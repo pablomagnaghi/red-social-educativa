@@ -70,10 +70,9 @@ class RedController {
 			fechaSolicitud: new Date())
 	
 		if(!membresia.validate()) {
-			println membresia.errors
 			flash.message = "Revise sus parametros"
-			redirect (action:"solicitarMembresia")
-			
+			respond membresia.errors, view:'solicitarMembresia'
+			return
 		} else {
 			membresia.save()
 			flash.message = "Solicitud aceptada. A la brevedad se le enviara un mail de confirmacion"

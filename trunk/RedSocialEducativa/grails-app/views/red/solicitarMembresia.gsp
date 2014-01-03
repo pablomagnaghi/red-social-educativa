@@ -15,7 +15,14 @@
 	   <g:if test="${flash.message}">
 	   		<div class="message" role="status">${flash.message}</div>
 		</g:if>
-		<g:form action="revisarDatosMembresia" onSubmit="return validarPasswords();">
+		<g:hasErrors bean="${membresiaInstance}">
+			<ul class="errors" role="alert">
+				<g:eachError bean="${membresiaInstance}" var="error">
+				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+				</g:eachError>
+			</ul>
+			</g:hasErrors>
+		<g:form url="[resource:membresiaInstance, action:'revisarDatosMembresia']" >
 			<div class="fieldcontain ${hasErrors(bean: membresiaInstance, field: 'dni', 'error')} required">
 				<label for="dni"> 
 					<g:message code="membresia.dni.label" default="Dni" /> 
