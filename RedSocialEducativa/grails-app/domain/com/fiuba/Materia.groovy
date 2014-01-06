@@ -9,10 +9,10 @@ class Materia {
 	Short creditos
 	String contenidosMinimos
 	
-	static hasMany = [cursos : Curso]
+	static hasMany = [cursos: Curso]
 	
 	String toString() {
-		"${codigo}- ${nombre}"
+		"${codigo} - ${nombre}"
 	}
 	
     static constraints = {

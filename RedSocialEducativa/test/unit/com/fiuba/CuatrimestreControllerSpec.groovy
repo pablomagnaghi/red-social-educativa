@@ -5,9 +5,9 @@ package com.fiuba
 import grails.test.mixin.*
 import spock.lang.*
 
-@TestFor(MateriaController)
-@Mock(Materia)
-class MateriaControllerSpec extends Specification {
+@TestFor(CuatrimestreController)
+@Mock(Cuatrimestre)
+class CuatrimestreControllerSpec extends Specification {
 
     def populateValidParams(params) {
         assert params != null
@@ -21,8 +21,8 @@ class MateriaControllerSpec extends Specification {
             controller.index()
 
         then:"The model is correct"
-            !model.materiaInstanceList
-            model.materiaInstanceCount == 0
+            !model.cuatrimestreInstanceList
+            model.cuatrimestreInstanceCount == 0
     }
 
     void "Test the create action returns the correct model"() {
@@ -30,31 +30,31 @@ class MateriaControllerSpec extends Specification {
             controller.create()
 
         then:"The model is correctly created"
-            model.materiaInstance!= null
+            model.cuatrimestreInstance!= null
     }
 
     void "Test the save action correctly persists an instance"() {
 
         when:"The save action is executed with an invalid instance"
-            def materia = new Materia()
-            materia.validate()
-            controller.save(materia)
+            def cuatrimestre = new Cuatrimestre()
+            cuatrimestre.validate()
+            controller.save(cuatrimestre)
 
         then:"The create view is rendered again with the correct model"
-            model.materiaInstance!= null
+            model.cuatrimestreInstance!= null
             view == 'create'
 
         when:"The save action is executed with a valid instance"
             response.reset()
             populateValidParams(params)
-            materia = new Materia(params)
+            cuatrimestre = new Cuatrimestre(params)
 
-            controller.save(materia)
+            controller.save(cuatrimestre)
 
         then:"A redirect is issued to the show action"
-            response.redirectedUrl == '/materia/show/1'
+            response.redirectedUrl == '/cuatrimestre/show/1'
             controller.flash.message != null
-            Materia.count() == 1
+            Cuatrimestre.count() == 1
     }
 
     void "Test that the show action returns the correct model"() {
@@ -66,11 +66,11 @@ class MateriaControllerSpec extends Specification {
 
         when:"A domain instance is passed to the show action"
             populateValidParams(params)
-            def materia = new Materia(params)
-            controller.show(materia)
+            def cuatrimestre = new Cuatrimestre(params)
+            controller.show(cuatrimestre)
 
         then:"A model is populated containing the domain instance"
-            model.materiaInstance == materia
+            model.cuatrimestreInstance == cuatrimestre
     }
 
     void "Test that the edit action returns the correct model"() {
@@ -82,11 +82,11 @@ class MateriaControllerSpec extends Specification {
 
         when:"A domain instance is passed to the edit action"
             populateValidParams(params)
-            def materia = new Materia(params)
-            controller.edit(materia)
+            def cuatrimestre = new Cuatrimestre(params)
+            controller.edit(cuatrimestre)
 
         then:"A model is populated containing the domain instance"
-            model.materiaInstance == materia
+            model.cuatrimestreInstance == cuatrimestre
     }
 
     void "Test the update action performs an update on a valid domain instance"() {
@@ -94,28 +94,28 @@ class MateriaControllerSpec extends Specification {
             controller.update(null)
 
         then:"A 404 error is returned"
-            response.redirectedUrl == '/materia/index'
+            response.redirectedUrl == '/cuatrimestre/index'
             flash.message != null
 
 
         when:"An invalid domain instance is passed to the update action"
             response.reset()
-            def materia = new Materia()
-            materia.validate()
-            controller.update(materia)
+            def cuatrimestre = new Cuatrimestre()
+            cuatrimestre.validate()
+            controller.update(cuatrimestre)
 
         then:"The edit view is rendered again with the invalid instance"
             view == 'edit'
-            model.materiaInstance == materia
+            model.cuatrimestreInstance == cuatrimestre
 
         when:"A valid domain instance is passed to the update action"
             response.reset()
             populateValidParams(params)
-            materia = new Materia(params).save(flush: true)
-            controller.update(materia)
+            cuatrimestre = new Cuatrimestre(params).save(flush: true)
+            controller.update(cuatrimestre)
 
         then:"A redirect is issues to the show action"
-            response.redirectedUrl == "/materia/show/$materia.id"
+            response.redirectedUrl == "/cuatrimestre/show/$cuatrimestre.id"
             flash.message != null
     }
 
@@ -124,23 +124,23 @@ class MateriaControllerSpec extends Specification {
             controller.delete(null)
 
         then:"A 404 is returned"
-            response.redirectedUrl == '/materia/index'
+            response.redirectedUrl == '/cuatrimestre/index'
             flash.message != null
 
         when:"A domain instance is created"
             response.reset()
             populateValidParams(params)
-            def materia = new Materia(params).save(flush: true)
+            def cuatrimestre = new Cuatrimestre(params).save(flush: true)
 
         then:"It exists"
-            Materia.count() == 1
+            Cuatrimestre.count() == 1
 
         when:"The domain instance is passed to the delete action"
-            controller.delete(materia)
+            controller.delete(cuatrimestre)
 
         then:"The instance is deleted"
-            Materia.count() == 0
-            response.redirectedUrl == '/materia/index'
+            Cuatrimestre.count() == 0
+            response.redirectedUrl == '/cuatrimestre/index'
             flash.message != null
     }
 }

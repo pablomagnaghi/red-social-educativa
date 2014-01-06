@@ -1,7 +1,5 @@
 package com.fiuba
 
-import java.util.Date
-
 class Membresia {
 	
 	Integer dni

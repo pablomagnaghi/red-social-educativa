@@ -1,7 +1,15 @@
 package com.fiuba
 
-class RedController {
+import static org.springframework.http.HttpStatus.*
 
+class RedController {
+	// El visitante puede: 
+	// * 2 - Acceder a la cartelera general
+	// * 4 - Dejar comentario o mensaje en un foro general de la red
+	// * 5 - Solicitar membresia
+	// * 6 - Conectarse
+	
+	
 	// sacar cuando se active el combo de salir de sesion una vez iniciada
 	def sesionIniciada = false
 	

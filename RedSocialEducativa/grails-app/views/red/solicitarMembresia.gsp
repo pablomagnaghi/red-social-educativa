@@ -21,7 +21,7 @@
 				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
 				</g:eachError>
 			</ul>
-			</g:hasErrors>
+		</g:hasErrors>
 		<g:form url="[resource:membresiaInstance, action:'revisarDatosMembresia']" >
 			<div class="fieldcontain ${hasErrors(bean: membresiaInstance, field: 'dni', 'error')} required">
 				<label for="dni"> 
@@ -69,8 +69,7 @@
 					<g:message code="membresia.email.label" default="Email" /> 
 					<span class="required-indicator">*</span>
 				</label>
-				<g:textField name="email" required=""
-					value="${membresiaInstance?.email}" />
+				<g:textField name="email" required="" value="${membresiaInstance?.email}" />
 			</div>
 			
 			<div class="fieldcontain ${hasErrors(bean: membresiaInstance, field: 'password', 'error')} ">
