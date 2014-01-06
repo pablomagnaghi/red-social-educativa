@@ -5,6 +5,10 @@ abstract class Usuario {
 	Rol rol
 	Membresia membresia
 
+	String toString() {
+		"${membresia}- ${rol}"
+	}
+	
     static constraints = {
     }
 	

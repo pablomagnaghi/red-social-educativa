@@ -153,7 +153,7 @@ class BootStrap {
 				println mediadores.get(i).errors
 			} else {
 				println "Mediadores agregados a la bbdd:"
-				mediadores.get(i).save()
+				//mediadores.get(i).save()
 				println mediadores.get(i).membresia.dni
 			}
 		}
@@ -174,71 +174,24 @@ class BootStrap {
 				println aprendices.get(i).errors
 			} else {
 				println "Aprendices agregadas a la bbdd:"
-				aprendices.get(i).save()
+				//aprendices.get(i).save()
 				println aprendices.get(i).membresia.dni
 			}
 		}
 		
 		
 		//--Carga cuatrimestre, curso, materia
-			
-		// Cuatrimestre - con carga de aprendices
 		
-		def ArrayList<Cuatrimestre> cuatrimestres = new ArrayList<Cuatrimestre>()
-	
-		def cuatrimestreUno = new Cuatrimestre(anio: "2014", numero: 1, habGrupos: false, nroUltGrupo: "0", 
-			aprendices: [aprendizAgus])
-		cuatrimestres.add(cuatrimestreUno)
-		def cuatrimestreDos = new Cuatrimestre(anio: "2014", numero: 1, habGrupos: false, nroUltGrupo: "0", 
-			aprendices: [aprendizAgus])
-		cuatrimestres.add(cuatrimestreDos)
-		def cuatrimestreTres = new Cuatrimestre(anio: "2014", numero: 1, habGrupos: false, nroUltGrupo: "0", 
-			aprendices: [aprendizCuatro])
-		cuatrimestres.add(cuatrimestreTres)
-
-		for(int i = 0; i<cuatrimestres.size(); i++){
-			if (!cuatrimestres.get(i).validate()) {
-				println cuatrimestres.get(i).errors
-			} else {
-				println "Cuatrimestres agregadas a la bbdd:"
-				cuatrimestres.get(i).save()
-				println cuatrimestres.get(i).anio
-			}
-		}
-	
-		// Cursos - con carga de cuatrimestres y mediadores
-		def ArrayList<Curso> cursos = new ArrayList<Curso>()
-		
-		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2", mediadores: [mediadorCuatro], 
-			cuatrimestres: [cuatrimestreUno, cuatrimestreDos])
-		cursos.add(cursoUno)
-		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", mediadores: [mediadorCuatro], 
-			cuatrimestres: [cuatrimestreDos])
-		cursos.add(cursoDos)
-		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1|2", mediadores: [mediadorAgus], 
-			cuatrimestres: [cuatrimestreTres])
-		cursos.add(cursoTres)
-		
-		for(int i = 0; i<cursos.size(); i++){
-			if (!cursos.get(i).validate()) {
-				println cursos.get(i).errors
-			} else {
-				println "Cursos agregadas a la bbdd:"
-				cursos.get(i).save()
-				println cursos.get(i).nroRelativo
-			}
-		}
-
 		// Materias - con carga de cursos
-		def ArrayList<Materia> materias = new ArrayList<Materia>()		
-		def materiaUno = new Materia(codigo: "75.01", nombre: "materiaUno", creditos: "6", 
-			contenidosMinimos: "contenidos", cursos: [cursoUno, cursoDos, cursoTres])
+		def ArrayList<Materia> materias = new ArrayList<Materia>()
+		def materiaUno = new Materia(codigo: "75.01", nombre: "materiaUno", creditos: "6",
+			contenidosMinimos: "contenidos")
 		materias.add(materiaUno)
-		def materiaDos = new Materia(codigo: "75.02", nombre: "materiaDos", creditos: "6", 
-			contenidosMinimos: "contenidos", cursos: [cursoDos])
+		def materiaDos = new Materia(codigo: "75.02", nombre: "materiaDos", creditos: "6",
+			contenidosMinimos: "contenidos")
 		materias.add(materiaDos)
-		def materiaTres = new Materia(codigo: "75.03", nombre: "materiaTres", creditos: "6", 
-			contenidosMinimos: "contenidos", cursos: [cursoTres])
+		def materiaTres = new Materia(codigo: "75.03", nombre: "materiaTres", creditos: "6",
+			contenidosMinimos: "contenidos")
 		materias.add(materiaTres)
 		
 		for(int i = 0; i<materias.size(); i++){
@@ -251,6 +204,69 @@ class BootStrap {
 			}
 		}
 		
+		// Cursos - con carga de cuatrimestres y mediadores
+		def ArrayList<Curso> cursos = new ArrayList<Curso>()
+		
+		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2", mediadores: [mediadorCuatro], materia: materiaUno)
+		cursos.add(cursoUno)
+		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", mediadores: [mediadorCuatro], materia: materiaUno)
+		cursos.add(cursoDos)
+		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1|2", mediadores: [mediadorAgus], materia: materiaUno)
+		cursos.add(cursoTres)
+		def cursoCuatro = new Curso(nroRelativo: "04", cuatDict: "1|2", mediadores: [mediadorAgus], materia: materiaDos)
+		cursos.add(cursoCuatro)
+		def cursoCinco = new Curso(nroRelativo: "05", cuatDict: "1|2", mediadores: [mediadorAgus], materia: materiaTres)
+		cursos.add(cursoCinco)
+		
+		for(int i = 0; i<cursos.size(); i++){
+			if (!cursos.get(i).validate()) {
+				println cursos.get(i).errors
+			} else {
+				println "Cursos agregadas a la bbdd:"
+				cursos.get(i).save()
+				println cursos.get(i).nroRelativo
+			}
+		}
+		
+		// Cuatrimestre - con carga de aprendices
+		
+		def ArrayList<Cuatrimestre> cuatrimestres = new ArrayList<Cuatrimestre>()
+	
+		def cuatrimestreUno = new Cuatrimestre(anio: "2011", numero: 1, habGrupos: false, nroUltGrupo: "0", 
+			aprendices: [aprendizAgus], curso: cursoUno)
+		cuatrimestres.add(cuatrimestreUno)
+		def cuatrimestreDos = new Cuatrimestre(anio: "2012", numero: 1, habGrupos: false, nroUltGrupo: "0", 
+			aprendices: [aprendizAgus], curso: cursoUno)
+		cuatrimestres.add(cuatrimestreDos)
+		def cuatrimestreTres = new Cuatrimestre(anio: "2013", numero: 1, habGrupos: false, nroUltGrupo: "0", 
+			aprendices: [aprendizCuatro], curso: cursoUno)
+		cuatrimestres.add(cuatrimestreTres)
+		def cuatrimestreCuatro = new Cuatrimestre(anio: "2014", numero: 1, habGrupos: false, nroUltGrupo: "0",
+			aprendices: [aprendizAgus], curso: cursoDos)
+		cuatrimestres.add(cuatrimestreCuatro)
+		def cuatrimestreCinco = new Cuatrimestre(anio: "2015", numero: 1, habGrupos: false, nroUltGrupo: "0",
+			aprendices: [aprendizAgus], curso: cursoDos)
+		cuatrimestres.add(cuatrimestreCinco)
+		def cuatrimestreSeis = new Cuatrimestre(anio: "2016", numero: 1, habGrupos: false, nroUltGrupo: "0",
+			aprendices: [aprendizCuatro], curso: cursoTres)
+		cuatrimestres.add(cuatrimestreSeis)
+		def cuatrimestreSiete = new Cuatrimestre(anio: "2017", numero: 1, habGrupos: false, nroUltGrupo: "0",
+			aprendices: [aprendizCuatro], curso: cursoCuatro)
+		cuatrimestres.add(cuatrimestreSiete)
+		def cuatrimestreOcho = new Cuatrimestre(anio: "2018", numero: 1, habGrupos: false, nroUltGrupo: "0",
+			aprendices: [aprendizCuatro], curso: cursoCinco)
+		cuatrimestres.add(cuatrimestreOcho)
+		
+		for(int i = 0; i<cuatrimestres.size(); i++){
+			if (!cuatrimestres.get(i).validate()) {
+				println cuatrimestres.get(i).errors
+			} else {
+				println "Cuatrimestres agregadas a la bbdd:"
+				cuatrimestres.get(i).save()
+				println cuatrimestres.get(i).anio
+			}
+		}
+	
 		// --Agrego todo a la red-- //
 
 		def red = new Red (membresias: [membresiaPablo, membresiaLuis, membresiaAgus, membresiaUno, membresiaDos, membresiaTres],

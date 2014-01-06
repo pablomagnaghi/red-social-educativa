@@ -31,7 +31,16 @@
 		<g:message code="materia.cursos.label" default="Cursos" />
 		
 	</label>
-	<g:select name="cursos" from="${com.fiuba.Curso.list()}" multiple="multiple" optionKey="id" size="5" value="${materiaInstance?.cursos*.id}" class="many-to-many"/>
+	
+<ul class="one-to-many">
+<g:each in="${materiaInstance?.cursos?}" var="c">
+    <li><g:link controller="curso" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></li>
+</g:each>
+<li class="add">
+<g:link controller="curso" action="create" params="['materia.id': materiaInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'curso.label', default: 'Curso')])}</g:link>
+</li>
+</ul>
+
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: materiaInstance, field: 'nombre', 'error')} ">

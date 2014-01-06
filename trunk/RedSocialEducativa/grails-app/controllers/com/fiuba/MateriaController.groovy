@@ -8,15 +8,15 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class MateriaController {
 
-	def index(final int id) {
-		[cursos: Materia.get(id).cursos]
+	def indexGeneral() {
+		[cursos: Materia.get(params.id).cursos]
 	}
-
-	// Lo que sigue viene por defecto : REVISARLO
 	
+	// metodos por defecto, usados en ABM materias del administrador
+	// ver en detalle despues
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def indexAdm(Integer max) {
+    def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Materia.list(params), model:[materiaInstanceCount: Materia.count()]
     }
@@ -92,7 +92,7 @@ class MateriaController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'Materia.label', default: 'Materia'), materiaInstance.id])
-                redirect action:"indexAdm", method:"GET"
+                redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
         }
@@ -102,7 +102,7 @@ class MateriaController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'materiaInstance.label', default: 'Materia'), params.id])
-                redirect action: "indexAdm", method: "GET"
+                redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }
         }

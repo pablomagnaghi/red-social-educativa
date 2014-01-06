@@ -9,14 +9,16 @@ class Curso {
 	// Cuatrimestre en que se da el curso: 1ero, 2do o ambos
 	String cuatDict
 	
-	static belongsTo = Materia
+	static belongsTo = [materia: Materia]
 	
 	static hasMany = [mediadores: Mediador, cuatrimestres: Cuatrimestre]
-	
+
 	String toString() {
-		"${nroRelativo}- ${cuatDict}"
+		"${materia} - ${nroRelativo}"
 	}
 	
     static constraints = {
+		
     }
+	
 }

@@ -11,9 +11,7 @@ class Red {
 	
 	static hasMany = [membresias: Membresia, administradores: Administrador, materias: Materia]
 	
-	
     static constraints = {
     }
 	
-
 }

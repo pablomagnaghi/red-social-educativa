@@ -7,9 +7,9 @@ class Mediador extends Usuario {
 	// Profesor|JTP|AP|AS|Colaborador
 	String jerarquia
 	
-	static hasMany = [cursos: Curso]
-
 	static belongsTo = Curso
+	
+	static hasMany = [cursos:Curso]
 		
     static constraints = {
     }

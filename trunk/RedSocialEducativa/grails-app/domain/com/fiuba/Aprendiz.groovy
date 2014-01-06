@@ -9,9 +9,10 @@ class Aprendiz extends Usuario{
 	Integer descMaterial // Cantidad de materiales descargados del curso
 	Date ultVisita // AAAAMMDD
 	
-	static hasMany = [cuatrismestres: Cuatrimestre]
-	
 	static belongsTo = Cuatrimestre
+	
+	static hasMany = [cuatrismestres:Cuatrimestre]
+
 	
     static constraints = {
     }

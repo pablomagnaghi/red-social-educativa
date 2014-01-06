@@ -64,7 +64,7 @@
 				<g:each in="${materias}" var="materia">
 					<li>
 						<span class = "menuButton">
-							<g:link action="index" controller="materia" id="${materia.id}">
+							<g:link action="indexGeneral" controller="materia" id="${materia.id}">
 							<g:message code="${materia}" /></g:link>
 						</span>
 					</li>

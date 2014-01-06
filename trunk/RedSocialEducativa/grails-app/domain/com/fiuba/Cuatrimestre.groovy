@@ -13,12 +13,12 @@ class Cuatrimestre {
 	// numero de grupos actuales, debe cambiarse a cero cuando habGrupos es falso
 	Short nroUltGrupo 
 	
+	static belongsTo = [curso: Curso]
+	
 	static hasMany = [aprendices: Aprendiz]
-
-	static belongsTo = Curso
 	
 	String toString() {
-		"${anio}- ${numero}"
+		"${anio} - ${numero}"
 	}
 	
     static constraints = {

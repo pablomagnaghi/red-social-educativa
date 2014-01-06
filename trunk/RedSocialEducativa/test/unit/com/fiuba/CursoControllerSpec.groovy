@@ -18,7 +18,7 @@ class CursoControllerSpec extends Specification {
     void "Test the index action returns the correct model"() {
 
         when:"The index action is executed"
-            controller.indexMed()
+            controller.index()
 
         then:"The model is correct"
             !model.cursoInstanceList

@@ -12,7 +12,7 @@
 		<div class="nav" role="navigation">
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="indexMed"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
+				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
 				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -39,6 +39,15 @@
 						<g:each in="${cursoInstance.cuatrimestres}" var="c">
 						<span class="property-value" aria-labelledby="cuatrimestres-label"><g:link controller="cuatrimestre" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></span>
 						</g:each>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${cursoInstance?.materia}">
+				<li class="fieldcontain">
+					<span id="materia-label" class="property-label"><g:message code="curso.materia.label" default="Materia" /></span>
+					
+						<span class="property-value" aria-labelledby="materia-label"><g:link controller="materia" action="show" id="${cursoInstance?.materia?.id}">${cursoInstance?.materia?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

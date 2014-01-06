@@ -2,8 +2,21 @@ package com.fiuba
 
 import grails.plugin.mail.*
 
+
 class AdministradorController {
 
+	
+	// Administrador
+	// 7. Registrar y eliminar materias y cursos de materias
+	// 8. Administrar cartelera general (publicar, modificar y eliminar anuncios)
+	// 9. Administrar parámetros de configuración de toda la red (duración del ciclo de conservación de
+	// calificaciones)
+	// 10. Crear y administrar (depurar y eliminar) foros generales
+	// 11. Aceptar miembros
+	// 12. Asignar y revocar roles de mediador en cursos
+	// 13. Visualizar información y material de los cursos (foros, temas y material general)
+	
+	// metodos por defecto
 	def index = {
 		def membresia = false;
 		[membresias: Membresia.findAllByMembresia(membresia)]
