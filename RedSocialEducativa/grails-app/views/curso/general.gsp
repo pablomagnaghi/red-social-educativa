@@ -14,9 +14,9 @@
 		</div>
 		<div>
 			<br>
-			<h4>"${materia}"</h4>>
-			<g:link action="indexGeneral" controller="materia" id="${materia.id}">
-			<g:message code="Volver" /></g:link>
+			<h4>"${materia}"</h4>
+			<g:link action="general" controller="materia" id="${materia.id}">
+			<g:message code="Volver"/></g:link>
 			<br>
 		</div>
 		<p>Para tener mayores accesos por favor, inicie sesion</p>

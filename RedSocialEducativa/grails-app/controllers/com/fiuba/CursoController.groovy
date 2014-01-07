@@ -1,11 +1,5 @@
 package com.fiuba
 
-
-
-import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
-
-@Transactional(readOnly = true)
 class CursoController {
 	// EL visitante puede:
 	// * 1 - Visualizar información y material de los cursos (foros, temas y material general)
@@ -33,130 +27,41 @@ class CursoController {
 	def revisarRol(){
 	
 		cursoId = params.id
-
 		if (!session.user) {
 			flash.message = "Ingreso como visitante"
-			redirect(action: "indexGeneral")
+			redirect(action: "general")
 		} else {
-			def administrador = Administrador.findByMembresia(session.user)
-			
+			def membresia = Membresia.findByDni(session.user.dni)
+			def administrador = Administrador.findByMembresia(membresia)
 			if (administrador) {
 				flash.message = "Ingreso como administrador"
-				redirect(action: "indexGeneral")
+				redirect(action: "general")
 			} else {
-				/*def mediador = Mediador.findByMembresia(session.user)
-	
+				def mediador = Mediador.findByMembresia(membresia)
 				if (Curso.get(cursoId).mediadores.contains(mediador)) {
-					println "Hola mediador ${session.user}"
-					redirect(action: "indexMediador")
+					println "Hola mediador ${mediador}"
+					redirect(action: "mediador")
+					return
 				} else {
-					def aprendiz = Aprendiz.findByMembresia(session.user)
+					def aprendiz = Aprendiz.findByMembresia(membresia)
 					redirect(action: "indexAprendiz")
-				}*/
+					return
+				}
 				flash.message = "falta termianr"
 				redirect(action: "indexMediador")
 			}
 		}
 	}
 	
-	def indexGeneral() {
-		[materia:  Curso.get(cursoId).materia]
+	def general(){
+		[materia: Curso.get(cursoId).materia]
 	}
 	
+	def mediador(){
+		
+	}
 	// metodos por defecto, usados en ABM cursos del administrador
 	// ver en detalle despues
 	
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Curso.list(params), model:[cursoInstanceCount: Curso.count()]
-    }
-
-    def show(Curso cursoInstance) {
-        respond cursoInstance
-    }
-
-    def create() {
-        respond new Curso(params)
-    }
-
-    @Transactional
-    def save(Curso cursoInstance) {
-        if (cursoInstance == null) {
-            notFound()
-            return
-        }
-
-        if (cursoInstance.hasErrors()) {
-            respond cursoInstance.errors, view:'create'
-            return
-        }
-
-        cursoInstance.save flush:true
-
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'cursoInstance.label', default: 'Curso'), cursoInstance.id])
-                redirect cursoInstance
-            }
-            '*' { respond cursoInstance, [status: CREATED] }
-        }
-    }
-
-    def edit(Curso cursoInstance) {
-        respond cursoInstance
-    }
-
-    @Transactional
-    def update(Curso cursoInstance) {
-        if (cursoInstance == null) {
-            notFound()
-            return
-        }
-
-        if (cursoInstance.hasErrors()) {
-            respond cursoInstance.errors, view:'edit'
-            return
-        }
-
-        cursoInstance.save flush:true
-
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Curso.label', default: 'Curso'), cursoInstance.id])
-                redirect cursoInstance
-            }
-            '*'{ respond cursoInstance, [status: OK] }
-        }
-    }
-
-    @Transactional
-    def delete(Curso cursoInstance) {
-
-        if (cursoInstance == null) {
-            notFound()
-            return
-        }
-
-        cursoInstance.delete flush:true
-
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Curso.label', default: 'Curso'), cursoInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
-
-    protected void notFound() {
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'cursoInstance.label', default: 'Curso'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
+    static scaffold = true
 }

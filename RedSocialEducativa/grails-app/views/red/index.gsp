@@ -11,8 +11,6 @@
 	    	<ul>
 		       	<li><g:link class="list" action="solicitarMembresia">
 		       		<g:message code="Solicitar Membresía" args="[entityName]" /></g:link></li>
-		       	<li><g:link class="list" action="salir">
-		       		<g:message code="Salir" args="[entityName]" /></g:link></li>
 	       	</ul>
 		</div>
 	    <div id="create-endUser" class="content scaffold-create" role="main">
@@ -29,29 +27,36 @@
 					</g:eachError>
 				</ul>
 			</g:hasErrors>
-			<g:form action="autenticacion" >
-				<fieldset class="form">
-					<div class="fieldcontain ${hasErrors(bean: miembroInstance, field: 'dni', 'error')} ">
-						<label for="dni">
-							<g:message code="miembro.dni.label" default="Dni" />   
-						</label>
-							<g:textField name="dni" value="${miembroInstance?.dni}"/>
-					</div>
-					<div class="fieldcontain ${hasErrors(bean: miembroInstance, field: 'password', 'error')} ">
-						<label for="password">
-							<g:message code="miembro.password.label" default="Password" /> 
-						</label>
-							<g:field type="password" name="password" value="${miembroInstance?.password}"/>
-					</div>
-					<div class="fieldcontain">
-						<label for='remember_me'>Recordar contraseña</label>
-						<input type='checkbox' class='chk' id='remember_me'/>
-					</div>
-				</fieldset>
-	            <fieldset class="buttons">
-					<g:submitButton name="login" class="save" value="Ingresar" />
-				</fieldset>
+			<g:if test="${membresia}">
+				Hola ${membresia}, 
+				<g:link class="list" action="salir">
+		       		<g:message code="Salir" args="[entityName]" /></g:link>
+			</g:if>
+			<g:else>
+				<g:form action="autenticacion" >
+					<fieldset class="form">
+						<div class="fieldcontain ${hasErrors(bean: miembroInstance, field: 'dni', 'error')} ">
+							<label for="dni">
+								<g:message code="miembro.dni.label" default="Dni" />   
+							</label>
+								<g:textField name="dni" value="${miembroInstance?.dni}"/>
+						</div>
+						<div class="fieldcontain ${hasErrors(bean: miembroInstance, field: 'password', 'error')} ">
+							<label for="password">
+								<g:message code="miembro.password.label" default="Password" /> 
+							</label>
+								<g:field type="password" name="password" value="${miembroInstance?.password}"/>
+						</div>
+						<div class="fieldcontain">
+							<label for='remember_me'>Recordar contraseña</label>
+							<input type='checkbox' class='chk' id='remember_me' name='remember_me'/>
+						</div>
+					</fieldset>
+		            <fieldset class="buttons">
+						<g:submitButton name="login" class="save" value="Ingresar" />
+					</fieldset>
 			</g:form>
+			</g:else>
 		</div>
 		<div>
 	       		<br><h2>Proximamente la cartelera</h2>
@@ -64,7 +69,7 @@
 				<g:each in="${materias}" var="materia">
 					<li>
 						<span class = "menuButton">
-							<g:link action="indexGeneral" controller="materia" id="${materia.id}">
+							<g:link action="general" controller="materia" id="${materia.id}">
 							<g:message code="${materia}" /></g:link>
 						</span>
 					</li>

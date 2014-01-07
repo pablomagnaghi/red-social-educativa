@@ -51,9 +51,7 @@ class AdministradorController {
 		redirect(action: "index")
 	}
 	
-	def salir = {
-		flash.message = "Goodbye ${session.user.dni}"
-		session.user = null
+	def volver = {
 		redirect(controller: "Red", action:"index")
 	}
 }

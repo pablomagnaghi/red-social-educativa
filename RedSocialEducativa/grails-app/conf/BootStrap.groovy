@@ -8,7 +8,6 @@ import com.fiuba.Administrador
 import com.fiuba.Mediador
 import com.fiuba.Aprendiz
 
-import com.fiuba.Cuatrimestre
 import com.fiuba.Curso
 import com.fiuba.Materia
 import com.fiuba.Mediador
@@ -207,15 +206,20 @@ class BootStrap {
 		// Cursos - con carga de cuatrimestres y mediadores
 		def ArrayList<Curso> cursos = new ArrayList<Curso>()
 		
-		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2", mediadores: [mediadorCuatro], materia: materiaUno)
+		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2", mediadores: [mediadorCuatro], 
+			aprendices: [aprendizAgus], materia: materiaUno)
 		cursos.add(cursoUno)
-		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", mediadores: [mediadorCuatro], materia: materiaUno)
+		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", mediadores: [mediadorCuatro], 
+			aprendices: [aprendizAgus], materia: materiaUno)
 		cursos.add(cursoDos)
-		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1|2", mediadores: [mediadorAgus], materia: materiaUno)
+		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1|2", mediadores: [mediadorAgus], 
+			aprendices: [aprendizCuatro], materia: materiaUno)
 		cursos.add(cursoTres)
-		def cursoCuatro = new Curso(nroRelativo: "04", cuatDict: "1|2", mediadores: [mediadorAgus], materia: materiaDos)
+		def cursoCuatro = new Curso(nroRelativo: "04", cuatDict: "1|2", mediadores: [mediadorAgus], 
+			aprendices: [aprendizCuatro], materia: materiaDos)
 		cursos.add(cursoCuatro)
-		def cursoCinco = new Curso(nroRelativo: "05", cuatDict: "1|2", mediadores: [mediadorAgus], materia: materiaTres)
+		def cursoCinco = new Curso(nroRelativo: "05", cuatDict: "1|2", mediadores: [mediadorAgus], 
+			aprendices: [aprendizCuatro], materia: materiaTres)
 		cursos.add(cursoCinco)
 		
 		for(int i = 0; i<cursos.size(); i++){
@@ -228,45 +232,6 @@ class BootStrap {
 			}
 		}
 		
-		// Cuatrimestre - con carga de aprendices
-		
-		def ArrayList<Cuatrimestre> cuatrimestres = new ArrayList<Cuatrimestre>()
-	
-		def cuatrimestreUno = new Cuatrimestre(anio: "2011", numero: 1, habGrupos: false, nroUltGrupo: "0", 
-			aprendices: [aprendizAgus], curso: cursoUno)
-		cuatrimestres.add(cuatrimestreUno)
-		def cuatrimestreDos = new Cuatrimestre(anio: "2012", numero: 1, habGrupos: false, nroUltGrupo: "0", 
-			aprendices: [aprendizAgus], curso: cursoUno)
-		cuatrimestres.add(cuatrimestreDos)
-		def cuatrimestreTres = new Cuatrimestre(anio: "2013", numero: 1, habGrupos: false, nroUltGrupo: "0", 
-			aprendices: [aprendizCuatro], curso: cursoUno)
-		cuatrimestres.add(cuatrimestreTres)
-		def cuatrimestreCuatro = new Cuatrimestre(anio: "2014", numero: 1, habGrupos: false, nroUltGrupo: "0",
-			aprendices: [aprendizAgus], curso: cursoDos)
-		cuatrimestres.add(cuatrimestreCuatro)
-		def cuatrimestreCinco = new Cuatrimestre(anio: "2015", numero: 1, habGrupos: false, nroUltGrupo: "0",
-			aprendices: [aprendizAgus], curso: cursoDos)
-		cuatrimestres.add(cuatrimestreCinco)
-		def cuatrimestreSeis = new Cuatrimestre(anio: "2016", numero: 1, habGrupos: false, nroUltGrupo: "0",
-			aprendices: [aprendizCuatro], curso: cursoTres)
-		cuatrimestres.add(cuatrimestreSeis)
-		def cuatrimestreSiete = new Cuatrimestre(anio: "2017", numero: 1, habGrupos: false, nroUltGrupo: "0",
-			aprendices: [aprendizCuatro], curso: cursoCuatro)
-		cuatrimestres.add(cuatrimestreSiete)
-		def cuatrimestreOcho = new Cuatrimestre(anio: "2018", numero: 1, habGrupos: false, nroUltGrupo: "0",
-			aprendices: [aprendizCuatro], curso: cursoCinco)
-		cuatrimestres.add(cuatrimestreOcho)
-		
-		for(int i = 0; i<cuatrimestres.size(); i++){
-			if (!cuatrimestres.get(i).validate()) {
-				println cuatrimestres.get(i).errors
-			} else {
-				println "Cuatrimestres agregadas a la bbdd:"
-				cuatrimestres.get(i).save()
-				println cuatrimestres.get(i).anio
-			}
-		}
-	
 		// --Agrego todo a la red-- //
 
 		def red = new Red (membresias: [membresiaPablo, membresiaLuis, membresiaAgus, membresiaUno, membresiaDos, membresiaTres],
