@@ -7,12 +7,6 @@
         <title><g:message code="Red Social Login" args="[entityName]" /></title>
     </head>
     <body>
-	    <div class="nav" role="navigation">
-	    	<ul>
-		       	<li><g:link class="list" action="solicitarMembresia">
-		       		<g:message code="Solicitar Membresía" args="[entityName]" /></g:link></li>
-	       	</ul>
-		</div>
 	    <div id="create-endUser" class="content scaffold-create" role="main">
 			<h1><g:message code="Red Social Educativa FIUBA" /></h1>
 			<g:if test="${flash.message}">
@@ -33,6 +27,12 @@
 		       		<g:message code="Salir" args="[entityName]" /></g:link>
 			</g:if>
 			<g:else>
+				<div class="nav" role="navigation">
+	    			<ul>
+		       			<li><g:link class="list" action="solicitarMembresia">
+		       			<g:message code="Solicitar Membresía" args="[entityName]" /></g:link></li>
+	       			</ul>
+				</div>
 				<g:form action="autenticacion" >
 					<fieldset class="form">
 						<div class="fieldcontain ${hasErrors(bean: miembroInstance, field: 'dni', 'error')} ">
@@ -55,8 +55,49 @@
 		            <fieldset class="buttons">
 						<g:submitButton name="login" class="save" value="Ingresar" />
 					</fieldset>
-			</g:form>
+				</g:form>
 			</g:else>
+		</div>
+		<div>
+			<g:if test="${administrador}">
+				<h2>Bienvenido administrador ${administrador}</h2> 
+				<span class = "menuButton">
+					<g:link action="index" controller="administrador">
+					<g:message code="Tareas administrativas" /></g:link>
+				</span>
+			</g:if>
+		</div>
+		<div>
+			<span>
+				<g:if test="${cursosMediador}">
+					<h2>Mis cursos como mediador</h2> 
+					<ol>
+						<g:each in="${cursosMediador}" var="cursoMediador">
+							<li>
+								<span class = "menuButton">
+									<g:link action="mediador" controller="curso" id="${cursoMediador.id}">
+									<g:message code="${cursoMediador}" /></g:link>
+								</span>
+							</li>
+						</g:each>
+					</ol>
+				</g:if>
+			</span>
+			<span>
+				<g:if test="${cursosAprendiz}">
+					<h2>Mis cursos como aprendizr</h2> 
+					<ol>
+						<g:each in="${cursosAprendiz}" var="cursoAprendiz">
+							<li>
+								<span class = "menuButton">
+									<g:link action="aprendiz" controller="curso" id="${cursoAprendiz.id}">
+									<g:message code="${cursoAprendiz}" /></g:link>
+								</span>
+							</li>
+						</g:each>
+					</ol>
+				</g:if>
+			</span>
 		</div>
 		<div>
 	       		<br><h2>Proximamente la cartelera</h2>

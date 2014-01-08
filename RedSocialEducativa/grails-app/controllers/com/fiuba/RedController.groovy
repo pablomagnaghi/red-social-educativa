@@ -12,24 +12,20 @@ class RedController {
 	// * 5 - Solicitar membresia
 	// * 6 - Conectarse
 	
-	
-	// sacar cuando se active el combo de salir de sesion una vez iniciada
-	def sesionIniciada = false
-	
-	def membresia
-	
+	def membresia = null
+
     def index = { 
+		
 		// mostrar todas las materias
 		// cartelera general
 		// foros de curso
-		
-		def cookies = request.getCookies()
+	
+		/*def cookies = request.getCookies()
 		def sessionCookie = null
 		for (item in cookies) { 
 			if (item.getName() == "session_token" ){
 				sessionCookie = item.getValue()
 			}
-		}
 		if (sessionCookie){
 			Pattern p = Pattern.compile("^(\\d{8})(.*)")
 			Matcher m = p.matcher(sessionCookie)
@@ -37,13 +33,54 @@ class RedController {
 			if (m.find()){
 				dni = m.group(1);
 				pass = m.group(2);
+				membresia = Membresia.findByDni(dni)
+				println "membresia cookie: ${membresia} dni: ${dni} pass: ${pass}"
 			}
-			def membresia = Membresia.findByDni(dni)
-			println membresia
 		} else {
-			println "no hay usuario"
+			println "no hay usuario cookie"
 		}
-		[materias: Materia.findAll(), membresia: membresia]
+		println "membresia index: ${membresia}"*/
+		
+		// Defino que tipo de usuario es
+		// Administrador: redirigir a pagina especial
+		// Mediador/aprendiz: mostrar la pagina comun, con los cursos en los que es mediador y los cursos en los que es aprendiz.
+
+		
+		// FALTA COMPROBAR SI EL MIEMBRO ESTA HABILITADO O ESPERANDO HABILITACION PARA LA RED
+		// LO MISMO PARA EL APRENDIZ CON EL CURSO 
+		def ArrayList<Curso> cursosMediador = new ArrayList<Curso>()
+		
+		println "membresia: ${membresia}"
+		
+		def mediador = Mediador.findByMembresia(membresia)
+			
+		if (mediador) {
+			println "mediador a buscar: ${mediador}"
+			for (c in Curso.list()) {
+				if (c.mediadores.contains(mediador)) {
+					println "curso agregado: ${c}"
+					cursosMediador.add(c)
+				}
+			}
+		}
+		
+		def ArrayList<Curso> cursosAprendiz = new ArrayList<Curso>()
+		
+		def aprendiz = Aprendiz.findByMembresia(membresia)
+			
+		if (aprendiz) {
+			println "aprendiz a buscar: ${aprendiz}"
+			for (c in Curso.list()) {
+				if (c.aprendices.contains(aprendiz)) {
+					// falta revisar si el aprendiz esta habilitado o esperando habilitacion
+					println "curso agregado: ${c}"
+					cursosAprendiz.add(c)
+				}
+			}
+		}
+		
+		[materias: Materia.findAll(), membresia: membresia, administrador: Administrador.findByMembresia(membresia), 
+			cursosMediador: cursosMediador, cursosAprendiz: cursosAprendiz]
 	}
 	
 	def solicitarMembresia = {
@@ -52,55 +89,34 @@ class RedController {
 	def autenticacion = {
 		membresia = Membresia.findByDni(params.dni)
 		
+		println "params: ${params}"
+		
 		if (membresia) {
+			println "ingreso membresia"
 			if (params.password.encodeAsMD5()==membresia.password){
 				session.user = membresia
-				if (params.remember_me == 'on'){
+				/*if (params.remember_me == 'on'){
 					Cookie cookie = new Cookie("session_token", membresia.dni + membresia.password);
 					cookie.maxAge = 60000
 					response.addCookie(cookie)
-				}				
-			
-				// Defino que tipo de usuario es
-				// Administrador: redirigir a pagina especial
-				// Mediador y/o aprendiz: mostrar la pagina comun, con los cursos
-				// en los que es mediador y los cursos en los que es aprendiz.
-				def administradores = Administrador.findAll();
-				def esAdm = false
-				
-				administradores.each {
-					if(it.membresia.dni == membresia.dni){
-						redirect(controller:"administrador", action:"index")
-						println "Ingreso del administrador ${membresia.dni}"
-						esAdm = true
-					}
-				} 
-				if (!esAdm) {
-					// aca poner la vista especial para mediador y aprendiz
-					redirect(action: "index")
-				}
-			} else {
+				}*/				
+			} else  {
+				membresia = null
 				flash.message = "El password es incorrecto ${params.dni}. Intente nuevamente."
-				redirect(action:"index")
 			}
-		} else {
-			flash.message = "No existe un miembro con dni: ${params.dni}. Intente nuevamente."
-			redirect(action:"index")
-		}
+		} else 
+			flash.message = "No existe ese miembro. Intente nuevamente."
+		redirect(action:"index")
 	}
 	
 	def salir = {
-		if (sesionIniciada) {
-			flash.message = "Goodbye ${session.user.dni}"
-			session.user = null
-			Cookie cookie = new Cookie("session_token", "null");
-			cookie.maxAge = 60000
-			response.addCookie(cookie)
-		} else {
-			flash.message = "No hay iniciado sesion todavia"
-		}
-		sesionIniciada = false
+		println "adios session: ${session.user}"
+		flash.message = "Goodbye ${session.user.dni}"
+		session.user = null
 		membresia = null
+		//Cookie cookie = new Cookie("session_token", "null");
+		//cookie.maxAge = 60000
+		//response.addCookie(cookie)
 		redirect(action:"index")
 	}
 	
@@ -121,4 +137,5 @@ class RedController {
 			redirect(action:"index")
 		}
 	}
+	
 }

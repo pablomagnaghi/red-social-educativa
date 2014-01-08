@@ -6,13 +6,15 @@ abstract class Usuario {
 	Membresia membresia
 
 	String toString() {
-		"${membresia}- ${rol}"
+		"${membresia}"
 	}
 	
     static constraints = {
     }
 	
-	//static mapping = [tablePerHierarchy : false ]
+	static mapping = {
+		tablePerHierarchy false
+    }
 	/*
 	def esAdm(String nombreRol) {
 		for (rol in this.roles) {

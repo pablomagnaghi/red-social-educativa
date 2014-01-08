@@ -5,7 +5,7 @@ class Rol {
 	// todos los atributos del enunciado ya estan puestos
 	String nombre
 
-	static hasMany = [acciones : Accion]
+	static hasMany = [acciones: Accion]
 	
 	String toString() {
 		"${nombre}"
