@@ -95,18 +95,31 @@ class BootStrap {
 			fechaMemb: new Date())
 		membresias.add(membresiaUno)
 		def membresiaDos = new Membresia(dni: "22222222", password: "33300432", apellido: "Magnaghi", nombres: "Pablo DOS",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", membresia: false, fechaSolicitud: new Date(),
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", membresia: true, fechaSolicitud: new Date(),
 			fechaMemb: new Date())
 		membresias.add(membresiaDos)
 		def membresiaTres = new Membresia(dni: "33333333", password: "33300432", apellido: "Magnaghi", nombres: "Pablo TRES",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", membresia: false, fechaSolicitud: new Date(),
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", membresia: true, fechaSolicitud: new Date(),
 			fechaMemb: new Date())
 		membresias.add(membresiaTres)
-
 		def membresiaCuatro = new Membresia(dni: "44444444", password: "33300432", apellido: "Magnaghi", nombres: "Pablo CUATRO",
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", membresia: true, fechaSolicitud: new Date(),
 			fechaMemb: new Date())
 		membresias.add(membresiaCuatro)
+		
+		def membresiaCinco = new Membresia(dni: "55555555", password: "33300432", apellido: "Magnaghi", nombres: "Pablo CINCO",
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", membresia: false, fechaSolicitud: new Date(),
+			fechaMemb: new Date())
+		membresias.add(membresiaCinco)
+		
+		def membresiaSeis = new Membresia(dni: "66666666", password: "33300432", apellido: "Magnaghi", nombres: "Pablo SEIS",
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", membresia: false, fechaSolicitud: new Date(),
+			fechaMemb: new Date())
+		membresias.add(membresiaSeis)
+		def membresiaSiete = new Membresia(dni: "77777777", password: "33300432", apellido: "Magnaghi", nombres: "Pablo SIETE",
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", membresia: false, fechaSolicitud: new Date(),
+			fechaMemb: new Date())
+		membresias.add(membresiaSiete)
 		
 		for(int i = 0; i<membresias.size(); i++){
 			if (!membresias.get(i).validate()) {
@@ -123,9 +136,9 @@ class BootStrap {
 		// Administradores - con carga de rol
 		def ArrayList<Administrador> administradores = new ArrayList<Administrador>()
 		
-		def admPablo = new Administrador (membresia: membresiaPablo, rol: rolAdministrador);
+		def admPablo = new Administrador (membresia: membresiaPablo, rol: rolAdministrador)
 		administradores.add(admPablo)
-		def admLuis = new Administrador (membresia: membresiaLuis, rol: rolAdministrador);
+		def admLuis = new Administrador (membresia: membresiaLuis, rol: rolAdministrador)
 		administradores.add(admLuis)
 		
 		for(int i = 0; i<administradores.size(); i++){
@@ -144,6 +157,9 @@ class BootStrap {
 		def mediadorAgus = new Mediador(membresia: membresiaAgus, rol: rolMediador, jerarquia: "JTP");
 		mediadores.add(mediadorAgus)
 		
+		def mediadorUno = new Mediador(membresia: membresiaUno, rol: rolMediador, jerarquia: "JTP");
+		mediadores.add(mediadorUno)
+		
 		def mediadorCuatro = new Mediador(membresia: membresiaCuatro, rol: rolMediador, jerarquia: "JTP");
 		mediadores.add(mediadorCuatro)
 		
@@ -160,13 +176,25 @@ class BootStrap {
 		// Aprendices
 		def ArrayList<Aprendiz> aprendices = new ArrayList<Aprendiz>()
 		
-		def aprendizAgus = new Aprendiz(membresia: membresiaAgus, rol: rolAprendiz, participa: false, msjEnviados: "0",
+		def aprendizAgus = new Aprendiz(membresia: membresiaAgus, rol: rolAprendiz, participa: true, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
 		aprendices.add(aprendizAgus)
 		
+		def aprendizUno = new Aprendiz(membresia: membresiaUno, rol: rolAprendiz, participa: true, msjEnviados: "0",
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
+		aprendices.add(aprendizUno)
+		
+		def aprendizDos = new Aprendiz(membresia: membresiaDos, rol: rolAprendiz, participa: true, msjEnviados: "0",
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
+		aprendices.add(aprendizDos)
+		
+		def aprendizTres = new Aprendiz(membresia: membresiaTres, rol: rolAprendiz, participa: false, msjEnviados: "0",
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
+		aprendices.add(aprendizTres)
+		
 		def aprendizCuatro = new Aprendiz(membresia: membresiaCuatro, rol: rolAprendiz, participa: false, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
-		aprendices.add(aprendizAgus)
+		aprendices.add(aprendizCuatro)
 		
 		for(int i = 0; i<aprendices.size(); i++){
 			if (!aprendices.get(i).validate()) {
@@ -206,14 +234,14 @@ class BootStrap {
 		// Cursos - con carga de cuatrimestres y mediadores
 		def ArrayList<Curso> cursos = new ArrayList<Curso>()
 		
-		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2", mediadores: [mediadorCuatro], 
-			aprendices: [aprendizAgus], materia: materiaUno)
+		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2", mediadores: [mediadorCuatro, mediadorUno], 
+			aprendices: [aprendizAgus, aprendizUno, aprendizDos, aprendizTres], materia: materiaUno)
 		cursos.add(cursoUno)
 		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", mediadores: [mediadorCuatro], 
-			aprendices: [aprendizAgus], materia: materiaUno)
+			aprendices: [aprendizAgus, aprendizDos, aprendizTres], materia: materiaUno)
 		cursos.add(cursoDos)
 		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1|2", mediadores: [mediadorAgus], 
-			aprendices: [aprendizCuatro], materia: materiaUno)
+			aprendices: [aprendizTres, aprendizCuatro], materia: materiaUno)
 		cursos.add(cursoTres)
 		def cursoCuatro = new Curso(nroRelativo: "04", cuatDict: "1|2", mediadores: [mediadorAgus], 
 			aprendices: [aprendizCuatro], materia: materiaDos)
@@ -234,8 +262,8 @@ class BootStrap {
 		
 		// --Agrego todo a la red-- //
 
-		def red = new Red (membresias: [membresiaPablo, membresiaLuis, membresiaAgus, membresiaUno, membresiaDos, membresiaTres],
-			administradores: [admPablo, admLuis], materias: [materiaUno, materiaDos, materiaTres])
+		def red = new Red() /*(membresias: [membresiaPablo, membresiaLuis, membresiaAgus, membresiaUno, membresiaDos, 
+			membresiaTres, membresiaCuatro], administradores: [admPablo, admLuis], materias: [materiaUno, materiaDos, materiaTres])*/
 		
 		if (!red.validate()) {
 			println red.get.errors

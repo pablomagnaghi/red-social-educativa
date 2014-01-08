@@ -14,7 +14,7 @@ class Membresia {
 	Date fechaMemb
 
 	String toString() {
-		"${apellido}, ${nombres}"
+		"${nombres} ${apellido}"
 	}
 
 	static constraints = {

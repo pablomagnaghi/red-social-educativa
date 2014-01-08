@@ -33,22 +33,28 @@ class CursoController {
 		} else {
 			def membresia = Membresia.findByDni(session.user.dni)
 			def administrador = Administrador.findByMembresia(membresia)
+			
 			if (administrador) {
 				flash.message = "Ingreso como administrador"
 				redirect(action: "general")
 			} else {
 				def mediador = Mediador.findByMembresia(membresia)
+				
 				if (Curso.get(cursoId).mediadores.contains(mediador)) {
 					println "Hola mediador ${mediador}"
 					redirect(action: "mediador")
-					return
 				} else {
 					def aprendiz = Aprendiz.findByMembresia(membresia)
-					redirect(action: "indexAprendiz")
-					return
+					
+					if (Curso.get(cursoId).aprendices.contains(mediador)) {
+						println "Hola aprendiz ${aprendiz}"
+						redirect(action: "aprendiz")
+					} else {
+						flash.message = "Hola miembro ${membresia}"
+						redirect(action: "miembro")
+					}
 				}
-				flash.message = "falta termianr"
-				redirect(action: "indexMediador")
+				
 			}
 		}
 	}
@@ -58,6 +64,14 @@ class CursoController {
 	}
 	
 	def mediador(){
+		
+	}
+	
+	def aprendiz(){
+		
+	}
+	
+	def miembro(){
 		
 	}
 	// metodos por defecto, usados en ABM cursos del administrador

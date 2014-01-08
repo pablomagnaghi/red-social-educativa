@@ -12,7 +12,7 @@ class Mediador extends Usuario {
 	static belongsTo = Curso
 	
 	// 1 mediador tiene muchos cursos
-	static hasMany = [cursos:Curso]
+	static hasMany = [cursos: Curso]
 		
     static constraints = {
     }

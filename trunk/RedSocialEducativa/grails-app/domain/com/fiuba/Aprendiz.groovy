@@ -11,7 +11,7 @@ class Aprendiz extends Usuario{
 	
 	static belongsTo = Curso
 	
-	static hasMany = [curso:Curso]
+	static hasMany = [cursos:Curso]
 
 	
     static constraints = {
