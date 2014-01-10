@@ -42,11 +42,11 @@ class CursoController {
 				
 				if (Curso.get(cursoId).mediadores.contains(mediador)) {
 					println "Hola mediador ${mediador}"
-					redirect(action: "mediador")
+					redirect(action: "mediador", params: params)
 				} else {
 					def aprendiz = Aprendiz.findByMembresia(membresia)
 					
-					if (Curso.get(cursoId).aprendices.contains(mediador)) {
+					if (Curso.get(cursoId).aprendices.contains(aprendiz)) {
 						println "Hola aprendiz ${aprendiz}"
 						redirect(action: "aprendiz")
 					} else {
@@ -65,6 +65,24 @@ class CursoController {
 	
 	def mediador(){
 		
+		def ArrayList<Aprendiz> aprendicesInactivos = new ArrayList<Aprendiz>()
+		
+		println "params mediador: ${params}"
+
+		cursoId = params.id
+		
+		println "curso mediador directo ${Curso.get(cursoId)}"
+		
+		if (Curso.get(cursoId).aprendices) {
+			aprendicesInactivos = Curso.get(cursoId).aprendices.findAll {
+				if (it.participa == false) {
+					it
+				}
+			}
+		}
+		println "aprendices inactivos: ${aprendicesInactivos}"
+		
+		[aprendices: aprendicesInactivos]
 	}
 	
 	def aprendiz(){
