@@ -5,8 +5,6 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.servlet.http.Cookie
 
-import com.sun.corba.se.spi.orbutil.fsm.Action;
-
 class RedController {
 	// El visitante puede: 
 	// * 2 - Acceder a la cartelera general
