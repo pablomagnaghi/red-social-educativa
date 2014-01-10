@@ -5,6 +5,8 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.servlet.http.Cookie
 
+import com.sun.corba.se.spi.orbutil.fsm.Action;
+
 class RedController {
 	// El visitante puede: 
 	// * 2 - Acceder a la cartelera general
@@ -55,21 +57,35 @@ class RedController {
 		def mediador = Mediador.findByMembresia(membresia)
 			
 		if (mediador) {
+			
+		//	barsOfAllFoos.collect{ if( it.contains( "baz" ) { it } ) }
+			//barsOfAllFoos.findAll { it.contains 'baz' }
+			
+			cursosMediador = Curso.list().findAll {
+				if (it.mediadores.contains(mediador)) {
+					it
+				}
+			}
+			
+			println "${cursosMediador}"
+			
+			/*
 			println "mediador a buscar: ${mediador}"
 			for (c in Curso.list()) {
 				if (c.mediadores.contains(mediador)) {
 					println "curso agregado: ${c}"
 					cursosMediador.add(c)
 				}
-			}
+			}*/
 		}
-		
+
 		def ArrayList<Curso> cursosAprendiz = new ArrayList<Curso>()
 		
 		def aprendiz = Aprendiz.findByMembresia(membresia)
 			
 		if (aprendiz) {
 			println "aprendiz a buscar: ${aprendiz}"
+			println "aprendiz participa: ${aprendiz.participa}"
 			for (c in Curso.list()) {
 				if (c.aprendices.contains(aprendiz)) {
 					// falta revisar si el aprendiz esta habilitado o esperando habilitacion
@@ -87,25 +103,26 @@ class RedController {
 	}
 	
 	def autenticacion = {
-		membresia = Membresia.findByDni(params.dni)
+		membresia = Membresia.findByDniAndPassword(params.dni, params.password.encodeAsMD5())
 		
 		println "params: ${params}"
 		
 		if (membresia) {
-			println "ingreso membresia"
-			if (params.password.encodeAsMD5()==membresia.password){
+			if (membresia.membresia) {
+				println "ingreso membresia"
 				session.user = membresia
-				/*if (params.remember_me == 'on'){
-					Cookie cookie = new Cookie("session_token", membresia.dni + membresia.password);
-					cookie.maxAge = 60000
-					response.addCookie(cookie)
-				}*/				
-			} else  {
+			/*if (params.remember_me == 'on'){
+				Cookie cookie = new Cookie("session_token", membresia.dni + membresia.password);
+				cookie.maxAge = 60000
+				response.addCookie(cookie)
+			}*/		
+				
+			} else {
 				membresia = null
-				flash.message = "El password es incorrecto ${params.dni}. Intente nuevamente."
+				flash.message = "Todavia no esta habilitado para ingresar. Intente en unos minutos."
 			}
 		} else 
-			flash.message = "No existe ese miembro. Intente nuevamente."
+			flash.message = "No existe el miembro. Intente nuevamente."
 		redirect(action:"index")
 	}
 	
@@ -122,20 +139,49 @@ class RedController {
 	
 	def revisarDatosMembresia = {
 		// hacer validaciones de algunas campos como dni
-		
-		def membresia = new Membresia(dni: params.dni, password: params.password, apellido: params.apellido,
+		if (params.password != params.passwordConfirmado) {
+			flash.message = "El password confirmado es incorrecto"
+			redirect(action: "solicitarMembresia")
+			return
+		} 
+		def membresiaNueva = new Membresia(dni: params.dni, password: params.password, apellido: params.apellido,
 			nombres: params.nombres, legajo: params.legajo, padron: params.padron, email: params.email, membresia: false,
 			fechaSolicitud: new Date())
-	
-		if(!membresia.validate()) {
+		
+		if(!membresiaNueva.validate()) {
 			flash.message = "Revise sus parametros"
-			respond membresia.errors, view:'solicitarMembresia'
+			respond membresiaNueva.errors, view:'solicitarMembresia'
 			return
-		} else {
-			membresia.save()
-			flash.message = "Solicitud aceptada. A la brevedad se le enviara un mail de confirmacion"
-			redirect(action:"index")
+		} 
+		
+		membresiaNueva.save()
+		flash.message = "Solicitud aceptada. A la brevedad se le enviara un mail de confirmacion"
+		redirect(action:"index")
+		
+	}
+	
+	def configuracion = {
+		def red = Red.get(1)
+		println "configuracion controller - red: ${red}, titulo: ${red.titulo}, ciclo: ${red.cicloConservacion}"
+		[redInstance: Red.get(1)]
+	}
+	
+	def actualizarConfiguracion = {
+		println "params: ${params}"
+		
+		def red = Red.get(1)
+		red.properties = params
+
+		if(!red.validate()) {
+			flash.message = "Revise sus parametros"
+			respond red.errors, view:'configuracion'
+			return
 		}
+		
+		red.save()
+		flash.message = "La actualizacion ha sido realizada"
+		redirect(action:"configuracion")
+	
 	}
 	
 }

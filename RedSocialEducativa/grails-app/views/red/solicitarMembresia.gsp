@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="layout" content="main" />
-<g:javascript src="formulario.js"/>
+<!--<g:javascript src="formulario.js"/>-->
 <title>Insert title here</title>
 </head>
 <body>
@@ -22,7 +22,7 @@
 				</g:eachError>
 			</ul>
 		</g:hasErrors>
-		<g:form url="[resource:membresiaInstance, action:'revisarDatosMembresia']" >
+		<g:form controller="red" action="revisarDatosMembresia">
 			<div class="fieldcontain ${hasErrors(bean: membresiaInstance, field: 'dni', 'error')} required">
 				<label for="dni"> 
 					<g:message code="membresia.dni.label" default="Dni" /> 
@@ -77,14 +77,18 @@
 					<g:message code="membresia.password.label" default="Password" />
 					
 				</label>
+				<!--  
 				<g:passwordField name="password" maxlength="12" required="" id="pass"  value="${membresiaInstance?.password}"/>
+				-->
+				<g:passwordField name="password" maxlength="12" required="" value="${membresiaInstance?.password}"/>
 			</div>	
 	
 			<div class="fieldcontain ${hasErrors(bean: membresiaInstance, field: 'password', 'error')} ">
-				<label for="direcciones"> 
-					<g:message code="membresia.direcciones.label" default="Verificar Password" />
+				<label for="passwordConfirmado"> 
+					<g:message code="membresia.direcciones.label" default="Confirmar Password" />
 				</label>
-				<g:passwordField name="password" id="reTypePass" required="" />
+				<!--<g:passwordField name="password" id="reTypePass" required="" />-->
+				<g:passwordField name="passwordConfirmado" required="" />
 			</div>
 
 			<fieldset class="buttons">

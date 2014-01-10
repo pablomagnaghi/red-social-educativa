@@ -28,14 +28,14 @@
 			</g:if>
 			<br>
 			<ol>
-				<!--<g:each in="${membresias}" var="membresia">
+				<g:each in="${aprendices}" var="aprendiz">
 					<li>
-						<span>${membresia}</span>
+						<span>${aprendiz}</span>
 						<span class = "menuButton">
-							<g:link action="activarMiembro" id="${membresia.id}">Activar</g:link>
+							<g:link action="activarAprendiz" id="${aprendiz.id}">Activar</g:link>
 						</span>
 					</li>
-				</g:each>!-->
+				</g:each>
 			</ol>
 		</div>
 	</body>

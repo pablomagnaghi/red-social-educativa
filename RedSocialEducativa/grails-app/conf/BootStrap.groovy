@@ -192,7 +192,7 @@ class BootStrap {
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
 		aprendices.add(aprendizTres)
 		
-		def aprendizCuatro = new Aprendiz(membresia: membresiaCuatro, rol: rolAprendiz, participa: false, msjEnviados: "0",
+		def aprendizCuatro = new Aprendiz(membresia: membresiaCuatro, rol: rolAprendiz, participa: true, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
 		aprendices.add(aprendizCuatro)
 		
