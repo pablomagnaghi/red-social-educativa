@@ -19,31 +19,31 @@ class AdministradorController {
 	// metodos por defecto
 	def index = {
 		def membresia = false;
-		[membresias: Membresia.findAllByMembresia(membresia)]
+		[usuarios: Usuario.findAllByMembresia(membresia)]
 	}
 
-	def activarMiembro(final int id){
-		def membresia = Membresia.findById(id)
-		membresia.membresia = true
-		membresia.fechaMemb = new Date()
-		def mail = membresia.email
-		def dni = membresia.dni
-		if (membresia.hasErrors()){
-			println membresia.errors
-			flash.message = "Problemas con la membresia"
+	def activarUsuario(final int id){
+		def usuario = Usuario.get(id)
+		usuario.membresia = true
+		usuario.fechaMemb = new Date()
+		def mail = usuario.email
+		def dni = usuario.dni
+		if (usuario.hasErrors()){
+			println usuario.errors
+			flash.message = "Problemas con la usuario"
 			redirect(action: "index")
 			return
 		} else {
-			membresia.save();
+			usuario.save();
 			sendMail {
 				to mail
 				subject "Red Social Educativa"
 				body "Bienvenido ${dni} a la Red Social Educativa FIUBA 2014"
 			}
-			flash.message = "Autorización enviada para el miembro con dni: ${membresia.dni}"
+			flash.message = "Autorización enviada para el miembro con dni: ${usuario.dni}"
 		}
 		
-		def miembro = new Miembro(membresia: membresia, rol: Rol.findByNombre("Miembro"))
+		def miembro = new Miembro(usuario: usuario, rol: Rol.findByNombre("Miembro"))
 		if (!miembro.validate()){
 			println miembro.errors
 		} 
@@ -51,7 +51,4 @@ class AdministradorController {
 		redirect(action: "index")
 	}
 	
-	def volver = {
-		redirect(controller: "Red", action:"index")
-	}
 }

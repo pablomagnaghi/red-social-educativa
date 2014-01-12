@@ -31,26 +31,26 @@ class CursoController {
 			flash.message = "Ingreso como visitante"
 			redirect(action: "general")
 		} else {
-			def membresia = Membresia.findByDni(session.user.dni)
-			def administrador = Administrador.findByMembresia(membresia)
+			def usuario = Usuario.findByDni(session.user.dni)
+			def administrador = Administrador.findByUsuario(usuario)
 			
 			if (administrador) {
 				flash.message = "Ingreso como administrador"
 				redirect(action: "general")
 			} else {
-				def mediador = Mediador.findByMembresia(membresia)
+				def mediador = Mediador.findByUsuario(usuario)
 				
 				if (Curso.get(cursoId).mediadores.contains(mediador)) {
 					println "Hola mediador ${mediador}"
 					redirect(action: "mediador", params: params)
 				} else {
-					def aprendiz = Aprendiz.findByMembresia(membresia)
+					def aprendiz = Aprendiz.findByUsuario(usuario)
 					
 					if (Curso.get(cursoId).aprendices.contains(aprendiz)) {
 						println "Hola aprendiz ${aprendiz}"
 						redirect(action: "aprendiz")
 					} else {
-						flash.message = "Hola miembro ${membresia}"
+						flash.message = "Hola miembro ${usuario}"
 						redirect(action: "miembro")
 					}
 				}

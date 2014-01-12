@@ -1,6 +1,6 @@
 package com.fiuba
 
-class Mediador extends Usuario {
+class Mediador extends UsuarioRol {
 
 	// todos los atributos del enunciado ya estan puestos
 	
@@ -12,7 +12,7 @@ class Mediador extends Usuario {
 	static belongsTo = Curso
 	
 	// 1 mediador tiene muchos cursos
-	static hasMany = [cursos: Curso]
+	static hasMany = [cursos:Curso]
 		
     static constraints = {
     }
