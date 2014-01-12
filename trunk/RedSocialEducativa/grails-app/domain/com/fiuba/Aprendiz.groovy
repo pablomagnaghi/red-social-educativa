@@ -1,6 +1,6 @@
 package com.fiuba
 
-class Aprendiz extends Usuario{
+class Aprendiz extends UsuarioRol {
 
 	Boolean participa // Sólo un mediador puede cambiar el estado
 	Integer	msjEnviados // Cantidad de mensajes enviados a participantes del mismo curso

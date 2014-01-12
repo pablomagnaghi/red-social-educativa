@@ -1,19 +1,6 @@
 import java.util.Date;
 
-import com.fiuba.Accion
-import com.fiuba.Rol
-
-import com.fiuba.Membresia
-import com.fiuba.Administrador
-import com.fiuba.Mediador
-import com.fiuba.Aprendiz
-
-import com.fiuba.Curso
-import com.fiuba.Materia
-import com.fiuba.Mediador
-import com.fiuba.Aprendiz
-
-import com.fiuba.Red
+import com.fiuba.*
 
 class BootStrap {
 
@@ -51,16 +38,16 @@ class BootStrap {
 			}
 		}
 		
-		//Roles - con carga de acciones
+		//Roles
 		def ArrayList<Rol> roles = new ArrayList<Rol>()
 		
-		def rolAdministrador = new Rol(nombre: "Administrador", acciones : [accionMaterias, accionAnunciosGenerales, accionConfiguracion, accionMiembros, accionMediadores, accionRoles])
+		def rolAdministrador = new Rol(nombre: "Administrador", acciones: [accionMaterias, accionAnunciosGenerales, accionConfiguracion, accionMiembros, accionMediadores, accionRoles])
 		roles.add(rolAdministrador)
-		def rolMediador = new Rol(nombre: "Mediador", acciones : [accionAprendices, accionTemas, accionAnunciosCurso])
+		def rolMediador = new Rol(nombre: "Mediador", acciones: [accionAprendices, accionTemas, accionAnunciosCurso])
 		roles.add(rolMediador)
 		def rolAprendiz = new Rol (nombre: "Aprendiz")
 		roles.add(rolAprendiz)
-		// Visitante que solicito membresia, ya cargo sus datos y esta esperando confirmacion
+		// Visitante que solicito usuario, ya cargo sus datos y esta esperando confirmacion
 		def rolMiembro = new Rol (nombre: "Miembro")
 		roles.add(rolMiembro)
 
@@ -74,71 +61,67 @@ class BootStrap {
 			}
 		}
 		
-		// Membresias
-		def ArrayList<Membresia> membresias = new ArrayList<Membresia>()
+		// Usuarios
+		def ArrayList<Usuario> usuarios = new ArrayList<Usuario>()
 		
-		// Membresias
-		def membresiaPablo = new Membresia(dni: "33300432", password: "33300432", apellido: "Magnaghi", nombres: "Pablo", 
+		def usuarioPablo = new Usuario(dni: "33300432", password: "33300432", apellido: "Magnaghi", nombres: "Pablo", 
 			legajo: "11", padron: "11", email: "pablo@gmail.com", membresia: true, fechaSolicitud: new Date(),
 			fechaMemb: new Date())
-		membresias.add(membresiaPablo)
-		def membresiaLuis = new Membresia(dni: "31861315", password: "31861315", apellido: "Paniagua", nombres: "Luis", 
+		usuarios.add(usuarioPablo)
+		def usuarioLuis = new Usuario(dni: "31861315", password: "31861315", apellido: "Paniagua", nombres: "Luis", 
 			legajo: "11", padron: "11", email: "luis@gmail.com", membresia: true, fechaSolicitud: new Date(),
 			fechaMemb: new Date())
-		membresias.add(membresiaLuis)
-		def membresiaAgus = new Membresia(dni: "32725217", password: "32725217", apellido: "Milia", nombres: "Agustina", 
+		usuarios.add(usuarioLuis)
+		def usuarioAgus = new Usuario(dni: "32725217", password: "32725217", apellido: "Milia", nombres: "Agustina", 
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", membresia: true, fechaSolicitud: new Date());
-		membresias.add(membresiaAgus)	
+		usuarios.add(usuarioAgus)	
 		
-		def membresiaUno = new Membresia(dni: "11111111", password: "33300432", apellido: "Magnaghi", nombres: "Pablo UNO",
+		def usuarioUno = new Usuario(dni: "11111111", password: "33300432", apellido: "Magnaghi", nombres: "Pablo UNO",
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", membresia: true, fechaSolicitud: new Date(),
 			fechaMemb: new Date())
-		membresias.add(membresiaUno)
-		def membresiaDos = new Membresia(dni: "22222222", password: "33300432", apellido: "Magnaghi", nombres: "Pablo DOS",
+		usuarios.add(usuarioUno)
+		def usuarioDos = new Usuario(dni: "22222222", password: "33300432", apellido: "Magnaghi", nombres: "Pablo DOS",
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", membresia: true, fechaSolicitud: new Date(),
 			fechaMemb: new Date())
-		membresias.add(membresiaDos)
-		def membresiaTres = new Membresia(dni: "33333333", password: "33300432", apellido: "Magnaghi", nombres: "Pablo TRES",
+		usuarios.add(usuarioDos)
+		def usuarioTres = new Usuario(dni: "33333333", password: "33300432", apellido: "Magnaghi", nombres: "Pablo TRES",
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", membresia: true, fechaSolicitud: new Date(),
 			fechaMemb: new Date())
-		membresias.add(membresiaTres)
-		def membresiaCuatro = new Membresia(dni: "44444444", password: "33300432", apellido: "Magnaghi", nombres: "Pablo CUATRO",
+		usuarios.add(usuarioTres)
+		def usuarioCuatro = new Usuario(dni: "44444444", password: "33300432", apellido: "Magnaghi", nombres: "Pablo CUATRO",
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", membresia: true, fechaSolicitud: new Date(),
 			fechaMemb: new Date())
-		membresias.add(membresiaCuatro)
+		usuarios.add(usuarioCuatro)
 		
-		def membresiaCinco = new Membresia(dni: "55555555", password: "33300432", apellido: "Magnaghi", nombres: "Pablo CINCO",
+		def usuarioCinco = new Usuario(dni: "55555555", password: "33300432", apellido: "Magnaghi", nombres: "Pablo CINCO",
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", membresia: false, fechaSolicitud: new Date(),
 			fechaMemb: new Date())
-		membresias.add(membresiaCinco)
-		
-		def membresiaSeis = new Membresia(dni: "66666666", password: "33300432", apellido: "Magnaghi", nombres: "Pablo SEIS",
+		usuarios.add(usuarioCinco)		
+		def usuarioSeis = new Usuario(dni: "66666666", password: "33300432", apellido: "Magnaghi", nombres: "Pablo SEIS",
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", membresia: false, fechaSolicitud: new Date(),
 			fechaMemb: new Date())
-		membresias.add(membresiaSeis)
-		def membresiaSiete = new Membresia(dni: "77777777", password: "33300432", apellido: "Magnaghi", nombres: "Pablo SIETE",
+		usuarios.add(usuarioSeis)
+		def usuarioSiete = new Usuario(dni: "77777777", password: "33300432", apellido: "Magnaghi", nombres: "Pablo SIETE",
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", membresia: false, fechaSolicitud: new Date(),
 			fechaMemb: new Date())
-		membresias.add(membresiaSiete)
+		usuarios.add(usuarioSiete)
 		
-		for(int i = 0; i<membresias.size(); i++){
-			if (!membresias.get(i).validate()) {
-				println membresias.get(i).errors
+		for(int i = 0; i<usuarios.size(); i++){
+			if (!usuarios.get(i).validate()) {
+				println usuarios.get(i).errors
 			} else {
 				println "Miembros agregados a la bbdd:"
-				membresias.get(i).save()
-				println membresias.get(i).dni
+				usuarios.get(i).save()
+				println usuarios.get(i).dni
 			}
 		}
 		
-		// Carga de usuarios
-		
-		// Administradores - con carga de rol
+		// Administradores
 		def ArrayList<Administrador> administradores = new ArrayList<Administrador>()
 		
-		def admPablo = new Administrador (membresia: membresiaPablo, rol: rolAdministrador)
+		def admPablo = new Administrador(usuario: usuarioPablo, rol: rolAdministrador)
 		administradores.add(admPablo)
-		def admLuis = new Administrador (membresia: membresiaLuis, rol: rolAdministrador)
+		def admLuis = new Administrador(usuario: usuarioLuis, rol: rolAdministrador)
 		administradores.add(admLuis)
 		
 		for(int i = 0; i<administradores.size(); i++){
@@ -147,78 +130,70 @@ class BootStrap {
 			} else {
 				println "Administradores agregados a la bbdd:"
 				administradores.get(i).save()
-				println administradores.get(i).membresia.dni
+				println administradores.get(i).usuario.dni
 			}
 		}
 		
-		// Mediador
-		def ArrayList<Mediador> mediadores = new ArrayList<Mediador>()
-		
-		def mediadorAgus = new Mediador(membresia: membresiaAgus, rol: rolMediador, jerarquia: "JTP");
-		mediadores.add(mediadorAgus)
-		
-		def mediadorUno = new Mediador(membresia: membresiaUno, rol: rolMediador, jerarquia: "JTP");
-		mediadores.add(mediadorUno)
-		
-		def mediadorCuatro = new Mediador(membresia: membresiaCuatro, rol: rolMediador, jerarquia: "JTP");
-		mediadores.add(mediadorCuatro)
-		
-		for(int i = 0; i<mediadores.size(); i++){
-			if (!mediadores.get(i).validate()) {
-				println mediadores.get(i).errors
-			} else {
-				println "Mediadores agregados a la bbdd:"
-				//mediadores.get(i).save()
-				println mediadores.get(i).membresia.dni
-			}
-		}
-		
+		// Mediadores
+		def mediadorAgus = new Mediador(usuario: usuarioAgus, rol: rolMediador, jerarquia: "JTP")
+		def mediadorUno = new Mediador(usuario: usuarioUno, rol: rolMediador, jerarquia: "JTP")
+		def mediadorCuatro = new Mediador(usuario: usuarioCuatro, rol: rolMediador, jerarquia: "JTP")
+	
 		// Aprendices
-		def ArrayList<Aprendiz> aprendices = new ArrayList<Aprendiz>()
-		
-		def aprendizAgus = new Aprendiz(membresia: membresiaAgus, rol: rolAprendiz, participa: true, msjEnviados: "0",
+		def aprendizAgus = new Aprendiz(usuario: usuarioAgus, rol: rolAprendiz, participa: true, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
-		aprendices.add(aprendizAgus)
-		
-		def aprendizUno = new Aprendiz(membresia: membresiaUno, rol: rolAprendiz, participa: true, msjEnviados: "0",
+		def aprendizUno = new Aprendiz(usuario: usuarioUno, rol: rolAprendiz, participa: true, msjEnviados: "0",
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())		
+		def aprendizDos = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: true, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
-		aprendices.add(aprendizUno)
-		
-		def aprendizDos = new Aprendiz(membresia: membresiaDos, rol: rolAprendiz, participa: true, msjEnviados: "0",
+		def aprendizTres = new Aprendiz(usuario: usuarioTres, rol: rolAprendiz, participa: false, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
-		aprendices.add(aprendizDos)
-		
-		def aprendizTres = new Aprendiz(membresia: membresiaTres, rol: rolAprendiz, participa: false, msjEnviados: "0",
+		def aprendizCuatro = new Aprendiz(usuario: usuarioCuatro, rol: rolAprendiz, participa: true, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
-		aprendices.add(aprendizTres)
 		
-		def aprendizCuatro = new Aprendiz(membresia: membresiaCuatro, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
-		aprendices.add(aprendizCuatro)
+		// Cursos
 		
-		for(int i = 0; i<aprendices.size(); i++){
-			if (!aprendices.get(i).validate()) {
-				println aprendices.get(i).errors
-			} else {
-				println "Aprendices agregadas a la bbdd:"
-				//aprendices.get(i).save()
-				println aprendices.get(i).membresia.dni
-			}
-		}
+		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2")
+		cursoUno.addToMediadores(mediadorCuatro)
+		cursoUno.addToMediadores(mediadorUno)
+		cursoUno.addToAprendices(aprendizAgus)
+		cursoUno.addToAprendices(aprendizDos)
+		cursoUno.addToAprendices(aprendizTres)
 		
+		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2")
+		cursoDos.addToMediadores(mediadorCuatro)
+		cursoDos.addToAprendices(aprendizAgus)
+		cursoDos.addToAprendices(aprendizDos)
+		cursoDos.addToAprendices(aprendizTres)
 		
-		//--Carga cuatrimestre, curso, materia
+		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1|2")
+		cursoTres.addToMediadores(mediadorAgus)
+		cursoTres.addToAprendices(aprendizTres)
+		cursoTres.addToAprendices(aprendizCuatro)
+		
+		def cursoCuatro = new Curso(nroRelativo: "04", cuatDict: "1|2")
+		cursoCuatro.addToMediadores(mediadorAgus)
+		cursoCuatro.addToAprendices(aprendizCuatro)
+		
+		def cursoCinco = new Curso(nroRelativo: "05", cuatDict: "1|2")
+		cursoCinco.addToMediadores(mediadorAgus)
+		cursoCinco.addToAprendices(aprendizCuatro)
 		
 		// Materias - con carga de cursos
 		def ArrayList<Materia> materias = new ArrayList<Materia>()
 		def materiaUno = new Materia(codigo: "75.01", nombre: "materiaUno", creditos: "6",
 			contenidosMinimos: "contenidos")
+		materiaUno.addToCursos(cursoUno)
+		materiaUno.addToCursos(cursoDos)
+		materiaUno.addToCursos(cursoTres)
 		materias.add(materiaUno)
 		def materiaDos = new Materia(codigo: "75.02", nombre: "materiaDos", creditos: "6",
 			contenidosMinimos: "contenidos")
+		materiaDos.addToCursos(cursoCuatro)
 		materias.add(materiaDos)
 		def materiaTres = new Materia(codigo: "75.03", nombre: "materiaTres", creditos: "6",
 			contenidosMinimos: "contenidos")
+		materiaTres.addToCursos(cursoCinco)
 		materias.add(materiaTres)
 		
 		for(int i = 0; i<materias.size(); i++){
@@ -231,39 +206,9 @@ class BootStrap {
 			}
 		}
 		
-		// Cursos - con carga de cuatrimestres y mediadores
-		def ArrayList<Curso> cursos = new ArrayList<Curso>()
-		
-		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2", mediadores: [mediadorCuatro, mediadorUno], 
-			aprendices: [aprendizAgus, aprendizUno, aprendizDos, aprendizTres], materia: materiaUno)
-		cursos.add(cursoUno)
-		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", mediadores: [mediadorCuatro], 
-			aprendices: [aprendizAgus, aprendizDos, aprendizTres], materia: materiaUno)
-		cursos.add(cursoDos)
-		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1|2", mediadores: [mediadorAgus], 
-			aprendices: [aprendizTres, aprendizCuatro], materia: materiaUno)
-		cursos.add(cursoTres)
-		def cursoCuatro = new Curso(nroRelativo: "04", cuatDict: "1|2", mediadores: [mediadorAgus], 
-			aprendices: [aprendizCuatro], materia: materiaDos)
-		cursos.add(cursoCuatro)
-		def cursoCinco = new Curso(nroRelativo: "05", cuatDict: "1|2", mediadores: [mediadorAgus], 
-			aprendices: [aprendizCuatro], materia: materiaTres)
-		cursos.add(cursoCinco)
-		
-		for(int i = 0; i<cursos.size(); i++){
-			if (!cursos.get(i).validate()) {
-				println cursos.get(i).errors
-			} else {
-				println "Cursos agregadas a la bbdd:"
-				cursos.get(i).save()
-				println cursos.get(i).nroRelativo
-			}
-		}
-		
-		// --Agrego todo a la red-- //
+		// Red
 
-		def red = new Red() /*(membresias: [membresiaPablo, membresiaLuis, membresiaAgus, membresiaUno, membresiaDos, 
-			membresiaTres, membresiaCuatro], administradores: [admPablo, admLuis], materias: [materiaUno, materiaDos, materiaTres])*/
+		def red = new Red() 
 		
 		if (!red.validate()) {
 			println red.get.errors

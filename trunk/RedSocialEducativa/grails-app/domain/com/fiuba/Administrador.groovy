@@ -1,6 +1,6 @@
 package com.fiuba
 
-class Administrador extends Usuario {
+class Administrador extends UsuarioRol {
 
     static constraints = {
     }

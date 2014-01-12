@@ -5,16 +5,17 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.servlet.http.Cookie
 
+
 class RedController {
-	// El visitante puede: 
+	// El visitante puede:
 	// * 2 - Acceder a la cartelera general
 	// * 4 - Dejar comentario o mensaje en un foro general de la red
 	// * 5 - Solicitar membresia
 	// * 6 - Conectarse
 	
-	def membresia = null
+	def usuario = null
 
-    def index = { 
+	def index = {
 		
 		// mostrar todas las materias
 		// cartelera general
@@ -22,7 +23,7 @@ class RedController {
 	
 		/*def cookies = request.getCookies()
 		def sessionCookie = null
-		for (item in cookies) { 
+		for (item in cookies) {
 			if (item.getName() == "session_token" ){
 				sessionCookie = item.getValue()
 			}
@@ -33,13 +34,13 @@ class RedController {
 			if (m.find()){
 				dni = m.group(1);
 				pass = m.group(2);
-				membresia = Membresia.findByDni(dni)
-				println "membresia cookie: ${membresia} dni: ${dni} pass: ${pass}"
+				usuario = Usuario.findByDni(dni)
+				println "usuario cookie: ${usuario} dni: ${dni} pass: ${pass}"
 			}
 		} else {
 			println "no hay usuario cookie"
 		}
-		println "membresia index: ${membresia}"*/
+		println "usuario index: ${usuario}"*/
 		
 		// Defino que tipo de usuario es
 		// Administrador: redirigir a pagina especial
@@ -47,12 +48,12 @@ class RedController {
 
 		
 		// FALTA COMPROBAR SI EL MIEMBRO ESTA HABILITADO O ESPERANDO HABILITACION PARA LA RED
-		// LO MISMO PARA EL APRENDIZ CON EL CURSO 
+		// LO MISMO PARA EL APRENDIZ CON EL CURSO
 		def ArrayList<Curso> cursosMediador = new ArrayList<Curso>()
 		
-		println "membresia: ${membresia}"
+		println "usuario: ${usuario}"
 		
-		def mediador = Mediador.findByMembresia(membresia)
+		def mediador = Mediador.findByUsuario(usuario)
 			
 		if (mediador) {
 			
@@ -79,7 +80,7 @@ class RedController {
 
 		def ArrayList<Curso> cursosAprendiz = new ArrayList<Curso>()
 		
-		def aprendiz = Aprendiz.findByMembresia(membresia)
+		def aprendiz = Aprendiz.findByUsuario(usuario)
 			
 		if (aprendiz) {
 			println "aprendiz a buscar: ${aprendiz}"
@@ -93,7 +94,7 @@ class RedController {
 			}
 		}
 		
-		[materias: Materia.findAll(), membresia: membresia, administrador: Administrador.findByMembresia(membresia), 
+		[materias: Materia.findAll(), usuario: usuario, administrador: Administrador.findByUsuario(usuario),
 			cursosMediador: cursosMediador, cursosAprendiz: cursosAprendiz]
 	}
 	
@@ -101,25 +102,25 @@ class RedController {
 	}
 	
 	def autenticacion = {
-		membresia = Membresia.findByDniAndPassword(params.dni, params.password.encodeAsMD5())
+		usuario = Usuario.findByDniAndPassword(params.dni, params.password.encodeAsMD5())
 		
 		println "params: ${params}"
 		
-		if (membresia) {
-			if (membresia.membresia) {
-				println "ingreso membresia"
-				session.user = membresia
+		if (usuario) {
+			if (usuario.membresia) {
+				println "ingreso usuario"
+				session.user = usuario
 			/*if (params.remember_me == 'on'){
-				Cookie cookie = new Cookie("session_token", membresia.dni + membresia.password);
+				Cookie cookie = new Cookie("session_token", usuario.dni + usuario.password);
 				cookie.maxAge = 60000
 				response.addCookie(cookie)
-			}*/		
+			}*/
 				
 			} else {
-				membresia = null
+				usuario = null
 				flash.message = "Todavia no esta habilitado para ingresar. Intente en unos minutos."
 			}
-		} else 
+		} else
 			flash.message = "No existe el miembro. Intente nuevamente."
 		redirect(action:"index")
 	}
@@ -128,31 +129,31 @@ class RedController {
 		println "adios session: ${session.user}"
 		flash.message = "Goodbye ${session.user.dni}"
 		session.user = null
-		membresia = null
+		usuario = null
 		//Cookie cookie = new Cookie("session_token", "null");
 		//cookie.maxAge = 60000
 		//response.addCookie(cookie)
 		redirect(action:"index")
 	}
 	
-	def revisarDatosMembresia = {
+	def revisarDatosUsuario = {
 		// hacer validaciones de algunas campos como dni
 		if (params.password != params.passwordConfirmado) {
 			flash.message = "El password confirmado es incorrecto"
 			redirect(action: "solicitarMembresia")
 			return
-		} 
-		def membresiaNueva = new Membresia(dni: params.dni, password: params.password, apellido: params.apellido,
-			nombres: params.nombres, legajo: params.legajo, padron: params.padron, email: params.email, membresia: false,
+		}
+		def usuarioNuevo = new Usuario(dni: params.dni, password: params.password, apellido: params.apellido,
+			nombres: params.nombres, legajo: params.legajo, padron: params.padron, email: params.email, usuario: false,
 			fechaSolicitud: new Date())
 		
-		if(!membresiaNueva.validate()) {
+		if(!usuarioNuevo.validate()) {
 			flash.message = "Revise sus parametros"
-			respond membresiaNueva.errors, view:'solicitarMembresia'
+			respond usuarioNuevo.errors, view:'solicitarMembresia'
 			return
-		} 
+		}
 		
-		membresiaNueva.save()
+		usuarioNuevo.save()
 		flash.message = "Solicitud aceptada. A la brevedad se le enviara un mail de confirmacion"
 		redirect(action:"index")
 		

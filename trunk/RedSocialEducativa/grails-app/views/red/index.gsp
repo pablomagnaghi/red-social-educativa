@@ -12,17 +12,17 @@
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
-			<g:hasErrors bean="${miembroInstance}">
+			<g:hasErrors bean="${usuarioInstance}">
 				<ul class="errors" role="alert">
-					<g:eachError bean="${miembroInstance}" var="error">
+					<g:eachError bean="${usuarioInstance}" var="error">
 						<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>>
 							<g:message error="${error}"/>
 		                </li>
 					</g:eachError>
 				</ul>
 			</g:hasErrors>
-			<g:if test="${membresia}">
-				Hola ${membresia}, 
+			<g:if test="${usuario}">
+				Hola ${usuario}, 
 				<g:link class="list" action="salir">
 		       		<g:message code="Salir" args="[entityName]" /></g:link>
 			</g:if>
@@ -35,17 +35,17 @@
 				</div>
 				<g:form action="autenticacion" >
 					<fieldset class="form">
-						<div class="fieldcontain ${hasErrors(bean: miembroInstance, field: 'dni', 'error')} ">
+						<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'dni', 'error')} ">
 							<label for="dni">
-								<g:message code="miembro.dni.label" default="Dni" />   
+								<g:message code="usuario.dni.label" default="Dni" />   
 							</label>
-								<g:textField name="dni" value="${miembroInstance?.dni}"/>
+								<g:textField name="dni" value="${usuarioInstance?.dni}"/>
 						</div>
-						<div class="fieldcontain ${hasErrors(bean: miembroInstance, field: 'password', 'error')} ">
+						<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'password', 'error')} ">
 							<label for="password">
-								<g:message code="miembro.password.label" default="Password" /> 
+								<g:message code="usuario.password.label" default="Password" /> 
 							</label>
-								<g:field type="password" name="password" value="${miembroInstance?.password}"/>
+								<g:field type="password" name="password" value="${usuarioInstance?.password}"/>
 						</div>
 						<div class="fieldcontain">
 							<label for='remember_me'>Recordar contraseña</label>

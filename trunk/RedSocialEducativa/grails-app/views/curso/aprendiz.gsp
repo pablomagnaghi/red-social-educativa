@@ -10,16 +10,6 @@
 					<g:message code="Salir"/></g:link></li>
 				<li><g:link class="list" action="index" controller="aprendiz">
 					<g:message code="AdministrarAprendices" /></g:link></li>
-				<!--  
-				<li><g:link class="list" action="index" controller="temas">
-					<g:message code="Temas en curso" /></g:link></li>
-				<li><g:link class="list" action="indexAdm" controller="materia">
-					<g:message code="Administrar cartelera" /></g:link></li>
-				<li><g:link class="list" action="indexMed" controller="curso">
-					<g:message code="Administrar Material" /></g:link></li>
-				<li><g:link class="list" action="index" controller="mediador">
-					<g:message code="Administrar Foros" /></g:link></li>
-				-->
 			</ul>
 		</div>
 		<div>
@@ -27,16 +17,6 @@
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<br>
-			<ol>
-				<!--<g:each in="${membresias}" var="membresia">
-					<li>
-						<span>${membresia}</span>
-						<span class = "menuButton">
-							<g:link action="activarMiembro" id="${membresia.id}">Activar</g:link>
-						</span>
-					</li>
-				</g:each>!-->
-			</ol>
 		</div>
 	</body>
 </html>

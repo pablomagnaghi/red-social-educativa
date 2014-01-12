@@ -6,7 +6,7 @@
 	<body>
 		<div>
 			<ol>
-				<li><g:link class="list" action="volver">
+				<li><g:link class="list" action="index" controller="red">
 					<g:message code="Volver"/></g:link></li>
 				<li><g:link class="list" action="index" controller="rol">
 					<g:message code="Roles" /></g:link></li>
@@ -31,14 +31,14 @@
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<br>
-			<g:if test="${membresias}">
+			<g:if test="${usuarios}">
 				<h3>Membresias esperando activacion</h3>
 				<ol>
-					<g:each in="${membresias}" var="membresia">
+					<g:each in="${usuarios}" var="usuario">
 						<li>
-							<span>${membresia}</span>
+							<span>${usuario}</span>
 							<span class = "menuButton">
-								<g:link action="activarMiembro" id="${membresia.id}">Activar</g:link>
+								<g:link action="activarUsuario" id="${usuario.id}">Activar</g:link>
 							</span>
 						</li>
 					</g:each>
