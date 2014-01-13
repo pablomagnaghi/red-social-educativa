@@ -12,7 +12,7 @@
 					<g:message code="Registrar y eliminar materias" /></g:link></li>
 				<li><g:link class="list" action="index" controller="curso">
 					<g:message code="Registrar y eliminar cursos de materias" /></g:link></li>
-				<li><g:link class="list" action="index" controller="cartelera">
+				<li><g:link class="list" action="index" controller="NoticiaRed">
 					<g:message code="Administrar cartelera general" /></g:link></li>
 				<li><g:link class="list" action="configuracion" controller="red">
 					<g:message code="Administrar configuracion de la red" /></g:link></li>

@@ -26,6 +26,8 @@ class RedController {
 			return null
 	}
 	
+	//Red.withCriteria(uniqueResult:true){ eq: 'titulo', 'Red Social Educativa del Departamento de Computacion de la Fiuba" }//
+	
     def principal = { 
 		
 		def ArrayList<Curso> cursosMediador = new ArrayList<Curso>()
@@ -52,7 +54,10 @@ class RedController {
 		}
 		//println "Cursos del aprendiz participando ${usuarioActual()}: ${cursosAprendiz}"
 		
-		[materias: Materia.findAll(), administrador: Administrador.findByUsuario(usuarioActual()),
+		// poner un maximo y un orden a la cantidad de noticias a mostrar en la cartelera
+		
+		[noticiasRed: NoticiaRed.list(), materias: Materia.findAll(), 
+			administrador: Administrador.findByUsuario(usuarioActual()),
 			cursosMediador: cursosMediador, cursosAprendiz: cursosAprendiz]
 	}
 	
@@ -83,15 +88,13 @@ class RedController {
 	}
 	
 	def configuracion = {
-		def red = Red.get(1)
-		//println "configuracion controller - red: ${red}, titulo: ${red.titulo}, ciclo: ${red.cicloConservacion}"
-		[redInstance: Red.get(1)]
+		[redInstance: Red.first()]
 	}
 	
 	def actualizarConfiguracion = {
 		println "params: ${params}"
 		
-		def red = Red.get(1)
+		def red = Red.first()
 		red.properties = params
 
 		if(!red.validate()) {
