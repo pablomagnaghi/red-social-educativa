@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div class="nav" role="navigation">
-		<g:link class="list" action="index">
+		<g:link class="list" action="principal">
 		<g:message code="Volver"/></g:link>
 	</div>
 	<div class="body">

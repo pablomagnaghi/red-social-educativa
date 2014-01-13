@@ -31,36 +31,57 @@ class BootStrap {
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
 		usuarios.add(usuarioPablo)
 		def usuarioLuis = new Usuario(username: "31861315", password: "31861315", apellido: "Paniagua", nombres: "Luis", 
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
+			legajo: "11", padron: "11", email: "pany100@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
 		usuarios.add(usuarioLuis)
 		def usuarioAgus = new Usuario(username: "32725217", password: "32725217", apellido: "Milla", nombres: "Agustina", 
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
 		usuarios.add(usuarioAgus)
-		def usuarioUno = new Usuario(username: "11111111", password: "11111111", apellido: "ApUNO", nombres: "NoUno", 
+		def usuarioMessi = new Usuario(username: "10101010", password: "10101010", apellido: "Zarate", nombres: "Facundo",
+			legajo: "11", padron: "11", email: "nanozarate@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
+		usuarios.add(usuarioMessi)
+
+		def usuarioUno = new Usuario(username: "00000001", password: "00000001", apellido: "ApeUNO", nombres: "NomUno", 
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
 		usuarios.add(usuarioUno)
-		def usuarioDos = new Usuario(username: "22222222", password: "22222222", apellido: "ApDOS", nombres: "NoDOS", 
+		def usuarioDos = new Usuario(username: "00000002", password: "00000002", apellido: "ApeDOS", nombres: "NomDOS", 
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
 		usuarios.add(usuarioDos)
-		def usuarioTres = new Usuario(username: "33333333", password: "33333333", apellido: "ApTRES", nombres: "NoTRES", 
+		def usuarioTres = new Usuario(username: "00000003", password: "00000003", apellido: "ApeTRES", nombres: "NomTRES", 
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
 		usuarios.add(usuarioTres)
-		def usuarioCuatro = new Usuario(username: "44444444", password: "44444444", apellido: "ApCUATRO", nombres: "NoCUATRO", 
+		def usuarioCuatro = new Usuario(username: "00000004", password: "00000004", apellido: "ApeCUATRO", nombres: "NomCUATRO", 
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
 		usuarios.add(usuarioCuatro)
-		def usuarioCinco = new Usuario(username: "55555555", password: "55555555", apellido: "ApCINCO", nombres: "NoCINCO", 
+		def usuarioCinco = new Usuario(username: "00000005", password: "00000005", apellido: "ApeCINCO", nombres: "NomCINCO", 
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
 		usuarios.add(usuarioCinco)
-		
-		def usuarioSeis = new Usuario(username: "66666666", password: "66666666", apellido: "ApSeis", nombres: "NoSeis",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), enabled: false)
+		def usuarioSeis = new Usuario(username: "00000006", password: "00000006", apellido: "ApeSeis", nombres: "NomSeis",
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
 		usuarios.add(usuarioSeis)
-		def usuarioSiete = new Usuario(username: "77777777", password: "77777777", apellido: "ApSiete", nombres: "NoSiete",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), enabled: false)
+		def usuarioSiete = new Usuario(username: "00000007", password: "00000007", apellido: "ApeSiete", nombres: "NomSiete",
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
 		usuarios.add(usuarioSiete)
-		def usuarioOcho = new Usuario(username: "88888888", password: "88888888", apellido: "ApOcho", nombres: "NoOcho",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), enabled: false)
+		def usuarioOcho = new Usuario(username: "00000008", password: "00000008", apellido: "ApeOcho", nombres: "NomOcho",
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
 		usuarios.add(usuarioOcho)
+		def usuarioNueve = new Usuario(username: "00000009", password: "00000009", apellido: "ApeNueve", nombres: "NomNueve",
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
+		usuarios.add(usuarioNueve)
+		def usuarioDiez = new Usuario(username: "00000010", password: "00000010", apellido: "ApeDiez", nombres: "NomDiez",
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
+		usuarios.add(usuarioDiez)
+		def usuarioOnce = new Usuario(username: "00000011", password: "00000011", apellido: "ApeOnce", nombres: "NomOnce",
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
+		usuarios.add(usuarioOnce)
+		def usuarioDoce = new Usuario(username: "00000012", password: "00000012", apellido: "ApeDoce", nombres: "NomDoce",
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
+		usuarios.add(usuarioDoce)
+		def usuarioTrece = new Usuario(username: "00000013", password: "00000013", apellido: "ApeTrece", nombres: "NomTrece",
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), enabled: false)
+		usuarios.add(usuarioTrece)
+		def usuarioCatorce = new Usuario(username: "00000014", password: "00000014", apellido: "ApeCatorce", nombres: "NomCatorce",
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), enabled: false)
+		usuarios.add(usuarioCatorce)
 		
 		for(int i = 0; i<usuarios.size(); i++){
 			if (!usuarios.get(i).validate()) {
@@ -79,7 +100,9 @@ class BootStrap {
 		administradores.add(admPablo)
 		def admLuis = new Administrador(usuario: usuarioLuis, rol: rolAdmin)
 		administradores.add(admLuis)
-		
+		def admMessi = new Administrador(usuario: usuarioMessi, rol: rolAdmin)
+		administradores.add(admMessi)
+			
 		for(int i = 0; i<administradores.size(); i++){
 			if (!administradores.get(i).validate()) {
 				println administradores.get(i).errors
@@ -91,23 +114,45 @@ class BootStrap {
 		}
 			
 		// Mediadores
-		
 		def mediadorAgus = new Mediador(usuario: usuarioAgus, rol: rolMediador, jerarquia: "JTP");
 		def mediadorUno = new Mediador(usuario: usuarioUno, rol: rolMediador, jerarquia: "JTP");
-		def mediadorDos = new Mediador(usuario: usuarioCuatro, rol: rolMediador, jerarquia: "JTP");
+		def mediadorUnoP = new Mediador(usuario: usuarioUno, rol: rolMediador, jerarquia: "AYU1");
+		def mediadorDos = new Mediador(usuario: usuarioDos, rol: rolMediador, jerarquia: "JTP");
+		def mediadorTres = new Mediador(usuario: usuarioTres, rol: rolMediador, jerarquia: "JTP");
+		def mediadorCuatro = new Mediador(usuario: usuarioCuatro, rol: rolMediador, jerarquia: "JTP");
+		def mediadorCinco = new Mediador(usuario: usuarioCinco, rol: rolMediador, jerarquia: "JTP");
+		def mediadorSeis = new Mediador(usuario: usuarioSeis, rol: rolMediador, jerarquia: "JTP");
 		
 		// Aprendices
 		def aprendizAgus = new Aprendiz(usuario: usuarioAgus, rol: rolAprendiz, participa: true, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
 		def aprendizUno = new Aprendiz(usuario: usuarioUno, rol: rolAprendiz, participa: true, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
+		def aprendizUnoP = new Aprendiz(usuario: usuarioUno, rol: rolAprendiz, participa: true, msjEnviados: "0",
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
+		def aprendizUnoPP = new Aprendiz(usuario: usuarioUno, rol: rolAprendiz, participa: false, msjEnviados: "0",
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
 		def aprendizDos = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: true, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
-		def aprendizTres = new Aprendiz(usuario: usuarioTres, rol: rolAprendiz, participa: false, msjEnviados: "0",
+		def aprendizTres = new Aprendiz(usuario: usuarioTres, rol: rolAprendiz, participa: true, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
 		def aprendizCuatro = new Aprendiz(usuario: usuarioCuatro, rol: rolAprendiz, participa: true, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())		
 		def aprendizCinco = new Aprendiz(usuario: usuarioCinco, rol: rolAprendiz, participa: true, msjEnviados: "0",
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
+		def aprendizSeis = new Aprendiz(usuario: usuarioSeis, rol: rolAprendiz, participa: true, msjEnviados: "0",
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
+		def aprendizSiete = new Aprendiz(usuario: usuarioSiete, rol: rolAprendiz, participa: true, msjEnviados: "0",
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
+		def aprendizOcho = new Aprendiz(usuario: usuarioOcho, rol: rolAprendiz, participa: false, msjEnviados: "0",
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
+		def aprendizNueve = new Aprendiz(usuario: usuarioNueve, rol: rolAprendiz, participa: false, msjEnviados: "0",
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
+		def aprendizDiez = new Aprendiz(usuario: usuarioDiez, rol: rolAprendiz, participa: false, msjEnviados: "0",
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
+		def aprendizOnce = new Aprendiz(usuario: usuarioOnce, rol: rolAprendiz, participa: false, msjEnviados: "0",
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
+		def aprendizDoce = new Aprendiz(usuario: usuarioDoce, rol: rolAprendiz, participa: false, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
 		
 		//--Carga de cursos
@@ -115,30 +160,35 @@ class BootStrap {
 		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2")
 		cursoUno.addToMediadores(mediadorAgus)
 		cursoUno.addToMediadores(mediadorUno)
-		cursoUno.addToAprendices(aprendizUno)
 		cursoUno.addToAprendices(aprendizDos)
 		cursoUno.addToAprendices(aprendizTres)
+		cursoUno.addToAprendices(aprendizOcho)
 
 		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2")
+		cursoDos.addToMediadores(mediadorUnoP)
 		cursoDos.addToMediadores(mediadorDos)
 		cursoDos.addToAprendices(aprendizAgus)
-		cursoDos.addToAprendices(aprendizUno)
-		cursoDos.addToAprendices(aprendizTres)
+		cursoDos.addToAprendices(aprendizCuatro)
+		cursoDos.addToAprendices(aprendizNueve)
 		
 		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1|2")
-		cursoTres.addToMediadores(mediadorAgus)
-		cursoTres.addToAprendices(aprendizTres)
-		cursoTres.addToAprendices(aprendizCuatro)
+		cursoTres.addToMediadores(mediadorTres)
+		cursoTres.addToAprendices(aprendizUno)
+		cursoTres.addToAprendices(aprendizCinco)
+		cursoTres.addToAprendices(aprendizDiez)
 
 		def cursoCuatro = new Curso(nroRelativo: "04", cuatDict: "1|2")
-		cursoCuatro.addToMediadores(mediadorAgus)
-		cursoCuatro.addToAprendices(aprendizCuatro)
-		cursoCuatro.addToAprendices(aprendizCinco)
+		cursoCuatro.addToMediadores(mediadorCuatro)
+		cursoCuatro.addToAprendices(aprendizUnoP)
+		cursoCuatro.addToAprendices(aprendizSeis)
+		cursoCuatro.addToAprendices(aprendizOnce)
 
 		def cursoCinco = new Curso(nroRelativo: "05", cuatDict: "1|2")
-		cursoCinco.addToMediadores(mediadorAgus)
-		cursoCinco.addToAprendices(aprendizCuatro)
-		cursoCinco.addToAprendices(aprendizCinco)
+		cursoCinco.addToMediadores(mediadorCinco)
+		cursoCinco.addToMediadores(mediadorSeis)
+		cursoCinco.addToAprendices(aprendizUnoPP)
+		cursoCinco.addToAprendices(aprendizSiete)
+		cursoCinco.addToAprendices(aprendizDoce)
 		
 		
 		// Materias - con carga de cursos

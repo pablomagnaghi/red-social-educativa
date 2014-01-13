@@ -131,7 +131,7 @@ class LoginController {
 		else {
 			flash.message = msg
 			// TODO
-			redirect controller: 'red', action: 'index', params: params
+			redirect controller: 'red', action: 'principal', params: params
 			// antes era
 			// redirect action: 'auth', params: params
 		}

@@ -26,39 +26,31 @@ class RedController {
 			return null
 	}
 	
-    def index = { 
-
-		// FALTA COMPROBAR SI EL APRENDIZ ESTA HABILITADO CON EL CURSO 
-		println "Usuario actual: ${usuarioActual()}"
+    def principal = { 
 		
 		def ArrayList<Curso> cursosMediador = new ArrayList<Curso>()
-
-		def mediador = Mediador.findByUsuario(usuarioActual())
-			
-		if (mediador) {
-			cursosMediador = Curso.list().findAll {
-				if (it.mediadores.contains(mediador)) {
-					it
-				}
-			}
-			println "${cursosMediador}"
-		}
-
-		def ArrayList<Curso> cursosAprendiz = new ArrayList<Curso>()
+		def ArrayList<Mediador> mediadores = Mediador.findAllByUsuario(usuarioActual())
 		
-		def aprendiz = Aprendiz.findByUsuario(usuarioActual())
-			
-		if (aprendiz) {
-			println "aprendiz a buscar: ${aprendiz}"
-			println "aprendiz participa: ${aprendiz.participa}"
-			for (c in Curso.list()) {
-				if (c.aprendices.contains(aprendiz)) {
-					// falta revisar si el aprendiz esta habilitado o esperando habilitacion
-					println "curso agregado: ${c}"
-					cursosAprendiz.add(c)
+		if (mediadores){
+			for(int i = 0; i<mediadores.size(); i++){
+				//println "${mediadores.get(i).curso}, ${mediadores.get(i).usuario}, ${mediadores.get(i).jerarquia}"
+				cursosMediador.add(mediadores.get(i).curso)
+			}
+		}
+		//println "Cursos del mediador ${usuarioActual()}: ${cursosMediador}"
+		
+		def ArrayList<Curso> cursosAprendiz = new ArrayList<Curso>()
+		def ArrayList<Aprendiz> aprendices = Aprendiz.findAllByUsuario(usuarioActual())
+		
+		if (aprendices){
+			for(int i = 0; i<aprendices.size(); i++){
+				//println "${aprendices.get(i).curso}, ${aprendices.get(i).usuario}, ${aprendices.get(i).participa}"
+				if (aprendices.get(i).participa) {
+					cursosAprendiz.add(aprendices.get(i).curso)
 				}
 			}
 		}
+		//println "Cursos del aprendiz participando ${usuarioActual()}: ${cursosAprendiz}"
 		
 		[materias: Materia.findAll(), administrador: Administrador.findByUsuario(usuarioActual()),
 			cursosMediador: cursosMediador, cursosAprendiz: cursosAprendiz]
@@ -86,13 +78,13 @@ class RedController {
 		
 		usuario.save()
 		flash.message = "Solicitud aceptada. A la brevedad se le enviara un mail de confirmacion"
-		redirect(action:"index")
+		redirect(action:"principal")
 		
 	}
 	
 	def configuracion = {
 		def red = Red.get(1)
-		println "configuracion controller - red: ${red}, titulo: ${red.titulo}, ciclo: ${red.cicloConservacion}"
+		//println "configuracion controller - red: ${red}, titulo: ${red.titulo}, ciclo: ${red.cicloConservacion}"
 		[redInstance: Red.get(1)]
 	}
 	

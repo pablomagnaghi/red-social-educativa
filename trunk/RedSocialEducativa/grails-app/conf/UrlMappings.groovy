@@ -8,7 +8,7 @@ class UrlMappings {
         }
 
 		"/"(controller: "red",
-			action:"index")
+			action:"principal")
 		//"/"(view:"/index")
 		"500"(view:'/error')
 

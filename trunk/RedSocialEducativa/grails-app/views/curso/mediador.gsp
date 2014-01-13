@@ -6,15 +6,15 @@
 	<body>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><g:link class="list" action="salir">
-					<g:message code="Salir"/></g:link></li>
+				<li><g:link class="list" action="principal" controller="red">
+					<g:message code="Pagina principal"/></g:link></li>
 				<li><g:link class="list" action="index" controller="aprendiz">
-					<g:message code="AdministrarAprendices" /></g:link></li>
-				<!--  
+					<g:message code="Administrar aprendices" /></g:link></li>
 				<li><g:link class="list" action="index" controller="temas">
-					<g:message code="Temas en curso" /></g:link></li>
-				<li><g:link class="list" action="indexAdm" controller="materia">
-					<g:message code="Administrar cartelera" /></g:link></li>
+					<g:message code="Administrar temas del curso" /></g:link></li>
+				<li><g:link class="list" action="index" controller="cartelera">
+					<g:message code="Administrar cartelera del curso" /></g:link></li>
+				<!--  
 				<li><g:link class="list" action="indexMed" controller="curso">
 					<g:message code="Administrar Material" /></g:link></li>
 				<li><g:link class="list" action="index" controller="mediador">
@@ -32,7 +32,7 @@
 					<li>
 						<span>${aprendiz}</span>
 						<span class = "menuButton">
-							<g:link action="activarAprendiz" id="${aprendiz.id}">Activar</g:link>
+							<g:link action="activarAprendiz" controller="mediador" id="${aprendiz.id}">Activar</g:link>
 						</span>
 					</li>
 				</g:each>

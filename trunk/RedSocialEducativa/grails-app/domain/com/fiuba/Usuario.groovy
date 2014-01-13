@@ -38,7 +38,8 @@ class Usuario {
 	}
 
 	static mapping = {
-		password column: '`password`'
+		username column: 'dni'
+		password column: '`password`'		
 	}
 
 	Set<Rol> getAuthorities() {

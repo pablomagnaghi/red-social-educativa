@@ -14,18 +14,12 @@
 		</div>
 		<div>
 			<br>
-			<h4>"${materia}"</h4>
-			<g:link action="general" controller="materia" id="${materia.id}">
-			<g:message code="Volver"/></g:link>
-			<br>
+			<h4>"Bienvenido al curso ${curso.nroRelativo} de la materia ${curso.materia}"</h4>
+		       	<g:link class="list" action="principal" controller="red">
+		       	<g:message code="Pagina Inicial" args="[entityName]" /></g:link>
 		</div>
+		<br>
 		<p>Para tener mayores accesos por favor, inicie sesion</p>
-		<div class="nav" role="navigation">
-	    	<ul>
-		       	<li><g:link class="list" action="index" controller="red">
-		       		<g:message code="Pagina Inicial" args="[entityName]" /></g:link></li>
-	       	</ul>
-		</div>
 		<div>
 			<br>
 			<h2>Proximamente</h2>
