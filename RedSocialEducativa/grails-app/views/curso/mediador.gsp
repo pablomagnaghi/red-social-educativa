@@ -6,10 +6,20 @@
 	<body>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><g:link class="list" action="index" controller="red">
+				<li><g:link class="list" action="salir">
 					<g:message code="Salir"/></g:link></li>
 				<li><g:link class="list" action="index" controller="aprendiz">
 					<g:message code="AdministrarAprendices" /></g:link></li>
+				<!--  
+				<li><g:link class="list" action="index" controller="temas">
+					<g:message code="Temas en curso" /></g:link></li>
+				<li><g:link class="list" action="indexAdm" controller="materia">
+					<g:message code="Administrar cartelera" /></g:link></li>
+				<li><g:link class="list" action="indexMed" controller="curso">
+					<g:message code="Administrar Material" /></g:link></li>
+				<li><g:link class="list" action="index" controller="mediador">
+					<g:message code="Administrar Foros" /></g:link></li>
+				-->
 			</ul>
 		</div>
 		<div>

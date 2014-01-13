@@ -4,5 +4,6 @@ class Administrador extends UsuarioRol {
 
     static constraints = {
     }
-
+	
 }
+
