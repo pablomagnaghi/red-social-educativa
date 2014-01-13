@@ -2,7 +2,9 @@ package com.fiuba
 
 import grails.plugin.mail.*
 
+import org.springframework.security.access.annotation.Secured
 
+@Secured('permitAll')
 class AdministradorController {
 
 	
@@ -16,21 +18,21 @@ class AdministradorController {
 	// 12. Asignar y revocar roles de mediador en cursos
 	// 13. Visualizar información y material de los cursos (foros, temas y material general)
 	
-	// metodos por defecto
 	def index = {
-		def membresia = false;
-		[usuarios: Usuario.findAllByMembresia(membresia)]
+		[usuarios: Usuario.findAllByEnabled(false)]
 	}
 
 	def activarUsuario(final int id){
 		def usuario = Usuario.get(id)
-		usuario.membresia = true
+		println "${usuario}, ${usuario.id}, ${usuario.enabled}, ${usuario.fechaMemb}"
+	
+		usuario.enabled = true
 		usuario.fechaMemb = new Date()
 		def mail = usuario.email
-		def dni = usuario.dni
+		def username = usuario.username
 		if (usuario.hasErrors()){
 			println usuario.errors
-			flash.message = "Problemas con la usuario"
+			flash.message = "Problemas con el usuario"
 			redirect(action: "index")
 			return
 		} else {
@@ -38,12 +40,12 @@ class AdministradorController {
 			sendMail {
 				to mail
 				subject "Red Social Educativa"
-				body "Bienvenido ${dni} a la Red Social Educativa FIUBA 2014"
+				body "Bienvenido ${username} a la Red Social Educativa FIUBA 2014"
 			}
-			flash.message = "Autorización enviada para el miembro con dni: ${usuario.dni}"
+			flash.message = "Autorización enviada para el miembro con dni: ${usuario.username}"
 		}
 		
-		def miembro = new Miembro(usuario: usuario, rol: Rol.findByNombre("Miembro"))
+		def miembro = new Miembro(usuario: usuario, rol: Rol.findByAuthority("ROL_MIEMBRO"))
 		if (!miembro.validate()){
 			println miembro.errors
 		} 
@@ -51,4 +53,7 @@ class AdministradorController {
 		redirect(action: "index")
 	}
 	
+	def volver = {
+		redirect(controller: "Red", action:"index")
+	}
 }

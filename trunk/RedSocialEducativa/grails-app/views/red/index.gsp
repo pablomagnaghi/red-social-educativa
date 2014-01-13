@@ -12,51 +12,47 @@
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
-			<g:hasErrors bean="${usuarioInstance}">
+			<!--<g:hasErrors bean="${miembroInstance}">
 				<ul class="errors" role="alert">
-					<g:eachError bean="${usuarioInstance}" var="error">
+					<g:eachError bean="${miembroInstance}" var="error">
 						<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>>
 							<g:message error="${error}"/>
 		                </li>
 					</g:eachError>
 				</ul>
-			</g:hasErrors>
-			<g:if test="${usuario}">
-				Hola ${usuario}, 
-				<g:link class="list" action="salir">
-		       		<g:message code="Salir" args="[entityName]" /></g:link>
-			</g:if>
-			<g:else>
+			</g:hasErrors>-->
+			<sec:ifLoggedIn>
+				Bienvenido <sec:username/> (<g:link controller='logout'>Salir</g:link>)
+			</sec:ifLoggedIn>
+			<sec:ifNotLoggedIn>
 				<div class="nav" role="navigation">
 	    			<ul>
 		       			<li><g:link class="list" action="solicitarMembresia">
 		       			<g:message code="Solicitar Membresía" args="[entityName]" /></g:link></li>
 	       			</ul>
 				</div>
-				<g:form action="autenticacion" >
-					<fieldset class="form">
-						<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'dni', 'error')} ">
-							<label for="dni">
-								<g:message code="usuario.dni.label" default="Dni" />   
-							</label>
-								<g:textField name="dni" value="${usuarioInstance?.dni}"/>
-						</div>
-						<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'password', 'error')} ">
-							<label for="password">
-								<g:message code="usuario.password.label" default="Password" /> 
-							</label>
-								<g:field type="password" name="password" value="${usuarioInstance?.password}"/>
-						</div>
-						<div class="fieldcontain">
-							<label for='remember_me'>Recordar contraseña</label>
-							<input type='checkbox' class='chk' id='remember_me' name='remember_me'/>
-						</div>
-					</fieldset>
-		            <fieldset class="buttons">
-						<g:submitButton name="login" class="save" value="Ingresar" />
-					</fieldset>
-				</g:form>
-			</g:else>
+        		<div id="loginForm">
+           			<form method="POST" action="${resource(file: 'j_spring_security_check')}">
+                		<table>
+                  			<tr>
+                    			<td>Username:</td>
+                    			<td><input type='text' class='text_' name='j_username' id='username'/></td>
+                  			</tr>
+                  			<tr>
+                    			<td>Password:</td>
+                    			<td><input type='password' class='text_' name='j_password' id='password'/></td>
+                  			</tr>
+                  			<tr>
+                    			<td>Remember me</td>
+                    			<td><input type='checkbox' class='chk' id='remember_me' name='_spring_security_remember_me'/></td>
+                  			</tr>
+                  			<tr>
+                    			<td colspan="2"><g:submitButton name="login" value="Login"/></td>
+                  			</tr>
+                		</table>
+            		</form>
+				</div>
+			</sec:ifNotLoggedIn>
 		</div>
 		<div>
 			<g:if test="${administrador}">
@@ -117,5 +113,8 @@
 				</g:each>
 			</ol>
 		</div>
+		
+		 <g:render template='/login/ajaxLogin'/>
+		
 	</body>
 </html>

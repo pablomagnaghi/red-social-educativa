@@ -1,5 +1,8 @@
 package com.fiuba
 
+import org.springframework.security.access.annotation.Secured
+
+@Secured('permitAll')
 class CursoController {
 	// EL visitante puede:
 	// * 1 - Visualizar información y material de los cursos (foros, temas y material general)
@@ -22,16 +25,33 @@ class CursoController {
 	// 25. Acceder a información de seguimiento de la participación de aprendices de un curso
 	// 26. Consolidar cuatrimestre
 	
+	// metodos por defecto, usados en ABM cursos del administrador
+	// ver en detalle despues
+	
+	static scaffold = true
+	
+	// Metodos nuevos
+	def springSecurityService
+	
+	private usuarioActual() {
+		if (springSecurityService.principal.enabled)
+			return Usuario.get(springSecurityService.principal.id)
+		else
+			return null
+	}
+	
 	def cursoId
 	
 	def revisarRol(){
 	
 		cursoId = params.id
-		if (!session.user) {
+
+		def usuario = usuarioActual()
+		
+		if (!usuario) {
 			flash.message = "Ingreso como visitante"
 			redirect(action: "general")
 		} else {
-			def usuario = Usuario.findByDni(session.user.dni)
 			def administrador = Administrador.findByUsuario(usuario)
 			
 			if (administrador) {
@@ -92,8 +112,4 @@ class CursoController {
 	def miembro(){
 		
 	}
-	// metodos por defecto, usados en ABM cursos del administrador
-	// ver en detalle despues
-	
-    static scaffold = true
 }

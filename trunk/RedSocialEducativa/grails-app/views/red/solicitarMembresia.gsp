@@ -23,12 +23,12 @@
 			</ul>
 		</g:hasErrors>
 		<g:form controller="red" action="revisarDatosUsuario">
-			<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'dni', 'error')} required">
-				<label for="dni"> 
-					<g:message code="usuario.dni.label" default="Dni" /> 
+			<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'username', 'error')} required">
+				<label for="username"> 
+					<g:message code="usuario.username.label" default="Dni" /> 
 					<span class="required-indicator">*</span>
 				</label>
-				<g:textField name="dni" type="number" value="${usuarioInstance?.dni}" required=""/>
+				<g:textField name="username" type="number" value="${usuarioInstance?.username}" required=""/>
 			</div>
 		
 			<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'apellido', 'error')} required">
@@ -77,9 +77,6 @@
 					<g:message code="usuario.password.label" default="Password" />
 					
 				</label>
-				<!--  
-				<g:passwordField name="password" maxlength="12" required="" id="pass"  value="${usuarioInstance?.password}"/>
-				-->
 				<g:passwordField name="password" maxlength="12" required="" value="${usuarioInstance?.password}"/>
 			</div>	
 	
@@ -87,7 +84,6 @@
 				<label for="passwordConfirmado"> 
 					<g:message code="usuario.direcciones.label" default="Confirmar Password" />
 				</label>
-				<!--<g:passwordField name="password" id="reTypePass" required="" />-->
 				<g:passwordField name="passwordConfirmado" required="" />
 			</div>
 

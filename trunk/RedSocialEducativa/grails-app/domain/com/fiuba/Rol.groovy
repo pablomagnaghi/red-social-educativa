@@ -1,17 +1,18 @@
 package com.fiuba
 
 class Rol {
-	
-	// todos los atributos del enunciado ya estan puestos
-	String nombre
 
-	static hasMany = [acciones: Accion]
-	
+	String authority
+
 	String toString() {
-		"${nombre}"
+		"${authority}"
 	}
 	
-    static constraints = {
-		nombre(blank:false)
-    }
+	static mapping = {
+		cache true
+	}
+
+	static constraints = {
+		authority blank: false, unique: true
+	}
 }

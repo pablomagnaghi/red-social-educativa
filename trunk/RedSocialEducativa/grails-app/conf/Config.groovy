@@ -121,10 +121,24 @@ grails {
 	  username = "redsocialfiuba@gmail.com"
 	  password = "fiuba2014"
 	  props = ["mail.smtp.auth":"true",
-            "mail.smtp.debug":"true",
-            "mail.smtp.starttls.enable":"true",
-            "mail.smtp.socketFactory.port":"465",
-            "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
-            "mail.smtp.socketFactory.fallback":"false"]
+			"mail.smtp.debug":"true",
+			"mail.smtp.starttls.enable":"true",
+			"mail.smtp.socketFactory.port":"465",
+			"mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+			"mail.smtp.socketFactory.fallback":"false"]
 	}
  }
+
+// Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.fiuba.Usuario'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.fiuba.UsuarioRol'
+grails.plugin.springsecurity.authority.className = 'com.fiuba.Rol'
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+	'/':                              ['permitAll'],
+	'/index':                         ['permitAll'],
+	'/index.gsp':                     ['permitAll'],
+	'/**/js/**':                      ['permitAll'],
+	'/**/css/**':                     ['permitAll'],
+	'/**/images/**':                  ['permitAll'],
+	'/**/favicon.ico':                ['permitAll']
+]

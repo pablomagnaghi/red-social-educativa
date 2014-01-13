@@ -17,6 +17,7 @@
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<br>
+	
 		</div>
 	</body>
 </html>
