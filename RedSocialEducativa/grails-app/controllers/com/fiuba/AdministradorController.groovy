@@ -18,12 +18,12 @@ class AdministradorController {
 	// 12. Asignar y revocar roles de mediador en cursos
 	// 13. Visualizar información y material de los cursos (foros, temas y material general)
 	
-	def index = {
+	def general = {
 		[usuarios: Usuario.findAllByEnabled(false)]
 	}
 
-	def activarUsuario(final int id){
-		def usuario = Usuario.get(id)
+	def activarUsuario() {
+		def usuario = Usuario.get(params.id)
 		println "${usuario}, ${usuario.id}, ${usuario.enabled}, ${usuario.fechaMemb}"
 	
 		usuario.enabled = true
@@ -33,7 +33,7 @@ class AdministradorController {
 		if (usuario.hasErrors()){
 			println usuario.errors
 			flash.message = "Problemas con el usuario"
-			redirect(action: "index")
+			redirect(action: "general")
 			return
 		} else {
 			usuario.save();
@@ -50,10 +50,6 @@ class AdministradorController {
 			println miembro.errors
 		} 
 		miembro.save()
-		redirect(action: "index")
-	}
-	
-	def volver = {
-		redirect(controller: "Red", action:"index")
+		redirect(action: "general")
 	}
 }

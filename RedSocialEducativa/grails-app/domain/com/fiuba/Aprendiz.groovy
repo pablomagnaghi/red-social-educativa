@@ -9,11 +9,12 @@ class Aprendiz extends UsuarioRol {
 	Integer descMaterial // Cantidad de materiales descargados del curso
 	Date ultVisita // AAAAMMDD
 	
-	static belongsTo = Curso
+	// Aprendiz tiene como entidad fuerte a Curso.
+	// En tabla de aprendiz se pone el id de curso
+	// Igual que como esta en la BBDD del enunciado del tp
 	
-	static hasMany = [cursos:Curso]
+	static belongsTo = [curso: Curso]
 
-	
     static constraints = {
     }
 

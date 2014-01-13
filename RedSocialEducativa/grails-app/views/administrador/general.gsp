@@ -6,7 +6,7 @@
 	<body>
 		<div>
 			<ol>
-				<li><g:link class="list" action="volver">
+				<li><g:link class="list" action="principal" controller="red">
 					<g:message code="Volver"/></g:link></li>
 				<li><g:link class="list" action="index" controller="materia">
 					<g:message code="Registrar y eliminar materias" /></g:link></li>

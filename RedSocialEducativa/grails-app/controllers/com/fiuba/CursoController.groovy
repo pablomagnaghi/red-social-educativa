@@ -42,9 +42,12 @@ class CursoController {
 	
 	def cursoId
 	
-	def revisarRol(){
+	def revisarRol() {
 	
 		cursoId = params.id
+		
+		// println "Revisar rol params: ${params}"
+		//  [id:2, action:mediador, format:null, controller:curso]
 
 		def usuario = usuarioActual()
 		
@@ -58,41 +61,41 @@ class CursoController {
 				flash.message = "Ingreso como administrador"
 				redirect(action: "general")
 			} else {
-				def mediador = Mediador.findByUsuario(usuario)
+				def mediador = Mediador.findByUsuarioAndCurso(usuario, Curso.get(cursoId))
 				
-				if (Curso.get(cursoId).mediadores.contains(mediador)) {
-					println "Hola mediador ${mediador}"
+				if (mediador) {
+					println "Hola mediador ${mediador} ${mediador.jerarquia}"
 					redirect(action: "mediador", params: params)
 				} else {
-					def aprendiz = Aprendiz.findByUsuario(usuario)
-					
-					if (Curso.get(cursoId).aprendices.contains(aprendiz)) {
+					def aprendiz = Aprendiz.findByUsuarioAndCurso(usuario, Curso.get(cursoId))
+
+					if (aprendiz) {
 						println "Hola aprendiz ${aprendiz}"
-						redirect(action: "aprendiz")
+						redirect(action: "aprendiz", params: params)
 					} else {
 						flash.message = "Hola miembro ${usuario}"
 						redirect(action: "miembro")
 					}
 				}
-				
 			}
 		}
 	}
 	
-	def general(){
-		[materia: Curso.get(cursoId).materia]
+	def general() {
+		[curso: Curso.get(cursoId)]
 	}
 	
-	def mediador(){
+	def mediador() {
 		
 		def ArrayList<Aprendiz> aprendicesInactivos = new ArrayList<Aprendiz>()
 		
-		println "params mediador: ${params}"
+		// println "params mediador: ${params}"
 
-		cursoId = params.id
+		if (params.id)
+			cursoId = params.id
 		
-		println "curso mediador directo ${Curso.get(cursoId)}"
-		
+		// println "curso mediador directo ${Curso.get(cursoId)}"
+			
 		if (Curso.get(cursoId).aprendices) {
 			aprendicesInactivos = Curso.get(cursoId).aprendices.findAll {
 				if (it.participa == false) {
@@ -100,16 +103,41 @@ class CursoController {
 				}
 			}
 		}
-		println "aprendices inactivos: ${aprendicesInactivos}"
+		// println "aprendices inactivos: ${aprendicesInactivos}"
 		
-		[aprendices: aprendicesInactivos]
+		[aprendices: aprendicesInactivos, materia: Curso.get(cursoId).materia]
 	}
 	
-	def aprendiz(){
+	def aprendiz() {
+		def aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(params.id))
+		// println "Vista del curso para el aprendiz ${aprendiz}"
+		[aprendiz: aprendiz]
+	}
+	
+	def miembro() {
 		
 	}
 	
-	def miembro(){
+	def solicitarParticipacionEnElCurso() {/*
+		// hacer validaciones de algunas campos como dni
+		if (params.password != params.passwordConfirmado) {
+			flash.message = "El password confirmado es incorrecto"
+			redirect(action: "solicitarMembresia")
+			return
+		}
+		def usuario = new Usuario(username: params.username, password: params.password, apellido: params.apellido,
+			nombres: params.nombres, legajo: params.legajo, padron: params.padron, email: params.email,
+			fechaSolicitud: new Date(), enabled: false)
+		
+		if(!usuario.validate()) {
+			flash.message = "Revise sus parametros"
+			respond usuario.errors, view:'solicitarMembresia'
+			return
+		}
+		
+		usuario.save()
+		flash.message = "Solicitud aceptada. A la brevedad se le enviara un mail de confirmacion"
+		redirect(action:"index")*/
 		
 	}
 }

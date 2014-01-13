@@ -9,9 +9,9 @@
 		<a href="#edit-red" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><g:link class="list" action="index">
+				<li><g:link class="list" action="principal">
 					<g:message code="Pagina inicial" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="index" controller="administrador">
+				<li><g:link class="create" action="general" controller="administrador">
 					<g:message code="Volver" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>

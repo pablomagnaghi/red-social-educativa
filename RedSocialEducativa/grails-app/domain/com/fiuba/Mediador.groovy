@@ -7,12 +7,11 @@ class Mediador extends UsuarioRol {
 	// Profesor|JTP|AP|AS|Colaborador
 	String jerarquia
 	
-	// Curso tiene la prioridad sobre mediador: Si borro curso, se borra el mediador. Y si guardo curso
-	// se guarda el mediador. La fuerte es Curso
-	static belongsTo = Curso
+	// Mediador tiene como entidad fuerte a Curso. 
+	// En tabla de mediador se pone el id de curso
+	// Igual que como esta en la BBDD del enunciado del tp 
 	
-	// 1 mediador tiene muchos cursos
-	static hasMany = [cursos: Curso]
+	static belongsTo = [curso: Curso]
 		
     static constraints = {
     }

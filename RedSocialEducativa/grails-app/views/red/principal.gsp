@@ -12,7 +12,7 @@
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
-			<!--<g:hasErrors bean="${miembroInstance}">
+			<g:hasErrors bean="${miembroInstance}">
 				<ul class="errors" role="alert">
 					<g:eachError bean="${miembroInstance}" var="error">
 						<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>>
@@ -20,22 +20,20 @@
 		                </li>
 					</g:eachError>
 				</ul>
-			</g:hasErrors>-->
+			</g:hasErrors>
 			<sec:ifLoggedIn>
 				Bienvenido <sec:username/> (<g:link controller='logout'>Salir</g:link>)
 			</sec:ifLoggedIn>
 			<sec:ifNotLoggedIn>
-				<div class="nav" role="navigation">
-	    			<ul>
-		       			<li><g:link class="list" action="solicitarMembresia">
-		       			<g:message code="Solicitar Membresía" args="[entityName]" /></g:link></li>
-	       			</ul>
+				<div>
+					<g:link class="list" action="solicitarMembresia">
+			       	<g:message code="Solicitar Membresía" /></g:link>
 				</div>
         		<div id="loginForm">
            			<form method="POST" action="${resource(file: 'j_spring_security_check')}">
                 		<table>
                   			<tr>
-                    			<td>Username:</td>
+                    			<td>DNI:</td>
                     			<td><input type='text' class='text_' name='j_username' id='username'/></td>
                   			</tr>
                   			<tr>
@@ -43,7 +41,7 @@
                     			<td><input type='password' class='text_' name='j_password' id='password'/></td>
                   			</tr>
                   			<tr>
-                    			<td>Remember me</td>
+                    			<td>Recordarme</td>
                     			<td><input type='checkbox' class='chk' id='remember_me' name='_spring_security_remember_me'/></td>
                   			</tr>
                   			<tr>
@@ -58,7 +56,7 @@
 			<g:if test="${administrador}">
 				<h2>Bienvenido administrador ${administrador}</h2> 
 				<span class = "menuButton">
-					<g:link action="index" controller="administrador">
+					<g:link action="general" controller="administrador">
 					<g:message code="Tareas administrativas" /></g:link>
 				</span>
 			</g:if>
@@ -81,7 +79,7 @@
 			</span>
 			<span>
 				<g:if test="${cursosAprendiz}">
-					<h2>Mis cursos como aprendizr</h2> 
+					<h2>Mis cursos como aprendiz</h2> 
 					<ol>
 						<g:each in="${cursosAprendiz}" var="cursoAprendiz">
 							<li>
@@ -100,16 +98,20 @@
 		</div>
 		<div>
 			<br><hr><br>
-			<h2>Sector destinado a vistas de materias</h2>
+			<h2>Sector destinado a visualizar informacion y material de los cursos (foros, temas y material general)</h2>
+			<br>
+			<h3>Los cursos de la red Social son estos</h3>
 			<br>
 			<ol>
 				<g:each in="${materias}" var="materia">
-					<li>
-						<span class = "menuButton">
-							<g:link action="general" controller="materia" id="${materia.id}">
-							<g:message code="${materia}" /></g:link>
-						</span>
-					</li>
+					<g:each in="${materia.cursos}" var="curso">
+						<li>
+							<span class = "menuButton">
+								<g:link action="revisarRol" controller="curso" id="${curso.id}">
+								<g:message code="${curso}" /></g:link>
+							</span>
+						</li>
+					</g:each>	
 				</g:each>
 			</ol>
 		</div>
