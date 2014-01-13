@@ -94,7 +94,14 @@
 			</span>
 		</div>
 		<div>
-	       		<br><h2>Proximamente la cartelera</h2>
+	       	<br><h2>Cartelera general</h2>
+			<g:each in="${noticiasRed}">
+				<g:if test="${it.visibilidad}">
+					<p>Noticia: ${it.titulo} - Fecha: ${it.fecha} - Administrador: ${it.administrador}</p>
+					<p>[${it.texto}]</p>
+				</g:if>
+        	<br>
+    		</g:each>
 		</div>
 		<div>
 			<br><hr><br>

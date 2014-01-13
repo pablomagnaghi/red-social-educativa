@@ -9,8 +9,6 @@ class Red {
 
 	// pueden agregarse mas atributos
 	
-	//static hasMany = [membresias: Membresia, materias: Materia]
-	
     static constraints = {
     }
 	

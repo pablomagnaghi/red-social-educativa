@@ -1,4 +1,6 @@
 
+import java.util.Date;
+
 import com.fiuba.*
 
 class BootStrap {
@@ -93,26 +95,6 @@ class BootStrap {
 			}
 		}
 
-		// Administradores
-		def ArrayList<Administrador> administradores = new ArrayList<Administrador>()
-		
-		def admPablo = new Administrador(usuario: usuarioPablo, rol: rolAdmin)
-		administradores.add(admPablo)
-		def admLuis = new Administrador(usuario: usuarioLuis, rol: rolAdmin)
-		administradores.add(admLuis)
-		def admMessi = new Administrador(usuario: usuarioMessi, rol: rolAdmin)
-		administradores.add(admMessi)
-			
-		for(int i = 0; i<administradores.size(); i++){
-			if (!administradores.get(i).validate()) {
-				println administradores.get(i).errors
-			} else {
-				println "Administradores agregados a la bbdd:"
-				administradores.get(i).save()
-				println administradores.get(i)
-			}
-		}
-			
 		// Mediadores
 		def mediadorAgus = new Mediador(usuario: usuarioAgus, rol: rolMediador, jerarquia: "JTP");
 		def mediadorUno = new Mediador(usuario: usuarioUno, rol: rolMediador, jerarquia: "JTP");
@@ -215,7 +197,34 @@ class BootStrap {
 			}
 		}
 		
-		def red = new Red() 
+		// Noticias red
+		
+		def noticiaRedUno = new NoticiaRed(titulo: "Noticia Uno",
+			texto: "Inauguracion de la Red Social Educativa 2014", fecha: new Date(), visibilidad: true)
+
+		// Administradores
+		def ArrayList<Administrador> administradores = new ArrayList<Administrador>()
+		
+		def admPablo = new Administrador(usuario: usuarioPablo, rol: rolAdmin)
+		admPablo.addToNoticiasRed(noticiaRedUno)
+		administradores.add(admPablo)
+		def admLuis = new Administrador(usuario: usuarioLuis, rol: rolAdmin)
+		administradores.add(admLuis)
+		def admMessi = new Administrador(usuario: usuarioMessi, rol: rolAdmin)
+		administradores.add(admMessi)
+			
+		for(int i = 0; i<administradores.size(); i++){
+			if (!administradores.get(i).validate()) {
+				println administradores.get(i).errors
+			} else {
+				println "Administradores agregados a la bbdd:"
+				administradores.get(i).save()
+				println administradores.get(i)
+			}
+		}
+		
+		// Red
+		def red = new Red()
 		
 		if (!red.validate()) {
 			println red.get.errors
@@ -224,6 +233,7 @@ class BootStrap {
 			red.save()
 			println red.titulo
 		}
+	
     }
     def destroy = {
     }
