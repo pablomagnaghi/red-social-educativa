@@ -99,8 +99,8 @@
 				<g:if test="${it.visibilidad}">
 					<p>Noticia: ${it.titulo} - Fecha: ${it.fecha} - Administrador: ${it.administrador}</p>
 					<p>[${it.texto}]</p>
+					<br>
 				</g:if>
-        	<br>
     		</g:each>
 		</div>
 		<div>

@@ -22,7 +22,7 @@ class Curso {
 	// Curso tiene como entidad fuerte a Materia. En tabla curso se pone el id de materia
 	static belongsTo = [materia: Materia]
 	
-	static hasMany = [mediadores: Mediador, aprendices: Aprendiz]
+	static hasMany = [mediadores: Mediador, aprendices: Aprendiz, noticiasCurso: NoticiaCurso]
 
 	String toString() {
 		"${materia} - ${nroRelativo}"

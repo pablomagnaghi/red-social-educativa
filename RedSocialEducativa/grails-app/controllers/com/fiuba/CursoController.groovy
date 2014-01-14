@@ -111,7 +111,10 @@ class CursoController {
 	def aprendiz() {
 		def aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(params.id))
 		// println "Vista del curso para el aprendiz ${aprendiz}"
-		[aprendiz: aprendiz]
+		// TODO agregar noticias del curso
+		def noticiasCurso = NoticiaCurso.findByCurso(Curso.get(params.id))
+		// def noticiasCurso
+		[aprendiz: aprendiz, noticiasCurso: noticiasCurso]
 	}
 	
 	def miembro() {

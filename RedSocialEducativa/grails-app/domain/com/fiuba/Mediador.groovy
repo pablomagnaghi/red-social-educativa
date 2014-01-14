@@ -12,7 +12,9 @@ class Mediador extends UsuarioRol {
 	// Igual que como esta en la BBDD del enunciado del tp 
 	
 	static belongsTo = [curso: Curso]
-		
+	
+	static hasMany = [noticiasCurso: NoticiaCurso]
+	
     static constraints = {
     }
 	
