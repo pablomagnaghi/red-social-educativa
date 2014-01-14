@@ -12,7 +12,7 @@
 					<g:message code="Administrar aprendices" /></g:link></li>
 				<li><g:link class="list" action="index" controller="temas">
 					<g:message code="Administrar temas del curso" /></g:link></li>
-				<li><g:link class="list" action="index" controller="cartelera">
+				<li><g:link class="list" action="index" controller="noticiaCurso">
 					<g:message code="Administrar cartelera del curso" /></g:link></li>
 				<!--  
 				<li><g:link class="list" action="indexMed" controller="curso">
