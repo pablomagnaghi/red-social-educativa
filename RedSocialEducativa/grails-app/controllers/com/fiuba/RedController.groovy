@@ -1,10 +1,13 @@
 package com.fiuba
 
 import static org.springframework.http.HttpStatus.*
+
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+
 import javax.servlet.http.Cookie
 
+import com.mensajeria.Mensaje;
 import com.sun.corba.se.spi.orbutil.fsm.Action;
 
 import org.springframework.security.access.annotation.Secured
@@ -43,7 +46,7 @@ class RedController {
 		
 		def ArrayList<Curso> cursosAprendiz = new ArrayList<Curso>()
 		def ArrayList<Aprendiz> aprendices = Aprendiz.findAllByUsuario(usuarioActual())
-		
+		def mensajes = Mensaje.findAllByReceptorAndLeido(usuarioActual(), Boolean.FALSE)
 		if (aprendices){
 			for(int i = 0; i<aprendices.size(); i++){
 				//println "${aprendices.get(i).curso}, ${aprendices.get(i).usuario}, ${aprendices.get(i).participa}"
@@ -58,7 +61,7 @@ class RedController {
 		
 		[noticiasRed: NoticiaRed.list(), materias: Materia.findAll(), 
 			administrador: Administrador.findByUsuario(usuarioActual()),
-			cursosMediador: cursosMediador, cursosAprendiz: cursosAprendiz]
+			cursosMediador: cursosMediador, cursosAprendiz: cursosAprendiz, cantMensajes: mensajes.size()]
 	}
 	
 	def solicitarMembresia = {
