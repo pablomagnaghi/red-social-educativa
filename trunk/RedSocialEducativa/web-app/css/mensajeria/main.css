@@ -1,0 +1,18 @@
+.msgNoLeido {
+	background-color: #6CCC99
+}
+
+.li_clickeable, #nueva_carpeta {
+	cursor: pointer;
+}
+
+.center_div {
+	position: absolute;
+    height: 100px;
+    width: 350px;
+    margin: -100px 0 0 -200px;
+    top: 50%;
+    left: 50%;
+    display : block;
+    background-color: #AAAAAA
+}

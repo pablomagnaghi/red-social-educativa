@@ -8,10 +8,24 @@ class MensajeTagLib {
 	
 	def showNotifications = { attrs, body ->
 		if (springSecurityService.currentUser != null){
-			out << "<a href='#'>"
+			out << "<a href='mensajeria/index'>"
 			out << " <img style='border:0;' src='${resource(dir: 'images', file: 'sobre.gif')}'/>"
 			out << "</a>"
 			out << "(" + attrs.cantMensajes + ")"
+		}
+	}
+	
+	def showConversation = { attrs, body ->
+		def conversacion = attrs.data
+		def mensajes = conversacion.mensajes
+		mensajes.each {
+			if (it.leido == false){
+				out << "<div class='msgNoLeido'>"
+			} else {
+				out << "<div>"
+			}
+			out << " <p>De:  " + it.emisor.username + " | asunto: " + it.asunto + " | fecha: " + it.fecha
+			out << "</div>"
 		}
 	}
     //static encodeAsForTags = [tagName: 'raw']
