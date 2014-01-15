@@ -11,6 +11,7 @@ class MensajeService {
 		mensaje.hilo = hilo;
 		def carpeta = Carpeta.findByNombreAndUsuario("Escritorio", mensaje.receptor)
 		def nuevaConversacion = new Conversacion(padre: carpeta, hilo: hilo)
+		nuevaConversacion.addToMensajes(mensaje)
 		if (!mensaje.save()) {
 			mensaje.errors.each {
 				println it
