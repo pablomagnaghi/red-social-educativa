@@ -8,10 +8,10 @@
     </head>
     <body>
 	    <div id="create-endUser" class="content scaffold-create" role="main">
-	    	<div>
-				<h1><g:message code="Red Social Educativa FIUBA" /></h1>
-				<msg:showNotifications cantMensajes="${cantMensajes}"/>
-			</div>
+	    	<ul class="menuBar">
+				<li id="tituloRed"><g:message code="Red Social Educativa FIUBA" /></li>
+				<li><msg:showNotifications cantMensajes="${cantMensajes}"/></li>
+			</ul>
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>

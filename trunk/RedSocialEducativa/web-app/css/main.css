@@ -595,4 +595,29 @@ a.skip {
 	left: -9999px;
 }
 
-.alineado { float:left; }
+.menuBar
+{
+list-style-type:none;
+margin:0;
+padding:0;
+margin-bottom: 20px; 
+margin-top: 10px;
+}
+
+.menuBar  li {
+	display:inline;
+	
+} 
+
+#tituloRed {
+	color: #48802c;
+	font-weight: normal;
+	font-size: 1.25em;
+	margin: 0.8em 0 0.3em 0;
+	padding-right: 6px;
+}
+
+.menuBar li + li {
+    background:url(../images/separator.gif) no-repeat top left;
+    padding-left: 10px
+}
