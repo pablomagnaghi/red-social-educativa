@@ -2,9 +2,15 @@
 import java.util.Date;
 
 import com.fiuba.*
+import com.facultad.UsuarioService
+import com.mensajeria.Hilo
+import com.mensajeria.Mensaje
+import org.codehaus.groovy.grails.commons.ApplicationAttributes
 
 class BootStrap {
-
+	def usuarioService
+	def mensajeService
+	
     def init = { servletContext ->
 		
 		def ArrayList<Rol> roles = new ArrayList<Rol>()
@@ -12,7 +18,7 @@ class BootStrap {
 		roles.add(rolAdmin)
 		def rolMediador = new Rol(authority: 'ROL_MEDIADOR')
 		roles.add(rolMediador)
-		def rolAprendiz = new Rol(authority: 'ROL_APRENDIZ')
+		def rolAprendiz = new Rol(authority																																																																																																		: 'ROL_APRENDIZ')
 		roles.add(rolAprendiz)
 		def rolMiembro = new Rol(authority: 'ROL_MIEMBRO')
 		roles.add(rolMiembro)
@@ -20,81 +26,95 @@ class BootStrap {
 		for(int i = 0; i<roles.size(); i++){
 			if (!roles.get(i).validate()) {
 				println roles.get(i).errors
-			} else {
+			} else {																										
 				println "Roles agregados a la bbdd:"
 				roles.get(i).save()
 				println roles.get(i).authority
-			}
+			}																																																																																																																																																													
 		}
 		
-		def ArrayList<Usuario> usuarios = new ArrayList<Usuario>()
 		
 		def usuarioPablo = new Usuario(username: "33300432", password: "33300432", apellido: "Magnaghi", nombres: "Pablo", 
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
-		usuarios.add(usuarioPablo)
+		usuarioService.guardar(usuarioPablo)
 		def usuarioLuis = new Usuario(username: "31861315", password: "31861315", apellido: "Paniagua", nombres: "Luis", 
 			legajo: "11", padron: "11", email: "pany100@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
-		usuarios.add(usuarioLuis)
+		usuarioService.guardar(usuarioLuis)
 		def usuarioAgus = new Usuario(username: "32725217", password: "32725217", apellido: "Milla", nombres: "Agustina", 
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
-		usuarios.add(usuarioAgus)
+		usuarioService.guardar(usuarioAgus)
 		def usuarioMessi = new Usuario(username: "10101010", password: "10101010", apellido: "Zarate", nombres: "Facundo",
 			legajo: "11", padron: "11", email: "nanozarate@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
-		usuarios.add(usuarioMessi)
+		usuarioService.guardar(usuarioMessi)
 
 		def usuarioUno = new Usuario(username: "00000001", password: "00000001", apellido: "ApeUNO", nombres: "NomUno", 
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
-		usuarios.add(usuarioUno)
+		usuarioService.guardar(usuarioUno)
 		def usuarioDos = new Usuario(username: "00000002", password: "00000002", apellido: "ApeDOS", nombres: "NomDOS", 
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
-		usuarios.add(usuarioDos)
+		usuarioService.guardar(usuarioDos)
 		def usuarioTres = new Usuario(username: "00000003", password: "00000003", apellido: "ApeTRES", nombres: "NomTRES", 
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
-		usuarios.add(usuarioTres)
+		usuarioService.guardar(usuarioTres)
 		def usuarioCuatro = new Usuario(username: "00000004", password: "00000004", apellido: "ApeCUATRO", nombres: "NomCUATRO", 
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
-		usuarios.add(usuarioCuatro)
+		usuarioService.guardar(usuarioCuatro)
 		def usuarioCinco = new Usuario(username: "00000005", password: "00000005", apellido: "ApeCINCO", nombres: "NomCINCO", 
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
-		usuarios.add(usuarioCinco)
+		usuarioService.guardar(usuarioCinco)
 		def usuarioSeis = new Usuario(username: "00000006", password: "00000006", apellido: "ApeSeis", nombres: "NomSeis",
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
-		usuarios.add(usuarioSeis)
+		usuarioService.guardar(usuarioSeis)
 		def usuarioSiete = new Usuario(username: "00000007", password: "00000007", apellido: "ApeSiete", nombres: "NomSiete",
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
-		usuarios.add(usuarioSiete)
+		usuarioService.guardar(usuarioSiete)
 		def usuarioOcho = new Usuario(username: "00000008", password: "00000008", apellido: "ApeOcho", nombres: "NomOcho",
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
-		usuarios.add(usuarioOcho)
+		usuarioService.guardar(usuarioOcho)
 		def usuarioNueve = new Usuario(username: "00000009", password: "00000009", apellido: "ApeNueve", nombres: "NomNueve",
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
-		usuarios.add(usuarioNueve)
+		usuarioService.guardar(usuarioNueve)
 		def usuarioDiez = new Usuario(username: "00000010", password: "00000010", apellido: "ApeDiez", nombres: "NomDiez",
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
-		usuarios.add(usuarioDiez)
+		usuarioService.guardar(usuarioDiez)
 		def usuarioOnce = new Usuario(username: "00000011", password: "00000011", apellido: "ApeOnce", nombres: "NomOnce",
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
-		usuarios.add(usuarioOnce)
+		usuarioService.guardar(usuarioOnce)
 		def usuarioDoce = new Usuario(username: "00000012", password: "00000012", apellido: "ApeDoce", nombres: "NomDoce",
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
-		usuarios.add(usuarioDoce)
+		usuarioService.guardar(usuarioDoce)
 		def usuarioTrece = new Usuario(username: "00000013", password: "00000013", apellido: "ApeTrece", nombres: "NomTrece",
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), enabled: false)
-		usuarios.add(usuarioTrece)
+		usuarioService.guardar(usuarioTrece)
 		def usuarioCatorce = new Usuario(username: "00000014", password: "00000014", apellido: "ApeCatorce", nombres: "NomCatorce",
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), enabled: false)
-		usuarios.add(usuarioCatorce)
-		
-		for(int i = 0; i<usuarios.size(); i++){
-			if (!usuarios.get(i).validate()) {
-				println usuarios.get(i).errors
-			} else {
-				println "Usuarios agregados a la bbdd:"
-				usuarios.get(i).save()
-				println usuarios.get(i).username
-			}
-		}
+		usuarioService.guardar(usuarioCatorce)
+		/*
+		 * Mensajes
+		 */
+		def mensajePabloToLuis = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
+		cuerpo: "Vamos por el campeonato", fecha : new Date())
+		mensajeService.nuevoMensaje(mensajePabloToLuis)
+		def mensajeAgusToLuis = new Mensaje(emisor: usuarioAgus, receptor: usuarioLuis, asunto: "Mensaje de Agus a Luis 1",
+		cuerpo: "Buenas noches!", fecha : new Date())
+		mensajeService.nuevoMensaje(mensajeAgusToLuis)
+		def mensajePabloToLuisDos = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de Pablo a Luis 2",
+		cuerpo: "Vamos por el campeonato mundial", fecha : new Date())
+		mensajeService.nuevoMensaje(mensajePabloToLuisDos)
+		def mensajeLuisToPablo = new Mensaje(emisor: usuarioLuis, receptor: usuarioPablo, asunto: "Contestación de Luis a Pablo",
+		cuerpo: "Sin dudas vamos por eso", fecha : new Date())
+		mensajeService.nuevoMensaje(mensajeLuisToPablo)
+		def mensajeLuisToAgus = new Mensaje(emisor: usuarioLuis, receptor: usuarioAgus, asunto: "Respuesta a Agus",
+		cuerpo: "Buen dia!!", fecha : new Date())
+		mensajeService.nuevoMensaje(mensajeLuisToAgus)
+		def mensajePabloToAgus = new Mensaje(emisor: usuarioPablo, receptor: usuarioAgus, asunto: "Mensaje de Pablo a Agus ",
+		cuerpo: "Volver al futuro 2", fecha : new Date())
+		mensajeService.nuevoMensaje(mensajePabloToAgus)
+		def mensajeAgusToLuisDos = new Mensaje(emisor: usuarioAgus, receptor: usuarioLuis, asunto: "Mensaje de Agus a Luis 2",
+		cuerpo: "Hola como estas?", fecha : new Date())
+		mensajeService.nuevoMensaje(mensajeAgusToLuisDos)
 
+		
 		// Mediadores
 		def mediadorAgus = new Mediador(usuario: usuarioAgus, rol: rolMediador, jerarquia: "JTP");
 		def mediadorUno = new Mediador(usuario: usuarioUno, rol: rolMediador, jerarquia: "JTP");
@@ -233,6 +253,12 @@ class BootStrap {
 			red.save()
 			println red.titulo
 		}
+		
+		/*
+		 * Mensajeria
+		 */
+		
+		
 	
     }
     def destroy = {
