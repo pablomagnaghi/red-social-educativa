@@ -25,7 +25,7 @@
 		<g:form controller="red" action="revisarDatosUsuario">
 			<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'username', 'error')} required">
 				<label for="username"> 
-					<g:message code="usuario.username.label" default="Dni" /> 
+					<g:message code="usuarioInstance.username.label" default="Dni" /> 
 					<span class="required-indicator">*</span>
 				</label>
 				<g:textField name="username" type="number" value="${usuarioInstance?.username}" required=""/>
@@ -33,7 +33,7 @@
 		
 			<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'apellido', 'error')} required">
 				<label for="apellido">
-					<g:message code="usuario.apellido.label" default="Apellido" />
+					<g:message code="usuarioInstance.apellido.label" default="Apellido" />
 					<span class="required-indicator">*</span>
 				</label>
 				<g:textField name="apellido" required="" value="${usuarioInstance?.apellido}"/>
@@ -41,7 +41,7 @@
 			
 			<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'nombres', 'error')} required">
 				<label for="nombres">
-					<g:message code="usuario.nombres.label" default="Nombres" />
+					<g:message code="usuarioInstance.nombres.label" default="Nombres" />
 					<span class="required-indicator">*</span>
 				</label>
 				<g:textField name="nombres" required="" value="${miembroInstance?.nombres}"/>
@@ -49,7 +49,7 @@
 
 			<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'legajo', 'error')} required">
 				<label for="legajo">
-					<g:message code="usuario.legajo.label" default="Legajo" />
+					<g:message code="usuarioInstance.legajo.label" default="Legajo" />
 					<span class="required-indicator">*</span>
 				</label>
 				<g:textField name="legajo" type="number" value="${usuarioInstance?.legajo}" required=""/>
@@ -57,7 +57,7 @@
 			
 			<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'padron', 'error')} required">
 				<label for="padron">
-					<g:message code="usuario.padron.label" default="Padron" />
+					<g:message code="usuarioInstance.padron.label" default="Padron" />
 					<span class="required-indicator">*</span>
 				</label>
 				<g:textField name="padron" type="number" value="${usuarioInstance?.padron}" required=""/>
@@ -66,7 +66,7 @@
 			<div
 				class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'email', 'error')} required">
 				<label for="email"> 
-					<g:message code="usuario.email.label" default="Email" /> 
+					<g:message code="usuarioInstance.email.label" default="Email" /> 
 					<span class="required-indicator">*</span>
 				</label>
 				<g:textField name="email" required="" value="${usuarioInstance?.email}" />
@@ -74,15 +74,14 @@
 			
 			<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'password', 'error')} ">
 				<label for="password">
-					<g:message code="usuario.password.label" default="Password" />
-					
+					<g:message code="usuarioInstance.password.label" default="Password" />
 				</label>
 				<g:passwordField name="password" maxlength="12" required="" value="${usuarioInstance?.password}"/>
 			</div>	
 	
 			<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'password', 'error')} ">
 				<label for="passwordConfirmado"> 
-					<g:message code="usuario.direcciones.label" default="Confirmar Password" />
+					<g:message code="usuarioInstance.passwordConfirmado.label" default="Confirmar Password" />
 				</label>
 				<g:passwordField name="passwordConfirmado" required="" />
 			</div>
