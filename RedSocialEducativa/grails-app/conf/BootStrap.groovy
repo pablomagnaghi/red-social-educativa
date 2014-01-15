@@ -18,7 +18,7 @@ class BootStrap {
 		roles.add(rolAdmin)
 		def rolMediador = new Rol(authority: 'ROL_MEDIADOR')
 		roles.add(rolMediador)
-		def rolAprendiz = new Rol(authority																																																																																																		: 'ROL_APRENDIZ')
+		def rolAprendiz = new Rol(authority: 'ROL_APRENDIZ')
 		roles.add(rolAprendiz)
 		def rolMiembro = new Rol(authority: 'ROL_MIEMBRO')
 		roles.add(rolMiembro)
@@ -89,9 +89,9 @@ class BootStrap {
 		def usuarioCatorce = new Usuario(username: "00000014", password: "00000014", apellido: "ApeCatorce", nombres: "NomCatorce",
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), enabled: false)
 		usuarioService.guardar(usuarioCatorce)
-		/*
-		 * Mensajes
-		 */
+		
+		// Mensajes
+		
 		def mensajePabloToLuis = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
 		cuerpo: "Vamos por el campeonato", fecha : new Date())
 		mensajeService.nuevoMensaje(mensajePabloToLuis)
@@ -242,6 +242,46 @@ class BootStrap {
 				println administradores.get(i)
 			}
 		}
+		
+		// Miembros
+		def ArrayList<Miembro> miembros = new ArrayList<Miembro>()
+		
+		def miembroAgus = new Miembro(usuario: usuarioAgus, rol: rolMiembro)
+		miembros.add(miembroAgus)
+		def miembroUno = new Miembro(usuario: usuarioUno, rol: rolMiembro)
+		miembros.add(miembroUno)
+		def miembroDos = new Miembro(usuario: usuarioDos, rol: rolMiembro)
+		miembros.add(miembroDos)
+		def miembroTres = new Miembro(usuario: usuarioTres, rol: rolMiembro)
+		miembros.add(miembroTres)
+		def miembroCuatro = new Miembro(usuario: usuarioCuatro, rol: rolMiembro)
+		miembros.add(miembroCuatro)
+		def miembroCinco = new Miembro(usuario: usuarioCinco, rol: rolMiembro)
+		miembros.add(miembroCinco)
+		def miembroSeis = new Miembro(usuario: usuarioSeis, rol: rolMiembro)
+		miembros.add(miembroSeis)
+		def miembroSiete = new Miembro(usuario: usuarioSiete, rol: rolMiembro)
+		miembros.add(miembroSiete)
+		def miembroOcho = new Miembro(usuario: usuarioOcho, rol: rolMiembro)
+		miembros.add(miembroOcho)
+		def miembroNueve = new Miembro(usuario: usuarioNueve, rol: rolMiembro)
+		miembros.add(miembroNueve)
+		def miembroDiez = new Miembro(usuario: usuarioDiez, rol: rolMiembro)
+		miembros.add(miembroDiez)
+		def miembroOnce = new Miembro(usuario: usuarioOnce, rol: rolMiembro)
+		miembros.add(miembroOnce)
+		def miembroDoce = new Miembro(usuario: usuarioDoce, rol: rolMiembro)
+		miembros.add(miembroDoce)
+			
+		for(int i = 0; i<miembros.size(); i++){
+			if (!miembros.get(i).validate()) {
+				println miembros.get(i).errors
+			} else {
+				println "Miembros agregados a la bbdd:"
+				miembros.get(i).save()
+				println miembros.get(i)
+			}
+		}	
 		
 		// Red
 		def red = new Red()

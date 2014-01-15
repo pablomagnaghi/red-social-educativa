@@ -64,19 +64,24 @@ class RedController {
 			cursosMediador: cursosMediador, cursosAprendiz: cursosAprendiz, cantMensajes: mensajes.size()]
 	}
 	
+	// TODO analogia con los controladores scaffold respond new Class(params)
 	def solicitarMembresia = {
+		respond new Usuario(params)
 	}
 	
-	def revisarDatosUsuario = {
+	def revisarDatosUsuario(Usuario usuario) {
 		// hacer validaciones de algunas campos como dni
 		if (params.password != params.passwordConfirmado) {
 			flash.message = "El password confirmado es incorrecto"
 			redirect(action: "solicitarMembresia")
 			return
 		} 
-		def usuario = new Usuario(username: params.username, password: params.password, apellido: params.apellido,
+		/*def usuario = new Usuario(username: params.username, password: params.password, apellido: params.apellido,
 			nombres: params.nombres, legajo: params.legajo, padron: params.padron, email: params.email,
-			fechaSolicitud: new Date(), enabled: false)
+			fechaSolicitud: new Date(), enabled: false)*/
+		
+		usuario.fechaSolicitud = new Date()
+		usuario.enabled = false
 		
 		if(!usuario.validate()) {
 			flash.message = "Revise sus parametros"

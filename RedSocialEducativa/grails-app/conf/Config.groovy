@@ -65,6 +65,7 @@ grails {
 }
  
 grails.converters.encoding = "UTF-8"
+// TODO si saco Instance, en las view en vez de bean="${nombreInstance}" poner bean="${nombre}"
 // scaffolding templates configuration
 grails.scaffolding.templates.domainSuffix = 'Instance'
 
