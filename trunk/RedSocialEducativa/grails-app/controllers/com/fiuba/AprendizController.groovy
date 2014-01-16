@@ -14,9 +14,22 @@ class AprendizController {
 	// metodos para ABM aprendices del menu de mediador
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+	def cursoId 
+	
     def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Aprendiz.list(params), model:[aprendizInstanceCount: Aprendiz.count()]
+        params.max = Math.min(max ?: 2, 100)
+		
+		println "index aprendiz"
+		println params
+		
+		if (params.id)
+			cursoId = params.id
+			
+		respond Aprendiz.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]), 
+			model:[aprendizInstanceCount: Aprendiz.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId]
+			
+		//[aprendizInstanceList: Aprendiz.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]), 
+		//	aprendizInstanceCount: Aprendiz.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId]
     }
 
     def show(Aprendiz aprendizInstance) {

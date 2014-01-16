@@ -113,9 +113,9 @@ class BootStrap {
 		def mensajeAgusToLuisDos = new Mensaje(emisor: usuarioAgus, receptor: usuarioLuis, asunto: "Mensaje de Agus a Luis 2",
 		cuerpo: "Hola como estas?", fecha : new Date())
 		mensajeService.nuevoMensaje(mensajeAgusToLuisDos)
-
-		
+	
 		// Mediadores
+		
 		def mediadorAgus = new Mediador(usuario: usuarioAgus, rol: rolMediador, jerarquia: "JTP");
 		def mediadorUno = new Mediador(usuario: usuarioUno, rol: rolMediador, jerarquia: "JTP");
 		def mediadorUnoP = new Mediador(usuario: usuarioUno, rol: rolMediador, jerarquia: "AYU1");
@@ -157,41 +157,50 @@ class BootStrap {
 		def aprendizDoce = new Aprendiz(usuario: usuarioDoce, rol: rolAprendiz, participa: false, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
 		
+		//--Carga de foros
+		
+		// Foros generales de curso
+		
+		def foroCursoUno = new ForoCurso(nombre: "ForoGeneralCursoUno")
+		def foroCursoDos = new ForoCurso(nombre: "ForoGeneralCursoDos")
+		def foroCursoTres = new ForoCurso(nombre: "ForoGeneralCursoTres")
+		def foroCursoCuatro = new ForoCurso(nombre: "ForoGeneralCursoCuatro")
+		def foroCursoCinco = new ForoCurso(nombre: "ForoGeneralCursoCinco")
+		
 		//--Carga de cursos
 		
-		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2")
+		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2", foro: foroCursoUno)
 		cursoUno.addToMediadores(mediadorAgus)
 		cursoUno.addToMediadores(mediadorUno)
 		cursoUno.addToAprendices(aprendizDos)
 		cursoUno.addToAprendices(aprendizTres)
 		cursoUno.addToAprendices(aprendizOcho)
 
-		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2")
+		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", foro: foroCursoDos)
 		cursoDos.addToMediadores(mediadorUnoP)
 		cursoDos.addToMediadores(mediadorDos)
 		cursoDos.addToAprendices(aprendizAgus)
 		cursoDos.addToAprendices(aprendizCuatro)
 		cursoDos.addToAprendices(aprendizNueve)
 		
-		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1|2")
+		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1|2", foro: foroCursoTres)
 		cursoTres.addToMediadores(mediadorTres)
 		cursoTres.addToAprendices(aprendizUno)
 		cursoTres.addToAprendices(aprendizCinco)
 		cursoTres.addToAprendices(aprendizDiez)
 
-		def cursoCuatro = new Curso(nroRelativo: "04", cuatDict: "1|2")
+		def cursoCuatro = new Curso(nroRelativo: "04", cuatDict: "1|2", foro: foroCursoCuatro)
 		cursoCuatro.addToMediadores(mediadorCuatro)
 		cursoCuatro.addToAprendices(aprendizUnoP)
 		cursoCuatro.addToAprendices(aprendizSeis)
 		cursoCuatro.addToAprendices(aprendizOnce)
 
-		def cursoCinco = new Curso(nroRelativo: "05", cuatDict: "1|2")
+		def cursoCinco = new Curso(nroRelativo: "05", cuatDict: "1|2", foro: foroCursoCinco)
 		cursoCinco.addToMediadores(mediadorCinco)
 		cursoCinco.addToMediadores(mediadorSeis)
 		cursoCinco.addToAprendices(aprendizUnoPP)
 		cursoCinco.addToAprendices(aprendizSiete)
 		cursoCinco.addToAprendices(aprendizDoce)
-		
 		
 		// Materias - con carga de cursos
 		def ArrayList<Materia> materias = new ArrayList<Materia>()
@@ -298,8 +307,6 @@ class BootStrap {
 		 * Mensajeria
 		 */
 		
-		
-	
     }
     def destroy = {
     }

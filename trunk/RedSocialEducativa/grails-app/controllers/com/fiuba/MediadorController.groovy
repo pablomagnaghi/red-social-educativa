@@ -13,8 +13,8 @@ class MediadorController {
 	// Metodos nuevos
 	
 	def activarAprendiz() {
-		def aprendiz = Aprendiz.get(params.id)
-		//println "activarAprendiz params: ${params}"
+		def aprendiz = Aprendiz.get(params.aprendizId)
+		println "activarAprendiz params: ${params}"
 		//println "${aprendiz}, ${aprendiz.id}, ${aprendiz.participa}"
 	
 		aprendiz.participa = true
@@ -35,7 +35,7 @@ class MediadorController {
 			flash.message = "Autorización enviada para el aprendiz ${username} del curso ${aprendiz.curso}"
 		}
 		
-		redirect(controller: "curso", action: "mediador")
+		redirect(controller: "curso", action: "mediador", params: params)
 	}
 	
 	// TODO

@@ -11,10 +11,19 @@
 		<a href="#list-aprendiz" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+				<li><a class="home" href="${createLink(uri: '/')}">
+					<g:message code="default.home.label"/></a></li>
+				<li><g:link class="create" action="mediador" controller="curso" id="${cursoId}">
+					<g:message code="Tareas mediador" /></g:link></li>
+				<li><g:link class="create" action="create">
+					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+		
+		<h2>Params: ${params}</h2>
+		<h2>Curso: ${com.fiuba.Curso.get(cursoId)}</h2>
+		<h2>Curso Id: ${cursoId}</h2>
+		
 		<div id="list-aprendiz" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -58,6 +67,8 @@
 				</g:each>
 				</tbody>
 			</table>
+			<h2>${aprendizInstanceCount ?: 0}</h2>
+			<h2>${aprendizInstanceCount}</h2>
 			<div class="pagination">
 				<g:paginate total="${aprendizInstanceCount ?: 0}" />
 			</div>
