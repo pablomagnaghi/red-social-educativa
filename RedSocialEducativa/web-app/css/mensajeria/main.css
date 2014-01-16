@@ -16,3 +16,14 @@
     display : block;
     background-color: #AAAAAA
 }
+
+.ui-state-active {
+	background-color: #CCCCCC
+}
+
+.selectedFolder {
+	background-color:#FFCC66;
+    text-shadow: none;
+}
+    
+    

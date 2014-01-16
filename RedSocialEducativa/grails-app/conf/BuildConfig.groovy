@@ -60,7 +60,7 @@ grails.project.dependency.resolution = {
         compile ":scaffolding:2.0.1"
         compile ':cache:1.1.1'
 		compile ":mail:1.0.1"
-
+		compile ":jquery-ui:1.10.3"
 		compile ":spring-security-core:2.0-RC2"
 		
         // plugins needed at runtime but not for compilation

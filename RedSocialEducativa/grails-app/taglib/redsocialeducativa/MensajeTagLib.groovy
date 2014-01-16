@@ -24,7 +24,7 @@ class MensajeTagLib {
 			} else {
 				out << "<div>"
 			}
-			out << " <p>De:  " + it.emisor.username + " | asunto: " + it.asunto + " | fecha: " + it.fecha
+			out << " <div class='draggable' id='" + conversacion.id + "'>De:  " + it.emisor.username + " | asunto: " + it.asunto + " | fecha: " + it.fecha + "</div>"
 			out << "</div>"
 		}
 	}
