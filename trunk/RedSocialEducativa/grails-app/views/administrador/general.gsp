@@ -9,9 +9,9 @@
 				<li><g:link class="list" action="principal" controller="red">
 					<g:message code="Volver"/></g:link></li>
 				<li><g:link class="list" action="index" controller="materia">
-					<g:message code="Registrar y eliminar materias" /></g:link></li>
+					<g:message code="Administrar materias" /></g:link></li>
 				<li><g:link class="list" action="index" controller="curso">
-					<g:message code="Registrar y eliminar cursos de materias" /></g:link></li>
+					<g:message code="Administrar cursos" /></g:link></li>
 				<li><g:link class="list" action="index" controller="noticiaRed">
 					<g:message code="Administrar cartelera general" /></g:link></li>
 				<li><g:link class="list" action="configuracion" controller="red">

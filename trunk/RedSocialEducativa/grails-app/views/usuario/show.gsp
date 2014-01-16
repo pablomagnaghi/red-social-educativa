@@ -14,9 +14,13 @@
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
 				<li><g:link class="list" controller="administrador" action="general">
-					<g:message code="Volver a tareas administrativas"/></g:link></li>
+					<g:message code="Tareas administrativas"/></g:link></li>
+				<li><g:link class="list" controller="curso" action="general">
+					<g:message code="Administrar cursos"/></g:link></li>
+				<li><g:link class="list" controller="noticiaRed" action="index">
+					<g:message code="Cartelera general"/></g:link></li>
 				<li><g:link class="list" controller="mediador" action="index">
-					<g:message code="Volver a mediadores"/></g:link></li>
+					<g:message code="Administrar mediadores"/></g:link></li>
 			</ul>
 		</div>
 		<div id="show-usuario" class="content scaffold-show" role="main">

@@ -16,6 +16,7 @@ class Aprendiz extends UsuarioRol {
 	static belongsTo = [curso: Curso]
 
     static constraints = {
+		ultVisita nullable:true
     }
 
 }

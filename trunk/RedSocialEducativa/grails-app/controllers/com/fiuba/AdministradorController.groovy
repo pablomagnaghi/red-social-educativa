@@ -7,7 +7,6 @@ import org.springframework.security.access.annotation.Secured
 @Secured('permitAll')
 class AdministradorController {
 
-	
 	// Administrador
 	// 7. Registrar y eliminar materias y cursos de materias
 	// 8. Administrar cartelera general (publicar, modificar y eliminar anuncios)

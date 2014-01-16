@@ -9,8 +9,8 @@
 		       	<g:message code="Volver" args="[entityName]" /></g:link>
 		</div>
 		<div>
-		    <g:link class="list" action="solicitarParticionEnElCurso">
-				<g:message code="Solicitar particion en el curso" args="[entityName]" /></g:link>    
+		    <g:link class="list" action="solicitarParticipacionEnElCurso">
+				<g:message code="Solicitar partipacion en el curso" args="[entityName]" /></g:link>    
 		</div>
 	</body>
 </html>

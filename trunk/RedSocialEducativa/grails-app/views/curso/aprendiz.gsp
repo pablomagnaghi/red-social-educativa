@@ -16,7 +16,7 @@
 			<g:link class="list" action="principal" controller="red">
 			<g:message code="Pagina Inicial" args="[entityName]" /></g:link>
 		</div>
-		<g:if test="${aprendiz.participa}">
+		<g:if test="${aprendiz?.participa}">
 			<div>
 		    "Bienvenido al curso aprendiz: ${aprendiz}"
 		    	<div>
