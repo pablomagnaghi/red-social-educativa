@@ -5,6 +5,7 @@
 <meta name="layout" content="main"/>
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'mensajeria/main.css')}" type="text/css">
 <g:javascript library="jquery" />
+<r:require module="jquery-ui"/>
 <r:layoutResources/>
 <g:javascript src="mensajeria/index.js" />
 <title>Mensajería</title>
@@ -15,10 +16,10 @@
   		<li><g:link id="redactarMensaje">Redactar</g:link>
   	</ul>
   </div>
-  <div class="body" style="display:inline">
+  <div class="body" style="display:inline" id="panel_mensajes">
   	<div style="width: 150px; float: left">
 	  	<ul id="lista_carpetas" style="list-style-type:none;">
-		  	<g:render template="carpetas" model="['etiquetasCarpetas' : etiquetasCarpetas]"></g:render>
+		  	<g:render template="carpetas" model="['etiquetasCarpetas' : etiquetasCarpetas, 'seleccionada' : carpetaSeleccionada]"></g:render>
 	  	</ul>
   	</div>
   	<div id="lista_conversaciones" style="float: left">
