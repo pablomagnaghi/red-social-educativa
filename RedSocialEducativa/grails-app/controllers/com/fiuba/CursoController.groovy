@@ -1,9 +1,15 @@
 package com.fiuba
 
+import static org.springframework.http.HttpStatus.*
+//import grails.transaction.Transactional
+
+//@Transactional(readOnly = true)
+
 import org.springframework.security.access.annotation.Secured
 
 @Secured('permitAll')
 class CursoController {
+
 	// EL visitante puede:
 	// * 1 - Visualizar información y material de los cursos (foros, temas y material general)
 	// * 3 - Dejar comentario o mensaje para un curso (foro de curso)
@@ -27,8 +33,6 @@ class CursoController {
 	
 	// metodos por defecto, usados en ABM cursos del administrador
 	// ver en detalle despues
-	
-	static scaffold = true
 	
 	// Metodos nuevos
 	def springSecurityService
@@ -74,7 +78,7 @@ class CursoController {
 						redirect(action: "aprendiz", params: params)
 					} else {
 						flash.message = "Hola miembro ${usuario}"
-						redirect(action: "miembro")
+						redirect(action: "miembro", params: params)
 					}
 				}
 			}
@@ -109,6 +113,7 @@ class CursoController {
 	}
 	
 	def aprendiz() {
+		//println params
 		def aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(params.id))
 		// println "Vista del curso para el aprendiz ${aprendiz}"
 		// TODO agregar noticias del curso
@@ -118,29 +123,125 @@ class CursoController {
 	}
 	
 	def miembro() {
-		
+		//println "cursoID miembro: ${cursoId}"
+		//println params
+		cursoId = params.id
 	}
 	
-	def solicitarParticipacionEnElCurso() {/*
-		// hacer validaciones de algunas campos como dni
-		if (params.password != params.passwordConfirmado) {
-			flash.message = "El password confirmado es incorrecto"
-			redirect(action: "solicitarMembresia")
+	def solicitarParticipacionEnElCurso() {
+		
+		def aprendiz = new Aprendiz(usuario: usuarioActual(), rol: Rol.findByAuthority('ROL_APRENDIZ'), participa: false, msjEnviados: "0",
+			msjLeidos: "0", pubForos: "0", descMaterial: "0")
+		
+		println "cursoID : ${cursoId}"
+		
+		Curso.get(cursoId).addToAprendices(aprendiz)
+		
+		if(!aprendiz.validate()) {
+			flash.message = "Problemas con la solitud de participacion"
+			println aprendiz.errors
+			redirect(action:"aprendiz", params:['id': cursoId])
 			return
 		}
-		def usuario = new Usuario(username: params.username, password: params.password, apellido: params.apellido,
-			nombres: params.nombres, legajo: params.legajo, padron: params.padron, email: params.email,
-			fechaSolicitud: new Date(), enabled: false)
 		
-		if(!usuario.validate()) {
-			flash.message = "Revise sus parametros"
-			respond usuario.errors, view:'solicitarMembresia'
-			return
-		}
-		
-		usuario.save()
+		aprendiz.save()
 		flash.message = "Solicitud aceptada. A la brevedad se le enviara un mail de confirmacion"
-		redirect(action:"index")*/
-		
+		redirect(action:"aprendiz", params:['id': cursoId])
 	}
+	
+	// TODO: Metodos para ABM de cursos en menu administrador
+
+    // static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+    def index(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        respond Curso.list(params), model:[cursoInstanceCount: Curso.count()]
+    }
+
+    def show(Curso cursoInstance) {
+        respond cursoInstance
+    }
+
+    def create() {
+        respond new Curso(params)
+    }
+
+    //@Transactional
+    def save(Curso cursoInstance) {
+        if (cursoInstance == null) {
+            notFound()
+            return
+        }
+
+        if (cursoInstance.hasErrors()) {
+            respond cursoInstance.errors, view:'create'
+            return
+        }
+
+        cursoInstance.save flush:true
+
+        request.withFormat {
+            form {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'cursoInstance.label', default: 'Curso'), cursoInstance.id])
+                redirect cursoInstance
+            }
+            '*' { respond cursoInstance, [status: CREATED] }
+        }
+    }
+
+    def edit(Curso cursoInstance) {
+        respond cursoInstance
+    }
+
+    //@Transactional
+    def update(Curso cursoInstance) {
+        if (cursoInstance == null) {
+            notFound()
+            return
+        }
+
+        if (cursoInstance.hasErrors()) {
+            respond cursoInstance.errors, view:'edit'
+            return
+        }
+
+        cursoInstance.save flush:true
+
+        request.withFormat {
+            form {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'Curso.label', default: 'Curso'), cursoInstance.id])
+                redirect cursoInstance
+            }
+            '*'{ respond cursoInstance, [status: OK] }
+        }
+    }
+
+    //@Transactional
+    def delete(Curso cursoInstance) {
+
+        if (cursoInstance == null) {
+            notFound()
+            return
+        }
+
+        cursoInstance.delete flush:true
+
+        request.withFormat {
+            form {
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Curso.label', default: 'Curso'), cursoInstance.id])
+                redirect action:"index", method:"GET"
+            }
+            '*'{ render status: NO_CONTENT }
+        }
+    }
+
+    protected void notFound() {
+        request.withFormat {
+            form {
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'cursoInstance.label', default: 'Curso'), params.id])
+                redirect action: "index", method: "GET"
+            }
+            '*'{ render status: NOT_FOUND }
+        }
+    }
 }

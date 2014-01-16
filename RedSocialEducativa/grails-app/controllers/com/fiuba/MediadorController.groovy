@@ -1,9 +1,9 @@
 package com.fiuba
 
 import static org.springframework.http.HttpStatus.*
-//import grails.transaction.Transactional
+import grails.transaction.Transactional
 
-//@Transactional(readOnly = true)
+@Transactional(readOnly = true)
 
 import org.springframework.security.access.annotation.Secured
 
@@ -38,6 +38,7 @@ class MediadorController {
 		redirect(controller: "curso", action: "mediador")
 	}
 	
+	// TODO
 	// Metodos para el ABM de administrador
 	
     //static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -48,15 +49,19 @@ class MediadorController {
     }
 
     def show(Mediador mediadorInstance) {
+		println "show"
+		
+		println params
+		
         respond mediadorInstance
     }
 
-	// Crea un mediador vacio
+	// Crea un mediador vacio que se carga con los parametros en el _form
     def create() {
         respond new Mediador(params)
     }
 
-    //@Transactional
+    @Transactional
     def save(Mediador mediadorInstance) {
 
         if (mediadorInstance == null) {
@@ -68,6 +73,8 @@ class MediadorController {
             respond mediadorInstance.errors, view:'create'
             return
         }
+		
+		println "save"
 		
 		def curso = Curso.get(mediadorInstance.curso.id)
 		
@@ -103,11 +110,36 @@ class MediadorController {
     }
 
     def edit(Mediador mediadorInstance) {
+		println "edi"
+		
+		println params
+		
+		def curso = Curso.get(mediadorInstance.curso.id)
+		
+		def usuario = Usuario.get(mediadorInstance.usuario.id)
+		
+		println "curso: ${curso}"
+		println "usuario: ${usuario}"
+		
+		
         respond mediadorInstance
     }
 
-    //@Transactional
+    @Transactional
     def update(Mediador mediadorInstance) {
+		
+		println "update"
+		
+		println params
+		
+		def curso = Curso.get(mediadorInstance.curso.id)
+		
+		def usuario = Usuario.get(mediadorInstance.usuario.id)
+		
+		println "curso: ${curso}"
+		println "usuario: ${usuario}"
+		
+		
         if (mediadorInstance == null) {
             notFound()
             return
@@ -129,9 +161,20 @@ class MediadorController {
         }
     }
 
-    //@Transactional
+    @Transactional
     def delete(Mediador mediadorInstance) {
+		
+		println "delete"
 
+		
+		def curso = Curso.get(mediadorInstance.curso.id)
+		
+		def usuario = Usuario.get(mediadorInstance.usuario.id)
+		
+		println "curso: ${curso}"
+		println "usuario: ${usuario}"
+		
+		
         if (mediadorInstance == null) {
             notFound()
             return

@@ -10,8 +10,16 @@ import org.springframework.security.access.annotation.Secured
 
 @Secured('permitAll')
 class NoticiaRedController {
-
-    //static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	
+	def springSecurityService
+	
+	private usuarioActual() {
+		return Usuario.get(springSecurityService.principal.id)
+	}
+	
+	// TODO
+	// Metodos usados en el ABM Cartelera del menu administrador
+    // static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -23,11 +31,12 @@ class NoticiaRedController {
     }
 
     def create() {
-        respond new NoticiaRed(params)
+        [noticiaRedInstance: new NoticiaRed(params), usuario: usuarioActual()]
     }
-
-    // @Transactional
+	
+    //@Transactional
     def save(NoticiaRed noticiaRedInstance) {
+
         if (noticiaRedInstance == null) {
             notFound()
             return
@@ -50,11 +59,24 @@ class NoticiaRedController {
     }
 
     def edit(NoticiaRed noticiaRedInstance) {
+		// println "edit"
+		// println noticiaRedInstance.titulo
+		// println noticiaRedInstance.texto
+		// println noticiaRedInstance.id
+		// println noticiaRedInstance.administrador
+		
         respond noticiaRedInstance
     }
 
-    // @Transactional
+    //@Transactional
     def update(NoticiaRed noticiaRedInstance) {
+		
+		println "update"
+		println noticiaRedInstance.titulo
+		println noticiaRedInstance.texto
+		println noticiaRedInstance.id
+		println noticiaRedInstance.administrador
+		
         if (noticiaRedInstance == null) {
             notFound()
             return

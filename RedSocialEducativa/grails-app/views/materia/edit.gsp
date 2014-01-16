@@ -1,41 +1,39 @@
-<%@ page import="com.fiuba.Mediador" %>
+<%@ page import="com.fiuba.Materia" %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'mediador.label', default: 'Mediador')}" />
+		<g:set var="entityName" value="${message(code: 'materia.label', default: 'Materia')}" />
 		<title><g:message code="default.edit.label" args="[entityName]" /></title>
 	</head>
 	<body>
-		<a href="#edit-mediador" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+		<a href="#edit-materia" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
 				<li><g:link class="list" controller="administrador" action="general">
-					<g:message code="Tareas administrativas"/></g:link></li>
-				
+					<g:message code="Volver a tareas administrativas"/></g:link></li>
 				<li><g:link class="list" action="index">
 					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
 				<li><g:link class="create" action="create">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
-			
-		<div id="edit-mediador" class="content scaffold-edit" role="main">
+		<div id="edit-materia" class="content scaffold-edit" role="main">
 			<h1><g:message code="default.edit.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
-			<g:hasErrors bean="${mediadorInstance}">
+			<g:hasErrors bean="${materiaInstance}">
 			<ul class="errors" role="alert">
-				<g:eachError bean="${mediadorInstance}" var="error">
+				<g:eachError bean="${materiaInstance}" var="error">
 				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="update" method="PUT" id="${mediadorInstance.id}">
-				<g:hiddenField name="version" value="${mediadorInstance?.version}" />
+			<g:form url="[resource:materiaInstance, action:'update']" method="PUT" >
+				<g:hiddenField name="version" value="${materiaInstance?.version}" />
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>

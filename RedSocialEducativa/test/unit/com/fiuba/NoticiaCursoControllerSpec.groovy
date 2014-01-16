@@ -5,9 +5,9 @@ package com.fiuba
 import grails.test.mixin.*
 import spock.lang.*
 
-@TestFor(RolController)
-@Mock(Rol)
-class RolControllerSpec extends Specification {
+@TestFor(NoticiaCursoController)
+@Mock(NoticiaCurso)
+class NoticiaCursoControllerSpec extends Specification {
 
     def populateValidParams(params) {
         assert params != null
@@ -21,8 +21,8 @@ class RolControllerSpec extends Specification {
             controller.index()
 
         then:"The model is correct"
-            !model.rolInstanceList
-            model.rolInstanceCount == 0
+            !model.noticiaCursoInstanceList
+            model.noticiaCursoInstanceCount == 0
     }
 
     void "Test the create action returns the correct model"() {
@@ -30,31 +30,31 @@ class RolControllerSpec extends Specification {
             controller.create()
 
         then:"The model is correctly created"
-            model.rolInstance!= null
+            model.noticiaCursoInstance!= null
     }
 
     void "Test the save action correctly persists an instance"() {
 
         when:"The save action is executed with an invalid instance"
-            def rol = new Rol()
-            rol.validate()
-            controller.save(rol)
+            def noticiaCurso = new NoticiaCurso()
+            noticiaCurso.validate()
+            controller.save(noticiaCurso)
 
         then:"The create view is rendered again with the correct model"
-            model.rolInstance!= null
+            model.noticiaCursoInstance!= null
             view == 'create'
 
         when:"The save action is executed with a valid instance"
             response.reset()
             populateValidParams(params)
-            rol = new Rol(params)
+            noticiaCurso = new NoticiaCurso(params)
 
-            controller.save(rol)
+            controller.save(noticiaCurso)
 
         then:"A redirect is issued to the show action"
-            response.redirectedUrl == '/rol/show/1'
+            response.redirectedUrl == '/noticiaCurso/show/1'
             controller.flash.message != null
-            Rol.count() == 1
+            NoticiaCurso.count() == 1
     }
 
     void "Test that the show action returns the correct model"() {
@@ -66,11 +66,11 @@ class RolControllerSpec extends Specification {
 
         when:"A domain instance is passed to the show action"
             populateValidParams(params)
-            def rol = new Rol(params)
-            controller.show(rol)
+            def noticiaCurso = new NoticiaCurso(params)
+            controller.show(noticiaCurso)
 
         then:"A model is populated containing the domain instance"
-            model.rolInstance == rol
+            model.noticiaCursoInstance == noticiaCurso
     }
 
     void "Test that the edit action returns the correct model"() {
@@ -82,11 +82,11 @@ class RolControllerSpec extends Specification {
 
         when:"A domain instance is passed to the edit action"
             populateValidParams(params)
-            def rol = new Rol(params)
-            controller.edit(rol)
+            def noticiaCurso = new NoticiaCurso(params)
+            controller.edit(noticiaCurso)
 
         then:"A model is populated containing the domain instance"
-            model.rolInstance == rol
+            model.noticiaCursoInstance == noticiaCurso
     }
 
     void "Test the update action performs an update on a valid domain instance"() {
@@ -94,28 +94,28 @@ class RolControllerSpec extends Specification {
             controller.update(null)
 
         then:"A 404 error is returned"
-            response.redirectedUrl == '/rol/index'
+            response.redirectedUrl == '/noticiaCurso/index'
             flash.message != null
 
 
         when:"An invalid domain instance is passed to the update action"
             response.reset()
-            def rol = new Rol()
-            rol.validate()
-            controller.update(rol)
+            def noticiaCurso = new NoticiaCurso()
+            noticiaCurso.validate()
+            controller.update(noticiaCurso)
 
         then:"The edit view is rendered again with the invalid instance"
             view == 'edit'
-            model.rolInstance == rol
+            model.noticiaCursoInstance == noticiaCurso
 
         when:"A valid domain instance is passed to the update action"
             response.reset()
             populateValidParams(params)
-            rol = new Rol(params).save(flush: true)
-            controller.update(rol)
+            noticiaCurso = new NoticiaCurso(params).save(flush: true)
+            controller.update(noticiaCurso)
 
         then:"A redirect is issues to the show action"
-            response.redirectedUrl == "/rol/show/$rol.id"
+            response.redirectedUrl == "/noticiaCurso/show/$noticiaCurso.id"
             flash.message != null
     }
 
@@ -124,23 +124,23 @@ class RolControllerSpec extends Specification {
             controller.delete(null)
 
         then:"A 404 is returned"
-            response.redirectedUrl == '/rol/index'
+            response.redirectedUrl == '/noticiaCurso/index'
             flash.message != null
 
         when:"A domain instance is created"
             response.reset()
             populateValidParams(params)
-            def rol = new Rol(params).save(flush: true)
+            def noticiaCurso = new NoticiaCurso(params).save(flush: true)
 
         then:"It exists"
-            Rol.count() == 1
+            NoticiaCurso.count() == 1
 
         when:"The domain instance is passed to the delete action"
-            controller.delete(rol)
+            controller.delete(noticiaCurso)
 
         then:"The instance is deleted"
-            Rol.count() == 0
-            response.redirectedUrl == '/rol/index'
+            NoticiaCurso.count() == 0
+            response.redirectedUrl == '/noticiaCurso/index'
             flash.message != null
     }
 }
