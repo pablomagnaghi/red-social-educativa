@@ -21,10 +21,8 @@
 		  	<g:render template="carpetas" model="['etiquetasCarpetas' : etiquetasCarpetas]"></g:render>
 	  	</ul>
   	</div>
-  	<div style="float: left">
-  		<g:each in="${conversacionesEscr}" var="conversacion">
-  			<msg:showConversation data="${conversacion}"/>
-  		</g:each>
+  	<div id="lista_conversaciones" style="float: left">
+  		<g:render template="conversaciones" model="['conversaciones' : conversacionesEscr]"></g:render>
   	</div>
   </div>
   <div id="div_nueva_carpeta" style="display:none">

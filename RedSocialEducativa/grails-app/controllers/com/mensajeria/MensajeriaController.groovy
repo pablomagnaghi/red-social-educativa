@@ -1,9 +1,12 @@
 package com.mensajeria
 
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
 import org.springframework.security.access.annotation.Secured
+
 import com.fiuba.Usuario
 import com.mensajeria.Conversacion
-
 import com.fiuba.RedController;
 
 @Secured('permitAll')
@@ -25,6 +28,28 @@ class MensajeriaController {
 		
 		def etiquetasCarpetas = getCarpetas(usuario)
 		render(template:"carpetas",model:[etiquetasCarpetas: etiquetasCarpetas])
+	}
+	
+	def mostrarMensajes(String nombreCarpeta){
+		def usuario = Usuario.get(springSecurityService.principal.id)
+		def matcher = /([^(]+)(?:\([\d]+\))?$/
+		def nombreFormateado = ""
+		nombreCarpeta.eachMatch(matcher) {
+			nombreFormateado = it[1]
+		}
+		def conversacion = []
+		if (nombreFormateado.equals("Enviados")){
+			def mensajes = Mensaje.findAllByEmisor(usuario)
+			print "hola"
+			mensajes.each {
+				def conv = new Conversacion()
+				conv.addToMensajes(it)
+				conversacion.add(conv)
+			}
+		} else {
+			conversacion = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, nombreFormateado))
+		}
+		render(template:"conversaciones",model:[conversaciones: conversacion])
 	}
 	
 	private getCarpetas(Usuario usuario){
