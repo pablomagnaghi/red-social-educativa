@@ -1,6 +1,6 @@
 package com.fiuba
 
-class MaterialContenido extends Materia {
+class MaterialContenido extends Material {
 	
 	static belongsTo = [contenido: Contenido]
 	
