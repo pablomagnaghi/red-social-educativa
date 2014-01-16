@@ -19,11 +19,13 @@ class Curso {
 //	// numero de grupos actuales, debe cambiarse a cero cuando habGrupos es falso
 //	Short nroUltGrupo
 	
+	ForoCurso foro
+	
 	// Curso tiene como entidad fuerte a Materia. En tabla curso se pone el id de materia
 	static belongsTo = [materia: Materia]
 	
-	static hasMany = [mediadores: Mediador, aprendices: Aprendiz, noticiasCurso: NoticiaCurso]
-
+	static hasMany = [mediadores: Mediador, aprendices: Aprendiz, noticiasCurso: NoticiaCurso, temas: Tema]
+	
 	String toString() {
 		"${materia} - ${nroRelativo}"
 	}

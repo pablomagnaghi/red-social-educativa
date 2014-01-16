@@ -4,17 +4,17 @@
 		<meta name="layout" content="main"/>
 		</head>
 	<body>
-		<div class="nav" role="navigation">
-			<ul>
+		<div>
+			<ol>
 				<li><g:link class="list" action="principal" controller="red">
 					<g:message code="Pagina principal"/></g:link></li>
-				<li><g:link class="list" action="index" controller="aprendiz">
+				<li><g:link class="list" action="index" controller="aprendiz" id="${cursoId}">
 					<g:message code="Administrar aprendices" /></g:link></li>
 				<li><g:link class="list" action="index" controller="temas">
 					<g:message code="Administrar temas del curso" /></g:link></li>
 				<li><g:link class="list" action="index" controller="noticiaCurso">
 					<g:message code="Administrar cartelera del curso" /></g:link></li>
-			</ul>
+			</ol>
 		</div>
 		<div>
 			<g:if test="${flash.message}">
@@ -28,7 +28,8 @@
 						<li>
 							<span>${aprendiz}</span>
 							<span class = "menuButton">
-								<g:link action="activarAprendiz" controller="mediador" id="${aprendiz.id}">Aceptar</g:link>
+								<g:link action="activarAprendiz" controller="mediador" id="${cursoId}" params="['aprendizId': aprendiz.id]">
+									Aceptar</g:link>
 							</span>
 						</li>
 					</g:each>

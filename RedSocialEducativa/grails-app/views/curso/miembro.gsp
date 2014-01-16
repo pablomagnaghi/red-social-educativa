@@ -9,7 +9,7 @@
 		       	<g:message code="Volver" args="[entityName]" /></g:link>
 		</div>
 		<div>
-		    <g:link class="list" action="solicitarParticipacionEnElCurso">
+		    <g:link class="list" action="solicitarParticipacionEnElCurso" id="${cursoId}">
 				<g:message code="Solicitar partipacion en el curso" args="[entityName]" /></g:link>    
 		</div>
 	</body>

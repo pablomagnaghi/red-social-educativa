@@ -3,7 +3,7 @@ dataSource {
 	driverClassName = "com.mysql.jdbc.Driver"
 	username = "root"
 	password = "root"
-	// password = "33300432"
+	//password = "33300432"
 	
 	// TODO para ver las consultas SQL
 	// logSql = true

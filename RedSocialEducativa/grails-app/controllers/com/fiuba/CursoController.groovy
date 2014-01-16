@@ -93,10 +93,9 @@ class CursoController {
 		
 		def ArrayList<Aprendiz> aprendicesInactivos = new ArrayList<Aprendiz>()
 		
-		// println "params mediador: ${params}"
-
-		if (params.id)
-			cursoId = params.id
+		println "params mediador: ${params}"
+		
+		cursoId = params.id
 		
 		// println "curso mediador directo ${Curso.get(cursoId)}"
 			
@@ -109,7 +108,7 @@ class CursoController {
 		}
 		// println "aprendices inactivos: ${aprendicesInactivos}"
 		
-		[aprendices: aprendicesInactivos, materia: Curso.get(cursoId).materia]
+		[aprendices: aprendicesInactivos, materia: Curso.get(cursoId).materia, cursoId: cursoId]
 	}
 	
 	def aprendiz() {
@@ -126,6 +125,7 @@ class CursoController {
 		//println "cursoID miembro: ${cursoId}"
 		//println params
 		cursoId = params.id
+		[cursoId: cursoId]
 	}
 	
 	def solicitarParticipacionEnElCurso() {
@@ -133,7 +133,9 @@ class CursoController {
 		def aprendiz = new Aprendiz(usuario: usuarioActual(), rol: Rol.findByAuthority('ROL_APRENDIZ'), participa: false, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0")
 		
-		println "cursoID : ${cursoId}"
+		// println "solicitar participacion params: ${params}"
+		
+		cursoId = params.id
 		
 		Curso.get(cursoId).addToAprendices(aprendiz)
 		
