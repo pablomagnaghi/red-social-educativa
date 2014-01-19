@@ -11,30 +11,37 @@
 		<a href="#list-noticiaCurso" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+				<li><a class="home" href="${createLink(uri: '/')}">
+					<g:message code="default.home.label"/></a></li>
+				<li><g:link class="create" action="menuMediador" controller="curso" id="${cursoId}">
+					<g:message code="Tareas mediador" /></g:link></li>
+				<li><g:link class="create" action="create">
+					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+		
+		<h2>Params: ${params}</h2>
+		<h2>Curso: ${com.fiuba.Curso.get(cursoId)}</h2>
+		<h2>Curso Id: ${cursoId}</h2>
+
 		<div id="list-noticiaCurso" class="content scaffold-list" role="main">
-			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
+			<h1><g:message code="Noticias del curso ${com.fiuba.Curso.get(cursoId)}" /></h1>
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<table>
 			<thead>
 					<tr>
-					
-						<th><g:message code="noticiaCurso.curso.label" default="Curso" /></th>
-					
-						<g:sortableColumn property="fecha" title="${message(code: 'noticiaCurso.fecha.label', default: 'Fecha')}" />
-					
+
 						<th><g:message code="noticiaCurso.mediador.label" default="Mediador" /></th>
 					
-						<g:sortableColumn property="texto" title="${message(code: 'noticiaCurso.texto.label', default: 'Texto')}" />
+						<g:sortableColumn property="fecha" title="${message(code: 'noticiaCurso.fecha.label', default: 'Fecha')}" />
+						
+						<g:sortableColumn property="hora" title="${message(code: 'noticiaCurso.hora.label', default: 'Hora')}" />
 					
 						<g:sortableColumn property="titulo" title="${message(code: 'noticiaCurso.titulo.label', default: 'Titulo')}" />
 					
-						<g:sortableColumn property="visibilidad" title="${message(code: 'noticiaCurso.visibilidad.label', default: 'Visibilidad')}" />
+						<td> Detalle </td>	
 					
 					</tr>
 				</thead>
@@ -42,17 +49,16 @@
 				<g:each in="${noticiaCursoInstanceList}" status="i" var="noticiaCursoInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${noticiaCursoInstance.id}">${fieldValue(bean: noticiaCursoInstance, field: "curso")}</g:link></td>
-					
-						<td><g:formatDate date="${noticiaCursoInstance.fecha}" /></td>
-					
 						<td>${fieldValue(bean: noticiaCursoInstance, field: "mediador")}</td>
 					
-						<td>${fieldValue(bean: noticiaCursoInstance, field: "texto")}</td>
+						<td>${fieldValue(bean: noticiaCursoInstance, field: "fecha")}</td>
+						
+						<td>${fieldValue(bean: noticiaCursoInstance, field: "hora")}</td>
 					
 						<td>${fieldValue(bean: noticiaCursoInstance, field: "titulo")}</td>
 					
-						<td><g:formatBoolean boolean="${noticiaCursoInstance.visibilidad}" /></td>
+						<td><g:link action="show" id="${noticiaCursoInstance.id}">
+							Ver detalle</g:link></td>
 					
 					</tr>
 				</g:each>

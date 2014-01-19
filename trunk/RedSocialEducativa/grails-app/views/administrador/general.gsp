@@ -5,9 +5,11 @@
 		</head>
 	<body>
 		<div>
+			<h3>Menu principal de administrador</h3>
+			<br>
 			<ol>
 				<li><g:link class="list" action="principal" controller="red">
-					<g:message code="Volver"/></g:link></li>
+					<g:message code="Pagina principal"/></g:link></li>
 				<li><g:link class="list" action="index" controller="materia">
 					<g:message code="Administrar materias" /></g:link></li>
 				<li><g:link class="list" action="index" controller="curso">
@@ -20,25 +22,13 @@
 					<g:message code="Administrar foros generales" /></g:link></li>	
 				<li><g:link class="list" action="index" controller="mediador">
 					<g:message code="Administrar mediadores" /></g:link></li>
+				<li><g:link class="list" action="index" controller="usuario">
+					<g:message code="Aceptar miembros" /></g:link></li>
 			</ol>
 		</div>
 		<div>
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<br>
-			<g:if test="${usuarios}">
-				<h3>Membresias esperando activacion</h3>
-				<ol>
-					<g:each in="${usuarios}" var="usuario">
-						<li>
-							<span>${usuario}</span>
-							<span class = "menuButton">
-								<g:link action="activarUsuario" id="${usuario.id}">Activar</g:link>
-							</span>
-						</li>
-					</g:each>
-				</ol>
 			</g:if>
 		</div>
 	</body>

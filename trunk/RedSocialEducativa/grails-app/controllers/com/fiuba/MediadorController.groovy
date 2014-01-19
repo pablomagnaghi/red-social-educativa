@@ -23,7 +23,7 @@ class MediadorController {
 		if (aprendiz.hasErrors()){
 			println aprendiz.errors
 			flash.message = "Problemas con el aprendiz"
-			redirect(controller: "curso", action: "mediador")
+			redirect(controller: "curso", action: "menuMediador")
 			return
 		} else {
 			aprendiz.save();
@@ -35,7 +35,7 @@ class MediadorController {
 			flash.message = "Autorización enviada para el aprendiz ${username} del curso ${aprendiz.curso}"
 		}
 		
-		redirect(controller: "curso", action: "mediador", params: params)
+		redirect(controller: "curso", action: "menuMediador", params: params)
 	}
 	
 	// TODO
@@ -106,58 +106,6 @@ class MediadorController {
                 redirect mediadorInstance
             }
             '*' { respond mediadorInstance, [status: CREATED] }
-        }
-    }
-
-    def edit(Mediador mediadorInstance) {
-		println "edi"
-		
-		println params
-		
-		def curso = Curso.get(mediadorInstance.curso.id)
-		
-		def usuario = Usuario.get(mediadorInstance.usuario.id)
-		
-		println "curso: ${curso}"
-		println "usuario: ${usuario}"
-		
-		
-        respond mediadorInstance
-    }
-
-    @Transactional
-    def update(Mediador mediadorInstance) {
-		
-		println "update"
-		
-		println params
-		
-		def curso = Curso.get(mediadorInstance.curso.id)
-		
-		def usuario = Usuario.get(mediadorInstance.usuario.id)
-		
-		println "curso: ${curso}"
-		println "usuario: ${usuario}"
-		
-		
-        if (mediadorInstance == null) {
-            notFound()
-            return
-        }
-
-        if (mediadorInstance.hasErrors()) {
-            respond mediadorInstance.errors, view:'edit'
-            return
-        }
-
-        mediadorInstance.save flush:true
-
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Mediador.label', default: 'Mediador'), mediadorInstance.id])
-                redirect mediadorInstance
-            }
-            '*'{ respond mediadorInstance, [status: OK] }
         }
     }
 

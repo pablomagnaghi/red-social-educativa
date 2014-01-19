@@ -6,7 +6,7 @@
 	<body>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><g:link class="list" action="mediador" controller="curso">
+				<li><g:link class="list" action="menuMediador" controller="curso">
 					<g:message code="Pagina principal"/></g:link></li>
 			</ul>
 		</div>

@@ -30,6 +30,8 @@
 					
 						<g:sortableColumn property="nroRelativo" title="${message(code: 'curso.nroRelativo.label', default: 'Nro Relativo')}" />
 					
+						<g:sortableColumn property="nombre" title="${message(code: 'curso.nombre.label', default: 'Nombre')}" />
+					
 						<g:sortableColumn property="cuatDict" title="${message(code: 'curso.cuatDict.label', default: 'Cuat Dict')}" />
 					
 						<th><g:message code="curso.materia.label" default="Materia" /></th>
@@ -43,6 +45,8 @@
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
 						<td>${fieldValue(bean: cursoInstance, field: "nroRelativo")}</td>
+						
+						<td>${fieldValue(bean: cursoInstance, field: "nombre")}</td>
 					
 						<td>${fieldValue(bean: cursoInstance, field: "cuatDict")}</td>
 					

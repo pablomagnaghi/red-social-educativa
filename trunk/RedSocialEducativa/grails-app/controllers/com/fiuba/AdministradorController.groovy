@@ -49,6 +49,6 @@ class AdministradorController {
 			println miembro.errors
 		} 
 		miembro.save()
-		redirect(action: "general")
+		redirect(action: "index", controller: "usuario")
 	}
 }

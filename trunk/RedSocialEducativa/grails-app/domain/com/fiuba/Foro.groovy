@@ -6,6 +6,10 @@ abstract class Foro {
 	
     static constraints = {
     }
+
+	String toString() {
+		"${nombre}"
+	}
 	
 	static mapping = {
 		tablePerHierarchy false

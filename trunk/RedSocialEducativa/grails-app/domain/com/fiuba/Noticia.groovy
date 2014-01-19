@@ -4,8 +4,8 @@ abstract class Noticia {
 
 	String titulo 
 	String texto 
-	Date fecha // separar en fecha y hora
-	// Date hora
+	String fecha 
+	String hora
 	
 	// Indica si se muestra en la cartelera o no para los visitantes o aprendices
 	// Para administradores/mediadores se muestran todas las noticias

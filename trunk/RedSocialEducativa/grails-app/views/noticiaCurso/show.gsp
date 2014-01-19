@@ -11,9 +11,12 @@
 		<a href="#show-noticiaCurso" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+				<li><a class="home" href="${createLink(uri: '/')}">
+					<g:message code="default.home.label"/></a></li>
+				<li><g:link class="list" action="index">
+					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
+				<li><g:link class="create" action="create">
+					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
 		<div id="show-noticiaCurso" class="content scaffold-show" role="main">
@@ -27,25 +30,34 @@
 				<li class="fieldcontain">
 					<span id="curso-label" class="property-label"><g:message code="noticiaCurso.curso.label" default="Curso" /></span>
 					
-						<span class="property-value" aria-labelledby="curso-label"><g:link controller="curso" action="show" id="${noticiaCursoInstance?.curso?.id}">${noticiaCursoInstance?.curso?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="curso-label">${noticiaCursoInstance?.curso?.encodeAsHTML()}</span>
 					
 				</li>
 				</g:if>
 			
+				
 				<g:if test="${noticiaCursoInstance?.fecha}">
 				<li class="fieldcontain">
 					<span id="fecha-label" class="property-label"><g:message code="noticiaCurso.fecha.label" default="Fecha" /></span>
 					
-						<span class="property-value" aria-labelledby="fecha-label"><g:formatDate date="${noticiaCursoInstance?.fecha}" /></span>
+						<span class="property-value" aria-labelledby="fecha-label"><g:fieldValue bean="${noticiaCursoInstance}" field="fecha"/></span>
 					
 				</li>
 				</g:if>
+				<g:if test="${noticiaCursoInstance?.hora}">
+				<li class="fieldcontain">
+					<span id="hora-label" class="property-label"><g:message code="noticiaCurso.hora.label" default="Hora" /></span>
+					
+						<span class="property-value" aria-labelledby="hora-label"><g:fieldValue bean="${noticiaCursoInstance}" field="hora"/></span>
+					
+				</li>
+				</g:if>			
 			
 				<g:if test="${noticiaCursoInstance?.mediador}">
 				<li class="fieldcontain">
 					<span id="mediador-label" class="property-label"><g:message code="noticiaCurso.mediador.label" default="Mediador" /></span>
 					
-						<span class="property-value" aria-labelledby="mediador-label"><g:link controller="mediador" action="show" id="${noticiaCursoInstance?.mediador?.id}">${noticiaCursoInstance?.mediador?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="mediador-label">${noticiaCursoInstance?.mediador?.encodeAsHTML()}</span>
 					
 				</li>
 				</g:if>
@@ -78,10 +90,12 @@
 				</g:if>
 			
 			</ol>
-			<g:form url="[resource:noticiaCursoInstance, action:'delete']" method="DELETE">
+			<g:form action="delete" method="DELETE" id="${noticiaCursoInstance.id}">
 				<fieldset class="buttons">
-					<g:link class="edit" action="edit" resource="${noticiaCursoInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+					<g:link class="edit" action="edit" resource="${noticiaCursoInstance}" id="${noticiaCursoInstance.id}">
+						<g:message code="default.button.edit.label" default="Edit" /></g:link>
+					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
+						onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 				</fieldset>
 			</g:form>
 		</div>

@@ -43,10 +43,19 @@
 				<li class="fieldcontain">
 					<span id="fecha-label" class="property-label"><g:message code="noticiaRed.fecha.label" default="Fecha" /></span>
 					
-						<span class="property-value" aria-labelledby="fecha-label"><g:formatDate date="${noticiaRedInstance?.fecha}" /></span>
+						<span class="property-value" aria-labelledby="fecha-label"><g:fieldValue bean="${noticiaRedInstance}" field="fecha"/></span>
 					
 				</li>
 				</g:if>
+				<g:if test="${noticiaRedInstance?.hora}">
+				<li class="fieldcontain">
+					<span id="hora-label" class="property-label"><g:message code="noticiaRed.hora.label" default="Hora" /></span>
+					
+						<span class="property-value" aria-labelledby="hora-label"><g:fieldValue bean="${noticiaRedInstance}" field="hora"/></span>
+					
+				</li>
+				</g:if>			
+			
 			
 				<g:if test="${noticiaRedInstance?.texto}">
 				<li class="fieldcontain">

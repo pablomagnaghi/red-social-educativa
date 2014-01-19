@@ -2,7 +2,8 @@ package com.fiuba
 
 // El foro de cada tema de  un curso
 
-class ForoTema {
+class ForoTema extends Foro {
+	
 	static belongsTo = [tema: Tema]
 
 	static constraints = {

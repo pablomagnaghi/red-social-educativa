@@ -69,22 +69,29 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${cursoInstance?.noticiasCurso}">
-				<li class="fieldcontain">
-					<span id="noticiasCurso-label" class="property-label"><g:message code="curso.noticiasCurso.label" default="Noticias Curso" /></span>
-					
-						<g:each in="${cursoInstance.noticiasCurso}" var="n">
-						<span class="property-value" aria-labelledby="noticiasCurso-label"><g:link controller="noticiaCurso" action="show" id="${n.id}">${n?.encodeAsHTML()}</g:link></span>
-						</g:each>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${cursoInstance?.nroRelativo}">
 				<li class="fieldcontain">
 					<span id="nroRelativo-label" class="property-label"><g:message code="curso.nroRelativo.label" default="Nro Relativo" /></span>
 					
 						<span class="property-value" aria-labelledby="nroRelativo-label"><g:fieldValue bean="${cursoInstance}" field="nroRelativo"/></span>
+					
+				</li>
+				</g:if>
+				
+				<g:if test="${cursoInstance?.foro}">
+				<li class="fieldcontain">
+					<span id="foro-label" class="property-label"><g:message code="curso.foro.label" default="Foro" /></span>
+					
+						<span class="property-value" aria-labelledby="foro-label"><g:fieldValue bean="${cursoInstance}" field="foro"/></span>
+					
+				</li>
+				</g:if>
+				
+				<g:if test="${cursoInstance?.nombre}">
+				<li class="fieldcontain">
+					<span id="nombre-label" class="property-label"><g:message code="curso.nombre.label" default="Nombre" /></span>
+					
+						<span class="property-value" aria-labelledby="nombre-label"><g:fieldValue bean="${cursoInstance}" field="nombre"/></span>
 					
 				</li>
 				</g:if>

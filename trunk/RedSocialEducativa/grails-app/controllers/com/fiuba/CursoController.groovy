@@ -89,26 +89,28 @@ class CursoController {
 		[curso: Curso.get(cursoId)]
 	}
 	
+	
 	def mediador() {
-		
-		def ArrayList<Aprendiz> aprendicesInactivos = new ArrayList<Aprendiz>()
 		
 		println "params mediador: ${params}"
 		
 		cursoId = params.id
 		
-		// println "curso mediador directo ${Curso.get(cursoId)}"
-			
-		if (Curso.get(cursoId).aprendices) {
-			aprendicesInactivos = Curso.get(cursoId).aprendices.findAll {
-				if (it.participa == false) {
-					it
-				}
-			}
-		}
-		// println "aprendices inactivos: ${aprendicesInactivos}"
+		def mediador = Mediador.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
 		
-		[aprendices: aprendicesInactivos, materia: Curso.get(cursoId).materia, cursoId: cursoId]
+		println mediador
+		
+		[materia: Curso.get(cursoId).materia, cursoId: cursoId, mediador: mediador,
+			noticiasCurso: NoticiaCurso.findAllByCurso(Curso.get(params.id))]
+	}
+	
+	def menuMediador() {
+		
+		println "params mediador: ${params}"
+		
+		cursoId = params.id
+
+		[materia: Curso.get(cursoId).materia, cursoId: cursoId]
 	}
 	
 	def aprendiz() {
@@ -116,7 +118,7 @@ class CursoController {
 		def aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(params.id))
 		// println "Vista del curso para el aprendiz ${aprendiz}"
 		// TODO agregar noticias del curso
-		def noticiasCurso = NoticiaCurso.findByCurso(Curso.get(params.id))
+		def noticiasCurso = NoticiaCurso.findAllByCurso(Curso.get(params.id))
 		// def noticiasCurso
 		[aprendiz: aprendiz, noticiasCurso: noticiasCurso]
 	}
@@ -175,11 +177,22 @@ class CursoController {
             return
         }
 
+		cursoInstance.foro = new ForoCurso(nombre: "Foro general del curso ${cursoInstance.nroRelativo}")
+		
         if (cursoInstance.hasErrors()) {
             respond cursoInstance.errors, view:'create'
             return
         }
 
+		def cursoExistente = Curso.findByMateriaAndNroRelativo(Materia.get(cursoInstance.materia.id), cursoInstance.nroRelativo)
+		println cursoExistente
+		
+		if (cursoExistente) {
+			flash.message = "Ya existe el curso ${cursoInstance.nroRelativo}"
+			redirect action: "create"
+			return
+		}
+		
         cursoInstance.save flush:true
 
         request.withFormat {
@@ -206,7 +219,7 @@ class CursoController {
             respond cursoInstance.errors, view:'edit'
             return
         }
-
+		
         cursoInstance.save flush:true
 
         request.withFormat {

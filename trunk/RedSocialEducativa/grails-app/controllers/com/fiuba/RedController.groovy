@@ -31,7 +31,9 @@ class RedController {
 	
 	//Red.withCriteria(uniqueResult:true){ eq: 'titulo', 'Red Social Educativa del Departamento de Computacion de la Fiuba" }//
 	
-    def principal = { 
+    def principal() { 
+		
+		params.max = 3
 		
 		def ArrayList<Curso> cursosMediador = new ArrayList<Curso>()
 		def ArrayList<Mediador> mediadores = Mediador.findAllByUsuario(usuarioActual())
@@ -59,7 +61,7 @@ class RedController {
 		
 		// poner un maximo y un orden a la cantidad de noticias a mostrar en la cartelera
 		
-		[noticiasRed: NoticiaRed.list(), materias: Materia.findAll(), 
+		[cursos: Curso.list(params), noticiasRed: NoticiaRed.list(), cursoCant: Curso.count(), 
 			administrador: Administrador.findByUsuario(usuarioActual()),
 			cursosMediador: cursosMediador, cursosAprendiz: cursosAprendiz, cantMensajes: mensajes.size()]
 	}
