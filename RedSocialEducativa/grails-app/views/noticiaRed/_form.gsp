@@ -1,20 +1,14 @@
 <%@ page import="com.fiuba.NoticiaRed" %>
 
-<g:if test="${noticiaRedInstance?.administrador}">
+<!--<g:if test="${noticiaRedInstance?.administrador}">
 	<div> <g:hiddenField name="administrador.id"  value="${noticiaRedInstance?.administrador.id}"/></div>				
 </g:if>
 <g:else>
 	<div> <g:hiddenField name="administrador.id"  value="${com.fiuba.Administrador.findByUsuario(usuario).id}"/></div>
 
-</g:else>			
+</g:else>-->			
 
-<div class="fieldcontain ${hasErrors(bean: noticiaRedInstance, field: 'fecha', 'error')} required">
-	<label for="fecha">
-		<g:message code="noticiaRed.fecha.label" default="Fecha" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:datePicker name="fecha" precision="day"  value="${noticiaRedInstance?.fecha}"  />
-</div>
+<div> <g:hiddenField name="administrador.id"  value="${com.fiuba.Administrador.findByUsuario(usuario).id}"/></div>
 
 <div class="fieldcontain ${hasErrors(bean: noticiaRedInstance, field: 'texto', 'error')} ">
 	<label for="texto">
@@ -40,3 +34,10 @@
 	<g:checkBox name="visibilidad" value="${noticiaRedInstance?.visibilidad}" />
 </div>
 
+<div>
+	<g:hiddenField name="fecha" value="${(new Date()).getDateString()}"/>
+</div>
+
+<div>
+	<g:hiddenField name="hora" value="${(new Date()).getTimeString()}"/>
+</div>

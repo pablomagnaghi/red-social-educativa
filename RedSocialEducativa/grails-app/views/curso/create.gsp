@@ -32,11 +32,27 @@
 			<g:form url="[resource:cursoInstance, action:'save']" >
 				<fieldset class="form">
 					<g:render template="form"/>
+					<div class="fieldcontain ${hasErrors(bean: cursoInstance, field: 'nroRelativo', 'error')} required">
+						<label for="nroRelativo">
+							<g:message code="curso.nroRelativo.label" default="Nro Relativo" />
+							<span class="required-indicator">*</span>
+						</label>
+						<g:field name="nroRelativo" type="number" value="${cursoInstance.nroRelativo}" required=""/>
+					</div>
+					<div class="fieldcontain ${hasErrors(bean: cursoInstance, field: 'materia', 'error')} required">
+						<label for="materia">
+							<g:message code="curso.materia.label" default="Materia" />
+							<span class="required-indicator">*</span>
+						</label>
+						<g:select id="materia" name="materia.id" from="${com.fiuba.Materia.list()}" optionKey="id" required="" value="${cursoInstance?.materia?.id}" class="many-to-one"/>
+					</div>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
 				</fieldset>
 			</g:form>
 		</div>
+		
+		
 	</body>
 </html>

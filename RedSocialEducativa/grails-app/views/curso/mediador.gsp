@@ -5,36 +5,24 @@
 		</head>
 	<body>
 		<div>
-			<ol>
-				<li><g:link class="list" action="principal" controller="red">
-					<g:message code="Pagina principal"/></g:link></li>
-				<li><g:link class="list" action="index" controller="aprendiz" id="${cursoId}">
-					<g:message code="Administrar aprendices" /></g:link></li>
-				<li><g:link class="list" action="index" controller="temas">
-					<g:message code="Administrar temas del curso" /></g:link></li>
-				<li><g:link class="list" action="index" controller="noticiaCurso">
-					<g:message code="Administrar cartelera del curso" /></g:link></li>
-			</ol>
+			<h2>
+				<p>"${com.fiuba.Curso.get(cursoId)}"</p>
+				<br>
+				<p>Bienvenido mediador "${mediador}"</p>
+			</h2> 
+				<br>
+				<span class = "menuButton">
+					<g:link action="menuMediador" controller="curso" id="${cursoId}">
+					<g:message code="Tareas administrativas de mediador" /></g:link>
+				</span>
 		</div>
 		<div>
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
-			<br>
-			<g:if test="${aprendices}">
-				<h3>Aprendices esperando aceptacion</h3>
-				<ol>
-					<g:each in="${aprendices}" var="aprendiz">
-						<li>
-							<span>${aprendiz}</span>
-							<span class = "menuButton">
-								<g:link action="activarAprendiz" controller="mediador" id="${cursoId}" params="['aprendizId': aprendiz.id]">
-									Aceptar</g:link>
-							</span>
-						</li>
-					</g:each>
-				</ol>
-			</g:if>
 		</div>
+		<fieldset class="form">
+			<g:render template="noticiasCurso"/>
+		</fieldset>
 	</body>
 </html>

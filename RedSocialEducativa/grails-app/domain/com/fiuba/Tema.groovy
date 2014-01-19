@@ -4,12 +4,17 @@ class Tema {
 
 	String titulo
 	
-	ForoTema foro
-	
 	static belongsTo = [curso: Curso]
+	
+	static hasOne = [foro: ForoTema]
 	
 	static hasMany = [contenidos: Contenido, materiales: MaterialTema]
 	
+	String toString() {
+		"${titulo}"
+	}
+	
     static constraints = {
     }
+	
 }

@@ -31,6 +31,8 @@
 						<th><g:message code="noticiaRed.administrador.label" default="Administrador" /></th>
 					
 						<g:sortableColumn property="fecha" title="${message(code: 'noticiaRed.fecha.label', default: 'Fecha')}" />
+						
+						<g:sortableColumn property="hora" title="${message(code: 'noticiaRed.hora.label', default: 'Hora')}" />
 				
 						<g:sortableColumn property="titulo" title="${message(code: 'noticiaRed.titulo.label', default: 'Titulo')}" />
 						
@@ -44,7 +46,9 @@
 					
 						<td>${fieldValue(bean: noticiaRedInstance, field: "administrador")}</td>
 					
-						<td><g:formatDate date="${noticiaRedInstance.fecha}" /></td>
+						<td>${fieldValue(bean: noticiaRedInstance, field: "fecha")}</td>
+						
+						<td>${fieldValue(bean: noticiaRedInstance, field: "hora")}</td>
 					
 						<td>${fieldValue(bean: noticiaRedInstance, field: "titulo")}</td>
 					

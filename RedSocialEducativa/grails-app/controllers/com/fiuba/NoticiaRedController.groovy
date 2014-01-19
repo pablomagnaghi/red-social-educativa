@@ -36,12 +36,12 @@ class NoticiaRedController {
 	
     //@Transactional
     def save(NoticiaRed noticiaRedInstance) {
-
-        if (noticiaRedInstance == null) {
+		
+		 if (noticiaRedInstance == null) {
             notFound()
             return
         }
-
+		
         if (noticiaRedInstance.hasErrors()) {
             respond noticiaRedInstance.errors, view:'create'
             return
@@ -59,29 +59,18 @@ class NoticiaRedController {
     }
 
     def edit(NoticiaRed noticiaRedInstance) {
-		// println "edit"
-		// println noticiaRedInstance.titulo
-		// println noticiaRedInstance.texto
-		// println noticiaRedInstance.id
-		// println noticiaRedInstance.administrador
 		
-        respond noticiaRedInstance
+        respond noticiaRedInstance, model: [usuario: usuarioActual()]
     }
 
     //@Transactional
     def update(NoticiaRed noticiaRedInstance) {
 		
-		println "update"
-		println noticiaRedInstance.titulo
-		println noticiaRedInstance.texto
-		println noticiaRedInstance.id
-		println noticiaRedInstance.administrador
-		
         if (noticiaRedInstance == null) {
             notFound()
             return
         }
-
+		
         if (noticiaRedInstance.hasErrors()) {
             respond noticiaRedInstance.errors, view:'edit'
             return

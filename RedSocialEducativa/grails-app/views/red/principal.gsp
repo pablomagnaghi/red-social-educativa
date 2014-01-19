@@ -112,21 +112,19 @@
 			<br>
 			<h3>Los cursos de la red Social son estos</h3>
 			<br>
-			<ol>
-				<g:each in="${materias}" var="materia">
-					<g:each in="${materia.cursos}" var="curso">
-						<li>
-							<span class = "menuButton">
-								<g:link action="revisarRol" controller="curso" id="${curso.id}">
-								<g:message code="${curso}" /></g:link>
-							</span>
-						</li>
-					</g:each>	
+			<table>
+				<g:each in="${cursos}" var="cursoInstance">
+					<tr>
+						<td><g:link action="revisarRol" controller="curso" id="${cursoInstance.id}">
+							${cursoInstance}</g:link></td>			
+					</tr>						
 				</g:each>
-			</ol>
+			</table>
+			<div class="pagination">
+				<g:paginate total="${cursoCant ?: 0}" />
+			</div>
 		</div>
-		
-		 <g:render template='/login/ajaxLogin'/>
+		<g:render template='/login/ajaxLogin'/>
 		
 	</body>
 </html>

@@ -8,14 +8,6 @@
 	<g:textField name="cuatDict" value="${cursoInstance?.cuatDict}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: cursoInstance, field: 'materia', 'error')} required">
-	<label for="materia">
-		<g:message code="curso.materia.label" default="Materia" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="materia" name="materia.id" from="${com.fiuba.Materia.list()}" optionKey="id" required="" value="${cursoInstance?.materia?.id}" class="many-to-one"/>
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: cursoInstance, field: 'mediadores', 'error')} ">
 	<label for="mediadores">
 		<g:message code="curso.mediadores.label" default="Mediadores" />
@@ -33,11 +25,24 @@
 	</ul>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: cursoInstance, field: 'nroRelativo', 'error')} required">
-	<label for="nroRelativo">
-		<g:message code="curso.nroRelativo.label" default="Nro Relativo" />
-		<span class="required-indicator">*</span>
+<div class="fieldcontain ${hasErrors(bean: cursoInstance, field: 'nombre', 'error')} ">
+	<label for="nombre">
+		<g:message code="curso.nombre.label" default="Nombre" />
+
 	</label>
-	<g:field name="nroRelativo" type="number" value="${cursoInstance.nroRelativo}" required=""/>
+	<g:textField name="nombre" value="${cursoInstance?.nombre}" />
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 

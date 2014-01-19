@@ -33,7 +33,6 @@ class BootStrap {
 			}																																																																																																																																																													
 		}
 		
-		
 		def usuarioPablo = new Usuario(username: "33300432", password: "33300432", apellido: "Magnaghi", nombres: "Pablo", 
 			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: new Date(), fechaMemb: new Date())
 		usuarioService.guardar(usuarioPablo)
@@ -157,7 +156,13 @@ class BootStrap {
 		def aprendizDoce = new Aprendiz(usuario: usuarioDoce, rol: rolAprendiz, participa: false, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: new Date())
 		
-		//--Carga de foros
+		// Foros
+		
+		// Foros de un tema
+		
+		def foroTemaUnoCursoUno = new ForoTema(nombre: "ForoGeneralTemaUnoCursoUno")
+		def foroTemaDosCursoUno = new ForoTema(nombre: "ForoGeneralTemaDosCursoUno")
+		def foroTemaTresCursoUno = new ForoTema(nombre: "ForoGeneralTemaTresCursoUno")
 		
 		// Foros generales de curso
 		
@@ -167,35 +172,53 @@ class BootStrap {
 		def foroCursoCuatro = new ForoCurso(nombre: "ForoGeneralCursoCuatro")
 		def foroCursoCinco = new ForoCurso(nombre: "ForoGeneralCursoCinco")
 		
-		//--Carga de cursos
+		// Contenidos
+		def contenidoUnoTemaUnoCursoUno = new Contenido(titulo: "ContenidoUnoTemaUnoCursoUno")
+		def contenidoDosTemaUnoCursoUno = new Contenido(titulo: "ContenidoDosTemaUnoCursoUno")
+		def contenidoTresTemaUnoCursoUno = new Contenido(titulo: "ContenidoTresTemaUnoCursoUno")
 		
-		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2", foro: foroCursoUno)
+		// Temas
+		
+		def temaUnoCursoUno = new Tema(titulo: "TemaUnoCursoUno", foro: foroTemaUnoCursoUno)
+		def temaDosCursoUno = new Tema(titulo: "TemaUnoCursoDos", foro: foroTemaDosCursoUno)
+		def temaTresCursoUno = new Tema(titulo: "TemaUnoCursoTres", foro: foroTemaTresCursoUno)
+		
+		temaUnoCursoUno.addToContenidos(contenidoUnoTemaUnoCursoUno)
+		temaUnoCursoUno.addToContenidos(contenidoDosTemaUnoCursoUno)
+		temaUnoCursoUno.addToContenidos(contenidoTresTemaUnoCursoUno)
+		
+		// Cursos
+		
+		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2", foro: foroCursoUno, nombre: "Curso 1")
 		cursoUno.addToMediadores(mediadorAgus)
 		cursoUno.addToMediadores(mediadorUno)
 		cursoUno.addToAprendices(aprendizDos)
 		cursoUno.addToAprendices(aprendizTres)
 		cursoUno.addToAprendices(aprendizOcho)
+		cursoUno.addToTemas(temaUnoCursoUno)
+		cursoUno.addToTemas(temaDosCursoUno)
+		cursoUno.addToTemas(temaTresCursoUno)
 
-		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", foro: foroCursoDos)
+		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", foro: foroCursoDos, nombre: "Curso 2")
 		cursoDos.addToMediadores(mediadorUnoP)
 		cursoDos.addToMediadores(mediadorDos)
 		cursoDos.addToAprendices(aprendizAgus)
 		cursoDos.addToAprendices(aprendizCuatro)
 		cursoDos.addToAprendices(aprendizNueve)
 		
-		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1|2", foro: foroCursoTres)
+		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1|2", foro: foroCursoTres, nombre: "Curso 3")
 		cursoTres.addToMediadores(mediadorTres)
 		cursoTres.addToAprendices(aprendizUno)
 		cursoTres.addToAprendices(aprendizCinco)
 		cursoTres.addToAprendices(aprendizDiez)
 
-		def cursoCuatro = new Curso(nroRelativo: "04", cuatDict: "1|2", foro: foroCursoCuatro)
+		def cursoCuatro = new Curso(nroRelativo: "04", cuatDict: "1|2", foro: foroCursoCuatro, nombre: "Curso 4")
 		cursoCuatro.addToMediadores(mediadorCuatro)
 		cursoCuatro.addToAprendices(aprendizUnoP)
 		cursoCuatro.addToAprendices(aprendizSeis)
 		cursoCuatro.addToAprendices(aprendizOnce)
 
-		def cursoCinco = new Curso(nroRelativo: "05", cuatDict: "1|2", foro: foroCursoCinco)
+		def cursoCinco = new Curso(nroRelativo: "05", cuatDict: "1|2", foro: foroCursoCinco, nombre: "Curso 5")
 		cursoCinco.addToMediadores(mediadorCinco)
 		cursoCinco.addToMediadores(mediadorSeis)
 		cursoCinco.addToAprendices(aprendizUnoPP)
@@ -228,9 +251,40 @@ class BootStrap {
 		
 		// Noticias red
 		
-		def noticiaRedUno = new NoticiaRed(titulo: "Noticia Uno",
-			texto: "Inauguracion de la Red Social Educativa 2014", fecha: new Date(), visibilidad: true)
+		def noticiaRedUno = new NoticiaRed(titulo: "Noticia Uno", texto: "Inauguracion de la Red Social Educativa 2014", 
+			fecha: (new Date()).getDateString(), hora: (new Date()).getTimeString(), visibilidad: true)
 
+		// Noticias curso
+		
+		def ArrayList<NoticiaCurso> noticiasCursoUno = new ArrayList<NoticiaCurso>()
+		
+		def noticiaCursoUno = new NoticiaCurso(titulo: "Noticia Uno 1", texto: "noticiaCursoUno",
+			fecha: (new Date()).getDateString(), hora: (new Date()).getTimeString(), visibilidad: true, 
+			mediador: mediadorAgus, curso: cursoUno)
+		noticiasCursoUno.add(noticiaCursoUno)
+		def noticiaCursoUnoP = new NoticiaCurso(titulo: "Noticia Uno 2", texto: "noticiaCursoUnoP ",
+			fecha: (new Date()).getDateString(), hora: (new Date()).getTimeString(), visibilidad: true,
+			mediador: mediadorAgus, curso: cursoUno)
+		noticiasCursoUno.add(noticiaCursoUnoP)
+		def noticiaCursoUnoPP = new NoticiaCurso(titulo: "Noticia Uno 3", texto: "noticiaCursoUnoPP",
+			fecha: (new Date()).getDateString(), hora: (new Date()).getTimeString(), visibilidad: true, 
+			mediador: mediadorUno, curso: cursoUno)
+		noticiasCursoUno.add(noticiaCursoUnoPP)
+		def noticiaCursoUnoPPP = new NoticiaCurso(titulo: "Noticia Uno 4", texto: "noticiaCursoUnoPPP",
+			fecha: (new Date()).getDateString(), hora: (new Date()).getTimeString(), visibilidad: true, 
+			mediador: mediadorUno, curso: cursoUno)
+		noticiasCursoUno.add(noticiaCursoUnoPPP)
+		
+		for(int i = 0; i<noticiasCursoUno.size(); i++){
+			if (!noticiasCursoUno.get(i).validate()) {
+				println noticiasCursoUno.get(i).errors
+			} else {
+				println "Noticias curso uno agregados a la bbdd:"
+				noticiasCursoUno.get(i).save()
+				println noticiasCursoUno.get(i)
+			}
+		}
+		
 		// Administradores
 		def ArrayList<Administrador> administradores = new ArrayList<Administrador>()
 		
@@ -302,12 +356,8 @@ class BootStrap {
 			red.save()
 			println red.titulo
 		}
-		
-		/*
-		 * Mensajeria
-		 */
-		
     }
+	
     def destroy = {
     }
 }
