@@ -19,21 +19,7 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: temaInstance, field: 'curso', 'error')} required">
-	<label for="curso">
-		<g:message code="tema.curso.label" default="Curso" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="curso" name="curso.id" from="${com.fiuba.Curso.list()}" optionKey="id" required="" value="${temaInstance?.curso?.id}" class="many-to-one"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: temaInstance, field: 'foro', 'error')} required">
-	<label for="foro">
-		<g:message code="tema.foro.label" default="Foro" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="foro" name="foro.id" from="${com.fiuba.ForoTema.list()}" optionKey="id" required="" value="${temaInstance?.foro?.id}" class="many-to-one"/>
-</div>
+<div> <g:hiddenField name="curso.id"  value="${cursoId}"/></div>
 
 <div class="fieldcontain ${hasErrors(bean: temaInstance, field: 'materiales', 'error')} ">
 	<label for="materiales">

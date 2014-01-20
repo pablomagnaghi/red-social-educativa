@@ -27,7 +27,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form url="[resource:aprendizInstance, action:'save']" >
+			<g:form action="save" id="${cursoId}" >
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>

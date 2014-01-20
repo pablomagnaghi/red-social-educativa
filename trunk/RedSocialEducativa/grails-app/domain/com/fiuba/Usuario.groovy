@@ -14,8 +14,8 @@ class Usuario {
 	Integer legajo
 	Integer padron
 	String email
-	Date fechaSolicitud
-	Date fechaMemb
+	String fechaSolicitud
+	String fechaMemb
 	
 	boolean enabled = true
 	boolean accountExpired

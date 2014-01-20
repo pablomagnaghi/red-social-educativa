@@ -46,6 +46,15 @@ class NoticiaRedController {
             respond noticiaRedInstance.errors, view:'create'
             return
         }
+		
+		def noticiaRedExistente = NoticiaRed.findByTitulo(noticiaRedInstance.titulo)
+		println noticiaRedExistente
+		
+		if (noticiaRedExistente) {
+			flash.message = "Ya existe la noticia ${noticiaRedInstance.titulo} en la cartelera general"
+			redirect action: "create"
+			return
+		}
 
         noticiaRedInstance.save flush:true
 

@@ -32,6 +32,12 @@
 			<g:form url="[resource:noticiaRedInstance, action:'save']" >
 				<fieldset class="form">
 					<g:render template="form"/>
+						<div class="fieldcontain ${hasErrors(bean: noticiaRedInstance, field: 'titulo', 'error')} ">
+							<label for="titulo">
+								<g:message code="noticiaRed.titulo.label" default="Titulo" />
+							</label>
+						<g:textField name="titulo" value="${noticiaRedInstance?.titulo}"/>
+					</div>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />

@@ -10,11 +10,14 @@
 				<br>
 				<p>Bienvenido mediador "${mediador}"</p>
 			</h2> 
-				<br>
-				<span class = "menuButton">
-					<g:link action="menuMediador" controller="curso" id="${cursoId}">
-					<g:message code="Tareas administrativas de mediador" /></g:link>
-				</span>
+			<br>
+			<ol>
+				<li><g:link class="list" action="principal" controller="red">
+					<g:message code="Pagina principal"/></g:link></li>
+				<li><g:link class="list" action="menuMediador" controller="curso" id="${cursoId}">
+					<g:message code="Tareas administrativas de mediador" /></g:link></li>
+		
+			</ol>
 		</div>
 		<div>
 			<g:if test="${flash.message}">

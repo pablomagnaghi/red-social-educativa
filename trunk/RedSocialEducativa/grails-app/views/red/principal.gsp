@@ -112,14 +112,11 @@
 			<br>
 			<h3>Los cursos de la red Social son estos</h3>
 			<br>
-			<table>
 				<g:each in="${cursos}" var="cursoInstance">
-					<tr>
-						<td><g:link action="revisarRol" controller="curso" id="${cursoInstance.id}">
-							${cursoInstance}</g:link></td>			
-					</tr>						
+					<p><g:link action="revisarRol" controller="curso" id="${cursoInstance.id}">
+							${cursoInstance}</g:link><p>	
+					<br>
 				</g:each>
-			</table>
 			<div class="pagination">
 				<g:paginate total="${cursoCant ?: 0}" />
 			</div>

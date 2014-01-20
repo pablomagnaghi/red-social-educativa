@@ -35,13 +35,9 @@
 					
 						<g:sortableColumn property="usuairo" title="${message(code: 'aprendiz.usuario.label', default: 'Usuario')}" />
 										
-						<g:sortableColumn property="descMaterial" title="${message(code: 'aprendiz.descMaterial.label', default: 'Desc Material')}" />
+						<td>Datos del aprendiz</td>
 						
-						<g:sortableColumn property="msjEnviados" title="${message(code: 'aprendiz.msjEnviados.label', default: 'Msj Enviados')}" />
-						
-						<g:sortableColumn property="msjLeidos" title="${message(code: 'aprendiz.msjLeidos.label', default: 'Msj Leidos')}" />
-						
-						<td>Detalle</td>
+						<td>Estado</td>
 						
 					</tr>
 				</thead>
@@ -50,21 +46,30 @@
 						<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 						
 							<td>${fieldValue(bean: aprendizInstance, field: "usuario")}</td>					
-						
-							<td>${fieldValue(bean: aprendizInstance, field: "descMaterial")}</td>
-						
-							<td>${fieldValue(bean: aprendizInstance, field: "msjEnviados")}</td>
-						
-							<td>${fieldValue(bean: aprendizInstance, field: "msjLeidos")}</td>
 												
-							<td><g:link action="show" id="${aprendizInstance.id}">
-								Ver detalle</g:link></td>
+							<td><g:link controller="usuario" action="show" 
+								id="${aprendizInstance?.usuario?.id}" params="['aprendizId': aprendizInstance.id]">
+								<g:message code="Ver datos" /></g:link></td>
+								
+							<g:if test="${!aprendizInstance.participa}">
+								<td>Esperando aceptacion (<g:link action="activarAprendiz" controller="mediador" id="${aprendizInstance.curso.id}" 
+									params="['aprendizId': aprendizInstance.id]"><g:message code="Aceptar aprendiz" /></g:link>)
+								</td>
+							</g:if>		
+							<g:else>
+								<td>Aprendiz activo (<g:link class="delete" action="delete" id="${aprendizInstance.id}" 
+									value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
+									onclick="return confirm('${message(code: 'default.button.delete.confirm.message', 
+									default: 'Are you sure?')}');">
+									<g:message code="Eliminar aprendiz" /></g:link>)
+								</td>
+							</g:else>
 						</tr>
 					</g:each>
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${aprendizInstanceCount ?: 0}" />
+				<g:paginate total="${aprendizInstanceCount ?: 0}" id="${cursoId}"/>
 			</div>
 		</div>
 	</body>

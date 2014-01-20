@@ -54,6 +54,16 @@ class NoticiaCursoController {
             respond noticiaCursoInstance.errors, view:'create'
             return
         }
+		
+		def noticiaCursoExistente = NoticiaCurso.findByCursoAndTitulo(Curso.get(noticiaCursoInstance.curso.id), 
+			noticiaCursoInstance.titulo)
+		println noticiaCursoExistente
+		
+		if (noticiaCursoExistente) {
+			flash.message = "Ya existe la noticia ${noticiaCursoInstance.titulo} del curso ${Curso.get(noticiaCursoInstance.curso.id)}"
+			redirect action: "create"
+			return
+		}
 
         noticiaCursoInstance.save flush:true
 
