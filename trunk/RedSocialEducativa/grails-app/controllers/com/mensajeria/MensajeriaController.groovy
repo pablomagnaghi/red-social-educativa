@@ -15,6 +15,7 @@ import grails.converters.JSON
 class MensajeriaController {
 
 	def springSecurityService
+	def mensajeService
 
 	def index() {
 		def usuario = Usuario.get(springSecurityService.principal.id)
@@ -124,9 +125,21 @@ class MensajeriaController {
 	}
 	
 	def enviarMensajes(){
-		println params.para
-		println params.asunto
-		println params.mensaje
+		def usuario = Usuario.get(springSecurityService.principal.id)
+		def para = params.para
+		def asunto = params.asunto
+		def texto = params.mensaje
+		def matcher = /\s*([^\s]*)\s*([^<]*)<([^>]*)>,/
+		Hilo hilo = new Hilo()
+		hilo.save(flush: true)
+		para.eachMatch(matcher) {
+			def nombres = it[1]
+			def apellido = it[2]
+			def email = it[3]
+			def receptor = Usuario.findByNombresAndApellidoAndEmail(nombres, apellido, email)
+			mensajeService.sendMessage(para, asunto, texto, usuario, receptor, hilo)
+			
+		}
 		redirect(action: 'index')
 	}
 	
