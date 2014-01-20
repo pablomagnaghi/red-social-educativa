@@ -116,12 +116,18 @@ class MensajeriaController {
 		ulist.each {
 			def companyMap = [:] // add to map. jQuery autocomplete expects the JSON object to be with id/label/value.
 			companyMap.put("id", it[0])
-			companyMap.put("nombres", it[1])
-			companyMap.put("apellido", it[2])
-			companyMap.put("email", it[3])
+			companyMap.put("label", it[1] + it[2])
+			companyMap.put("value", it[1] + " " + it[2] + "<" + it[3] + ">")
 			listaUsuarios.add(companyMap) // add to the arraylist
 		}
 		render (listaUsuarios as JSON)
+	}
+	
+	def enviarMensajes(){
+		println params.para
+		println params.asunto
+		println params.mensaje
+		redirect(action: 'index')
 	}
 	
 	def traerDatosCurso(Integer idCurso){

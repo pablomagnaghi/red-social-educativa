@@ -12,6 +12,11 @@
     border-width: 1px;
 }
 
+.inputMail {
+	width: 89%;
+	font-size: 10px;
+}
+
 .seleccionableOrg {
 	cursor: pointer;
 }

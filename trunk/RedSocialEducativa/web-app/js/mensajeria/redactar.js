@@ -4,6 +4,14 @@ $(document).ready(
 		}
 );
 
+function split( val ) {
+	return val.split( /,\s*/ );
+}
+
+function extractLast( term ) {
+	return split( term ).pop();
+}
+
 function when_ready(){
 	$('#img_clickeable').click(function(){
 		$("#organigrama").addClass('center_div');
@@ -39,23 +47,28 @@ function when_ready(){
 	});
 	$("#para").autocomplete({
 		source: function(request, response){
-			$.ajax({
-				url: "traerUsuariosFormateados", // remote datasource
-				data: request,
-				success: function(data){
-					response($.map(data, function (item) {
-                        return {
-                            label: item.nombres + item.apellido,
-                            value: item.nombres + item.apellido + "<" +item.email+">,"
-                        }
-					}));
+			if (request.term.match(/,/g)!=null){
+				var regexp = /,\s*(.*)/g;
+				var matcher = regexp.exec(request.term);
+				if (matcher != null){
+					request.term = matcher[1]; 
 				}
-			});
+			} 
+			$.getJSON( "traerUsuariosFormateados", {
+				term: extractLast( request.term )
+			}, response );
 		},
 		minLength: 2, // triggered only after minimum 2 characters have been entered.
-		select: function(event, ui) { // event handler when user selects a company from the list.
-			//$("#company\\.id").val(ui.item.id); // update the hidden field.
-			$("#para").val(ui.item.nombres+ "-" + ui.item.apellido) // populate the employee field with the nasdaq symbol.
+		select: function( event, ui ) {
+			var terms = split( this.value );
+			// remove the current input
+			terms.pop();
+			// add the selected item
+			terms.push( ui.item.value);
+			// add placeholder to get the comma-and-space at the end
+			terms.push( "" );
+			this.value = terms.join( ", " );
+			return false;
 		}
 	});
 }
@@ -78,18 +91,12 @@ function agregarTipo(id, texto){
 
 function agregarCurso(id, texto){
 	textoAnterior = $("#para").val();
-	if (textoAnterior != "" ){
-		textoAnterior += ", "
-	}
-	$("#para").val(textoAnterior + " Curso: " + texto);
+	$("#para").val(textoAnterior + " Curso: " + texto + ",");
 }
 
 function agregarMediador(id){
 	textoAnterior = $("#para").val();
-	if (textoAnterior != "" ){
-		textoAnterior += ", "
-	}
-	$("#para").val(textoAnterior + " Mediador: " + texto);
+	$("#para").val(textoAnterior + " Mediador: " + texto+ ",");
 }
 
 function traerDatosCurso(id){
