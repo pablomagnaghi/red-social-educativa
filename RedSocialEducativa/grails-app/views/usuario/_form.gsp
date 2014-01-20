@@ -42,14 +42,14 @@
 		<g:if test="${usuarioInstance?.fechaMemb}">
 			<li class="fieldcontain">
 				<span id="fechaMemb-label" class="property-label"><g:message code="usuario.fechaMemb.label" default="Fecha Memb" /></span> 
-				<span class="property-value" aria-labelledby="fechaMemb-label"><g:formatDate date="${usuarioInstance?.fechaMemb}" /></span>
+				<span class="property-value" aria-labelledby="fechaMemb-label"><g:fieldValue bean="${usuarioInstance}" field="fechaMemb" /></span>
 			</li>
 		</g:if>
 	
 		<g:if test="${usuarioInstance?.fechaSolicitud}">
 			<li class="fieldcontain">
 				<span id="fechaSolicitud-label" class="property-label"><g:message code="usuario.fechaSolicitud.label" default="Fecha Solicitud" /></span> 
-				<span class="property-value" aria-labelledby="fechaSolicitud-label"><g:formatDate date="${usuarioInstance?.fechaSolicitud}" /></span>
+				<span class="property-value" aria-labelledby="fechaSolicitud-label"><g:fieldValue bean="${usuarioInstance}" field="fechaSolicitud" /></span>
 			</li>
 		</g:if>
 	

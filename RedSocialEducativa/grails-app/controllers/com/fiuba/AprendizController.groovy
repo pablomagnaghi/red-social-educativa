@@ -10,11 +10,23 @@ import org.springframework.security.access.annotation.Secured
 @Secured('permitAll')
 class AprendizController {
 
-	// TODO
-	// metodos para ABM aprendices del menu de mediador
-    // static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
 	def cursoId 
+	
+	def estadisticas(Integer max) {
+		params.max = Math.min(max ?: 10, 100)
+		
+		println "index aprendiz"
+		println params
+		
+		if (params.id)
+			cursoId = params.id
+			
+		[aprendizInstanceList: Aprendiz.findAllByCursoAndParticipa(Curso.get(cursoId), true, [max: params.max, offset: params.offset]),
+			aprendizInstanceCount: Aprendiz.findAllByCursoAndParticipa(Curso.get(cursoId), true).size(), cursoId: cursoId]
+	}
+	
+	// metodos para ABM aprendices del menu de mediador
+	// static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -78,9 +90,9 @@ class AprendizController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'aprendizInstance.label', default: 'Aprendiz'), aprendizInstance.id])
-                redirect aprendizInstance
+                redirect action: "index"
             }
-            '*' { respond aprendizInstance, [status: CREATED] }
+            '*' { redirect action: "index", [status: CREATED] }
         }
     }
 

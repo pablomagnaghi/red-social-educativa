@@ -34,6 +34,7 @@
 				<g:hiddenField name="version" value="${noticiaCursoInstance?.version}" />
 				<fieldset class="form">
 					<g:render template="form"/>
+					<div> <g:hiddenField name="titulo" value="${noticiaCursoInstance.titulo}"/></div>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />

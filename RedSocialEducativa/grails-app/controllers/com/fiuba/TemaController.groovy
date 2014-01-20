@@ -15,9 +15,19 @@ class TemaController {
 	
     //static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+	def cursoId
+	
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Tema.list(params), model:[temaInstanceCount: Tema.count()]
+		
+		println "index tema"
+		println params
+		
+		if (params.id)
+		cursoId = params.id
+		
+		[temaInstanceList: Tema.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
+			temaInstanceCount: Tema.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId]
     }
 
     def show(Tema temaInstance) {
@@ -25,7 +35,7 @@ class TemaController {
     }
 
     def create() {
-        respond new Tema(params)
+        respond new Tema(params), model:[cursoId: cursoId]
     }
 
     //@Transactional
@@ -34,6 +44,8 @@ class TemaController {
             notFound()
             return
         }
+
+		temaInstance.foro = new ForoTema(nombre: "Foro del tema ${temaInstance} del curso ${Curso.get(temaInstance.curso.id)}")
 
         if (temaInstance.hasErrors()) {
             respond temaInstance.errors, view:'create'
@@ -52,7 +64,7 @@ class TemaController {
     }
 
     def edit(Tema temaInstance) {
-        respond temaInstance
+        respond temaInstance, model:[cursoId: cursoId]
     }
 
     //@Transactional

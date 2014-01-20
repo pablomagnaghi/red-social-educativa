@@ -35,7 +35,7 @@ class MediadorController {
 			flash.message = "Autorización enviada para el aprendiz ${username} del curso ${aprendiz.curso}"
 		}
 		
-		redirect(controller: "curso", action: "menuMediador", params: params)
+		redirect(controller: "aprendiz", action: "index", params: params)
 	}
 	
 	// TODO

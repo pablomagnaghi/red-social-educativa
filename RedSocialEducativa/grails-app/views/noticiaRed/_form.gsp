@@ -18,14 +18,6 @@
 	<g:textArea name="texto" value="${noticiaRedInstance?.texto}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: noticiaRedInstance, field: 'titulo', 'error')} ">
-	<label for="titulo">
-		<g:message code="noticiaRed.titulo.label" default="Titulo" />
-		
-	</label>
-	<g:textField name="titulo" value="${noticiaRedInstance?.titulo}"/>
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: noticiaRedInstance, field: 'visibilidad', 'error')} ">
 	<label for="visibilidad">
 		<g:message code="noticiaRed.visibilidad.label" default="Visibilidad" />
@@ -35,7 +27,7 @@
 </div>
 
 <div>
-	<g:hiddenField name="fecha" value="${(new Date()).getDateString()}"/>
+	<g:hiddenField name="fecha" value="${(new Date()).format("yyyy-mm-dd")}"/>
 </div>
 
 <div>

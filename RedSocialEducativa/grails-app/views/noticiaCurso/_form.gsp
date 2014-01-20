@@ -12,14 +12,6 @@
 	<g:textField name="texto" value="${noticiaCursoInstance?.texto}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: noticiaCursoInstance, field: 'titulo', 'error')} ">
-	<label for="titulo">
-		<g:message code="noticiaCurso.titulo.label" default="Titulo" />
-		
-	</label>
-	<g:textField name="titulo" value="${noticiaCursoInstance?.titulo}"/>
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: noticiaCursoInstance, field: 'visibilidad', 'error')} ">
 	<label for="visibilidad">
 		<g:message code="noticiaCurso.visibilidad.label" default="Visibilidad" />
@@ -29,7 +21,7 @@
 </div>
 
 <div>
-	<g:hiddenField name="fecha" value="${(new Date()).getDateString()}"/>
+	<g:hiddenField name="fecha" value="${(new Date()).format("yyyy-mm-dd")}"/>
 </div>
 
 <div>

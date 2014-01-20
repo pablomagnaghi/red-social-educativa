@@ -65,7 +65,7 @@
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${noticiaCursoInstanceCount ?: 0}" />
+				<g:paginate total="${noticiaCursoInstanceCount ?: 0}" id="${cursoId}"/>
 			</div>
 		</div>
 	</body>

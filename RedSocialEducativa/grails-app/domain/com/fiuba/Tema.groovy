@@ -15,6 +15,7 @@ class Tema {
 	}
 	
     static constraints = {
+		foro nullable: true
     }
 	
 }

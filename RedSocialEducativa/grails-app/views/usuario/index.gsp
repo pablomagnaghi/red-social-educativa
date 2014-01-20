@@ -50,8 +50,8 @@
 					
 						<td>${fieldValue(bean: usuarioInstance, field: "email")}</td>
 					
-							<td><g:link action="activarUsuario" controller="administrador" id="${usuarioInstance.id}">
-								Activar</g:link></td>
+						<td><g:link action="activarUsuario" controller="administrador" id="${usuarioInstance.id}"
+							onclick="return confirm('${message(code: '¿Esta seguro de activar al usuario?')}');">Activar</g:link></td>
 					
 					</tr>
 				</g:each>
