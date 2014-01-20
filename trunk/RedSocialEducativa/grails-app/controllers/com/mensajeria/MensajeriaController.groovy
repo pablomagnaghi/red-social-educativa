@@ -1,11 +1,11 @@
 package com.mensajeria
 
-import java.util.regex.Matcher
-import java.util.regex.Pattern
-
 import org.springframework.security.access.annotation.Secured
 
+import com.fiuba.Curso;
+import com.fiuba.Mediador
 import com.fiuba.Usuario
+import com.fiuba.Aprendiz
 import com.mensajeria.Conversacion
 import com.fiuba.RedController;
 
@@ -76,5 +76,27 @@ class MensajeriaController {
 			etiquetasCarpetas.put(it.nombre, cantMsg)
 		}
 		return etiquetasCarpetas
+	}
+	
+	def redactar(){
+		def usuario = Usuario.get(springSecurityService.principal.id)
+		def mediadores = Mediador.findAllByUsuario(usuario)
+		def aprendices = Aprendiz.findAllByUsuario(usuario)
+		def cursosAprendiz = []
+		def cursosMediador = []
+		mediadores.each {
+			cursosMediador.add(it.curso)
+		}
+		aprendices.each {
+			if (it.participa){
+				cursosAprendiz.add(it.curso)
+			}
+		}
+		[cursosAprendiz : cursosAprendiz, cursosMediador : cursosMediador]
+	}
+	
+	def traerDatosCurso(Integer idCurso){
+		def mediadores = Mediador.findAllByCurso(Curso.findById(idCurso))
+		render(template: "datosCurso", model: [mediadores : mediadores])
 	}
 }

@@ -3,6 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta name="layout" content="main"/>
+<link rel="stylesheet" href="${resource(dir: 'css', file: 'mensajeria/redactar.css')}" type="text/css">
 <link rel="stylesheet" href="${resource(dir: 'css', file: 'mensajeria/main.css')}" type="text/css">
 <g:javascript library="jquery" />
 <r:require module="jquery-ui"/>
@@ -13,7 +14,7 @@
 <body>
   <div class="header">
   	<ul class="menuBar">
-  		<li><g:link id="redactarMensaje">Redactar</g:link>
+  		<li><g:link action="redactar">Redactar</g:link>
   	</ul>
   </div>
   <div class="body" style="display:inline" id="panel_mensajes">
