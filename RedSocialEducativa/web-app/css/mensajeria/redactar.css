@@ -12,4 +12,12 @@
     border-width: 1px;
 }
 
+.seleccionableOrg {
+	cursor: pointer;
+}
+
+.seleccionableOrg:hover {
+	 background-color:yellow;
+}
+
 
