@@ -9,6 +9,8 @@ import com.fiuba.Aprendiz
 import com.mensajeria.Conversacion
 import com.fiuba.RedController;
 
+import grails.converters.JSON
+
 @Secured('permitAll')
 class MensajeriaController {
 
@@ -93,6 +95,33 @@ class MensajeriaController {
 			}
 		}
 		[cursosAprendiz : cursosAprendiz, cursosMediador : cursosMediador]
+	}
+	
+	def traerUsuariosFormateados(){
+		def query = {
+			or {
+				like("nombres", "${params.term}%") // term is the parameter send by jQuery autocomplete
+				like("apellido", "${params.term}%")
+				like("email", "${params.term}%")
+			}
+			projections { // good to select only the required columns.
+				property("id")
+				property("nombres")
+				property("apellido")
+				property("email")
+			}
+		}
+		def ulist = Usuario.createCriteria().list(query)
+		def listaUsuarios = []
+		ulist.each {
+			def companyMap = [:] // add to map. jQuery autocomplete expects the JSON object to be with id/label/value.
+			companyMap.put("id", it[0])
+			companyMap.put("nombres", it[1])
+			companyMap.put("apellido", it[2])
+			companyMap.put("email", it[3])
+			listaUsuarios.add(companyMap) // add to the arraylist
+		}
+		render (listaUsuarios as JSON)
 	}
 	
 	def traerDatosCurso(Integer idCurso){
