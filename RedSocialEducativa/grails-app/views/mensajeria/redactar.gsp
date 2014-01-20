@@ -18,14 +18,14 @@
 				<label for="para"> 
 					<g:message code="Para:" /> 
 				</label>
-				<g:textField name="para" id="para" value="" />
+				<g:textField name="para" id="para" value="" class="inputMail"/>
 				<g:img file="organigrama.jpg" id="img_clickeable" style="cursor: pointer"/>
 			</div>
 			<div>
 				<label for="asunto"> 
 					<g:message code="Asunto:" /> 
 				</label>
-				<g:textField name="asunto" value="" />
+				<g:textField name="asunto" value="" class="inputMail"/>
 			</div>
 			<div class="required">
 				<label for="mensaje"> 
