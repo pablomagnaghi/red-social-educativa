@@ -18,8 +18,7 @@ class AprendizController {
 		println "index aprendiz"
 		println params
 		
-		if (params.id)
-			cursoId = params.id
+		cursoId = params.cursoId
 			
 		[aprendizInstanceList: Aprendiz.findAllByCursoAndParticipa(Curso.get(cursoId), true, [max: params.max, offset: params.offset]),
 			aprendizInstanceCount: Aprendiz.findAllByCursoAndParticipa(Curso.get(cursoId), true).size(), cursoId: cursoId]
@@ -29,20 +28,16 @@ class AprendizController {
 	// static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	
     def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+        params.max = 2 //Math.min(max ?: 10, 100)
 		
 		println "index aprendiz"
 		println params
 		
-		if (params.id)
-			cursoId = params.id
+		//if (params.cursoId)
+			cursoId = params.cursoId
 			
 		[aprendizInstanceList: Aprendiz.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]), 
 			aprendizInstanceCount: Aprendiz.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId]
-    }
-
-    def show(Aprendiz aprendizInstance) {
-        respond aprendizInstance
     }
 
     def create() {
@@ -56,14 +51,16 @@ class AprendizController {
             return
         }
 
+		cursoId = aprendizInstance.curso.id
+		
         if (aprendizInstance.hasErrors()) {
-            respond aprendizInstance.errors, view:'create'
+            respond aprendizInstance.errors, view:'create', params:['cursoId': cursoId]
             return
         }
 
-		println "save"
+		println "save params: ${params}"
 		
-		def curso = Curso.get(aprendizInstance.curso.id)
+		def curso = Curso.get(cursoId)
 		
 		def usuario = Usuario.get(aprendizInstance.usuario.id)
 		
@@ -75,13 +72,13 @@ class AprendizController {
 		
 		if (mediador) {
 			flash.message = "El miembro ${usuario} ya es mediador en el curso ${curso}. No puede ser aprendiz en el mismo"
-			redirect action: "create"
+			redirect action: "create", params:['cursoId': cursoId]
 			return
 		}
 		
 		if (aprendiz) {
 			flash.message = "${aprendiz} ya es aprendiz en el curso ${curso}"
-			redirect action: "create"
+			redirect action: "create", params:['cursoId': cursoId]
 			return
 		}
 
@@ -90,9 +87,9 @@ class AprendizController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'aprendizInstance.label', default: 'Aprendiz'), aprendizInstance.id])
-                redirect action: "index"
+                redirect action: "index", params:['cursoId': cursoId]
             }
-            '*' { redirect action: "index", [status: CREATED] }
+			'*' { respond aprendizInstance, [status: CREATED] }
         }
     }
 
@@ -103,23 +100,27 @@ class AprendizController {
             notFound()
             return
         }
+		
+		cursoId = params.cursoId
 
         aprendizInstance.delete flush:true
 
         request.withFormat {
             form {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'Aprendiz.label', default: 'Aprendiz'), aprendizInstance.id])
-                redirect action:"index", method:"GET"
+                redirect action:"index", params:['cursoId': cursoId], method:"GET"
             }
             '*'{ render status: NO_CONTENT }
         }
     }
 
     protected void notFound() {
+		println "not found params: ${params}"
+		
         request.withFormat {
             form {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'aprendizInstance.label', default: 'Aprendiz'), params.id])
-                redirect action: "index", method: "GET"
+                redirect action: "index", params:['cursoId': cursoId], method: "GET"
             }
             '*'{ render status: NOT_FOUND }
         }

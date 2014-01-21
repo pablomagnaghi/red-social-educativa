@@ -5,7 +5,7 @@ class Material {
 	String titulo
 	String descripcion // opcional
 	String autor // opcional
-	Date fecha
+	String fecha
 	String responsable
 	
 	// Categorias: articulo, presentacion, cuestionario, ejercicios planteados, ejercicios resueltos

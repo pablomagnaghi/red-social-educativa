@@ -13,8 +13,8 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<g:if test="${params.aprendizId}">
-					<li><g:link class="list" controller="aprendiz" action="index">
+				<g:if test="${params.cursoId}">
+					<li><g:link class="list" controller="aprendiz" action="index" params="['cursoId': params.cursoId]">
 					<g:message code="Administrar aprendices"/></g:link></li>
 				</g:if>
 				<g:else>

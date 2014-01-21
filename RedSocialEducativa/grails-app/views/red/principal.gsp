@@ -57,24 +57,26 @@
 		</div>
 		<div>
 			<g:if test="${administrador}">
-				<h2>Bienvenido administrador ${administrador}</h2> 
+				<br><h2>Bienvenido administrador ${administrador}</h2><br> 
 				<span class = "menuButton">
 					<g:link action="general" controller="administrador">
 					<g:message code="Tareas administrativas" /></g:link>
 				</span>
+				<br>
 			</g:if>
 		</div>
 		<div>
 			<span>
 				<g:if test="${cursosMediador}">
-					<h2>Mis cursos como mediador</h2> 
+					<br><h2>Mis cursos como mediador</h2><br> 
 					<ol>
 						<g:each in="${cursosMediador}" var="cursoMediador">
 							<li>
 								<span class = "menuButton">
-									<g:link action="mediador" controller="curso" id="${cursoMediador.id}">
+									<g:link action="mediador" controller="curso" params="['cursoId': cursoMediador.id]">
 									<g:message code="${cursoMediador}" /></g:link>
 								</span>
+								<br>
 							</li>
 						</g:each>
 					</ol>
@@ -82,14 +84,15 @@
 			</span>
 			<span>
 				<g:if test="${cursosAprendiz}">
-					<h2>Mis cursos como aprendiz</h2> 
+					<br><h2>Mis cursos como aprendiz</h2><br> 
 					<ol>
 						<g:each in="${cursosAprendiz}" var="cursoAprendiz">
 							<li>
 								<span class = "menuButton">
-									<g:link action="aprendiz" controller="curso" id="${cursoAprendiz.id}">
+									<g:link action="aprendiz" controller="curso" params="['cursoId': cursoAprendiz.id]">
 									<g:message code="${cursoAprendiz}" /></g:link>
 								</span>
+								<br>
 							</li>
 						</g:each>
 					</ol>
@@ -97,7 +100,7 @@
 			</span>
 		</div>
 		<div>
-	       	<br><h2>Cartelera general</h2>
+	       	<h2>Cartelera general</h2><br>
 			<g:each in="${noticiasRed}">
 				<g:if test="${it.visibilidad}">
 					<p>Noticia: ${it.titulo} - Fecha: ${it.fecha} - Administrador: ${it.administrador}</p>
@@ -113,7 +116,7 @@
 			<h3>Los cursos de la red Social son estos</h3>
 			<br>
 				<g:each in="${cursos}" var="cursoInstance">
-					<p><g:link action="revisarRol" controller="curso" id="${cursoInstance.id}">
+					<p><g:link action="revisarRol" controller="curso" params="['cursoId': cursoInstance.id]">
 							${cursoInstance}</g:link><p>	
 					<br>
 				</g:each>

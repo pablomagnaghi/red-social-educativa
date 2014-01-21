@@ -48,9 +48,11 @@ class CursoController {
 	
 	def revisarRol() {
 	
-		cursoId = params.id
+		cursoId = params.cursoId
 		
-		// println "Revisar rol params: ${params}"
+		//params.cursoId = cursoId
+		
+		println "Revisar rol params: ${params}"
 		//  [id:2, action:mediador, format:null, controller:curso]
 
 		def usuario = usuarioActual()
@@ -68,13 +70,13 @@ class CursoController {
 				def mediador = Mediador.findByUsuarioAndCurso(usuario, Curso.get(cursoId))
 				
 				if (mediador) {
-					println "Hola mediador ${mediador} ${mediador.jerarquia}"
+					//println "Hola mediador ${mediador} ${mediador.jerarquia}"
 					redirect(action: "mediador", params: params)
 				} else {
 					def aprendiz = Aprendiz.findByUsuarioAndCurso(usuario, Curso.get(cursoId))
 
 					if (aprendiz) {
-						println "Hola aprendiz ${aprendiz}"
+						//println "Hola aprendiz ${aprendiz}"
 						redirect(action: "aprendiz", params: params)
 					} else {
 						flash.message = "Hola miembro ${usuario}"
@@ -92,42 +94,47 @@ class CursoController {
 	
 	def mediador() {
 		
-		println "params mediador: ${params}"
+		println "mediador params: ${params}"
 		
-		cursoId = params.id
+		cursoId = params.cursoId
 		
 		def mediador = Mediador.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
 		
 		println mediador
 		
 		[materia: Curso.get(cursoId).materia, cursoId: cursoId, mediador: mediador,
-			noticiasCurso: NoticiaCurso.findAllByCurso(Curso.get(params.id))]
+			noticiasCurso: NoticiaCurso.findAllByCurso(Curso.get(cursoId))]
 	}
 	
 	def menuMediador() {
 		
-		println "params mediador: ${params}"
+		println "params menu mediador: ${params}"
 		
-		cursoId = params.id
+		cursoId = params.cursoId
 
 		[materia: Curso.get(cursoId).materia, cursoId: cursoId]
 	}
 	
 	def aprendiz() {
-		//println params
-		def aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(params.id))
-		// println "Vista del curso para el aprendiz ${aprendiz}"
-		// TODO agregar noticias del curso
-		def noticiasCurso = NoticiaCurso.findAllByCurso(Curso.get(params.id))
-		// def noticiasCurso
-		[aprendiz: aprendiz, noticiasCurso: noticiasCurso]
+		println "params aprendiz: ${params}"
+		
+		cursoId = params.cursoId
+		
+		def aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
+
+		def noticiasCurso = NoticiaCurso.findAllByCurso(Curso.get(cursoId))
+
+		[aprendiz: aprendiz, noticiasCurso: noticiasCurso, cursoId: cursoId]
 	}
 	
 	def miembro() {
 		//println "cursoID miembro: ${cursoId}"
 		//println params
-		cursoId = params.id
-		[cursoId: cursoId]
+		cursoId = params.cursoId
+		
+		def miembro = Miembro.findByUsuario(usuarioActual())
+		
+		[miembro: miembro, cursoId: cursoId]
 	}
 	
 	def solicitarParticipacionEnElCurso() {
@@ -137,20 +144,20 @@ class CursoController {
 		
 		// println "solicitar participacion params: ${params}"
 		
-		cursoId = params.id
+		cursoId = params.cursoId
 		
 		Curso.get(cursoId).addToAprendices(aprendiz)
 		
 		if(!aprendiz.validate()) {
 			flash.message = "Problemas con la solitud de participacion"
 			println aprendiz.errors
-			redirect(action:"aprendiz", params:['id': cursoId])
+			redirect(action:"aprendiz", params:['cursoId': cursoId])
 			return
 		}
 		
 		aprendiz.save()
 		flash.message = "Solicitud aceptada. A la brevedad se le enviara un mail de confirmacion"
-		redirect(action:"aprendiz", params:['id': cursoId])
+		redirect(action:"aprendiz", params:['cursoId': cursoId])
 	}
 	
 	// TODO: Metodos para ABM de cursos en menu administrador
@@ -172,6 +179,9 @@ class CursoController {
 
     //@Transactional
     def save(Curso cursoInstance) {
+		
+		// new Curso = ...
+		
         if (cursoInstance == null) {
             notFound()
             return

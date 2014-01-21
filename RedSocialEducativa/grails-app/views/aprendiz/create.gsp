@@ -11,7 +11,9 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index">
+				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': cursoId]">
+					<g:message code="Tareas mediador" /></g:link></li>
+				<li><g:link class="list" action="index" params="['cursoId': cursoId]">
 					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -27,7 +29,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="save" id="${cursoId}" >
+			<g:form action="save">
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>

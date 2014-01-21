@@ -21,11 +21,8 @@
 	<g:hiddenField name="msjLeidos" value="0" />
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: aprendizInstance, field: 'participa', 'error')} ">
-	<label for="participa"> 
-		<g:message code="aprendiz.participa.label" default="Participa" />
-	</label>
-	<g:checkBox name="participa" value="${aprendizInstance?.participa}" />
+<div>
+	<g:hiddenField name="participa" value="${true}" />
 </div>
 
 <div>

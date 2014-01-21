@@ -38,11 +38,5 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: temaInstance, field: 'titulo', 'error')} ">
-	<label for="titulo">
-		<g:message code="tema.titulo.label" default="Titulo" />
-		
-	</label>
-	<g:textField name="titulo" value="${temaInstance?.titulo}"/>
-</div>
+
 

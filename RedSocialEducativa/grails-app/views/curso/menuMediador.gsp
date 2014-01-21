@@ -10,15 +10,15 @@
 			<ol>
 				<li><g:link class="list" action="principal" controller="red">
 					<g:message code="Pagina principal"/></g:link></li>
-				<li><g:link class="list" action="mediador" controller="curso" id="${cursoId}">
+				<li><g:link class="list" action="mediador" controller="curso" params="['cursoId': cursoId]">
 					<g:message code="Pagina principal de mediador"/></g:link></li>
-				<li><g:link class="list" action="index" controller="aprendiz" id="${cursoId}">
+				<li><g:link class="list" action="index" controller="aprendiz" params="['cursoId': cursoId]">
 					<g:message code="Administrar aprendices" /></g:link></li>
-				<li><g:link class="list" action="index" controller="tema" id="${cursoId}">
+				<li><g:link class="list" action="index" controller="tema" params="['cursoId': cursoId]">
 					<g:message code="Administrar temas del curso" /></g:link></li>
-				<li><g:link class="list" action="index" controller="noticiaCurso" id="${cursoId}">
+				<li><g:link class="list" action="index" controller="noticiaCurso" params="['cursoId': cursoId]">
 					<g:message code="Administrar cartelera del curso" /></g:link></li>
-				<li><g:link class="list" action="estadisticas" controller="aprendiz" id="${cursoId}">
+				<li><g:link class="list" action="estadisticas" controller="aprendiz" params="['cursoId': cursoId]">
 					<g:message code="Estadisticas de aprendices" /></g:link></li>
 			</ol>
 		</div>

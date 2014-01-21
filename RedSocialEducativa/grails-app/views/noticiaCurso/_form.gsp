@@ -2,8 +2,6 @@
 
 <div> <g:hiddenField name="curso.id"  value="${cursoId}"/></div>
 
-<div> <g:hiddenField name="mediador.id" value="${com.fiuba.Mediador.findByUsuario(usuario).id}"/></div>
-
 <div class="fieldcontain ${hasErrors(bean: noticiaCursoInstance, field: 'texto', 'error')} ">
 	<label for="texto">
 		<g:message code="noticiaCurso.texto.label" default="Texto" />
