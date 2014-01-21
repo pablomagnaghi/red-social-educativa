@@ -13,7 +13,7 @@ class MediadorController {
 	// Metodos nuevos
 	
 	def activarAprendiz() {
-		def aprendiz = Aprendiz.get(params.aprendizId)
+		def aprendiz = Aprendiz.get(params.id)
 		println "activarAprendiz params: ${params}"
 		//println "${aprendiz}, ${aprendiz.id}, ${aprendiz.participa}"
 	

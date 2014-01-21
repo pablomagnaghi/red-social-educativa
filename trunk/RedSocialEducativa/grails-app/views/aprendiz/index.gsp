@@ -13,7 +13,7 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="menuMediador" controller="curso" id="${cursoId}">
+				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': cursoId]">
 					<g:message code="Tareas mediador" /></g:link></li>
 				<li><g:link class="create" action="create">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
@@ -47,17 +47,17 @@
 						
 							<td>${fieldValue(bean: aprendizInstance, field: "usuario")}</td>					
 												
-							<td><g:link controller="usuario" action="show" 
-								id="${aprendizInstance?.usuario?.id}" params="['aprendizId': aprendizInstance.id]">
+							<td><g:link controller="usuario" action="show" id="${aprendizInstance.usuario.id}" params="['cursoId': cursoId]">
 								<g:message code="Ver datos" /></g:link></td>
 								
 							<g:if test="${!aprendizInstance.participa}">
-								<td>Esperando aceptacion (<g:link action="activarAprendiz" controller="mediador" id="${aprendizInstance.curso.id}" 
-									params="['aprendizId': aprendizInstance.id]"><g:message code="Aceptar aprendiz" /></g:link>)
+								<td>Esperando aceptacion (<g:link action="activarAprendiz" controller="mediador" id="${aprendizInstance.id}" 
+									params="['cursoId': cursoId]"><g:message code="Aceptar aprendiz" /></g:link>)
 								</td>
 							</g:if>		
 							<g:else>
 								<td>Aprendiz activo (<g:link class="delete" action="delete" id="${aprendizInstance.id}" 
+									params="['cursoId': cursoId]"
 									value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
 									onclick="return confirm('${message(code: 'default.button.delete.confirm.message', 
 									default: 'Are you sure?')}');">
@@ -69,7 +69,7 @@
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${aprendizInstanceCount ?: 0}" id="${cursoId}"/>
+				<g:paginate total="${aprendizInstanceCount ?: 0}" params="['cursoId': cursoId]"/>
 			</div>
 		</div>
 	</body>

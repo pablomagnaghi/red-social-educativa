@@ -173,7 +173,43 @@ class BootStrap {
 		def aprendizDoce = new Aprendiz(usuario: usuarioDoce, rol: rolAprendiz, participa: false, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-mm-dd"))
 		
-		// Foros
+		// Categorias
+		def ArrayList<Categoria> categorias = new ArrayList<Categoria>()
+		
+		def categoriaArticulo = new Categoria(nombre: "Articulo")
+		categorias.add(categoriaArticulo)
+		def categoriaPresentacion = new Categoria(nombre: "Presentacion")
+		categorias.add(categoriaPresentacion)
+		def categoriaCuestionario = new Categoria(nombre: "Cuestionario")
+		categorias.add(categoriaCuestionario)
+		def categoriaEjerciciosPlanteados = new Categoria(nombre: "EjerciciosPlanteados")
+		categorias.add(categoriaEjerciciosPlanteados)
+		def categoriaEjerciciosResueltos = new Categoria(nombre: "EjerciciosResueltos")
+		categorias.add(categoriaEjerciciosResueltos)
+		def categoriaTrabajo = new Categoria(nombre: "Trabajo")
+		categorias.add(categoriaTrabajo)
+		def categoriaRefBibliografica = new Categoria(nombre: "RefBibliografica ")
+		categorias.add(categoriaRefBibliografica )
+		def categoriaEnlace = new Categoria(nombre: "Enlace")
+		categorias.add(categoriaEnlace)
+		def categoriaGlosario = new Categoria(nombre: "Glosario")
+		categorias.add(categoriaGlosario)
+		def categoriaEnunciadoDeEvaluacion = new Categoria(nombre: "EnunciadoDeEvaluacion")
+		categorias.add(categoriaEnunciadoDeEvaluacion)
+		def categoriaOtros = new Categoria(nombre: "Otros")
+		categorias.add(categoriaOtros)
+		
+		for(int i = 0; i<categorias.size(); i++){
+			if (!categorias.get(i).validate()) {
+				println categorias.get(i).errors
+			} else {
+				println "Categorias agregadas nombre"
+				categorias.get(i).save()
+				println categorias.get(i).nombre
+			}
+		}
+	
+		// TODO Foros
 		
 		// Foros de un tema
 		
@@ -188,6 +224,31 @@ class BootStrap {
 		def foroCursoTres = new ForoCurso(nombre: "ForoGeneralCursoTres")
 		def foroCursoCuatro = new ForoCurso(nombre: "ForoGeneralCursoCuatro")
 		def foroCursoCinco = new ForoCurso(nombre: "ForoGeneralCursoCinco")
+		
+		// Publicaciones generales
+		
+		def publicacionGeneralUno = new PublicacionGeneral(titulo: "PublicacionGeneralUno", contenido: "Contenido", 
+			responsable: "Pablo Magnaghi", fecha: (new Date()).format("yyyy-mm-dd"), hora: (new Date()).getTimeString())
+
+		def publicacionGeneralDos = new PublicacionGeneral(titulo: "PublicacionGeneralDos", contenido: "Contenido", 
+			responsable: "Pablo Magnaghi", fecha: (new Date()).format("yyyy-mm-dd"), hora: (new Date()).getTimeString())
+		def publicacionGeneralTres = new PublicacionGeneral(titulo: "PublicacionGeneralTres", contenido: "Contenido", 
+			responsable: "Pablo Magnaghi", fecha: (new Date()).format("yyyy-mm-dd"), hora: (new Date()).getTimeString())
+		
+		def foroGeneral = new ForoGeneral(nombre: "Foro general")
+		foroGeneral.addToPublicaciones(publicacionGeneralUno)
+		foroGeneral.addToPublicaciones(publicacionGeneralDos)
+		foroGeneral.addToPublicaciones(publicacionGeneralTres)
+		
+		if (!foroGeneral.validate()) {
+			println foroGeneral.errors
+		} else {
+			println "foroGeneral agregada a la bbdd:"
+			foroGeneral.save()
+			println foroGeneral
+		}
+		
+		// TODO aca termina la zona de pruebas
 		
 		// Contenidos
 		def contenidoUnoTemaUnoCursoUno = new Contenido(titulo: "ContenidoUnoTemaUnoCursoUno")
@@ -367,7 +428,7 @@ class BootStrap {
 		def red = new Red()
 		
 		if (!red.validate()) {
-			println red.get.errors
+			println red.errors
 		} else {
 			println "Red agregada a la bbdd:"
 			red.save()

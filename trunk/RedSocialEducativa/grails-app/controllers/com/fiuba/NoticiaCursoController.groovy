@@ -28,19 +28,26 @@ class NoticiaCursoController {
 		println "index noticiaCurso"
 		println params
 		
-		if (params.id)
-			cursoId = params.id
+		cursoId = params.cursoId
 			
 		[noticiaCursoInstanceList: NoticiaCurso.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
 			noticiaCursoInstanceCount: NoticiaCurso.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId]
     }
 
     def show(NoticiaCurso noticiaCursoInstance) {
-        respond noticiaCursoInstance
+		println "show params: ${params}"
+        respond noticiaCursoInstance, model:[cursoId: cursoId]
     }
 
     def create() {
-        respond new NoticiaCurso(params), model:[cursoId: cursoId, usuario: usuarioActual()]
+		
+		println "create noticia curso params: ${params}"
+		cursoId = params.cursoId
+		def mediadorId = Mediador.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId)).id
+		
+		println "usaurio actual id: ${mediadorId}"
+		
+        respond new NoticiaCurso(params), params:['cursoId': cursoId], model:[cursoId: cursoId, mediadorId: mediadorId]
     }
 
     //@Transactional
@@ -49,19 +56,34 @@ class NoticiaCursoController {
             notFound()
             return
         }
+		
+		cursoId = noticiaCursoInstance.curso.id
 
+		println "save noticia curso"
+		println "curso.id"
+		println noticiaCursoInstance.curso.id
+		println "texto"
+		noticiaCursoInstance.texto
+		println "titulo"
+		noticiaCursoInstance.titulo
+		println "responsable"
+		noticiaCursoInstance.mediador.id
+		
+		// TODO
         if (noticiaCursoInstance.hasErrors()) {
-            respond noticiaCursoInstance.errors, view:'create'
+			def mediadorId = Mediador.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId)).id
+            respond noticiaCursoInstance.errors, view:'create', params:['cursoId': cursoId], 
+				model: [cursoId: cursoId, mediadorId: mediadorId]
             return
         }
 		
-		def noticiaCursoExistente = NoticiaCurso.findByCursoAndTitulo(Curso.get(noticiaCursoInstance.curso.id), 
+		def noticiaCursoExistente = NoticiaCurso.findByCursoAndTitulo(Curso.get(cursoId), 
 			noticiaCursoInstance.titulo)
 		println noticiaCursoExistente
 		
 		if (noticiaCursoExistente) {
-			flash.message = "Ya existe la noticia ${noticiaCursoInstance.titulo} del curso ${Curso.get(noticiaCursoInstance.curso.id)}"
-			redirect action: "create"
+			flash.message = "Ya existe la noticia ${noticiaCursoInstance.titulo} del curso ${Curso.get(cursoId)}"
+			redirect action: "create", params:['cursoId': cursoId]
 			return
 		}
 
@@ -70,18 +92,23 @@ class NoticiaCursoController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'noticiaCursoInstance.label', default: 'NoticiaCurso'), noticiaCursoInstance.id])
-                redirect noticiaCursoInstance
+                redirect action: "index", params:['cursoId': cursoId]
             }
             '*' { respond noticiaCursoInstance, [status: CREATED] }
         }
     }
 
+	// TODO: revisar a fondo por si falta actualizar el cursoId
     def edit(NoticiaCurso noticiaCursoInstance) {
-        respond noticiaCursoInstance, model:[cursoId: cursoId, usuario: usuarioActual()]
+		cursoId = params.cursoId
+        respond noticiaCursoInstance, params:['cursoId': cursoId], model:[cursoId: cursoId, usuario: usuarioActual()]
     }
 
+	// TODO revisar a fondo por si falta actualizar el cursoId
     //@Transactional
     def update(NoticiaCurso noticiaCursoInstance) {
+		
+		// TODO ver aca
         if (noticiaCursoInstance == null) {
             notFound()
             return
@@ -110,13 +137,15 @@ class NoticiaCursoController {
             notFound()
             return
         }
+		
+		cursoId = params.cursoId
 
         noticiaCursoInstance.delete flush:true
 
         request.withFormat {
             form {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'NoticiaCurso.label', default: 'NoticiaCurso'), noticiaCursoInstance.id])
-                redirect action:"index", method:"GET"
+                redirect action:"index", params:['cursoId': cursoId], method:"GET"
             }
             '*'{ render status: NO_CONTENT }
         }
@@ -126,7 +155,7 @@ class NoticiaCursoController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'noticiaCursoInstance.label', default: 'NoticiaCurso'), params.id])
-                redirect action: "index", method: "GET"
+                redirect action: "index", params:['cursoId': cursoId], method: "GET"
             }
             '*'{ render status: NOT_FOUND }
         }

@@ -8,13 +8,16 @@
 	</head>
 	<body>
 		<a href="#edit-noticiaCurso" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+		
+		<h2>params curso id: ${params.cursoId}</h2>
+		
 		<div class="nav" role="navigation">
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index">
+				<li><g:link class="list" action="index" params="['cursoId': params.cursoId]">
 					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create">
+				<li><g:link class="create" action="create" params="['cursoId': params.cursoId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -30,11 +33,12 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="update" method="PUT" id="${noticiaCursoInstance.id}">
+			<g:form action="update" method="PUT" id="${noticiaCursoInstance.id}" params="['cursoId': params.cursoId]">
 				<g:hiddenField name="version" value="${noticiaCursoInstance?.version}" />
 				<fieldset class="form">
 					<g:render template="form"/>
 					<div> <g:hiddenField name="titulo" value="${noticiaCursoInstance.titulo}"/></div>
+					<div> <g:hiddenField name="mediador.id" value="${noticiaCursoInstance.mediador.id}"/></div>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />

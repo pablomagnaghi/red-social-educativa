@@ -7,10 +7,18 @@
 	</head>
 	<body>
 		<a href="#create-tema" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+		
+		<h2>curso id : ${cursoId}</h2>
+		<h2>params curso id: ${params.cursoId}</h2>
+		
 		<div class="nav" role="navigation">
 			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
+				<li><a class="home" href="${createLink(uri: '/')}">
+					<g:message code="default.home.label"/></a></li>
+				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': params.cursoId]">
+					<g:message code="Tareas mediador" /></g:link></li>
+				<li><g:link class="list" action="index" params="['cursoId': params.cursoId]">
+					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
 		<div id="create-tema" class="content scaffold-create" role="main">
@@ -25,14 +33,22 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form url="[resource:temaInstance, action:'save']" >
+			<g:form action="save" params="['cursoId': params.cursoId]">
 				<fieldset class="form">
 					<g:render template="form"/>
+						<div class="fieldcontain ${hasErrors(bean: temaInstance, field: 'titulo', 'error')} ">
+							<label for="titulo">
+								<g:message code="tema.titulo.label" default="Titulo" />
+		
+							</label>
+							<g:textField name="titulo" value="${temaInstance?.titulo}"/>
+						</div>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
 				</fieldset>
 			</g:form>
 		</div>
+		<h2>tema id: ${temaInstance?.id}</h2>
 	</body>
 </html>

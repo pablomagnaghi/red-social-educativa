@@ -14,7 +14,7 @@
 			<ol>
 				<li><g:link class="list" action="principal" controller="red">
 					<g:message code="Pagina principal"/></g:link></li>
-				<li><g:link class="list" action="menuMediador" controller="curso" id="${cursoId}">
+				<li><g:link class="list" action="menuMediador" controller="curso" params="['cursoId': cursoId]">
 					<g:message code="Tareas administrativas de mediador" /></g:link></li>
 		
 			</ol>

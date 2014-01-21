@@ -4,7 +4,12 @@
 		<meta name="layout" content="main"/>
 		</head>
 	<body>
-		<div class="nav" role="navigation">
+		<div>
+			<h2>
+				<p>"${com.fiuba.Curso.get(cursoId)}"</p>
+				<br>
+				<p>Bienvenido aprendiz: "${aprendiz}"</p>
+			</h2> 
 		</div>
 		<div>
 			<g:if test="${flash.message}">
