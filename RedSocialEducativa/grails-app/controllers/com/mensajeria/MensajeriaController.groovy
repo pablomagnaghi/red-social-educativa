@@ -138,13 +138,36 @@ class MensajeriaController {
 			def email = it[3]
 			def receptor = Usuario.findByNombresAndApellidoAndEmail(nombres, apellido, email)
 			mensajeService.sendMessage(para, asunto, texto, usuario, receptor, hilo)
-			
 		}
 		redirect(action: 'index')
+	}
+	
+	def responderMensaje(){
+		def mensajeOriginal = Mensaje.findById(params.respuestaId)
+		def para = params.respuestaPara
+		def asunto = params.respuestaAsunto
+		def texto = params.respuestaCuerpo
+		def matcher = /\s*([^\s]*)\s*([^<]*)<([^>]*)>,?/
+		para.eachMatch(matcher) {
+			def nombres = it[1]
+			def apellido = it[2]
+			def email = it[3]
+			def receptor = Usuario.findByNombresAndApellidoAndEmail(nombres, apellido, email)
+			mensajeService.reply(para, asunto, texto, mensajeOriginal.receptor, receptor, mensajeOriginal.hilo)
+		}
+		flash.message = "Mensaje Enviado"
+		render(action:'index')
 	}
 	
 	def traerDatosCurso(Integer idCurso){
 		def mediadores = Mediador.findAllByCurso(Curso.findById(idCurso))
 		render(template: "datosCurso", model: [mediadores : mediadores])
 	}
+	
+	def conversacion(){
+		def conversacion = Conversacion.findById(params.id)
+		def mensajes = conversacion.mensajes
+		[mensajes : mensajes]
+	}
+	
 }

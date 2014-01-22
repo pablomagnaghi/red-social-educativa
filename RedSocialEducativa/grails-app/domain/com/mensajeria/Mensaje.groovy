@@ -8,6 +8,7 @@ class Mensaje {
 	Usuario receptor
 	String asunto
 	String cuerpo
+	String para
 	Date fecha
 	Boolean leido = false
 	
