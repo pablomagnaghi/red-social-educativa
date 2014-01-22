@@ -2,9 +2,9 @@ package com.fiuba
 
 import static org.springframework.http.HttpStatus.*
 
-//import grails.transaction.Transactional
+import grails.transaction.Transactional
 
-//@Transactional(readOnly = true)
+@Transactional(readOnly = true)
 
 import org.springframework.security.access.annotation.Secured
 
@@ -38,32 +38,52 @@ class TemaController {
         respond new Tema(params), params:['cursoId': cursoId], model: [cursoId: cursoId]
     }
 
-    //@Transactional
+    @Transactional
     def save(Tema temaInstance) {
         if (temaInstance == null) {
             notFound()
             return
         }
 		
+		println "params save: ${params}"
+		
 		cursoId = temaInstance.curso.id
+		
+		def curso = Curso.get(cursoId)
+		
+		//println curso
+		
+		/*
 		temaInstance.foro = new ForoTema(nombre: "Foro del tema ${temaInstance} del curso ${Curso.get(cursoId)}")
 
         if (temaInstance.hasErrors()) {
             respond temaInstance.errors, view: "create", params:['cursoId': cursoId], model: [cursoId: cursoId]
             return
-        }
-
-		def temaExistente = Tema.findByCursoAndTitulo(Curso.get(cursoId), temaInstance.titulo)
-		println temaExistente
+        }*/
 		
+		def temaExistente = Tema.findByCursoAndTitulo(curso, temaInstance.titulo)
+			
+		println "tema existente"
+		println temaExistente
+			
+			
 		if (temaExistente) {
-			flash.message = "Ya existe el tema ${temaInstance.titulo} del curso ${Curso.get(cursoId)}"
+			println "tema existe"
+			flash.message = "Ya existe el tema ${temaInstance.titulo} del curso ${curso}"
 			redirect action: "create", params:['cursoId': cursoId]
 			return
 		}
 		
-        temaInstance.save flush:true
+        //temaInstance.save flush:true
 
+		
+		temaInstance.foro = new ForoTema(nombre: "Foro del tema ${temaInstance} del curso ${curso}")
+		
+		if (! temaInstance.save(flush: true)) {
+			respond temaInstance.errors, view: "create", params:['cursoId': cursoId], model: [cursoId: cursoId]
+			return
+		}	
+		
         request.withFormat {
             form {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'temaInstance.label', default: 'Tema'), temaInstance.id])

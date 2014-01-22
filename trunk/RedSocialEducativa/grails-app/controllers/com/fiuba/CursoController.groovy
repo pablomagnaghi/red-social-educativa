@@ -179,18 +179,9 @@ class CursoController {
 
     //@Transactional
     def save(Curso cursoInstance) {
-		
-		// new Curso = ...
-		
+			
         if (cursoInstance == null) {
             notFound()
-            return
-        }
-
-		cursoInstance.foro = new ForoCurso(nombre: "Foro general del curso ${cursoInstance.nroRelativo}")
-		
-        if (cursoInstance.hasErrors()) {
-            respond cursoInstance.errors, view:'create'
             return
         }
 
@@ -203,7 +194,12 @@ class CursoController {
 			return
 		}
 		
-        cursoInstance.save flush:true
+		cursoInstance.foro = new ForoCurso(nombre: "Foro general del curso ${cursoInstance.nroRelativo}")
+		
+		if (! cursoInstance.save(flush:true)) {
+			respond cursoInstance.errors, view:'create'
+			return
+		}
 
         request.withFormat {
             form {

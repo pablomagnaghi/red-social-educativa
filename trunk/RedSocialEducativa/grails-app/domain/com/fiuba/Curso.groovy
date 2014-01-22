@@ -35,7 +35,7 @@ class Curso {
 	}
 	
     static constraints = {
-		foro nullable: true
+		//foro nullable: true
     }
 	
 }
