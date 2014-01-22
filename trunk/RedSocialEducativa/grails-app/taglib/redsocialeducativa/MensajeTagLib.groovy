@@ -24,9 +24,9 @@ class MensajeTagLib {
 			} else {
 				out << "<div>"
 			}
-			out << " <div class='draggable' id='" + conversacion.id + "'>De:  " + it.emisor.username + " | asunto: " + it.asunto + " | fecha: " + it.fecha + "</div>"
+			out << g.link("De:  " + it.emisor.username + " | asunto: " + it.asunto + " | fecha: " + it.fecha,
+				action: 'conversacion', id: conversacion.id, class:'draggable', params : [id:conversacion.id])
 			out << "</div>"
 		}
 	}
-    //static encodeAsForTags = [tagName: 'raw']
 }
