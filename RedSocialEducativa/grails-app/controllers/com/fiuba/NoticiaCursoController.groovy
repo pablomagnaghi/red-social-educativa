@@ -58,7 +58,7 @@ class NoticiaCursoController {
         }
 		
 		cursoId = noticiaCursoInstance.curso.id
-
+		/*
 		println "save noticia curso"
 		println "curso.id"
 		println noticiaCursoInstance.curso.id
@@ -68,7 +68,7 @@ class NoticiaCursoController {
 		noticiaCursoInstance.titulo
 		println "responsable"
 		noticiaCursoInstance.mediador.id
-		
+		*/
 		// TODO
         if (noticiaCursoInstance.hasErrors()) {
 			def mediadorId = Mediador.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId)).id
@@ -109,13 +109,16 @@ class NoticiaCursoController {
     def update(NoticiaCurso noticiaCursoInstance) {
 		
 		// TODO ver aca
+		cursoId = params.cursoId
+		
         if (noticiaCursoInstance == null) {
             notFound()
             return
         }
 
         if (noticiaCursoInstance.hasErrors()) {
-            respond noticiaCursoInstance.errors, view:'edit'
+            respond noticiaCursoInstance.errors, view:'edit', params:['cursoId': cursoId],
+				model: [cursoId: cursoId]
             return
         }
 
