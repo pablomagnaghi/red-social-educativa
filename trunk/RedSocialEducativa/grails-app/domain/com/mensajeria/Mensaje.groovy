@@ -3,7 +3,6 @@ package com.mensajeria
 import com.fiuba.Usuario
 
 class Mensaje {
-	
 	Usuario emisor
 	Usuario receptor
 	String asunto

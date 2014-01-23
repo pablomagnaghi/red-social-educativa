@@ -16,6 +16,7 @@ class MensajeriaController {
 
 	def springSecurityService
 	def mensajeService
+	def conversacionService
 
 	def index() {
 		def usuario = Usuario.get(springSecurityService.principal.id)
@@ -167,7 +168,44 @@ class MensajeriaController {
 	def conversacion(){
 		def conversacion = Conversacion.findById(params.id)
 		def mensajes = conversacion.mensajes
-		[mensajes : mensajes]
+		[mensajes : mensajes, conversacionId : params.id]
 	}
-	
+
+	def conversacionAPdf= {
+		def conversacion = Conversacion.findById(params.id)
+		def mensajes = conversacion.mensajes
+		render(template: "mensajesPdf", model: [mensajes: mensajes])
+	}
+
+	def buscar_mensajes(){
+		def usuario = Usuario.get(springSecurityService.principal.id)
+		def de = null	
+		def para = null
+		def regex = /\s*([^\s]*)\s*([^<]*)<([^>]*)>,?/
+		def mensajes = []
+		if (!params.de.trim().empty){
+			def matcher = (params.de =~ regex)
+			def nombres = matcher[0][1]
+			def apellido = matcher[0][2]
+			def email = matcher[0][3]
+			de = Usuario.findByNombresAndApellidoAndEmail(nombres, apellido, email)
+		} else 	if (!params.para.trim().empty){
+			def matcher = (params.para =~ regex)
+			def nombres = matcher[0][1]
+			def apellido = matcher[0][2]
+			def email = matcher[0][3]
+			para = Usuario.findByNombresAndApellidoAndEmail(nombres, apellido, email)
+		}
+		if (de == null && para != null){
+			mensajes = Mensaje.findAllByEmisorAndReceptor(usuario, para)
+		} else if (para == null && de != null){
+			mensajes = Mensaje.findAllByEmisorAndReceptor(de, usuario)
+		}
+		def conversaciones = []
+		mensajes.each {
+			def conversacion = conversacionService.findConversacionByMessage(it, usuario)
+			conversaciones.add(conversacion)
+		}
+		render(template: "conversaciones", model: [conversaciones: conversaciones])
+	}	
 }

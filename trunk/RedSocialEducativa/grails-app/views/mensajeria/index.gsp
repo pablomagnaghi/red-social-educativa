@@ -16,6 +16,11 @@
   	<ul class="menuBar">
   		<li><g:link action="redactar">Redactar</g:link>
   	</ul>
+  	<g:formRemote onSuccess="" name="buscarMensajes" url="[controller:'mensajeria', action:'buscar_mensajes']" update="lista_conversaciones">
+	    <label for="de">De</label><g:textField name="de"/><br/>
+	    <label for="para">Para</label><g:textField name="para"/><br/>
+	    <g:submitButton name="Buscar" id="buscar_mensajes"/>
+  	</g:formRemote>
   </div>
   <div class="body" style="display:inline" id="panel_mensajes">
   	<div style="width: 150px; float: left">
