@@ -23,7 +23,7 @@
 				<li><g:link class="list" action="configuracion" controller="red">
 					<g:message code="Administrar configuracion de la red" /></g:link></li>
 				<br>
-				<li><g:link class="list" action="index" controller="foro">
+				<li><g:link class="list" action="index" controller="foroGeneral">
 					<g:message code="Administrar foros generales" /></g:link></li>	
 				<br>
 				<li><g:link class="list" action="index" controller="mediador">

@@ -2,7 +2,7 @@ package com.fiuba
 
 class PublicacionGeneral extends Publicacion {
 
-	static hasOne = [publicacion: PublicacionGeneral]
+	static hasOne = [respuesta: PublicacionGeneral]
 	
 	static belongsTo = [publicacionPadre: PublicacionGeneral, foro: ForoGeneral]
 	
@@ -10,6 +10,6 @@ class PublicacionGeneral extends Publicacion {
 	// Es el caso de un foro con un publicacion con un solo mensaje
     static constraints = {
 		publicacionPadre nullable:true
-		//publicacion nullable: true
+		respuesta nullable: true
     }
 }

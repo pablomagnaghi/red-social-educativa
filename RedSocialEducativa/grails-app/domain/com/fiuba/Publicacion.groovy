@@ -10,6 +10,10 @@ abstract class Publicacion {
 	String fecha
 	String hora
 
+	String toString() {
+		"${titulo}"
+	}
+	
     static constraints = {
     }
 	
