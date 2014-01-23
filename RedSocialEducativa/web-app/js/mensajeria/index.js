@@ -4,6 +4,15 @@ $(document).ready(
 		}
 );
 
+
+function extractLast( term ) {
+	return split( term ).pop();
+}
+
+function split( val ) {
+	return val.split( /,\s*/ );
+}
+
 function when_ready(){
 	$('#nueva_carpeta').click(function(){
 		abrir_form_nueva_carpeta();
@@ -34,6 +43,32 @@ function when_ready(){
 				});
 			}
 		})
+	});
+	$("#para, #de").autocomplete({
+		source: function(request, response){
+			if (request.term.match(/,/g)!=null){
+				var regexp = /,\s*(.*)/g;
+				var matcher = regexp.exec(request.term);
+				if (matcher != null){
+					request.term = matcher[1]; 
+				}
+			} 
+			$.getJSON( "traerUsuariosFormateados", {
+				term: extractLast( request.term )
+			}, response );
+		},
+		minLength: 2, // triggered only after minimum 2 characters have been entered.
+		select: function( event, ui ) {
+			var terms = split( this.value );
+			// remove the current input
+			terms.pop();
+			// add the selected item
+			terms.push( ui.item.value);
+			// add placeholder to get the comma-and-space at the end
+			terms.push( "" );
+			this.value = terms.join( ", " );
+			return false;
+		}
 	});
 }
 

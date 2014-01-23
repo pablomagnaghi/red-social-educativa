@@ -3,7 +3,6 @@ package com.fiuba
 import java.util.Date;
 
 class Usuario {
-
 	transient springSecurityService
 
 	String username
@@ -16,6 +15,7 @@ class Usuario {
 	String email
 	String fechaSolicitud
 	String fechaMemb
+	
 	
 	boolean enabled = true
 	boolean accountExpired
