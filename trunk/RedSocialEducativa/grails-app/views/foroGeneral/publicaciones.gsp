@@ -28,21 +28,22 @@
 		    </g:if>
 		    <g:else>			
 		 		<g:each in="${respuestas}">
-		 			<p>Publicacion: ${it.titulo} - Responsable: ${it.responsable} - Fecha: ${it.fecha} - Hora: ${it.hora} </p>
-					<p>[[[${it.contenido}]]]</p>
-						<g:set var="padreId" value="${it.id}" />
-						padreId = ${padreId}
-			    		<br>
-			    		<br>
-			    		<hr>
+		 			<g:if test="${it}">
+			 			<p>Publicacion: ${it.titulo} - Responsable: ${it.responsable} - Fecha: ${it.fecha} - Hora: ${it.hora} </p>
+						<p>[[[${it.contenido}]]]</p>
+							<g:set var="padreId" value="${it.id}" />
+							padreId = ${padreId}
+				    		<br>
+				    		<br>
+				    		<hr>
+			    	</g:if>	
 				</g:each>
 				<g:link controller="publicacionGeneral" action="respuesta" 
 			    	params="['padreId': padreId]">Responder</g:link>
 			</g:else>
-			<!-- 
 			<div class="pagination">
-				<g:paginate total="${respuestasCant ?: 0}"/>
-			</div>-->
+				<g:paginate total="${respuestasCant ?: 0}" id="${publicacionId}"/>
+			</div>
 		</div>
 	</body>
 </html>

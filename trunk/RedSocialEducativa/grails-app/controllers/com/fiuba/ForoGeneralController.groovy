@@ -38,27 +38,61 @@ class ForoGeneralController {
 	def publicaciones() {
 		println "foro, publicacion, params ${params}"
 		
-		params.max = 2
+		params.max = 3
 		
 		def publicacionId = params.id
 		def publicacion = PublicacionGeneral.get(publicacionId)
 		
-		def List<PublicacionGeneral> respuestas = new ArrayList<PublicacionGeneral>()
+		def respuestas = [] //new ArrayList<PublicacionGeneral>() // =[]
 
 		println publicacion
 		
-		while (publicacion.respuesta) {
-			println "entro"
-			println publicacion.respuesta
-			println "pub"
+		while (publicacion?.respuesta) {
+			//println "entro"
+			//println publicacion.respuesta
+			//println "pub"
 			publicacion = publicacion.respuesta
 			respuestas.add(publicacion)
 		}
+		
+		println "respuesta []"
+		println respuestas
+		/*
+		if (!params.offset)
+			params.offset = 0
+		println "offset, ${params.offset}"
+		
+		int to = params.offset 
+		
+		println "hasta: ${to}"
+		*/
+		
+		def max = Math.min(params.max, respuestas.size())
+		
+		println "max: ${max}, ${respuestas.size()}"
+		
+		def myList = null
+		if (respuestas) { 
+			myList = (0..max-1).collect({respuestas[it]})
+			publicacionId = myList.last().id
+		}
+		println "myList"
+		println myList
+		myList.each {
+			if (it)
+				println "${it.titulo}, ${it.responsable}, ${it.fecha}"
+		}
+		
 
-		[publicacion: PublicacionGeneral.get(publicacionId), padreId: PublicacionGeneral.get(publicacionId).id,
-			respuestas: respuestas,
+		println "respuesta ultima id"
+		println publicacionId
+		
+		
+		[publicacion: PublicacionGeneral.get(params.id), padreId: PublicacionGeneral.get(params.id).id,
+			respuestas: myList, 
 			respuestasCant: respuestas.size(),
-			usuario: Usuario.findByUsername(usuarioActual()?.username)]
+			publicacionId: publicacionId,
+			usuario: Usuario.findByUsername(usuarioActual()?.username), params: params]
 		
 	}
 	
