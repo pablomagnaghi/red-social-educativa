@@ -33,7 +33,8 @@ class RedController {
 	
     def principal() { 
 		
-		params.max = 3
+		params.max = 3 //Math.min(max ?: 10, 100)
+		println params
 		
 		def ArrayList<Curso> cursosMediador = new ArrayList<Curso>()
 		def ArrayList<Mediador> mediadores = Mediador.findAllByUsuario(usuarioActual())
@@ -63,7 +64,8 @@ class RedController {
 		
 		[cursos: Curso.list(params), noticiasRed: NoticiaRed.list(), cursoCant: Curso.count(), 
 			administrador: Administrador.findByUsuario(usuarioActual()),
-			cursosMediador: cursosMediador, cursosAprendiz: cursosAprendiz, cantMensajes: mensajes.size()]
+			cursosMediador: cursosMediador, cursosAprendiz: cursosAprendiz, 
+			cantMensajes: mensajes.size()]
 	}
 	
 	// TODO analogia con los controladores scaffold respond new Class(params)

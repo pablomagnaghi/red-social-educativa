@@ -228,12 +228,11 @@ class BootStrap {
 		// Publicaciones generales
 		
 		def publicacionGeneralUno = new PublicacionGeneral(titulo: "PublicacionGeneralUno", contenido: "Contenido", 
-			responsable: "Pablo Magnaghi", fecha: (new Date()).format("yyyy-mm-dd"), hora: (new Date()).getTimeString())
-
+			responsable: "Pablo Magnaghi (Administrador)", fecha: (new Date()).format("yyyy-mm-dd"), hora: (new Date()).getTimeString())
 		def publicacionGeneralDos = new PublicacionGeneral(titulo: "PublicacionGeneralDos", contenido: "Contenido", 
-			responsable: "Pablo Magnaghi", fecha: (new Date()).format("yyyy-mm-dd"), hora: (new Date()).getTimeString())
+			responsable: "Pablo Magnaghi (Administrador)", fecha: (new Date()).format("yyyy-mm-dd"), hora: (new Date()).getTimeString())
 		def publicacionGeneralTres = new PublicacionGeneral(titulo: "PublicacionGeneralTres", contenido: "Contenido", 
-			responsable: "Pablo Magnaghi", fecha: (new Date()).format("yyyy-mm-dd"), hora: (new Date()).getTimeString())
+			responsable: "Pablo Magnaghi (Administrador)", fecha: (new Date()).format("yyyy-mm-dd"), hora: (new Date()).getTimeString())
 		
 		def foroGeneral = new ForoGeneral(nombre: "Foro general")
 		foroGeneral.addToPublicaciones(publicacionGeneralUno)

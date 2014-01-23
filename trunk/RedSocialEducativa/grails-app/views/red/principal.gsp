@@ -99,7 +99,9 @@
 				</g:if>
 			</span>
 		</div>
+		<br>
 		<div>
+			<hr>
 	       	<h2>Cartelera general</h2><br>
 			<g:each in="${noticiasRed}">
 				<g:if test="${it.visibilidad}">
@@ -108,6 +110,34 @@
 					<br>
 				</g:if>
     		</g:each>
+		</div>
+		<div>
+			<hr>
+	       	<h2><g:link controller="foroGeneral" action="general">Foro general</g:link></h2>
+	       	
+	       	TEMA |COMENZADO POR |REPLICAS |ULTIMO MENSAJE
+
+	       	<!--
+	       	<div class="pagination">
+				<g:paginate total="${publicacionesCant ?: 0}" />
+			</div>-->
+	       	<!--  
+	       	<g:set var="padreId" value="0" />     	
+	       	<g:each in="${publicacionesGenerales}">
+	       		<g:if test="${!it.publicacionPadre}">
+		       		<p>Publicacion: ${it.titulo} - Responsable: ${it.responsable} - Fecha: ${it.fecha} - Hora: ${it.hora} </p>
+					<p>[[[${it.contenido}]]]</p>
+					<g:set var="padreId" value="${it.id}" />
+	    			<g:render template="respuestas" model="${[publicacion: it.respuesta]}" />
+	    			<g:link controller="publicacionGeneral" action="respuesta" 
+	    				params="['padreId': padreId]">Responder</g:link>
+	    			padreId = ${padreId}
+	    			<br>
+	    			<br>
+    			</g:if>
+			</g:each>
+				padreId = ${padreId}
+				-->
 		</div>
 		<div>
 			<br><hr><br>
