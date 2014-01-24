@@ -246,7 +246,7 @@ class BootStrap {
 			foroGeneral.save()
 			println foroGeneral
 		}
-		
+			
 		// TODO aca termina la zona de pruebas
 		
 		// Contenidos

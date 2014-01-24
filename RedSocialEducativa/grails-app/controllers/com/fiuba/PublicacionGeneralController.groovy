@@ -20,30 +20,22 @@ class PublicacionGeneralController {
 		else
 			return null
 	}
-	
-	def padreId = null
+
+	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	
 	def nueva() {
-		println "publicacion general nueva params"
-		println "${params}"
-		
-		respond new PublicacionGeneral(params), model: [usuario: usuarioActual()]
-	}
-	
-	def respuesta() {
-		println "publicacion general responder params"
-		println "${params}"
-		
-		padreId = params.padreId
-		
-		respond new PublicacionGeneral(params), model: [usuario: usuarioActual(), padreId: padreId]
+		println "nueva params: ${params}"
+		println usuarioActual()
+		def pubInicialId = params.pubInicialId
+		respond new PublicacionGeneral(params), model: [usuario: usuarioActual(), pubInicialId: pubInicialId]
 	}
 	
 	@Transactional
 	def guardar(PublicacionGeneral publicacionGeneralInstance) {
 		
-		println "publicacion general guardar params"
-		println "${params}"
+		println "guardar params: ${params.pubInicialId}"
+		
+		def pubInicialId = params.pubInicialId
 		
 		if (publicacionGeneralInstance == null) {
 			notFound()
@@ -51,7 +43,7 @@ class PublicacionGeneralController {
 		}
 		
 		if (publicacionGeneralInstance.hasErrors()) {
-			respond publicacionGeneralInstance.errors, view:'create'
+			respond publicacionGeneralInstance.errors, view:'nueva',  model: [pubInicialId: pubInicialId, usuario: usuarioActual()]
 			return
 		}
 		
@@ -65,14 +57,17 @@ class PublicacionGeneralController {
 			}
 		}
 	
-		if (params.padreId) {
+		if (pubInicialId) {
 			println "es una respuesta"
-			def publicacion = PublicacionGeneral.get(padreId)
-			publicacion.respuesta = publicacionGeneralInstance
+			def publicacion = PublicacionGeneral.get(pubInicialId)
+			publicacionGeneralInstance.titulo = "Respuesta a: " + publicacionGeneralInstance.titulo
+			publicacion.addToRespuestas(publicacionGeneralInstance)
 			publicacion.save flush:true
+			flash.message = message(code: 'default.created.message', args: [message(code: 'publicacionGeneralInstance.label', default: 'PublicacionGeneral'), publicacionGeneralInstance.id])
+			redirect controller: "foroGeneral", action: "publicaciones", params:['id': pubInicialId]
+			return
 		} else {
-
-		publicacionGeneralInstance.save flush:true
+			publicacionGeneralInstance.save flush:true
 		}
 		
 		request.withFormat {
@@ -84,103 +79,98 @@ class PublicacionGeneralController {
 		}
 	}
 	
-	
-	
-	
-	// metodos por defecto 
-	
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond PublicacionGeneral.list(params), model:[publicacionGeneralInstanceCount: PublicacionGeneral.count()]
-    }
-
-    def show(PublicacionGeneral publicacionGeneralInstance) {
-        respond publicacionGeneralInstance
-    }
-
-    def create() {
-		println "publicacion general create params"
-		println "${params}"
+	@Transactional
+	def eliminar() {
 		
-        respond new PublicacionGeneral(params)
-    }
+		println "eliminarPublicacion params: ${params}"
+		
+		def publicacionId = params.id
+		
+		println "publicaion id: ${publicacionId}"
+		
+		def publicacion = PublicacionGeneral.get(publicacionId)
 
-    @Transactional
-    def save(PublicacionGeneral publicacionGeneralInstance) {
-        if (publicacionGeneralInstance == null) {
-            notFound()
-            return
-        }
+		println "publicacion: ${publicacion}"
+				
+		if (publicacion == null) {
+			flash.message = "No existe esa publicacion"
+			redirect controller: "foroGeneral", action: "publicaciones", method: "GET", params:['id': params.pubInicialId]
+			return
+		}
+		
+		def esTema = false
+		
+		if (!publicacion.publicacionInicial) {
+			//println "es inicialllllllllll"
+			esTema = true
+		} else {
+			//println "NO ES INICIAL"
+			//println publicacion.publicacionInicial
+		}
+		
+		publicacion.delete flush:true
 
-        if (publicacionGeneralInstance.hasErrors()) {
-            respond publicacionGeneralInstance.errors, view:'create'
-            return
-        }
 
-        publicacionGeneralInstance.save flush:true
+		flash.message = message(code: 'default.deleted.message', args: [message(code: 'PublicacionGeneral.label',
+			default: 'PublicacionGeneral'), publicacion.id])
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'publicacionGeneralInstance.label', default: 'PublicacionGeneral'), publicacionGeneralInstance.id])
-                redirect publicacionGeneralInstance
-            }
-            '*' { respond publicacionGeneralInstance, [status: CREATED] }
-        }
-    }
+		if (esTema) {
+			redirect controller: "foroGeneral", action:"general"
+		} else {
+			redirect controller: "foroGeneral", action:"publicaciones", method:"GET", params:['id': params.pubInicialId]
+		}
+	}
+	
+	def editar(PublicacionGeneral publicacionGeneralInstance) {
+		
+		println "editar params: ${params}"
+		println usuarioActual()
+		def pubInicialId = params.pubInicialId
+		def publicacionId = params.id
+		respond publicacionGeneralInstance, model: [usuario: usuarioActual(), 
+			pubInicialId: pubInicialId, publicacionId: publicacionId]
+		
+	}
+	
+	@Transactional
+	def actualizar(PublicacionGeneral publicacionGeneralInstance) {
+		
+		println "actualizar params: ${params}"
+		
+		println "publicacion id: ${params.id}, ${publicacionGeneralInstance.id}"
+		
+		println "padreId: ${params.pubInicialId}"
+		
+		println publicacionGeneralInstance.properties
+		
+		if (publicacionGeneralInstance == null) {
+			notFound()
+			return
+		}
 
-    def edit(PublicacionGeneral publicacionGeneralInstance) {
-        respond publicacionGeneralInstance
-    }
+		if (publicacionGeneralInstance.hasErrors()) {
+			respond publicacionGeneralInstance.errors, view:'editar', model: [usuario: usuarioActual(),
+				pubInicialId: params.pubInicialId, publicacionId: params.id]
+			return
+		}
 
-    @Transactional
-    def update(PublicacionGeneral publicacionGeneralInstance) {
-        if (publicacionGeneralInstance == null) {
-            notFound()
-            return
-        }
+		publicacionGeneralInstance.save flush:true
 
-        if (publicacionGeneralInstance.hasErrors()) {
-            respond publicacionGeneralInstance.errors, view:'edit'
-            return
-        }
-
-        publicacionGeneralInstance.save flush:true
-
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'PublicacionGeneral.label', default: 'PublicacionGeneral'), publicacionGeneralInstance.id])
-                redirect publicacionGeneralInstance
-            }
-            '*'{ respond publicacionGeneralInstance, [status: OK] }
-        }
-    }
-
-    @Transactional
-    def delete(PublicacionGeneral publicacionGeneralInstance) {
-
-        if (publicacionGeneralInstance == null) {
-            notFound()
-            return
-        }
-
-        publicacionGeneralInstance.delete flush:true
-
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'PublicacionGeneral.label', default: 'PublicacionGeneral'), publicacionGeneralInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
+		request.withFormat {
+			form {
+				flash.message = message(code: 'default.updated.message', args: [message(code: 'PublicacionGeneral.label', default: 'PublicacionGeneral'), publicacionGeneralInstance.id])
+				redirect controller: "foroGeneral", action: "publicaciones", params: ['id': params.pubInicialId], 
+				model: [usuario: usuarioActual(), pubInicialId: params.pubInicialId]
+			}
+			'*'{ respond publicacionGeneralInstance, [status: OK] }
+		}
+	}
 
     protected void notFound() {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'publicacionGeneralInstance.label', default: 'PublicacionGeneral'), params.id])
-                redirect action: "index", method: "GET"
+                redirect controller: "foroGeneral", action: "publicaciones", method: "GET"//,  params:['id': cursoId]
             }
             '*'{ render status: NOT_FOUND }
         }

@@ -2,14 +2,14 @@ package com.fiuba
 
 class PublicacionGeneral extends Publicacion {
 
-	static hasOne = [respuesta: PublicacionGeneral]
+	static hasMany = [respuestas: PublicacionGeneral]
 	
-	static belongsTo = [publicacionPadre: PublicacionGeneral, foro: ForoGeneral]
+	static belongsTo = [publicacionInicial: PublicacionGeneral, foro: ForoGeneral]
 	
-	// Una publicacion puede no tener respueste, o no tener padre
+	// Una publicacion puede no tener respuestas, o no tener padre
 	// Es el caso de un foro con un publicacion con un solo mensaje
     static constraints = {
-		publicacionPadre nullable:true
-		respuesta nullable: true
+		publicacionInicial nullable:true
+		respuestas nullable: true
     }
 }
