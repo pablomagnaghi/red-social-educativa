@@ -10,25 +10,51 @@
 		<a href="#list-foroGeneral" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
+				<li><a class="home" href="${createLink(uri: '/')}">
+					<g:message code="default.home.label"/></a></li>
+				<li><g:link class="create" controller="publicacionGeneral" action="nueva">
+					<g:message code="Nueva publicacion" /></g:link></li>
 			</ul>
 		</div>
-		<g:if test="${flash.message}">
+		<div id="list-foroGeneral" class="content scaffold-list" role="main">
+			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
-		</g:if>
+			</g:if>
+		</div>	
 		<div>
-		
-			<h2>Foro general: <g:link controller="publicacionGeneral" action="nueva">(Nueva publicacion)</g:link></h2>
+			<h2>Foro general: ${com.fiuba.ForoGeneral.first()}</h2>
 			<br>
-			<ol>
-				<g:each in="${publicaciones}">
-	       				<li>
-		       				<p>Publicacion: <g:link action="publicaciones" id="${it.id}">${it.titulo}</g:link>
-		       			 	- Autor: ${it.responsable} - Fecha: ${it.fecha} - Hora: ${it.hora} </p>
-	    				</li>
-	    				<br>
+			<table>
+			<thead>
+				<tr>
+					<g:sortableColumn property="Tema" title="Tema" />
+					<g:sortableColumn property="Autor" title="Autor" />
+					<g:sortableColumn property="Replicas" title="Replicas" />
+					<g:sortableColumn property="Ultimo mensaje" title="Ultimo mensaje" />
+				</tr>
+			</thead>
+			<tbody>
+				<g:each in="${publicaciones}" >
+					<tr>
+						<td><g:link action="publicaciones" id="${it.id}">${it.titulo}</g:link></td>
+						<td>${it.responsable}</td>
+						<td>${it.respuestas?.size()}</td>
+						<td>
+							<g:if test="${it.respuestas}">
+								<p>${it.respuestas.last().responsable}</p>
+								<p>${it.respuestas.last().fecha}</p>
+								<p>${it.respuestas.last().hora}</p>
+							</g:if>
+							<g:else>
+								<p>${it.responsable}</p>
+								<p>${it.fecha}</p>
+								<p>${it.hora}</p>
+							</g:else>
+						</td>
+					</tr>
 				</g:each>
-			</ol>
+			</tbody>
+			</table>
 			<div class="pagination">
 				<g:paginate total="${publicacionesCant ?: 0}" />
 			</div>

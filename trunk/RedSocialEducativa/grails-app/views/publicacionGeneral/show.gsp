@@ -23,11 +23,22 @@
 			</g:if>
 			<ol class="property-list publicacionGeneral">
 			
-				<g:if test="${publicacionGeneralInstance?.publicacionPadre}">
+				<g:if test="${publicacionGeneralInstance?.publicacionInicial}">
 				<li class="fieldcontain">
-					<span id="publicacionPadre-label" class="property-label"><g:message code="publicacionGeneral.publicacionPadre.label" default="Publicacion Padre" /></span>
+					<span id="publicacionInicial-label" class="property-label"><g:message code="publicacionGeneral.publicacionInicial.label" default="Publicacion Inicial" /></span>
 					
-						<span class="property-value" aria-labelledby="publicacionPadre-label"><g:link controller="publicacionGeneral" action="show" id="${publicacionGeneralInstance?.publicacionPadre?.id}">${publicacionGeneralInstance?.publicacionPadre?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="publicacionInicial-label"><g:link controller="publicacionGeneral" action="show" id="${publicacionGeneralInstance?.publicacionInicial?.id}">${publicacionGeneralInstance?.publicacionInicial?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${publicacionGeneralInstance?.respuestas}">
+				<li class="fieldcontain">
+					<span id="respuestas-label" class="property-label"><g:message code="publicacionGeneral.respuestas.label" default="Respuestas" /></span>
+					
+						<g:each in="${publicacionGeneralInstance.respuestas}" var="r">
+						<span class="property-value" aria-labelledby="respuestas-label"><g:link controller="publicacionGeneral" action="show" id="${r.id}">${r?.encodeAsHTML()}</g:link></span>
+						</g:each>
 					
 				</li>
 				</g:if>
@@ -73,15 +84,6 @@
 					<span id="responsable-label" class="property-label"><g:message code="publicacionGeneral.responsable.label" default="Responsable" /></span>
 					
 						<span class="property-value" aria-labelledby="responsable-label"><g:fieldValue bean="${publicacionGeneralInstance}" field="responsable"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${publicacionGeneralInstance?.respuesta}">
-				<li class="fieldcontain">
-					<span id="respuesta-label" class="property-label"><g:message code="publicacionGeneral.respuesta.label" default="Respuesta" /></span>
-					
-						<span class="property-value" aria-labelledby="respuesta-label"><g:link controller="publicacionGeneral" action="show" id="${publicacionGeneralInstance?.respuesta?.id}">${publicacionGeneralInstance?.respuesta?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

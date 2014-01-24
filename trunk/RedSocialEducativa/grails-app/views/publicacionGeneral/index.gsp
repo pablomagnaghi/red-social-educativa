@@ -24,7 +24,7 @@
 			<thead>
 					<tr>
 					
-						<th><g:message code="publicacionGeneral.publicacionPadre.label" default="Publicacion Padre" /></th>
+						<th><g:message code="publicacionGeneral.publicacionInicial.label" default="Publicacion Inicial" /></th>
 					
 						<g:sortableColumn property="contenido" title="${message(code: 'publicacionGeneral.contenido.label', default: 'Contenido')}" />
 					
@@ -42,7 +42,7 @@
 				<g:each in="${publicacionGeneralInstanceList}" status="i" var="publicacionGeneralInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${publicacionGeneralInstance.id}">${fieldValue(bean: publicacionGeneralInstance, field: "publicacionPadre")}</g:link></td>
+						<td><g:link action="show" id="${publicacionGeneralInstance.id}">${fieldValue(bean: publicacionGeneralInstance, field: "publicacionInicial")}</g:link></td>
 					
 						<td>${fieldValue(bean: publicacionGeneralInstance, field: "contenido")}</td>
 					

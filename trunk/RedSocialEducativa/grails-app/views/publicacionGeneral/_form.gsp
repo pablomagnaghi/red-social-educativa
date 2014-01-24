@@ -1,26 +1,5 @@
 <%@ page import="com.fiuba.PublicacionGeneral" %>
 
-
-<g:if test="${respuestassss}">
-	<div class="fieldcontain ${hasErrors(bean: publicacionGeneralInstance, field: 'publicacionPadre', 'error')} ">
-		<label for="publicacionPadre">
-			<g:message code="publicacionGeneral.publicacionPadre.label" default="Publicacion Padre" />
-			
-		</label>
-		<g:select id="publicacionPadre" name="publicacionPadre.id" from="${com.fiuba.PublicacionGeneral.list()}" 
-			optionKey="id" value="${publicacionGeneralInstance?.publicacionPadre?.id}" class="many-to-one" noSelection="['null': '']"/>
-	</div>
-	
-	<div class="fieldcontain ${hasErrors(bean: publicacionGeneralInstance, field: 'respuesta', 'error')} required">
-		<label for="respuesta">
-			<g:message code="publicacionGeneral.respuesta.label" default="Respuesta" />
-			<span class="required-indicator">*</span>
-		</label>
-		<g:select id="respuesta" name="respuesta.id" from="${com.fiuba.PublicacionGeneral.list()}" 
-			optionKey="id" required="" value="${publicacionGeneralInstance?.respuesta?.id}" class="many-to-one"/>
-	</div>
-</g:if>
-
 <g:if test="${usuario}">
 	<div>
 		<g:hiddenField name="responsable" value="${usuario}"/>
@@ -48,15 +27,6 @@
 	<g:hiddenField name="foro.id" value="${com.fiuba.ForoGeneral.first().id}"/>
 </div>
 
-
-<div class="fieldcontain ${hasErrors(bean: publicacionGeneralInstance, field: 'titulo', 'error')} ">
-	<label for="titulo">
-		<g:message code="publicacionGeneral.titulo.label" default="Titulo" />
-		
-	</label>
-	<g:textField name="titulo" value="${publicacionGeneralInstance?.titulo}"/>
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: publicacionGeneralInstance, field: 'contenido', 'error')} ">
 	<label for="contenido">
 		<g:message code="publicacionGeneral.contenido.label" default="Contenido" />
@@ -65,17 +35,15 @@
 	<g:textField name="contenido" value="${publicacionGeneralInstance?.contenido}"/>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<g:if test="${pubInicialId}">
+	<g:hiddenField name="titulo" value="${com.fiuba.PublicacionGeneral.get(pubInicialId).titulo}"/>
+</g:if>
+<g:else>
+	<div class="fieldcontain ${hasErrors(bean: publicacionGeneralInstance, field: 'titulo', 'error')} ">
+		<label for="titulo">
+			<g:message code="publicacionGeneral.titulo.label" default="Titulo" />
+			
+		</label>
+		<g:textField name="titulo" value="${publicacionGeneralInstance?.titulo}"/>
+	</div>
+</g:else>
