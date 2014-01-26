@@ -4,6 +4,9 @@
 	<div>
 		<g:hiddenField name="responsable" value="${usuario}"/>
 	</div>
+	<div>
+		<g:hiddenField name="dni" value="${usuario.username}"/>
+	</div>
 </g:if>
 <g:else>
 	<div class="fieldcontain ${hasErrors(bean: publicacionGeneralInstance, field: 'responsable', 'error')} ">

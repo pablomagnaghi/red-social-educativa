@@ -29,7 +29,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form url="[resource:cursoInstance, action:'save']" >
+			<g:form action="save" >
 				<fieldset class="form">
 					<g:render template="form"/>
 					<div class="fieldcontain ${hasErrors(bean: cursoInstance, field: 'nroRelativo', 'error')} required">

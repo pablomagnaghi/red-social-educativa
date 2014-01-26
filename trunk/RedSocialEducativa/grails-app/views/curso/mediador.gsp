@@ -20,12 +20,9 @@
 			</ol>
 		</div>
 		<div>
-			<g:if test="${flash.message}">
-				<div class="message" role="status">${flash.message}</div>
-			</g:if>
+			<fieldset class="form">
+				<g:render template="esquema"/>
+			</fieldset>
 		</div>
-		<fieldset class="form">
-			<g:render template="noticiasCurso"/>
-		</fieldset>
 	</body>
 </html>
