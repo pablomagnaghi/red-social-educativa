@@ -12,24 +12,21 @@
 			</h2> 
 		</div>
 		<div>
-			<g:if test="${flash.message}">
-				<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<br>
-		</div>
-		<div>
 			<g:link class="list" action="principal" controller="red">
 			<g:message code="Pagina Inicial" args="[entityName]" /></g:link>
 		</div>
-		<g:if test="${aprendiz?.participa}">
+		<div>
 			<fieldset class="form">
-			<g:render template="noticiasCurso"/>
-			</fieldset>
-    	</g:if>
-    	<g:else>
-    		<div>
-		    	<p>Su solicitud de particion en el curso ya ha sido recibida.</p>
-			</div>
-		</g:else>       
+				<g:render template="esquema"/>
+			</fieldset>   
+		</div>
+		<div>
+			<g:if test="${aprendiz?.participa}">
+				<p>PARTICIPA</p>
+	    	</g:if>
+	    	<g:else>
+			    <p>Su solicitud de particion en el curso ya ha sido recibida.</p>
+			</g:else>    
+		</div>
 	</body>
 </html>

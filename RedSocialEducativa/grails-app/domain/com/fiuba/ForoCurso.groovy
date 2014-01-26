@@ -6,6 +6,8 @@ class ForoCurso extends Foro {
 
 	static belongsTo = [curso: Curso]
 	
+	static hasMany = [publicaciones: PublicacionCurso]
+	
     static constraints = {
     }
 }

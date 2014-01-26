@@ -11,11 +11,38 @@ import org.springframework.security.access.annotation.Secured
 @Secured('permitAll')
 class TemaController {
 
+	def springSecurityService
+	
+	private usuarioActual() {
+		if (springSecurityService.principal.enabled)
+			return Usuario.get(springSecurityService.principal.id)
+		else
+			return null
+	}
+	
+	def cursoId
+	def temaId
+	
+	def general() {
+		params.max = 5
+		
+		println "general tema: params"
+		println params
+				
+		cursoId = params.cursoId
+		temaId = params.id
+		//contenido
+		//material tema
+		//foro
+		
+		[contenidos: Contenido.findAllByTema(Tema.get(temaId)),
+			materiales: MaterialTema.findAllByTema(Tema.get(temaId)),
+			cursoId: cursoId, temaId: temaId]
+	}
+	
 	// TODO metodos para el ABM temas del menu mediador
 	
     //static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
-	def cursoId
 	
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)

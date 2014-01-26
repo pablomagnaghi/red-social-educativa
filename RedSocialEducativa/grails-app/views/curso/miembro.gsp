@@ -19,5 +19,10 @@
 		    <g:link class="list" action="solicitarParticipacionEnElCurso" params="['cursoId': cursoId]">
 				<g:message code="Solicitar partipacion en el curso" args="[entityName]" /></g:link>    
 		</div>
+		<div>
+			<fieldset class="form">
+				<g:render template="esquema"/>
+			</fieldset>
+		</div>
 	</body>
 </html>

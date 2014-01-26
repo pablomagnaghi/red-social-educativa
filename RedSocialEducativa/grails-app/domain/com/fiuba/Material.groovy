@@ -17,6 +17,10 @@ class Material {
 	// TODO ver
 	Categoria categoria
 	
+	String toString() {
+		"${titulo}"
+	}
+	
     static constraints = {
     }
 	

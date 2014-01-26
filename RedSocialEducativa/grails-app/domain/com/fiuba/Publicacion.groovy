@@ -7,6 +7,7 @@ abstract class Publicacion {
 	
 	// responsable, fecha y hora se agregan automaticamente
 	String responsable
+	String dni
 	String fecha
 	String hora
 
@@ -15,6 +16,7 @@ abstract class Publicacion {
 	}
 	
     static constraints = {
+		dni nullable: true
     }
 	
 	static mapping = {

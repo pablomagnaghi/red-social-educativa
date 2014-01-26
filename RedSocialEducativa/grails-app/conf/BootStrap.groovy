@@ -188,7 +188,7 @@ class BootStrap {
 		categorias.add(categoriaEjerciciosResueltos)
 		def categoriaTrabajo = new Categoria(nombre: "Trabajo")
 		categorias.add(categoriaTrabajo)
-		def categoriaRefBibliografica = new Categoria(nombre: "RefBibliografica ")
+		def categoriaRefBibliografica = new Categoria(nombre: "RefBibliografica")
 		categorias.add(categoriaRefBibliografica )
 		def categoriaEnlace = new Categoria(nombre: "Enlace")
 		categorias.add(categoriaEnlace)
@@ -215,7 +215,7 @@ class BootStrap {
 		
 		def foroTemaUnoCursoUno = new ForoTema(nombre: "ForoGeneralTemaUnoCursoUno")
 		def foroTemaDosCursoUno = new ForoTema(nombre: "ForoGeneralTemaDosCursoUno")
-		def foroTemaTresCursoUno = new ForoTema(nombre: "ForoGeneralTemaTresCursoUno")
+		def foroTemaUnoCursoDos = new ForoTema(nombre: "ForoGeneralTemaUnoCursoDos")
 		
 		// Foros generales de curso
 		
@@ -228,12 +228,17 @@ class BootStrap {
 		// Publicaciones generales
 		
 		def publicacionGeneralUno = new PublicacionGeneral(titulo: "PublicacionGeneralUno", contenido: "Contenido", 
-			responsable: "Pablo Magnaghi (Administrador)", fecha: (new Date()).format("yyyy-mm-dd"), hora: (new Date()).getTimeString())
-		def publicacionGeneralDos = new PublicacionGeneral(titulo: "PublicacionGeneralDos", contenido: "Contenido", 
-			responsable: "Pablo Magnaghi (Administrador)", fecha: (new Date()).format("yyyy-mm-dd"), hora: (new Date()).getTimeString())
-		def publicacionGeneralTres = new PublicacionGeneral(titulo: "PublicacionGeneralTres", contenido: "Contenido", 
-			responsable: "Pablo Magnaghi (Administrador)", fecha: (new Date()).format("yyyy-mm-dd"), hora: (new Date()).getTimeString())
+			responsable: "Pablo Magnaghi (Administrador)", dni: "33300432", fecha: (new Date()).format("yyyy-mm-dd"), 
+			hora: (new Date()).getTimeString())
 		
+		def publicacionGeneralDos = new PublicacionGeneral(titulo: "PublicacionGeneralDos", contenido: "Contenido", 
+			responsable: "Pablo Magnaghi (Administrador)", dni: "33300432", fecha: (new Date()).format("yyyy-mm-dd"), 
+			hora: (new Date()).getTimeString())
+
+		def publicacionGeneralTres = new PublicacionGeneral(titulo: "PublicacionGeneralTres", contenido: "Contenido", 
+			responsable: "Pablo Magnaghi (Administrador)", dni: "33300432", fecha: (new Date()).format("yyyy-mm-dd"), 
+			hora: (new Date()).getTimeString())
+				
 		def foroGeneral = new ForoGeneral(nombre: "Foro general")
 		foroGeneral.addToPublicaciones(publicacionGeneralUno)
 		foroGeneral.addToPublicaciones(publicacionGeneralDos)
@@ -249,20 +254,77 @@ class BootStrap {
 			
 		// TODO aca termina la zona de pruebas
 		
+		// Materiales, temas, contenidos
+		
+		// Material de contenido
+		def materialContenidoUno = new MaterialContenido(titulo: "material contenido 1", descripcion: "opcional", autor: "anonimo", 
+			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("RefBibliografica"))
+		def materialContenidoDos = new MaterialContenido(titulo: "material contenido 2", descripcion: "opcional", autor: "anonimo",
+			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Presentacion"))
+		def materialContenidoTres = new MaterialContenido(titulo: "material contenido 3", descripcion: "opcional", autor: "anonimo",
+			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Enlace"))
+		def materialContenidoCuatro = new MaterialContenido(titulo: "material contenido 4", descripcion: "opcional", autor: "anonimo",
+			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Glosario"))
+
 		// Contenidos
 		def contenidoUnoTemaUnoCursoUno = new Contenido(titulo: "ContenidoUnoTemaUnoCursoUno")
+		contenidoUnoTemaUnoCursoUno.addToMateriales(materialContenidoUno)
+		contenidoUnoTemaUnoCursoUno.addToMateriales(materialContenidoDos)
+	
 		def contenidoDosTemaUnoCursoUno = new Contenido(titulo: "ContenidoDosTemaUnoCursoUno")
+		contenidoDosTemaUnoCursoUno.addToMateriales(materialContenidoTres)
+		contenidoDosTemaUnoCursoUno.addToMateriales(materialContenidoCuatro)
+		
 		def contenidoTresTemaUnoCursoUno = new Contenido(titulo: "ContenidoTresTemaUnoCursoUno")
+		
+		def contenidoUnoTemaDosCursoUno = new Contenido(titulo: "ContenidoUnoTemaDosCursoUno")
+		def contenidoDosTemaDosCursoUno = new Contenido(titulo: "ContenidoDosTemaDosCursoUno")
+		
+		def contenidoUnoTemaUnoCursoDos = new Contenido(titulo: "ContenidoUnoTemaUnoCursoDos")
+		def contenidoDosTemaUnoCursoDos = new Contenido(titulo: "ContenidoDosTemaUnoCursoDos")
+		
+		// Material de temas
+		def materialTemaUno = new MaterialTema(titulo: "material Tema 1", descripcion: "opcional", autor: "anonimo",
+			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("RefBibliografica"))
+		def materialTemaDos = new MaterialTema(titulo: "material Tema 2", descripcion: "opcional", autor: "anonimo",
+			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Presentacion"))
+		def materialTemaTres = new MaterialTema(titulo: "material Tema 3", descripcion: "opcional", autor: "anonimo",
+			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Enlace"))
+		def materialTemaCuatro = new MaterialTema(titulo: "material Tema 4", descripcion: "opcional", autor: "anonimo",
+			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Glosario"))
 		
 		// Temas
 		
 		def temaUnoCursoUno = new Tema(titulo: "TemaUnoCursoUno", foro: foroTemaUnoCursoUno)
-		def temaDosCursoUno = new Tema(titulo: "TemaUnoCursoDos", foro: foroTemaDosCursoUno)
-		def temaTresCursoUno = new Tema(titulo: "TemaUnoCursoTres", foro: foroTemaTresCursoUno)
-		
 		temaUnoCursoUno.addToContenidos(contenidoUnoTemaUnoCursoUno)
 		temaUnoCursoUno.addToContenidos(contenidoDosTemaUnoCursoUno)
 		temaUnoCursoUno.addToContenidos(contenidoTresTemaUnoCursoUno)
+		temaUnoCursoUno.addToMateriales(materialTemaUno)
+		temaUnoCursoUno.addToMateriales(materialTemaDos)
+		
+		def temaDosCursoUno = new Tema(titulo: "TemaDosCursoUno", foro: foroTemaDosCursoUno)
+		temaDosCursoUno.addToContenidos(contenidoUnoTemaDosCursoUno)
+		temaDosCursoUno.addToContenidos(contenidoDosTemaDosCursoUno)
+		
+		def temaUnoCursoDos = new Tema(titulo: "TemaUnoCursoDos", foro: foroTemaUnoCursoDos)
+		temaUnoCursoDos.addToContenidos(contenidoUnoTemaUnoCursoDos)
+		temaUnoCursoDos.addToContenidos(contenidoDosTemaUnoCursoDos)
+		temaUnoCursoDos.addToMateriales(materialTemaTres)
+		temaUnoCursoDos.addToMateriales(materialTemaCuatro)
+		
+		// Material curso
+		def materialUno = new MaterialCurso(titulo: "material curso 1", descripcion: "opcional", autor: "anonimo",
+			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("RefBibliografica"))
+		def materialDos = new MaterialCurso(titulo: "material curso 2", descripcion: "opcional", autor: "anonimo",
+			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Presentacion"))
+		def materialTres = new MaterialCurso(titulo: "material curso 3", descripcion: "opcional", autor: "anonimo",
+			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Enlace"))
+		def materialCuatro = new MaterialCurso(titulo: "material curso 4", descripcion: "opcional", autor: "anonimo",
+			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Glosario"))
+		def materialCinco = new MaterialCurso(titulo: "material curso 5", descripcion: "opcional", autor: "anonimo",
+			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Trabajo"))
+		def materialSeis = new MaterialCurso(titulo: "material curso 6", descripcion: "opcional", autor: "anonimo",
+			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Cuestionario"))
 		
 		// Cursos
 		
@@ -274,7 +336,12 @@ class BootStrap {
 		cursoUno.addToAprendices(aprendizOcho)
 		cursoUno.addToTemas(temaUnoCursoUno)
 		cursoUno.addToTemas(temaDosCursoUno)
-		cursoUno.addToTemas(temaTresCursoUno)
+		cursoUno.addToMateriales(materialUno)
+		cursoUno.addToMateriales(materialDos)
+		cursoUno.addToMateriales(materialTres)
+		cursoUno.addToMateriales(materialCuatro)
+		cursoUno.addToMateriales(materialCinco)
+		cursoUno.addToMateriales(materialSeis)
 
 		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", foro: foroCursoDos, nombre: "Curso 2")
 		cursoDos.addToMediadores(mediadorUnoP)
@@ -282,6 +349,7 @@ class BootStrap {
 		cursoDos.addToAprendices(aprendizAgus)
 		cursoDos.addToAprendices(aprendizCuatro)
 		cursoDos.addToAprendices(aprendizNueve)
+		cursoDos.addToTemas(temaUnoCursoDos)
 		
 		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1|2", foro: foroCursoTres, nombre: "Curso 3")
 		cursoTres.addToMediadores(mediadorTres)

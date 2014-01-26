@@ -18,6 +18,8 @@
 					<g:message code="Administrar temas del curso" /></g:link></li>
 				<li><g:link class="list" action="index" controller="noticiaCurso" params="['cursoId': cursoId]">
 					<g:message code="Administrar cartelera del curso" /></g:link></li>
+				<li><g:link class="list" action="general" controller="foroCurso" params="['cursoId': cursoId]">
+					<g:message code="Administrar foros generales de cursos" /></g:link></li>
 				<li><g:link class="list" action="estadisticas" controller="aprendiz" params="['cursoId': cursoId]">
 					<g:message code="Estadisticas de aprendices" /></g:link></li>
 			</ol>

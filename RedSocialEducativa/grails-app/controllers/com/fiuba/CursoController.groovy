@@ -1,12 +1,10 @@
 package com.fiuba
 
 import static org.springframework.http.HttpStatus.*
-//import grails.transaction.Transactional
-
-//@Transactional(readOnly = true)
-
+import grails.transaction.Transactional
 import org.springframework.security.access.annotation.Secured
 
+@Transactional(readOnly = true)
 @Secured('permitAll')
 class CursoController {
 
@@ -87,10 +85,32 @@ class CursoController {
 		}
 	}
 	
+	// Para visitantes y administradores
 	def general() {
-		[curso: Curso.get(cursoId)]
+		[curso: Curso.get(cursoId), cursoId: cursoId]
 	}
 	
+	def miembro() {
+		//println "cursoID miembro: ${cursoId}"
+		//println params
+		cursoId = params.cursoId
+		
+		def miembro = Miembro.findByUsuario(usuarioActual())
+		
+		[miembro: miembro, cursoId: cursoId]
+	}
+	
+	def aprendiz() {
+		println "params aprendiz: ${params}"
+		
+		cursoId = params.cursoId
+		
+		def aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
+
+		def noticiasCurso = NoticiaCurso.findAllByCurso(Curso.get(cursoId))
+
+		[aprendiz: aprendiz, noticiasCurso: noticiasCurso, cursoId: cursoId]
+	}
 	
 	def mediador() {
 		
@@ -115,26 +135,19 @@ class CursoController {
 		[materia: Curso.get(cursoId).materia, cursoId: cursoId]
 	}
 	
-	def aprendiz() {
-		println "params aprendiz: ${params}"
+	def temas() {
+		params.max = 5
 		
+		println "general materiaCurso"
+		println params
+				
 		cursoId = params.cursoId
-		
-		def aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
 
-		def noticiasCurso = NoticiaCurso.findAllByCurso(Curso.get(cursoId))
-
-		[aprendiz: aprendiz, noticiasCurso: noticiasCurso, cursoId: cursoId]
-	}
-	
-	def miembro() {
-		//println "cursoID miembro: ${cursoId}"
-		//println params
-		cursoId = params.cursoId
-		
-		def miembro = Miembro.findByUsuario(usuarioActual())
-		
-		[miembro: miembro, cursoId: cursoId]
+		[temasCurso: Tema.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
+			temasCursoCant: Tema.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId,
+			mediador: Mediador.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId)),
+			aprendiz: Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId)),
+			cursoId: cursoId]
 	}
 	
 	def solicitarParticipacionEnElCurso() {
@@ -162,7 +175,7 @@ class CursoController {
 	
 	// TODO: Metodos para ABM de cursos en menu administrador
 
-    // static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -174,12 +187,16 @@ class CursoController {
     }
 
     def create() {
+		println "create"
         respond new Curso(params)
     }
 
-    //@Transactional
+	//@Transactional
     def save(Curso cursoInstance) {
-			
+		
+		println "save"	
+		println cursoInstance.properties
+		
         if (cursoInstance == null) {
             notFound()
             return
