@@ -1,6 +1,6 @@
 <%@ page import="com.fiuba.NoticiaCurso" %>
 
-<div> <g:hiddenField name="curso.id"  value="${cursoId}"/></div>
+<div> <g:hiddenField name="curso.id" value="${cursoId}"/></div>
 
 <div class="fieldcontain ${hasErrors(bean: noticiaCursoInstance, field: 'texto', 'error')} ">
 	<label for="texto">

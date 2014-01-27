@@ -29,9 +29,15 @@
 		</div>
 		<div>
 			<hr>
+			<h2><g:link controller="materialTema" action="general" params="['cursoId': cursoId, 'temaId': temaId]">
+				<g:message code="Material del tema"/></g:link></h2>
+		</div>
+		<div>
+			<hr>
 			<h2><g:link controller="contenido" action="general" params="['cursoId': cursoId, 'temaId': temaId]">
 				<g:message code="Contenidos del tema"/></g:link></h2>
 		</div>
+
 		<div>
 			<h2>Material del tema</h2>
 			<br>

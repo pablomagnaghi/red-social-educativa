@@ -135,10 +135,24 @@ class CursoController {
 		[materia: Curso.get(cursoId).materia, cursoId: cursoId]
 	}
 	
+	def material() {
+		params.max = 5
+		
+		println "action materias controller curso"
+		println params
+				
+		cursoId = params.cursoId
+
+		[materialesCurso: MaterialCurso.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
+			materialesCursoCant: MaterialCurso.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId,
+			mediador: Mediador.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId)),
+			aprendiz: Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))]
+	}
+	
 	def temas() {
 		params.max = 5
 		
-		println "general materiaCurso"
+		println "action temas controller curso"
 		println params
 				
 		cursoId = params.cursoId

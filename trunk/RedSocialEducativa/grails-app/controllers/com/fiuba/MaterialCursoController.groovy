@@ -1,7 +1,5 @@
 package com.fiuba
 
-
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -12,36 +10,60 @@ import org.springframework.security.access.annotation.Secured
 @Secured('permitAll')
 class MaterialCursoController {
 	
+	def springSecurityService
+	
+	private usuarioActual() {
+		return Usuario.get(springSecurityService.principal.id)
+	}
+	
 	// metodos nuevos
 	def cursoId
 	
 	def general() {
-		params.max = 5
+		params.max = 5 // Math.min(max ?: 10, 100)
+
+		println "foro Tema general CURSOID: ${params.cursoId}"
+		println "foro Tema general TEMAID: ${params}"
 		
-		println "general materiaCurso"
-		println params
-				
 		cursoId = params.cursoId
-					
-		[materialesCurso: MaterialCurso.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
-			materialesCursoCant: MaterialCurso.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId]
+		def materialId = params.id
+				
+		def material = Material.get(materialId)
+		
+		[cursoId: cursoId, material: material]
 	}
 	
 	// metodos por defecto
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    //static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond MaterialCurso.list(params), model:[materialCursoInstanceCount: MaterialCurso.count()]
+		
+		println "index noticiaCurso"
+		println params
+		
+		cursoId = params.cursoId
+			
+		[materialCursoInstanceList: MaterialCurso.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
+			materialCursoInstanceCount: MaterialCurso.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId]
+		
     }
-
+	
     def show(MaterialCurso materialCursoInstance) {
-        respond materialCursoInstance
+        respond materialCursoInstance, model: [cursoId: cursoId]
     }
 
     def create() {
-        respond new MaterialCurso(params)
+		
+		println "create noticia curso params: ${params}"
+		cursoId = params.cursoId
+		def mediador = Mediador.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
+		
+		println "usaurio actual: ${mediador}"
+		
+		respond new MaterialCurso(params), params:['cursoId': cursoId], model:[cursoId: cursoId, mediador: mediador]
+		
     }
 
     @Transactional
@@ -50,36 +72,56 @@ class MaterialCursoController {
             notFound()
             return
         }
-
+		
+		cursoId = materialCursoInstance.curso.id
+		
         if (materialCursoInstance.hasErrors()) {
-            respond materialCursoInstance.errors, view:'create'
+			def mediador = Mediador.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
+			respond materialCursoInstance.errors, view:'create', params:['cursoId': cursoId],
+				model: [cursoId: cursoId, mediador: mediador]
             return
         }
+		
+		println "LLLLLLLLEGO"
+		
+		def materialCursoExistente = MaterialCurso.findByCursoAndTitulo(Curso.get(cursoId),
+			materialCursoInstance.titulo)
+		println materialCursoExistente
+		
+		if (materialCursoExistente) {
+			flash.message = "Ya existe el material ${materialCursoInstance.titulo} del curso ${Curso.get(cursoId)}"
+			redirect action: "create", params:['cursoId': cursoId]
+			return
+		}
 
         materialCursoInstance.save flush:true
 
         request.withFormat {
             form {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'materialCursoInstance.label', default: 'MaterialCurso'), materialCursoInstance.id])
-                redirect materialCursoInstance
+                redirect action: "index", params:['cursoId': cursoId]
             }
             '*' { respond materialCursoInstance, [status: CREATED] }
         }
     }
 
     def edit(MaterialCurso materialCursoInstance) {
-        respond materialCursoInstance
+		cursoId = params.cursoId
+        respond materialCursoInstance, params:['cursoId': cursoId], model:[cursoId: cursoId, usuario: usuarioActual()]
     }
 
     @Transactional
     def update(MaterialCurso materialCursoInstance) {
-        if (materialCursoInstance == null) {
+        
+		cursoId = params.cursoId
+		
+		if (materialCursoInstance == null) {
             notFound()
             return
         }
 
         if (materialCursoInstance.hasErrors()) {
-            respond materialCursoInstance.errors, view:'edit'
+            respond materialCursoInstance.errors, view:'edit', params:['cursoId': cursoId], model: [cursoId: cursoId]
             return
         }
 
@@ -93,7 +135,7 @@ class MaterialCursoController {
             '*'{ respond materialCursoInstance, [status: OK] }
         }
     }
-
+	
     @Transactional
     def delete(MaterialCurso materialCursoInstance) {
 
@@ -102,12 +144,14 @@ class MaterialCursoController {
             return
         }
 
+		cursoId = params.cursoId
+		
         materialCursoInstance.delete flush:true
 
         request.withFormat {
             form {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'MaterialCurso.label', default: 'MaterialCurso'), materialCursoInstance.id])
-                redirect action:"index", method:"GET"
+                redirect action:"index", params:['cursoId': cursoId], method:"GET"
             }
             '*'{ render status: NO_CONTENT }
         }
@@ -117,7 +161,7 @@ class MaterialCursoController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'materialCursoInstance.label', default: 'MaterialCurso'), params.id])
-                redirect action: "index", method: "GET"
+                redirect action: "index", params:['cursoId': cursoId], method: "GET"
             }
             '*'{ render status: NOT_FOUND }
         }

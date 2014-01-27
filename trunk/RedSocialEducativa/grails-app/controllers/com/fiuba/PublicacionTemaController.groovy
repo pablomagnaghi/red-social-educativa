@@ -27,10 +27,10 @@ class PublicacionTemaController {
 		println "publicacion controller nueva params: ${params}"
 		println usuarioActual()
 		def pubInicialId = params.pubInicialId
-		//def temaId = params.temaId
+		def cursoId = params.cursoId
 		def temaId = params.temaId
 		respond new PublicacionTema(params), model: [usuario: usuarioActual(), 
-			pubInicialId: pubInicialId, temaId: temaId]
+			pubInicialId: pubInicialId, cursoId: cursoId, temaId: temaId]
 	}
 	
 	@Transactional
@@ -40,6 +40,7 @@ class PublicacionTemaController {
 		
 		def pubInicialId = params.pubInicialId
 		def temaId = params.temaId
+		def cursoId = params.cursoId
 		
 		if (publicacionTemaInstance == null) {
 			notFound()
@@ -48,16 +49,12 @@ class PublicacionTemaController {
 		
 		if (publicacionTemaInstance.hasErrors()) {
 			respond publicacionTemaInstance.errors, view:'nueva',  model: [pubInicialId: pubInicialId, 
-				usuario: usuarioActual(), temaId: temaId]
+				usuario: usuarioActual(), cursoId: cursoId, temaId: temaId]
 			return
 		}
 		
-		if (Administrador.findByUsuario(usuarioActual())) {
-			publicacionTemaInstance.responsable = publicacionTemaInstance.responsable + " (Administrador)"
-		} else {
-			publicacionTemaInstance.responsable = publicacionTemaInstance.responsable + " (Miembro)"
-		}
-			
+		publicacionTemaInstance.responsable = publicacionTemaInstance.responsable + " (Miembro)"
+	
 		if (pubInicialId) {
 			println "es una respuesta"
 			def publicacion = PublicacionTema.get(pubInicialId)
@@ -66,7 +63,7 @@ class PublicacionTemaController {
 			publicacion.save flush:true
 			flash.message = message(code: 'default.created.message', args: [message(code: 'publicacionTemaInstance.label', 
 				default: 'PublicacionTema'), publicacionTemaInstance.id])
-			redirect controller: "foroTema", action: "publicaciones", params:['id': pubInicialId, 'temaId': temaId]
+			redirect controller: "foroTema", action: "publicaciones", params: ['id': pubInicialId, 'cursoId': cursoId, 'temaId': temaId]
 			return
 		} else {
 			publicacionTemaInstance.save flush:true
@@ -76,7 +73,7 @@ class PublicacionTemaController {
 			form {
 				flash.message = message(code: 'default.created.message', args: [message(code: 'publicacionTemaInstance.label', 
 					default: 'PublicacionTema'), publicacionTemaInstance.id])
-				redirect controller: "foroTema", action: "general", params:['temaId': temaId]
+				redirect controller: "foroTema", action: "general", params: ['cursoId': cursoId, 'temaId': temaId]
 			}
 			'*' { respond publicacionTemaInstance, [status: CREATED] }
 		}
@@ -88,6 +85,7 @@ class PublicacionTemaController {
 		println "publicacion controller eliminarPublicacion params: ${params}"
 		
 		def publicacionId = params.id
+		def cursoId= params.cursoId
 		def temaId = params.temaId
 		
 		println "publicaion id: ${publicacionId}"
@@ -99,7 +97,7 @@ class PublicacionTemaController {
 		if (publicacion == null) {
 			flash.message = "No existe esa publicacion"
 			redirect controller: "foroTema", action: "publicaciones", method: "GET", 
-				params:['id': params.pubInicialId, 'temaId': temaId]
+				params:['id': params.pubInicialId, 'cursoId': cursoId, 'temaId': temaId]
 			return
 		}
 		
@@ -120,10 +118,10 @@ class PublicacionTemaController {
 			default: 'PublicacionTema'), publicacion.id])
 
 		if (esTema) {
-			redirect controller: "foroTema", action:"general", params:['temaId': temaId]
+			redirect controller: "foroTema", action:"general", params:['cursoId': cursoId, 'temaId': temaId]
 		} else {
 			redirect controller: "foroTema", action:"publicaciones", method:"GET", 
-				params:['id': params.pubInicialId, 'temaId':  temaId]
+				params:['id': params.pubInicialId, 'cursoId': cursoId, 'temaId':  temaId]
 		}
 	}
 	
@@ -133,10 +131,11 @@ class PublicacionTemaController {
 		println usuarioActual()
 		def pubInicialId = params.pubInicialId
 		def publicacionId = params.id
+		def cursoId = params.cursoId
 		def temaId = params.temaId
 		
 		respond publicacionTemaInstance, model: [usuario: usuarioActual(),
-			pubInicialId: pubInicialId, publicacionId: publicacionId, temaId: temaId]
+			pubInicialId: pubInicialId, publicacionId: publicacionId, cursoId: cursoId, temaId: temaId]
 		
 	}
 	
@@ -156,7 +155,7 @@ class PublicacionTemaController {
 
 		if (publicacionTemaInstance.hasErrors()) {
 			respond publicacionTemaInstance.errors, view:'editar', model: [usuario: usuarioActual(),
-				pubInicialId: params.pubInicialId, publicacionId: params.id, temaId: params.temaId]
+				pubInicialId: params.pubInicialId, publicacionId: params.id, cursoId: params.cursoId, temaId: params.temaId]
 			return
 		}
 
@@ -166,8 +165,9 @@ class PublicacionTemaController {
 			form {
 				flash.message = message(code: 'default.updated.message', args: [message(code: 'PublicacionTema.label', 
 					default: 'PublicacionTema'), publicacionTemaInstance.id])
-				redirect controller: "foroTema", action: "publicaciones", params: ['id': params.pubInicialId, 'temaId': params.temaId],
-				model: [usuario: usuarioActual(), pubInicialId: params.pubInicialId, temaId: params.temaId]
+				redirect controller: "foroTema", action: "publicaciones", params: ['id': params.pubInicialId, 
+					'cursoId': params.cursoId, 'temaId': params.temaId],
+					model: [usuario: usuarioActual(), pubInicialId: params.pubInicialId, temaId: params.temaId]
 			}
 			'*'{ respond publicacionTemaInstance, [status: OK] }
 		}
@@ -178,7 +178,7 @@ class PublicacionTemaController {
 			form {
 				flash.message = message(code: 'default.not.found.message', args: [message(code: 'publicacionTemaInstance.label', 
 					default: 'PublicacionTema'), params.id])
-				redirect controller: "foroTema", action: "publicaciones", method: "GET",  params:['temaId': temaId]
+				redirect controller: "foroTema", action: "publicaciones", method: "GET",  params:['cursoId': cursoId, 'temaId': temaId]
 			}
 			'*'{ render status: NOT_FOUND }
 		}

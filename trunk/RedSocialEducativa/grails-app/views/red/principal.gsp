@@ -74,7 +74,7 @@
 							<li>
 								<span class = "menuButton">
 									<g:link action="mediador" controller="curso" params="['cursoId': cursoMediador.id]">
-									<g:message code="${cursoMediador}" /></g:link>
+									<g:message code="${com.fiuba.Materia.get(cursoMediador.materia.id)}-${cursoMediador}" /></g:link>
 								</span>
 								<br>
 							</li>
@@ -90,7 +90,7 @@
 							<li>
 								<span class = "menuButton">
 									<g:link action="aprendiz" controller="curso" params="['cursoId': cursoAprendiz.id]">
-									<g:message code="${cursoAprendiz}" /></g:link>
+									<g:message code="${com.fiuba.Materia.get(cursoAprendiz.materia.id)}-${cursoAprendiz}" /></g:link>
 								</span>
 								<br>
 							</li>
@@ -143,7 +143,7 @@
 			<br>
 				<g:each in="${cursos}" var="cursoInstance">
 					<p><g:link action="revisarRol" controller="curso" params="['cursoId': cursoInstance.id]">
-							${cursoInstance}</g:link><p>	
+							${com.fiuba.Materia.get(cursoInstance.materia.id)}-${cursoInstance}</g:link><p>	
 					<br>
 				</g:each>
 			<div class="pagination">
