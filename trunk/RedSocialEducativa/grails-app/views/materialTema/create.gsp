@@ -25,9 +25,16 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form url="[resource:materialTemaInstance, action:'save']" >
+			<g:form action="save" params="['cursoId': params.cursoId, 'temaId': params.temaId]" >
 				<fieldset class="form">
 					<g:render template="form"/>
+						<div class="fieldcontain ${hasErrors(bean: materialTemaInstance, field: 'titulo', 'error')} ">
+							<label for="titulo">
+								<g:message code="materialTema.titulo.label" default="Titulo" />
+							</label>
+							<g:textField name="titulo" value="${materialTemaInstance?.titulo}"/>
+						</div>
+					<div> <g:hiddenField name="responsable" value="${mediador}-${mediador?.jerarquia}"/></div>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />

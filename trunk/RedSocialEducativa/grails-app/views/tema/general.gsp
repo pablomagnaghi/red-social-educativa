@@ -37,20 +37,5 @@
 			<h2><g:link controller="contenido" action="general" params="['cursoId': cursoId, 'temaId': temaId]">
 				<g:message code="Contenidos del tema"/></g:link></h2>
 		</div>
-
-		<div>
-			<h2>Material del tema</h2>
-			<br>
-			<ol>
-				<g:each in="${materiales}">	
-					<li>Titulo: ${it.titulo} </li>
-						<p>Categoria: ${it.categoria} - Autor: ${it.autor} - Descripcion: ${it.descripcion}</p>
-						<p>Fecha: ${it.fecha} - Responsable: ${it.responsable}</p>	
-						<p>poner link al material</p>
-						<br>
-				</g:each>
-			</ol>
-			<h5>Agregar PAGINACION</h5>
-		</div>	
 	</body>
 </html>

@@ -152,5 +152,15 @@
 		</div>
 		<g:render template='/login/ajaxLogin'/>
 		
+		
+		<div>
+			<p>Noticia red; "${com.fiuba.NoticiaRed.first()}"</p>
+			<p>Noticia curso; "${com.fiuba.NoticiaCurso.first()}"</p>
+			<p>Material curso; "${com.fiuba.MaterialCurso.first()}"</p>
+			<p>Material tema; "${com.fiuba.MaterialTema.first()}"</p>
+			<p>Foro general; "${com.fiuba.ForoGeneral.first()}"</p>
+			<p>Foro curso; "${com.fiuba.ForoCurso.first()}"</p>
+			<p>Foro tema; "${com.fiuba.ForoTema.first()}"</p>
+		</div>
 	</body>
 </html>

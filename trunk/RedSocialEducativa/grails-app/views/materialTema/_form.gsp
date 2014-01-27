@@ -1,6 +1,12 @@
 <%@ page import="com.fiuba.MaterialTema" %>
 
+<div>
+	<g:hiddenField name="tema.id" value="${temaId}"/>
+</div>
 
+<div>
+	<g:hiddenField name="fecha" value="${(new Date()).format("yyyy-mm-dd")}"/>
+</div>
 
 <div class="fieldcontain ${hasErrors(bean: materialTemaInstance, field: 'autor', 'error')} ">
 	<label for="autor">
@@ -26,35 +32,7 @@
 	<g:textField name="descripcion" value="${materialTemaInstance?.descripcion}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: materialTemaInstance, field: 'fecha', 'error')} ">
-	<label for="fecha">
-		<g:message code="materialTema.fecha.label" default="Fecha" />
-		
-	</label>
-	<g:textField name="fecha" value="${materialTemaInstance?.fecha}"/>
-</div>
 
-<div class="fieldcontain ${hasErrors(bean: materialTemaInstance, field: 'responsable', 'error')} ">
-	<label for="responsable">
-		<g:message code="materialTema.responsable.label" default="Responsable" />
-		
-	</label>
-	<g:textField name="responsable" value="${materialTemaInstance?.responsable}"/>
-</div>
 
-<div class="fieldcontain ${hasErrors(bean: materialTemaInstance, field: 'tema', 'error')} required">
-	<label for="tema">
-		<g:message code="materialTema.tema.label" default="Tema" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="tema" name="tema.id" from="${com.fiuba.Tema.list()}" optionKey="id" required="" value="${materialTemaInstance?.tema?.id}" class="many-to-one"/>
-</div>
 
-<div class="fieldcontain ${hasErrors(bean: materialTemaInstance, field: 'titulo', 'error')} ">
-	<label for="titulo">
-		<g:message code="materialTema.titulo.label" default="Titulo" />
-		
-	</label>
-	<g:textField name="titulo" value="${materialTemaInstance?.titulo}"/>
-</div>
 

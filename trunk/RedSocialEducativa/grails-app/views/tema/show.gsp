@@ -26,46 +26,38 @@
 			</g:if>
 			<ol class="property-list tema">
 			
-				<g:if test="${temaInstance?.contenidos}">
-				<li class="fieldcontain">
-					<span id="contenidos-label" class="property-label"><g:message code="tema.contenidos.label" default="Contenidos" /></span>
-					
-						<g:each in="${temaInstance.contenidos}" var="c">
-						<span class="property-value" aria-labelledby="contenidos-label"><g:link controller="contenido" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></span>
-						</g:each>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${temaInstance?.foro}">
-				<li class="fieldcontain">
-					<span id="foro-label" class="property-label"><g:message code="tema.foro.label" default="Foro" /></span>
-					
-						<span class="property-value" aria-labelledby="foro-label"><g:link controller="foroTema" action="show" id="${temaInstance?.foro?.id}">${temaInstance?.foro?.encodeAsHTML()}</g:link></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${temaInstance?.materiales}">
-				<li class="fieldcontain">
-					<span id="materiales-label" class="property-label"><g:message code="tema.materiales.label" default="Materiales" /></span>
-					
-						<g:each in="${temaInstance.materiales}" var="m">
-						<span class="property-value" aria-labelledby="materiales-label"><g:link controller="materialTema" action="show" id="${m.id}">${m?.encodeAsHTML()}</g:link></span>
-						</g:each>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${temaInstance?.titulo}">
 				<li class="fieldcontain">
 					<span id="titulo-label" class="property-label"><g:message code="tema.titulo.label" default="Titulo" /></span>
-					
 						<span class="property-value" aria-labelledby="titulo-label"><g:fieldValue bean="${temaInstance}" field="titulo"/></span>
-					
 				</li>
 				</g:if>
-			
+				<g:if test="${temaInstance?.foro}">
+				<li class="fieldcontain">
+					<span id="foro-label" class="property-label"><g:message code="tema.foro.label" default="Foro" /></span>
+						<span class="property-value" aria-labelledby="foro-label">${temaInstance?.foro?.encodeAsHTML()}</span>
+				</li>
+				</g:if>
+				<g:if test="${temaInstance?.contenidos}">
+				<li class="fieldcontain">
+					<span id="contenidos-label" class="property-label"><g:message code="tema.contenidos.label" default="Contenidos" /></span>
+						<g:each in="${temaInstance.contenidos}" var="c">
+						<span class="property-value" aria-labelledby="contenidos-label">
+							<g:link controller="contenido" action="show" id="${c.id}" 
+								params="['cursoId': cursoId, 'temaId': temaInstance.id]">${c?.encodeAsHTML()}</g:link></span>
+						</g:each>
+				</li>
+				</g:if>
+				<g:if test="${temaInstance?.materiales}">
+				<li class="fieldcontain">
+					<span id="materiales-label" class="property-label"><g:message code="tema.materiales.label" default="Materiales" /></span>
+						<g:each in="${temaInstance.materiales}" var="m">
+						<span class="property-value" aria-labelledby="materiales-label">
+							<g:link controller="materialTema" action="show" id="${m.id}" 
+								params="['cursoId': cursoId, 'temaId': temaInstance.id]">${m?.encodeAsHTML()}</g:link></span>
+						</g:each>
+				</li>
+				</g:if>
 			</ol>
 			<g:form action="delete" method="DELETE" id="${temaInstance.id}" params="['cursoId': cursoId]">
 				<fieldset class="buttons">
