@@ -31,7 +31,7 @@ class Curso {
 	String nombre
 	
 	String toString() {
-		"${materia.codigo} - ${nroRelativo} - ${nombre}"
+		"${nroRelativo} - ${nombre}"
 	}
 	
     static constraints = {

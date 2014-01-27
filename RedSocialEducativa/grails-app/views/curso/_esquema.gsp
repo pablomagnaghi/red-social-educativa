@@ -10,8 +10,8 @@
 </div>
 <div>
 	<hr>
-		<h2><g:link controller="materialCurso" action="general" params="['cursoId': cursoId]">
-			<g:message code="Materiales del curso"/></g:link></h2>
+		<h2><g:link action="material" params="['cursoId': cursoId]">
+			<g:message code="Material del curso"/></g:link></h2>
 </div>
 <div>
 	<hr>
@@ -20,9 +20,9 @@
 </div>
 
 <div>
+	<g:if test="${noticiasCurso}">
 	<h2>Cartelera general</h2>
 	<br>
-	<g:if test="${noticiasCurso}">
 		<table>
 		<thead>
 			<tr>
@@ -44,7 +44,8 @@
 			</g:each>
 		</tbody>
 		</table>
-	</g:if>
 	<h5>Agregar PAGINACION</h5>
+	</g:if>
+	
 </div>
 

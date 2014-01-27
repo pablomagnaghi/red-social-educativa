@@ -16,22 +16,23 @@
 			</ul>
 		</div>		
 		<div>
-			<h1><g:message code="Temas del curso: ${com.fiuba.Curso.get(cursoId)}" /></h1>
+			<h1><g:message code="Material del curso: ${com.fiuba.Curso.get(cursoId)}" /></h1>
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<div>
 				<ol>
-				<g:each in="${temasCurso}">
-					<span>
-						<li>${it.titulo}</li>
-					</span>
-					<span>
-						<g:if test="${mediador || aprendiz}">	
-							<g:link controller="tema" action="general" id="${it.id}" params="['cursoId': cursoId]">
-									<g:message code="Acceder al tema"/></g:link>		
-						</g:if>
-					</span>	
+				<g:each in="${materialesCurso}">
+					<g:if test="${it.categoria.nombre == "RefBibliografica" || it.categoria.nombre == "Enlace" ||
+							it.categoria.nombre == "Glosario" || mediador || aprendiz}">
+						<span>
+							<li>${it.titulo}</li>
+						</span>
+						<span>
+							<g:link controller="materialCurso" action="general" id="${it.id}" params="['cursoId': cursoId]">
+								<g:message code="Acceder al material"/></g:link>		
+						</span>		
+					</g:if>
 				</g:each>
 				</ol>
 			</div>

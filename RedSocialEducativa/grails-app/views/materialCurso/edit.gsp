@@ -10,9 +10,12 @@
 		<a href="#edit-materialCurso" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+				<li><a class="home" href="${createLink(uri: '/')}">
+					<g:message code="default.home.label"/></a></li>
+				<li><g:link class="list" action="index" params="['cursoId': params.cursoId]">
+					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
+				<li><g:link class="create" action="create" params="['cursoId': params.cursoId]">
+					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
 		<div id="edit-materialCurso" class="content scaffold-edit" role="main">
@@ -27,10 +30,12 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form url="[resource:materialCursoInstance, action:'update']" method="PUT" >
+			<g:form action="update" method="PUT" id="${materialCursoInstance.id}" params="['cursoId': params.cursoId]" >
 				<g:hiddenField name="version" value="${materialCursoInstance?.version}" />
 				<fieldset class="form">
 					<g:render template="form"/>
+					<div> <g:hiddenField name="titulo" value="${materialCursoInstance.titulo}"/></div>
+					<div> <g:hiddenField name="responsable" value="${materialCursoInstance.responsable}"/></div>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />

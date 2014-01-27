@@ -46,6 +46,10 @@
 					
 			</thead>
 			<!-- TODO VERRRRRRR POSIBILIDAD DE EDITAR/BORRAR COMENTARIOS HECHOS POR EL APRENDIZ-->
+			
+			<h2>Mediador = ${mediador}</h2>
+			<h2>Aprendiz = ${com.fiuba.Aprendiz.findByUsuarioAndCurso(usuario, com.fiuba.Curso.get(cursoId))?.usuario?.username}</h2>
+			
 			<tbody>	
 				<g:each in="${respuestas}">	
 					<tr>
@@ -54,12 +58,8 @@
 							<p>Publicado: ${it.fecha} - ${it.hora}<p>
 						</td>
 						<td>${it.contenido}</td>
-						<g:if test="${usuario}">
-							<h2>es usuario</h2>
 							<g:if test="${mediador || (
-								com.fiuba.Aprendiz.findByUsuarioAndCurso(
-								com.fiuba.Usuario.findByUsername(it.dni), 
-								com.fiuba.Curso.get(cursoId)) && (it.dni == usuario.username))}">
+								com.fiuba.Aprendiz.findByUsuarioAndCurso(usuario, com.fiuba.Curso.get(cursoId))?.usuario?.username == it.dni)}">
 								<g:if test="${!it.id.equals(pubInicialId as long)}">								
 									<td>
 										<g:link controller="publicacionTema" action="editar" id="${it.id}" 
@@ -85,7 +85,6 @@
 									</td>
 								</g:else>	
 							</g:if>	
-						</g:if>
 					</tr>
 				</g:each>
 			</tbody>

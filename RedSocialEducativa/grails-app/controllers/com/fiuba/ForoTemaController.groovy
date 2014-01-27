@@ -83,7 +83,7 @@ class ForoTemaController {
 		[publicacion: PublicacionTema.get(publicacionId), pubInicialId: publicacionId,
 			respuestas: respuestas,
 			respuestasCant: respuestasCant,
-			usuario: Usuario.findByUsername(usuarioActual()?.username),
+			usuario: usuarioActual(),
 			mediador: Mediador.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId)),
 			cursoId: cursoId, temaId: temaId]
 		
