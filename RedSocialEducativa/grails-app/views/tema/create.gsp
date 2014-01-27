@@ -49,6 +49,5 @@
 				</fieldset>
 			</g:form>
 		</div>
-		<h2>tema id: ${temaInstance?.id}</h2>
 	</body>
 </html>

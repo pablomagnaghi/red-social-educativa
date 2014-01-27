@@ -6,8 +6,43 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
-class ContenidoController {
 
+import org.springframework.security.access.annotation.Secured
+
+@Secured('permitAll')
+class ContenidoController {
+	
+	def springSecurityService
+		
+	private usuarioActual() {
+		if (springSecurityService.principal.enabled)
+			return Usuario.get(springSecurityService.principal.id)
+		else
+			return null
+	}
+		
+	def cursoId
+	def temaId
+		
+	def general() {
+		
+		params.max = 5 // Math.min(max ?: 10, 100)
+		
+		println "foro Tema general CURSOID: ${params.cursoId}"
+		println "foro Tema general TEMAID: ${params.temaId}"
+			
+		cursoId = params.cursoId
+		temaId = params.temaId
+					
+		def tema = Tema.get(temaId)
+		
+		[contenidos: Contenido.findAllByTema(tema, [max: params.max, offset: params.offset]),
+			contenidosCant: Contenido.findAllByTema(tema).size(),
+			tema: tema, cursoId: cursoId, temaId: temaId]
+	}
+
+	// metodos por defecto
+			
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -16,7 +51,14 @@ class ContenidoController {
     }
 
     def show(Contenido contenidoInstance) {
-        respond contenidoInstance
+		
+		println "contenido tema show: cursoId: ${params.cursoId}, tema Id. ${params.temaId}"
+		println "contenido Id: ${params.id}"
+		
+		cursoId = params.cursoId
+		temaId = params.temaId
+
+        respond contenidoInstance, model: [cursoId: cursoId, temaId: temaId]
     }
 
     def create() {

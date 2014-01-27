@@ -37,7 +37,7 @@ class TemaController {
 		
 		[contenidos: Contenido.findAllByTema(Tema.get(temaId)),
 			materiales: MaterialTema.findAllByTema(Tema.get(temaId)),
-			cursoId: cursoId, temaId: temaId]
+			cursoId: cursoId, temaId: temaId, tema: Tema.get(temaId)]
 	}
 	
 	// TODO metodos para el ABM temas del menu mediador
@@ -57,6 +57,7 @@ class TemaController {
     }
 
     def show(Tema temaInstance) {
+		println "tema show params: ${params}"
         respond temaInstance, model:[cursoId: cursoId]
     }
 

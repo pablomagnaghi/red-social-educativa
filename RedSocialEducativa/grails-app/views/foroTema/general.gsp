@@ -1,9 +1,9 @@
-<%@ page import="com.fiuba.ForoCurso" %>
+<%@ page import="com.fiuba.ForoTema" %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'foroCurso.label', default: 'ForoCurso')}" />
+		<g:set var="entityName" value="${message(code: 'foroTema.label', default: 'ForoTema')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
 	</head>
 	<body>
@@ -12,6 +12,8 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
+				<li><g:link class="create" controller="tema" action="general" id="${temaId}" params="['cursoId': cursoId]">
+					<g:message code="Tema ${tema}" /></g:link></li>	
 				<li><g:link class="create" controller="publicacionTema" action="nueva" params="['cursoId': cursoId, 'temaId': temaId]">
 					<g:message code="Nueva publicacion" /></g:link></li>
 			</ul>
