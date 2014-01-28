@@ -25,7 +25,7 @@ class MensajeTagLib {
 				out << "<div>"
 			}
 			out << g.link("De:  " + it.emisor.username + " | asunto: " + it.asunto + " | fecha: " + it.fecha,
-				action: 'conversacion', id: conversacion.id, class:'draggable', params : [id:conversacion.id])
+				action: 'conversacion', conversationId: conversacion.id, class:'draggable', params : [id:conversacion.id])
 			out << "</div>"
 		}
 	}
