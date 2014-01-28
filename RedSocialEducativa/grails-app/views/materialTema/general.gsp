@@ -46,23 +46,23 @@
 			<br>
 				<ol>
 					<g:each in="${contenidos}" >
-						<li>${it.titulo}</li>
+						<g:if test="${it.materiales}">
+							<li>${it.titulo}</li>
 							<ol>
-								<g:if test="${it.materiales}">
-									<p>Material del contenido</p>
-									<g:each in="${it.materiales}" var="material">
-										<div><h1><g:message code="Material: ${material.titulo}" args="[entityName]" /></h1></div>
-										<div>
-											<p>Autor: ${material.autor}</p>
-											<p>Descripcion: ${material.descripcion}</p>
-											<p>Categoria": ${material.categoria}</p>	
-											<p>Responsable: ${material.responsable}</p>
-											<p>Fecha"${material.fecha}</p>
-											<p>Poner link al material(URL)</p>
-										</div>
-									</g:each>
-								</g:if>	
+								<p>Material del contenido</p>
+								<g:each in="${it.materiales}" var="material">
+									<div><h1><g:message code="Material: ${material.titulo}" args="[entityName]" /></h1></div>
+									<div>
+										<p>Autor: ${material.autor}</p>
+										<p>Descripcion: ${material.descripcion}</p>
+										<p>Categoria": ${material.categoria}</p>	
+										<p>Responsable: ${material.responsable}</p>
+										<p>Fecha"${material.fecha}</p>
+										<p>Poner link al material(URL)</p>
+									</div>
+								</g:each>
 							</ol>
+						</g:if>	
 					</g:each>	
 				</ol>	
 			<div class="pagination">

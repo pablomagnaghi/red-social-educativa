@@ -60,6 +60,8 @@ class MaterialTemaController {
     }
 
     def create() {
+		println "create material tema params: ${params}"
+		
 		cursoId = params.cursoId
 		temaId = params.temaId
 		def mediador = Mediador.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))

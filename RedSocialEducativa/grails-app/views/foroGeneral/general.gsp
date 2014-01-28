@@ -28,7 +28,7 @@
 			<thead>
 				<tr>
 					<g:sortableColumn property="Tema" title="Tema" />
-					<g:sortableColumn property="Autor" title="Autor" />
+					<g:sortableColumn property="Autor" title="Autor (comenzado por)" />
 					<g:sortableColumn property="Replicas" title="Replicas" />
 					<g:sortableColumn property="Ultimo mensaje" title="Ultimo mensaje" />
 				</tr>

@@ -130,13 +130,11 @@
 		</div>	
 		<div>
 			<hr>
-	       	<h2><g:link controller="foroGeneral" action="general">Foro general</g:link></h2>
-	       	
-	       	TEMA |COMENZADO POR |REPLICAS |ULTIMO MENSAJE
-
+				<br><h2><g:link controller="foroGeneral" action="general">Foro general</g:link></h2><br>
+			<hr>
 		</div>
 		<div>
-			<br><hr><br>
+			<br>
 			<h2>Sector destinado a visualizar informacion y material de los cursos (foros, temas y material general)</h2>
 			<br>
 			<h3>Los cursos de la red Social son estos</h3>
