@@ -29,7 +29,7 @@ function when_ready(){
 			accept: ".draggable",
 			hoverClass: "ui-state-active",
 			drop: function( event, ui ) {
-				idConversacion = ui.draggable.attr('id')
+				idConversacion = ui.draggable.attr('conversationId')
 				idCarpeta = $(this).attr('id')
 				$.ajax({
 					url: "cambiarConversacion",

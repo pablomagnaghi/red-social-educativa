@@ -56,8 +56,10 @@ class MensajeriaController {
 	}
 
 	def cambiarConversacion(){
+		//si el usuario es null
 		def usuario = Usuario.get(springSecurityService.principal.id)
 		def idConversacion = params.conversacion
+		println idConversacion
 		def nombreCarpeta = params.carpeta
 		def matcher = /([^=]+)=/
 		def nombreFormateado = ""
@@ -66,6 +68,8 @@ class MensajeriaController {
 		}
 		def carpeta = Carpeta.findByNombreAndUsuario(nombreFormateado, usuario)
 		def conversacion = Conversacion.findById(idConversacion)
+		/*println conversacion
+		println carpeta*/
 		conversacion.padre = carpeta;
 		conversacion.save(flush: true)
 		def conversaciones = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, nombreFormateado))
