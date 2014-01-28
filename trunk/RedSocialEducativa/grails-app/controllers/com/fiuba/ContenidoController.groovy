@@ -62,7 +62,12 @@ class ContenidoController {
     }
 
     def create() {
-        respond new Contenido(params)
+		cursoId = params.cursoId
+		temaId = params.temaId
+		
+		println "create contenido params: ${params}"
+		respond new Contenido(params), params:['cursoId': cursoId],
+			model:[cursoId: cursoId, temaId: temaId]
     }
 
     @Transactional
@@ -72,35 +77,50 @@ class ContenidoController {
             return
         }
 
-        if (contenidoInstance.hasErrors()) {
-            respond contenidoInstance.errors, view:'create'
-            return
-        }
+		cursoId = params.cursoId
+		temaId = params.temaId
+		
+		if (contenidoInstance.hasErrors()) {
+			respond contenidoInstance.errors, view:'create', params: ['cursoId': cursoId, 'temaId': temaId],
+				model: [cursoId: cursoId, temaId: temaId]
+			return
+		}
 
         contenidoInstance.save flush:true
 
         request.withFormat {
             form {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'contenidoInstance.label', default: 'Contenido'), contenidoInstance.id])
-                redirect contenidoInstance
+                redirect controller:"tema", action:"show", params:['id': temaId, 'cursoId': cursoId, 'temaId': temaId]
             }
             '*' { respond contenidoInstance, [status: CREATED] }
         }
     }
 
     def edit(Contenido contenidoInstance) {
-        respond contenidoInstance
+		println "edit material tema para,s: ${params}"
+		
+		cursoId = params.cursoId
+		temaId = params.temaId
+		respond contenidoInstance, model: [cursoId: cursoId, temaId: temaId]
     }
 
     @Transactional
     def update(Contenido contenidoInstance) {
+		
+		println "update contenido tema para,s: ${params}"
+		
+		cursoId = params.cursoId
+		temaId = params.temaId
+		
         if (contenidoInstance == null) {
             notFound()
             return
         }
 
         if (contenidoInstance.hasErrors()) {
-            respond contenidoInstance.errors, view:'edit'
+			respond contenidoInstance.errors, view:'edit', params:['cursoId': cursoId, 'temaId': temaId],
+			model: [cursoId: cursoId, temaId: temaId]
             return
         }
 
@@ -109,7 +129,7 @@ class ContenidoController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'Contenido.label', default: 'Contenido'), contenidoInstance.id])
-                redirect contenidoInstance
+                 redirect action:"show", params:['id': materialTemaInstance.id, 'cursoId': cursoId, 'temaId': temaId]
             }
             '*'{ respond contenidoInstance, [status: OK] }
         }
@@ -123,12 +143,15 @@ class ContenidoController {
             return
         }
 
+		cursoId = params.cursoId
+		temaId = params.temaId
+		
         contenidoInstance.delete flush:true
 
         request.withFormat {
             form {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'Contenido.label', default: 'Contenido'), contenidoInstance.id])
-                redirect action:"index", method:"GET"
+                redirect controller:"tema", action:"show", params:['id': temaId], method:"GET"
             }
             '*'{ render status: NO_CONTENT }
         }
@@ -138,7 +161,7 @@ class ContenidoController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'contenidoInstance.label', default: 'Contenido'), params.id])
-                redirect action: "index", method: "GET"
+                redirect controller: "tema", action:"show", params:['id': temaId], method: "GET"
             }
             '*'{ render status: NOT_FOUND }
         }

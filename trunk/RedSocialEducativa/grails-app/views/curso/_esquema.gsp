@@ -4,19 +4,16 @@
 	</g:if>
 </div>
 <div>
-	<hr>
-		<h2><g:link controller="foroCurso" action="general" params="['cursoId': cursoId]">
-			<g:message code="Foro del curso"/></g:link></h2>
+	<g:link controller="foroCurso" action="general" params="['cursoId': cursoId]">
+		<g:message code="Foro del curso"/></g:link>
 </div>
 <div>
-	<hr>
-		<h2><g:link action="material" params="['cursoId': cursoId]">
-			<g:message code="Material del curso"/></g:link></h2>
+	<g:link action="material" params="['cursoId': cursoId]">
+		<g:message code="Material del curso"/></g:link>
 </div>
 <div>
-	<hr>
-		<h2><g:link action="temas" params="['cursoId': cursoId]">
-			<g:message code="Temas del curso"/></g:link></h2>
+	<g:link action="temas" params="['cursoId': cursoId]">
+		<g:message code="Temas del curso"/></g:link>
 </div>
 
 <div>

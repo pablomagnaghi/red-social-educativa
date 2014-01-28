@@ -17,7 +17,7 @@
 					<g:message code="Lista de temas del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
 				<li><g:link controller="tema" action="show" id="${temaId}" params="['cursoId': cursoId, 'temaId': temaId]">
 					<g:message code="Tema: ${com.fiuba.Tema.get(temaId)}" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create">
+				<li><g:link class="create" action="create" params="['cursoId': cursoId, 'temaId': temaId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -55,7 +55,8 @@
 					
 						<g:each in="${contenidoInstance.materiales}" var="m">
 						<span class="property-value" aria-labelledby="materiales-label">
-							<g:link controller="materialContenido" action="show" id="${m.id}">${m?.encodeAsHTML()}</g:link></span>
+							<g:link controller="materialContenido" action="show" id="${m.id}"
+								params="['cursoId': cursoId, 'temaId': temaId, 'contenidoId': contenidoInstance.id]">${m?.encodeAsHTML()}</g:link></span>
 						</g:each>
 					
 				</li>

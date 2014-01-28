@@ -1,5 +1,12 @@
 <%@ page import="com.fiuba.MaterialContenido" %>
 
+<div>
+	<g:hiddenField name="contenido.id" value="${contenidoId}"/>
+</div>
+
+<div>
+	<g:hiddenField name="fecha" value="${(new Date()).format("yyyy-mm-dd")}"/>
+</div>
 
 
 <div class="fieldcontain ${hasErrors(bean: materialContenidoInstance, field: 'autor', 'error')} ">
@@ -18,14 +25,6 @@
 	<g:select id="categoria" name="categoria.id" from="${com.fiuba.Categoria.list()}" optionKey="id" required="" value="${materialContenidoInstance?.categoria?.id}" class="many-to-one"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: materialContenidoInstance, field: 'contenido', 'error')} required">
-	<label for="contenido">
-		<g:message code="materialContenido.contenido.label" default="Contenido" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="contenido" name="contenido.id" from="${com.fiuba.Contenido.list()}" optionKey="id" required="" value="${materialContenidoInstance?.contenido?.id}" class="many-to-one"/>
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: materialContenidoInstance, field: 'descripcion', 'error')} ">
 	<label for="descripcion">
 		<g:message code="materialContenido.descripcion.label" default="Descripcion" />
@@ -34,27 +33,5 @@
 	<g:textField name="descripcion" value="${materialContenidoInstance?.descripcion}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: materialContenidoInstance, field: 'fecha', 'error')} ">
-	<label for="fecha">
-		<g:message code="materialContenido.fecha.label" default="Fecha" />
-		
-	</label>
-	<g:textField name="fecha" value="${materialContenidoInstance?.fecha}"/>
-</div>
 
-<div class="fieldcontain ${hasErrors(bean: materialContenidoInstance, field: 'responsable', 'error')} ">
-	<label for="responsable">
-		<g:message code="materialContenido.responsable.label" default="Responsable" />
-		
-	</label>
-	<g:textField name="responsable" value="${materialContenidoInstance?.responsable}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: materialContenidoInstance, field: 'titulo', 'error')} ">
-	<label for="titulo">
-		<g:message code="materialContenido.titulo.label" default="Titulo" />
-		
-	</label>
-	<g:textField name="titulo" value="${materialContenidoInstance?.titulo}"/>
-</div>
 

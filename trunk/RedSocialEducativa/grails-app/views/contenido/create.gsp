@@ -9,8 +9,12 @@
 		<a href="#create-contenido" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
+				<li><a class="home" href="${createLink(uri: '/')}">
+					<g:message code="default.home.label"/></a></li>
+				<li><g:link controller="tema" action="index" id="${temaId}" params="['cursoId': cursoId]">
+					<g:message code="Lista de temas del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
+				<li><g:link controller="tema" action="show" id="${temaId}" params="['cursoId': cursoId, 'temaId': temaId]">
+					<g:message code="Tema: ${com.fiuba.Tema.get(temaId)}" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
 		<div id="create-contenido" class="content scaffold-create" role="main">
@@ -25,9 +29,15 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form url="[resource:contenidoInstance, action:'save']" >
+			<g:form action="save" params="['cursoId': params.cursoId, 'temaId': params.temaId]" >
 				<fieldset class="form">
 					<g:render template="form"/>
+						<div class="fieldcontain ${hasErrors(bean: contenidoInstance, field: 'titulo', 'error')} ">
+							<label for="titulo">
+								<g:message code="contenido.titulo.label" default="Titulo" />
+							</label>
+							<g:textField name="titulo" value="${contenidoInstance?.titulo}"/>
+						</div>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
