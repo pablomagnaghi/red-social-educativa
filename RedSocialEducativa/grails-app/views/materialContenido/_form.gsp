@@ -5,7 +5,7 @@
 </div>
 
 <div>
-	<g:hiddenField name="fecha" value="${(new Date()).format("yyyy-mm-dd")}"/>
+	<g:hiddenField name="fecha" value="${(new Date()).format("yyyy-MM-dd")}"/>
 </div>
 
 

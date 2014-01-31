@@ -13,10 +13,11 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link controller="grupoCurso" action="general" params="['cursoId': cursoId]">
-					<g:message code="Lista de grupos del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
-				<li><g:link controller="grupoCurso" action="mostrar" id="${grupoId}" params="['cursoId': cursoId, 'grupoId': grupoId]">
-					<g:message code="Grupo: ${com.fiuba.GrupoCurso.get(grupoId)}" args="[entityName]" /></g:link>
+				<li><g:link class="create" controller="curso" action="menuMediador" params="['cursoId': cursoId]">
+					<g:message code="Tareas mediador" args="[entityName]" /></g:link></li>			
+				<li><g:link controller="grupoCurso" action="muestraMediador"  id="${materialGrupoInstance.grupo.id}" params="['cursoId': cursoId]">
+					<g:message code="Grupo ${com.fiuba.Grupo.get(grupoId)}" args="[entityName]" /></g:link></li>
+		
 			</ul>
 		</div>
 		<div id="show-materialGrupo" class="content scaffold-show" role="main">
@@ -83,14 +84,6 @@
 				</g:if>
 			
 			</ol>
-			<g:form action="delete" method="DELETE" id="${materialGrupoInstance.id}" params="['cursoId': cursoId, 'grupoId': grupoId]">
-				<fieldset class="buttons">
-					<g:link class="edit" action="edit" resource="${materialGrupoInstance}"
-						id="${materialGrupoInstance.id}" params="['cursoId': cursoId, 'grupoId': grupoId]">
-						<g:message code="default.button.edit.label" default="Edit" /></g:link>
-					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-				</fieldset>
-			</g:form>	
 		</div>
 	</body>
 </html>

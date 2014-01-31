@@ -2,6 +2,14 @@ package com.fiuba
 
 class CategoriaActividad {
 
-    static constraints = {
-    }
+	String nombre
+	
+	String toString() {
+		"${nombre}"
+	}
+	
+	static constraints = {
+		nombre unique: true
+	}
+
 }

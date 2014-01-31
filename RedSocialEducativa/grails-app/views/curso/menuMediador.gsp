@@ -34,6 +34,9 @@
 				<br>
 				<li><g:link class="list" action="menuMediador" controller="grupoCurso" params="['cursoId': cursoId]">
 					<g:message code="Grupos del curso" /></g:link></li>	
+					<br>
+				<li><g:link class="list" action="index" controller="actividad" params="['cursoId': cursoId]">
+					<g:message code="Administrar actividades del curso" /></g:link></li>	
 			</ol>
 		</div>
 		<div>

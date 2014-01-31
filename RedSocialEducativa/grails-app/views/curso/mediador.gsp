@@ -19,7 +19,11 @@
 		
 			</ol>
 		</div>
+		<div>	
 		<div>
+			<g:link action="actividades" params="['cursoId': cursoId]">
+				<g:message code="Actividades del curso"/></g:link>
+			</div>
 			<fieldset class="form">
 				<g:render template="esquema"/>
 			</fieldset>

@@ -22,22 +22,19 @@
 			</g:if>
 			<div>
 				<ol>
-				<g:each in="${materialesCurso}">
-					<g:if test="${it.categoria.nombre == "RefBibliografica" || it.categoria.nombre == "Enlace" ||
-							it.categoria.nombre == "Glosario" || mediador || aprendiz}">
-						<span>
-							<li>${it.titulo}</li>
-						</span>
-						<span>
-							<g:link controller="materialCurso" action="general" id="${it.id}" params="['cursoId': cursoId]">
-								<g:message code="Acceder al material"/></g:link>		
-						</span>		
-					</g:if>
+				<g:each in="${actividades}">
+					<span>
+						<li>${it.titulo}</li>
+					</span>
+					<span>
+						<g:link controller="actividad" action="general" id="${it.id}" params="['cursoId': cursoId]">
+							<g:message code="Acceder a la actividad"/></g:link>		
+					</span>		
 				</g:each>
 				</ol>
 			</div>
 			<div class="pagination">
-				<g:paginate total="${materialesCursoCant ?: 0}" params="['cursoId': cursoId]"/>
+				<g:paginate total="${actividadesCant ?: 0}" params="['cursoId': cursoId]"/>
 			</div>
 		</div>
 	</body>

@@ -31,9 +31,10 @@
 					<span id="materiales-label" class="property-label"><g:message code="grupoCurso.materiales.label" default="Materiales" /></span>
 					
 						<g:each in="${grupoCursoInstance.materiales}" var="m">
-						<span class="property-value" aria-labelledby="materiales-label"><g:link controller="materialGrupo" action="show" id="${m.id}">${m?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="materiales-label">
+							<g:link controller="materialGrupo" action="show" id="${m.id}" 
+								params="['cursoId': cursoId, 'grupoId': grupoCursoInstance.id]">${m?.encodeAsHTML()}</g:link></span>
 						</g:each>
-					
 				</li>
 				</g:if>
 			
@@ -82,7 +83,7 @@
 						<g:message code="Editar nombre de grupo" />
 					</g:link>
 					<g:link class="edit" controller="materialGrupo" action="create"
-						params="['grupoCurso.id': grupoCursoInstance?.id, 'cursoId': cursoId]">
+						params="['grupoId': grupoCursoInstance?.id, 'cursoId': cursoId]">
 						<g:message code="Agregar material al grupo" />
 					</g:link>
 				</g:else>

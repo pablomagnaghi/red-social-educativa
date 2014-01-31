@@ -31,7 +31,9 @@
 					<span id="materiales-label" class="property-label"><g:message code="grupoCurso.materiales.label" default="Materiales" /></span>
 					
 						<g:each in="${grupoCursoInstance.materiales}" var="m">
-						<span class="property-value" aria-labelledby="materiales-label"><g:link controller="materialGrupo" action="show" id="${m.id}">${m?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="materiales-label">
+							<g:link controller="materialGrupo" action="muestraMediador" id="${m.id}"
+								params="['cursoId': cursoId, 'grupoId': grupoCursoInstance.id]">${m?.encodeAsHTML()}</g:link></span>
 						</g:each>
 					
 				</li>
@@ -67,12 +69,6 @@
 				</g:if>
 			
 			</ol>
-			<g:form action="delete" method="DELETE" id="${grupoCursoInstance.id}" params="['cursoId': cursoId]">
-				<fieldset class="buttons">
-					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
-						onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-				</fieldset>
-			</g:form>
 		</div>
 	</body>
 </html>
