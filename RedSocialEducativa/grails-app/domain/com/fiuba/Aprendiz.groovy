@@ -9,14 +9,22 @@ class Aprendiz extends UsuarioRol {
 	Integer descMaterial // Cantidad de materiales descargados del curso
 	String ultVisita // AAAAMMDD
 	
+	// Un aprendiz puede pertecer o no a un grupo en un curso
+	// No se usa belongsTo porque si se borra el curso, el aprendiz
+	// debe seguir existiendo
+	GrupoCurso grupo
+	
+	
 	// Aprendiz tiene como entidad fuerte a Curso.
 	// En tabla de aprendiz se pone el id de curso
 	// Igual que como esta en la BBDD del enunciado del tp
+	
 	
 	static belongsTo = [curso: Curso]
 
     static constraints = {
 		ultVisita nullable:true
+		grupo nullable: true
     }
 
 }

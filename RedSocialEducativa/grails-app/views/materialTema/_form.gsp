@@ -21,7 +21,7 @@
 		<g:message code="materialTema.categoria.label" default="Categoria" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="categoria" name="categoria.id" from="${com.fiuba.Categoria.list()}" optionKey="id" required="" value="${materialTemaInstance?.categoria?.id}" class="many-to-one"/>
+	<g:select id="categoria" name="categoria.id" from="${com.fiuba.CategoriaMaterial.list()}" optionKey="id" required="" value="${materialTemaInstance?.categoria?.id}" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: materialTemaInstance, field: 'descripcion', 'error')} ">

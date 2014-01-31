@@ -25,7 +25,7 @@ class Curso {
 	static hasOne = [foro: ForoCurso]
 	
 	static hasMany = [mediadores: Mediador, aprendices: Aprendiz, noticiasCurso: NoticiaCurso, 
-		temas: Tema, materiales: MaterialCurso, actividades: ActividadCurso]
+		materiales: MaterialCurso, temas: Tema, grupos: GrupoCurso, actividades: Actividad]
 	
 	// Atributos extras
 	String nombre

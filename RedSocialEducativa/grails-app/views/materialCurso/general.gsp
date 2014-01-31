@@ -13,8 +13,8 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link action="general" controller="curso" params="['cursoId': cursoId]">
-					<g:message code="Curso: ${com.fiuba.Curso.get(cursoId)}"/></g:link></li>
+				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': cursoId]">
+					<g:message code="Tareas mediador" /></g:link></li>
 			</ul>
 		</div>
 		<div>

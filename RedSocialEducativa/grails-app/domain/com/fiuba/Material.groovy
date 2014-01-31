@@ -15,7 +15,7 @@ class Material {
 	// Para el resto de las categorias debe visualizarse en conjunto los datos de registro de cada material
 	// con el enlace al archivo correspondiente
 	// TODO ver
-	Categoria categoria
+	CategoriaMaterial categoria
 	
 	String toString() {
 		"${titulo}"
