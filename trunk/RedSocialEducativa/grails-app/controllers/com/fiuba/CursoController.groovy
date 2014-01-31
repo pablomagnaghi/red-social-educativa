@@ -163,6 +163,20 @@ class CursoController {
 			cursoId: cursoId]
 	}
 	
+	def actividades() {
+		params.max = 5
+		
+		println "action actividades controller curso"
+		println params
+				
+		cursoId = params.cursoId
+
+		[actividades: Actividad.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
+			actividadesCant: Actividad.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId,
+			mediador: Mediador.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId)),
+			aprendiz: Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))]
+	}
+	
 	def solicitarParticipacionEnElCurso() {
 		
 		def aprendiz = new Aprendiz(usuario: usuarioActual(), rol: Rol.findByAuthority('ROL_APRENDIZ'), participa: false, msjEnviados: "0",

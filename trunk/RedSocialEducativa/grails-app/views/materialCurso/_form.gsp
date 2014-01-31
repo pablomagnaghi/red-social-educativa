@@ -2,7 +2,7 @@
 
 <div><g:hiddenField name="curso.id" value="${cursoId}"/></div>
 
-<div><g:hiddenField name="fecha" value="${(new Date()).format("yyyy-mm-dd")}"/></div>
+<div><g:hiddenField name="fecha" value="${(new Date()).format("yyyy-MM-dd")}"/></div>
 
 <div class="fieldcontain ${hasErrors(bean: materialCursoInstance, field: 'autor', 'error')} ">
 	<label for="autor">
@@ -17,7 +17,7 @@
 		<g:message code="materialCurso.categoria.label" default="Categoria" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="categoria" name="categoria.id" from="${com.fiuba.Categoria.list()}" optionKey="id" required="" value="${materialCursoInstance?.categoria?.id}" class="many-to-one"/>
+	<g:select id="categoria" name="categoria.id" from="${com.fiuba.CategoriaMaterial.list()}" optionKey="id" required="" value="${materialCursoInstance?.categoria?.id}" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: materialCursoInstance, field: 'descripcion', 'error')} ">

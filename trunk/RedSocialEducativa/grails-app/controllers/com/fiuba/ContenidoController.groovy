@@ -45,11 +45,6 @@ class ContenidoController {
 			
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Contenido.list(params), model:[contenidoInstanceCount: Contenido.count()]
-    }
-
     def show(Contenido contenidoInstance) {
 		
 		println "contenido tema show: cursoId: ${params.cursoId}, tema Id. ${params.temaId}"

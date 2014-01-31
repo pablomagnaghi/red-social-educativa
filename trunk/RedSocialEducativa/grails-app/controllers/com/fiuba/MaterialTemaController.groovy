@@ -43,11 +43,6 @@ class MaterialTemaController {
 	// metodos por defecto
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond MaterialTema.list(params), model:[materialTemaInstanceCount: MaterialTema.count()]
-    }
-
     def show(MaterialTema materialTemaInstance) {
 		
 		println "material tema show: cursoId: ${params.cursoId}, tema Id. ${params.temaId}"

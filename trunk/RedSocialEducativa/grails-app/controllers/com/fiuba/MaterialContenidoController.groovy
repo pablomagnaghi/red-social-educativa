@@ -25,11 +25,6 @@ class MaterialContenidoController {
 	// metodos por defecto
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond MaterialContenido.list(params), model:[materialContenidoInstanceCount: MaterialContenido.count()]
-    }
-
     def show(MaterialContenido materialContenidoInstance) {
 		
 		println "material Contenido show: cursoId: ${params.cursoId}, tema Id. ${params.temaId}, contenidoID ${params.contenidoId}"

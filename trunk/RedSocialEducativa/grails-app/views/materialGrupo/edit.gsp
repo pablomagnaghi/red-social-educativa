@@ -10,9 +10,12 @@
 		<a href="#edit-materialGrupo" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+				<li><a class="home" href="${createLink(uri: '/')}">
+					<g:message code="default.home.label"/></a></li>
+				<li><g:link controller="grupoCurso" action="general" params="['cursoId': cursoId]">
+					<g:message code="Lista de grupos del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
+				<li><g:link controller="grupoCurso" action="mostrar" id="${grupoId}" params="['cursoId': cursoId, 'grupoId': grupoId]">
+					<g:message code="Grupo: ${com.fiuba.GrupoCurso.get(grupoId)}" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
 		<div id="edit-materialGrupo" class="content scaffold-edit" role="main">
@@ -27,10 +30,13 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form url="[resource:materialGrupoInstance, action:'update']" method="PUT" >
+			<g:form action="update" method="PUT" id="${materialGrupoInstance.id}" 
+				params="['cursoId': params.cursoId, 'grupoId': params.grupoId]" >
 				<g:hiddenField name="version" value="${materialGrupoInstance?.version}" />
 				<fieldset class="form">
 					<g:render template="form"/>
+						<div> <g:hiddenField name="titulo" value="${materialGrupoInstance.titulo}"/></div>
+						<div> <g:hiddenField name="responsable" value="${materialGrupoInstance.responsable}"/></div>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />

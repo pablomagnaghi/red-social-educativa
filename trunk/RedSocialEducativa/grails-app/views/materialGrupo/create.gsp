@@ -9,8 +9,12 @@
 		<a href="#create-materialGrupo" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
+				<li><a class="home" href="${createLink(uri: '/')}">
+					<g:message code="default.home.label"/></a></li>
+				<li><g:link controller="grupoCurso" action="general" params="['cursoId': cursoId]">
+					<g:message code="Lista de grupos del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
+				<li><g:link controller="grupoCurso" action="mostrar" id="${grupoId}" params="['cursoId': cursoId, 'grupoId': grupoId]">
+					<g:message code="Grupo: ${com.fiuba.GrupoCurso.get(grupoId)}" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
 		<div id="create-materialGrupo" class="content scaffold-create" role="main">
@@ -25,9 +29,16 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form url="[resource:materialGrupoInstance, action:'save']" >
+			<g:form action="save" params="['cursoId': params.cursoId, 'grupoId': params.grupoId]" >
 				<fieldset class="form">
 					<g:render template="form"/>
+						<div> <g:hiddenField name="responsable" value="${aprendiz}-${aprendiz?.usuario?.padron}"/></div>
+						<div class="fieldcontain ${hasErrors(bean: materialGrupoInstance, field: 'titulo', 'error')} ">
+							<label for="titulo">
+								<g:message code="materialGrupo.titulo.label" default="Titulo" />
+							</label>
+							<g:textField name="titulo" value="${materialGrupoInstance?.titulo}"/>
+						</div>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />

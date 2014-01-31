@@ -174,42 +174,68 @@ class BootStrap {
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
 		
 		// Categorias
-		def ArrayList<CategoriaMaterial> categorias = new ArrayList<CategoriaMaterial>()
+		
+		// Categoria material
+		def ArrayList<CategoriaMaterial> categoriasMaterial = new ArrayList<CategoriaMaterial>()
 		
 		def categoriaArticulo = new CategoriaMaterial(nombre: "Articulo")
-		categorias.add(categoriaArticulo)
+		categoriasMaterial.add(categoriaArticulo)
 		def categoriaPresentacion = new CategoriaMaterial(nombre: "Presentacion")
-		categorias.add(categoriaPresentacion)
+		categoriasMaterial.add(categoriaPresentacion)
 		def categoriaCuestionario = new CategoriaMaterial(nombre: "Cuestionario")
-		categorias.add(categoriaCuestionario)
+		categoriasMaterial.add(categoriaCuestionario)
 		def categoriaEjerciciosPlanteados = new CategoriaMaterial(nombre: "EjerciciosPlanteados")
-		categorias.add(categoriaEjerciciosPlanteados)
+		categoriasMaterial.add(categoriaEjerciciosPlanteados)
 		def categoriaEjerciciosResueltos = new CategoriaMaterial(nombre: "EjerciciosResueltos")
-		categorias.add(categoriaEjerciciosResueltos)
+		categoriasMaterial.add(categoriaEjerciciosResueltos)
 		def categoriaTrabajo = new CategoriaMaterial(nombre: "Trabajo")
-		categorias.add(categoriaTrabajo)
+		categoriasMaterial.add(categoriaTrabajo)
 		def categoriaRefBibliografica = new CategoriaMaterial(nombre: "RefBibliografica")
-		categorias.add(categoriaRefBibliografica )
+		categoriasMaterial.add(categoriaRefBibliografica )
 		def categoriaEnlace = new CategoriaMaterial(nombre: "Enlace")
-		categorias.add(categoriaEnlace)
+		categoriasMaterial.add(categoriaEnlace)
 		def categoriaGlosario = new CategoriaMaterial(nombre: "Glosario")
-		categorias.add(categoriaGlosario)
+		categoriasMaterial.add(categoriaGlosario)
 		def categoriaEnunciadoDeEvaluacion = new CategoriaMaterial(nombre: "EnunciadoDeEvaluacion")
-		categorias.add(categoriaEnunciadoDeEvaluacion)
+		categoriasMaterial.add(categoriaEnunciadoDeEvaluacion)
 		def categoriaOtros = new CategoriaMaterial(nombre: "Otros")
-		categorias.add(categoriaOtros)
+		categoriasMaterial.add(categoriaOtros)
 		
-		for(int i = 0; i<categorias.size(); i++){
-			if (!categorias.get(i).validate()) {
-				println categorias.get(i).errors
+		for(int i = 0; i<categoriasMaterial.size(); i++){
+			if (!categoriasMaterial.get(i).validate()) {
+				println categoriasMaterial.get(i).errors
 			} else {
-				println "Categorias agregadas nombre"
-				categorias.get(i).save()
-				println categorias.get(i).nombre
+				println "Categorias Material agregadas nombre"
+				categoriasMaterial.get(i).save()
+				println categoriasMaterial.get(i).nombre
+			}
+		}
+		
+		// Categoria actividad
+		def ArrayList<CategoriaActividad> categoriasActividad = new ArrayList<CategoriaActividad>()
+
+		def categoriaEncuesta = new CategoriaActividad(nombre: "Encuesta")
+		categoriasActividad.add(categoriaEncuesta)
+		def categoriaTP = new CategoriaActividad(nombre: "TP")
+		categoriasActividad.add(categoriaTP)
+		def categoriaCuestionarioAct = new CategoriaActividad(nombre: "Cuestionario")
+		categoriasActividad.add(categoriaCuestionarioAct)
+		def categoriaBrainstorming = new CategoriaActividad(nombre: "Brainstorming")
+		categoriasActividad.add(categoriaBrainstorming)
+		def categoriaOtra = new CategoriaActividad(nombre: "Otra")
+		categoriasActividad.add(categoriaOtra)
+		
+		for(int i = 0; i<categoriasActividad.size(); i++){
+			if (!categoriasActividad.get(i).validate()) {
+				println categoriasActividad.get(i).errors
+			} else {
+				println "Categorias Actividad agregadas nombre"
+				categoriasActividad.get(i).save()
+				println categoriasActividad.get(i).nombre
 			}
 		}
 	
-		// TODO Foros
+		// Foros
 		
 		// Foros de un tema
 		
@@ -251,8 +277,6 @@ class BootStrap {
 			foroGeneral.save()
 			println foroGeneral
 		}
-			
-		// TODO aca termina la zona de pruebas
 		
 		// Materiales, temas, contenidos
 		
@@ -337,6 +361,17 @@ class BootStrap {
 		grupoDos.addToAprendices(aprendizSeis)
 		grupoDos.addToAprendices(aprendizSiete)
 		
+		// Actividades 
+		
+		def actividadUno = new Actividad(titulo: "actividad 1", objetivo: "objetivo", evaluable: true,
+			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("Encuesta"), fechaFinalizacion: "fechafinalizacion")
+		
+		def actividadDos = new Actividad(titulo: "actividad 2", objetivo: "objetivo", evaluable: true,
+			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("TP"), fechaFinalizacion: "fechafinalizacion")	
+		
+		def actividadTres = new Actividad(titulo: "actividad 3", objetivo: "objetivo", evaluable: true,
+			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("Cuestionario"), fechaFinalizacion: "fechafinalizacion")
+
 		// Cursos
 		
 		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2", foro: foroCursoUno, nombre: "Curso 1")
@@ -360,6 +395,9 @@ class BootStrap {
 		cursoUno.addToMateriales(materialSeis)
 		cursoUno.addToGrupos(grupoUno)
 		cursoUno.addToGrupos(grupoDos)
+		cursoUno.addToActividades(actividadUno)
+		cursoUno.addToActividades(actividadDos)
+		cursoUno.addToActividades(actividadTres)
 
 		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", foro: foroCursoDos, nombre: "Curso 2")
 		cursoDos.addToMediadores(mediadorUnoP)
