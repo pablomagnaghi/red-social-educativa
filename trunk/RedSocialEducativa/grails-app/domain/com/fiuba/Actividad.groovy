@@ -23,7 +23,7 @@ class Actividad {
 	// static hasMany = [temas: Tema]
 	
 	// Puede estar asociada a uno o mas temas de un curso
-	static hasMany = [grupos: GrupoActividad, material: MaterialActividad]
+	static hasMany = [grupos: GrupoActividad, materiales: MaterialActividad, temas: TemaActividad]
 	
 	String toString() {
 		"${titulo}"

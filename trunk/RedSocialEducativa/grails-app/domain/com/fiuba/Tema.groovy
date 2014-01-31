@@ -11,7 +11,7 @@ class Tema {
 	
 	static hasOne = [foro: ForoTema]
 	
-	static hasMany = [contenidos: Contenido, materiales: MaterialTema]
+	static hasMany = [contenidos: Contenido, materiales: MaterialTema, actividades: TemaActividad]
 	
 	String toString() {
 		"${titulo}"

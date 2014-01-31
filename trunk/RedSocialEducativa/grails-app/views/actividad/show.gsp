@@ -30,16 +30,8 @@
 				<li class="fieldcontain">
 					<span id="categoria-label" class="property-label"><g:message code="actividad.categoria.label" default="Categoria" /></span>
 					
-						<span class="property-value" aria-labelledby="categoria-label"><g:link controller="categoriaActividad" action="show" id="${actividadInstance?.categoria?.id}">${actividadInstance?.categoria?.encodeAsHTML()}</g:link></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${actividadInstance?.curso}">
-				<li class="fieldcontain">
-					<span id="curso-label" class="property-label"><g:message code="actividad.curso.label" default="Curso" /></span>
-					
-						<span class="property-value" aria-labelledby="curso-label"><g:link controller="curso" action="show" id="${actividadInstance?.curso?.id}">${actividadInstance?.curso?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="categoria-label">
+							${actividadInstance?.categoria?.encodeAsHTML()}</span>
 					
 				</li>
 				</g:if>
@@ -48,16 +40,19 @@
 				<li class="fieldcontain">
 					<span id="evaluable-label" class="property-label"><g:message code="actividad.evaluable.label" default="Evaluable" /></span>
 					
-						<span class="property-value" aria-labelledby="evaluable-label"><g:formatBoolean boolean="${actividadInstance?.evaluable}" /></span>
+						<span class="property-value" aria-labelledby="evaluable-label">
+							<g:formatBoolean boolean="${actividadInstance?.evaluable}" /></span>
 					
 				</li>
 				</g:if>
 			
 				<g:if test="${actividadInstance?.fechaFinalizacion}">
 				<li class="fieldcontain">
-					<span id="fechaFinalizacion-label" class="property-label"><g:message code="actividad.fechaFinalizacion.label" default="Fecha Finalizacion" /></span>
-					
-						<span class="property-value" aria-labelledby="fechaFinalizacion-label"><g:fieldValue bean="${actividadInstance}" field="fechaFinalizacion"/></span>
+					<span id="fechaFinalizacion-label" class="property-label"><g:message code="actividad.fechaFinalizacion.label" 
+						default="Fecha Finalizacion" /></span>
+						
+						<span class="property-value" aria-labelledby="fechaFinalizacion-label">
+							<g:fieldValue bean="${actividadInstance}" field="fechaFinalizacion"/></span>
 					
 				</li>
 				</g:if>
@@ -82,17 +77,17 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${actividadInstance?.material}">
+				<g:if test="${actividadInstance?.materiales}">
 				<li class="fieldcontain">
-					<span id="material-label" class="property-label"><g:message code="actividad.material.label" default="Material" /></span>
-					
-						<g:each in="${actividadInstance.material}" var="m">
-						<span class="property-value" aria-labelledby="material-label"><g:link controller="materialActividad" action="show" id="${m.id}">${m?.encodeAsHTML()}</g:link></span>
+					<span id="materiales-label" class="property-label"><g:message code="actividad.materiales.label" default="Materiales" /></span>
+						<g:each in="${actividadInstance.materiales}" var="m">
+						<span class="property-value" aria-labelledby="materiales-label">
+							<g:link controller="materialActividad" action="show" id="${m.id}" 
+								params="['cursoId': cursoId, 'actividadId': actividadInstance.id]">${m?.encodeAsHTML()}</g:link></span>
 						</g:each>
-					
 				</li>
 				</g:if>
-			
+				
 				<g:if test="${actividadInstance?.objetivo}">
 				<li class="fieldcontain">
 					<span id="objetivo-label" class="property-label"><g:message code="actividad.objetivo.label" default="Objetivo" /></span>

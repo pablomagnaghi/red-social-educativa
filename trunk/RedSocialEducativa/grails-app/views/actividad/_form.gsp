@@ -42,28 +42,12 @@
 	<g:select name="grupos" from="${com.fiuba.GrupoActividad.list()}" multiple="multiple" optionKey="id" size="5" value="${actividadInstance?.grupos*.id}" class="many-to-many"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: actividadInstance, field: 'material', 'error')} ">
-	<label for="material">
-		<g:message code="actividad.material.label" default="Material" />
-		
-	</label>
-	<g:select name="material" from="${com.fiuba.MaterialActividad.list()}" multiple="multiple" optionKey="id" size="5" value="${actividadInstance?.material*.id}" class="many-to-many"/>
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: actividadInstance, field: 'objetivo', 'error')} ">
 	<label for="objetivo">
 		<g:message code="actividad.objetivo.label" default="Objetivo" />
 		
 	</label>
 	<g:textField name="objetivo" value="${actividadInstance?.objetivo}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: actividadInstance, field: 'titulo', 'error')} ">
-	<label for="titulo">
-		<g:message code="actividad.titulo.label" default="Titulo" />
-		
-	</label>
-	<g:textField name="titulo" value="${actividadInstance?.titulo}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: actividadInstance, field: 'visibilidad', 'error')} ">

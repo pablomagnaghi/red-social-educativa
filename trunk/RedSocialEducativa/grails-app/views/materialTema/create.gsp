@@ -38,7 +38,7 @@
 							</label>
 							<g:textField name="titulo" value="${materialTemaInstance?.titulo}"/>
 						</div>
-					<div> <g:hiddenField name="responsable" value="${mediador}-${mediador?.jerarquia}"/></div>
+						<div> <g:hiddenField name="responsable" value="${mediador}-${mediador?.jerarquia}"/></div>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />

@@ -31,17 +31,9 @@
 			<thead>
 					<tr>
 					
+						<th><g:message code="actividad.curso.label" default="Titulo" /></th>
+					
 						<th><g:message code="actividad.categoria.label" default="Categoria" /></th>
-					
-						<th><g:message code="actividad.curso.label" default="Curso" /></th>
-					
-						<g:sortableColumn property="evaluable" title="${message(code: 'actividad.evaluable.label', default: 'Evaluable')}" />
-					
-						<g:sortableColumn property="fechaFinalizacion" title="${message(code: 'actividad.fechaFinalizacion.label', default: 'Fecha Finalizacion')}" />
-					
-						<g:sortableColumn property="grupal" title="${message(code: 'actividad.grupal.label', default: 'Grupal')}" />
-					
-						<g:sortableColumn property="objetivo" title="${message(code: 'actividad.objetivo.label', default: 'Objetivo')}" />
 					
 						<td> Detalle </td>	
 					
@@ -51,21 +43,12 @@
 				<g:each in="${actividadInstanceList}" status="i" var="actividadInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
+						<td>${fieldValue(bean: actividadInstance, field: "titulo")}</td>
+					
 						<td>${fieldValue(bean: actividadInstance, field: "categoria")}</td>
-					
-						<td>${fieldValue(bean: actividadInstance, field: "curso")}</td>
-					
-						<td><g:formatBoolean boolean="${actividadInstance.evaluable}" /></td>
-					
-						<td>${fieldValue(bean: actividadInstance, field: "fechaFinalizacion")}</td>
-					
-						<td><g:formatBoolean boolean="${actividadInstance.grupal}" /></td>
-					
-						<td>${fieldValue(bean: actividadInstance, field: "objetivo")}</td>
 						
 						<td><g:link action="show" id="${actividadInstance.id}">Ver detalle</g:link></td>
 						
-					
 					</tr>
 				</g:each>
 				</tbody>
