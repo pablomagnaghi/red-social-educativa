@@ -21,8 +21,15 @@
 			</fieldset>   
 		</div>
 		<div>
-			<g:if test="${aprendiz?.participa}">
-				<p>PARTICIPA</p>
+			<g:if test="${aprendiz?.participa}">		
+				<li><g:link class="list" action="general" controller="grupoCurso" params="['cursoId': cursoId]">
+					<g:message code="Los grupos del curso"/></g:link></li>
+				<g:if test="${aprendiz?.grupo}">
+					<li><g:link class="list" action="mostrar" controller="grupoCurso" id="${aprendiz?.grupo.id}" params="['cursoId': cursoId]">
+						<g:message code="Mi grupo"/></g:link></li>
+				</g:if>	
+					
+					
 	    	</g:if>
 	    	<g:else>
 			    <p>Su solicitud de particion en el curso ya ha sido recibida.</p>

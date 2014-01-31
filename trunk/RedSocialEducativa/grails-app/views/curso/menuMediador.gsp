@@ -31,6 +31,9 @@
 				<br>
 				<li><g:link class="list" action="estadisticas" controller="aprendiz" params="['cursoId': cursoId]">
 					<g:message code="Estadisticas de aprendices" /></g:link></li>
+				<br>
+				<li><g:link class="list" action="menuMediador" controller="grupoCurso" params="['cursoId': cursoId]">
+					<g:message code="Grupos del curso" /></g:link></li>	
 			</ol>
 		</div>
 		<div>

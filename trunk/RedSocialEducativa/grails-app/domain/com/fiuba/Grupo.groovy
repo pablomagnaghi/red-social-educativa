@@ -1,11 +1,12 @@
 package com.fiuba
 
-abstract class Foro {
+abstract class Grupo {
 
+	Integer numero
 	String nombre
 	
 	String toString() {
-		"${nombre}"
+		"${numero}"
 	}
 	
     static constraints = {

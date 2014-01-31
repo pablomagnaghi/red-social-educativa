@@ -3,7 +3,7 @@ package com.fiuba
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import org.springframework.security.access.annotation.Secured
-
+//@Transactional(readOnly = true)
 @Secured('permitAll')
 class CursoController {
 

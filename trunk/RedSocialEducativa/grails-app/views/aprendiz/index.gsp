@@ -33,7 +33,7 @@
 				<thead>
 					<tr>
 					
-						<g:sortableColumn property="usuairo" title="${message(code: 'aprendiz.usuario.label', default: 'Usuario')}" />
+						<g:sortableColumn property="usuario" title="${message(code: 'aprendiz.usuario.label', default: 'Usuario')}" />
 										
 						<td>Datos del aprendiz</td>
 						

@@ -1,6 +1,6 @@
 package com.fiuba
 
-class Categoria {
+class CategoriaMaterial {
 
 	String nombre
 	

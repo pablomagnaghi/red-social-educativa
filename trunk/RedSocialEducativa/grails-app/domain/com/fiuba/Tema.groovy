@@ -4,6 +4,9 @@ class Tema {
 
 	String titulo
 	
+	// 
+	//Actividad actividad
+	
 	static belongsTo = [curso: Curso]
 	
 	static hasOne = [foro: ForoTema]

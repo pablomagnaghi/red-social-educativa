@@ -34,76 +34,76 @@ class BootStrap {
 		}
 		
 		def usuarioPablo = new Usuario(username: "33300432", password: "33300432", apellido: "Magnaghi", nombres: "Pablo", 
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-mm-dd"), 
-			fechaMemb: (new Date()).format("yyyy-mm-dd"))
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
+			fechaMemb: (new Date()).format("yyyy-MM-dd"))
 		usuarioService.guardar(usuarioPablo)
 		def usuarioLuis = new Usuario(username: "31861315", password: "31861315", apellido: "Paniagua", nombres: "Luis", 
-			legajo: "11", padron: "11", email: "pany100@gmail.com", fechaSolicitud: (new Date()).format("yyyy-mm-dd"), 
-			fechaMemb: (new Date()).format("yyyy-mm-dd"))
+			legajo: "11", padron: "11", email: "pany100@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
+			fechaMemb: (new Date()).format("yyyy-MM-dd"))
 		usuarioService.guardar(usuarioLuis)
 		def usuarioAgus = new Usuario(username: "32725217", password: "32725217", apellido: "Milla", nombres: "Agustina", 
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-mm-dd"), 
-			fechaMemb: (new Date()).format("yyyy-mm-dd"))
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
+			fechaMemb: (new Date()).format("yyyy-MM-dd"))
 		usuarioService.guardar(usuarioAgus)
 		def usuarioMessi = new Usuario(username: "10101010", password: "10101010", apellido: "Zarate", nombres: "Facundo",
-			legajo: "11", padron: "11", email: "nanozarate@gmail.com", fechaSolicitud: (new Date()).format("yyyy-mm-dd"), 
-			fechaMemb: (new Date()).format("yyyy-mm-dd"))
+			legajo: "11", padron: "11", email: "nanozarate@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
+			fechaMemb: (new Date()).format("yyyy-MM-dd"))
 		usuarioService.guardar(usuarioMessi)
 
 		def usuarioUno = new Usuario(username: "00000001", password: "00000001", apellido: "ApeUNO", nombres: "NomUno", 
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-mm-dd"), 
-			fechaMemb: (new Date()).format("yyyy-mm-dd"))
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
+			fechaMemb: (new Date()).format("yyyy-MM-dd"))
 		usuarioService.guardar(usuarioUno)
 		def usuarioDos = new Usuario(username: "00000002", password: "00000002", apellido: "ApeDOS", nombres: "NomDOS", 
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-mm-dd"), 
-			fechaMemb: (new Date()).format("yyyy-mm-dd"))
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
+			fechaMemb: (new Date()).format("yyyy-MM-dd"))
 		usuarioService.guardar(usuarioDos)
 		def usuarioTres = new Usuario(username: "00000003", password: "00000003", apellido: "ApeTRES", nombres: "NomTRES", 
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-mm-dd"), 
-			fechaMemb: (new Date()).format("yyyy-mm-dd"))
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
+			fechaMemb: (new Date()).format("yyyy-MM-dd"))
 		usuarioService.guardar(usuarioTres)
 		def usuarioCuatro = new Usuario(username: "00000004", password: "00000004", apellido: "ApeCUATRO", nombres: "NomCUATRO", 
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-mm-dd"), 
-			fechaMemb: (new Date()).format("yyyy-mm-dd"))
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
+			fechaMemb: (new Date()).format("yyyy-MM-dd"))
 		usuarioService.guardar(usuarioCuatro)
 		def usuarioCinco = new Usuario(username: "00000005", password: "00000005", apellido: "ApeCINCO", nombres: "NomCINCO", 
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-mm-dd"), 
-			fechaMemb: (new Date()).format("yyyy-mm-dd"))
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
+			fechaMemb: (new Date()).format("yyyy-MM-dd"))
 		usuarioService.guardar(usuarioCinco)
 		def usuarioSeis = new Usuario(username: "00000006", password: "00000006", apellido: "ApeSeis", nombres: "NomSeis",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-mm-dd"), 
-			fechaMemb: (new Date()).format("yyyy-mm-dd"))
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
+			fechaMemb: (new Date()).format("yyyy-MM-dd"))
 		usuarioService.guardar(usuarioSeis)
 		def usuarioSiete = new Usuario(username: "00000007", password: "00000007", apellido: "ApeSiete", nombres: "NomSiete",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-mm-dd"), 
-			fechaMemb: (new Date()).format("yyyy-mm-dd"))
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
+			fechaMemb: (new Date()).format("yyyy-MM-dd"))
 		usuarioService.guardar(usuarioSiete)
 		def usuarioOcho = new Usuario(username: "00000008", password: "00000008", apellido: "ApeOcho", nombres: "NomOcho",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-mm-dd"), 
-			fechaMemb: (new Date()).format("yyyy-mm-dd"))
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
+			fechaMemb: (new Date()).format("yyyy-MM-dd"))
 		usuarioService.guardar(usuarioOcho)
 		def usuarioNueve = new Usuario(username: "00000009", password: "00000009", apellido: "ApeNueve", nombres: "NomNueve",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-mm-dd"), 
-			fechaMemb: (new Date()).format("yyyy-mm-dd"))
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
+			fechaMemb: (new Date()).format("yyyy-MM-dd"))
 		usuarioService.guardar(usuarioNueve)
 		def usuarioDiez = new Usuario(username: "00000010", password: "00000010", apellido: "ApeDiez", nombres: "NomDiez",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-mm-dd"), 
-			fechaMemb: (new Date()).format("yyyy-mm-dd"))
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
+			fechaMemb: (new Date()).format("yyyy-MM-dd"))
 		usuarioService.guardar(usuarioDiez)
 		def usuarioOnce = new Usuario(username: "00000011", password: "00000011", apellido: "ApeOnce", nombres: "NomOnce",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-mm-dd"), 
-			fechaMemb: (new Date()).format("yyyy-mm-dd"))
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
+			fechaMemb: (new Date()).format("yyyy-MM-dd"))
 		usuarioService.guardar(usuarioOnce)
 		def usuarioDoce = new Usuario(username: "00000012", password: "00000012", apellido: "ApeDoce", nombres: "NomDoce",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-mm-dd"), 
-			fechaMemb: (new Date()).format("yyyy-mm-dd"))
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
+			fechaMemb: (new Date()).format("yyyy-MM-dd"))
 		usuarioService.guardar(usuarioDoce)
 		
 		def usuarioTrece = new Usuario(username: "00000013", password: "00000013", apellido: "ApeTrece", nombres: "NomTrece",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-mm-dd"), enabled: false)
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), enabled: false)
 		usuarioService.guardar(usuarioTrece)
 		def usuarioCatorce = new Usuario(username: "00000014", password: "00000014", apellido: "ApeCatorce", nombres: "NomCatorce",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-mm-dd"), enabled: false)
+			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), enabled: false)
 		usuarioService.guardar(usuarioCatorce)
 		
 		// Mensajes
@@ -143,60 +143,60 @@ class BootStrap {
 		
 		// Aprendices
 		def aprendizAgus = new Aprendiz(usuario: usuarioAgus, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-mm-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
 		def aprendizUno = new Aprendiz(usuario: usuarioUno, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-mm-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
 		def aprendizUnoP = new Aprendiz(usuario: usuarioUno, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-mm-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
 		def aprendizUnoPP = new Aprendiz(usuario: usuarioUno, rol: rolAprendiz, participa: false, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-mm-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
 		def aprendizDos = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-mm-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
 		def aprendizTres = new Aprendiz(usuario: usuarioTres, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-mm-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
 		def aprendizCuatro = new Aprendiz(usuario: usuarioCuatro, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-mm-dd"))		
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))		
 		def aprendizCinco = new Aprendiz(usuario: usuarioCinco, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-mm-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
 		def aprendizSeis = new Aprendiz(usuario: usuarioSeis, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-mm-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
 		def aprendizSiete = new Aprendiz(usuario: usuarioSiete, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-mm-dd"))
-		def aprendizOcho = new Aprendiz(usuario: usuarioOcho, rol: rolAprendiz, participa: false, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-mm-dd"))
-		def aprendizNueve = new Aprendiz(usuario: usuarioNueve, rol: rolAprendiz, participa: false, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-mm-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
+		def aprendizOcho = new Aprendiz(usuario: usuarioOcho, rol: rolAprendiz, participa: true, msjEnviados: "0",
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
+		def aprendizNueve = new Aprendiz(usuario: usuarioNueve, rol: rolAprendiz, participa: true, msjEnviados: "0",
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
 		def aprendizDiez = new Aprendiz(usuario: usuarioDiez, rol: rolAprendiz, participa: false, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-mm-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
 		def aprendizOnce = new Aprendiz(usuario: usuarioOnce, rol: rolAprendiz, participa: false, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-mm-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
 		def aprendizDoce = new Aprendiz(usuario: usuarioDoce, rol: rolAprendiz, participa: false, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-mm-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
 		
 		// Categorias
-		def ArrayList<Categoria> categorias = new ArrayList<Categoria>()
+		def ArrayList<CategoriaMaterial> categorias = new ArrayList<CategoriaMaterial>()
 		
-		def categoriaArticulo = new Categoria(nombre: "Articulo")
+		def categoriaArticulo = new CategoriaMaterial(nombre: "Articulo")
 		categorias.add(categoriaArticulo)
-		def categoriaPresentacion = new Categoria(nombre: "Presentacion")
+		def categoriaPresentacion = new CategoriaMaterial(nombre: "Presentacion")
 		categorias.add(categoriaPresentacion)
-		def categoriaCuestionario = new Categoria(nombre: "Cuestionario")
+		def categoriaCuestionario = new CategoriaMaterial(nombre: "Cuestionario")
 		categorias.add(categoriaCuestionario)
-		def categoriaEjerciciosPlanteados = new Categoria(nombre: "EjerciciosPlanteados")
+		def categoriaEjerciciosPlanteados = new CategoriaMaterial(nombre: "EjerciciosPlanteados")
 		categorias.add(categoriaEjerciciosPlanteados)
-		def categoriaEjerciciosResueltos = new Categoria(nombre: "EjerciciosResueltos")
+		def categoriaEjerciciosResueltos = new CategoriaMaterial(nombre: "EjerciciosResueltos")
 		categorias.add(categoriaEjerciciosResueltos)
-		def categoriaTrabajo = new Categoria(nombre: "Trabajo")
+		def categoriaTrabajo = new CategoriaMaterial(nombre: "Trabajo")
 		categorias.add(categoriaTrabajo)
-		def categoriaRefBibliografica = new Categoria(nombre: "RefBibliografica")
+		def categoriaRefBibliografica = new CategoriaMaterial(nombre: "RefBibliografica")
 		categorias.add(categoriaRefBibliografica )
-		def categoriaEnlace = new Categoria(nombre: "Enlace")
+		def categoriaEnlace = new CategoriaMaterial(nombre: "Enlace")
 		categorias.add(categoriaEnlace)
-		def categoriaGlosario = new Categoria(nombre: "Glosario")
+		def categoriaGlosario = new CategoriaMaterial(nombre: "Glosario")
 		categorias.add(categoriaGlosario)
-		def categoriaEnunciadoDeEvaluacion = new Categoria(nombre: "EnunciadoDeEvaluacion")
+		def categoriaEnunciadoDeEvaluacion = new CategoriaMaterial(nombre: "EnunciadoDeEvaluacion")
 		categorias.add(categoriaEnunciadoDeEvaluacion)
-		def categoriaOtros = new Categoria(nombre: "Otros")
+		def categoriaOtros = new CategoriaMaterial(nombre: "Otros")
 		categorias.add(categoriaOtros)
 		
 		for(int i = 0; i<categorias.size(); i++){
@@ -228,15 +228,15 @@ class BootStrap {
 		// Publicaciones generales
 		
 		def publicacionGeneralUno = new PublicacionGeneral(titulo: "PublicacionGeneralUno", contenido: "Contenido", 
-			responsable: "Pablo Magnaghi (Administrador)", dni: "33300432", fecha: (new Date()).format("yyyy-mm-dd"), 
+			responsable: "Pablo Magnaghi (Administrador)", dni: "33300432", fecha: (new Date()).format("yyyy-MM-dd"), 
 			hora: (new Date()).getTimeString())
 		
 		def publicacionGeneralDos = new PublicacionGeneral(titulo: "PublicacionGeneralDos", contenido: "Contenido", 
-			responsable: "Pablo Magnaghi (Administrador)", dni: "33300432", fecha: (new Date()).format("yyyy-mm-dd"), 
+			responsable: "Pablo Magnaghi (Administrador)", dni: "33300432", fecha: (new Date()).format("yyyy-MM-dd"), 
 			hora: (new Date()).getTimeString())
 
 		def publicacionGeneralTres = new PublicacionGeneral(titulo: "PublicacionGeneralTres", contenido: "Contenido", 
-			responsable: "Pablo Magnaghi (Administrador)", dni: "33300432", fecha: (new Date()).format("yyyy-mm-dd"), 
+			responsable: "Pablo Magnaghi (Administrador)", dni: "33300432", fecha: (new Date()).format("yyyy-MM-dd"), 
 			hora: (new Date()).getTimeString())
 				
 		def foroGeneral = new ForoGeneral(nombre: "Foro general")
@@ -258,13 +258,13 @@ class BootStrap {
 		
 		// Material de contenido
 		def materialContenidoUno = new MaterialContenido(titulo: "material contenido 1", descripcion: "opcional", autor: "anonimo", 
-			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("RefBibliografica"))
+			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
 		def materialContenidoDos = new MaterialContenido(titulo: "material contenido 2", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Presentacion"))
+			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Presentacion"))
 		def materialContenidoTres = new MaterialContenido(titulo: "material contenido 3", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Enlace"))
+			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Enlace"))
 		def materialContenidoCuatro = new MaterialContenido(titulo: "material contenido 4", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Glosario"))
+			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Glosario"))
 
 		// Contenidos
 		def contenidoUnoTemaUnoCursoUno = new Contenido(titulo: "ContenidoUnoTemaUnoCursoUno")
@@ -285,13 +285,13 @@ class BootStrap {
 		
 		// Material de temas
 		def materialTemaUno = new MaterialTema(titulo: "material Tema 1", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("RefBibliografica"))
+			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
 		def materialTemaDos = new MaterialTema(titulo: "material Tema 2", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Presentacion"))
+			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Presentacion"))
 		def materialTemaTres = new MaterialTema(titulo: "material Tema 3", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Enlace"))
+			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Enlace"))
 		def materialTemaCuatro = new MaterialTema(titulo: "material Tema 4", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Glosario"))
+			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Glosario"))
 		
 		// Temas
 		
@@ -314,17 +314,28 @@ class BootStrap {
 		
 		// Material curso
 		def materialUno = new MaterialCurso(titulo: "material curso 1", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("RefBibliografica"))
+			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
 		def materialDos = new MaterialCurso(titulo: "material curso 2", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Presentacion"))
+			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Presentacion"))
 		def materialTres = new MaterialCurso(titulo: "material curso 3", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Enlace"))
+			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Enlace"))
 		def materialCuatro = new MaterialCurso(titulo: "material curso 4", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Glosario"))
+			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Glosario"))
 		def materialCinco = new MaterialCurso(titulo: "material curso 5", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Trabajo"))
+			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Trabajo"))
 		def materialSeis = new MaterialCurso(titulo: "material curso 6", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-mm-dd"), responsable: "responsable", categoria: Categoria.findByNombre("Cuestionario"))
+			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Cuestionario"))
+		
+		// Grupos curso
+		
+		def grupoUno = new GrupoCurso(numero: "1", nombre: "grupo 1")
+		grupoUno.addToAprendices(aprendizDos)
+		grupoUno.addToAprendices(aprendizTres)
+		grupoUno.addToAprendices(aprendizCuatro)
+		def grupoDos = new GrupoCurso(numero: "2", nombre: "grupo 2")
+		grupoDos.addToAprendices(aprendizCinco)
+		grupoDos.addToAprendices(aprendizSeis)
+		grupoDos.addToAprendices(aprendizSiete)
 		
 		// Cursos
 		
@@ -333,7 +344,12 @@ class BootStrap {
 		cursoUno.addToMediadores(mediadorUno)
 		cursoUno.addToAprendices(aprendizDos)
 		cursoUno.addToAprendices(aprendizTres)
+		cursoUno.addToAprendices(aprendizCuatro)
+		cursoUno.addToAprendices(aprendizCinco)
+		cursoUno.addToAprendices(aprendizSeis)
+		cursoUno.addToAprendices(aprendizSiete)
 		cursoUno.addToAprendices(aprendizOcho)
+		cursoUno.addToAprendices(aprendizNueve)
 		cursoUno.addToTemas(temaUnoCursoUno)
 		cursoUno.addToTemas(temaDosCursoUno)
 		cursoUno.addToMateriales(materialUno)
@@ -342,32 +358,29 @@ class BootStrap {
 		cursoUno.addToMateriales(materialCuatro)
 		cursoUno.addToMateriales(materialCinco)
 		cursoUno.addToMateriales(materialSeis)
+		cursoUno.addToGrupos(grupoUno)
+		cursoUno.addToGrupos(grupoDos)
 
 		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", foro: foroCursoDos, nombre: "Curso 2")
 		cursoDos.addToMediadores(mediadorUnoP)
 		cursoDos.addToMediadores(mediadorDos)
 		cursoDos.addToAprendices(aprendizAgus)
-		cursoDos.addToAprendices(aprendizCuatro)
-		cursoDos.addToAprendices(aprendizNueve)
 		cursoDos.addToTemas(temaUnoCursoDos)
 		
 		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1|2", foro: foroCursoTres, nombre: "Curso 3")
 		cursoTres.addToMediadores(mediadorTres)
 		cursoTres.addToAprendices(aprendizUno)
-		cursoTres.addToAprendices(aprendizCinco)
 		cursoTres.addToAprendices(aprendizDiez)
 
 		def cursoCuatro = new Curso(nroRelativo: "04", cuatDict: "1|2", foro: foroCursoCuatro, nombre: "Curso 4")
 		cursoCuatro.addToMediadores(mediadorCuatro)
 		cursoCuatro.addToAprendices(aprendizUnoP)
-		cursoCuatro.addToAprendices(aprendizSeis)
 		cursoCuatro.addToAprendices(aprendizOnce)
 
 		def cursoCinco = new Curso(nroRelativo: "05", cuatDict: "1|2", foro: foroCursoCinco, nombre: "Curso 5")
 		cursoCinco.addToMediadores(mediadorCinco)
 		cursoCinco.addToMediadores(mediadorSeis)
 		cursoCinco.addToAprendices(aprendizUnoPP)
-		cursoCinco.addToAprendices(aprendizSiete)
 		cursoCinco.addToAprendices(aprendizDoce)
 		
 		// Materias - con carga de cursos
@@ -397,26 +410,26 @@ class BootStrap {
 		// Noticias red
 		
 		def noticiaRedUno = new NoticiaRed(titulo: "Noticia Uno", texto: "Inauguracion de la Red Social Educativa 2014", 
-			fecha: (new Date()).format("yyyy-mm-dd"), hora: (new Date()).getTimeString(), visibilidad: true)
+			fecha: (new Date()).format("yyyy-MM-dd"), hora: (new Date()).getTimeString(), visibilidad: true)
 
 		// Noticias curso
 		
 		def ArrayList<NoticiaCurso> noticiasCursoUno = new ArrayList<NoticiaCurso>()
 		
 		def noticiaCursoUno = new NoticiaCurso(titulo: "Noticia Uno 1", texto: "noticiaCursoUno",
-			fecha: (new Date()).format("yyyy-mm-dd"), hora: (new Date()).getTimeString(), visibilidad: true, 
+			fecha: (new Date()).format("yyyy-MM-dd"), hora: (new Date()).getTimeString(), visibilidad: true, 
 			mediador: mediadorAgus, curso: cursoUno)
 		noticiasCursoUno.add(noticiaCursoUno)
 		def noticiaCursoUnoP = new NoticiaCurso(titulo: "Noticia Uno 2", texto: "noticiaCursoUnoP ",
-			fecha: (new Date()).format("yyyy-mm-dd"), hora: (new Date()).getTimeString(), visibilidad: true,
+			fecha: (new Date()).format("yyyy-MM-dd"), hora: (new Date()).getTimeString(), visibilidad: true,
 			mediador: mediadorAgus, curso: cursoUno)
 		noticiasCursoUno.add(noticiaCursoUnoP)
 		def noticiaCursoUnoPP = new NoticiaCurso(titulo: "Noticia Uno 3", texto: "noticiaCursoUnoPP",
-			fecha: (new Date()).format("yyyy-mm-dd"), hora: (new Date()).getTimeString(), visibilidad: true, 
+			fecha: (new Date()).format("yyyy-MM-dd"), hora: (new Date()).getTimeString(), visibilidad: true, 
 			mediador: mediadorUno, curso: cursoUno)
 		noticiasCursoUno.add(noticiaCursoUnoPP)
 		def noticiaCursoUnoPPP = new NoticiaCurso(titulo: "Noticia Uno 4", texto: "noticiaCursoUnoPPP",
-			fecha: (new Date()).format("yyyy-mm-dd"), hora: (new Date()).getTimeString(), visibilidad: true, 
+			fecha: (new Date()).format("yyyy-MM-dd"), hora: (new Date()).getTimeString(), visibilidad: true, 
 			mediador: mediadorUno, curso: cursoUno)
 		noticiasCursoUno.add(noticiaCursoUnoPPP)
 		

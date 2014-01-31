@@ -159,6 +159,7 @@
 			<p>Foro general; "${com.fiuba.ForoGeneral.first()}"</p>
 			<p>Foro curso; "${com.fiuba.ForoCurso.first()}"</p>
 			<p>Foro tema; "${com.fiuba.ForoTema.first()}"</p>
+			<p>Grupo curso: "${com.fiuba.GrupoCurso.first().aprendices}"
 		</div>
 	</body>
 </html>
