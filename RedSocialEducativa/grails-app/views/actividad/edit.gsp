@@ -34,7 +34,26 @@
 				<g:hiddenField name="version" value="${actividadInstance?.version}" />
 				<fieldset class="form">
 					<g:render template="form"/>
-				</fieldset>
+						<div>
+							<g:hiddenField name="titulo" value="${actividadInstance.titulo}" />
+						</div>
+						<div
+							class="fieldcontain ${hasErrors(bean: actividadInstance, field: 'materiales', 'error')} ">
+							<label for="materiales"> <g:message
+									code="actividad.materiales.label" default="Materiales" />
+							</label>
+							<ul class="one-to-many">
+								<g:each in="${materialInstance?.materiales?}" var="m">
+									<li><g:link controller="materialActividad" action="show" id="${m.id}" 
+										params="['cursoId': cursoId, 'activdadId': actividadInstance.id]">${m?.encodeAsHTML()}</g:link></li>
+								</g:each>
+								<li class="add"><g:link controller="materialActividad" action="create"  
+									params="['cursoId': cursoId, 'actividadId': actividadInstance?.id]">
+									${message(code: 'default.add.label', args: [message(code: 'materialActividad.label', default: 'MaterialActividad')])}
+									</g:link></li>
+							</ul>
+						</div>
+			</fieldset>
 				<fieldset class="buttons">
 					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
 				</fieldset>

@@ -29,7 +29,9 @@ class ActividadController {
 				
 		def actividad = Actividad.get(actividadId)
 		
-		[cursoId: cursoId, actividad: actividad]
+		def aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
+		
+		[cursoId: cursoId, actividad: actividad, aprendiz: aprendiz]
 	}
 	
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
