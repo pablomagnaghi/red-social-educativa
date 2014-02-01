@@ -88,6 +88,17 @@
 				</li>
 				</g:if>
 				
+				<g:if test="${actividadInstance?.temas}">
+				<li class="fieldcontain">
+					<span id="temas-label" class="property-label"><g:message code="actividad.temas.label" default="Temas" /></span>
+						<g:each in="${actividadInstance.temas}" var="m">
+						<span class="property-value" aria-labelledby="temas-label">
+							<g:link controller="temaActividad" action="show" id="${m.id}" 
+								params="['cursoId': cursoId, 'actividadId': actividadInstance.id]">${m?.encodeAsHTML()}</g:link></span>
+						</g:each>
+				</li>
+				</g:if>
+				
 				<g:if test="${actividadInstance?.objetivo}">
 				<li class="fieldcontain">
 					<span id="objetivo-label" class="property-label"><g:message code="actividad.objetivo.label" default="Objetivo" /></span>

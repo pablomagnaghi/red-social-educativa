@@ -34,14 +34,6 @@
 	<g:checkBox name="grupal" value="${actividadInstance?.grupal}" />
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: actividadInstance, field: 'grupos', 'error')} ">
-	<label for="grupos">
-		<g:message code="actividad.grupos.label" default="Grupos" />
-		
-	</label>
-	<g:select name="grupos" from="${com.fiuba.GrupoActividad.list()}" multiple="multiple" optionKey="id" size="5" value="${actividadInstance?.grupos*.id}" class="many-to-many"/>
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: actividadInstance, field: 'objetivo', 'error')} ">
 	<label for="objetivo">
 		<g:message code="actividad.objetivo.label" default="Objetivo" />
