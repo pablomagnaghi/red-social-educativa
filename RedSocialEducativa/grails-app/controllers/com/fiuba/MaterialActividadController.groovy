@@ -26,8 +26,8 @@ class MaterialActividadController {
 		
 		params.max = 5 // Math.min(max ?: 10, 100)
 		
-		println "foro Tema general CURSOID: ${params.cursoId}"
-		println "foro Tema general actividadId: ${params.actividadId}"
+		println "material curso general CURSOID: ${params.cursoId}"
+		println "material curso general actividadId: ${params.actividadId}"
 			
 		cursoId = params.cursoId
 		actividadId = params.actividadId
@@ -122,7 +122,7 @@ class MaterialActividadController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'MaterialActividad.label', default: 'MaterialActividad'), materialActividadInstance.id])
-                redirect action:"show", params:['id': materialTemaInstance.id, 'cursoId': cursoId, 'actividadId': actividadId]
+                redirect action:"show", params:['id': materialActividadInstance.id, 'cursoId': cursoId, 'actividadId': actividadId]
             }
             '*'{ respond materialActividadInstance, [status: OK] }
         }

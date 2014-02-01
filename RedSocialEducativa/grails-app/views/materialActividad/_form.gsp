@@ -32,12 +32,5 @@
 	<g:textField name="descripcion" value="${materialActividadInstance?.descripcion}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: materialActividadInstance, field: 'responsable', 'error')} ">
-	<label for="responsable">
-		<g:message code="materialActividad.responsable.label" default="Responsable" />
-		
-	</label>
-	<g:textField name="responsable" value="${materialActividadInstance?.responsable}"/>
-</div>
 
 

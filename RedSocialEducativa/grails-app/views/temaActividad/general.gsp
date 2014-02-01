@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.MaterialActividad" %>
+<%@ page import="com.fiuba.TemaActividad" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -22,23 +22,18 @@
 			</g:if>
 		</div>	
 		<div>
-			<p>Material del actividad ${actividad} del Curso: ${com.fiuba.Curso.get(cursoId)}</p>
+			<p>Tema de la actividad ${actividad} del Curso: ${com.fiuba.Curso.get(cursoId)}</p>
 			<br>
 				<ol>
-					<g:each in="${materiales}">
-						<div><h1><g:message code="Material: ${it.titulo}" args="[entityName]" /></h1></div>
+					<g:each in="${temas}">
+						<div><h1><g:message code="Tema: ${it.tema.titulo}" args="[entityName]" /></h1></div>
 						<div>
-							<p>Autor: ${it.autor}</p>
-							<p>Descripcion: ${it.descripcion}</p>
-							<p>Categoria": ${it.categoria}</p>	
-							<p>Responsable: ${it.responsable}</p>
-							<p>Fecha"${it.fecha}</p>
-							<p>Poner link al material(URL)</p>
+							<p>Poner link al tema(URL)</p>
 						</div>
 					</g:each>
 				</ol>	
 			<div class="pagination">
-				<g:paginate total="${materialesCant ?: 0}" params="['cursoId': cursoId, 'actividadId': actividadId]"/>
+				<g:paginate total="${temasCant ?: 0}" params="['cursoId': cursoId, 'actividadId': actividadId]"/>
 			</div>
 		</div>	
 	</body>

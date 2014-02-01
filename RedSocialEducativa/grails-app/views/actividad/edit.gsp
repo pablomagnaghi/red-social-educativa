@@ -43,13 +43,29 @@
 									code="actividad.materiales.label" default="Materiales" />
 							</label>
 							<ul class="one-to-many">
-								<g:each in="${materialInstance?.materiales?}" var="m">
+								<g:each in="${actividadInstance?.materiales?}" var="m">
 									<li><g:link controller="materialActividad" action="show" id="${m.id}" 
-										params="['cursoId': cursoId, 'activdadId': actividadInstance.id]">${m?.encodeAsHTML()}</g:link></li>
+										params="['cursoId': cursoId, 'actividadId': actividadInstance.id]">${m?.encodeAsHTML()}</g:link></li>
 								</g:each>
 								<li class="add"><g:link controller="materialActividad" action="create"  
 									params="['cursoId': cursoId, 'actividadId': actividadInstance?.id]">
 									${message(code: 'default.add.label', args: [message(code: 'materialActividad.label', default: 'MaterialActividad')])}
+									</g:link></li>
+							</ul>
+						</div>
+						<div
+							class="fieldcontain ${hasErrors(bean: actividadInstance, field: 'temas', 'error')} ">
+							<label for="temas"> <g:message
+									code="actividad.temas.label" default="Temas" />
+							</label>
+							<ul class="one-to-many">
+								<g:each in="${actividadInstance?.temas?}" var="t">
+									<li><g:link controller="temaActividad" action="show" id="${t.id}" 
+										params="['cursoId': cursoId, 'activdadId': actividadInstance.id]">${t?.encodeAsHTML()}</g:link></li>
+								</g:each>
+								<li class="add"><g:link controller="temaActividad" action="create"  
+									params="['cursoId': cursoId, 'actividadId': actividadInstance?.id]">
+									${message(code: 'default.add.label', args: [message(code: 'temaActividad.label', default: 'TemaActividad')])}
 									</g:link></li>
 							</ul>
 						</div>

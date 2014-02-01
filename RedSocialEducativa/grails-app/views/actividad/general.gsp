@@ -33,6 +33,21 @@
 		</div>
 		<div>
 			<p>Categoria": ${actividad.categoria}</p>	
+			<p>COLOCAR TEMAS ASOCIADOS A LA ACTIVIDAD</p>
+			<p>MATERIAL ASOCIADOS A LA ACTIVIDAD</p>
 		</div>
+		
+		<div>
+			<hr>
+			<h2><g:link controller="materialActividad" action="general" params="['cursoId': cursoId, 'actividadId': actividadId]">
+				<g:message code="Material de la actividad"/></g:link></h2>
+		</div>
+		<div>
+			<hr>
+			<h2><g:link controller="temaActividad" action="general" params="['cursoId': cursoId, 'actividadId': actividadId]">
+				<g:message code="Temas relacionados con la actividad"/></g:link></h2>
+		</div>
+		
+		
 	</body>
 </html>
