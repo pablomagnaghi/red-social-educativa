@@ -145,7 +145,6 @@ class GrupoActividadController {
 	}
 	
 	def muestraMediador(GrupoActividad grupoActividadInstance) {
-		// TODO
 		println "muestra mediador params: ${params}"
 		
 		cursoId = params.cursoId
@@ -159,64 +158,94 @@ class GrupoActividadController {
 	}
 	
 	def menuCambios() {
-		// TODO
 		cursoId = params.cursoId
 		actividadId = params.actividadId
 		
 		println "menu cambiso: curso ID: ${cursoId}"
 		
-		// TODO
-		
-		[aprendices: Aprendiz.findAllByCursoAndParticipaAndGrupoIsNotNull(Curso.get(cursoId), true),
-			cursoId:cursoId, actividadId: actividadId]
-			
+		def c = GrupoActividadAprendiz.createCriteria()
+		def aprendices = c {
+			grupo {
+				eq('actividad.id', actividadId as long)
+			}
+		}
+
+		[aprendices: aprendices, cursoId:cursoId, actividadId: actividadId]
 	}
 	
 	def realizarCambio() {
-		// TODO
 		cursoId = params.cursoId
 		actividadId = params.actividadId
 		
-		Integer aprendizId = params.aprendizId.toInteger()
-		Integer numeroGrupo = params.numero.toInteger()
+		if (params.numero.size()) {
 		
-		Integer cantGrupos = GrupoActividad.findAllByCurso(Curso.get(cursoId)).size()
-		
-		println "REALIZAR CAMBIOS"
-		
-		println "numero de grupo: ${numeroGrupo}"
-		println "cantGrupos: ${cantGrupos}"
-		println "aprendizId: ${aprendizId}"
-		
-		println "aprendiz: ${Aprendiz.get(aprendizId)}"
-		
-		
-		if ((numeroGrupo > cantGrupos) || (numeroGrupo < 1)) {
-			flash.message = "El numero de grupo ingresado no existe." +
-			"Los numero de grupo van del 1 hasta el ${cantGrupos}"
-			redirect action: "menuCambios", params:['cursoId': cursoId]
-			return
-		}
-		
-		def aprendiz = Aprendiz.get(aprendizId)
-		
-		if (aprendiz.grupo.id == numeroGrupo) {
-			flash.message = "El aprendiz ${aprendiz} ya pertenece al grupo ${numeroGrupo}"
-			redirect action: "menuCambios", params:['cursoId': cursoId]
-			return
-		}
-		
-		aprendiz.grupo = GrupoCurso.get(numeroGrupo)
-		
-		aprendiz.save flush:true
-		
-		println "cambios realizados"
-		
-		flash.message = "El aprendiz ${Aprendiz.get(aprendizId)} " +
-		"ahora pertenece al grupo ${numeroGrupo}"
-		
-		redirect action: "menuMediador", params:['cursoId': cursoId, 'aprendizId': aprendizId]
+			Integer grupoActividadAprendizId = params.grupoActividadAprendizId.toInteger()
+			Integer numeroGrupo = params.numero.toInteger()
 			
+			def actividad = Actividad.get(actividadId)
+			
+			println "cantidad de grupos del curso: ${Curso.get(cursoId)}"
+			println GrupoActividad.findAllByActividad(actividad).size()
+			
+			Integer cantGrupos = GrupoActividad.findAllByActividad(actividad).size() 
+			
+			println "REALIZAR CAMBIOS"
+			
+			println "numero de grupo: ${numeroGrupo}"
+			println "cantGrupos: ${cantGrupos}"
+			println "grupoActividadAprendizId: ${grupoActividadAprendizId}"
+			
+			println "aprendiz: ${GrupoActividadAprendiz.get(grupoActividadAprendizId)}"
+			
+			println "grupoId: ${GrupoActividadAprendiz.get(grupoActividadAprendizId).grupo.id}"
+			println "aprendizId: ${GrupoActividadAprendiz.get(grupoActividadAprendizId).aprendiz.id}"
+			
+			
+			if ((numeroGrupo > cantGrupos) || (numeroGrupo < 1)) {
+				flash.message = "El numero de grupo ingresado no existe." +
+				"Los numero de grupo van del 1 hasta el ${cantGrupos}"
+				redirect action: "menuCambios", params:['cursoId': cursoId, 'actividadId': actividadId]
+				return
+			}
+		
+			def grupoActividadAprendiz = GrupoActividadAprendiz.get(grupoActividadAprendizId)
+			
+			if (grupoActividadAprendiz.grupo.numero == numeroGrupo) {
+				flash.message = "El aprendiz ${grupoActividadAprendiz.aprendiz} ya pertenece al grupo ${numeroGrupo}"
+				redirect action: "menuCambios", params:['cursoId': cursoId, 'actividadId': actividadId]
+				return
+			}
+			
+			def grupoActividad = GrupoActividad.findByActividadAndNumero(actividad, numeroGrupo)
+			
+			println "grupoActividad: ${grupoActividad}"
+			println "HASSSSSSSSSSSSSSSSSSSSSTA ACA"
+	
+			println "grupo acitividad previo"
+			println grupoActividadAprendiz.grupo
+			
+			grupoActividadAprendiz.grupo = grupoActividad
+			
+			println "COMO QUEDARIA"
+			println "grupo acitividad"
+			println grupoActividadAprendiz.grupo
+			println "grupo acitividad aprendiz"
+			println grupoActividadAprendiz.aprendiz
+		
+			grupoActividadAprendiz.save flush:true
+			
+			println "cambios realizados"
+			
+			flash.message = "El aprendiz ${grupoActividadAprendiz.aprendiz} " +
+			"ahora pertenece al grupo ${numeroGrupo}"
+			
+		} else {
+			flash.message = "No existe ese numero ese numero de grupo"
+			redirect action: "menuCambios", params:['cursoId': cursoId, 'actividadId': actividadId]
+			return
+		}
+		redirect action: "menuMediador", params:['cursoId': cursoId, 'actividadId': actividadId]
+		
 	}
 	
 	def editar(GrupoActividad grupoActividadInstance) {
@@ -366,7 +395,11 @@ class GrupoActividadController {
 	def delete(GrupoActividad grupoActividadInstance) {
 
 		if (grupoActividadInstance == null) {
-			notFound()
+			
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'grupoActividadInstance.label', 
+					default: 'GrupoActividad'), params.id])
+			redirect action:"menuMediador", params:['cursoId': cursoId, 'actividadId': actividadId], method:"GET"
+			
 			return
 		}
 
@@ -395,7 +428,8 @@ class GrupoActividadController {
 	protected void notFound() {
 		request.withFormat {
 			form {
-				flash.message = message(code: 'default.not.found.message', args: [message(code: 'grupoCursoInstance.label', default: 'GrupoCurso'), params.id])
+				flash.message = message(code: 'default.not.found.message', args: [message(code: 'grupoActividadInstance.label', 
+					default: 'GrupoActividad'), params.id])
 				redirect action: "general", params:['cursoId': cursoId, 'actividadId': actividadId], method: "GET"
 			}
 			'*'{ render status: NOT_FOUND }
