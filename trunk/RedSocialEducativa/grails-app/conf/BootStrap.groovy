@@ -361,13 +361,24 @@ class BootStrap {
 		grupoDos.addToAprendices(aprendizSeis)
 		grupoDos.addToAprendices(aprendizSiete)
 		
+		// Grupos actividad: agrego grupoActividadAprendiz a los grupo actividad
+		
+		def grupoActividadUno = new GrupoActividad(numero: "1", nombre: "grupo 1")
+		def grupoActividadDos = new GrupoActividad(numero: "2", nombre: "grupo 2")
+		def grupoActividadTres = new GrupoActividad(numero: "3", nombre: "grupo 3")
+		
 		// Actividades 
 		
 		def actividadUno = new Actividad(titulo: "actividad 1", objetivo: "objetivo", evaluable: true,
 			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("Encuesta"), fechaFinalizacion: "fechafinalizacion")
 		
+		actividadUno.addToGrupos(grupoActividadUno)
+		actividadUno.addToGrupos(grupoActividadDos)
+		
 		def actividadDos = new Actividad(titulo: "actividad 2", objetivo: "objetivo", evaluable: true,
 			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("TP"), fechaFinalizacion: "fechafinalizacion")	
+		
+		actividadDos.addToGrupos(grupoActividadTres)
 		
 		def actividadTres = new Actividad(titulo: "actividad 3", objetivo: "objetivo", evaluable: true,
 			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("Cuestionario"), fechaFinalizacion: "fechafinalizacion")
@@ -541,6 +552,49 @@ class BootStrap {
 				println miembros.get(i)
 			}
 		}	
+		
+		// Grupos actividad aprendiz (tabla intermedia para la relacion N N entre grupo actividad y aprendiz)
+		// TODO
+		
+		def ArrayList<GrupoActividadAprendiz> grupos = new ArrayList<GrupoActividadAprendiz>()
+		
+		def grupoActividadAprendizUno = new GrupoActividadAprendiz(numero: "1", nombre: "grupo 1 aprendiz 2",
+			grupo: grupoActividadUno, aprendiz: aprendizDos)
+		grupos.add(grupoActividadAprendizUno)
+		def grupoActividadAprendizDos = new GrupoActividadAprendiz(numero: "1", nombre: "grupo 1 aprendiz 3",
+			grupo: grupoActividadUno, aprendiz: aprendizTres)
+		grupos.add(grupoActividadAprendizDos)
+		def grupoActividadAprendizTres = new GrupoActividadAprendiz(numero: "1", nombre: "grupo 1 aprendiz 4",
+			grupo: grupoActividadUno, aprendiz: aprendizCuatro)
+		grupos.add(grupoActividadAprendizTres)
+		def grupoActividadAprendizCuatro = new GrupoActividadAprendiz(numero: "2", nombre: "grupo 2 aprendiz 2",
+			grupo: grupoActividadDos, aprendiz: aprendizCinco)
+		grupos.add(grupoActividadAprendizCuatro)
+		def grupoActividadAprendizCinco = new GrupoActividadAprendiz(numero: "2", nombre: "grupo 2 aprendiz 3",
+			grupo: grupoActividadDos, aprendiz: aprendizSeis)
+		grupos.add(grupoActividadAprendizCinco)
+		def grupoActividadAprendizSeis = new GrupoActividadAprendiz(numero: "2", nombre: "grupo 2 aprendiz 4",
+			grupo: grupoActividadDos, aprendiz: aprendizSiete)
+		grupos.add(grupoActividadAprendizSeis)
+		def grupoActividadAprendizSiete = new GrupoActividadAprendiz(numero: "3", nombre: "grupo 3 aprendiz 2",
+			grupo: grupoActividadTres, aprendiz: aprendizDos)
+		grupos.add(grupoActividadAprendizSiete)
+		def grupoActividadAprendizOcho = new GrupoActividadAprendiz(numero: "3", nombre: "grupo 3 aprendiz 3",
+			grupo: grupoActividadTres, aprendiz: aprendizTres)
+		grupos.add(grupoActividadAprendizOcho)
+		def grupoActividadAprendizNueve = new GrupoActividadAprendiz(numero: "3", nombre: "grupo 3 aprendiz 4",
+			grupo: grupoActividadTres, aprendiz: aprendizCuatro)
+		grupos.add(grupoActividadAprendizNueve)
+			
+		for(int i = 0; i<grupos.size(); i++){
+			if (!grupos.get(i).validate()) {
+				println grupos.get(i).errors
+			} else {
+				println "Grupos agregados a la bbdd:"
+				grupos.get(i).save()
+				println grupos.get(i)
+			}
+		}
 		
 		// Red
 		def red = new Red()

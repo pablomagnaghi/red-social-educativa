@@ -33,8 +33,6 @@
 		</div>
 		<div>
 			<p>Categoria": ${actividad.categoria}</p>	
-			<p>COLOCAR TEMAS ASOCIADOS A LA ACTIVIDAD</p>
-			<p>MATERIAL ASOCIADOS A LA ACTIVIDAD</p>
 		</div>
 		
 		<div>
@@ -45,9 +43,21 @@
 		<div>
 			<hr>
 			<h2><g:link controller="temaActividad" action="general" params="['cursoId': cursoId, 'actividadId': actividadId]">
-				<g:message code="Temas relacionados con la actividad"/></g:link></h2>
+				<g:message code="Temas asociados con la actividad"/></g:link></h2>
 		</div>
-		
-		
+		<div>
+			<g:if test="${aprendiz}">
+				<li><g:link class="list" action="general" controller="grupoActividad" params="['cursoId': cursoId, 'actividadId': actividadId]">
+					<g:message code="Los grupos de la actividad"/></g:link></li>
+				<li><g:link class="list" action="mostrarGrupo" controller="grupoActividad" id="${aprendiz.first().grupo.id}" 
+					params="['cursoId': cursoId, 'actividadId': actividadId]">
+					<g:message code="Mi grupo ${aprendiz.first().grupo}"/></g:link></li>
+			</g:if>	 
+			<g:else>
+				<li><g:link class="list" action="menuMediador" controller="grupoActividad" 
+					params="['cursoId': cursoId, 'actividadId': actividadId]">
+				<g:message code="Los grupos de la actividad"/></g:link></li>
+			</g:else>
+		</div>
 	</body>
 </html>

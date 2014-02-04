@@ -10,6 +10,7 @@ abstract class Grupo {
 	}
 	
     static constraints = {
+		//nombre nullable: true
     }
 	
 	static mapping = {
