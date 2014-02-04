@@ -42,8 +42,9 @@ class GrupoCursoController {
 			aprendizInstanceCount: Aprendiz.findAllByCursoAndParticipaAndGrupoIsNotNull(Curso.get(cursoId), true).size(), cursoId: cursoId]
 	}
 	
+	
 	def crear() {
-		
+		println "CREARRRRRR"
 		println "create grupo curso params: ${params}"
 		cursoId = params.cursoId
 		
@@ -55,7 +56,7 @@ class GrupoCursoController {
 		def aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
 		
 		if (aprendiz?.grupo) {
-			flash.message = "Usted ya tiene un grupo asignado"
+			flash.message = "Usted ya pertenece al grupo ${aprendiz.grupo}"
 			redirect action: "general", params:['cursoId': cursoId]
 			return
 		}
@@ -173,18 +174,22 @@ class GrupoCursoController {
 		println "params: ${params}"
 		println "properties grupoCursoInstance.properties"
 		
-		cursoId = grupoCursoInstance.curso.id
+		cursoId = params.cursoId
+		def numGrupo = params.numGrupo
+		
+		println "LLEGO 1"
+		
+		if (grupoCursoInstance.hasErrors()) {
+			respond grupoCursoInstance.errors, view:'crear', params:['cursoId': cursoId],
+				model: [cursoId: cursoId, numGrupo: numGrupo]
+			println grupoCursoInstance.errors
+			return
+		}
+		
 		def aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
 		
 		grupoCursoInstance.addToAprendices(aprendiz)
 		
-		if (grupoCursoInstance.hasErrors()) {
-			aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
-			respond grupoCursoInstance.errors, view:'crear', params:['cursoId': cursoId],
-				model: [cursoId: cursoId, mediador: mediador]
-			return
-		}
-	
 		grupoCursoInstance.save flush:true
 
 		request.withFormat {
@@ -202,7 +207,7 @@ class GrupoCursoController {
 		cursoId = params.cursoId
 		def aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
 		if (aprendiz?.grupo) {
-			flash.message = "Usted ya tiene un grupo asignado"
+			flash.message = "Usted ya pertenece al grupo ${aprendiz.grupo}"
 			redirect action: "mostrar", params:['id': params.id, 'cursoId': cursoId]
 			return
 		}
@@ -217,7 +222,6 @@ class GrupoCursoController {
 			notFound()
 			return
 		}
-
 		
 		println "aprendiz: ${aprendiz}"
 		
@@ -247,16 +251,26 @@ class GrupoCursoController {
 		println grupoCursoInstance.properties
 		println grupoCursoInstance.aprendices
 		
+		cursoId = params.cursoId
+
 		if (grupoCursoInstance == null) {
 			notFound()
 			return
 		}
-
+		
 		if (grupoCursoInstance.hasErrors()) {
-			respond grupoCursoInstance.errors, view:'mostrar', params:['cursoId': cursoId], model: [cursoId: cursoId]
+			respond grupoCursoInstance.errors, view:'editar', params:['id': params.id, 'cursoId': cursoId], 
+				model: [cursoId: cursoId]
 			return
 		}
 
+		println "prueba"
+		println grupoCursoInstance.nombre
+		
+		if (grupoCursoInstance.nombre) {
+			println "NULLL"
+		}
+		
 		grupoCursoInstance.save flush:true
 
 		request.withFormat {

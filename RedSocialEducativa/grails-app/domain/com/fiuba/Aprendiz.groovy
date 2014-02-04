@@ -14,17 +14,21 @@ class Aprendiz extends UsuarioRol {
 	// debe seguir existiendo
 	GrupoCurso grupo
 	
-	
 	// Aprendiz tiene como entidad fuerte a Curso.
 	// En tabla de aprendiz se pone el id de curso
 	// Igual que como esta en la BBDD del enunciado del tp
 	
 	
 	static belongsTo = [curso: Curso]
+	
+	// Un aprendiz puede pertenecer a un grupo por cada actividad por lo 
+	// que puede estar en N grupos de actividad por curso
+	static hasMany = [gruposActividad: GrupoActividadAprendiz]
 
     static constraints = {
 		ultVisita nullable:true
 		grupo nullable: true
+		gruposActividad nullable: true
     }
 
 }

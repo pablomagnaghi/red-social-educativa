@@ -29,7 +29,19 @@ class ActividadController {
 				
 		def actividad = Actividad.get(actividadId)
 		
-		def aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
+		def aprendizId = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))?.id
+		
+		def aprendiz = null
+		
+		if (aprendizId) {
+			def c = GrupoActividadAprendiz.createCriteria()
+			aprendiz = c {
+				grupo {
+					eq('actividad.id', actividadId as long)
+				}
+				eq('aprendiz.id', aprendizId as long)
+			}
+		} 
 		
 		[cursoId: cursoId, actividadId: actividadId, actividad: actividad, aprendiz: aprendiz]
 	}
