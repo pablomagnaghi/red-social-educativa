@@ -35,7 +35,7 @@
 				<br>
 				<div>
 					<g:message code="Numero del nuevo grupo del aprendiz" />
-					<g:field name="numero" type="number"/>
+					<g:field name="numero" type="number" value="${aprendices.first().grupo}"/>
 				</div>
 				</fieldset>
 				<fieldset class="buttons">

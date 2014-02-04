@@ -15,7 +15,7 @@
 					<g:message code="default.home.label"/></a></li>
 				<li><g:link class="create" controller="curso" action="menuMediador" params="['cursoId': cursoId]">
 					<g:message code="Tareas mediador" args="[entityName]" /></g:link></li>
-				<li><g:link class="list" action="menuMediador" params="['cursoId': cursoId]">
+				<li><g:link class="list" action="menuMediador" params="['cursoId': cursoId, 'actividadId': actividadId]">
 					<g:message code="Lista de grupos" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -30,12 +30,12 @@
 				<fieldset class="form">
 				<div>
 					<g:message code="Elegir aprendiz a cambiar de grupo" />
-					<g:select name="aprendizId" from="${aprendices}" optionKey="id"/>
+					<g:select name="grupoActividadAprendizId" from="${aprendices}" optionKey="id"/>
 				</div>
 				<br>
 				<div>
 					<g:message code="Numero del nuevo grupo del aprendiz" />
-					<g:field name="numero" type="number"/>
+					<g:field name="numero" type="number" value="${aprendices.first().grupo}"/>
 				</div>
 				</fieldset>
 				<fieldset class="buttons">

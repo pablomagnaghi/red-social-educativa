@@ -69,12 +69,9 @@
 				<g:if test="${actividadInstance?.grupos}">
 				<li class="fieldcontain">
 					<span id="grupos-label" class="property-label"><g:message code="actividad.grupos.label" default="Grupos" /></span>
-					
-						<g:each in="${actividadInstance.grupos}" var="g">
 						<span class="property-value" aria-labelledby="grupos-label">
-							<g:link controller="grupoActividad" action="muestraMediador" id="${g.id}"
-								params="['cursoId': cursoId, 'actividadId': actividadInstance.id]">${g?.encodeAsHTML()}</g:link></span>
-						</g:each>
+							<g:link controller="grupoActividad" action="menuMediador" 
+							params="['cursoId': cursoId, 'actividadId': actividadInstance.id]">Ver grupos</g:link></span>
 					
 				</li>
 				</g:if>
