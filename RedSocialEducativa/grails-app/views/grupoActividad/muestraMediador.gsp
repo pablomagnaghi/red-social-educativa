@@ -33,8 +33,9 @@
 					
 						<g:each in="${grupoActividadInstance.materiales}" var="m">
 						<span class="property-value" aria-labelledby="materiales-label">
-							<g:link controller="materialGrupo" action="muestraMediador" id="${m.id}"
-								params="['cursoId': cursoId, 'grupoId': grupoActividadInstance.id]">${m?.encodeAsHTML()}</g:link></span>
+							<g:link controller="materialGrupoActividad" action="muestraMediador" id="${m.id}"
+								params="['cursoId': cursoId, 'actividadId': actividadId, 
+									'grupoActividadId': grupoActividadInstance.id]">${m?.encodeAsHTML()}</g:link></span>
 						</g:each>
 					
 				</li>

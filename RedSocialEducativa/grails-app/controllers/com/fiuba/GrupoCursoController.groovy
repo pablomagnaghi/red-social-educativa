@@ -317,7 +317,9 @@ class GrupoCursoController {
     def delete(GrupoCurso grupoCursoInstance) {
 
         if (grupoCursoInstance == null) {
-            notFound()
+			flash.message = message(code: 'default.deleted.message', args: [message(code: 'GrupoCurso.label', 
+				default: 'GrupoCurso'), grupoCursoInstance.id])
+			redirect action:"menuMediador", params:['cursoId': cursoId], method:"GET"
             return
         }
 

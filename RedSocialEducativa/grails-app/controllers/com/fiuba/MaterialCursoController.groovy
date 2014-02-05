@@ -28,7 +28,7 @@ class MaterialCursoController {
 		cursoId = params.cursoId
 		def materialId = params.id
 				
-		def material = Material.get(materialId)
+		def material = MaterialCurso.get(materialId)
 		
 		[cursoId: cursoId, material: material]
 	}

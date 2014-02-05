@@ -104,8 +104,15 @@ class CursoController {
 		
 		cursoId = params.cursoId
 		
+		println "usuario actual"
+		println "${usuarioActual()}"
+		println "curso: ${Curso.get(cursoId)}"
 		def aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
 
+		println "aprendiz"
+		println aprendiz
+		
+		
 		def noticiasCurso = NoticiaCurso.findAllByCurso(Curso.get(cursoId))
 
 		[aprendiz: aprendiz, noticiasCurso: noticiasCurso, cursoId: cursoId]
