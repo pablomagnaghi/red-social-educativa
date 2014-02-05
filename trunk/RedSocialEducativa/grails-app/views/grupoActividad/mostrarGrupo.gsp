@@ -19,6 +19,10 @@
 					<g:message code="Lista de grupos" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+		
+		<h2>actividad: ${actividadId}</h2>
+		<h2>curso: ${cursoId}</h2>
+		
 		<div id="show-grupoActividad" class="content scaffold-show" role="main">
 			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -26,12 +30,18 @@
 			</g:if>
 			<ol class="property-list grupoActividad">
 			
-				<g:if test="${grupoActividadInstance?.actividad}">
+			
+				<g:if test="${grupoActividadInstance?.materiales}">
 				<li class="fieldcontain">
-					<span id="actividad-label" class="property-label"><g:message code="grupoActividad.actividad.label" default="Actividad" /></span>
+					<span id="materiales-label" class="property-label"><g:message code="grupoActividad.materiales.label" 
+						default="Materiales" /></span>
 					
-						<span class="property-value" aria-labelledby="actividad-label"><g:link controller="actividad" action="show" id="${grupoActividadInstance?.actividad?.id}">${grupoActividadInstance?.actividad?.encodeAsHTML()}</g:link></span>
-					
+						<g:each in="${grupoActividadInstance.materiales}" var="m">
+						<span class="property-value" aria-labelledby="materiales-label">
+							<g:link controller="materialGrupoActividad" action="show" id="${m.id}" 
+								params="['cursoId': cursoId, 'actividadId': actividadId,
+								'grupoActividadId': grupoActividadInstance.id]">${m?.encodeAsHTML()}</g:link></span>
+						</g:each>
 				</li>
 				</g:if>
 			
@@ -79,8 +89,8 @@
 						params="['cursoId': cursoId, 'actividadId': actividadId]">
 						<g:message code="Editar nombre de grupo" />
 					</g:link>
-					<g:link class="edit" controller="materialGrupo" action="create"
-						params="['grupoId': grupoActividadInstance?.id, 'cursoId': cursoId, 'actividadId': actividadId]">
+					<g:link class="edit" controller="materialGrupoActividad" action="create"
+						params="['grupoActividadId': grupoActividadInstance?.id, 'cursoId': cursoId, 'actividadId': actividadId]">
 						<g:message code="Agregar material al grupo" />
 					</g:link>
 				</g:else>

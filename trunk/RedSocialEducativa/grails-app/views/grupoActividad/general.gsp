@@ -13,7 +13,7 @@
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
 				<li><g:link class="list" controller="curso" action="aprendiz" params="['cursoId': cursoId]">
-						<g:message code="Menu aprendiz  del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
+						<g:message code="Menu aprendiz del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
 				<li><g:link class="list" controller="curso" action="actividades" params="['cursoId': cursoId]">
 						<g:message code="Actividades  del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>	
 				<li><g:link class="create" action="crear" params="['cursoId': cursoId, 'actividadId': actividadId]">

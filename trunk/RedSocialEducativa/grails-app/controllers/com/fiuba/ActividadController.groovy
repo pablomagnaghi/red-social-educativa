@@ -31,11 +31,11 @@ class ActividadController {
 		
 		def aprendizId = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))?.id
 		
-		def aprendiz = null
+		def grupoActividadAprendiz = null
 		
 		if (aprendizId) {
 			def c = GrupoActividadAprendiz.createCriteria()
-			aprendiz = c {
+			grupoActividadAprendiz = c {
 				grupo {
 					eq('actividad.id', actividadId as long)
 				}
@@ -43,7 +43,8 @@ class ActividadController {
 			}
 		} 
 		
-		[cursoId: cursoId, actividadId: actividadId, actividad: actividad, aprendiz: aprendiz]
+		[cursoId: cursoId, actividadId: actividadId, actividad: actividad, aprendizId: aprendizId,
+			grupoActividadAprendiz: grupoActividadAprendiz]
 	}
 	
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]

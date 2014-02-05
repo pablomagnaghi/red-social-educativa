@@ -13,7 +13,7 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<g:if test="${aprendiz}">
+				<g:if test="${aprendizId}">
 					<li><g:link class="list" controller="curso" action="aprendiz" params="['cursoId': cursoId]">
 						<g:message code="Menu aprendiz  del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
 				</g:if>
@@ -46,12 +46,14 @@
 				<g:message code="Temas asociados con la actividad"/></g:link></h2>
 		</div>
 		<div>
-			<g:if test="${aprendiz}">
+			<g:if test="${aprendizId}">
 				<li><g:link class="list" action="general" controller="grupoActividad" params="['cursoId': cursoId, 'actividadId': actividadId]">
 					<g:message code="Los grupos de la actividad"/></g:link></li>
-				<li><g:link class="list" action="mostrarGrupo" controller="grupoActividad" id="${aprendiz.first().grupo.id}" 
-					params="['cursoId': cursoId, 'actividadId': actividadId]">
-					<g:message code="Mi grupo ${aprendiz.first().grupo}"/></g:link></li>
+				<g:if test="${grupoActividadAprendiz}">	
+					<li><g:link class="list" action="mostrarGrupo" controller="grupoActividad" id="${grupoActividadAprendiz.first().grupo.id}" 
+						params="['cursoId': cursoId, 'actividadId': actividadId]">
+						<g:message code="Mi grupo ${grupoActividadAprendiz.first().grupo}"/></g:link></li>
+				</g:if>
 			</g:if>	 
 			<g:else>
 				<li><g:link class="list" action="menuMediador" controller="grupoActividad" 
