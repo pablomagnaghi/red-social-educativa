@@ -26,6 +26,15 @@
 					<g:link action="actividades" params="['cursoId': cursoId]">
 					<g:message code="Actividades del curso"/></g:link>
 				</div>	
+				<div>
+					<g:link action="evaluaciones" params="['cursoId': cursoId]">
+					<g:message code="Evaluaciones del curso"/></g:link>
+				</div>
+				<div>
+					<g:link action="mostrar" controller="evaluacion" params="['cursoId': cursoId]">
+					<g:message code="Mis evaluaciones en el curso"/></g:link>
+				</div>
+				
 				<li><g:link class="list" action="general" controller="grupoCurso" params="['cursoId': cursoId]">
 					<g:message code="Los grupos del curso"/></g:link></li>
 				<g:if test="${aprendiz?.grupo}">
