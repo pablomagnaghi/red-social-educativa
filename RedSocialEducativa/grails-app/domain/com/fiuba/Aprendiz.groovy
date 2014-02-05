@@ -23,7 +23,7 @@ class Aprendiz extends UsuarioRol {
 	
 	// Un aprendiz puede pertenecer a un grupo por cada actividad por lo 
 	// que puede estar en N grupos de actividad por curso
-	static hasMany = [gruposActividad: GrupoActividadAprendiz]
+	static hasMany = [gruposActividad: GrupoActividadAprendiz, evaluaciones: EvaluacionAprendiz]
 
     static constraints = {
 		ultVisita nullable:true

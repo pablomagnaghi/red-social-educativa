@@ -22,25 +22,25 @@
 			</ul>
 		</div>		
 		<div>
-			<h1><g:message code="Actividades del curso: ${com.fiuba.Curso.get(cursoId)}" /></h1>
+			<h1><g:message code="Evaluaciones del curso: ${com.fiuba.Curso.get(cursoId)}" /></h1>
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<div>
 				<ol>
-				<g:each in="${actividades}">
+				<g:each in="${evaluaciones}">
 					<span>
-						<li>${it.titulo}</li>
+						<li>${it.fecha}-${it.horario}</li>
 					</span>
 					<span>
-						<g:link controller="actividad" action="general" id="${it.id}" params="['cursoId': cursoId]">
-							<g:message code="Acceder a la actividad"/></g:link>		
+						<g:link controller="evaluacion" action="general" id="${it.id}" params="['cursoId': cursoId]">
+							<g:message code="Acceder a la evaluacion"/></g:link>		
 					</span>		
 				</g:each>
 				</ol>
 			</div>
 			<div class="pagination">
-				<g:paginate total="${actividadesCant ?: 0}" params="['cursoId': cursoId]"/>
+				<g:paginate total="${evaluacionesCant ?: 0}" params="['cursoId': cursoId]"/>
 			</div>
 		</div>
 	</body>

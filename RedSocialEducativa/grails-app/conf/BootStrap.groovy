@@ -371,18 +371,29 @@ class BootStrap {
 		
 		def actividadUno = new Actividad(titulo: "actividad 1", objetivo: "objetivo", evaluable: true,
 			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("Encuesta"), fechaFinalizacion: "fechafinalizacion")
-		
 		actividadUno.addToGrupos(grupoActividadUno)
 		actividadUno.addToGrupos(grupoActividadDos)
 		
 		def actividadDos = new Actividad(titulo: "actividad 2", objetivo: "objetivo", evaluable: true,
 			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("TP"), fechaFinalizacion: "fechafinalizacion")	
-		
 		actividadDos.addToGrupos(grupoActividadTres)
 		
 		def actividadTres = new Actividad(titulo: "actividad 3", objetivo: "objetivo", evaluable: true,
 			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("Cuestionario"), fechaFinalizacion: "fechafinalizacion")
 
+		// Evaluaciones
+		
+		def evaluacionUno = new Evaluacion(fecha: (new Date()).format("yyyy-MM-dd"), descripcion: "descripcion", 
+			horario: (new Date()).getTimeString(), aula: "1", parcial: true, obligatoria: true, habilitada: true)
+		def evaluacionDos = new Evaluacion(fecha: (new Date()).format("yyyy-MM-dd"), descripcion: "descripcion",
+			horario: (new Date()).getTimeString(), aula: "2", parcial: true, obligatoria: true, habilitada: true)
+		def evaluacionTres = new Evaluacion(fecha: (new Date()).format("yyyy-MM-dd"), descripcion: "descripcion",
+			horario: (new Date()).getTimeString(), aula: "3", parcial: true, obligatoria: true, habilitada: true)
+		def evaluacionCuatro = new Evaluacion(fecha: (new Date()).format("yyyy-MM-dd"), descripcion: "descripcion",
+			horario: (new Date()).getTimeString(), aula: "4", parcial: true, obligatoria: true, habilitada: true)
+		def evaluacionCinco = new Evaluacion(fecha: (new Date()).format("yyyy-MM-dd"), descripcion: "descripcion",
+			horario: (new Date()).getTimeString(), aula: "5", parcial: true, obligatoria: true, habilitada: true)
+		
 		// Cursos
 		
 		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2", foro: foroCursoUno, nombre: "Curso 1")
@@ -409,6 +420,11 @@ class BootStrap {
 		cursoUno.addToActividades(actividadUno)
 		cursoUno.addToActividades(actividadDos)
 		cursoUno.addToActividades(actividadTres)
+		cursoUno.addToEvaluaciones(evaluacionUno)
+		cursoUno.addToEvaluaciones(evaluacionDos)
+		cursoUno.addToEvaluaciones(evaluacionTres)
+		cursoUno.addToEvaluaciones(evaluacionCuatro)
+		cursoUno.addToEvaluaciones(evaluacionCinco)
 
 		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", foro: foroCursoDos, nombre: "Curso 2")
 		cursoDos.addToMediadores(mediadorUnoP)
@@ -554,7 +570,6 @@ class BootStrap {
 		}	
 		
 		// Grupos actividad aprendiz (tabla intermedia para la relacion N N entre grupo actividad y aprendiz)
-		// TODO
 		
 		def ArrayList<GrupoActividadAprendiz> grupos = new ArrayList<GrupoActividadAprendiz>()
 		
@@ -593,6 +608,39 @@ class BootStrap {
 				println "Grupos agregados a la bbdd:"
 				grupos.get(i).save()
 				println grupos.get(i)
+			}
+		}
+		
+		// Evaluacion aprendiz (tabla intermedia para la relacion N N entre evaluacion y aprendiz)
+		// TODO
+		def ArrayList<EvaluacionAprendiz> evaluacionesAprendiz = new ArrayList<EvaluacionAprendiz>()
+		
+		def evaluacionAprendizUno = new EvaluacionAprendiz(evaluacion: evaluacionUno, aprendiz: aprendizDos)
+		evaluacionesAprendiz.add(evaluacionAprendizUno)
+		def evaluacionAprendizDos = new EvaluacionAprendiz(evaluacion: evaluacionUno, aprendiz: aprendizTres)
+		evaluacionesAprendiz.add(evaluacionAprendizDos)
+		def evaluacionAprendizTres = new EvaluacionAprendiz(evaluacion: evaluacionDos, aprendiz: aprendizDos)
+		evaluacionesAprendiz.add(evaluacionAprendizTres)
+		def evaluacionAprendizCuatro = new EvaluacionAprendiz(evaluacion: evaluacionDos, aprendiz: aprendizTres)
+		evaluacionesAprendiz.add(evaluacionAprendizCuatro)
+		def evaluacionAprendizCinco = new EvaluacionAprendiz(evaluacion: evaluacionTres, aprendiz: aprendizDos)
+		evaluacionesAprendiz.add(evaluacionAprendizCinco)
+		def evaluacionAprendizSeis = new EvaluacionAprendiz(evaluacion: evaluacionTres, aprendiz: aprendizCuatro)
+		evaluacionesAprendiz.add(evaluacionAprendizSeis)
+		def evaluacionAprendizSiete = new EvaluacionAprendiz(evaluacion: evaluacionCuatro, aprendiz: aprendizDos)
+		evaluacionesAprendiz.add(evaluacionAprendizSiete)
+		def evaluacionAprendizOcho = new EvaluacionAprendiz(evaluacion: evaluacionCuatro, aprendiz: aprendizCinco)
+		evaluacionesAprendiz.add(evaluacionAprendizOcho)
+		def evaluacionAprendizNueve = new EvaluacionAprendiz(evaluacion: evaluacionCinco, aprendiz: aprendizDos)
+		evaluacionesAprendiz.add(evaluacionAprendizNueve)
+			
+		for(int i = 0; i<evaluacionesAprendiz.size(); i++){
+			if (!evaluacionesAprendiz.get(i).validate()) {
+				println evaluacionesAprendiz.get(i).errors
+			} else {
+				println "evaluacionesAprendiz agregados a la bbdd:"
+				evaluacionesAprendiz.get(i).save()
+				println evaluacionesAprendiz.get(i)
 			}
 		}
 		
