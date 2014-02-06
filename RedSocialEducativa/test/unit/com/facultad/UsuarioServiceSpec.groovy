@@ -1,5 +1,7 @@
 package com.facultad
 
+import com.fiuba.UsuarioService;
+
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 
