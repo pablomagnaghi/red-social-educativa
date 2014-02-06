@@ -2,9 +2,9 @@
 import java.util.Date;
 
 import com.fiuba.*
-import com.facultad.UsuarioService
 import com.mensajeria.Hilo
 import com.mensajeria.Mensaje
+
 import org.codehaus.groovy.grails.commons.ApplicationAttributes
 
 class BootStrap {
