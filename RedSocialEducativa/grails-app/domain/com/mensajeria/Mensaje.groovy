@@ -11,10 +11,10 @@ class Mensaje {
 	Date fecha
 	Boolean leido = false
 	
-	static belongsTo = [hilo : Hilo]
+	static belongsTo = [hilo : Hilo, conversacion : Conversacion]
 
     static constraints = {
-		
+		conversacion nullable:true
     }
 	static findMessagesByCarpeta(Usuario usuario, String nombreCarpeta){
 		def msg = Mensaje.findAll("from Mensaje as m, Conversacion as conv, Carpeta as carp \
