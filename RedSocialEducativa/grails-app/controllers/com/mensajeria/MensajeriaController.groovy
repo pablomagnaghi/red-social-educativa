@@ -176,7 +176,7 @@ class MensajeriaController {
 	}
 
 	def conversacionAPdf= {
-		def conversacion = Conversacion.findById(params.id)
+		def conversacion = Conversacion.findById(params.pdfId)
 		def mensajes = conversacion.mensajes
 		render(template: "mensajesPdf", model: [mensajes: mensajes])
 	}
