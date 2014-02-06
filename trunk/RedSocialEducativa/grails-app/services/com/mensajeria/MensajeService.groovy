@@ -11,7 +11,7 @@ class MensajeService {
     	hilo.save()
 		mensaje.hilo = hilo;
 		mensaje.para = mensaje.receptor.nombres +" "+ 
-			mensaje.receptor.apellido + "<"+mensaje.receptor.email+">,"
+		mensaje.receptor.apellido + "<"+mensaje.receptor.email+">,"
 		def carpeta = Carpeta.findByNombreAndUsuario("Escritorio", mensaje.receptor)
 		def nuevaConversacion = new Conversacion(padre: carpeta, hilo: hilo)
 		nuevaConversacion.addToMensajes(mensaje)

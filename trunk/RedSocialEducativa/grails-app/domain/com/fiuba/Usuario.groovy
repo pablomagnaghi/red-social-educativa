@@ -1,6 +1,7 @@
 package com.fiuba
 
 import java.util.Date;
+import com.mensajeria.Carpeta
 
 class Usuario {
 	transient springSecurityService
@@ -25,6 +26,8 @@ class Usuario {
 	String toString() {
 		"${nombres} ${apellido}"
 	}
+	
+	static hasMany = [carpetas : Carpeta]
 	
 	static transients = ['springSecurityService']
 

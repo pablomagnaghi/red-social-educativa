@@ -1,4 +1,4 @@
-package com.facultad
+package com.fiuba
 
 import com.fiuba.Usuario
 import com.mensajeria.Carpeta;
