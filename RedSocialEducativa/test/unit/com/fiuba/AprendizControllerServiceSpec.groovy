@@ -1,6 +1,4 @@
-package com.facultad
-
-import com.fiuba.UsuarioService;
+package com.fiuba
 
 import grails.test.mixin.TestFor
 import spock.lang.Specification
@@ -8,8 +6,8 @@ import spock.lang.Specification
 /**
  * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
  */
-@TestFor(UsuarioService)
-class UsuarioServiceSpec extends Specification {
+@TestFor(AprendizControllerService)
+class AprendizControllerServiceSpec extends Specification {
 
     def setup() {
     }

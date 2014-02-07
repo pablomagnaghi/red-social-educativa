@@ -1,4 +1,4 @@
-package redsocialeducativa
+package com.mensajeria
 
 import grails.plugin.springsecurity.SpringSecurityService
 
