@@ -28,7 +28,6 @@ class Aprendiz extends UsuarioRol {
     static constraints = {
 		ultVisita nullable:true
 		grupo nullable: true
-		cuatrimestre nullable: true
     }
 
 }
