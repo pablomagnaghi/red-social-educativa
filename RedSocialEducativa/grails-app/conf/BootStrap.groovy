@@ -395,9 +395,6 @@ class BootStrap {
 			horario: (new Date()).getTimeString(), aula: "5", parcial: true, obligatoria: true, habilitada: true)
 		
 		// Cuatrimestres
-		
-		def ArrayList<Cuatrimestre> cuatrimestres = new ArrayList<Cuatrimestre>()
-		
 		def cuatrimestreUno = new Cuatrimestre(anio: 2014, numero: 1, habGrupos: true, nroUltGrupo: 0)
 		cuatrimestreUno.addToAprendices(aprendizDos)
 		cuatrimestreUno.addToAprendices(aprendizTres)
@@ -407,52 +404,24 @@ class BootStrap {
 		cuatrimestreUno.addToAprendices(aprendizSiete)
 		cuatrimestreUno.addToAprendices(aprendizOcho)
 		cuatrimestreUno.addToAprendices(aprendizNueve)
-
-		cuatrimestres.add(cuatrimestreUno)
 		
 		def cuatrimestreDos = new Cuatrimestre(anio: 2014, numero: 2, habGrupos: true, nroUltGrupo: 0)
-		
 		cuatrimestreDos.addToAprendices(aprendizDiez)
 		cuatrimestreDos.addToAprendices(aprendizOnce)
 		cuatrimestreDos.addToAprendices(aprendizDoce)
-
-		cuatrimestres.add(cuatrimestreDos)
 		
 		def cuatrimestreTres = new Cuatrimestre(anio: 2014, numero: 1, habGrupos: true, nroUltGrupo: 0)
 		cuatrimestreTres.addToAprendices(aprendizAgus)
-	
-		cuatrimestres.add(cuatrimestreTres)
-		
+
 		def cuatrimestreCuatro = new Cuatrimestre(anio: 2014, numero: 1, habGrupos: true, nroUltGrupo: 0)
 		cuatrimestreCuatro.addToAprendices(aprendizAgus)
 		cuatrimestreCuatro.addToAprendices(aprendizUno)
 		
-		cuatrimestres.add(cuatrimestreCuatro)
-		
 		def cuatrimestreCinco = new Cuatrimestre(anio: 2014, numero: 1, habGrupos: true, nroUltGrupo: 0)
 		cuatrimestreCinco.addToAprendices(aprendizUnoP)
-		
-		cuatrimestres.add(cuatrimestreCinco)
-		
+
 		def cuatrimestreSeis = new Cuatrimestre(anio: 2014, numero: 1, habGrupos: true, nroUltGrupo: 0)
 		cuatrimestreSeis.addToAprendices(aprendizUnoPP)
-		
-		cuatrimestres.add(cuatrimestreSeis)
-		/*
-		for(int i = 0; i<cuatrimestres.size(); i++){
-			if (!cuatrimestres.get(i).validate()) {
-				println cuatrimestres.get(i).errors
-			} else {
-				println "cuatrimestres agregadas a la bbdd:"
-				cuatrimestres.get(i).save()
-				println cuatrimestres.get(i).codigo
-			}
-		}
-		
-		
-		
-		
-		*/
 		
 		// Cursos
 		
