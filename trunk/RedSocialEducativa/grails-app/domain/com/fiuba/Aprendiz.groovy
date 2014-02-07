@@ -19,7 +19,7 @@ class Aprendiz extends UsuarioRol {
 	// Igual que como esta en la BBDD del enunciado del tp
 	
 	
-	static belongsTo = [curso: Curso]
+	static belongsTo = [cuatrimestre: Cuatrimestre]
 	
 	// Un aprendiz puede pertenecer a un grupo por cada actividad por lo 
 	// que puede estar en N grupos de actividad por curso
@@ -28,7 +28,7 @@ class Aprendiz extends UsuarioRol {
     static constraints = {
 		ultVisita nullable:true
 		grupo nullable: true
-		gruposActividad nullable: true
+		cuatrimestre nullable: true
     }
 
 }

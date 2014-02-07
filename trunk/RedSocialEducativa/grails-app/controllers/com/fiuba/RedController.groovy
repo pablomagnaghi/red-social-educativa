@@ -2,13 +2,7 @@ package com.fiuba
 
 import static org.springframework.http.HttpStatus.*
 
-import java.util.regex.Matcher
-import java.util.regex.Pattern
-
-import javax.servlet.http.Cookie
-
 import com.mensajeria.Mensaje;
-import com.sun.corba.se.spi.orbutil.fsm.Action;
 
 import org.springframework.security.access.annotation.Secured
 
@@ -20,56 +14,42 @@ class RedController {
 	// * 5 - Solicitar membresia
 	// * 6 - Conectarse
 	
-	def springSecurityService
-	
-	private usuarioActual() {
-		if (springSecurityService.principal.enabled)
-			return Usuario.get(springSecurityService.principal.id)
-		else
-			return null
-	}
+	def seguridadService
 	
 	//Red.withCriteria(uniqueResult:true){ eq: 'titulo', 'Red Social Educativa del Departamento de Computacion de la Fiuba" }//
 	
     def principal() { 
 		
 		params.max = 3 //Math.min(max ?: 10, 100)
-		println params
 		
 		def ArrayList<Curso> cursosMediador = new ArrayList<Curso>()
-		def ArrayList<Mediador> mediadores = Mediador.findAllByUsuario(usuarioActual())
-		
-		if (mediadores){
-			for(int i = 0; i<mediadores.size(); i++){
-				//println "${mediadores.get(i).curso}, ${mediadores.get(i).usuario}, ${mediadores.get(i).jerarquia}"
-				cursosMediador.add(mediadores.get(i).curso)
-			}
+		def ArrayList<Mediador> mediadores = Mediador.findAllByUsuario(seguridadService.usuarioActual())
+
+		mediadores.each {
+			cursosMediador.add(it.curso)
 		}
-		//println "Cursos del mediador ${usuarioActual()}: ${cursosMediador}"
 		
 		def ArrayList<Curso> cursosAprendiz = new ArrayList<Curso>()
-		def ArrayList<Aprendiz> aprendices = Aprendiz.findAllByUsuario(usuarioActual())
-		def mensajes = Mensaje.findAllByReceptorAndLeido(usuarioActual(), Boolean.FALSE)
-		if (aprendices){
-			for(int i = 0; i<aprendices.size(); i++){
-				//println "${aprendices.get(i).curso}, ${aprendices.get(i).usuario}, ${aprendices.get(i).participa}"
-				if (aprendices.get(i).participa) {
-					cursosAprendiz.add(aprendices.get(i).curso)
-				}
+		def ArrayList<Aprendiz> aprendices = Aprendiz.findAllByUsuario(seguridadService.usuarioActual())
+
+		aprendices.each {
+			if (it.participa) {
+				cursosAprendiz.add(it.cuatrimestre.curso)
 			}
 		}
-		//println "Cursos del aprendiz participando ${usuarioActual()}: ${cursosAprendiz}"
+		
+		def mensajes = Mensaje.findAllByReceptorAndLeido(seguridadService.usuarioActual(), Boolean.FALSE)
 		
 		// poner un maximo y un orden a la cantidad de noticias a mostrar en la cartelera
 		
 		[cursos: Curso.list(params), noticiasRed: NoticiaRed.list(), cursoCant: Curso.count(), 
-			administrador: Administrador.findByUsuario(usuarioActual()),
+			administrador: Administrador.findByUsuario(seguridadService.usuarioActual()),
 			cursosMediador: cursosMediador, cursosAprendiz: cursosAprendiz, 
 			cantMensajes: mensajes.size()]
 	}
 	
 	// TODO analogia con los controladores scaffold respond new Class(params)
-	def solicitarMembresia = {
+	def solicitarMembresia() {
 		respond new Usuario(params)
 	}
 	
