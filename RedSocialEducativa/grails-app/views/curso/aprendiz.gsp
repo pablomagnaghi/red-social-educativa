@@ -21,7 +21,8 @@
 			</fieldset>   
 		</div>
 		<div>
-			<g:if test="${aprendiz?.participa}">	
+			<h2>"${aprendiz.participa}"</h2>
+			<g:if test="${aprendiz.participa}">	
 				<div>
 					<g:link action="actividades" params="['cursoId': cursoId]">
 					<g:message code="Actividades del curso"/></g:link>

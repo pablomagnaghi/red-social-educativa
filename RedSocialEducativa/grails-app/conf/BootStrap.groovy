@@ -394,19 +394,73 @@ class BootStrap {
 		def evaluacionCinco = new Evaluacion(fecha: (new Date()).format("yyyy-MM-dd"), descripcion: "descripcion",
 			horario: (new Date()).getTimeString(), aula: "5", parcial: true, obligatoria: true, habilitada: true)
 		
+		// Cuatrimestres
+		
+		def ArrayList<Cuatrimestre> cuatrimestres = new ArrayList<Cuatrimestre>()
+		
+		def cuatrimestreUno = new Cuatrimestre(anio: 2014, numero: 1, habGrupos: true, nroUltGrupo: 0)
+		cuatrimestreUno.addToAprendices(aprendizDos)
+		cuatrimestreUno.addToAprendices(aprendizTres)
+		cuatrimestreUno.addToAprendices(aprendizCuatro)
+		cuatrimestreUno.addToAprendices(aprendizCinco)
+		cuatrimestreUno.addToAprendices(aprendizSeis)
+		cuatrimestreUno.addToAprendices(aprendizSiete)
+		cuatrimestreUno.addToAprendices(aprendizOcho)
+		cuatrimestreUno.addToAprendices(aprendizNueve)
+
+		cuatrimestres.add(cuatrimestreUno)
+		
+		def cuatrimestreDos = new Cuatrimestre(anio: 2014, numero: 2, habGrupos: true, nroUltGrupo: 0)
+		
+		cuatrimestreDos.addToAprendices(aprendizDiez)
+		cuatrimestreDos.addToAprendices(aprendizOnce)
+		cuatrimestreDos.addToAprendices(aprendizDoce)
+
+		cuatrimestres.add(cuatrimestreDos)
+		
+		def cuatrimestreTres = new Cuatrimestre(anio: 2014, numero: 1, habGrupos: true, nroUltGrupo: 0)
+		cuatrimestreTres.addToAprendices(aprendizAgus)
+	
+		cuatrimestres.add(cuatrimestreTres)
+		
+		def cuatrimestreCuatro = new Cuatrimestre(anio: 2014, numero: 1, habGrupos: true, nroUltGrupo: 0)
+		cuatrimestreCuatro.addToAprendices(aprendizAgus)
+		cuatrimestreCuatro.addToAprendices(aprendizUno)
+		
+		cuatrimestres.add(cuatrimestreCuatro)
+		
+		def cuatrimestreCinco = new Cuatrimestre(anio: 2014, numero: 1, habGrupos: true, nroUltGrupo: 0)
+		cuatrimestreCinco.addToAprendices(aprendizUnoP)
+		
+		cuatrimestres.add(cuatrimestreCinco)
+		
+		def cuatrimestreSeis = new Cuatrimestre(anio: 2014, numero: 1, habGrupos: true, nroUltGrupo: 0)
+		cuatrimestreSeis.addToAprendices(aprendizUnoPP)
+		
+		cuatrimestres.add(cuatrimestreSeis)
+		/*
+		for(int i = 0; i<cuatrimestres.size(); i++){
+			if (!cuatrimestres.get(i).validate()) {
+				println cuatrimestres.get(i).errors
+			} else {
+				println "cuatrimestres agregadas a la bbdd:"
+				cuatrimestres.get(i).save()
+				println cuatrimestres.get(i).codigo
+			}
+		}
+		
+		
+		
+		
+		*/
+		
 		// Cursos
 		
 		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2", foro: foroCursoUno, nombre: "Curso 1")
 		cursoUno.addToMediadores(mediadorAgus)
 		cursoUno.addToMediadores(mediadorUno)
-		cursoUno.addToAprendices(aprendizDos)
-		cursoUno.addToAprendices(aprendizTres)
-		cursoUno.addToAprendices(aprendizCuatro)
-		cursoUno.addToAprendices(aprendizCinco)
-		cursoUno.addToAprendices(aprendizSeis)
-		cursoUno.addToAprendices(aprendizSiete)
-		cursoUno.addToAprendices(aprendizOcho)
-		cursoUno.addToAprendices(aprendizNueve)
+		cursoUno.addToCuatrimestres(cuatrimestreUno)
+		cursoUno.addToCuatrimestres(cuatrimestreDos)
 		cursoUno.addToTemas(temaUnoCursoUno)
 		cursoUno.addToTemas(temaDosCursoUno)
 		cursoUno.addToMateriales(materialUno)
@@ -429,24 +483,21 @@ class BootStrap {
 		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", foro: foroCursoDos, nombre: "Curso 2")
 		cursoDos.addToMediadores(mediadorUnoP)
 		cursoDos.addToMediadores(mediadorDos)
-		cursoDos.addToAprendices(aprendizAgus)
+		cursoDos.addToCuatrimestres(cuatrimestreTres)
 		cursoDos.addToTemas(temaUnoCursoDos)
 		
 		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1|2", foro: foroCursoTres, nombre: "Curso 3")
 		cursoTres.addToMediadores(mediadorTres)
-		cursoTres.addToAprendices(aprendizUno)
-		cursoTres.addToAprendices(aprendizDiez)
+		cursoTres.addToCuatrimestres(cuatrimestreCuatro)
 
 		def cursoCuatro = new Curso(nroRelativo: "04", cuatDict: "1|2", foro: foroCursoCuatro, nombre: "Curso 4")
 		cursoCuatro.addToMediadores(mediadorCuatro)
-		cursoCuatro.addToAprendices(aprendizUnoP)
-		cursoCuatro.addToAprendices(aprendizOnce)
-
+		cursoCuatro.addToCuatrimestres(cuatrimestreCinco)
+		
 		def cursoCinco = new Curso(nroRelativo: "05", cuatDict: "1|2", foro: foroCursoCinco, nombre: "Curso 5")
 		cursoCinco.addToMediadores(mediadorCinco)
 		cursoCinco.addToMediadores(mediadorSeis)
-		cursoCinco.addToAprendices(aprendizUnoPP)
-		cursoCinco.addToAprendices(aprendizDoce)
+		cursoCinco.addToCuatrimestres(cuatrimestreSeis)
 		
 		// Materias - con carga de cursos
 		def ArrayList<Materia> materias = new ArrayList<Materia>()
