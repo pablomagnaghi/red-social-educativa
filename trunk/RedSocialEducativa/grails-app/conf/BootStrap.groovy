@@ -166,7 +166,7 @@ class BootStrap {
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
 		def aprendizNueve = new Aprendiz(usuario: usuarioNueve, rol: rolAprendiz, participa: true, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
-		def aprendizDiez = new Aprendiz(usuario: usuarioDiez, rol: rolAprendiz, participa: false, msjEnviados: "0",
+		def aprendizDiez = new Aprendiz(usuario: usuarioDiez, rol: rolAprendiz, participa: true, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
 		def aprendizOnce = new Aprendiz(usuario: usuarioOnce, rol: rolAprendiz, participa: false, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
@@ -406,6 +406,8 @@ class BootStrap {
 		cuatrimestreUno.addToAprendices(aprendizSiete)
 		cuatrimestreUno.addToAprendices(aprendizOcho)
 		cuatrimestreUno.addToAprendices(aprendizNueve)
+		cuatrimestreUno.addToAprendices(aprendizOnce)
+		cuatrimestreUno.addToAprendices(aprendizDoce)
 		cuatrimestreUno.addToGrupos(grupoUno)
 		cuatrimestreUno.addToGrupos(grupoDos)
 		cuatrimestreUno.addToActividades(actividadUno)
@@ -415,8 +417,6 @@ class BootStrap {
 		def cuatrimestreDos = new Cuatrimestre(anio: 2013, numero: 1, habGrupos: true, nroUltGrupo: 0,
 			foro: foroCursoDos)
 		cuatrimestreDos.addToAprendices(aprendizDiez)
-		cuatrimestreDos.addToAprendices(aprendizOnce)
-		cuatrimestreDos.addToAprendices(aprendizDoce)
 		
 		def cuatrimestreTres = new Cuatrimestre(anio: 2013, numero: 2, habGrupos: true, nroUltGrupo: 0,
 			foro: foroCursoTres)

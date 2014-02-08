@@ -29,7 +29,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="save">
+			<g:form action="save" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>

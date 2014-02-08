@@ -57,7 +57,7 @@
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${aprendizInstanceCount ?: 0}" params="['cursoId': cursoId]" />
+				<g:paginate total="${aprendizInstanceCount ?: 0}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]" />
 			</div>
 		</div>
 	</body>
