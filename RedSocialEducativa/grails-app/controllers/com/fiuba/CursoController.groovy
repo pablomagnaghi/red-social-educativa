@@ -122,14 +122,14 @@ class CursoController {
 		println "mediador params: ${params}"
 		
 		cursoId = params.cursoId
-
-		def cuatrimestre = cursoService.obtenerCuatrimestreActual(cursoId)
 		
 		def mediador = Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId))
 		
 		println mediador
 		
-		[materia: Curso.get(cursoId).materia, cursoId: cursoId, cuatrimestreId: cuatrimestre?.id, mediador: mediador,
+		def cuatrimestre = cursoService.obtenerCuatrimestreActual(cursoId)
+		
+		[materia: Curso.get(cursoId).materia, cursoId: cursoId, mediador: mediador, cuatrimestreId: cuatrimestre?.id,
 			noticiasCurso: NoticiaCurso.findAllByCuatrimestre(cuatrimestre)]
 	}
 	
@@ -138,8 +138,9 @@ class CursoController {
 		println "params menu mediador: ${params}"
 		
 		cursoId = params.cursoId
-
-		[materia: Curso.get(cursoId).materia, cursoId: cursoId]
+		def cuatrimestreId = cursoService.obtenerCuatrimestreActual(cursoId).id
+		
+		[materia: Curso.get(cursoId).materia, cursoId: cursoId, cuatrimestreId: cuatrimestreId]
 	}
 	
 	def material() {
@@ -252,8 +253,14 @@ class CursoController {
             notFound()
             return
         }
+		
+		if (cursoInstance.hasErrors()) {
+			respond cursoInstance.errors, view:'create'
+			return
+		}
 
 		def cursoExistente = Curso.findByMateriaAndNroRelativo(Materia.get(cursoInstance.materia.id), cursoInstance.nroRelativo)
+		
 		println cursoExistente
 		
 		if (cursoExistente) {
@@ -262,12 +269,7 @@ class CursoController {
 			return
 		}
 		
-		cursoInstance.foro = new ForoCurso(nombre: "Foro general del curso ${cursoInstance.nroRelativo}")
-		
-		if (! cursoInstance.save(flush:true)) {
-			respond cursoInstance.errors, view:'create'
-			return
-		}
+		cursoInstance.save flush:true
 
         request.withFormat {
             form {

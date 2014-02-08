@@ -34,7 +34,7 @@
 </div>
 
 <div>
-	<g:hiddenField name="curso.id" value="${cursoId}" />
+	<g:hiddenField name="cuatrimestre.id" value="${cuatrimestreId}" />
 </div>
 
 

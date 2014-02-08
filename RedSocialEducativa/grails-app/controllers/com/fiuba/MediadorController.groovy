@@ -23,16 +23,16 @@ class MediadorController {
 		if (aprendiz.hasErrors()){
 			println aprendiz.errors
 			flash.message = "Problemas con el aprendiz"
-			redirect(controller: "curso", action: "menuMediador")
+			redirect(controller: "curso", action: "menuMediador", params: params)
 			return
 		} else {
 			aprendiz.save();
 			sendMail {
 				to mail
 				subject "Red Social Educativa"
-				body "Bienvenido aprendiz ${username} al curso ${aprendiz.curso} de la Red Social Educativa FIUBA 2014"
+				body "Bienvenido aprendiz ${username} al curso ${aprendiz.cuatrimestre.curso} de la Red Social Educativa FIUBA 2014"
 			}
-			flash.message = "Autorización enviada para el aprendiz ${username} del curso ${aprendiz.curso}"
+			flash.message = "Autorización enviada para el aprendiz ${username} del curso ${aprendiz.cuatrimestre.curso}"
 		}
 		
 		redirect(controller: "aprendiz", action: "index", params: params)

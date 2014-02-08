@@ -13,8 +13,8 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" controller="administrador" action="general">
-					<g:message code="Tareas administrativas"/></g:link></li>		
+				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': cursoId]">
+					<g:message code="Tareas mediador" /></g:link></li>	
 				<li><g:link class="create" action="create">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
@@ -44,7 +44,7 @@
 						<td>${fieldValue(bean: cuatrimestreInstance, field: "numero")}</td>
 					
 				
-						<td><g:link action="show" id="${cuatrimestreInstance.id}">Ver detalle</g:link></td>
+						<td><g:link action="historial" id="${cuatrimestreInstance.id}">Ver detalle</g:link></td>
 
 					</tr>
 				</g:each>

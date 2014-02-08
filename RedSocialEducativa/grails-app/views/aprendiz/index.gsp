@@ -15,7 +15,7 @@
 					<g:message code="default.home.label"/></a></li>
 				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': cursoId]">
 					<g:message code="Tareas mediador" /></g:link></li>
-				<li><g:link class="create" action="create">
+				<li><g:link class="create" action="create" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -23,6 +23,7 @@
 		<h2>Params: ${params}</h2>
 		<h2>Curso: ${com.fiuba.Curso.get(cursoId)}</h2>
 		<h2>Curso Id: ${cursoId}</h2>
+		<h2>Cuatrimestre Id: ${cuatrimestreId}</h2>
 		
 		<div id="list-aprendiz" class="content scaffold-list" role="main">
 			<h1><g:message code="Aprendices del curso ${com.fiuba.Curso.get(cursoId)}" /></h1>
@@ -47,17 +48,18 @@
 						
 							<td>${fieldValue(bean: aprendizInstance, field: "usuario")}</td>					
 												
-							<td><g:link controller="usuario" action="show" id="${aprendizInstance.usuario.id}" params="['cursoId': cursoId]">
+							<td><g:link controller="usuario" action="show" id="${aprendizInstance.usuario.id}" 
+								params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 								<g:message code="Ver datos" /></g:link></td>
 								
 							<g:if test="${!aprendizInstance.participa}">
 								<td>Esperando aceptacion (<g:link action="activarAprendiz" controller="mediador" id="${aprendizInstance.id}" 
-									params="['cursoId': cursoId]"><g:message code="Aceptar aprendiz" /></g:link>)
+									params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]"><g:message code="Aceptar aprendiz" /></g:link>)
 								</td>
 							</g:if>		
 							<g:else>
 								<td>Aprendiz activo (<g:link class="delete" action="delete" id="${aprendizInstance.id}" 
-									params="['cursoId': cursoId]"
+									params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]"
 									value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
 									onclick="return confirm('${message(code: 'default.button.delete.confirm.message', 
 									default: 'Are you sure?')}');">
@@ -69,7 +71,7 @@
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${aprendizInstanceCount ?: 0}" params="['cursoId': cursoId]"/>
+				<g:paginate total="${aprendizInstanceCount ?: 0}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]"/>
 			</div>
 		</div>
 	</body>
