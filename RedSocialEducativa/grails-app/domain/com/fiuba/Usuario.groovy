@@ -34,7 +34,7 @@ class Usuario {
 	static constraints = {
 		username blank: false, matches:"[0-9]{8}", unique: true
 		password blank: false
-		apellido blank: false, matches:"[a-zA-Z]+"
+		apellido blank: false
 		nombres blank: false
 		email email: true
 		fechaMemb nullable: true

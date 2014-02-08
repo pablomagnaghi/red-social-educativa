@@ -29,12 +29,9 @@
 					<tr>
 					
 						<g:sortableColumn property="codigo" title="${message(code: 'materia.codigo.label', default: 'Codigo')}" />
-					
-						<g:sortableColumn property="contenidosMinimos" title="${message(code: 'materia.contenidosMinimos.label', default: 'Contenidos Minimos')}" />
-					
+						<g:sortableColumn property="nombre" title="${message(code: 'materia.nombre.label', default: 'Nombre')}" />
 						<g:sortableColumn property="creditos" title="${message(code: 'materia.creditos.label', default: 'Creditos')}" />
 					
-						<g:sortableColumn property="nombre" title="${message(code: 'materia.nombre.label', default: 'Nombre')}" />
 					
 						<td> Detalle </td>	
 						
@@ -45,15 +42,10 @@
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
 						<td>${fieldValue(bean: materiaInstance, field: "codigo")}</td>
-					
-						<td>${fieldValue(bean: materiaInstance, field: "contenidosMinimos")}</td>
-					
-						<td>${fieldValue(bean: materiaInstance, field: "creditos")}</td>
-					
 						<td>${fieldValue(bean: materiaInstance, field: "nombre")}</td>
-					
-						<td><g:link action="show" id="${materiaInstance.id}">
-							Ver detalle</g:link></td>
+						<td>${fieldValue(bean: materiaInstance, field: "creditos")}</td>
+			
+						<td><g:link action="show" id="${materiaInstance.id}">Ver detalle</g:link></td>
 			
 					</tr>
 				</g:each>

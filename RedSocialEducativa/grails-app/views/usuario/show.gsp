@@ -20,7 +20,7 @@
 				<g:else>
 					<li><g:link class="list" controller="administrador" action="general">
 						<g:message code="Tareas administrativas"/></g:link></li>
-					<li><g:link class="list" controller="curso" action="general">
+					<li><g:link class="list" controller="curso" action="index">
 						<g:message code="Administrar cursos"/></g:link></li>
 					<li><g:link class="list" controller="noticiaRed" action="index">
 						<g:message code="Cartelera general"/></g:link></li>

@@ -1,42 +1,40 @@
-<%@ page import="com.fiuba.NoticiaRed" %>
+<%@ page import="com.fiuba.Cuatrimestre" %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'noticiaRed.label', default: 'NoticiaRed')}" />
+		<g:set var="entityName" value="${message(code: 'cuatrimestre.label', default: 'Cuatrimestre')}" />
 		<title><g:message code="default.edit.label" args="[entityName]" /></title>
 	</head>
 	<body>
-		<a href="#edit-noticiaRed" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+		<a href="#edit-cuatrimestre" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
 				<li><g:link class="list" controller="administrador" action="general">
-					<g:message code="Tareas administrativas"/></g:link></li>
+					<g:message code="Tareas administrativas"/></g:link></li>	
 				<li><g:link class="list" action="index">
 					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
 				<li><g:link class="create" action="create">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
-		<div id="edit-noticiaRed" class="content scaffold-edit" role="main">
+		<div id="edit-cuatrimestre" class="content scaffold-edit" role="main">
 			<h1><g:message code="default.edit.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
-			<g:hasErrors bean="${noticiaRedInstance}">
+			<g:hasErrors bean="${cuatrimestreInstance}">
 			<ul class="errors" role="alert">
-				<g:eachError bean="${noticiaRedInstance}" var="error">
-				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>>
-					<g:message error="${error}"/></li>
+				<g:eachError bean="${cuatrimestreInstance}" var="error">
+				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="update" method="PUT" id="${noticiaRedInstance.id}">
-				<g:hiddenField name="version" value="${noticiaRedInstance?.version}" />
+			<g:form url="[resource:cuatrimestreInstance, action:'update']" method="PUT" >
+				<g:hiddenField name="version" value="${cuatrimestreInstance?.version}" />
 				<fieldset class="form">
-					<div><g:hiddenField name="titulo" value="${noticiaRedInstance.titulo}"/></div>
 					<g:render template="form"/>
 				</fieldset>
 				<fieldset class="buttons">

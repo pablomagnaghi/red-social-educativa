@@ -25,19 +25,20 @@
 			<g:hasErrors bean="${noticiaRedInstance}">
 			<ul class="errors" role="alert">
 				<g:eachError bean="${noticiaRedInstance}" var="error">
-				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>>
+					<g:message error="${error}"/></li>
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
 			<g:form url="[resource:noticiaRedInstance, action:'save']" >
 				<fieldset class="form">
-					<g:render template="form"/>
-						<div class="fieldcontain ${hasErrors(bean: noticiaRedInstance, field: 'titulo', 'error')} ">
-							<label for="titulo">
-								<g:message code="noticiaRed.titulo.label" default="Titulo" />
-							</label>
+					<div class="fieldcontain ${hasErrors(bean: noticiaRedInstance, field: 'titulo', 'error')} ">
+						<label for="titulo">
+							<g:message code="noticiaRed.titulo.label" default="Titulo" />
+						</label>
 						<g:textField name="titulo" value="${noticiaRedInstance?.titulo}"/>
 					</div>
+					<g:render template="form"/>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />

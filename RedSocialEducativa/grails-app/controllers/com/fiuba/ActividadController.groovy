@@ -10,27 +10,23 @@ import org.springframework.security.access.annotation.Secured
 @Secured('permitAll')
 class ActividadController {
 
-	def springSecurityService
-	
-	private usuarioActual() {
-		return Usuario.get(springSecurityService.principal.id)
-	}
-	
 	// metodos nuevos
-	def cursoId
+	def cuatrimestreId
+	
+	def seguridadService
+
 	
 	def general() {
 		params.max = 5 // Math.min(max ?: 10, 100)
 
-		println "actividad CURSOID: ${params.cursoId}"
+		println "actividad cuatrimestreID: ${params.cuatrimestreId}"
 		
-		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		def actividadId = params.id
 				
 		def actividad = Actividad.get(actividadId)
 		
-		def aprendizId = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))?.id
-		
+		def aprendizId = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), cuatrimestreId)
 		def grupoActividadAprendiz = null
 		
 		if (aprendizId) {
@@ -43,7 +39,7 @@ class ActividadController {
 			}
 		} 
 		
-		[cursoId: cursoId, actividadId: actividadId, actividad: actividad, aprendizId: aprendizId,
+		[cuatrimestreId: cuatrimestreId, actividadId: actividadId, actividad: actividad, aprendizId: aprendizId,
 			grupoActividadAprendiz: grupoActividadAprendiz]
 	}
 	
@@ -55,10 +51,10 @@ class ActividadController {
 		println "index actividad"
 		println params
 		
-		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 			
-		[actividadInstanceList: Actividad.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
-			actividadInstanceCount: Actividad.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId]
+		[actividadInstanceList: Actividad.findAllByCuatrimestre(Cuatrimestre.get(cuatrimestreId),[max: params.max, offset: params.offset]),
+			actividadInstanceCount: Actividad.findAllByCuatrimestre(Cuatrimestre.get(cuatrimestreId)).size(), cuatrimestreId: cuatrimestreId]
 		
     }
 
@@ -66,16 +62,16 @@ class ActividadController {
 		
 		println "actividad show params: ${params}"
 		
-        respond actividadInstance, model: [cursoId: cursoId]
+        respond actividadInstance, model: [cuatrimestreId: cuatrimestreId]
     }
 	
 
     def create() {
 		
-		println "create actividad curso params: ${params}"
-		cursoId = params.cursoId
+		println "create actividad cuatrimestre params: ${params}"
+		cuatrimestreId = params.cuatrimestreId
 		
-		respond new Actividad(params), params:['cursoId': cursoId], model:[cursoId: cursoId]
+		respond new Actividad(params), params:['cuatrimestreId': cuatrimestreId], model:[cuatrimestreId: cuatrimestreId]
     }
 
     @Transactional
@@ -87,10 +83,10 @@ class ActividadController {
 
 		println "actividad save: params: ${params}"
 		
-		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		
         if (actividadInstance.hasErrors()) {
-            respond actividadInstance.errors, view:'create', params:['cursoId': cursoId], model: [cursoId: cursoId]
+            respond actividadInstance.errors, view:'create', params:['cuatrimestreId': cuatrimestreId], model: [cuatrimestreId: cuatrimestreId]
             return
         }
 
@@ -99,22 +95,22 @@ class ActividadController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'actividadInstance.label', default: 'Actividad'), actividadInstance.id])
-                redirect action: "index", params:['cursoId': cursoId]
+                redirect action: "index", params:['cuatrimestreId': cuatrimestreId]
             }
             '*' { respond actividadInstance, [status: CREATED] }
         }
     }
 
     def edit(Actividad actividadInstance) {
-		cursoId = params.cursoId
-        respond actividadInstance, params:['cursoId': cursoId], model:[cursoId: cursoId]
+		cuatrimestreId = params.cuatrimestreId
+        respond actividadInstance, params:['cuatrimestreId': cuatrimestreId], model:[cuatrimestreId: cuatrimestreId]
     }
 
 
     @Transactional
     def update(Actividad actividadInstance) {
         
-		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		
 		if (actividadInstance == null) {
             notFound()
@@ -122,7 +118,7 @@ class ActividadController {
         }
 
         if (actividadInstance.hasErrors()) {
-            respond actividadInstance.errors, view:'edit', params:['cursoId': cursoId], model: [cursoId: cursoId]
+            respond actividadInstance.errors, view:'edit', params:['cuatrimestreId': cuatrimestreId], model: [cuatrimestreId: cuatrimestreId]
             return
         }
 
@@ -145,14 +141,14 @@ class ActividadController {
             return
         }
 		
-		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		
         actividadInstance.delete flush:true
 
         request.withFormat {
             form {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'Actividad.label', default: 'Actividad'), actividadInstance.id])
-                redirect action:"index", params:['cursoId': cursoId], method:"GET"
+                redirect action:"index", params:['cuatrimestreId': cuatrimestreId], method:"GET"
             }
             '*'{ render status: NO_CONTENT }
         }
@@ -162,7 +158,7 @@ class ActividadController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'actividadInstance.label', default: 'Actividad'), params.id])
-                redirect action: "index", params:['cursoId': cursoId], method: "GET"
+                redirect action: "index", params:['cuatrimestreId': cuatrimestreId], method: "GET"
             }
             '*'{ render status: NOT_FOUND }
         }

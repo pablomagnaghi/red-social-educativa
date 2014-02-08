@@ -57,7 +57,7 @@ class CursoController {
 					redirect(action: "mediador", params: params)
 				} else {
 					
-					def aprendiz = cursoService.obtenerAprendiz(seguridadService.usuarioActual(), cursoId)
+					def aprendiz = cursoService.obtenerAprendizCurso(seguridadService.usuarioActual(), cursoId)
 
 					if (aprendiz) {
 						//println "Hola aprendiz ${aprendiz}"
@@ -73,7 +73,7 @@ class CursoController {
 	
 	// Para visitantes y administradores
 	def general() {
-		[curso: Curso.get(cursoId), cursoId: cursoId]
+		[curso: Curso.get(cursoId), cursoId: cursoId, cuatrimestre: cursoService.obtenerCuatrimestreActual(cursoId)]
 	}
 	
 	def miembro() {
@@ -94,16 +94,22 @@ class CursoController {
 		println "usuario actual"
 		println "${seguridadService.usuarioActual()}"
 		println "curso: ${Curso.get(cursoId)}"
-		def aprendiz = cursoService.obtenerAprendiz(seguridadService.usuarioActual(), cursoId)
+		
+		// TODO despues diferenciar entre aprendiz cuatrimestre y aprendiz curso
+
+		def curso = Curso.get(cursoId)
+		def cuatrimestre = Cuatrimestre.findAllbyCurso(curso).last()
+		
+		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), cuatrimestre)
 
 		println "aprendiz"
 		println aprendiz
 		println "participa"
 		println aprendiz?.participa
 		
-		def noticiasCurso = NoticiaCurso.findAllByCurso(Curso.get(cursoId))
+		def noticiasCurso = NoticiaCurso.findAllByCurso(cuatrimestre)
 
-		[aprendiz: aprendiz, noticiasCurso: noticiasCurso, cursoId: cursoId]
+		[aprendiz: aprendiz, noticiasCurso: noticiasCurso, cuatrimestreId: cuatrimestreId]
 	}
 	
 	def mediador() {
@@ -140,7 +146,7 @@ class CursoController {
 		[materialesCurso: MaterialCurso.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
 			materialesCursoCant: MaterialCurso.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId,
 			mediador: Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId)),
-			aprendiz: cursoService.obtenerAprendiz(seguridadService.usuarioActual(), cursoId)]
+			aprendiz: cursoService.obtenerAprendizCurso(seguridadService.usuarioActual(), cursoId)]
 	}
 	
 	def temas() {
@@ -154,7 +160,7 @@ class CursoController {
 		[temasCurso: Tema.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
 			temasCursoCant: Tema.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId,
 			mediador: Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId)),
-			aprendiz: cursoService.obtenerAprendiz(seguridadService.usuarioActual(), cursoId),
+			aprendiz: cursoService.obtenerAprendizCurso(seguridadService.usuarioActual(), cursoId),
 			cursoId: cursoId]
 	}
 	
@@ -169,7 +175,7 @@ class CursoController {
 		[actividades: Actividad.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
 			actividadesCant: Actividad.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId,
 			mediador: Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId)),
-			aprendiz: cursoService.obtenerAprendiz(seguridadService.usuarioActual(), cursoId)]
+			aprendiz: cursoService.obtenerAprendizCurso(seguridadService.usuarioActual(), cursoId)]
 	}
 	
 	def evaluaciones() {
@@ -183,7 +189,7 @@ class CursoController {
 		[evaluaciones: Evaluacion.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
 			evaluacionesCant: Evaluacion.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId,
 			mediador: Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId)),
-			aprendiz: cursoService.obtenerAprendiz(seguridadService.usuarioActual(), cursoId)]
+			aprendiz: cursoService.obtenerAprendizCurso(seguridadService.usuarioActual(), cursoId)]
 	}
 	
 	def solicitarParticipacionEnElCurso() {

@@ -20,7 +20,7 @@ class ForoCursoController {
 			return null
 	}
 	
-	def cursoId
+	def cuatrimestreId
 	
 	def general() {
 		
@@ -30,14 +30,14 @@ class ForoCursoController {
 		
 		println "foro curso general CURSOID: ${params.cursoId}"
 		
-		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 				
-		def curso = Curso.get(cursoId)
+		def cuatrimestre = Cuatrimestre.get(cuatrimestreId)
 
-		[publicaciones: PublicacionCurso.findAllByForoAndPublicacionInicial(ForoCurso.findByCurso(curso), 
+		[publicaciones: PublicacionCurso.findAllByForoAndPublicacionInicial(ForoCurso.findByCuatrimestre(cuatrimestre), 
 			null, [max: params.max, offset: params.offset]),
-		publicacionesCant: PublicacionCurso.findAllByForoAndPublicacionInicial(ForoCurso.findByCurso(curso), null).size(),
-		cursoId: cursoId]
+		publicacionesCant: PublicacionCurso.findAllByForoAndPublicacionInicial(ForoCurso.findByCuatrimestre(cuatrimestre), null).size(),
+		cuatrimestreId: cuatrimestreId]
 	}
 	
 	def publicaciones() {
@@ -48,13 +48,13 @@ class ForoCursoController {
 		
 		def publicacionId = params.id
 
-		println "foro curso publicaciones CURSOID: ${params.cursoId}"
+		println "foro cuatrimestre publicaciones cuatrimestreID: ${params.cuatrimestreId}"
 		
-		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 				
-		def curso = Curso.get(cursoId)
-		println "curso: ${curso}"
-		def foroId = curso.foro.id
+		def cuatrimestre = Cuatrimestre.get(cuatrimestreId)
+		println "cuatrimestre: ${cuatrimestre}"
+		def foroId = cuatrimestre.foro.id
 		
 		
 		println PublicacionGeneral.first().foro.id
@@ -71,7 +71,7 @@ class ForoCursoController {
 		}
 		
 		def respuestasCant = PublicacionCurso.findAllByPublicacionInicialAndForo(PublicacionCurso.get(publicacionId),
-			ForoCurso.findByCurso(curso)).size()+1
+			ForoCurso.findByCuatrimestre(cuatrimestre)).size()+1
 		
 		println "respuestas"
 		println respuestas
@@ -82,7 +82,7 @@ class ForoCursoController {
 			respuestas: respuestas,
 			respuestasCant: respuestasCant,
 			usuario: Usuario.findByUsername(usuarioActual()?.username),
-			mediador: Mediador.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId)),
+			mediador: Mediador.findByUsuarioAndCurso(usuarioActual(), cuatrimestre.curso),
 			cursoId: cursoId]
 		
 	}

@@ -12,7 +12,7 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" controller="publicacionCurso" action="nueva" params="['cursoId': cursoId]">
+				<li><g:link class="create" controller="publicacionCurso" action="nueva" params="['cuatrimestreId': cuatrimestreId]">
 					<g:message code="Nueva publicacion" /></g:link></li>
 			</ul>
 		</div>
@@ -22,7 +22,7 @@
 			</g:if>
 		</div>	
 		<div>
-			<h2>Foro Curso: ${com.fiuba.ForoCurso.findByCurso(com.fiuba.Curso.get(cursoId))}</h2>
+			<h2>Foro Curso: ${com.fiuba.ForoCurso.findByCuatrimestre(com.fiuba.Cuatrimestre.get(cuatrimestreId)).cuatrimestre.curso}</h2>
 			<br>
 			<table>
 			<thead>
@@ -56,7 +56,7 @@
 			</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${publicacionesCant ?: 0}" params="['cursoId': cursoId]"/>
+				<g:paginate total="${publicacionesCant ?: 0}" params="['cuatrimestreId': cuatrimestreId]"/>
 			</div>
 		</div>
 	</body>

@@ -4,8 +4,14 @@
 	</g:if>
 </div>
 <div>
-	<g:link controller="foroCurso" action="general" params="['cursoId': cursoId]">
-		<g:message code="Foro del curso"/></g:link>
+	<g:if test="${cuatrimestre}">
+		<g:link controller="foroCurso" action="general" params="['cuatrimestreId': cuatrimestre.id]">
+			<g:message code="Foro del curso"/></g:link>
+	</g:if>	
+	<g:else>
+		<p>El curso no se dicta durante este cuatrimestre</p>
+		<p>Este curso se dicta durante el (primer/segundo) cuatrimestre</p>
+	</g:else>
 </div>
 <div>
 	<g:link action="material" params="['cursoId': cursoId]">

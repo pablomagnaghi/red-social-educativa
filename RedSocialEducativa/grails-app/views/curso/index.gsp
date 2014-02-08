@@ -29,13 +29,9 @@
 					<tr>
 					
 						<g:sortableColumn property="materia" title="${message(code: 'curso.nroRelativo.label', default: 'Materia')}" />
-					
 						<g:sortableColumn property="nroRelativo" title="${message(code: 'curso.nroRelativo.label', default: 'Nro Relativo')}" />
-					
 						<g:sortableColumn property="nombre" title="${message(code: 'curso.nombre.label', default: 'Nombre')}" />
-					
-						<g:sortableColumn property="cuatDict" title="${message(code: 'curso.cuatDict.label', default: 'Cuat Dict')}" />											
-					
+	
 						<td> Detalle </td>	
 					
 					</tr>
@@ -44,16 +40,11 @@
 				<g:each in="${cursoInstanceList}" status="i" var="cursoInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td>${fieldValue(bean: cursoInstance, field: "materia")}</td>
-					
-						<td>${fieldValue(bean: cursoInstance, field: "nroRelativo")}</td>
-						
+						<td>${fieldValue(bean: cursoInstance, field: "materia")}</td>					
+						<td>${fieldValue(bean: cursoInstance, field: "nroRelativo")}</td>						
 						<td>${fieldValue(bean: cursoInstance, field: "nombre")}</td>
-					
-						<td>${fieldValue(bean: cursoInstance, field: "cuatDict")}</td>
-
-						<td><g:link action="show" id="${cursoInstance.id}">
-							Ver detalle</g:link></td>
+				
+						<td><g:link action="show" id="${cursoInstance.id}">Ver detalle</g:link></td>
 					
 					</tr>
 				</g:each>

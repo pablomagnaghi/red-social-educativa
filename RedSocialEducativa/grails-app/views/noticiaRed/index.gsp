@@ -27,15 +27,12 @@
 			<table>
 			<thead>
 					<tr>
-					
-						<th><g:message code="noticiaRed.administrador.label" default="Administrador" /></th>
-					
-						<g:sortableColumn property="fecha" title="${message(code: 'noticiaRed.fecha.label', default: 'Fecha')}" />
-						
-						<g:sortableColumn property="hora" title="${message(code: 'noticiaRed.hora.label', default: 'Hora')}" />
 				
 						<g:sortableColumn property="titulo" title="${message(code: 'noticiaRed.titulo.label', default: 'Titulo')}" />
-						
+						<g:sortableColumn property="fecha" title="${message(code: 'noticiaRed.fecha.label', default: 'Fecha')}" />
+						<g:sortableColumn property="hora" title="${message(code: 'noticiaRed.hora.label', default: 'Hora')}" />
+						<th><g:message code="noticiaRed.administrador.label" default="Administrador" /></th>
+
 						<td> Detalle </td>	
 					
 					</tr>
@@ -44,16 +41,12 @@
 				<g:each in="${noticiaRedInstanceList}" status="i" var="noticiaRedInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td>${fieldValue(bean: noticiaRedInstance, field: "administrador")}</td>
-					
-						<td>${fieldValue(bean: noticiaRedInstance, field: "fecha")}</td>
-						
-						<td>${fieldValue(bean: noticiaRedInstance, field: "hora")}</td>
-					
 						<td>${fieldValue(bean: noticiaRedInstance, field: "titulo")}</td>
-					
-						<td><g:link action="show" id="${noticiaRedInstance.id}">
-							Ver detalle</g:link></td>
+						<td>${fieldValue(bean: noticiaRedInstance, field: "fecha")}</td>
+						<td>${fieldValue(bean: noticiaRedInstance, field: "hora")}</td>
+						<td>${fieldValue(bean: noticiaRedInstance, field: "administrador")}</td>
+						
+						<td><g:link action="show" id="${noticiaRedInstance.id}">Ver detalle</g:link></td>
 					
 					</tr>
 				</g:each>

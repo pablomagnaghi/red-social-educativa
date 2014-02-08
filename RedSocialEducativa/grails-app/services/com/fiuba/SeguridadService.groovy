@@ -11,9 +11,8 @@ class SeguridadService {
 	
 	def usuarioActual() {
 		if (springSecurityService.principal.enabled)
-			return Usuario.get(springSecurityService.principal.id)
+			return Usuario.get(springSecurityService.principal?.id)
 		else
 			return null
 	}
-
 }

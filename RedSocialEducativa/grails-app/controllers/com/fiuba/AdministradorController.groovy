@@ -17,38 +17,22 @@ class AdministradorController {
 	// 12. Asignar y revocar roles de mediador en cursos
 	// 13. Visualizar información y material de los cursos (foros, temas y material general)
 	
+	def administradorService
+	
 	def general = {
 		[usuarios: Usuario.findAllByEnabled(false)]
 	}
 
 	def activarUsuario() {
-		def usuario = Usuario.get(params.id)
-		println "${usuario}, ${usuario.id}, ${usuario.enabled}, ${usuario.fechaMemb}"
-	
-		usuario.enabled = true
-		usuario.fechaMemb = new Date()
-		def mail = usuario.email
-		def username = usuario.username
-		if (usuario.hasErrors()){
-			println usuario.errors
+		
+		if (administradorService.activarUsuario(params.id)) {
+			flash.message = "Autorización enviada"
+			administradorService.crearMiembro(params.id)
+			redirect(action: "index", controller: "usuario")
+		} else {
 			flash.message = "Problemas con el usuario"
 			redirect(action: "general")
 			return
-		} else {
-			usuario.save();
-			sendMail {
-				to mail
-				subject "Red Social Educativa"
-				body "Bienvenido ${username} a la Red Social Educativa FIUBA 2014"
-			}
-			flash.message = "Autorización enviada para el miembro con dni: ${usuario.username}"
 		}
-		
-		def miembro = new Miembro(usuario: usuario, rol: Rol.findByAuthority("ROL_MIEMBRO"))
-		if (!miembro.validate()){
-			println miembro.errors
-		} 
-		miembro.save()
-		redirect(action: "index", controller: "usuario")
 	}
 }

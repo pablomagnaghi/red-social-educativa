@@ -161,6 +161,12 @@
 			<p>Foro tema; "${com.fiuba.ForoTema.first()}"</p>
 			<p>Grupo curso: "${com.fiuba.GrupoCurso.first().aprendices}"</p>
 			<p>Grupo actividad: "${com.fiuba.GrupoActividad.first().aprendices}"</p>
+			<p>Dia: ${dia}</p>
+			<p>Mes: ${mes}</p>
+			<p>Anio: ${anio}</p>
+			<p>Fecha: ${fecha}</p>
+			<p>Calendar: ${calendar}</p>
+			<p>FECHA UTILIDADES: ${hoy}</p>
 		</div>
 	</body>
 </html>
