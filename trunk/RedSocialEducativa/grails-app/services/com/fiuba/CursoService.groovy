@@ -5,6 +5,11 @@ import grails.transaction.Transactional
 @Transactional
 class CursoService {
 	
+	// TODO cuando un aprendiz pierde la cursada, reprueba tres veces el final o se le vence la materia
+	// participa pasa a ser false o agregar atributo estado en aprendiz
+	// Estado [cursando/curso aprobado/]
+	
+	
 	def obtenerAprendizCurso(Usuario usuario, String cursoId) {
 		def c = Aprendiz.createCriteria()
 		def aprendiz = c {
@@ -17,12 +22,8 @@ class CursoService {
 		if (aprendiz) {
 			aprendiz.first()
 		}
-		//agregar si aprobo la cursada o no
-		// si aprobo el final o se le vencio
 	}
 	
-	// Si el curso no se dicta ese cuatrimestre: 
-	// Solo se muestran los temas y el material general
 	def obtenerCuatrimestreActual(String cursoId) {
 		
 		// Reviso en que periodo del año estamos, para determinar
@@ -42,7 +43,7 @@ class CursoService {
 		}
 		
 		def curso = Curso.get(cursoId)
-		def cuatrimestre = Cuatrimestre.findAllByCursoAndAnioAndNumero(curso, anio, numero)
+		def cuatrimestre = Cuatrimestre.findByCursoAndAnioAndNumero(curso, anio, numero)
 		
 		return cuatrimestre	
 	}

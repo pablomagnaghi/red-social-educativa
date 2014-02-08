@@ -9,10 +9,11 @@ import org.springframework.security.access.annotation.Secured
 @Secured('permitAll')
 class RedController {
 	// El visitante puede: 
-	// * 2 - Acceder a la cartelera general
-	// * 4 - Dejar comentario o mensaje en un foro general de la red
-	// * 5 - Solicitar membresia
-	// * 6 - Conectarse
+	// * Acceder a la cartelera general
+	// * Dejar comentario o mensaje en un foro general de la red
+	// * Solicitar membresia
+	// * Conectarse
+	
 	
 	def seguridadService
 	
@@ -32,6 +33,7 @@ class RedController {
 		def ArrayList<Curso> cursosAprendiz = new ArrayList<Curso>()
 		def ArrayList<Aprendiz> aprendices = Aprendiz.findAllByUsuario(seguridadService.usuarioActual())
 
+		// TODO: ver si un alumno que termino y aprobo la materia puede volver a ingresar al curso
 		aprendices.each {
 			if (it.participa) {
 				cursosAprendiz.add(it.cuatrimestre.curso)
@@ -43,20 +45,11 @@ class RedController {
 		// poner un maximo y un orden a la cantidad de noticias a mostrar en la cartelera
 		// TODO esto vuela, esta para pruebas
 		//<!--<g:render template="header" contextPath="/templates"/>-->
-		def date = new Date()
-		def anio = date.year + 1900
-		def mes = date.month + 1
-		def dia = date.getAt(Calendar.DAY_OF_MONTH)
-		
-		def fecha = 10000 * anio + 100 * mes + dia
-		def calendar = new Date().getCalendarDate()
-		// TODO: borrar lo q esta entre TODO
 		
 		[cursos: Curso.list(params), noticiasRed: NoticiaRed.list(), cursoCant: Curso.count(), 
 			administrador: Administrador.findByUsuario(seguridadService.usuarioActual()),
 			cursosMediador: cursosMediador, cursosAprendiz: cursosAprendiz, 
-			cantMensajes: mensajes.size(), 
-			anio: anio, mes: mes, dia: dia, fecha: fecha, calendar: calendar, hoy: Utilidades.FECHA]
+			cantMensajes: mensajes.size(), fecha: Utilidades.FECHA]
 	}
 	
 	// TODO analogia con los controladores scaffold respond new Class(params)

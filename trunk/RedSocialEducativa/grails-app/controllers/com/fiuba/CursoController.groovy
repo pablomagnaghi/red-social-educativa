@@ -8,8 +8,8 @@ import org.springframework.security.access.annotation.Secured
 class CursoController {
 
 	// EL visitante puede:
-	// * 1 - Visualizar información y material de los cursos (foros, temas y material general)
-	// * 3 - Dejar comentario o mensaje para un curso (foro de curso)
+	// * Visualizar información y material de los cursos (foros, temas y material general)
+	// * Dejar comentario o mensaje para un curso (foro de curso)
 	
 	// Mediador
 	// 15. Administrar aprendices (aceptar participación y eliminar)
@@ -60,7 +60,8 @@ class CursoController {
 					def aprendiz = cursoService.obtenerAprendizCurso(seguridadService.usuarioActual(), cursoId)
 
 					if (aprendiz) {
-						//println "Hola aprendiz ${aprendiz}"
+						println "Hola aprendiz ${aprendiz}"
+						
 						redirect(action: "aprendiz", params: params)
 					} else {
 						flash.message = "Hola miembro ${seguridadService.usuarioActual()}"
@@ -72,6 +73,7 @@ class CursoController {
 	}
 	
 	// Para visitantes y administradores
+	// Si el curso no se dicta ese cuatrimestre: Solo se muestran los temas y el material general
 	def general() {
 		[curso: Curso.get(cursoId), cursoId: cursoId, cuatrimestre: cursoService.obtenerCuatrimestreActual(cursoId)]
 	}
@@ -91,25 +93,28 @@ class CursoController {
 		
 		cursoId = params.cursoId
 		
+		/*
 		println "usuario actual"
 		println "${seguridadService.usuarioActual()}"
-		println "curso: ${Curso.get(cursoId)}"
+		println "curso: ${Curso.get(cursoId)}"*/
+	
+		def aprendiz = cursoService.obtenerAprendizCurso(seguridadService.usuarioActual(), cursoId)
+		def cuatrimestre = cursoService.obtenerCuatrimestreActual(cursoId)
+		def noticiasCurso = NoticiaCurso.findAllByCuatrimestre(cuatrimestre)
+		def cursando = false // para diferenciar entre aprendiz cuatrimestre y aprendiz curso
+			
+		/*println "cuatrimestre actual: ${cursoService.obtenerCuatrimestreActual(cursoId)}"
+		println "aprendiz cuatrimestre: ${aprendiz.cuatrimestre} ${aprendiz.cuatrimestre.anio}-${aprendiz.cuatrimestre.numero}"*/
 		
-		// TODO despues diferenciar entre aprendiz cuatrimestre y aprendiz curso
-
-		def curso = Curso.get(cursoId)
-		def cuatrimestre = Cuatrimestre.findAllbyCurso(curso).last()
+		if (aprendiz.cuatrimestre.equals(cuatrimestre)) {
+			println "Hola aprendiz ${aprendiz}"
+			println "aprendiz cuatrimestre: ${cuatrimestre}"
+			cursando = true
+		}
 		
-		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), cuatrimestre)
-
-		println "aprendiz"
-		println aprendiz
-		println "participa"
-		println aprendiz?.participa
+		def nombreobtenerAprendizCurso
 		
-		def noticiasCurso = NoticiaCurso.findAllByCurso(cuatrimestre)
-
-		[aprendiz: aprendiz, noticiasCurso: noticiasCurso, cuatrimestreId: cuatrimestreId]
+		[aprendiz: aprendiz, cursando: cursando, cursoId: cursoId, cuatrimestreId: cuatrimestre?.id, noticiasCurso: noticiasCurso]
 	}
 	
 	def mediador() {
@@ -117,13 +122,15 @@ class CursoController {
 		println "mediador params: ${params}"
 		
 		cursoId = params.cursoId
+
+		def cuatrimestre = cursoService.obtenerCuatrimestreActual(cursoId)
 		
 		def mediador = Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId))
 		
 		println mediador
 		
-		[materia: Curso.get(cursoId).materia, cursoId: cursoId, mediador: mediador,
-			noticiasCurso: NoticiaCurso.findAllByCurso(Curso.get(cursoId))]
+		[materia: Curso.get(cursoId).materia, cursoId: cursoId, cuatrimestreId: cuatrimestre?.id, mediador: mediador,
+			noticiasCurso: NoticiaCurso.findAllByCuatrimestre(cuatrimestre)]
 	}
 	
 	def menuMediador() {
@@ -171,9 +178,11 @@ class CursoController {
 		println params
 				
 		cursoId = params.cursoId
+		def cuatrimestre = cursoService.obtenerCuatrimestreActual(cursoId)
 
-		[actividades: Actividad.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
-			actividadesCant: Actividad.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId,
+		[actividades: Actividad.findAllByCuatrimestre(cuatrimestre,[max: params.max, offset: params.offset]),
+			actividadesCant: Actividad.findAllByCuatrimestre(cuatrimestre).size(), cursoId: cursoId,
+			cuatrimestreId: cuatrimestreId,
 			mediador: Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId)),
 			aprendiz: cursoService.obtenerAprendizCurso(seguridadService.usuarioActual(), cursoId)]
 	}
@@ -200,8 +209,8 @@ class CursoController {
 		// println "solicitar participacion params: ${params}"
 		
 		cursoId = params.cursoId
-		
-		Curso.get(cursoId).addToAprendices(aprendiz)
+		def cuatrimestre = cursoService.obtenerCuatrimestreActual(cursoId)
+		cuatrimestre.addToAprendices(aprendiz)
 		
 		if(!aprendiz.validate()) {
 			flash.message = "Problemas con la solitud de participacion"
