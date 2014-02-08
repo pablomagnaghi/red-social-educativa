@@ -26,12 +26,9 @@
 			<thead>
 					<tr>
 					
-						<g:sortableColumn property="username" title="${message(code: 'usuario.username.label', default: 'Username')}" />
-					
-						<g:sortableColumn property="apellido" title="${message(code: 'usuario.apellido.label', default: 'Apellido')}" />
-					
-						<g:sortableColumn property="nombres" title="${message(code: 'usuario.nombres.label', default: 'Nombres')}" />
-					
+						<g:sortableColumn property="username" title="${message(code: 'usuario.username.label', default: 'Username')}" />			
+						<g:sortableColumn property="apellido" title="${message(code: 'usuario.apellido.label', default: 'Apellido')}" />					
+						<g:sortableColumn property="nombres" title="${message(code: 'usuario.nombres.label', default: 'Nombres')}" />					
 						<g:sortableColumn property="email" title="${message(code: 'usuario.email.label', default: 'Email')}" />
 					
 						<td> Activar usuario </td>
@@ -43,11 +40,8 @@
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
 						<td>${fieldValue(bean: usuarioInstance, field: "username")}</td>
-					
-						<td>${fieldValue(bean: usuarioInstance, field: "apellido")}</td>
-					
-						<td>${fieldValue(bean: usuarioInstance, field: "nombres")}</td>
-					
+						<td>${fieldValue(bean: usuarioInstance, field: "apellido")}</td>				
+						<td>${fieldValue(bean: usuarioInstance, field: "nombres")}</td>					
 						<td>${fieldValue(bean: usuarioInstance, field: "email")}</td>
 					
 						<td><g:link action="activarUsuario" controller="administrador" id="${usuarioInstance.id}"

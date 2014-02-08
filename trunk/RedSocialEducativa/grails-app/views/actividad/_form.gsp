@@ -1,6 +1,6 @@
 <%@ page import="com.fiuba.Actividad" %>
 
-<div><g:hiddenField name="curso.id" value="${cursoId}"/></div>
+<div><g:hiddenField name="cuatrimestre.id" value="${cuatrimestreId}"/></div>
 
 <div class="fieldcontain ${hasErrors(bean: actividadInstance, field: 'categoria', 'error')} required">
 	<label for="categoria">

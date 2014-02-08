@@ -2,7 +2,7 @@ package com.fiuba
 
 class TemaActividad {
 
-	static belongsTo = [tema: Tema, actividad: Actividad]
+	static belongsTo = [actividad: Actividad, tema: Tema]
 	
 	String toString() {
 		"${tema}"

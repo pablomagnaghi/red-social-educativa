@@ -250,6 +250,7 @@ class BootStrap {
 		def foroCursoTres = new ForoCurso(nombre: "ForoGeneralCursoTres")
 		def foroCursoCuatro = new ForoCurso(nombre: "ForoGeneralCursoCuatro")
 		def foroCursoCinco = new ForoCurso(nombre: "ForoGeneralCursoCinco")
+		def foroCursoSeis = new ForoCurso(nombre: "ForoGeneralCursoSeis")
 		
 		// Publicaciones generales
 		
@@ -395,7 +396,8 @@ class BootStrap {
 			horario: (new Date()).getTimeString(), aula: "5", parcial: true, obligatoria: true, habilitada: true)
 		
 		// Cuatrimestres
-		def cuatrimestreUno = new Cuatrimestre(anio: 2014, numero: 1, habGrupos: true, nroUltGrupo: 0)
+		def cuatrimestreUno = new Cuatrimestre(anio: 2013, numero: 2, habGrupos: true, nroUltGrupo: 0, 
+			foro: foroCursoUno)
 		cuatrimestreUno.addToAprendices(aprendizDos)
 		cuatrimestreUno.addToAprendices(aprendizTres)
 		cuatrimestreUno.addToAprendices(aprendizCuatro)
@@ -404,28 +406,37 @@ class BootStrap {
 		cuatrimestreUno.addToAprendices(aprendizSiete)
 		cuatrimestreUno.addToAprendices(aprendizOcho)
 		cuatrimestreUno.addToAprendices(aprendizNueve)
-		
-		def cuatrimestreDos = new Cuatrimestre(anio: 2014, numero: 2, habGrupos: true, nroUltGrupo: 0)
+		cuatrimestreUno.addToGrupos(grupoUno)
+		cuatrimestreUno.addToGrupos(grupoDos)
+		cuatrimestreUno.addToActividades(actividadUno)
+		cuatrimestreUno.addToActividades(actividadDos)
+		cuatrimestreUno.addToActividades(actividadTres)
+
+		def cuatrimestreDos = new Cuatrimestre(anio: 2013, numero: 1, habGrupos: true, nroUltGrupo: 0,
+			foro: foroCursoDos)
 		cuatrimestreDos.addToAprendices(aprendizDiez)
 		cuatrimestreDos.addToAprendices(aprendizOnce)
 		cuatrimestreDos.addToAprendices(aprendizDoce)
 		
-		def cuatrimestreTres = new Cuatrimestre(anio: 2014, numero: 1, habGrupos: true, nroUltGrupo: 0)
+		def cuatrimestreTres = new Cuatrimestre(anio: 2013, numero: 2, habGrupos: true, nroUltGrupo: 0,
+			foro: foroCursoTres)
 		cuatrimestreTres.addToAprendices(aprendizAgus)
 
-		def cuatrimestreCuatro = new Cuatrimestre(anio: 2014, numero: 1, habGrupos: true, nroUltGrupo: 0)
-		cuatrimestreCuatro.addToAprendices(aprendizAgus)
+		def cuatrimestreCuatro = new Cuatrimestre(anio: 2013, numero: 1, habGrupos: true, nroUltGrupo: 0,
+			foro: foroCursoCuatro)
 		cuatrimestreCuatro.addToAprendices(aprendizUno)
 		
-		def cuatrimestreCinco = new Cuatrimestre(anio: 2014, numero: 1, habGrupos: true, nroUltGrupo: 0)
+		def cuatrimestreCinco = new Cuatrimestre(anio: 2013, numero: 2, habGrupos: true, nroUltGrupo: 0,
+			foro: foroCursoCinco)
 		cuatrimestreCinco.addToAprendices(aprendizUnoP)
 
-		def cuatrimestreSeis = new Cuatrimestre(anio: 2014, numero: 1, habGrupos: true, nroUltGrupo: 0)
+		def cuatrimestreSeis = new Cuatrimestre(anio: 2013, numero: 1, habGrupos: true, nroUltGrupo: 0, 
+			foro: foroCursoSeis)
 		cuatrimestreSeis.addToAprendices(aprendizUnoPP)
 		
 		// Cursos
 		
-		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2", foro: foroCursoUno, nombre: "Curso 1")
+		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2", nombre: "Curso 1")
 		cursoUno.addToMediadores(mediadorAgus)
 		cursoUno.addToMediadores(mediadorUno)
 		cursoUno.addToCuatrimestres(cuatrimestreUno)
@@ -438,32 +449,28 @@ class BootStrap {
 		cursoUno.addToMateriales(materialCuatro)
 		cursoUno.addToMateriales(materialCinco)
 		cursoUno.addToMateriales(materialSeis)
-		cursoUno.addToGrupos(grupoUno)
-		cursoUno.addToGrupos(grupoDos)
-		cursoUno.addToActividades(actividadUno)
-		cursoUno.addToActividades(actividadDos)
-		cursoUno.addToActividades(actividadTres)
+
 		cursoUno.addToEvaluaciones(evaluacionUno)
 		cursoUno.addToEvaluaciones(evaluacionDos)
 		cursoUno.addToEvaluaciones(evaluacionTres)
 		cursoUno.addToEvaluaciones(evaluacionCuatro)
 		cursoUno.addToEvaluaciones(evaluacionCinco)
 
-		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", foro: foroCursoDos, nombre: "Curso 2")
+		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", nombre: "Curso 2")
 		cursoDos.addToMediadores(mediadorUnoP)
 		cursoDos.addToMediadores(mediadorDos)
 		cursoDos.addToCuatrimestres(cuatrimestreTres)
 		cursoDos.addToTemas(temaUnoCursoDos)
 		
-		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1|2", foro: foroCursoTres, nombre: "Curso 3")
+		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1|2", nombre: "Curso 3")
 		cursoTres.addToMediadores(mediadorTres)
 		cursoTres.addToCuatrimestres(cuatrimestreCuatro)
 
-		def cursoCuatro = new Curso(nroRelativo: "04", cuatDict: "1|2", foro: foroCursoCuatro, nombre: "Curso 4")
+		def cursoCuatro = new Curso(nroRelativo: "04", cuatDict: "1|2", nombre: "Curso 4")
 		cursoCuatro.addToMediadores(mediadorCuatro)
 		cursoCuatro.addToCuatrimestres(cuatrimestreCinco)
 		
-		def cursoCinco = new Curso(nroRelativo: "05", cuatDict: "1|2", foro: foroCursoCinco, nombre: "Curso 5")
+		def cursoCinco = new Curso(nroRelativo: "05", cuatDict: "1|2", nombre: "Curso 5")
 		cursoCinco.addToMediadores(mediadorCinco)
 		cursoCinco.addToMediadores(mediadorSeis)
 		cursoCinco.addToCuatrimestres(cuatrimestreSeis)
@@ -503,19 +510,19 @@ class BootStrap {
 		
 		def noticiaCursoUno = new NoticiaCurso(titulo: "Noticia Uno 1", texto: "noticiaCursoUno",
 			fecha: (new Date()).format("yyyy-MM-dd"), hora: (new Date()).getTimeString(), visibilidad: true, 
-			mediador: mediadorAgus, curso: cursoUno)
+			mediador: mediadorAgus, cuatrimestre: cuatrimestreUno)
 		noticiasCursoUno.add(noticiaCursoUno)
 		def noticiaCursoUnoP = new NoticiaCurso(titulo: "Noticia Uno 2", texto: "noticiaCursoUnoP ",
 			fecha: (new Date()).format("yyyy-MM-dd"), hora: (new Date()).getTimeString(), visibilidad: true,
-			mediador: mediadorAgus, curso: cursoUno)
+			mediador: mediadorAgus, cuatrimestre: cuatrimestreUno)
 		noticiasCursoUno.add(noticiaCursoUnoP)
 		def noticiaCursoUnoPP = new NoticiaCurso(titulo: "Noticia Uno 3", texto: "noticiaCursoUnoPP",
 			fecha: (new Date()).format("yyyy-MM-dd"), hora: (new Date()).getTimeString(), visibilidad: true, 
-			mediador: mediadorUno, curso: cursoUno)
+			mediador: mediadorUno, cuatrimestre: cuatrimestreUno)
 		noticiasCursoUno.add(noticiaCursoUnoPP)
 		def noticiaCursoUnoPPP = new NoticiaCurso(titulo: "Noticia Uno 4", texto: "noticiaCursoUnoPPP",
 			fecha: (new Date()).format("yyyy-MM-dd"), hora: (new Date()).getTimeString(), visibilidad: true, 
-			mediador: mediadorUno, curso: cursoUno)
+			mediador: mediadorUno, cuatrimestre: cuatrimestreUno)
 		noticiasCursoUno.add(noticiaCursoUnoPPP)
 		
 		for(int i = 0; i<noticiasCursoUno.size(); i++){

@@ -3,7 +3,7 @@ package com.fiuba
 class Cuatrimestre {
 
 	//	// validar que sea mayor a 2000
-	Short anio
+	Integer anio
 	//	// 1er o 2do cuatrimestre
 	Short numero
 	//	// Si el curso esta habilitado para formar grupos
@@ -13,7 +13,9 @@ class Cuatrimestre {
 		
 	static belongsTo = [curso: Curso]	
 	
-	static hasMany = [aprendices: Aprendiz]
+	static hasOne = [foro: ForoCurso]
+	
+	static hasMany = [actividades: Actividad, aprendices: Aprendiz, grupos: GrupoCurso, noticiasCurso: NoticiaCurso]
 	
     static constraints = {
     }

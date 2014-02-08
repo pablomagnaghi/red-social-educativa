@@ -2,7 +2,7 @@ package com.fiuba
 
 class GrupoCurso extends Grupo {
 
-	static belongsTo = [curso: Curso]
+	static belongsTo = [cuatrimestre: Cuatrimestre]
 	
 	static hasMany = [aprendices: Aprendiz, materiales: MaterialGrupo]
 	

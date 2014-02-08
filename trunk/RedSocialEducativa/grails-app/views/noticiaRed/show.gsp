@@ -28,59 +28,59 @@
 			</g:if>
 			<ol class="property-list noticiaRed">
 			
-				<g:if test="${noticiaRedInstance?.administrador}">
+			
+				<g:if test="${noticiaRedInstance?.titulo}">
 				<li class="fieldcontain">
-					<span id="administrador-label" class="property-label"><g:message code="noticiaRed.administrador.label" default="Administrador" /></span>
-					
-						<span class="property-value" aria-labelledby="administrador-label">
-							<g:link controller="usuario" action="show" id="${noticiaRedInstance?.administrador?.usuario?.id}">
-								${noticiaRedInstance?.administrador?.encodeAsHTML()}</g:link></span>
-					
+					<span id="titulo-label" class="property-label">
+						<g:message code="noticiaRed.titulo.label" default="Titulo" /></span>
+					<span class="property-value" aria-labelledby="titulo-label">
+						<g:fieldValue bean="${noticiaRedInstance}" field="titulo"/></span>	
 				</li>
 				</g:if>
 			
 				<g:if test="${noticiaRedInstance?.fecha}">
 				<li class="fieldcontain">
-					<span id="fecha-label" class="property-label"><g:message code="noticiaRed.fecha.label" default="Fecha" /></span>
-					
-						<span class="property-value" aria-labelledby="fecha-label"><g:fieldValue bean="${noticiaRedInstance}" field="fecha"/></span>
-					
+					<span id="fecha-label" class="property-label">
+						<g:message code="noticiaRed.fecha.label" default="Fecha" /></span>
+					<span class="property-value" aria-labelledby="fecha-label">
+						<g:fieldValue bean="${noticiaRedInstance}" field="fecha"/></span>					
 				</li>
 				</g:if>
+				
 				<g:if test="${noticiaRedInstance?.hora}">
 				<li class="fieldcontain">
-					<span id="hora-label" class="property-label"><g:message code="noticiaRed.hora.label" default="Hora" /></span>
-					
-						<span class="property-value" aria-labelledby="hora-label"><g:fieldValue bean="${noticiaRedInstance}" field="hora"/></span>
-					
+					<span id="hora-label" class="property-label">
+						<g:message code="noticiaRed.hora.label" default="Hora" /></span>					
+					<span class="property-value" aria-labelledby="hora-label">
+						<g:fieldValue bean="${noticiaRedInstance}" field="hora"/></span>	
 				</li>
 				</g:if>			
 			
-			
-				<g:if test="${noticiaRedInstance?.texto}">
+				<g:if test="${noticiaRedInstance?.administrador}">
 				<li class="fieldcontain">
-					<span id="texto-label" class="property-label"><g:message code="noticiaRed.texto.label" default="Texto" /></span>
-					
-						<span class="property-value" aria-labelledby="texto-label"><g:fieldValue bean="${noticiaRedInstance}" field="texto"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${noticiaRedInstance?.titulo}">
-				<li class="fieldcontain">
-					<span id="titulo-label" class="property-label"><g:message code="noticiaRed.titulo.label" default="Titulo" /></span>
-					
-						<span class="property-value" aria-labelledby="titulo-label"><g:fieldValue bean="${noticiaRedInstance}" field="titulo"/></span>
-					
+					<span id="administrador-label" class="property-label">
+						<g:message code="noticiaRed.administrador.label" default="Administrador" /></span>
+					<span class="property-value" aria-labelledby="administrador-label">
+						<g:link controller="usuario" action="show" id="${noticiaRedInstance?.administrador?.usuario?.id}">
+							${noticiaRedInstance?.administrador?.encodeAsHTML()}</g:link></span>
 				</li>
 				</g:if>
 			
 				<g:if test="${noticiaRedInstance?.visibilidad}">
 				<li class="fieldcontain">
-					<span id="visibilidad-label" class="property-label"><g:message code="noticiaRed.visibilidad.label" default="Visibilidad" /></span>
-					
-						<span class="property-value" aria-labelledby="visibilidad-label"><g:formatBoolean boolean="${noticiaRedInstance?.visibilidad}" /></span>
-					
+					<span id="visibilidad-label" class="property-label">
+						<g:message code="noticiaRed.visibilidad.label" default="Visibilidad" /></span>
+					<span class="property-value" aria-labelledby="visibilidad-label">
+						<g:formatBoolean boolean="${noticiaRedInstance?.visibilidad}" /></span>
+				</li>
+				</g:if>
+			
+				<g:if test="${noticiaRedInstance?.texto}">
+				<li class="fieldcontain">
+					<span id="texto-label" class="property-label">
+						<g:message code="noticiaRed.texto.label" default="Texto" /></span>					
+					<span class="property-value" aria-labelledby="texto-label">
+						<g:fieldValue bean="${noticiaRedInstance}" field="texto"/></span>	
 				</li>
 				</g:if>
 			

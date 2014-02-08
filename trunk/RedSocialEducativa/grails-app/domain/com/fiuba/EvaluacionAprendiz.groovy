@@ -2,7 +2,7 @@ package com.fiuba
 
 class EvaluacionAprendiz {
 
-	static belongsTo = [evaluacion: Evaluacion, aprendiz: Aprendiz]
+	static belongsTo = [aprendiz: Aprendiz, evaluacion: Evaluacion]
 	
     static constraints = {
     }

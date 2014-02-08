@@ -17,7 +17,7 @@ class Actividad {
 	// TODO
 	CategoriaActividad categoria
 
-	static belongsTo = [curso: Curso]
+	static belongsTo = [cuatrimestre: Cuatrimestre]
 
 	// Puede estar asociada a uno o mas temas de un curso
 	static hasMany = [grupos: GrupoActividad, materiales: MaterialActividad, temas: TemaActividad]

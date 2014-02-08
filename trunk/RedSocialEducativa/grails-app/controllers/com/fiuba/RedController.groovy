@@ -41,11 +41,22 @@ class RedController {
 		def mensajes = Mensaje.findAllByReceptorAndLeido(seguridadService.usuarioActual(), Boolean.FALSE)
 		
 		// poner un maximo y un orden a la cantidad de noticias a mostrar en la cartelera
+		// TODO esto vuela, esta para pruebas
+		//<!--<g:render template="header" contextPath="/templates"/>-->
+		def date = new Date()
+		def anio = date.year + 1900
+		def mes = date.month + 1
+		def dia = date.getAt(Calendar.DAY_OF_MONTH)
+		
+		def fecha = 10000 * anio + 100 * mes + dia
+		def calendar = new Date().getCalendarDate()
+		// TODO: borrar lo q esta entre TODO
 		
 		[cursos: Curso.list(params), noticiasRed: NoticiaRed.list(), cursoCant: Curso.count(), 
 			administrador: Administrador.findByUsuario(seguridadService.usuarioActual()),
 			cursosMediador: cursosMediador, cursosAprendiz: cursosAprendiz, 
-			cantMensajes: mensajes.size()]
+			cantMensajes: mensajes.size(), 
+			anio: anio, mes: mes, dia: dia, fecha: fecha, calendar: calendar, hoy: Utilidades.FECHA]
 	}
 	
 	// TODO analogia con los controladores scaffold respond new Class(params)

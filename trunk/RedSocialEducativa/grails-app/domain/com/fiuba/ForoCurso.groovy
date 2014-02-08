@@ -4,7 +4,7 @@ package com.fiuba
 
 class ForoCurso extends Foro {
 
-	static belongsTo = [curso: Curso]
+	static belongsTo = [cuatrimestre: Cuatrimestre]
 	
 	static hasMany = [publicaciones: PublicacionCurso]
 	
