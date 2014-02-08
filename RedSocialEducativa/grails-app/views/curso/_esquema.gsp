@@ -4,8 +4,8 @@
 	</g:if>
 </div>
 <div>
-	<g:if test="${cuatrimestre}">
-		<g:link controller="foroCurso" action="general" params="['cuatrimestreId': cuatrimestre.id]">
+	<g:if test="${cuatrimestreId}">
+		<g:link controller="foroCurso" action="general" params="['cuatrimestreId': cuatrimestreId]">
 			<g:message code="Foro del curso"/></g:link>
 	</g:if>	
 	<g:else>

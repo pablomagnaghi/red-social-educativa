@@ -7,20 +7,18 @@ import org.springframework.security.access.annotation.Secured
 @Secured('permitAll')
 class AdministradorController {
 
-	// Administrador
-	// 7. Registrar y eliminar materias y cursos de materias
-	// 8. Administrar cartelera general (publicar, modificar y eliminar anuncios)
-	// 9. Administrar parámetros de configuración de toda la red (duración del ciclo de conservación de
-	// calificaciones)
-	// 10. Crear y administrar (depurar y eliminar) foros generales
-	// 11. Aceptar miembros
-	// 12. Asignar y revocar roles de mediador en cursos
-	// 13. Visualizar información y material de los cursos (foros, temas y material general)
+	// Tareas:
+	// * Registrar y eliminar materias y cursos de materias
+	// * Administrar cartelera general (publicar, modificar y eliminar anuncios)
+	// * Administrar parámetros de configuración de toda la red (duración del ciclo de conservación de calificaciones)
+	// * Crear y administrar (depurar y eliminar) foros generales
+	// * Aceptar miembros
+	// * Asignar y revocar roles de mediador en cursos
+	// * Visualizar información y material de los cursos (foros, temas y material general)
 	
 	def administradorService
 	
 	def general = {
-		[usuarios: Usuario.findAllByEnabled(false)]
 	}
 
 	def activarUsuario() {
@@ -32,7 +30,6 @@ class AdministradorController {
 		} else {
 			flash.message = "Problemas con el usuario"
 			redirect(action: "general")
-			return
 		}
 	}
 }

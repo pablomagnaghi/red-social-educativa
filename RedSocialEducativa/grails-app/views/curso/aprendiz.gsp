@@ -21,30 +21,36 @@
 			</fieldset>   
 		</div>
 		<div>
-			<h2>"${aprendiz.participa}"</h2>
-			<g:if test="${aprendiz.participa}">	
-				<div>
-					<g:link action="actividades" params="['cuatrimestreId': cuatrimestreId]">
-					<g:message code="Actividades del cuatrimestre"/></g:link>
-				</div>	
-				<div>
-					<g:link action="evaluaciones" params="['cuatrimestreId': cuatrimestreId]">
-					<g:message code="Evaluaciones del cuatrimestre"/></g:link>
-				</div>
-				<div>
-					<g:link action="mostrar" controller="evaluacion" params="['cursoId': cursoId]">
-					<g:message code="Mis evaluaciones en el curso"/></g:link>
-				</div>
-				
-				<li><g:link class="list" action="general" controller="grupoCurso" params="['cuatrimestreId': cuatrimestreId]">
-					<g:message code="Los grupos del cuatrimestre"/></g:link></li>
-				<g:if test="${aprendiz?.grupo}">
-					<li><g:link class="list" action="mostrar" controller="grupoCurso" id="${aprendiz?.grupo.id}" params="['cuatrimestreId': cuatrimestreId]">
-						<g:message code="Mi grupo"/></g:link></li>
-				</g:if>	
-					
-					
-	    	</g:if>
+			<h2>"PARTICIPA: ${aprendiz.participa}"</h2>	
+			<h2>"CURSANDO: ${cursando}"</h2>
+			<g:if test="${aprendiz.participa}">
+				<g:if test="${cursando}">	
+					<div>
+						<g:link action="actividades" params="['cuatrimestreId': cuatrimestreId]">
+						<g:message code="Actividades del cuatrimestre"/></g:link>
+					</div>	
+					<div>
+						<g:link action="evaluaciones" params="['cuatrimestreId': cuatrimestreId]">
+						<g:message code="Evaluaciones del cuatrimestre"/></g:link>
+					</div>
+					<div>
+						<g:link action="mostrar" controller="evaluacion" params="['cursoId': cursoId]">
+						<g:message code="Mis evaluaciones en el curso"/></g:link>
+					</div>
+					<div>
+						<li><g:link class="list" action="general" controller="grupoCurso" params="['cuatrimestreId': cuatrimestreId]">
+							<g:message code="Los grupos del cuatrimestre"/></g:link></li>
+						<g:if test="${aprendiz?.grupo}">
+							<li><g:link class="list" action="mostrar" controller="grupoCurso" id="${aprendiz?.grupo.id}" 
+								params="['cuatrimestreId': cuatrimestreId]">
+								<g:message code="Mi grupo"/></g:link></li>
+						</g:if>	
+					</div>
+		    	</g:if>
+		    	<g:else>
+		    		<p>Usted curso la materia durante el cuatrimestre: ${aprendiz.cuatrimestre.anio} - ${aprendiz.cuatrimestre.numero}</p>
+		    	</g:else>
+		    </g:if>		
 	    	<g:else>
 			    <p>Su solicitud de particion en el curso ya ha sido recibida.</p>
 			</g:else>    
