@@ -11,9 +11,9 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link controller="actividad" action="index" id="${actividadId}" params="['cursoId': cursoId]">
+				<li><g:link controller="actividad" action="index" id="${actividadId}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 					<g:message code="Lista de actividades del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
-				<li><g:link controller="actividad" action="show" id="${actividadId}" params="['cursoId': cursoId, 'actividadId': actividadId]">
+				<li><g:link controller="actividad" action="show" id="${actividadId}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]">
 					<g:message code="Actividad: ${com.fiuba.Actividad.get(actividadId)}" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -29,7 +29,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="save" params="['cursoId': params.cursoId, 'actividadId': params.actividadId]" >
+			<g:form action="save" params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': params.actividadId]" >
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>

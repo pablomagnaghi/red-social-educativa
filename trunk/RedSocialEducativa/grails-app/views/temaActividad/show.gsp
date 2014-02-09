@@ -13,11 +13,11 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link controller="actividad" action="index" id="${actividadId}" params="['cursoId': cursoId]">
+				<li><g:link controller="actividad" action="index" id="${actividadId}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 					<g:message code="Lista de actividads del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
-				<li><g:link controller="actividad" action="show" id="${actividadId}" params="['cursoId': cursoId, 'actividadId': actividadId]">
+				<li><g:link controller="actividad" action="show" id="${actividadId}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]">
 					<g:message code="Actividad: ${com.fiuba.Actividad.get(actividadId)}" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create" params="['cursoId': cursoId, 'actividadId': actividadId]">
+				<li><g:link class="create" action="create" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -32,7 +32,10 @@
 				<li class="fieldcontain">
 					<span id="actividad-label" class="property-label"><g:message code="temaActividad.actividad.label" default="Actividad" /></span>
 					
-						<span class="property-value" aria-labelledby="actividad-label"><g:link controller="actividad" action="show" id="${temaActividadInstance?.actividad?.id}">${temaActividadInstance?.actividad?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="actividad-label">
+							<g:link controller="actividad" action="show" id="${temaActividadInstance?.actividad?.id}"
+								params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]">
+									${temaActividadInstance?.actividad?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>
@@ -41,16 +44,19 @@
 				<li class="fieldcontain">
 					<span id="tema-label" class="property-label"><g:message code="temaActividad.tema.label" default="Tema" /></span>
 					
-						<span class="property-value" aria-labelledby="tema-label"><g:link controller="tema" action="show" id="${temaActividadInstance?.tema?.id}">${temaActividadInstance?.tema?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="tema-label">
+							<g:link controller="tema" action="show" id="${temaActividadInstance?.tema?.id}" params="['cursoId': cursoId]">
+								${temaActividadInstance?.tema?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>
 			
 			</ol>
-			<g:form action="delete" method="DELETE" id="${temaActividadInstance.id}" params="['cursoId': cursoId, 'actividadId': actividadId]">
+			<g:form action="delete" method="DELETE" id="${temaActividadInstance.id}" 
+				params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]">
 				<fieldset class="buttons">
 					<g:link class="edit" action="edit" resource="${temaActividadInstance}"
-					id="${temaActividadInstance.id}" params="['cursoId': cursoId, 'actividadId': actividadId]">
+					id="${temaActividadInstance.id}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]">
 						<g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
 						onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />

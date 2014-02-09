@@ -13,11 +13,11 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link controller="actividad" action="index" id="${actividadId}" params="['cursoId': cursoId]">
+				<li><g:link controller="actividad" action="index" id="${actividadId}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 					<g:message code="Lista de actividads del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
-				<li><g:link controller="actividad" action="show" id="${actividadId}" params="['cursoId': cursoId, 'actividadId': actividadId]">
+				<li><g:link controller="actividad" action="show" id="${actividadId}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]">
 					<g:message code="Actividad: ${com.fiuba.Actividad.get(actividadId)}" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create" params="['cursoId': cursoId, 'actividadId': actividadId]">
+				<li><g:link class="create" action="create" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -32,7 +32,10 @@
 				<li class="fieldcontain">
 					<span id="actividad-label" class="property-label"><g:message code="materialActividad.actividad.label" default="Actividad" /></span>
 					
-						<span class="property-value" aria-labelledby="actividad-label"><g:link controller="actividad" action="show" id="${materialActividadInstance?.actividad?.id}">${materialActividadInstance?.actividad?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="actividad-label">
+						<g:link controller="actividad" action="show" id="${materialActividadInstance?.actividad?.id}"
+							params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]">
+								${materialActividadInstance?.actividad?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>
@@ -93,10 +96,10 @@
 				</g:if>
 			
 			</ol>
-			<g:form action="delete" method="DELETE" id="${materialActividadInstance.id}" params="['cursoId': cursoId, 'actividadId': actividadId]">
+			<g:form action="delete" method="DELETE" id="${materialActividadInstance.id}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]">
 				<fieldset class="buttons">
 					<g:link class="edit" action="edit" resource="${materialActividadInstance}"
-					id="${materialActividadInstance.id}" params="['cursoId': cursoId, 'actividadId': actividadId]">
+					id="${materialActividadInstance.id}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]">
 						<g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
 						onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />

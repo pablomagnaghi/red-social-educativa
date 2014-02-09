@@ -19,6 +19,11 @@
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+		
+		<h3>curso: ${cursoId}</h3>
+		<h3>cuatri: ${cuatrimestreId}</h3>
+		<h3>act: ${actividadId}</h3>
+		
 		<div id="show-actividad" class="content scaffold-show" role="main">
 			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">

@@ -12,7 +12,7 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" controller="actividad" action="general" id="${actividadId}" params="['cursoId': cursoId]">
+				<li><g:link class="create" controller="actividad" action="general" id="${actividadId}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 					<g:message code="Actividad ${actividad}" /></g:link></li>	
 			</ul>
 		</div>
@@ -38,7 +38,7 @@
 					</g:each>
 				</ol>	
 			<div class="pagination">
-				<g:paginate total="${materialesCant ?: 0}" params="['cursoId': cursoId, 'actividadId': actividadId]"/>
+				<g:paginate total="${materialesCant ?: 0}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]"/>
 			</div>
 		</div>	
 	</body>

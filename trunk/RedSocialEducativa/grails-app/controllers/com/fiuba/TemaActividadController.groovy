@@ -19,6 +19,7 @@ class TemaActividadController {
 	}
 	
 	def cursoId
+	def cuatrimestreId
 	def actividadId
 		
 	def general() {
@@ -29,13 +30,14 @@ class TemaActividadController {
 		println "foro Tema general actividadId: ${params.actividadId}"
 			
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		actividadId = params.actividadId
 					
 		def actividad = Actividad.get(actividadId)
 		
 		[temas: TemaActividad.findAllByActividad(actividad, [max: params.max, offset: params.offset]),
 			temasCant: TemaActividad.findAllByActividad(actividad).size(),
-			actividad: actividad, cursoId: cursoId, actividadId: actividadId]
+			actividad: actividad, cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId]
 	}
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -46,9 +48,10 @@ class TemaActividadController {
 		println "material Id: ${params.id}"
 		
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		actividadId = params.actividadId
 		
-		respond temaActividadInstance, model: [cursoId: cursoId, actividadId: actividadId]
+		respond temaActividadInstance, model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId]
 
     }
 
@@ -56,10 +59,11 @@ class TemaActividadController {
        	println "create material tema params: ${params}"
 		
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		actividadId = params.actividadId
 		
-		respond new TemaActividad(params), params:['cursoId': cursoId],
-			model:[cursoId: cursoId, actividadId: actividadId]
+		respond new TemaActividad(params), params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId],
+			model:[cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId]
     }
 
     @Transactional
@@ -70,11 +74,12 @@ class TemaActividadController {
         }
 
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		actividadId = params.actividadId
 		
         if (temaActividadInstance.hasErrors()) {
-            respond temaActividadInstance.errors, view:'create', params: ['cursoId': cursoId, 'actividadId': actividadId],
-			model: [cursoId: cursoId, actividadId: actividadId]
+            respond temaActividadInstance.errors, view:'create', params: ['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId],
+			model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId]
             return
         }
 
@@ -83,7 +88,7 @@ class TemaActividadController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'temaActividadInstance.label', default: 'TemaActividad'), temaActividadInstance.id])
-                redirect controller:"actividad", action:"show", params:['id': actividadId, 'cursoId': cursoId, 'actividadId': actividadId]
+                redirect controller:"actividad", action:"show", params:['id': actividadId, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]
             }
             '*' { respond temaActividadInstance, [status: CREATED] }
         }
@@ -93,8 +98,9 @@ class TemaActividadController {
 		println "edit material tema params: ${params}"
 		
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		actividadId = params.actividadId
-		respond temaActividadInstance, model: [cursoId: cursoId, actividadId: actividadId]
+		respond temaActividadInstance, model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId]
     }
 
     @Transactional
@@ -103,6 +109,7 @@ class TemaActividadController {
 		println "update material actividad params: ${params}"
 		
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		actividadId = params.actividadId
 		
 		if (temaActividadInstance == null) {
@@ -111,8 +118,8 @@ class TemaActividadController {
         }
 
         if (temaActividadInstance.hasErrors()) {
-            respond temaActividadInstance.errors, view:'edit', params:['cursoId': cursoId, 'actividadId': actividadId],
-				model: [cursoId: cursoId, actividadId: actividadId]
+            respond temaActividadInstance.errors, view:'edit', params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId],
+				model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId]
             return
         }
 
@@ -121,7 +128,7 @@ class TemaActividadController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'TemaActividad.label', default: 'TemaActividad'), temaActividadInstance.id])
-                redirect action:"show", params:['id': temaActividadInstance.id, 'cursoId': cursoId, 'actividadId': actividadId]
+                redirect action:"show", params:['id': temaActividadInstance.id, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]
             }
             '*'{ respond temaActividadInstance, [status: OK] }
         }
@@ -136,6 +143,7 @@ class TemaActividadController {
         }
 		
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		actividadId = params.actividadId
 
         temaActividadInstance.delete flush:true
@@ -143,7 +151,7 @@ class TemaActividadController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'TemaActividad.label', default: 'TemaActividad'), temaActividadInstance.id])
-                redirect controller:"actividad", action:"show", params:['id': actividadId], method:"GET"
+                redirect controller:"actividad", action:"show", params:['id': actividadId, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], method:"GET"
             }
             '*'{ render status: NO_CONTENT }
         }
@@ -153,7 +161,7 @@ class TemaActividadController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'temaActividadInstance.label', default: 'TemaActividad'), params.id])
-                redirect controller: "actividad", action:"show", params:['id': actividadId], method: "GET"
+                redirect controller: "actividad", action:"show", params:['id': actividadId, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], method: "GET"
             }
             '*'{ render status: NOT_FOUND }
         }
