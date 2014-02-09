@@ -13,11 +13,8 @@ class RedController {
 	// * Dejar comentario o mensaje en un foro general de la red
 	// * Solicitar membresia
 	// * Conectarse
-	
-	
+
 	def seguridadService
-	
-	//Red.withCriteria(uniqueResult:true){ eq: 'titulo', 'Red Social Educativa del Departamento de Computacion de la Fiuba" }//
 	
     def principal() { 
 		
@@ -49,7 +46,7 @@ class RedController {
 		[cursos: Curso.list(params), noticiasRed: NoticiaRed.list(), cursoCant: Curso.count(), 
 			administrador: Administrador.findByUsuario(seguridadService.usuarioActual()),
 			cursosMediador: cursosMediador, cursosAprendiz: cursosAprendiz, 
-			cantMensajes: mensajes.size(), fecha: Utilidades.FECHA]
+			cantMensajes: mensajes.size()]
 	}
 	
 	// TODO analogia con los controladores scaffold respond new Class(params)
@@ -84,13 +81,13 @@ class RedController {
 	}
 	
 	def configuracion = {
-		[redInstance: Red.first()]
+		[redInstance: Red.instance]
 	}
 	
 	def actualizarConfiguracion = {
 		println "params: ${params}"
 		
-		def red = Red.first()
+		def red = Red.instance
 		red.properties = params
 
 		if(!red.validate()) {
