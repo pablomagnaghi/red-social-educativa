@@ -183,7 +183,7 @@ class CursoController {
 
 		[actividades: Actividad.findAllByCuatrimestre(cuatrimestre,[max: params.max, offset: params.offset]),
 			actividadesCant: Actividad.findAllByCuatrimestre(cuatrimestre).size(), cursoId: cursoId,
-			cuatrimestreId: cuatrimestreId,
+			cuatrimestreId: cuatrimestre?.id,
 			mediador: Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId)),
 			aprendiz: cursoService.obtenerAprendizCurso(seguridadService.usuarioActual(), cursoId)]
 	}

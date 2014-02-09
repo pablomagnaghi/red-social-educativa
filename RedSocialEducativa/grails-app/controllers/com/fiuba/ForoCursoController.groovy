@@ -20,6 +20,9 @@ class ForoCursoController {
 			return null
 	}
 	
+	
+	// TODO VERRRRR
+	def cursoId
 	def cuatrimestreId
 	
 	def general() {
@@ -30,6 +33,7 @@ class ForoCursoController {
 		
 		println "foro curso general CURSOID: ${params.cursoId}"
 		
+		cursoId = params.cursoId
 		cuatrimestreId = params.cuatrimestreId
 				
 		def cuatrimestre = Cuatrimestre.get(cuatrimestreId)
@@ -37,7 +41,7 @@ class ForoCursoController {
 		[publicaciones: PublicacionCurso.findAllByForoAndPublicacionInicial(ForoCurso.findByCuatrimestre(cuatrimestre), 
 			null, [max: params.max, offset: params.offset]),
 		publicacionesCant: PublicacionCurso.findAllByForoAndPublicacionInicial(ForoCurso.findByCuatrimestre(cuatrimestre), null).size(),
-		cuatrimestreId: cuatrimestreId]
+		cursoId: cursoId, cuatrimestreId: cuatrimestreId]
 	}
 	
 	def publicaciones() {
@@ -50,14 +54,12 @@ class ForoCursoController {
 
 		println "foro cuatrimestre publicaciones cuatrimestreID: ${params.cuatrimestreId}"
 		
+		cursoId = params.cursoId
 		cuatrimestreId = params.cuatrimestreId
 				
 		def cuatrimestre = Cuatrimestre.get(cuatrimestreId)
 		println "cuatrimestre: ${cuatrimestre}"
 		def foroId = cuatrimestre.foro.id
-		
-		
-		println PublicacionGeneral.first().foro.id
 		
 		def c = PublicacionCurso.createCriteria()
 		def respuestas = c.list([max: params.max, offset: offset]){
@@ -75,15 +77,13 @@ class ForoCursoController {
 		
 		println "respuestas"
 		println respuestas
-
-	
 		
 		[publicacion: PublicacionCurso.get(publicacionId), pubInicialId: publicacionId,
 			respuestas: respuestas,
 			respuestasCant: respuestasCant,
 			usuario: Usuario.findByUsername(usuarioActual()?.username),
 			mediador: Mediador.findByUsuarioAndCurso(usuarioActual(), cuatrimestre.curso),
-			cursoId: cursoId]
+			cursoId: cursoId, cuatrimestreId: cuatrimestreId]
 		
 	}
 }

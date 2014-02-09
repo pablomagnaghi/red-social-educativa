@@ -27,7 +27,7 @@
 </div>
 
 <div>
-	<g:hiddenField name="foro.id" value="${com.fiuba.ForoCurso.findByCurso(com.fiuba.Curso.get(cursoId)).id}"/>
+	<g:hiddenField name="foro.id" value="${com.fiuba.ForoCurso.findByCuatrimestre(com.fiuba.Cuatrimestre.get(cuatrimestreId)).id}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: publicacionCursoInstance, field: 'contenido', 'error')} ">

@@ -67,7 +67,10 @@
 				<br>
 				<li><g:link class="list" action="index" controller="evaluacion" params="['cursoId': cursoId]">
 					<g:message code="Administrar evaluaciones del curso" /></g:link></li>	
-				<br>		
+				<br>
+				<li><g:link class="list" action="index" controller="cuatrimestre" params="['cursoId': cursoId]">
+					<g:message code="Consolidar cuatrimestre (IMPLEMENTAR)" /></g:link></li>	
+				<br>			
 				<p>AGREGAR CONSOLIDAR CUATRIMESTRE, ESTE METODO TIENE QUE LLAMAR A NEW CUATRIMESTRE Y ADEMAS CONSOLIDAR EL ANTERIOR</p>	
 			</ol>
 		</div>

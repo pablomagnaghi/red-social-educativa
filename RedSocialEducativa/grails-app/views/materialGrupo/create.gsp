@@ -11,9 +11,10 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link controller="grupoCurso" action="general" params="['cursoId': cursoId]">
+				<li><g:link controller="grupoCurso" action="general" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 					<g:message code="Lista de grupos del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
-				<li><g:link controller="grupoCurso" action="mostrar" id="${grupoId}" params="['cursoId': cursoId, 'grupoId': grupoId]">
+				<li><g:link controller="grupoCurso" action="mostrar" id="${grupoId}" 
+					params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'grupoId': grupoId]">
 					<g:message code="Grupo: ${com.fiuba.GrupoCurso.get(grupoId)}" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -29,7 +30,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="save" params="['cursoId': params.cursoId, 'grupoId': params.grupoId]" >
+			<g:form action="save" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'grupoId': params.grupoId]" >
 				<fieldset class="form">
 					<g:render template="form"/>
 						<div> <g:hiddenField name="responsable" value="${aprendiz}-${aprendiz?.usuario?.padron}"/></div>

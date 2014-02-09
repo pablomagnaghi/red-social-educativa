@@ -13,9 +13,9 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" controller="curso" action="aprendiz" params="['cursoId': cursoId]">
+				<li><g:link class="create" controller="curso" action="aprendiz" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 					<g:message code="Menu aprendiz" args="[entityName]" /></g:link></li>
-				<li><g:link class="list" action="general" params="['cursoId': cursoId]">
+				<li><g:link class="list" action="general" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 					<g:message code="Lista de grupos" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -33,7 +33,7 @@
 						<g:each in="${grupoCursoInstance.materiales}" var="m">
 						<span class="property-value" aria-labelledby="materiales-label">
 							<g:link controller="materialGrupo" action="show" id="${m.id}" 
-								params="['cursoId': cursoId, 'grupoId': grupoCursoInstance.id]">${m?.encodeAsHTML()}</g:link></span>
+								params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId, 'grupoId': grupoCursoInstance.id]">${m?.encodeAsHTML()}</g:link></span>
 						</g:each>
 				</li>
 				</g:if>
@@ -43,7 +43,9 @@
 					<span id="aprendices-label" class="property-label"><g:message code="grupoCurso.aprendices.label" default="Aprendices" /></span>
 					
 						<g:each in="${grupoCursoInstance.aprendices}" var="a">
-						<span class="property-value" aria-labelledby="aprendices-label"><g:link controller="usuario" action="show" id="${a.usuario.id}">${a?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="aprendices-label">
+							<g:link controller="usuario" action="show" id="${a.usuario.id}" 
+								params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">${a?.encodeAsHTML()}</g:link></span>
 						</g:each>
 					
 				</li>
@@ -72,18 +74,18 @@
 				<g:if test="${!participa}">
 					<g:link class="edit" action="agregarme"
 						resource="${grupoCursoInstance}" id="${grupoCursoInstance.id}"
-						params="['cursoId': cursoId]">
+						params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 						<g:message code="Agregarme al grupo" />
 					</g:link>
 				</g:if>
 				<g:else>
 					<g:link class="edit" action="editar"
 						resource="${grupoCursoInstance}" id="${grupoCursoInstance.id}"
-						params="['cursoId': cursoId]">
+						params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 						<g:message code="Editar nombre de grupo" />
 					</g:link>
 					<g:link class="edit" controller="materialGrupo" action="create"
-						params="['grupoId': grupoCursoInstance?.id, 'cursoId': cursoId]">
+						params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId, 'grupoId': grupoCursoInstance.id]">
 						<g:message code="Agregar material al grupo" />
 					</g:link>
 				</g:else>

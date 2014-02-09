@@ -19,6 +19,7 @@ class MaterialGrupoController {
 	}
 	
 	def cursoId
+	def cuatrimestreId
 	def grupoId
 	
     def muestraMediador (MaterialGrupo materialGrupoInstance) {
@@ -27,9 +28,10 @@ class MaterialGrupoController {
 		println "material grupo Id: ${params.id}"
 		
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		grupoId = params.grupoId
 		
-		respond materialGrupoInstance, model: [cursoId: cursoId, grupoId: grupoId]
+		respond materialGrupoInstance, model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId, grupoId: grupoId]
     }
 	
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -40,9 +42,10 @@ class MaterialGrupoController {
 		println "material grupo Id: ${params.id}"
 		
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		grupoId = params.grupoId
 		
-		respond materialGrupoInstance, model: [cursoId: cursoId, grupoId: grupoId]
+		respond materialGrupoInstance, model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId, grupoId: grupoId]
     }
 
 
@@ -51,10 +54,11 @@ class MaterialGrupoController {
 		println "material grupo params: ${params}"
 		
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		grupoId = params.grupoId
-		def aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
-		respond new MaterialGrupo(params), params:['cursoId': cursoId],
-			model:[cursoId: cursoId, grupoId: grupoId, aprendiz: aprendiz]
+		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuarioActual(), Cuatrimestre.get(cuatrimestreId))
+		respond new MaterialGrupo(params), params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId],
+			model:[cursoId: cursoId, cuatrimestreId: cuatrimestreId, grupoId: grupoId, aprendiz: aprendiz]
     }
 	
     @Transactional
@@ -65,12 +69,13 @@ class MaterialGrupoController {
         }
 
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		grupoId = params.grupoId
 		
 		
         if (materialGrupoInstance.hasErrors()) {
-            respond materialGrupoInstance.errors, view:'create', params: ['cursoId': cursoId, 'grupoId': grupoId],
-			model: [cursoId: cursoId, grupoId: grupoId]
+            respond materialGrupoInstance.errors, view:'create', params: ['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'grupoId': grupoId],
+			model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId, grupoId: grupoId]
 			return
         }
 
@@ -79,7 +84,7 @@ class MaterialGrupoController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'materialGrupoInstance.label', default: 'MaterialGrupo'), materialGrupoInstance.id])
-                redirect controller:"grupoCurso", action:"mostrar", params:['id': grupoId, 'cursoId': cursoId, 'grupoId': grupoId]			
+                redirect controller:"grupoCurso", action:"mostrar", params:['id': grupoId, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'grupoId': grupoId]			
             }
             '*' { respond materialGrupoInstance, [status: CREATED] }
         }
@@ -87,9 +92,10 @@ class MaterialGrupoController {
 
     def edit(MaterialGrupo materialGrupoInstance) {
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		grupoId = params.grupoId
 		
-		respond materialGrupoInstance, model: [cursoId: cursoId, grupoId: grupoId]
+		respond materialGrupoInstance, model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId, grupoId: grupoId]
     }
 
     @Transactional
@@ -98,6 +104,7 @@ class MaterialGrupoController {
 		
 		
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		grupoId = params.grupoId
 		
 		if (materialGrupoInstance == null) {
@@ -106,8 +113,8 @@ class MaterialGrupoController {
         }
 
         if (materialGrupoInstance.hasErrors()) {
-            respond materialGrupoInstance.errors, view:'edit', params:['cursoId': cursoId, 'grupoId': grupoId],
-				model: [cursoId: cursoId, grupoId: grupoId]
+            respond materialGrupoInstance.errors, view:'edit', params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'grupoId': grupoId],
+				model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId, grupoId: grupoId]
             return
         }
 
@@ -116,7 +123,7 @@ class MaterialGrupoController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'MaterialGrupo.label', default: 'MaterialGrupo'), materialGrupoInstance.id])
-                redirect action:"show", params:['id': materialGrupoInstance.id, 'cursoId': cursoId, 'grupoId': grupoId]
+                redirect action:"show", params:['id': materialGrupoInstance.id, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'grupoId': grupoId]
             }
             '*'{ respond materialGrupoInstance, [status: OK] }
         }
@@ -131,6 +138,7 @@ class MaterialGrupoController {
         }
 
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		grupoId = params.grupoId
 		
         materialGrupoInstance.delete flush:true
@@ -138,7 +146,7 @@ class MaterialGrupoController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'MaterialGrupo.label', default: 'MaterialGrupo'), materialGrupoInstance.id])
-                redirect controller:"grupoCurso", action:"mostrar", params:['id': grupoId, 'cursoId': cursoId], method:"GET"
+                redirect controller:"grupoCurso", action:"mostrar", params:['id': grupoId, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], method:"GET"
             }
             '*'{ render status: NO_CONTENT }
         }
@@ -148,7 +156,7 @@ class MaterialGrupoController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'materialGrupoInstance.label', default: 'MaterialGrupo'), params.id])
-                redirect controller: "grupoCurso", action:"mostrar", params:['id': grupoId, 'cursoId': cursoId], method: "GET"
+                redirect controller: "grupoCurso", action:"mostrar", params:['id': grupoId, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], method: "GET"
             }
             '*'{ render status: NOT_FOUND }
         }

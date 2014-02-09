@@ -12,9 +12,10 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" controller="curso" action="aprendiz" params="['cursoId': cursoId]">
+				<li><g:link class="create" controller="curso" action="aprendiz" 
+					params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 					<g:message code="Menu aprendiz" args="[entityName]" /></g:link></li>		
-				<li><g:link class="create" action="crear" params="['cursoId': cursoId]">
+				<li><g:link class="create" action="crear" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 					<g:message code="Crear grupo" args="[entityName]" /></g:link></li>		
 			</ul>
 		</div>
@@ -28,10 +29,10 @@
 					<tr>
 					
 						<g:sortableColumn property="usuario" title="${message(code: 'aprendiz.usuario.label', default: 'Usuario')}" 
-							params="['cursoId': cursoId]" />
+							params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]" />
 					
 						<g:sortableColumn property="grupo" title="${message(code: 'aprendiz.grupo.label', default: 'Grupo')}"  
-							params="['cursoId': cursoId]"/>
+							params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]"/>
 						
 						<td>Detalle</td>	
 					
@@ -45,14 +46,15 @@
 					
 						<td>${fieldValue(bean: aprendizInstance, field: "grupo")}</td>			
 						
-						<td><g:link action="mostrar" id="${aprendizInstance.grupo.id}" params="['cursoId': cursoId]">Ver detalle</g:link></td>	
+						<td><g:link action="mostrar" id="${aprendizInstance.grupo.id}" 
+							params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">Ver detalle</g:link></td>	
 					
 					</tr>
 				</g:each>
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${aprendizInstanceCount ?: 0}" params="['cursoId': cursoId]" />
+				<g:paginate total="${aprendizInstanceCount ?: 0}" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]" />
 			</div>
 		</div>
 	</body>

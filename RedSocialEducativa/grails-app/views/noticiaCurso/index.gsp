@@ -15,7 +15,7 @@
 					<g:message code="default.home.label"/></a></li>
 				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': cursoId]">
 					<g:message code="Tareas mediador" /></g:link></li>
-				<li><g:link class="create" action="create" params="['cursoId': cursoId]">
+				<li><g:link class="create" action="create" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -57,7 +57,8 @@
 					
 						<td>${fieldValue(bean: noticiaCursoInstance, field: "titulo")}</td>
 					
-						<td><g:link action="show" id="${noticiaCursoInstance.id}" params="['cursoId': cursoId]">
+						<td><g:link action="show" id="${noticiaCursoInstance.id}" 
+							params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 							Ver detalle</g:link></td>
 					
 					</tr>
@@ -65,7 +66,7 @@
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${noticiaCursoInstanceCount ?: 0}" params="['cursoId': cursoId]"/>
+				<g:paginate total="${noticiaCursoInstanceCount ?: 0}" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]"/>
 			</div>
 		</div>
 	</body>

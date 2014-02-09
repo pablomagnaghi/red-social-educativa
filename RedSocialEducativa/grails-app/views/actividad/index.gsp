@@ -13,9 +13,9 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="menuMediador" controller="curso" params="['cuatrimestreId': cuatrimestreId]">
+				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': cursoId]">
 					<g:message code="Tareas mediador" /></g:link></li>
-				<li><g:link class="create" action="create" params="['cuatrimestreId': cuatrimestreId]">
+				<li><g:link class="create" action="create" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>	
 			</ul>
 		</div>
@@ -47,14 +47,15 @@
 					
 						<td>${fieldValue(bean: actividadInstance, field: "categoria")}</td>
 						
-						<td><g:link action="show" id="${actividadInstance.id}">Ver detalle</g:link></td>
+						<td><g:link action="show" id="${actividadInstance.id}" 
+							params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">Ver detalle</g:link></td>
 						
 					</tr>
 				</g:each>
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${actividadInstanceCount ?: 0}" params="['cuatrimestreId': cuatrimestreId]" />
+				<g:paginate total="${actividadInstanceCount ?: 0}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]" />
 			</div>
 		</div>
 	</body>

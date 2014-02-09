@@ -12,7 +12,7 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" controller="publicacionCurso" action="nueva" params="['cuatrimestreId': cuatrimestreId]">
+				<li><g:link class="create" controller="publicacionCurso" action="nueva" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 					<g:message code="Nueva publicacion" /></g:link></li>
 			</ul>
 		</div>
@@ -22,7 +22,9 @@
 			</g:if>
 		</div>	
 		<div>
-			<h2>Foro Curso: ${com.fiuba.ForoCurso.findByCuatrimestre(com.fiuba.Cuatrimestre.get(cuatrimestreId)).cuatrimestre.curso}</h2>
+			<h2>Foro Curso: ${com.fiuba.ForoCurso.findByCuatrimestre(com.fiuba.Cuatrimestre.get(cuatrimestreId))}</h2>
+			<h2>Curso: ${com.fiuba.Curso.get(cursoId)}</h2>
+			<h2>Cuatrimestre: ${com.fiuba.Cuatrimestre.get(cuatrimestreId)}</h2>
 			<br>
 			<table>
 			<thead>
@@ -36,7 +38,7 @@
 			<tbody>
 				<g:each in="${publicaciones}" >
 					<tr>
-						<td><g:link action="publicaciones" id="${it.id}" params="['cursoId': cursoId]">${it.titulo}</g:link></td>
+						<td><g:link action="publicaciones" id="${it.id}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">${it.titulo}</g:link></td>
 						<td>${it.responsable}</td>
 						<td>${it.respuestas?.size()}</td>
 						<td>
@@ -56,7 +58,7 @@
 			</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${publicacionesCant ?: 0}" params="['cuatrimestreId': cuatrimestreId]"/>
+				<g:paginate total="${publicacionesCant ?: 0}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]"/>
 			</div>
 		</div>
 	</body>
