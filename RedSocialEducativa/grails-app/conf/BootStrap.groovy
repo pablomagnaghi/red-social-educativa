@@ -672,7 +672,7 @@ class BootStrap {
 		}
 		
 		// Red
-		def red = new Red()
+		def red = Red.instance
 		
 		if (!red.validate()) {
 			println red.errors
