@@ -15,9 +15,9 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index" params="['cursoId': params.cursoId]">
+				<li><g:link class="list" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create" params="['cursoId': params.cursoId]">
+				<li><g:link class="create" action="create" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -33,7 +33,8 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="update" method="PUT" id="${noticiaCursoInstance.id}" params="['cursoId': params.cursoId]">
+			<g:form action="update" method="PUT" id="${noticiaCursoInstance.id}" 
+				params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 				<g:hiddenField name="version" value="${noticiaCursoInstance?.version}" />
 				<fieldset class="form">
 					<g:render template="form"/>

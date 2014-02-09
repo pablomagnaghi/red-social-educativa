@@ -12,13 +12,14 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="general" params="['cursoId': cursoId]">
+				<li><g:link class="create" action="general" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 					<g:message code="Volver a foro Curso" /></g:link></li>	
-				<li><g:link class="create" controller="publicacionCurso" action="nueva" params="['pubInicialId': pubInicialId, 'cursoId': cursoId]">
+				<li><g:link class="create" controller="publicacionCurso" action="nueva" 
+					params="['pubInicialId': pubInicialId, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 					<g:message code="Publicar respuesta" /></g:link></li>
 				<g:if test="${mediador}">
 					<li><g:link class="create" controller="publicacionCurso" action="eliminar" id="${pubInicialId}" 
-						params="['pubInicialId': pubInicialId, 'cursoId': cursoId]">
+						params="['pubInicialId': pubInicialId, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 						<g:message code="Eliminar tema" /></g:link></li>
 				</g:if>	
 			</ul>
@@ -55,28 +56,28 @@
 						<g:if test="${usuario}">
 							<h2>es usuario</h2>
 							<g:if test="${mediador || (
-								com.fiuba.Aprendiz.findByUsuarioAndCurso(
+								com.fiuba.Aprendiz.findByUsuarioAndCuatrimestre(
 								com.fiuba.Usuario.findByUsername(it.dni), 
-								com.fiuba.Curso.get(cursoId)) && (it.dni == usuario.username))}">
+								com.fiuba.Cuatrimestre.get(cuatrimestreId)) && (it.dni == usuario.username))}">
 								<g:if test="${!it.id.equals(pubInicialId as long)}">								
 									<td>
 										<g:link controller="publicacionCurso" action="editar" id="${it.id}" 
-											params="['pubInicialId': pubInicialId, 'cursoId': cursoId]">
+											params="['pubInicialId': pubInicialId, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 											<g:message code="Editar" /></g:link>
 										-
 										<g:link controller="publicacionCurso" action="eliminar" 
-											id="${it.id}" params="['pubInicialId': pubInicialId, 'cursoId': cursoId]">
+											id="${it.id}" params="['pubInicialId': pubInicialId, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 											<g:message code="Borrar" /></g:link>
 									</td>	
 								</g:if>
 								<g:else>
 									<td>
 										<g:link controller="publicacionCurso" action="editar" id="${it.id}" 
-											params="['pubInicialId': pubInicialId, 'cursoId': cursoId]">
+											params="['pubInicialId': pubInicialId, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 											<g:message code="Editar" /></g:link>
 										-
 										<g:link controller="publicacionCurso" action="eliminar" 
-											id="${it.id}" params="['pubInicialId': pubInicialId, 'cursoId': cursoId]">
+											id="${it.id}" params="['pubInicialId': pubInicialId, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 											<g:message code="Borrar" /></g:link>
 											<p>Al borrar la publicacion inicial, se borran todas sus respuestas</p>
 											<p>Equivale a eliminar tema</p>
@@ -89,7 +90,7 @@
 			</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${respuestasCant ?: 0}" id="${pubInicialId}" params="['cursoId': cursoId]"/>
+				<g:paginate total="${respuestasCant ?: 0}" id="${pubInicialId}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]"/>
 			</div>
 		</div>
 	</body>

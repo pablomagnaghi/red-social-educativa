@@ -13,9 +13,9 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index" params="['cuatrimestreId': cuatrimestreId]">
+				<li><g:link class="list" action="index" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create" params="['cuatrimestreId': cuatrimestreId]">
+				<li><g:link class="create" action="create" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -71,7 +71,7 @@
 					<span id="grupos-label" class="property-label"><g:message code="actividad.grupos.label" default="Grupos" /></span>
 						<span class="property-value" aria-labelledby="grupos-label">
 							<g:link controller="grupoActividad" action="menuMediador" 
-							params="['cuatrimestreId': cuatrimestreId, 'actividadId': actividadInstance.id]">Ver grupos</g:link></span>
+							params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadInstance.id]">Ver grupos</g:link></span>
 					
 				</li>
 				</g:if>
@@ -82,7 +82,7 @@
 						<g:each in="${actividadInstance.materiales}" var="m">
 						<span class="property-value" aria-labelledby="materiales-label">
 							<g:link controller="materialActividad" action="show" id="${m.id}" 
-								params="['cuatrimestreId': cuatrimestreId, 'actividadId': actividadInstance.id]">${m?.encodeAsHTML()}</g:link></span>
+								params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadInstance.id]">${m?.encodeAsHTML()}</g:link></span>
 						</g:each>
 				</li>
 				</g:if>
@@ -93,7 +93,7 @@
 						<g:each in="${actividadInstance.temas}" var="m">
 						<span class="property-value" aria-labelledby="temas-label">
 							<g:link controller="temaActividad" action="show" id="${m.id}" 
-								params="['cuatrimestreId': cuatrimestreId, 'actividadId': actividadInstance.id]">${m?.encodeAsHTML()}</g:link></span>
+								params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadInstance.id]">${m?.encodeAsHTML()}</g:link></span>
 						</g:each>
 				</li>
 				</g:if>
@@ -126,10 +126,10 @@
 				</g:if>
 			
 			</ol>
-			<g:form action="delete" method="DELETE" id="${actividadInstance.id}" params="['cuatrimestreId': cuatrimestreId]">
+			<g:form action="delete" method="DELETE" id="${actividadInstance.id}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 				<fieldset class="buttons">
 					<g:link class="edit" action="edit" resource="${actividadInstance}"
-						id="${actividadInstance.id}" params="['cuatrimestreId': cuatrimestreId]">
+						id="${actividadInstance.id}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 						<g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
 						onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />

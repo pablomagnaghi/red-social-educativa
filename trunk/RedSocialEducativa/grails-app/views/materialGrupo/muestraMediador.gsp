@@ -15,7 +15,8 @@
 					<g:message code="default.home.label"/></a></li>
 				<li><g:link class="create" controller="curso" action="menuMediador" params="['cursoId': cursoId]">
 					<g:message code="Tareas mediador" args="[entityName]" /></g:link></li>			
-				<li><g:link controller="grupoCurso" action="muestraMediador"  id="${materialGrupoInstance.grupo.id}" params="['cursoId': cursoId]">
+				<li><g:link controller="grupoCurso" action="muestraMediador"  id="${materialGrupoInstance.grupo.id}" 
+					params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 					<g:message code="Grupo ${com.fiuba.Grupo.get(grupoId)}" args="[entityName]" /></g:link></li>
 		
 			</ul>

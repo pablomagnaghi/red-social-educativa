@@ -11,6 +11,7 @@ import org.springframework.security.access.annotation.Secured
 class ActividadController {
 
 	// metodos nuevos
+	def cursoId
 	def cuatrimestreId
 	
 	def seguridadService
@@ -21,12 +22,16 @@ class ActividadController {
 
 		println "actividad cuatrimestreID: ${params.cuatrimestreId}"
 		
+		cursoId = params.cursoId
 		cuatrimestreId = params.cuatrimestreId
+		def cuatrimestre = Cuatrimestre.get(cuatrimestreId)
+		
 		def actividadId = params.id
 				
 		def actividad = Actividad.get(actividadId)
 		
-		def aprendizId = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), cuatrimestreId)
+		
+		def aprendizId = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), cuatrimestre)
 		def grupoActividadAprendiz = null
 		
 		if (aprendizId) {
@@ -39,7 +44,7 @@ class ActividadController {
 			}
 		} 
 		
-		[cuatrimestreId: cuatrimestreId, actividadId: actividadId, actividad: actividad, aprendizId: aprendizId,
+		[cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId, actividad: actividad, aprendizId: aprendizId,
 			grupoActividadAprendiz: grupoActividadAprendiz]
 	}
 	
@@ -51,27 +56,33 @@ class ActividadController {
 		println "index actividad"
 		println params
 		
+		cursoId = params.cursoId
 		cuatrimestreId = params.cuatrimestreId
 			
 		[actividadInstanceList: Actividad.findAllByCuatrimestre(Cuatrimestre.get(cuatrimestreId),[max: params.max, offset: params.offset]),
-			actividadInstanceCount: Actividad.findAllByCuatrimestre(Cuatrimestre.get(cuatrimestreId)).size(), cuatrimestreId: cuatrimestreId]
+			actividadInstanceCount: Actividad.findAllByCuatrimestre(Cuatrimestre.get(cuatrimestreId)).size(), 
+			cursoId: cursoId, cuatrimestreId: cuatrimestreId]
 		
     }
 
     def show(Actividad actividadInstance) {
 		
 		println "actividad show params: ${params}"
+		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		
-        respond actividadInstance, model: [cuatrimestreId: cuatrimestreId]
+        respond actividadInstance, model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId]
     }
 	
 
     def create() {
 		
 		println "create actividad cuatrimestre params: ${params}"
+		cursoId = params.cursoId
 		cuatrimestreId = params.cuatrimestreId
 		
-		respond new Actividad(params), params:['cuatrimestreId': cuatrimestreId], model:[cuatrimestreId: cuatrimestreId]
+		respond new Actividad(params), params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], 
+			model:[cursoId: cursoId, cuatrimestreId: cuatrimestreId]
     }
 
     @Transactional
@@ -83,10 +94,12 @@ class ActividadController {
 
 		println "actividad save: params: ${params}"
 		
+		cursoId = params.cursoId
 		cuatrimestreId = params.cuatrimestreId
 		
         if (actividadInstance.hasErrors()) {
-            respond actividadInstance.errors, view:'create', params:['cuatrimestreId': cuatrimestreId], model: [cuatrimestreId: cuatrimestreId]
+            respond actividadInstance.errors, view:'create', params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], 
+				model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId]
             return
         }
 
@@ -95,21 +108,24 @@ class ActividadController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'actividadInstance.label', default: 'Actividad'), actividadInstance.id])
-                redirect action: "index", params:['cuatrimestreId': cuatrimestreId]
+                redirect action: "index", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]
             }
             '*' { respond actividadInstance, [status: CREATED] }
         }
     }
 
     def edit(Actividad actividadInstance) {
+		cursoId = params.cursoId
 		cuatrimestreId = params.cuatrimestreId
-        respond actividadInstance, params:['cuatrimestreId': cuatrimestreId], model:[cuatrimestreId: cuatrimestreId]
+        respond actividadInstance, params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], 
+			model:[cursoId: cursoId, cuatrimestreId: cuatrimestreId]
     }
 
 
     @Transactional
     def update(Actividad actividadInstance) {
         
+		cursoId = params.cursoId
 		cuatrimestreId = params.cuatrimestreId
 		
 		if (actividadInstance == null) {
@@ -118,7 +134,8 @@ class ActividadController {
         }
 
         if (actividadInstance.hasErrors()) {
-            respond actividadInstance.errors, view:'edit', params:['cuatrimestreId': cuatrimestreId], model: [cuatrimestreId: cuatrimestreId]
+            respond actividadInstance.errors, view:'edit', params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], 
+				model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId]
             return
         }
 
@@ -127,7 +144,8 @@ class ActividadController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'Actividad.label', default: 'Actividad'), actividadInstance.id])
-                redirect actividadInstance
+				respond actividadInstance, view:"show", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId],
+					model:[cursoId: cursoId, cuatrimestreId: cuatrimestreId]
             }
             '*'{ respond actividadInstance, [status: OK] }
         }
@@ -141,6 +159,7 @@ class ActividadController {
             return
         }
 		
+		cursoId = params.cursoId
 		cuatrimestreId = params.cuatrimestreId
 		
         actividadInstance.delete flush:true
@@ -148,7 +167,7 @@ class ActividadController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'Actividad.label', default: 'Actividad'), actividadInstance.id])
-                redirect action:"index", params:['cuatrimestreId': cuatrimestreId], method:"GET"
+                redirect action:"index", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], method:"GET"
             }
             '*'{ render status: NO_CONTENT }
         }
@@ -158,7 +177,7 @@ class ActividadController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'actividadInstance.label', default: 'Actividad'), params.id])
-                redirect action: "index", params:['cuatrimestreId': cuatrimestreId], method: "GET"
+                redirect action: "index", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], method: "GET"
             }
             '*'{ render status: NOT_FOUND }
         }

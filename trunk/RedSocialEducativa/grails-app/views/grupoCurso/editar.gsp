@@ -12,7 +12,7 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="general" params="['cursoId': params.cursoId]">
+				<li><g:link class="list" action="general" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -28,11 +28,12 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="editarNombre" method="PUT" id="${grupoCursoInstance.id}" params="['cursoId': params.cursoId]">
+			<g:form action="editarNombre" method="PUT" id="${grupoCursoInstance.id}" 
+				params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 				<g:hiddenField name="version" value="${grupoCursoInstance?.version}" />
 				
 				<div><g:hiddenField name="numero" type="number" value="${grupoCursoInstance.numero}"/></div>
-				<div><g:hiddenField name="curso.id" value="${cursoId}"/></div>
+				<div><g:hiddenField name="cuatrimestre.id" value="${cuatrimestreId}"/></div>
 				<div class="fieldcontain ${hasErrors(bean: grupoCursoInstance, field: 'nombre', 'error')} ">
 					<label for="nombre">
 						<g:message code="grupoCurso.nombre.label" default="Nombre" />				

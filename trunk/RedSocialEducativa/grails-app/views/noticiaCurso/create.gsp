@@ -11,13 +11,16 @@
 		<h2>curso id : ${cursoId}</h2>
 		<h2>params curso id: ${params.cursoId}</h2>
 		
+		<h2>cuatri id : ${cuatrimestreId}</h2>
+		<h2>params cuatri id: ${params.cuatrimestreId}</h2>
+		
 		<div class="nav" role="navigation">
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
 				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': params.cursoId]">
 					<g:message code="Tareas mediador" /></g:link></li>
-				<li><g:link class="list" action="index" params="['cursoId': params.cursoId]">
+				<li><g:link class="list" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -33,7 +36,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="save" params="['cursoId': params.cursoId]">
+			<g:form action="save" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 				<fieldset class="form">
 					<g:render template="form"/>
 						<div class="fieldcontain ${hasErrors(bean: noticiaCursoInstance, field: 'titulo', 'error')} ">

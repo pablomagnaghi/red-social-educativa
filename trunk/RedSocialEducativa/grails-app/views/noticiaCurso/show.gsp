@@ -13,9 +13,9 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index" params="['cursoId': cursoId]">
+				<li><g:link class="list" action="index" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create" params="['cursoId': cursoId]">
+				<li><g:link class="create" action="create" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -26,11 +26,11 @@
 			</g:if>
 			<ol class="property-list noticiaCurso">
 			
-				<g:if test="${noticiaCursoInstance?.curso}">
+				<g:if test="${noticiaCursoInstance?.cuatrimestre}">
 				<li class="fieldcontain">
-					<span id="curso-label" class="property-label"><g:message code="noticiaCurso.curso.label" default="Curso" /></span>
+					<span id="cuatrimestre-label" class="property-label"><g:message code="noticiaCurso.cuatrimestre.label" default="Cuatrimestre" /></span>
 					
-						<span class="property-value" aria-labelledby="curso-label">${noticiaCursoInstance?.curso?.encodeAsHTML()}</span>
+						<span class="property-value" aria-labelledby="cuatrimestre-label">${noticiaCursoInstance?.cuatrimestre?.encodeAsHTML()}</span>
 					
 				</li>
 				</g:if>
@@ -90,10 +90,11 @@
 				</g:if>
 			
 			</ol>
-			<g:form action="delete" method="DELETE" id="${noticiaCursoInstance.id}" params="['cursoId': cursoId]">
+			<g:form action="delete" method="DELETE" id="${noticiaCursoInstance.id}" 
+				params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 				<fieldset class="buttons">
 					<g:link class="edit" action="edit" resource="${noticiaCursoInstance}" 
-						id="${noticiaCursoInstance.id}" params="['cursoId': cursoId]">
+						id="${noticiaCursoInstance.id}" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 						<g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
 						onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />

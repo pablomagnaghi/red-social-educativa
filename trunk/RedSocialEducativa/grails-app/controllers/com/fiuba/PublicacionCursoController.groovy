@@ -26,8 +26,9 @@ class PublicacionCursoController {
 		println usuarioActual()
 		def pubInicialId = params.pubInicialId
 		def cursoId = params.cursoId
+		def cuatrimestreId = params.cuatrimestreId
 		respond new PublicacionCurso(params), model: [usuario: usuarioActual(), 
-			pubInicialId: pubInicialId, cursoId: cursoId]
+			pubInicialId: pubInicialId, cursoId: cursoId, cuatrimestreId: cuatrimestreId]
 	}
 	
 	@Transactional
@@ -37,6 +38,7 @@ class PublicacionCursoController {
 		
 		def pubInicialId = params.pubInicialId
 		def cursoId = params.cursoId
+		def cuatrimestreId = params.cuatrimestreId
 		
 		if (publicacionCursoInstance == null) {
 			notFound()
@@ -45,7 +47,7 @@ class PublicacionCursoController {
 		
 		if (publicacionCursoInstance.hasErrors()) {
 			respond publicacionCursoInstance.errors, view:'nueva',  model: [pubInicialId: pubInicialId, 
-				usuario: usuarioActual(), cursoId: cursoId]
+				usuario: usuarioActual(), cursoId: cursoId, cuatrimestreId: cuatrimestreId]
 			return
 		}
 		
@@ -66,7 +68,7 @@ class PublicacionCursoController {
 			publicacion.addToRespuestas(publicacionCursoInstance)
 			publicacion.save flush:true
 			flash.message = message(code: 'default.created.message', args: [message(code: 'publicacionCursoInstance.label', default: 'PublicacionCurso'), publicacionCursoInstance.id])
-			redirect controller: "foroCurso", action: "publicaciones", params:['id': pubInicialId, 'cursoId': cursoId]
+			redirect controller: "foroCurso", action: "publicaciones", params:['id': pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': cuatrimestreId]
 			return
 		} else {
 			publicacionCursoInstance.save flush:true
@@ -75,7 +77,7 @@ class PublicacionCursoController {
 		request.withFormat {
 			form {
 				flash.message = message(code: 'default.created.message', args: [message(code: 'publicacionCursoInstance.label', default: 'PublicacionCurso'), publicacionCursoInstance.id])
-				redirect controller: "foroCurso", action: "general", params:['cursoId': cursoId]
+				redirect controller: "foroCurso", action: "general", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]
 			}
 			'*' { respond publicacionCursoInstance, [status: CREATED] }
 		}
@@ -88,6 +90,7 @@ class PublicacionCursoController {
 		
 		def publicacionId = params.id
 		def cursoId = params.cursoId
+		def cuatrimestreId = params.cuatrimestreId
 		
 		println "publicaion id: ${publicacionId}"
 		
@@ -98,7 +101,7 @@ class PublicacionCursoController {
 		if (publicacion == null) {
 			flash.message = "No existe esa publicacion"
 			redirect controller: "foroCurso", action: "publicaciones", method: "GET", 
-				params:['id': params.pubInicialId, 'cursoId': cursoId]
+				params:['id': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': cuatrimestreId]
 			return
 		}
 		
@@ -119,10 +122,10 @@ class PublicacionCursoController {
 			default: 'PublicacionCurso'), publicacion.id])
 
 		if (esTema) {
-			redirect controller: "foroCurso", action:"general", params:['cursoId': cursoId]
+			redirect controller: "foroCurso", action:"general", params:['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestreId]
 		} else {
 			redirect controller: "foroCurso", action:"publicaciones", method:"GET", 
-				params:['id': params.pubInicialId, 'cursoId':  cursoId]
+				params:['id': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId':  cuatrimestreId]
 		}
 	}
 	
@@ -133,9 +136,10 @@ class PublicacionCursoController {
 		def pubInicialId = params.pubInicialId
 		def publicacionId = params.id
 		def cursoId = params.cursoId
+		def cuatrimestreId = params.cuatrimestreId
 		
 		respond publicacionCursoInstance, model: [usuario: usuarioActual(),
-			pubInicialId: pubInicialId, publicacionId: publicacionId, cursoId: cursoId]
+			pubInicialId: pubInicialId, publicacionId: publicacionId, cursoId: params.cursoId,  cuatrimestreId: cuatrimestreId]
 		
 	}
 	
@@ -155,7 +159,7 @@ class PublicacionCursoController {
 
 		if (publicacionCursoInstance.hasErrors()) {
 			respond publicacionCursoInstance.errors, view:'editar', model: [usuario: usuarioActual(),
-				pubInicialId: params.pubInicialId, publicacionId: params.id, cursoId: params.cursoId]
+				pubInicialId: params.pubInicialId, publicacionId: params.id, cursoId: params.cursoId, cuatrimestreId: params.cuatrimestreId]
 			return
 		}
 
@@ -164,8 +168,8 @@ class PublicacionCursoController {
 		request.withFormat {
 			form {
 				flash.message = message(code: 'default.updated.message', args: [message(code: 'PublicacionCurso.label', default: 'PublicacionCurso'), publicacionCursoInstance.id])
-				redirect controller: "foroCurso", action: "publicaciones", params: ['id': params.pubInicialId, 'cursoId': params.cursoId],
-				model: [usuario: usuarioActual(), pubInicialId: params.pubInicialId, cursoId: params.cursoId]
+				redirect controller: "foroCurso", action: "publicaciones", params: ['id': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId':  params.cuatrimestreId],
+				model: [usuario: usuarioActual(), pubInicialId: params.pubInicialId, cursoId: params.cursoId, cuatrimestreId: params.cuatrimestreId]
 			}
 			'*'{ respond publicacionCursoInstance, [status: OK] }
 		}
@@ -175,7 +179,7 @@ class PublicacionCursoController {
 		request.withFormat {
 			form {
 				flash.message = message(code: 'default.not.found.message', args: [message(code: 'publicacionCursoInstance.label', default: 'PublicacionCurso'), params.id])
-				redirect controller: "foroCurso", action: "publicaciones", method: "GET",  params:['cursoId': cursoId]
+				redirect controller: "foroCurso", action: "publicaciones", method: "GET",  params:['cursoId': cursoId, 'cuatrimestreId':  cuatrimestreId]
 			}
 			'*'{ render status: NOT_FOUND }
 		}

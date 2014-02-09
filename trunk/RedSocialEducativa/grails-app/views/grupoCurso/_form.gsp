@@ -1,6 +1,6 @@
 <%@ page import="com.fiuba.GrupoCurso" %>
 
-<div><g:hiddenField name="curso.id" value="${cursoId}"/></div>
+<div><g:hiddenField name="cuatrimestre.id" value="${cuatrimestreId}"/></div>
 
 <div><g:hiddenField name="numero" value="${numGrupo}"/></div>
 

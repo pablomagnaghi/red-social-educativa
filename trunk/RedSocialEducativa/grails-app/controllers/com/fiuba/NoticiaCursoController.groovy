@@ -17,7 +17,7 @@ class NoticiaCursoController {
 	}
 	
 	def cursoId
-	
+	def cuatrimestreId
 	// TODO
 	// metodos para el ABM cartelera del curso en menu del mediador
     //static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -29,25 +29,32 @@ class NoticiaCursoController {
 		println params
 		
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
+		def cuatrimestre = Cuatrimestre.get(cuatrimestreId)
 			
-		[noticiaCursoInstanceList: NoticiaCurso.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
-			noticiaCursoInstanceCount: NoticiaCurso.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId]
+		[noticiaCursoInstanceList: NoticiaCurso.findAllByCuatrimestre(cuatrimestre,[max: params.max, offset: params.offset]),
+			noticiaCursoInstanceCount: NoticiaCurso.findAllByCuatrimestre(cuatrimestre).size(), 
+			cursoId: cursoId, cuatrimestreId: cuatrimestreId]
     }
 
     def show(NoticiaCurso noticiaCursoInstance) {
 		println "show params: ${params}"
-        respond noticiaCursoInstance, model:[cursoId: cursoId]
+		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
+        respond noticiaCursoInstance, model:[cursoId: cursoId, cuatrimestreId: cuatrimestreId]
     }
 
     def create() {
 		
 		println "create noticia curso params: ${params}"
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		def mediadorId = Mediador.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId)).id
 		
 		println "usaurio actual id: ${mediadorId}"
 		
-        respond new NoticiaCurso(params), params:['cursoId': cursoId], model:[cursoId: cursoId, mediadorId: mediadorId]
+        respond new NoticiaCurso(params), params:['cursoId': cursoId], model:[cursoId: cursoId, 
+			cuatrimestreId: cuatrimestreId, mediadorId: mediadorId]
     }
 
     //@Transactional
@@ -57,42 +64,22 @@ class NoticiaCursoController {
             return
         }
 		
-		cursoId = noticiaCursoInstance.curso.id
-		/*
-		println "save noticia curso"
-		println "curso.id"
-		println noticiaCursoInstance.curso.id
-		println "texto"
-		noticiaCursoInstance.texto
-		println "titulo"
-		noticiaCursoInstance.titulo
-		println "responsable"
-		noticiaCursoInstance.mediador.id
-		*/
-		// TODO
+		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
+
         if (noticiaCursoInstance.hasErrors()) {
 			def mediadorId = Mediador.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId)).id
-            respond noticiaCursoInstance.errors, view:'create', params:['cursoId': cursoId], 
-				model: [cursoId: cursoId, mediadorId: mediadorId]
+            respond noticiaCursoInstance.errors, view:'create', params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], 
+				model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId, mediadorId: mediadorId]
             return
         }
-		
-		def noticiaCursoExistente = NoticiaCurso.findByCursoAndTitulo(Curso.get(cursoId), 
-			noticiaCursoInstance.titulo)
-		println noticiaCursoExistente
-		
-		if (noticiaCursoExistente) {
-			flash.message = "Ya existe la noticia ${noticiaCursoInstance.titulo} del curso ${Curso.get(cursoId)}"
-			redirect action: "create", params:['cursoId': cursoId]
-			return
-		}
 
         noticiaCursoInstance.save flush:true
 
         request.withFormat {
             form {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'noticiaCursoInstance.label', default: 'NoticiaCurso'), noticiaCursoInstance.id])
-                redirect action: "index", params:['cursoId': cursoId]
+                redirect action: "index", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]
             }
             '*' { respond noticiaCursoInstance, [status: CREATED] }
         }
@@ -101,7 +88,9 @@ class NoticiaCursoController {
 	// TODO: revisar a fondo por si falta actualizar el cursoId
     def edit(NoticiaCurso noticiaCursoInstance) {
 		cursoId = params.cursoId
-        respond noticiaCursoInstance, params:['cursoId': cursoId], model:[cursoId: cursoId, usuario: usuarioActual()]
+		cuatrimestreId = params.cuatrimestreId
+        respond noticiaCursoInstance, params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], 
+			model:[cursoId: cursoId, cuatrimestreId: cuatrimestreId, usuario: usuarioActual()]
     }
 
 	// TODO revisar a fondo por si falta actualizar el cursoId
@@ -110,6 +99,7 @@ class NoticiaCursoController {
 		
 		// TODO ver aca
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		
         if (noticiaCursoInstance == null) {
             notFound()
@@ -117,8 +107,8 @@ class NoticiaCursoController {
         }
 
         if (noticiaCursoInstance.hasErrors()) {
-            respond noticiaCursoInstance.errors, view:'edit', params:['cursoId': cursoId],
-				model: [cursoId: cursoId]
+            respond noticiaCursoInstance.errors, view:'edit', params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId],
+				model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId]
             return
         }
 
@@ -127,7 +117,8 @@ class NoticiaCursoController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'NoticiaCurso.label', default: 'NoticiaCurso'), noticiaCursoInstance.id])
-                redirect noticiaCursoInstance
+                respond noticiaCursoInstance, view:"show", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], 
+					model:[cursoId: cursoId, cuatrimestreId: cuatrimestreId]
             }
             '*'{ respond noticiaCursoInstance, [status: OK] }
         }
@@ -142,13 +133,16 @@ class NoticiaCursoController {
         }
 		
 		cursoId = params.cursoId
-
+		cuatrimestreId = params.cuatrimestreId
+		
+		println "noticia curso delete, params: ${params}"
+		
         noticiaCursoInstance.delete flush:true
 
         request.withFormat {
             form {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'NoticiaCurso.label', default: 'NoticiaCurso'), noticiaCursoInstance.id])
-                redirect action:"index", params:['cursoId': cursoId], method:"GET"
+                redirect action:"index", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], method:"GET"
             }
             '*'{ render status: NO_CONTENT }
         }
@@ -158,7 +152,7 @@ class NoticiaCursoController {
         request.withFormat {
             form {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'noticiaCursoInstance.label', default: 'NoticiaCurso'), params.id])
-                redirect action: "index", params:['cursoId': cursoId], method: "GET"
+                redirect action: "index", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], method: "GET"
             }
             '*'{ render status: NOT_FOUND }
         }

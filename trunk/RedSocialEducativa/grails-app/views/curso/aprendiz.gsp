@@ -26,23 +26,23 @@
 			<g:if test="${aprendiz.participa}">
 				<g:if test="${cursando}">	
 					<div>
-						<g:link action="actividades" params="['cuatrimestreId': cuatrimestreId]">
+						<g:link action="actividades" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 						<g:message code="Actividades del cuatrimestre"/></g:link>
 					</div>	
 					<div>
-						<g:link action="evaluaciones" params="['cuatrimestreId': cuatrimestreId]">
+						<g:link action="evaluaciones" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 						<g:message code="Evaluaciones del cuatrimestre"/></g:link>
 					</div>
 					<div>
-						<g:link action="mostrar" controller="evaluacion" params="['cursoId': cursoId]">
+						<g:link action="mostrar" controller="evaluacion" params="['cursoId': cursoId, 'cursoId': cursoId]">
 						<g:message code="Mis evaluaciones en el curso"/></g:link>
 					</div>
 					<div>
-						<li><g:link class="list" action="general" controller="grupoCurso" params="['cuatrimestreId': cuatrimestreId]">
+						<li><g:link class="list" action="general" controller="grupoCurso" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 							<g:message code="Los grupos del cuatrimestre"/></g:link></li>
 						<g:if test="${aprendiz?.grupo}">
 							<li><g:link class="list" action="mostrar" controller="grupoCurso" id="${aprendiz?.grupo.id}" 
-								params="['cuatrimestreId': cuatrimestreId]">
+								params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 								<g:message code="Mi grupo"/></g:link></li>
 						</g:if>	
 					</div>
