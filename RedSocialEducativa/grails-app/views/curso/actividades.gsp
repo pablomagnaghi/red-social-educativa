@@ -33,14 +33,14 @@
 						<li>${it.titulo}</li>
 					</span>
 					<span>
-						<g:link controller="actividad" action="general" id="${it.id}" params="['cursoId': cursoId]">
+						<g:link controller="actividad" action="general" id="${it.id}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 							<g:message code="Acceder a la actividad"/></g:link>		
 					</span>		
 				</g:each>
 				</ol>
 			</div>
 			<div class="pagination">
-				<g:paginate total="${actividadesCant ?: 0}" params="['cursoId': cursoId]"/>
+				<g:paginate total="${actividadesCant ?: 0}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]"/>
 			</div>
 		</div>
 	</body>

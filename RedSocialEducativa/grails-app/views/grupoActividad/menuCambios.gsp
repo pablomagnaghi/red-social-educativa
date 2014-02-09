@@ -15,7 +15,7 @@
 					<g:message code="default.home.label"/></a></li>
 				<li><g:link class="create" controller="curso" action="menuMediador" params="['cursoId': cursoId]">
 					<g:message code="Tareas mediador" args="[entityName]" /></g:link></li>
-				<li><g:link class="list" action="menuMediador" params="['cursoId': cursoId, 'actividadId': actividadId]">
+				<li><g:link class="list" action="menuMediador" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadId]">
 					<g:message code="Lista de grupos" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -26,7 +26,7 @@
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			
-			<g:form action="realizarCambio" params="['cursoId': cursoId, 'actividadId': actividadId]">
+			<g:form action="realizarCambio" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadId]">
 				<fieldset class="form">
 				<div>
 					<g:message code="Elegir aprendiz a cambiar de grupo" />
