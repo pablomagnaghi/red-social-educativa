@@ -11,7 +11,7 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="general" params="['cursoId': params.cursoId, 'actividadId': params.actividadId]">
+				<li><g:link class="list" action="general" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]">
 					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -27,7 +27,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form  action="guardar" params="['cursoId': params.cursoId, 'actividadId': params.actividadId, 'numGrupo': numGrupo]" >
+			<g:form  action="guardar" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId, 'numGrupo': numGrupo]" >
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>

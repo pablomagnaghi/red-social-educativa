@@ -62,8 +62,11 @@ class TemaActividadController {
 		cuatrimestreId = params.cuatrimestreId
 		actividadId = params.actividadId
 		
+		def curso = Curso.get(cursoId)
+		
 		respond new TemaActividad(params), params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId],
-			model:[cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId]
+			model:[cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId,
+				temas: Tema.findAllByCurso(curso)]
     }
 
     @Transactional

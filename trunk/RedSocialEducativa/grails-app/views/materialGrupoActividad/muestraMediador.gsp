@@ -13,10 +13,10 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link controller="grupoActividad" action="general" params="['cursoId': cursoId, 'actividadId': actividadId]">
+				<li><g:link controller="grupoActividad" action="general" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]">
 					<g:message code="Lista de grupos del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
 				<li><g:link controller="grupoActividad" action="muestraMediador" id="${grupoActividadId}" 
-					params="['cursoId': cursoId, 'actividadId': actividadId,'grupoActividadId': grupoActividadId]">
+					params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId,'grupoActividadId': grupoActividadId]">
 					<g:message code="Grupo: ${com.fiuba.GrupoActividad.get(grupoActividadId)}" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>

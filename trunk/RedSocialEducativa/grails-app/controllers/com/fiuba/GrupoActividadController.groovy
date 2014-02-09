@@ -19,6 +19,7 @@ class GrupoActividadController {
 	}
 	
 	def cursoId
+	def cuatrimestreId
 	def actividadId
 	
 	def general(Integer max) {
@@ -27,6 +28,7 @@ class GrupoActividadController {
 		println params
 		
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		actividadId = params.actividadId
 
 		def c = GrupoActividadAprendiz.createCriteria()
@@ -46,7 +48,7 @@ class GrupoActividadController {
 		println "aprendices"
 		println aprendices
 		
-		[aprendices: aprendices, aprendicesCant: aprendicesCant.size(), cursoId: cursoId, actividadId: actividadId]
+		[aprendices: aprendices, aprendicesCant: aprendicesCant.size(), cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId]
 	}
 	
 
@@ -58,6 +60,7 @@ class GrupoActividadController {
 		println params
 		
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		actividadId = params.actividadId
 
 		def c = GrupoActividadAprendiz.createCriteria()
@@ -77,12 +80,13 @@ class GrupoActividadController {
 		println "aprendices"
 		println aprendices
 		
-		[aprendices: aprendices, aprendicesCant: aprendicesCant.size(), cursoId: cursoId, actividadId: actividadId]
+		[aprendices: aprendices, aprendicesCant: aprendicesCant.size(), cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId]
 	}
 	
 	def crear() {
 		println "create grupo curso params: ${params}"
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		actividadId = params.actividadId
 		
 		def actividad = Actividad.get(actividadId)
@@ -91,7 +95,7 @@ class GrupoActividadController {
 		println GrupoActividad.findAllByActividad(actividad).size()
 		
 		def numGrupo = GrupoActividad.findAllByActividad(actividad).size() + 1
-		def aprendizId = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId)).id
+		def aprendizId = Aprendiz.findByUsuarioAndCuatrimestre(usuarioActual(), Cuatrimestre.get(cuatrimestreId)).id
 		
 		println "existe aprendiz Id"
 		
@@ -107,24 +111,25 @@ class GrupoActividadController {
 
 		if (aprendiz) {
 			flash.message = "Usted ya pertenece al grupo ${aprendiz[0].grupo} en la actividad ${Actividad.get(actividadId)}"
-			redirect action: "general", params:['cursoId': cursoId, 'actividadId': actividadId]
+			redirect action: "general", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]
 			return
 		}
 		
 		println "numero de grupo: ${numGrupo}"
 		
-		respond new GrupoActividad(params), params:['cursoId': cursoId, 'actividadId': actividadId], 
-			model:[cursoId: cursoId, numGrupo: numGrupo, actividadId: actividadId]
+		respond new GrupoActividad(params), params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId], 
+			model:[cursoId: cursoId, cuatrimestreId: cuatrimestreId, numGrupo: numGrupo, actividadId: actividadId]
 	}
 	
 	def mostrarGrupo(GrupoActividad grupoActividadInstance) {
 		println "mostrar params: ${params}"
 		
-		println "aprendiz: ${Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))}"
+		println "aprendiz: ${Aprendiz.findByUsuarioAndCuatrimestre(usuarioActual(), Cuatrimestre.get(cuatrimestreId))}"
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		actividadId = params.actividadId
 		
-		def aprendizId = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId)).id
+		def aprendizId = Aprendiz.findByUsuarioAndCuatrimestre(usuarioActual(), Cuatrimestre.get(cuatrimestreId)).id
 		
 		def c = GrupoActividadAprendiz.createCriteria()
 		def aprendiz = c {
@@ -141,24 +146,26 @@ class GrupoActividadController {
 			participa = true
 		}
 		
-		respond grupoActividadInstance, model: [cursoId: cursoId, , actividadId: actividadId, participa: participa]
+		respond grupoActividadInstance, model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId, participa: participa]
 	}
 	
 	def muestraMediador(GrupoActividad grupoActividadInstance) {
 		println "muestra mediador params: ${params}"
 		
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		actividadId = params.actividadId
 		
 		println "cursoId: ${cursoId}"
 		println "actividadId: ${actividadId}"
 		
-		respond grupoActividadInstance, model: [cursoId: cursoId, actividadId: actividadId]
+		respond grupoActividadInstance, model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId]
 
 	}
 	
 	def menuCambios() {
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		actividadId = params.actividadId
 		
 		println "menu cambiso: curso ID: ${cursoId}"
@@ -170,11 +177,12 @@ class GrupoActividadController {
 			}
 		}
 
-		[aprendices: aprendices, cursoId:cursoId, actividadId: actividadId]
+		[aprendices: aprendices, cursoId:cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId]
 	}
 	
 	def realizarCambio() {
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		actividadId = params.actividadId
 		
 		if (params.numero.size()) {
@@ -212,7 +220,7 @@ class GrupoActividadController {
 			
 			if (grupoActividadAprendiz.grupo.numero == numeroGrupo) {
 				flash.message = "El aprendiz ${grupoActividadAprendiz.aprendiz} ya pertenece al grupo ${numeroGrupo}"
-				redirect action: "menuCambios", params:['cursoId': cursoId, 'actividadId': actividadId]
+				redirect action: "menuCambios", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]
 				return
 			}
 			
@@ -241,20 +249,21 @@ class GrupoActividadController {
 			
 		} else {
 			flash.message = "No existe ese numero ese numero de grupo"
-			redirect action: "menuCambios", params:['cursoId': cursoId, 'actividadId': actividadId]
+			redirect action: "menuCambios", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]
 			return
 		}
-		redirect action: "menuMediador", params:['cursoId': cursoId, 'actividadId': actividadId]
+		redirect action: "menuMediador", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]
 		
 	}
 	
 	def editar(GrupoActividad grupoActividadInstance) {
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		actividadId = params.actividadId
 		println grupoActividadInstance.aprendices
 		
-		respond grupoActividadInstance, params:['cursoId': cursoId, 'actividadId': actividadId], 
-			model:[cursoId: cursoId, actividadId: actividadId]
+		respond grupoActividadInstance, params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId], 
+			model:[cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId]
 	}
 	
 	@Transactional
@@ -270,20 +279,21 @@ class GrupoActividadController {
 		println "properties grupoCursoInstance.properties"
 		
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		actividadId = params.actividadId
 		def numGrupo = params.numGrupo
 		
 		
 		if (grupoActividadInstance.hasErrors()) {
 			//aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
-			respond grupoActividadInstance.errors, view:'crear', params:['cursoId': cursoId, 'actividadId': actividadId],
-				model: [cursoId: cursoId, actividadId: actividadId, numGrupo: numGrupo]
+			respond grupoActividadInstance.errors, view:'crear', params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId],
+				model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId, numGrupo: numGrupo]
 			return
 		}
 
 		grupoActividadInstance.save flush:true
 		
-		def aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
+		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuarioActual(), Cuatrimestre.get(cuatrimestreId))
 		
 		def grupoActividadAprendiz = new GrupoActividadAprendiz(aprendiz: aprendiz, grupo: grupoActividadInstance)
 		
@@ -293,7 +303,7 @@ class GrupoActividadController {
 			form {
 				flash.message = message(code: 'default.created.message', args: [message(code: 'grupoActividadInstance.label', 
 					default: 'GrupoActividad'), grupoActividadInstance.id])
-				redirect action: "general", params:['cursoId': cursoId, 'actividadId': actividadId]
+				redirect action: "general", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]
 			}
 			'*' { respond grupoActividadInstance, [status: CREATED] }
 		}
@@ -303,8 +313,9 @@ class GrupoActividadController {
 	def agregarme(GrupoActividad grupoActividadInstance) {
 		
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		actividadId = params.actividadId
-		def aprendizId = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId)).id
+		def aprendizId = Aprendiz.findByUsuarioAndCuatrimestre(usuarioActual(), Cuatrimestre.get(cuatrimestreId)).id
 		
 		println "existe aprendiz Id"
 		println aprendizId
@@ -319,7 +330,7 @@ class GrupoActividadController {
 
 		if (aprendiz) {
 			flash.message = "Usted ya pertenece al grupo ${aprendiz[0].grupo} en la actividad ${Actividad.get(actividadId)}"
-			redirect action: "general", params:['cursoId': cursoId, 'actividadId': actividadId]
+			redirect action: "general", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]
 			return
 		}
 		
@@ -339,8 +350,8 @@ class GrupoActividadController {
 		//grupoActividadInstance.addToAprendices(aprendiz)
 		
 		if (grupoActividadInstance.hasErrors()) {
-			respond grupoActividadInstance.errors, view:'mostrarGrupo', params:['id': params.id, 'cursoId': cursoId, 'actividadId': actividadId], 
-				model: [cursoId: cursoId, actividadId: actividadId]
+			respond grupoActividadInstance.errors, view:'mostrarGrupo', params:['id': params.id, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId], 
+				model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId]
 			return
 		}
 
@@ -355,7 +366,7 @@ class GrupoActividadController {
 			form {
 				flash.message = message(code: 'default.updated.message', args: [message(code: 'GrupoActividad.label', default: 'GrupoActividad'), 
 					grupoActividadInstance.id])
-				redirect action: "mostrarGrupo", params:['id': params.id, 'cursoId': cursoId, 'actividadId': actividadId]
+				redirect action: "mostrarGrupo", params:['id': params.id, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]
 			}
 			'*'{ respond grupoActividadInstance, [status: OK] }
 		}
@@ -366,6 +377,7 @@ class GrupoActividadController {
 		println "editar nombre"
 		
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		actividadId = params.actividadId
 		
 		if (grupoActividadInstance == null) {
@@ -374,8 +386,8 @@ class GrupoActividadController {
 		}
 
 		if (grupoActividadInstance.hasErrors()) {
-			respond grupoActividadInstance.errors, view:'editar', params:['id': params.id, 'cursoId': cursoId, 'actividadId': actividadId], 
-				model: [cursoId: cursoId, actividadId: actividadId]
+			respond grupoActividadInstance.errors, view:'editar', params:['id': params.id, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId], 
+				model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId]
 			return
 		}
 
@@ -385,7 +397,7 @@ class GrupoActividadController {
 			form {
 				flash.message = message(code: 'default.updated.message', args: [message(code: 'GrupoActividad.label', default: 'GrupoActividad'), 
 					grupoActividadInstance.id])
-				redirect action: "mostrarGrupo", params:['id': params.id, 'cursoId': cursoId, 'actividadId': actividadId]
+				redirect action: "mostrarGrupo", params:['id': params.id, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]
 			}
 			'*'{ respond grupoActividadInstance, [status: OK] }
 		}
@@ -398,7 +410,7 @@ class GrupoActividadController {
 			
 			flash.message = message(code: 'default.not.found.message', args: [message(code: 'grupoActividadInstance.label', 
 					default: 'GrupoActividad'), params.id])
-			redirect action:"menuMediador", params:['cursoId': cursoId, 'actividadId': actividadId], method:"GET"
+			redirect action:"menuMediador", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId], method:"GET"
 			
 			return
 		}
@@ -408,6 +420,7 @@ class GrupoActividadController {
 		println "grupo  a eliminar: "
 		
 		cursoId = params.cursoId
+		cuatrimestreId = params.cuatrimestreId
 		actividadId = params.actividadId
 		
 		println "cursoId: ${cursoId}"
@@ -419,7 +432,7 @@ class GrupoActividadController {
 			form {
 				flash.message = message(code: 'default.deleted.message', args: [message(code: 'GrupoActividad.label', default: 'GrupoActividad'), 
 					grupoActividadInstance.id])
-				redirect action:"menuMediador", params:['cursoId': cursoId, 'actividadId': actividadId], method:"GET"
+				redirect action:"menuMediador", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId], method:"GET"
 			}
 			'*'{ render status: NO_CONTENT }
 		}
@@ -430,7 +443,7 @@ class GrupoActividadController {
 			form {
 				flash.message = message(code: 'default.not.found.message', args: [message(code: 'grupoActividadInstance.label', 
 					default: 'GrupoActividad'), params.id])
-				redirect action: "general", params:['cursoId': cursoId, 'actividadId': actividadId], method: "GET"
+				redirect action: "general", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId], method: "GET"
 			}
 			'*'{ render status: NOT_FOUND }
 		}

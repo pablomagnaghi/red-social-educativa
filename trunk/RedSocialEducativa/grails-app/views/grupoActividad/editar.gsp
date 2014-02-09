@@ -12,9 +12,9 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index" params="['cursoId': params.cursoId, 'actividadId': params.actividadId]">
+				<li><g:link class="list" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]">
 					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create" params="['cursoId': params.cursoId, 'actividadId': params.actividadId]">
+				<li><g:link class="create" action="create" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -31,7 +31,7 @@
 			</ul>
 			</g:hasErrors>
 			<g:form action="editarNombre" method="PUT" id="${grupoActividadInstance.id}" 
-				params="['cursoId': params.cursoId, 'actividadId': params.actividadId]" >
+				params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]" >
 				<g:hiddenField name="version" value="${grupoActividadInstance?.version}" />
 				<div><g:hiddenField name="numero" type="number" value="${grupoActividadInstance.numero}"/></div>
 				<div><g:hiddenField name="actividad.id" value="${actividadId}"/></div>

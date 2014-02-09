@@ -14,7 +14,7 @@
 					<g:message code="default.home.label"/></a></li>
 				<li><g:link class="create" controller="curso" action="menuMediador" params="['cursoId': cursoId]">
 					<g:message code="Tareas mediador" args="[entityName]" /></g:link></li>		
-				<li><g:link class="create" action="menuCambios" params="['cursoId': cursoId, 'actividadId': actividadId]">
+				<li><g:link class="create" action="menuCambios" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadId]">
 					<g:message code="Cambiar aprendiz de grupo" args="[entityName]" /></g:link></li>		
 			</ul>
 		</div>
@@ -28,10 +28,10 @@
 					<tr>
 					
 						<g:sortableColumn property="usuario" title="${message(code: 'Aprendiz')}" 
-							params="['cursoId': cursoId, 'actividadId': actividadId]" />
+							params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadId]" />
 					
 						<g:sortableColumn property="grupo" title="${message(code: 'Grupo')}"  
-							params="['cursoId': cursoId, 'actividadId': actividadId]"/>
+							params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadId]"/>
 						
 						<td>Detalle</td>	
 					
@@ -45,14 +45,14 @@
 						<td>${it.grupo}</td>			
 						
 						<td><g:link action="muestraMediador" id="${it.grupo.id}"
-							params="['cursoId': cursoId, 'actividadId': actividadId]">Ver detalle grupo ${it.grupo.id}</g:link></td>	
+							params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadId]">Ver detalle grupo ${it.grupo.id}</g:link></td>	
 				
 					</tr>
 				</g:each>
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${aprendicesCant ?: 0}" params="['cursoId': cursoId, 'actividadId': actividadId]" />
+				<g:paginate total="${aprendicesCant ?: 0}" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadId]" />
 			</div>
 		</div>
 	</body>

@@ -31,7 +31,7 @@ class ActividadController {
 		def actividad = Actividad.get(actividadId)
 		
 		
-		def aprendizId = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), cuatrimestre)
+		def aprendizId = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), cuatrimestre)?.id
 		def grupoActividadAprendiz = null
 		
 		if (aprendizId) {

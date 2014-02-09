@@ -13,10 +13,10 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link controller="grupoActividad" action="general" params="['cursoId': cursoId, 'actividadId': actividadId]">
+				<li><g:link controller="grupoActividad" action="general" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]">
 					<g:message code="Lista de grupos del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
 				<li><g:link controller="grupoActividad" action="mostrarGrupo" id="${grupoActividadId}" 
-					params="['cursoId': cursoId, 'actividadId': actividadId,'grupoActividadId': grupoActividadId]">
+					params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId,'grupoActividadId': grupoActividadId]">
 					<g:message code="Grupo: ${com.fiuba.GrupoActividad.get(grupoActividadId)}" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
@@ -85,11 +85,11 @@
 			
 			</ol>
 			<g:form action="delete" method="DELETE" id="${materialGrupoActividadInstance.id}" 
-				params="['cursoId': cursoId, 'actividadId': actividadId, 'grupoActividadId': grupoActividadId]">
+				params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId, 'grupoActividadId': grupoActividadId]">
 				<fieldset class="buttons">
 					<g:link class="edit" action="edit" resource="${materialGrupoInstance}"
 						id="${materialGrupoActividadInstance.id}" 
-							params="['cursoId': cursoId, 'actividadId': actividadId, 'grupoActividadId': grupoActividadId]">
+							params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId, 'grupoActividadId': grupoActividadId]">
 						<g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
 						onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />

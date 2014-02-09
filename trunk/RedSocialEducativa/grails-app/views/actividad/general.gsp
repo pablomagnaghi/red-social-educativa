@@ -58,7 +58,7 @@
 			<g:else>
 				<li><g:link class="list" action="menuMediador" controller="grupoActividad" 
 					params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]">
-				<g:message code="Los grupos de la actividad"/></g:link></li>
+				<g:message code="Los grupos de la actividad med"/></g:link></li>
 			</g:else>
 		</div>
 	</body>
