@@ -8,11 +8,11 @@ import grails.transaction.Transactional
 class SeguridadService {
 
 	def springSecurityService
-	
+
 	def usuarioActual() {
-		if (springSecurityService.principal.enabled)
-			return Usuario.get(springSecurityService.principal?.id)
-		else
+		if (!springSecurityService.principal.enabled) {
 			return null
+		}
+		return Usuario.get(springSecurityService.principal.id)
 	}
 }

@@ -11,23 +11,26 @@
 				<li><g:link class="list" action="principal" controller="red">
 					<g:message code="Pagina principal"/></g:link></li>
 				<br>	
+				<li><g:link class="list" action="index" controller="calendario">
+					<g:message code="Calendario" /></g:link></li>	
+				<br>
 				<li><g:link class="list" action="configuracion" controller="red">
-					<g:message code="Administrar configuracion de la red" /></g:link></li>	
+					<g:message code="Configuracion de la red" /></g:link></li>	
 				<br>
 				<li><g:link class="list" action="index" controller="materia">
-					<g:message code="Administrar materias" /></g:link></li>
+					<g:message code="Materias" /></g:link></li>
 				<br>
 				<li><g:link class="list" action="index" controller="curso">
-					<g:message code="Administrar cursos" /></g:link></li>
+					<g:message code="Cursos" /></g:link></li>
 				<br>	
 				<li><g:link class="list" action="index" controller="mediador">
-					<g:message code="Administrar mediadores" /></g:link></li>
+					<g:message code="Mediadores" /></g:link></li>
 				<br>	
 				<li><g:link class="list" action="index" controller="noticiaRed">
-					<g:message code="Administrar cartelera general" /></g:link></li>
+					<g:message code="Cartelera general" /></g:link></li>
 				<br>
 				<li><g:link class="list" action="general" controller="foroGeneral">
-					<g:message code="Administrar foros generales" /></g:link></li>	
+					<g:message code="Foros general" /></g:link></li>	
 				<br>
 				<li><g:link class="list" action="index" controller="usuario">
 					<g:message code="Aceptar miembros" /></g:link></li>

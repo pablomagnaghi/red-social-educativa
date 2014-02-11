@@ -33,81 +33,74 @@ class BootStrap {
 			}																																																																																																																																																													
 		}
 		
-		def usuarioPablo = new Usuario(username: "33300432", password: "33300432", apellido: "Magnaghi", nombres: "Pablo", 
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
-			fechaMemb: (new Date()).format("yyyy-MM-dd"))
-		usuarioService.guardar(usuarioPablo)
-		def usuarioLuis = new Usuario(username: "31861315", password: "31861315", apellido: "Paniagua", nombres: "Luis", 
-			legajo: "11", padron: "11", email: "pany100@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
-			fechaMemb: (new Date()).format("yyyy-MM-dd"))
-		usuarioService.guardar(usuarioLuis)
-		def usuarioAgus = new Usuario(username: "32725217", password: "32725217", apellido: "Milla", nombres: "Agustina", 
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
-			fechaMemb: (new Date()).format("yyyy-MM-dd"))
-		usuarioService.guardar(usuarioAgus)
-		def usuarioMessi = new Usuario(username: "10101010", password: "10101010", apellido: "Zarate", nombres: "Facundo",
-			legajo: "11", padron: "11", email: "nanozarate@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
-			fechaMemb: (new Date()).format("yyyy-MM-dd"))
-		usuarioService.guardar(usuarioMessi)
-
-		def usuarioUno = new Usuario(username: "00000001", password: "00000001", apellido: "ApeUNO", nombres: "NomUno", 
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
-			fechaMemb: (new Date()).format("yyyy-MM-dd"))
-		usuarioService.guardar(usuarioUno)
-		def usuarioDos = new Usuario(username: "00000002", password: "00000002", apellido: "ApeDOS", nombres: "NomDOS", 
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
-			fechaMemb: (new Date()).format("yyyy-MM-dd"))
-		usuarioService.guardar(usuarioDos)
-		def usuarioTres = new Usuario(username: "00000003", password: "00000003", apellido: "ApeTRES", nombres: "NomTRES", 
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
-			fechaMemb: (new Date()).format("yyyy-MM-dd"))
-		usuarioService.guardar(usuarioTres)
+		def ArrayList<Usuario> usuarios = new ArrayList<Usuario>()
+		
+		def usuarioPablo = new Usuario(username: "33300432", password: "33300432", apellido: "Magnaghi", nombres: "Pablo", padron: "88126", 
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+		usuarios.add(usuarioPablo)
+		def usuarioLuis = new Usuario(username: "31861315", password: "31861315", apellido: "Paniagua", nombres: "Luis", padron: "86862", 
+			email: "pany100@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+		usuarios.add(usuarioLuis)
+		def usuarioAgus = new Usuario(username: "32725217", password: "32725217", apellido: "Milla", nombres: "Agustina", padron: "88888", 
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+		usuarios.add(usuarioAgus)
+		def usuarioMessi = new Usuario(username: "10101010", password: "10101010", apellido: "Zarate", nombres: "Facundo", padron: "78456", 
+			email: "nanozarate@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+		usuarios.add(usuarioMessi)
+		def usuarioUno = new Usuario(username: "00000001", password: "00000001", apellido: "ApeUNO", nombres: "NomUno", padron: "00001", 
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+		usuarios.add(usuarioUno)
+		def usuarioDos = new Usuario(username: "00000002", password: "00000002", apellido: "ApeDOS", nombres: "NomDOS", padron: "00002", 
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+		usuarios.add(usuarioDos)
+		def usuarioTres = new Usuario(username: "00000003", password: "00000003", apellido: "ApeTRES", nombres: "NomTRES", padron: "00003", 
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"),  fechaMemb: (new Date()).format("yyyy-MM-dd"))
+		usuarios.add(usuarioTres)
 		def usuarioCuatro = new Usuario(username: "00000004", password: "00000004", apellido: "ApeCUATRO", nombres: "NomCUATRO", 
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
-			fechaMemb: (new Date()).format("yyyy-MM-dd"))
-		usuarioService.guardar(usuarioCuatro)
-		def usuarioCinco = new Usuario(username: "00000005", password: "00000005", apellido: "ApeCINCO", nombres: "NomCINCO", 
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
-			fechaMemb: (new Date()).format("yyyy-MM-dd"))
-		usuarioService.guardar(usuarioCinco)
-		def usuarioSeis = new Usuario(username: "00000006", password: "00000006", apellido: "ApeSeis", nombres: "NomSeis",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
-			fechaMemb: (new Date()).format("yyyy-MM-dd"))
-		usuarioService.guardar(usuarioSeis)
-		def usuarioSiete = new Usuario(username: "00000007", password: "00000007", apellido: "ApeSiete", nombres: "NomSiete",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
-			fechaMemb: (new Date()).format("yyyy-MM-dd"))
-		usuarioService.guardar(usuarioSiete)
-		def usuarioOcho = new Usuario(username: "00000008", password: "00000008", apellido: "ApeOcho", nombres: "NomOcho",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
-			fechaMemb: (new Date()).format("yyyy-MM-dd"))
-		usuarioService.guardar(usuarioOcho)
-		def usuarioNueve = new Usuario(username: "00000009", password: "00000009", apellido: "ApeNueve", nombres: "NomNueve",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
-			fechaMemb: (new Date()).format("yyyy-MM-dd"))
-		usuarioService.guardar(usuarioNueve)
-		def usuarioDiez = new Usuario(username: "00000010", password: "00000010", apellido: "ApeDiez", nombres: "NomDiez",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
-			fechaMemb: (new Date()).format("yyyy-MM-dd"))
-		usuarioService.guardar(usuarioDiez)
-		def usuarioOnce = new Usuario(username: "00000011", password: "00000011", apellido: "ApeOnce", nombres: "NomOnce",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
-			fechaMemb: (new Date()).format("yyyy-MM-dd"))
-		usuarioService.guardar(usuarioOnce)
-		def usuarioDoce = new Usuario(username: "00000012", password: "00000012", apellido: "ApeDoce", nombres: "NomDoce",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), 
-			fechaMemb: (new Date()).format("yyyy-MM-dd"))
-		usuarioService.guardar(usuarioDoce)
-		
-		def usuarioTrece = new Usuario(username: "00000013", password: "00000013", apellido: "ApeTrece", nombres: "NomTrece",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), enabled: false)
-		usuarioService.guardar(usuarioTrece)
-		def usuarioCatorce = new Usuario(username: "00000014", password: "00000014", apellido: "ApeCatorce", nombres: "NomCatorce",
-			legajo: "11", padron: "11", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), enabled: false)
-		usuarioService.guardar(usuarioCatorce)
-		
+			padron: "00004", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+		usuarios.add(usuarioCuatro)
+		def usuarioCinco = new Usuario(username: "00000005", password: "00000005", apellido: "ApeCINCO", nombres: "NomCINCO", padron: "00005", 
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+		usuarios.add(usuarioCinco)
+		def usuarioSeis = new Usuario(username: "00000006", password: "00000006", apellido: "ApeSeis", nombres: "NomSeis", padron: "00006", 
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+		usuarios.add(usuarioSeis)
+		def usuarioSiete = new Usuario(username: "00000007", password: "00000007", apellido: "ApeSiete", nombres: "NomSiete", padron: "00007", 
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"),  fechaMemb: (new Date()).format("yyyy-MM-dd"))
+		usuarios.add(usuarioSiete)
+		def usuarioOcho = new Usuario(username: "00000008", password: "00000008", apellido: "ApeOcho", nombres: "NomOcho", padron: "00008", 
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"),  fechaMemb: (new Date()).format("yyyy-MM-dd"))
+		usuarios.add(usuarioOcho)
+		def usuarioNueve = new Usuario(username: "00000009", password: "00000009", apellido: "ApeNueve", nombres: "NomNueve", padron: "00009", 
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+		usuarios.add(usuarioNueve)
+		def usuarioDiez = new Usuario(username: "00000010", password: "00000010", apellido: "ApeDiez", nombres: "NomDiez", padron: "00010", 
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+		usuarios.add(usuarioDiez)
+		def usuarioOnce = new Usuario(username: "00000011", password: "00000011", apellido: "ApeOnce", nombres: "NomOnce", padron: "00011", 
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+		usuarios.add(usuarioOnce)
+		def usuarioDoce = new Usuario(username: "00000012", password: "00000012", apellido: "ApeDoce", nombres: "NomDoce", padron: "00012", 
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+		usuarios.add(usuarioDoce)
+		def usuarioTrece = new Usuario(username: "00000013", password: "00000013", apellido: "ApeTrece", nombres: "NomTrece", padron: "00013", 
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), enabled: false)
+		usuarios.add(usuarioTrece)
+		def usuarioCatorce = new Usuario(username: "00000014", password: "00000014", apellido: "ApeCatorce", nombres: "NomCatorce", padron: "00014", 
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), enabled: false)
+		usuarios.add(usuarioCatorce)
+
+		for(int i = 0; i<usuarios.size(); i++){
+			if (!usuarios.get(i).validate()) {
+				println usuarios.get(i).errors
+			} else {
+				println "Usuarios agregados a la bbdd:"
+				usuarioService.guardar(usuarios.get(i))
+				println usuarios.get(i).username
+			}
+		}
+
 		// Mensajes
-		
 		def mensajePabloToLuis = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
 		cuerpo: "Vamos por el campeonato", fecha : new Date())
 		mensajeService.nuevoMensaje(mensajePabloToLuis)
@@ -130,11 +123,10 @@ class BootStrap {
 		cuerpo: "Hola como estas?", fecha : new Date())
 		mensajeService.nuevoMensaje(mensajeAgusToLuisDos)
 	
-		// Mediadores
-		
+		// Mediadores	
 		def mediadorAgus = new Mediador(usuario: usuarioAgus, rol: rolMediador, jerarquia: "JTP");
 		def mediadorUno = new Mediador(usuario: usuarioUno, rol: rolMediador, jerarquia: "JTP");
-		def mediadorUnoP = new Mediador(usuario: usuarioUno, rol: rolMediador, jerarquia: "AYU1");
+		def mediadorUnoP = new Mediador(usuario: usuarioUno, rol: rolMediador, jerarquia: "AP");
 		def mediadorDos = new Mediador(usuario: usuarioDos, rol: rolMediador, jerarquia: "JTP");
 		def mediadorTres = new Mediador(usuario: usuarioTres, rol: rolMediador, jerarquia: "JTP");
 		def mediadorCuatro = new Mediador(usuario: usuarioCuatro, rol: rolMediador, jerarquia: "JTP");
@@ -237,14 +229,12 @@ class BootStrap {
 	
 		// Foros
 		
-		// Foros de un tema
-		
+		// Foros de un tema		
 		def foroTemaUnoCursoUno = new ForoTema(nombre: "ForoGeneralTemaUnoCursoUno")
 		def foroTemaDosCursoUno = new ForoTema(nombre: "ForoGeneralTemaDosCursoUno")
 		def foroTemaUnoCursoDos = new ForoTema(nombre: "ForoGeneralTemaUnoCursoDos")
 		
-		// Foros generales de curso
-		
+		// Foros generales de curso		
 		def foroCursoUno = new ForoCurso(nombre: "ForoGeneralCursoUno")
 		def foroCursoDos = new ForoCurso(nombre: "ForoGeneralCursoDos")
 		def foroCursoTres = new ForoCurso(nombre: "ForoGeneralCursoTres")
@@ -253,7 +243,6 @@ class BootStrap {
 		def foroCursoSeis = new ForoCurso(nombre: "ForoGeneralCursoSeis")
 		
 		// Publicaciones generales
-		
 		def publicacionGeneralUno = new PublicacionGeneral(titulo: "PublicacionGeneralUno", contenido: "Contenido", 
 			responsable: "Pablo Magnaghi (Administrador)", dni: "33300432", fecha: (new Date()).format("yyyy-MM-dd"), 
 			hora: (new Date()).getTimeString())
@@ -351,8 +340,7 @@ class BootStrap {
 		def materialSeis = new MaterialCurso(titulo: "material curso 6", descripcion: "opcional", autor: "anonimo",
 			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Cuestionario"))
 		
-		// Grupos curso
-		
+		// Grupos curso		
 		def grupoUno = new GrupoCurso(numero: "1", nombre: "grupo 1")
 		grupoUno.addToAprendices(aprendizDos)
 		grupoUno.addToAprendices(aprendizTres)
@@ -363,13 +351,11 @@ class BootStrap {
 		grupoDos.addToAprendices(aprendizSiete)
 		
 		// Grupos actividad: agrego grupoActividadAprendiz a los grupo actividad
-		
 		def grupoActividadUno = new GrupoActividad(numero: "1", nombre: "grupo 1")
 		def grupoActividadDos = new GrupoActividad(numero: "2", nombre: "grupo 2")
 		def grupoActividadTres = new GrupoActividad(numero: "3", nombre: "grupo 3")
 		
 		// Actividades 
-		
 		def actividadUno = new Actividad(titulo: "actividad 1", objetivo: "objetivo", evaluable: true,
 			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("Encuesta"), fechaFinalizacion: "fechafinalizacion")
 		actividadUno.addToGrupos(grupoActividadUno)
@@ -382,8 +368,7 @@ class BootStrap {
 		def actividadTres = new Actividad(titulo: "actividad 3", objetivo: "objetivo", evaluable: true,
 			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("Cuestionario"), fechaFinalizacion: "fechafinalizacion")
 
-		// Evaluaciones
-		
+		// Evaluaciones	
 		def evaluacionUno = new Evaluacion(fecha: (new Date()).format("yyyy-MM-dd"), descripcion: "descripcion", 
 			horario: (new Date()).getTimeString(), aula: "1", parcial: true, obligatoria: true, habilitada: true)
 		def evaluacionDos = new Evaluacion(fecha: (new Date()).format("yyyy-MM-dd"), descripcion: "descripcion",
@@ -434,8 +419,7 @@ class BootStrap {
 			foro: foroCursoSeis)
 		cuatrimestreSeis.addToAprendices(aprendizUnoPP)
 		
-		// Cursos
-		
+		// Cursos		
 		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2", nombre: "Curso 1")
 		cursoUno.addToMediadores(mediadorAgus)
 		cursoUno.addToMediadores(mediadorUno)
@@ -500,12 +484,10 @@ class BootStrap {
 		}
 		
 		// Noticias red
-		
 		def noticiaRedUno = new NoticiaRed(titulo: "Noticia Uno", texto: "Inauguracion de la Red Social Educativa 2014", 
 			fecha: (new Date()).format("yyyy-MM-dd"), hora: (new Date()).getTimeString(), visibilidad: true)
 
 		// Noticias curso
-		
 		def ArrayList<NoticiaCurso> noticiasCursoUno = new ArrayList<NoticiaCurso>()
 		
 		def noticiaCursoUno = new NoticiaCurso(titulo: "Noticia Uno 1", texto: "noticiaCursoUno",
@@ -596,8 +578,7 @@ class BootStrap {
 			}
 		}	
 		
-		// Grupos actividad aprendiz (tabla intermedia para la relacion N N entre grupo actividad y aprendiz)
-		
+		// Grupos actividad aprendiz (tabla intermedia para la relacion N N entre grupo actividad y aprendiz)	
 		def ArrayList<GrupoActividadAprendiz> grupos = new ArrayList<GrupoActividadAprendiz>()
 		
 		def grupoActividadAprendizUno = new GrupoActividadAprendiz(numero: "1", nombre: "grupo 1 aprendiz 2",
@@ -668,6 +649,24 @@ class BootStrap {
 				println "evaluacionesAprendiz agregados a la bbdd:"
 				evaluacionesAprendiz.get(i).save()
 				println evaluacionesAprendiz.get(i)
+			}
+		}
+		
+		// Calendario
+		def ArrayList<Calendario> calendarios = new ArrayList<Calendario>()
+		def calendarioUno = new Calendario(anio: 2013, inicioPrimerCuatrimestre: 20130220, inicioSegundoCuatrimestre: 20130810)
+		calendarios.add(calendarioUno)
+		
+		def calendarioDos = new Calendario(anio: 2014, inicioPrimerCuatrimestre: 20140228, inicioSegundoCuatrimestre: 20140815)
+		calendarios.add(calendarioDos)
+		
+		for(int i = 0; i<calendarios.size(); i++){
+			if (!calendarios.get(i).validate()) {
+				println calendarios.get(i).errors
+			} else {
+				println "calendarios agregados a la bbdd:"
+				calendarios.get(i).save()
+				println calendarios.get(i)
 			}
 		}
 		

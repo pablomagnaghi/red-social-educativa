@@ -1,22 +1,21 @@
 package com.fiuba
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
-
-@Transactional(readOnly = true)
-
 import org.springframework.security.access.annotation.Secured
 
-@Secured('permitAll')
 class MediadorController {
 
+	def mediadorService
+	def aprendizService
+
 	// Metodos nuevos
-	
+
+	@Secured('permitAll')
 	def activarAprendiz() {
 		def aprendiz = Aprendiz.get(params.id)
 		println "activarAprendiz params: ${params}"
 		//println "${aprendiz}, ${aprendiz.id}, ${aprendiz.participa}"
-	
+
 		aprendiz.participa = true
 		def mail = aprendiz.usuario.email
 		def username = aprendiz.usuario.username
@@ -29,123 +28,81 @@ class MediadorController {
 			aprendiz.save();
 			sendMail {
 				to mail
-				subject "Red Social Educativa"
+				subject Utilidades.TITULO_RED
 				body "Bienvenido aprendiz ${username} al curso ${aprendiz.cuatrimestre.curso} de la Red Social Educativa FIUBA 2014"
 			}
 			flash.message = "Autorización enviada para el aprendiz ${username} del curso ${aprendiz.cuatrimestre.curso}"
 		}
-		
+
 		redirect(controller: "aprendiz", action: "index", params: params)
 	}
-	
+
 	// TODO
 	// Metodos para el ABM de administrador
-	
-    //static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Mediador.list(params), model:[mediadorInstanceCount: Mediador.count()]
-    }
+	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def show(Mediador mediadorInstance) {
-		println "show"
-		
-		println params
-		
-        respond mediadorInstance
-    }
+	@Secured("hasRole('ROL_ADMIN')")
+	def index(Integer max) {
+		params.max = Utilidades.MAX_PARAMS
+		respond Mediador.list(params), model:[mediadorInstanceCount: Mediador.count()]
+	}
 
-	// Crea un mediador vacio que se carga con los parametros en el _form
-    def create() {
-        respond new Mediador(params)
-    }
+	@Secured("hasRole('ROL_ADMIN')")
+	def show(Mediador mediadorInstance) {
+		respond mediadorInstance
+	}
 
-    @Transactional
-    def save(Mediador mediadorInstance) {
+	@Secured("hasRole('ROL_ADMIN')")
+	def create() {
+		respond new Mediador(params)
+	}
 
-        if (mediadorInstance == null) {
-            notFound()
-            return
-        }
+	@Secured("hasRole('ROL_ADMIN')")
+	def save(Mediador mediadorInstance) {
 
-        if (mediadorInstance.hasErrors()) {
-            respond mediadorInstance.errors, view:'create'
-            return
-        }
-		
-		println "save"
-		
-		def curso = Curso.get(mediadorInstance.curso.id)
-		
-		def usuario = Usuario.get(mediadorInstance.usuario.id)
-		
-		println "curso: ${curso}"
-		println "usuario: ${usuario}"
-		
-		def mediador = Mediador.findByUsuarioAndCurso(usuario, curso)
-		def aprendiz = Aprendiz.findByUsuarioAndCurso(usuario, curso)
-		
-		if (mediador) {
-			flash.message = "${mediador} ya es mediador en el curso ${curso}"
-			redirect action: "create"
+		if (mediadorInstance == null) {
+			notFound()
 			return
 		}
-		
-		if (aprendiz) {
-			flash.message = "El miembro ${usuario} ya es aprendiz en el curso ${curso}. No puede ser mediador en el mismo"
+
+		if (mediadorService.existe(mediadorInstance)) {
+			flash.message = "${mediadorInstance} ya es mediador en el curso ${mediadorInstance.curso}"
 			redirect action: "create"
 			return
 		}
 
-        mediadorInstance.save flush:true
+		if (aprendizService.obtenerPorCurso(mediadorInstance.usuario.id, mediadorInstance.curso.id)) {
+			flash.message = "El miembro ${mediadorInstance.usuario} ya es aprendiz en el curso ${mediadorInstance.curso}. No puede ser mediador"
+			redirect action: "create"
+			return
+		}
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'mediadorInstance.label', default: 'Mediador'), mediadorInstance.id])
-                redirect mediadorInstance
-            }
-            '*' { respond mediadorInstance, [status: CREATED] }
-        }
-    }
+		if (!mediadorService.guardar(mediadorInstance)) {
+			respond mediadorInstance, view:'create'
+			return
+		}
 
-    @Transactional
-    def delete(Mediador mediadorInstance) {
-		
-		println "delete"
+		flash.message = message(code: 'default.created.message', args: [message(code: 'mediadorInstance.label', default: 'Mediador'), mediadorInstance.id])
+		redirect mediadorInstance
+	}
 
-		
-		def curso = Curso.get(mediadorInstance.curso.id)
-		
-		def usuario = Usuario.get(mediadorInstance.usuario.id)
-		
-		println "curso: ${curso}"
-		println "usuario: ${usuario}"
-		
-		
-        if (mediadorInstance == null) {
-            notFound()
-            return
-        }
+	@Secured("hasRole('ROL_ADMIN')")
+	def delete(Mediador mediadorInstance) {
 
-        mediadorInstance.delete flush:true
+		if (mediadorInstance == null) {
+			notFound()
+			return
+		}
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Mediador.label', default: 'Mediador'), mediadorInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
+		mediadorService.eliminar(mediadorInstance)
 
-    protected void notFound() {
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'mediadorInstance.label', default: 'Mediador'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
+		flash.message = message(code: 'default.deleted.message', args: [message(code: 'Mediador.label', default: 'Mediador'), mediadorInstance.id])
+		redirect action:"index", method:"GET"
+	}
+
+	protected void notFound() {
+		flash.message = message(code: 'default.not.found.message', args: [message(code: 'mediadorInstance.label', default: 'Mediador'), params.id])
+		redirect action: "index", method: "GET"
+	}
 }

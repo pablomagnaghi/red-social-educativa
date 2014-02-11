@@ -1,6 +1,5 @@
 package com.fiuba
 
-import java.util.Date;
 import com.mensajeria.Carpeta
 
 class Usuario {
@@ -8,7 +7,7 @@ class Usuario {
 
 	String username
 	String password
-	
+
 	String apellido
 	String nombres
 	Integer legajo
@@ -16,33 +15,38 @@ class Usuario {
 	String email
 	String fechaSolicitud
 	String fechaMemb
-	
-	
+
 	boolean enabled = true
 	boolean accountExpired
 	boolean accountLocked
 	boolean passwordExpired
 
-	String toString() {
-		"${nombres} ${apellido}"
-	}
-	
-	static hasMany = [carpetas : Carpeta]
-	
+	static hasMany = [carpetas: Carpeta]
+
 	static transients = ['springSecurityService']
 
 	static constraints = {
 		username blank: false, matches:"[0-9]{8}", unique: true
-		password blank: false
+		password blank: false, minSize: 6
 		apellido blank: false
 		nombres blank: false
+		legajo nullable: true, unique: true, validator: { val, obj ->
+			if (!val && !obj.padron)
+				return false
+			return true
+		}
+		padron nullable: true, matches:"[0-9]{5}", unique: true, validator: { val, obj ->
+			if (!val && ! obj.legajo)
+				return false
+			return true
+		}
 		email email: true
 		fechaMemb nullable: true
 	}
 
 	static mapping = {
 		username column: 'dni'
-		password column: '`password`'		
+		password column: '`password`'
 	}
 
 	Set<Rol> getAuthorities() {
@@ -63,4 +67,7 @@ class Usuario {
 		password = springSecurityService.encodePassword(password)
 	}
 
+	String toString() {
+		"${nombres} ${apellido}"
+	}
 }

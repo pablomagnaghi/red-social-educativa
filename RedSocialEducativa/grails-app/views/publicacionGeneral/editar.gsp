@@ -19,6 +19,9 @@
 					<g:message code="Tema actual" /></g:link></li>
 			</ul>
 		</div>
+		
+		<h3>PARAMS : ${params}</h3>
+		
 		<div id="edit-publicacionGeneral" class="content scaffold-edit" role="main">
 			<h1><g:message code="default.edit.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">

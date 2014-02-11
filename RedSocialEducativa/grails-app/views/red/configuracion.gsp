@@ -10,15 +10,22 @@
 		<div class="nav" role="navigation">
 			<ul>
 				<li><g:link class="list" action="principal">
-					<g:message code="Pagina inicial" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="general" controller="administrador">
-					<g:message code="Volver a tareas administrativas" args="[entityName]" /></g:link></li>
+						<g:message code="Pagina inicial" args="[entityName]" />
+					</g:link></li>
+				<li><g:link class="create" action="general"
+						controller="administrador">
+						<g:message code="Volver a tareas administrativas"
+							args="[entityName]" />
+					</g:link></li>
 			</ul>
 		</div>
+	
+		<h4>params: ${params}</h4>
+		
 		<div id="edit-red" class="content scaffold-edit" role="main">
 			<h1><g:message code="Configuracion de la Red" /></h1>
 			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
+				<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<g:hasErrors bean="${redInstance}">
 			<ul class="errors" role="alert">

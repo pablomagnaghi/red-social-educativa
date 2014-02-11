@@ -19,6 +19,7 @@
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+		<h4>PARAMS: ${params}</h4>
 		<div id="list-cuatrimestre" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
