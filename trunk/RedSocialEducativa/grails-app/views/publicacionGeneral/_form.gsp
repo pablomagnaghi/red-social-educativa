@@ -30,14 +30,6 @@
 	<g:hiddenField name="foro.id" value="${com.fiuba.ForoGeneral.first().id}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: publicacionGeneralInstance, field: 'contenido', 'error')} ">
-	<label for="contenido">
-		<g:message code="publicacionGeneral.contenido.label" default="Contenido" />
-		
-	</label>
-	<g:textField name="contenido" value="${publicacionGeneralInstance?.contenido}"/>
-</div>
-
 <g:if test="${pubInicialId}">
 	<g:hiddenField name="titulo" value="${com.fiuba.PublicacionGeneral.get(pubInicialId).titulo}"/>
 </g:if>
@@ -50,3 +42,12 @@
 		<g:textField name="titulo" value="${publicacionGeneralInstance?.titulo}"/>
 	</div>
 </g:else>
+
+<div class="fieldcontain ${hasErrors(bean: publicacionGeneralInstance, field: 'contenido', 'error')} ">
+	<label for="contenido">
+		<g:message code="publicacionGeneral.contenido.label" default="Contenido" />
+		
+	</label>
+	<g:textField name="contenido" value="${publicacionGeneralInstance?.contenido}"/>
+</div>
+

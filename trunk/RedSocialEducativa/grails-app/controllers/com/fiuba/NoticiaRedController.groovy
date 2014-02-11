@@ -1,127 +1,82 @@
 package com.fiuba
 
 import static org.springframework.http.HttpStatus.*
-
-//import grails.transaction.Transactional
-
-//@Transactional(readOnly = true)
-
 import org.springframework.security.access.annotation.Secured
 
-@Secured('permitAll')
+@Secured("hasRole('ROL_ADMIN')")
 class NoticiaRedController {
-	
-	def springSecurityService
-	
-	private usuarioActual() {
-		return Usuario.get(springSecurityService.principal.id)
-	}
-	
+
+	def seguridadService
+	def noticiaRedService
+
 	// TODO
 	// Metodos usados en el ABM Cartelera del menu administrador
-    // static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	// static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond NoticiaRed.list(params), model:[noticiaRedInstanceCount: NoticiaRed.count()]
-    }
+	def index() {
+		params.max = Utilidades.MAX_PARAMS
+		respond NoticiaRed.list(params), model:[noticiaRedInstanceCount: NoticiaRed.count()]
+	}
 
-    def show(NoticiaRed noticiaRedInstance) {
-        respond noticiaRedInstance
-    }
+	def show(NoticiaRed noticiaRedInstance) {
+		respond noticiaRedInstance
+	}
 
-    def create() {
-        [noticiaRedInstance: new NoticiaRed(params), usuario: usuarioActual()]
-    }
-	
-    //@Transactional
-    def save(NoticiaRed noticiaRedInstance) {
-		
-		 if (noticiaRedInstance == null) {
-            notFound()
-            return
-        }
-		
-        if (noticiaRedInstance.hasErrors()) {
-            respond noticiaRedInstance.errors, view:'create'
-            return
-        }
-		
-		def noticiaRedExistente = NoticiaRed.findByTitulo(noticiaRedInstance.titulo)
-		println noticiaRedExistente
-		
-		if (noticiaRedExistente) {
-			flash.message = "Ya existe la noticia ${noticiaRedInstance.titulo} en la cartelera general"
-			redirect action: "create"
+	def create() {
+		[noticiaRedInstance: new NoticiaRed(params), usuario: seguridadService.usuarioActual()]
+	}
+
+	def save(NoticiaRed noticiaRedInstance) {
+
+		if (noticiaRedInstance == null) {
+			notFound()
 			return
 		}
 
-        noticiaRedInstance.save flush:true
+		if (!noticiaRedService.guardar(noticiaRedInstance)) {
+			respond noticiaRedInstance, view:'create'
+			return
+		}
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'noticiaRedInstance.label', default: 'NoticiaRed'), noticiaRedInstance.id])
-                redirect noticiaRedInstance
-            }
-            '*' { respond noticiaRedInstance, [status: CREATED] }
-        }
-    }
+		flash.message = message(code: 'default.created.message', args: [message(code: 'noticiaRedInstance.label', default: 'NoticiaRed'), noticiaRedInstance.id])
+		redirect noticiaRedInstance
+	}
 
-    def edit(NoticiaRed noticiaRedInstance) {
-		
-        respond noticiaRedInstance, model: [usuario: usuarioActual()]
-    }
+	def edit(NoticiaRed noticiaRedInstance) {
+		respond noticiaRedInstance, model: [usuario: seguridadService.usuarioActual()]
+	}
 
-    //@Transactional
-    def update(NoticiaRed noticiaRedInstance) {
-		
-        if (noticiaRedInstance == null) {
-            notFound()
-            return
-        }
-		
-        if (noticiaRedInstance.hasErrors()) {
-            respond noticiaRedInstance.errors, view:'edit'
-            return
-        }
+	def update(NoticiaRed noticiaRedInstance) {
 
-        noticiaRedInstance.save flush:true
+		if (noticiaRedInstance == null) {
+			notFound()
+			return
+		}
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'NoticiaRed.label', default: 'NoticiaRed'), noticiaRedInstance.id])
-                redirect noticiaRedInstance
-            }
-            '*'{ respond noticiaRedInstance, [status: OK] }
-        }
-    }
+		if (!noticiaRedService.guardar(noticiaRedInstance)) {
+			respond noticiaRedInstance, view:'edit'
+			return
+		}
 
-    // @Transactional
-    def delete(NoticiaRed noticiaRedInstance) {
+		flash.message = message(code: 'default.updated.message', args: [message(code: 'NoticiaRed.label', default: 'NoticiaRed'), noticiaRedInstance.id])
+		redirect noticiaRedInstance
+	}
 
-        if (noticiaRedInstance == null) {
-            notFound()
-            return
-        }
+	def delete(NoticiaRed noticiaRedInstance) {
 
-        noticiaRedInstance.delete flush:true
+		if (noticiaRedInstance == null) {
+			notFound()
+			return
+		}
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'NoticiaRed.label', default: 'NoticiaRed'), noticiaRedInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
+		noticiaRedService.eliminar(noticiaRedInstance)
 
-    protected void notFound() {
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'noticiaRedInstance.label', default: 'NoticiaRed'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
+		flash.message = message(code: 'default.deleted.message', args: [message(code: 'NoticiaRed.label', default: 'NoticiaRed'), noticiaRedInstance.id])
+		redirect action:"index", method:"GET"
+	}
+
+	protected void notFound() {
+		flash.message = message(code: 'default.not.found.message', args: [message(code: 'noticiaRedInstance.label', default: 'NoticiaRed'), params.id])
+		redirect action: "index", method: "GET"
+	}
 }

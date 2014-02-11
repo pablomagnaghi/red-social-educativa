@@ -1,43 +1,45 @@
 package com.fiuba
 
+import grails.plugin.mail.*
 import grails.transaction.Transactional
 
 @Transactional
 class AdministradorService {
 
-    def activarUsuario(String usuarioId) {
-		
+	def activarUsuario(String usuarioId) {
+
 		def usuario = Usuario.get(usuarioId)
-		println "${usuario}, ${usuario.id}, ${usuario.enabled}, ${usuario.fechaMemb}"
-	
 		usuario.enabled = true
-		usuario.fechaMemb = new Date()
+		usuario.fechaMemb = new Date().format(Utilidades.FORMATO_FECHA)
+
 		def mail = usuario.email
 		def username = usuario.username
-		if (usuario.hasErrors()){
-			println usuario.errors
+
+		if (!usuario.save(flush: true)) {
 			return false
-		} else {
-			usuario.save();
-			sendMail {
-				to mail
-				subject "Red Social Educativa"
-				body "Bienvenido ${username} a la Red Social Educativa FIUBA 2014"
-			}
-			return true
 		}
 
-    }
-	
-	def crearMiembro(String usuarioId) {
-		
-		def usuario = Usuario.get(usuarioId)
-		def miembro = new Miembro(usuario: usuario, rol: Rol.findByAuthority("ROL_MIEMBRO"))
-		
-		if (!miembro.validate()){
-			println miembro.errors
+		if (!crearMiembro(usuario)) {
+			return false
 		}
-		
-		miembro.save()
+
+		sendMail {
+			to mail
+			subject Utilidades.TITULO_RED
+			body Utilidades.MENSAJE_BIENVENIDA
+		}
+
+		return true
+	}
+
+	private crearMiembro(Usuario usuario) {
+
+		def miembro = new Miembro(usuario: usuario, rol: Rol.findByAuthority(Utilidades.ROL_MIEMBRO))
+
+		if (miembro.save(flush: true)) {
+			return miembro
+		}
+
+		return null
 	}
 }

@@ -47,13 +47,13 @@
 				</label>
 				<g:textField name="nombres" required="" value="${miembroInstance?.nombres}"/>
 			</div>
-
+			
 			<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'legajo', 'error')} required">
 				<label for="legajo">
 					<g:message code="usuarioInstance.legajo.label" default="Legajo" />
 					<span class="required-indicator">*</span>
 				</label>
-				<g:textField name="legajo" type="number" value="${usuarioInstance?.legajo}" required=""/>
+				<g:textField name="legajo" type="number" value="${usuarioInstance?.legajo}"/>
 			</div>
 			
 			<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'padron', 'error')} required">
@@ -61,7 +61,7 @@
 					<g:message code="usuarioInstance.padron.label" default="Padron" />
 					<span class="required-indicator">*</span>
 				</label>
-				<g:textField name="padron" type="number" value="${usuarioInstance?.padron}" required=""/>
+				<g:textField name="padron" type="number" value="${usuarioInstance?.padron}"/>
 			</div>
 			
 			<div
@@ -86,6 +86,9 @@
 				</label>
 				<g:passwordField name="passwordConfirmado" required="" />
 			</div>
+			
+			<div><g:hiddenField name="fechaSolicitud" value="${(new Date()).format(com.fiuba.Utilidades.FORMATO_FECHA)}"/></div>
+			<div><g:hiddenField name="enabled" value="${false}"/></div>
 
 			<fieldset class="buttons">
 				<g:submitButton name="enviarDatos" class ="save" value="Enviar datos"/>	

@@ -13,6 +13,8 @@
 			</ul>
 		</div>
 		
+		<h3>PARAMS : ${params}</h3>
+		
 		<h2>CREANDO PUBLICACION</h2>
 		
 		<div id="create-publicacionGeneral" class="content scaffold-create" role="main">

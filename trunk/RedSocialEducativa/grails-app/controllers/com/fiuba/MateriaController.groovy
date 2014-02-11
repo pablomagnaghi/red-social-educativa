@@ -1,109 +1,76 @@
 package com.fiuba
 
 import static org.springframework.http.HttpStatus.*
-//import grails.transaction.Transactional
-
-//@Transactional(readOnly = true)
-
 import org.springframework.security.access.annotation.Secured
 
-@Secured('permitAll')
+@Secured("hasRole('ROL_ADMIN')")
 class MateriaController {
 
-	// TODO
-	// Metodos usados en ABM materias del administrador
-	
 	// static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-	
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Materia.list(params), model:[materiaInstanceCount: Materia.count()]
-    }
 
-    def show(Materia materiaInstance) {
-        respond materiaInstance
-    }
+	def materiaService
 
-    def create() {
-        respond new Materia(params)
-    }
+	def index() {
+		params.max = Utilidades.MAX_PARAMS
+		respond Materia.list(params), model:[materiaInstanceCount: Materia.count()]
+	}
 
-    //@Transactional
-    def save(Materia materiaInstance) {
-        if (materiaInstance == null) {
-            notFound()
-            return
-        }
+	def show(Materia materiaInstance) {
+		respond materiaInstance
+	}
 
-        if (materiaInstance.hasErrors()) {
-            respond materiaInstance.errors, view:'create'
-            return
-        }
+	def create() {
+		respond new Materia(params)
+	}
 
-        materiaInstance.save flush:true
+	def save(Materia materiaInstance) {
+		if (materiaInstance == null) {
+			notFound()
+			return
+		}
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'materiaInstance.label', default: 'Materia'), materiaInstance.id])
-                redirect materiaInstance
-            }
-            '*' { respond materiaInstance, [status: CREATED] }
-        }
-    }
+		if (!materiaService.guardar(materiaInstance)) {
+			respond materiaInstance, view:'create'
+			return
+		}
 
-    def edit(Materia materiaInstance) {
-        respond materiaInstance
-    }
+		flash.message = message(code: 'default.created.message', args: [message(code: 'materiaInstance.label', default: 'Materia'), materiaInstance.id])
+		redirect materiaInstance
+	}
 
-    //@Transactional
-    def update(Materia materiaInstance) {
-        if (materiaInstance == null) {
-            notFound()
-            return
-        }
+	def edit(Materia materiaInstance) {
+		respond materiaInstance
+	}
 
-        if (materiaInstance.hasErrors()) {
-            respond materiaInstance.errors, view:'edit'
-            return
-        }
+	def update(Materia materiaInstance) {
+		if (materiaInstance == null) {
+			notFound()
+			return
+		}
 
-        materiaInstance.save flush:true
+		if (!materiaService.guardar(materiaInstance)) {
+			respond materiaInstance, view:'edit'
+			return
+		}
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Materia.label', default: 'Materia'), materiaInstance.id])
-                redirect materiaInstance
-            }
-            '*'{ respond materiaInstance, [status: OK] }
-        }
-    }
+		flash.message = message(code: 'default.updated.message', args: [message(code: 'Materia.label', default: 'Materia'), materiaInstance.id])
+		redirect materiaInstance
+	}
 
-    //@Transactional
-    def delete(Materia materiaInstance) {
+	def delete(Materia materiaInstance) {
+		if (materiaInstance == null) {
+			notFound()
+			return
+		}
 
-        if (materiaInstance == null) {
-            notFound()
-            return
-        }
+		materiaService.eliminar(materiaInstance)
 
-        materiaInstance.delete flush:true
+		flash.message = message(code: 'default.deleted.message', args: [message(code: 'Materia.label', default: 'Materia'), materiaInstance.id])
+		redirect action:"index", method:"GET"
+	}
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Materia.label', default: 'Materia'), materiaInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
-
-    protected void notFound() {
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'materiaInstance.label', default: 'Materia'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
+	protected void notFound() {
+		flash.message = message(code: 'default.not.found.message', args: [message(code: 'materiaInstance.label', default: 'Materia'), params.id])
+		redirect action: "index", method: "GET"
+	}
 }

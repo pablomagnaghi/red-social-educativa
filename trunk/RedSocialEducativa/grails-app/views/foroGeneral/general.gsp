@@ -21,6 +21,8 @@
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
 		</div>	
+		<h3>PARAMS : ${params}</h3>
+		
 		<div>
 			<h2>Foro general: ${com.fiuba.ForoGeneral.first()}</h2>
 			<br>

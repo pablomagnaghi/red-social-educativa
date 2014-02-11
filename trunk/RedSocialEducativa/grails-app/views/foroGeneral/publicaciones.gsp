@@ -23,6 +23,9 @@
 				</g:if>	
 			</ul>
 		</div>
+		
+		<h3>PARAMS : ${params}</h3>
+		
 		<div id="list-foroGeneral" class="content scaffold-list" role="main">
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>

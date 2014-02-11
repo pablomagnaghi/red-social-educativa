@@ -15,7 +15,7 @@
 		<g:message code="mediador.jerarquia.label" default="Jerarquia" />
 		
 	</label>
-	<g:textField name="jerarquia" value="${mediadorInstance?.jerarquia}"/>
+	<g:select name="jerarquia" from="${['JTP', 'AP', 'AS', 'Colaborador"']}" />
 </div>
 
 <div>

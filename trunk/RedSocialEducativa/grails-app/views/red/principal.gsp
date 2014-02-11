@@ -156,6 +156,7 @@
 			<p>Mes: ${com.fiuba.Utilidades.MES}</p>
 			<p>Anio: ${com.fiuba.Utilidades.ANIO}</p>
 			<p>Fecha: ${com.fiuba.Utilidades.FECHA}</p>
+			<p>FORMATO FECHA: ${(new Date()).format(com.fiuba.Utilidades.FORMATO_FECHA)}</p>
 		</div>
 	</body>
 </html>

@@ -13,5 +13,5 @@
 		<g:message code="curso.cuatDict.label" default="Cuat Dict" />
 		
 	</label>
-	<g:textField name="cuatDict" value="${cursoInstance?.cuatDict}"/>
+	<g:select name="cuatDict" from="${['1', '2', '1|2']}" />
 </div>

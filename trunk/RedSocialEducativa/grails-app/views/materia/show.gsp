@@ -46,21 +46,21 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${materiaInstance?.contenidosMinimos}">
-				<li class="fieldcontain">
-					<span id="contenidosMinimos-label" class="property-label">
-						<g:message code="materia.contenidosMinimos.label" default="Contenidos Minimos" /></span>
-					<span class="property-value" aria-labelledby="contenidosMinimos-label">
-						<g:fieldValue bean="${materiaInstance}" field="contenidosMinimos"/></span>
-				</li>
-				</g:if>
-				
 				<g:if test="${materiaInstance?.creditos}">
 				<li class="fieldcontain">
 					<span id="creditos-label" class="property-label">
 						<g:message code="materia.creditos.label" default="Creditos" /></span>
 					<span class="property-value" aria-labelledby="creditos-label">
 						<g:fieldValue bean="${materiaInstance}" field="creditos"/></span>
+				</li>
+				</g:if>
+				
+				<g:if test="${materiaInstance?.contenidosMinimos}">
+				<li class="fieldcontain">
+					<span id="contenidosMinimos-label" class="property-label">
+						<g:message code="materia.contenidosMinimos.label" default="Contenidos Minimos" /></span>
+					<span class="property-value" aria-labelledby="contenidosMinimos-label">
+						<g:fieldValue bean="${materiaInstance}" field="contenidosMinimos"/></span>
 				</li>
 				</g:if>
 			
