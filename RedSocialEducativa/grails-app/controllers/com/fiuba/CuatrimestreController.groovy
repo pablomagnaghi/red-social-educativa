@@ -3,8 +3,7 @@ package com.fiuba
 import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured
 
-//@Secured("hasAnyRole(['ROL_ADMIN', 'ROL_MEDIADOR'])")
-@Secured('permitAll')
+
 class CuatrimestreController {
 	// metodos nuevos
 
@@ -13,10 +12,12 @@ class CuatrimestreController {
 	def cuatrimestreService
 	def cursoId
 
+	@Secured('permitAll')
 	def historial(Cuatrimestre cuatrimestreInstance) {
 		respond cuatrimestreInstance, model: [cursoId: cursoId]
 	}
 
+	@Secured("hasRole('ROL_ADMIN')")
 	def muestraMenuAdm(Cuatrimestre cuatrimestreInstance) {
 		respond cuatrimestreInstance, model: [cursoId: cursoId]
 	}
@@ -25,6 +26,7 @@ class CuatrimestreController {
 
 	// static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+	@Secured('permitAll')
 	def index(Integer max) {
 		params.max = Utilidades.MAX_PARAMS
 
@@ -34,15 +36,18 @@ class CuatrimestreController {
 			cuatrimestreInstanceCount: Cuatrimestre.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId]
 	}
 
+	@Secured('permitAll')
 	def show(Cuatrimestre cuatrimestreInstance) {
 		respond cuatrimestreInstance, model: [cursoId: cursoId]
 	}
 
+	@Secured('permitAll')
 	def create() {
 		cursoId = params.cursoId
 		respond new Cuatrimestre(params), params:['cursoId': cursoId], model:[cursoId: cursoId]
 	}
 
+	@Secured('permitAll')
 	def save(Cuatrimestre cuatrimestreInstance) {
 		if (cuatrimestreInstance == null) {
 			notFound()
@@ -69,11 +74,13 @@ class CuatrimestreController {
 		redirect action: "index", params:['cursoId': cursoId]
 	}
 
+	@Secured('permitAll')
 	def edit(Cuatrimestre cuatrimestreInstance) {
 		cursoId = params.cursoId
 		respond cuatrimestreInstance, params:['cursoId': cursoId], model:[cursoId: cursoId]
 	}
 
+	@Secured('permitAll')
 	def update(Cuatrimestre cuatrimestreInstance) {
 
 		cursoId = params.cursoId
@@ -92,6 +99,7 @@ class CuatrimestreController {
 		redirect cuatrimestreInstance
 	}
 
+	@Secured('permitAll')
 	def delete(Cuatrimestre cuatrimestreInstance) {
 
 		if (cuatrimestreInstance == null) {

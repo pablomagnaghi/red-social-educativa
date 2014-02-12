@@ -79,7 +79,7 @@
 						<g:message code="cuatrimestre.aprendices.label" default="Aprendices" /></span>
 					<g:each in="${cuatrimestreInstance.aprendices}" var="a">
 						<span class="property-value" aria-labelledby="aprendices-label">
-							<g:link controller="usuario" action="show" id="${a.usuario.id}">${a?.encodeAsHTML()}</g:link></span>
+							<g:link controller="usuario" action="muestraMenuMed" id="${a.usuario.id}">${a?.encodeAsHTML()}</g:link></span>
 					</g:each>
 				</li>
 				</g:if>

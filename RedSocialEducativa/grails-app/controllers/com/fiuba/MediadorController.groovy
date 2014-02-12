@@ -5,43 +5,27 @@ import org.springframework.security.access.annotation.Secured
 
 class MediadorController {
 
+	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	def mediadorService
 	def aprendizService
 
-	// Metodos nuevos
-
-	@Secured('permitAll')
+	// Metodo para el Menu Mediador
+	@Secured("hasRole('ROL_MEDIADOR')")
 	def activarAprendiz() {
-		def aprendiz = Aprendiz.get(params.id)
-		println "activarAprendiz params: ${params}"
-		//println "${aprendiz}, ${aprendiz.id}, ${aprendiz.participa}"
-
-		aprendiz.participa = true
-		def mail = aprendiz.usuario.email
-		def username = aprendiz.usuario.username
-		if (aprendiz.hasErrors()){
-			println aprendiz.errors
+		
+		if (!mediadorService.activarUsuario(params.id.toLong())) {
 			flash.message = "Problemas con el aprendiz"
 			redirect(controller: "curso", action: "menuMediador", params: params)
 			return
-		} else {
-			aprendiz.save();
-			sendMail {
-				to mail
-				subject Utilidades.TITULO_RED
-				body "Bienvenido aprendiz ${username} al curso ${aprendiz.cuatrimestre.curso} de la Red Social Educativa FIUBA 2014"
-			}
-			flash.message = "Autorización enviada para el aprendiz ${username} del curso ${aprendiz.cuatrimestre.curso}"
 		}
-
+	
+		def aprendiz = Aprendiz.get(params.id)
+		
+		flash.message = "Autorización enviada para el aprendiz ${aprendiz.usuario.username} del curso ${aprendiz.cuatrimestre.curso}"
 		redirect(controller: "aprendiz", action: "index", params: params)
 	}
 
-	// TODO
-	// Metodos para el ABM de administrador
-
-	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
+	// Metodos para el menu Administrador
 	@Secured("hasRole('ROL_ADMIN')")
 	def index(Integer max) {
 		params.max = Utilidades.MAX_PARAMS

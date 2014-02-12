@@ -50,7 +50,9 @@
 				<li class="fieldcontain">
 					<span id="usuario-label" class="property-label"><g:message code="mediador.usuario.label" default="Usuario" /></span>
 					
-						<span class="property-value" aria-labelledby="usuario-label"><g:link controller="usuario" action="show" id="${mediadorInstance?.usuario?.id}">${mediadorInstance?.usuario?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="usuario-label">
+							<g:link controller="usuario" action="muestraMenuAdm" id="${mediadorInstance?.usuario?.id}">
+								${mediadorInstance?.usuario?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

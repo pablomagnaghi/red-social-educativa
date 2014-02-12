@@ -61,7 +61,7 @@
 					<span id="administrador-label" class="property-label">
 						<g:message code="noticiaRed.administrador.label" default="Administrador" /></span>
 					<span class="property-value" aria-labelledby="administrador-label">
-						<g:link controller="usuario" action="show" id="${noticiaRedInstance?.administrador?.usuario?.id}">
+						<g:link controller="usuario" action="muestraMenuMed" id="${noticiaRedInstance?.administrador?.usuario?.id}">
 							${noticiaRedInstance?.administrador?.encodeAsHTML()}</g:link></span>
 				</li>
 				</g:if>

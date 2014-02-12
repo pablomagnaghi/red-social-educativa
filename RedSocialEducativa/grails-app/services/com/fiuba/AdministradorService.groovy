@@ -6,7 +6,7 @@ import grails.transaction.Transactional
 @Transactional
 class AdministradorService {
 
-	def activarUsuario(String usuarioId) {
+	def activarUsuario(Long usuarioId) {
 
 		def usuario = Usuario.get(usuarioId)
 		usuario.enabled = true

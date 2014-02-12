@@ -1,144 +1,92 @@
 package com.fiuba
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional;
-//import grails.transaction.Transactional
-
-//@Transactional(readOnly = true)
-
 import org.springframework.security.access.annotation.Secured
 
-@Secured('permitAll')
+@Secured("hasRole('ROL_MEDIADOR')")
 class AprendizController {
-
-	def cursoId 
-	def cuatrimestreId
 	
-	// estadisticas de los participantes del cuatrimestre
-	def estadisticas(Integer max) {
-		params.max = Math.min(max ?: 10, 100)
+	// static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	def seguridadService
+	def aprendizService
+	def mediadorService
+	
+	def estadisticas() {
+		params.max = Utilidades.MAX_PARAMS
 		
-		println "index aprendiz"
-		println params
-		
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
-		def cuatrimestre = Cuatrimestre.get(cuatrimestreId)
+		def cuatrimestre = Cuatrimestre.get(params.cuatrimestreId)
 			
 		[aprendizInstanceList: Aprendiz.findAllByCuatrimestreAndParticipa(cuatrimestre, true, [max: params.max, offset: params.offset]),
 			aprendizInstanceCount: Aprendiz.findAllByCuatrimestreAndParticipa(cuatrimestre, true).size(), 
-			cursoId: cursoId, cuatrimestreId: cuatrimestreId]
+			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 	}
 
-	// metodos para ABM aprendices del menu de mediador
-	// static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-	
-    def index(Integer max) {
-        params.max = 4 //Math.min(max ?: 10, 100)
+    def index() {
+        params.max = Utilidades.MAX_PARAMS
 		
-		println "index aprendiz"
-		println params
-		
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
-		def cuatrimestre = Cuatrimestre.get(cuatrimestreId)
+		def cuatrimestre = Cuatrimestre.get(params.cuatrimestreId)
 			
 		[aprendizInstanceList: Aprendiz.findAllByCuatrimestre(cuatrimestre,[max: params.max, offset: params.offset]), 
-			aprendizInstanceCount: Aprendiz.findAllByCuatrimestre(cuatrimestre).size(), cursoId: cursoId, cuatrimestreId: cuatrimestreId]
+			aprendizInstanceCount: Aprendiz.findAllByCuatrimestre(cuatrimestre).size(), 
+			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
     }
 
     def create() {
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
-		
-        respond new Aprendiz(params), model:[cursoId: cursoId, cuatrimestreId: cuatrimestreId]
+        respond new Aprendiz(params), params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
     }
 	
-    //@Transactional
     def save(Aprendiz aprendizInstance) {
         if (aprendizInstance == null) {
             notFound()
             return
         }
 
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
-		
-        if (aprendizInstance.hasErrors()) {
-            respond aprendizInstance.errors, view:'create', params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]
-            return
-        }
-
-		println "save params: ${params}"
-		
-		def curso = Curso.get(cursoId)
-		def cuatrimestre = Cuatrimestre.get(cuatrimestreId)
-		
 		def usuario = Usuario.get(aprendizInstance.usuario.id)
+		def mediador = Mediador.findByUsuarioAndCurso(usuario, Curso.get(params.cursoId))
 		
-		println "curso: ${curso}"
-		println "usuario: ${usuario}"
+		if (mediador && mediadorService.existe(mediador)) {
+			flash.message = "El miembro ${usuario} ya es mediador en el curso ${mediador.curso}. No puede ser aprendiz en el mismo"
+			redirect action: "create", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+			return
+		}
 		
-		def mediador = Mediador.findByUsuarioAndCurso(usuario, curso)
+		// Verifico si pertence al cuatrimestre acutal
+		def cuatrimestre = Cuatrimestre.get(params.cuatrimestreId)
 		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuario, cuatrimestre)
-		
-		if (mediador) {
-			flash.message = "El miembro ${usuario} ya es mediador en el curso ${curso}. No puede ser aprendiz en el mismo"
-			redirect action: "create", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]
-			return
-		}
-		
 		if (aprendiz) {
-			flash.message = "${aprendiz} ya es aprendiz en el curso ${curso} durante el cuatrimestre ${cuatrimestre}"
-			redirect action: "create", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]
+			flash.message = "${aprendiz} ya es aprendiz en el curso ${cuatrimestre.curso} durante el cuatrimestre ${cuatrimestre}"
+			redirect action: "create", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 			return
 		}
 
-        aprendizInstance.save flush:true
+		// TODO verificar si todavia adeuda la materia
+		// Falta
+		
+		if (!aprendizService.guardar(aprendizInstance)) {
+			respond aprendizInstance, view:'create', params:['cursoId': params.CursoId, 'cuatrimestreId': params.cuatrimestreId]
+			return
+		}
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'aprendizInstance.label', default: 'Aprendiz'), aprendizInstance.id])
-                redirect action: "index", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]
-            }
-			'*' { respond aprendizInstance, [status: CREATED] }
-        }
+		flash.message = message(code: 'default.created.message', args: [message(code: 'aprendizInstance.label', default: 'Aprendiz'), aprendizInstance.id])
+		redirect action: "index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
     }
 
-    //@Transactional
     def delete(Aprendiz aprendizInstance) {
 
-        if (aprendizInstance == null) {
-            notFound()
-            return
-        }
-		
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
+		if (aprendizInstance == null) {
+			notFound()
+			return
+		}
 
-        aprendizInstance.delete flush:true
+		aprendizService.eliminar(aprendizInstance)
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Aprendiz.label', default: 'Aprendiz'), aprendizInstance.id])
-                redirect action:"index", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
+		flash.message = message(code: 'default.deleted.message', args: [message(code: 'Aprendiz.label', default: 'Aprendiz'), aprendizInstance.id])
+		redirect action:"index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId], method:"GET"
+
+	}
 
     protected void notFound() {
-		println "not found params: ${params}"
-		
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'aprendizInstance.label', default: 'Aprendiz'), params.id])
-                redirect action: "index", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
+		flash.message = message(code: 'default.not.found.message', args: [message(code: 'aprendizInstance.label', default: 'Aprendiz'), params.id])
+		redirect action: "index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId], method: "GET"
     }
 }
-
-
-

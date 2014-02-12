@@ -14,7 +14,7 @@ class ForoGeneralService {
 				eq("publicacionInicial.id", publicacionId)
 			}
 		}
-
+		
 		return respuestas
 	}
 }

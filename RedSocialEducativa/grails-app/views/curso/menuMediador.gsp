@@ -48,9 +48,7 @@
 
 				</g:if>
 				<g:else>
-					<p>"TODAVIA NO HAY UN CUATRIMESTRE ACTUAL"</p>
-					<p>SI EL CURSO SE DICTA 1 o 2 SEGUNDO CUATRIMESTRE ACLARARLO Y SI DEBE HABER CUATRIMESTRE
-						EN ESE CURSO EN ESE MOMENTO PONER MSJ DE IR A CONSOLIDAR CUATRIMESTRE</p>
+					<p>"TODAVIA NO HAY UN CUATRIMESTRE ACTUAL. Revisar Consolidar cuatrimestre"</p>
 				</g:else>
 				<br>
 				<li><g:link class="list" action="index" controller="materialCurso" params="['cursoId': cursoId]">
@@ -63,14 +61,11 @@
 					<g:message code="Administrar evaluaciones del curso" /></g:link></li>		
 				<br>	
 				<li><g:link class="list" action="index" controller="cuatrimestre" params="['cursoId': cursoId]">
-					<g:message code="Historial de cuatrimestres del curso" /></g:link></li>
-				<br>
-				<li><g:link class="list" action="index" controller="evaluacion" params="['cursoId': cursoId]">
-					<g:message code="Administrar evaluaciones del curso" /></g:link></li>	
-				<br>
-				<li><g:link class="list" action="index" controller="cuatrimestre" params="['cursoId': cursoId]">
 					<g:message code="Consolidar cuatrimestre (IMPLEMENTAR)" /></g:link></li>	
-				<br>			
+				<br>	
+					<li><g:link class="list" action="index" controller="cuatrimestre" params="['cursoId': cursoId]">
+					<g:message code="Historial de cuatrimestres del curso" /></g:link></li>
+				<br>		
 				<p>AGREGAR CONSOLIDAR CUATRIMESTRE, ESTE METODO TIENE QUE LLAMAR A NEW CUATRIMESTRE Y ADEMAS CONSOLIDAR EL ANTERIOR</p>	
 			</ol>
 		</div>

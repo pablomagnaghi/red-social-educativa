@@ -13,12 +13,18 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+				<li><g:link class="list" action="mediador" controller="curso" params="['cursoId': params.cursoId]">
+					<g:message code="Pagina principal de mediador"/></g:link></li>	
+				<li><g:link class="list" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+				<li><g:link class="create" action="create" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+		<h4>PARAMS: ${params}</h4>
+		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+		<h2>Curso Id: ${params.cursoId}</h2>
+		<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
 		<div id="show-noticiaCurso" class="content scaffold-show" role="main">
 			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -26,15 +32,15 @@
 			</g:if>
 			<ol class="property-list noticiaCurso">
 			
-				<g:if test="${noticiaCursoInstance?.cuatrimestre}">
+				
+				<g:if test="${noticiaCursoInstance?.titulo}">
 				<li class="fieldcontain">
-					<span id="cuatrimestre-label" class="property-label"><g:message code="noticiaCurso.cuatrimestre.label" default="Cuatrimestre" /></span>
+					<span id="titulo-label" class="property-label"><g:message code="noticiaCurso.titulo.label" default="Titulo" /></span>
 					
-						<span class="property-value" aria-labelledby="cuatrimestre-label">${noticiaCursoInstance?.cuatrimestre?.encodeAsHTML()}</span>
+						<span class="property-value" aria-labelledby="titulo-label"><g:fieldValue bean="${noticiaCursoInstance}" field="titulo"/></span>
 					
 				</li>
 				</g:if>
-			
 				
 				<g:if test="${noticiaCursoInstance?.fecha}">
 				<li class="fieldcontain">
@@ -61,25 +67,7 @@
 					
 				</li>
 				</g:if>
-			
-				<g:if test="${noticiaCursoInstance?.texto}">
-				<li class="fieldcontain">
-					<span id="texto-label" class="property-label"><g:message code="noticiaCurso.texto.label" default="Texto" /></span>
-					
-						<span class="property-value" aria-labelledby="texto-label"><g:fieldValue bean="${noticiaCursoInstance}" field="texto"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${noticiaCursoInstance?.titulo}">
-				<li class="fieldcontain">
-					<span id="titulo-label" class="property-label"><g:message code="noticiaCurso.titulo.label" default="Titulo" /></span>
-					
-						<span class="property-value" aria-labelledby="titulo-label"><g:fieldValue bean="${noticiaCursoInstance}" field="titulo"/></span>
-					
-				</li>
-				</g:if>
-			
+				
 				<g:if test="${noticiaCursoInstance?.visibilidad}">
 				<li class="fieldcontain">
 					<span id="visibilidad-label" class="property-label"><g:message code="noticiaCurso.visibilidad.label" default="Visibilidad" /></span>
@@ -89,9 +77,27 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${noticiaCursoInstance?.texto}">
+				<li class="fieldcontain">
+					<span id="texto-label" class="property-label"><g:message code="noticiaCurso.texto.label" default="Texto" /></span>
+					
+						<span class="property-value" aria-labelledby="texto-label"><g:fieldValue bean="${noticiaCursoInstance}" field="texto"/></span>
+					
+				</li>
+				</g:if>
+
+				<g:if test="${noticiaCursoInstance?.cuatrimestre}">
+				<li class="fieldcontain">
+					<span id="cuatrimestre-label" class="property-label"><g:message code="noticiaCurso.cuatrimestre.label" default="Cuatrimestre" /></span>
+					
+						<span class="property-value" aria-labelledby="cuatrimestre-label">${noticiaCursoInstance?.cuatrimestre?.encodeAsHTML()}</span>
+					
+				</li>
+				</g:if>
+				
 			</ol>
 			<g:form action="delete" method="DELETE" id="${noticiaCursoInstance.id}" 
-				params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+				params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 				<fieldset class="buttons">
 					<g:link class="edit" action="edit" resource="${noticiaCursoInstance}" 
 						id="${noticiaCursoInstance.id}" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">

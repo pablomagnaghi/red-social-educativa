@@ -14,17 +14,18 @@
 					<g:message code="default.home.label"/></a></li>
 				<li><g:link class="create" action="general">
 					<g:message code="Volver a foro general" /></g:link></li>	
-				<li><g:link class="create" controller="publicacionGeneral" action="nueva" params="['pubInicialId': pubInicialId]">
+				<li><g:link class="create" controller="publicacionGeneral" action="nueva" params="['pubInicialId': params.pubInicialId]">
 					<g:message code="Publicar respuesta" /></g:link></li>
 				<g:if test="${administrador}">
-					<li><g:link class="create" controller="publicacionGeneral" action="eliminar" id="${pubInicialId}" 
-						params="['pubInicialId': pubInicialId]">
+					<li><g:link class="create" controller="publicacionGeneral" action="eliminar" id="${params.pubInicialId}" 
+						params="['pubInicialId': params.pubInicialId]">
 						<g:message code="Eliminar tema" /></g:link></li>
 				</g:if>	
 			</ul>
 		</div>
 		
 		<h3>PARAMS : ${params}</h3>
+		<h3>usuario: ${usuario}</h3>
 		
 		<div id="list-foroGeneral" class="content scaffold-list" role="main">
 			<g:if test="${flash.message}">
@@ -57,23 +58,25 @@
 						<td>${it.contenido}</td>
 						
 						<g:if test="${administrador}">
-							<g:if test="${!it.id.equals(pubInicialId as long)}">								
+							<g:if test="${!it.id.equals(params.pubInicialId as long)}">								
 								<td>
-									<g:link controller="publicacionGeneral" action="editar" id="${it.id}" params="['pubInicialId': pubInicialId]">
+									<g:link controller="publicacionGeneral" action="editar" id="${it.id}" 
+										params="['pubInicialId': params.pubInicialId]">
 										<g:message code="Editar" /></g:link>
 									-
-									<g:link controller="publicacionGeneral" action="eliminar" 
-										id="${it.id}" params="['pubInicialId': pubInicialId]">
+									<g:link controller="publicacionGeneral" action="eliminar" id="${it.id}" 
+										params="['pubInicialId': params.pubInicialId]">
 										<g:message code="Borrar" /></g:link>
 								</td>	
 							</g:if>
 							<g:else>
 								<td>
-									<g:link controller="publicacionGeneral" action="editar" id="${it.id}" params="['pubInicialId': pubInicialId]">
+									<g:link controller="publicacionGeneral" action="editar" id="${it.id}" 
+										params="['pubInicialId': params.pubInicialId]">
 										<g:message code="Editar" /></g:link>
 									-
-									<g:link controller="publicacionGeneral" action="eliminar" 
-										id="${it.id}" params="['pubInicialId': pubInicialId]">
+									<g:link controller="publicacionGeneral" action="eliminar" id="${it.id}" 
+										params="['pubInicialId': params.pubInicialId]">
 										<g:message code="Borrar" /></g:link>
 										<p>Al borrar la publicacion inicial, se borran todas sus respuestas</p>
 										<p>Equivale a eliminar tema</p>
@@ -85,7 +88,7 @@
 			</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${respuestasCant ?: 0}" id="${pubInicialId}"/>
+				<g:paginate total="${respuestasCant ?: 0}" id="${params.pubInicialId}" params="['pubInicialId': params.pubInicialId]"/>
 			</div>
 		</div>
 	</body>

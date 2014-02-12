@@ -17,7 +17,6 @@ class MediadorService {
 		return cursosMediador
 	}
 
-
 	def existe(Mediador mediador) {
 
 		def curso = Curso.get(mediador.curso.id)
@@ -38,5 +37,23 @@ class MediadorService {
 
 	def eliminar(Mediador mediador) {
 		mediador.delete flush:true
+	}
+
+	def activarUsuario(Long aprendizId) {
+		def aprendiz = Aprendiz.get(aprendizId)
+		aprendiz.participa = true
+		def mail = aprendiz.usuario.email
+		def username = aprendiz.usuario.username
+		
+		if (aprendiz.save(flush: true)) {
+			aprendiz.save();
+			sendMail {
+				to mail
+				subject Utilidades.TITULO_RED
+				body "Bienvenido aprendiz ${username} al curso ${aprendiz.cuatrimestre.curso} de la Red Social Educativa FIUBA 2014"
+			}
+			return true
+		}
+		return false
 	}
 }

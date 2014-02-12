@@ -5,7 +5,7 @@ import grails.transaction.Transactional
 @Transactional
 class CuatrimestreService {
 
-	def obtenerCuatrimestreActual(String cursoId) {
+	def obtenerCuatrimestreActual(Long cursoId) {
 
 		// Reviso en que periodo del año estamos, para determinar que cuatrimestre tendria que existir en el curso
 

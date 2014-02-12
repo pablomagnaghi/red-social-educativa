@@ -64,22 +64,13 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${cuatrimestreInstance?.nroUltGrupo}">
-				<li class="fieldcontain">
-					<span id="nroUltGrupo-label" class="property-label">
-						<g:message code="cuatrimestre.nroUltGrupo.label" default="Nro Ult Grupo" /></span>
-					<span class="property-value" aria-labelledby="nroUltGrupo-label">
-						<g:fieldValue bean="${cuatrimestreInstance}" field="nroUltGrupo"/></span>		
-				</li>
-				</g:if>
-			
 				<g:if test="${cuatrimestreInstance?.aprendices}">
 				<li class="fieldcontain">
 					<span id="aprendices-label" class="property-label">
 						<g:message code="cuatrimestre.aprendices.label" default="Aprendices" /></span>
 					<g:each in="${cuatrimestreInstance.aprendices}" var="a">
 						<span class="property-value" aria-labelledby="aprendices-label">
-							<g:link controller="usuario" action="show" id="${a.usuario.id}">${a?.encodeAsHTML()}</g:link></span>
+							<g:link controller="usuario" action="muestraMenuAdm" id="${a.usuario.id}">${a?.encodeAsHTML()}</g:link></span>
 					</g:each>
 				</li>
 				</g:if>

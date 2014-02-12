@@ -7,7 +7,7 @@ class AprendizService {
 
 	// TODO cuando un aprendiz pierde la cursada, reprueba tres veces el final o se le vence la materia
 	// participa pasa a ser false o agregar atributo estado en aprendiz
-	// Estado [cursando/curso aprobado/]
+	// Estado [inactivo/activo/cursada aprobada/curso terminado]
 
 	def obtenerCursos(Usuario usuario) {
 
@@ -22,13 +22,27 @@ class AprendizService {
 		return cursosAprendiz
 	}
 
+	// TODO agregar el participa true, porque si ya se le vencio o aprobo pasa a participa false
 	def obtenerPorCurso(Long usuarioId, Long cursoId) {
 		def c = Aprendiz.createCriteria()
 		def aprendiz = c.get {
 			cuatrimestre {
-				eq('curso.id', cursoId as long)
+				eq('curso.id', cursoId)
 			}
 			eq('usuario.id', usuarioId)
 		}
+	}
+	
+	def guardar(Aprendiz aprendiz) {
+		
+		if (aprendiz.save(flush:true)) {
+			return aprendiz
+		}
+		
+		return null
+	}
+	
+	def eliminar(Aprendiz aprendiz) {
+		aprendiz.delete flush:true
 	}
 }

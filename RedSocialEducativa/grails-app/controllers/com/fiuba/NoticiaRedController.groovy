@@ -10,7 +10,6 @@ class NoticiaRedController {
 	def noticiaRedService
 
 	// TODO
-	// Metodos usados en el ABM Cartelera del menu administrador
 	// static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def index() {

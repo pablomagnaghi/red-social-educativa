@@ -12,7 +12,7 @@ class AdministradorController {
 
 	def activarUsuario() {
 
-		if (!administradorService.activarUsuario(params.id)) {
+		if (!administradorService.activarUsuario(params.id.toLong())) {
 			flash.message = "Problemas con activar al usuario"
 			redirect(action: "general")
 			return
