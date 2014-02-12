@@ -15,12 +15,13 @@
 				<li><g:link class="create" controller="foroGeneral" action="general">
 					<g:message code="Foro General" /></g:link></li>
 				<li><g:link class="list" controller="foroGeneral" action="publicaciones" 
-					id="${publicacionId}" params="['pubInicialId': pubInicialId]">
+					id="${params.publicacionId}" params="['pubInicialId': params.pubInicialId]">
 					<g:message code="Tema actual" /></g:link></li>
 			</ul>
 		</div>
 		
 		<h3>PARAMS : ${params}</h3>
+		<h3>usuario; ${usuario}</h3>
 		
 		<div id="edit-publicacionGeneral" class="content scaffold-edit" role="main">
 			<h1><g:message code="default.edit.label" args="[entityName]" /></h1>
@@ -34,7 +35,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="actualizar" method="PUT" id="${publicacionGeneralInstance.id}" params="['pubInicialId': pubInicialId]">
+			<g:form action="actualizar" method="PUT" id="${publicacionGeneralInstance.id}" params="['pubInicialId': params.pubInicialId]">
 				<g:hiddenField name="version" value="${publicacionGeneralInstance?.version}" />
 				<fieldset class="form">
 					<g:render template="form"/>

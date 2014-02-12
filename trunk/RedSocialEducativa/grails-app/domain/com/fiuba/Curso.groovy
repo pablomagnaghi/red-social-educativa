@@ -13,7 +13,7 @@ class Curso {
 
 	static constraints = {
 		nroRelativo min:(Short)1
-		cuatDict inList:["1", "2", "1|2"]
+		cuatDict inList:[Utilidades.CUAT_UNO, Utilidades.CUAT_DOS, Utilidades.CUAT_AMBOS]
 	}
 
 	String toString() {

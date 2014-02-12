@@ -1,7 +1,5 @@
 <%@ page import="com.fiuba.Mediador" %>
 
-
-
 <div class="fieldcontain ${hasErrors(bean: mediadorInstance, field: 'curso', 'error')} required">
 	<label for="curso">
 		<g:message code="mediador.curso.label" default="Curso" />
@@ -18,10 +16,6 @@
 	<g:select name="jerarquia" from="${['JTP', 'AP', 'AS', 'Colaborador"']}" />
 </div>
 
-<div>
-	<g:hiddenField name="rol.id" value="${com.fiuba.Rol.findByAuthority('ROL_MEDIADOR').id}"/>
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: mediadorInstance, field: 'usuario', 'error')} required">
 	<label for="usuario">
 		<g:message code="mediador.usuario.label" default="Usuario" />
@@ -30,3 +24,4 @@
 	<g:select id="usuario" name="usuario.id" from="${com.fiuba.Miembro.list().usuario}" optionKey="id" required="" value="${mediadorInstance?.usuario?.id}" class="many-to-one"/>
 </div>
 
+<div><g:hiddenField name="rol.id" value="${com.fiuba.Rol.findByAuthority(com.fiuba.Utilidades.ROL_MEDIADOR).id}"/></div>

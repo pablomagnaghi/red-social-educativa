@@ -19,84 +19,73 @@ class CursoController {
 		println "Revisar rol params: ${params}"
 
 		cursoId = params.cursoId
-
+		def usuario = seguridadService.usuarioActual()
+		def curso = Curso.get(cursoId)
+		
 		if (!seguridadService.usuarioActual()) {
 			flash.message = "Ingreso como visitante"
 			redirect(action: "general")
-		} else {
-			def administrador = Administrador.findByUsuario(seguridadService.usuarioActual())
-
-			if (administrador) {
-				flash.message = "Ingreso como administrador"
-				redirect(action: "general")
-			} else {
-				def mediador = Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId))
-
-				if (mediador) {
-					redirect(action: "mediador", params: params)
-				} else {
-
-					def aprendiz = aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, cursoId)
-
-					if (aprendiz) {
-						println "Hola aprendiz ${aprendiz}"
-
-						redirect(action: "aprendiz", params: params)
-					} else {
-						flash.message = "Hola miembro ${seguridadService.usuarioActual()}"
-						redirect(action: "miembro", params: params)
-					}
-				}
-			}
-		}
+			return
+		} 
+		
+		if (Administrador.findByUsuario(usuario)) {
+			flash.message = "Ingreso como administrador"
+			redirect(action: "general")
+			return
+		} 
+		
+		if (Mediador.findByUsuarioAndCurso(usuario, curso)) {
+			redirect(action: "mediador", params: params)
+			return
+		} 
+		
+		if (aprendizService.obtenerPorCurso(usuario.id, cursoId.toLong())) {
+			println "Hola aprendiz ${aprendiz}"
+			redirect(action: "aprendiz", params: params)
+			return 
+		} 
+		
+		flash.message = "Hola miembro ${usuario}"
+		redirect(action: "miembro", params: params)
 	}
 
 	// Para visitantes y administradores
-	// Si el curso no se dicta ese cuatrimestre: Solo se muestran los temas y el material general
 	@Secured('permitAll')
 	def general() {
-		[curso: Curso.get(cursoId), cursoId: cursoId, cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(cursoId)]
+		println "general: curso se dicta: ${cursoService.dictandose(cursoId)}"
+		[dictaCuatrimestre: cursoService.dictandose(cursoId.toLong()), cursoId: cursoId, 
+			cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(cursoId)]
 	}
 
 	@Secured('permitAll')
 	def miembro() {
-		//println "miembro: ${cursoId}"
-		//println params
 		cursoId = params.cursoId
 
+		println "miembro: curso se dicta: ${cursoService.dictandose(cursoId.toLong())}"
 		def miembro = Miembro.findByUsuario(seguridadService.usuarioActual())
 
-		[miembro: miembro, cursoId: cursoId]
+		[dictaCuatrimestre: cursoService.dictandose(cursoId.toLong()), miembro: miembro, cursoId: cursoId]
 	}
 
 	@Secured('permitAll')
 	def aprendiz() {
-		println "CURSO|aprendiz: ${params}"
+		println "aprendiz: ${params}"
 
 		cursoId = params.cursoId
-
-		/*
-		 println "usuario actual"
-		 println "${seguridadService.usuarioActual()}"
-		 println "curso: ${Curso.get(cursoId)}"*/
-
-		def aprendiz = aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, cursoId)
-		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(cursoId)
+		println "aprendiz: curso se dicta: ${cursoService.dictandose(cursoId.toLong())}"
+		def aprendiz = aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, cursoId.toLong())
+		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(cursoId.toLong())
 		def noticiasCurso = NoticiaCurso.findAllByCuatrimestre(cuatrimestre)
 		def cursando = false // para diferenciar entre aprendiz cuatrimestre y aprendiz curso
 
-		/*println "cuatrimestre actual: ${cuatrimestreService.obtenerCuatrimestreActual(cursoId)}"
-		 println "aprendiz cuatrimestre: ${aprendiz.cuatrimestre} ${aprendiz.cuatrimestre.anio}-${aprendiz.cuatrimestre.numero}"*/
-
 		if (aprendiz.cuatrimestre.equals(cuatrimestre)) {
-			println "Hola aprendiz ${aprendiz}"
-			println "aprendiz cuatrimestre: ${cuatrimestre}"
 			cursando = true
 		}
 
 		def nombreobtenerAprendizCurso
 
-		[aprendiz: aprendiz, cursando: cursando, cursoId: cursoId, cuatrimestreId: cuatrimestre?.id, noticiasCurso: noticiasCurso]
+		[dictaCuatrimestre: cursoService.dictandose(cursoId.toLong()), aprendiz: aprendiz, 
+			cursando: cursando, cursoId: cursoId, cuatrimestreId: cuatrimestre?.id, noticiasCurso: noticiasCurso]
 	}
 
 	@Secured('permitAll')
@@ -106,13 +95,14 @@ class CursoController {
 
 		cursoId = params.cursoId
 
+		println "mediador: curso se dicta: ${cursoService.dictandose(cursoId.toLong())}"
+		
 		def mediador = Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId))
 
-		println mediador
+		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(cursoId.toLong())
 
-		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(cursoId)
-
-		[materia: Curso.get(cursoId).materia, cursoId: cursoId, mediador: mediador, cuatrimestreId: cuatrimestre?.id,
+		[dictaCuatrimestre: cursoService.dictandose(cursoId.toLong()), materia: Curso.get(cursoId).materia, 
+			cursoId: cursoId, mediador: mediador, cuatrimestreId: cuatrimestre?.id,
 			noticiasCurso: NoticiaCurso.findAllByCuatrimestre(cuatrimestre)]
 	}
 
@@ -122,39 +112,37 @@ class CursoController {
 		println "params menu mediador: ${params}"
 
 		cursoId = params.cursoId
-		def cuatrimestreId = cuatrimestreService.obtenerCuatrimestreActual(cursoId).id
+		def cuatrimestreId = cuatrimestreService.obtenerCuatrimestreActual(cursoId.toLong()).id
 
 		[materia: Curso.get(cursoId).materia, cursoId: cursoId, cuatrimestreId: cuatrimestreId]
 	}
 
 	@Secured('permitAll')
 	def material() {
-		params.max = 5
+		params.max = Utilidades.MAX_PARAMS
 
-		println "action materias controller curso"
-		println params
+		println "action materias controller curso params: ${params}"
 
 		cursoId = params.cursoId
 
 		[materialesCurso: MaterialCurso.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
 			materialesCursoCant: MaterialCurso.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId,
 			mediador: Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId)),
-			aprendiz: aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, cursoId)]
+			aprendiz: aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, cursoId.toLong())]
 	}
 
 	@Secured('permitAll')
 	def temas() {
-		params.max = 5
+		params.max = Utilidades.MAX_PARAMS
 
-		println "action temas controller curso"
-		println params
+		println "action temas controller curso params: ${params}"
 
 		cursoId = params.cursoId
 
 		[temasCurso: Tema.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
 			temasCursoCant: Tema.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId,
 			mediador: Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId)),
-			aprendiz: aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, cursoId),
+			aprendiz: aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, cursoId.toLong()),
 			cursoId: cursoId]
 	}
 
@@ -172,7 +160,7 @@ class CursoController {
 			actividadesCant: Actividad.findAllByCuatrimestre(cuatrimestre).size(), cursoId: cursoId,
 			cuatrimestreId: cuatrimestre?.id,
 			mediador: Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId)),
-			aprendiz: aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, cursoId)]
+			aprendiz: aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, cursoId.toLong())]
 	}
 
 	@Secured('permitAll')

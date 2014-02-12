@@ -1,7 +1,5 @@
 <%@ page import="com.fiuba.NoticiaRed" %>
 
-<div><g:hiddenField name="administrador.id" value="${com.fiuba.Administrador.findByUsuario(usuario).id}"/></div>
-
 <div class="fieldcontain ${hasErrors(bean: noticiaRedInstance, field: 'visibilidad', 'error')} ">
 	<label for="visibilidad">
 		<g:message code="noticiaRed.visibilidad.label" default="Visibilidad" />
@@ -16,6 +14,6 @@
 	<g:textArea name="texto" value="${noticiaRedInstance?.texto}"/>
 </div>
 
-<div><g:hiddenField name="fecha" value="${(new Date()).format("yyyy-mm-dd")}"/></div>
-
+<div><g:hiddenField name="administrador.id" value="${com.fiuba.Administrador.findByUsuario(usuario).id}"/></div>
+<div><g:hiddenField name="fecha" value="${(new Date()).format(com.fiuba.Utilidades.FORMATO_FECHA)}"/></div>
 <div><g:hiddenField name="hora" value="${(new Date()).getTimeString()}"/></div>

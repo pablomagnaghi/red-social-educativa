@@ -8,11 +8,10 @@ class Contenido {
 	
 	static hasMany = [materiales: MaterialContenido]
 	
-	String toString() {
-		"${titulo}"
-	}
-	
     static constraints = {
     }
 	
+	String toString() {
+		"${titulo}"
+	}
 }

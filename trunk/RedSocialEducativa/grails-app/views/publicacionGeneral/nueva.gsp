@@ -14,7 +14,7 @@
 		</div>
 		
 		<h3>PARAMS : ${params}</h3>
-		
+		<h3>usuario; ${usuario}</h3>
 		<h2>CREANDO PUBLICACION</h2>
 		
 		<div id="create-publicacionGeneral" class="content scaffold-create" role="main">
@@ -29,7 +29,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="guardar" params="['pubInicialId': pubInicialId]">
+			<g:form action="guardar" params="['pubInicialId': params.pubInicialId]">
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>

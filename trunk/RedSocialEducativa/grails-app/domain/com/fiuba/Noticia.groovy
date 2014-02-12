@@ -7,8 +7,6 @@ abstract class Noticia {
 	String fecha 
 	String hora
 	
-	// Indica si se muestra en la cartelera o no para los visitantes o aprendices
-	// Para administradores/mediadores se muestran todas las noticias
 	Boolean visibilidad 
 
     static constraints = {

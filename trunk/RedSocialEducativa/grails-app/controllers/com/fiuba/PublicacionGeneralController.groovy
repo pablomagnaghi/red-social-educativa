@@ -11,15 +11,12 @@ class PublicacionGeneralController {
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def nueva() {
-		println "nueva params: ${params}"
-		def pubInicialId = params.pubInicialId
-		respond new PublicacionGeneral(params), model: [usuario: seguridadService.usuarioActual(), pubInicialId: pubInicialId]
+	
+		respond new PublicacionGeneral(params), model: [usuario: seguridadService.usuarioActual()], 
+			params: ['pubInicialId': params.pubInicialId]
 	}
 
 	def guardar(PublicacionGeneral publicacionGeneralInstance) {
-
-		println "guardar params: ${params}"
-
 		def pubInicialId = params.pubInicialId
 
 		if (publicacionGeneralInstance == null) {
@@ -27,28 +24,21 @@ class PublicacionGeneralController {
 			return
 		}
 
-		if (publicacionGeneralInstance.hasErrors()) {
-			respond publicacionGeneralInstance.errors, view:'nueva',  model: [pubInicialId: pubInicialId, usuario: seguridadService.usuarioActual()]
-			return
-		}
-
-		publicacionGeneralService.asignarResponsable(publicacionGeneralInstance, seguridadService.usuarioActual())
-
-		if (pubInicialId) {
-			if (!publicacionGeneralService.guardarRespuesta(publicacionGeneralInstance, pubInicialId.toLong())) {
-				respond publicacionGeneralInstance, view:'nueva',
-				model: [pubInicialId: pubInicialId, usuario: seguridadService.usuarioActual()]
+		if (params.pubInicialId) {
+			if (!publicacionGeneralService.guardarRespuesta(publicacionGeneralInstance, params.pubInicialId.toLong(), seguridadService.usuarioActual())) {	
+				render view:'nueva', model: [publicacionGeneralInstance: publicacionGeneralInstance, usuario: seguridadService.usuarioActual()],
+					params: ['pubInicialId': params.pubInicialId]
 				return
 			}
 			flash.message = message(code: 'default.created.message', args: [message(code: 'publicacionGeneralInstance.label',
 				default: 'PublicacionGeneral'), publicacionGeneralInstance.id])
-			redirect controller: "foroGeneral", action: "publicaciones", params:['id': pubInicialId]
+			redirect controller: "foroGeneral", action: "publicaciones", params:['id': params.pubInicialId]
 			return
 		}
-
-		if	(!publicacionGeneralService.guardar(publicacionGeneralInstance)) {
-			respond publicacionGeneralInstance, view:'nueva',
-			model: [pubInicialId: pubInicialId, usuario: seguridadService.usuarioActual()]
+		
+		if	(!publicacionGeneralService.guardar(publicacionGeneralInstance, seguridadService.usuarioActual())) {
+			render view:'nueva', model: [publicacionGeneralInstance: publicacionGeneralInstance, usuario: seguridadService.usuarioActual()],
+				params: ['pubInicialId': params.pubInicialId]
 			return
 		}
 
@@ -57,10 +47,6 @@ class PublicacionGeneralController {
 	}
 
 	def eliminar(PublicacionGeneral publicacion) {
-
-		println "eliminarPublicacion params: ${params}"
-
-		def publicacionId = params.id
 
 		if (publicacion == null) {
 			flash.message = "No existe esa publicacion"
@@ -88,10 +74,8 @@ class PublicacionGeneralController {
 
 	def editar(PublicacionGeneral publicacionGeneralInstance) {
 
-		def pubInicialId = params.pubInicialId
-		def publicacionId = params.id
-		respond publicacionGeneralInstance, model: [usuario: seguridadService.usuarioActual(),
-			pubInicialId: pubInicialId, publicacionId: publicacionId]
+		respond publicacionGeneralInstance, model: [usuario: seguridadService.usuarioActual()], 
+			params: ['publicacionId': params.id, 'pubInicialId': params.pubInicialId]
 	}
 
 	def actualizar(PublicacionGeneral publicacionGeneralInstance) {
@@ -101,16 +85,14 @@ class PublicacionGeneralController {
 			return
 		}
 
-		if (!publicacionGeneralService.guardar(publicacionGeneralInstance)) {
-			respond publicacionGeneralInstance, view:'editar', model: [usuario: usuarioActual(),
-				pubInicialId: params.pubInicialId, publicacionId: params.id]
+		if (!publicacionGeneralService.guardar(publicacionGeneralInstance, seguridadService.usuarioActual())) {
+			render view:'editar', model: [publicacionGeneralInstance: publicacionGeneralInstance, usuario: seguridadService.usuarioActual()]
+				params: ['publicacionId': params.id, 'pubInicialId': params.pubInicialId]
 			return
 		}
 
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'PublicacionGeneral.label', default: 'PublicacionGeneral'), publicacionGeneralInstance.id])
-		redirect controller: "foroGeneral", action: "publicaciones", params: ['id': params.pubInicialId],
-		model: [usuario: seguridadService.usuarioActual(), pubInicialId: params.pubInicialId]
-
+		redirect controller: "foroGeneral", action: "publicaciones", params: ['id': params.pubInicialId, 'pubInicialId': params.pubInicialId]
 	}
 
 	protected void notFound() {

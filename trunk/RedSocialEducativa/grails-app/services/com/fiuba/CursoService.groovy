@@ -23,4 +23,27 @@ class CursoService {
 	def eliminar(Curso curso) {
 		curso.delete flush:true
 	}
+	
+	def dictandose(Long cursoId) {
+		
+		def curso = Curso.get(cursoId)
+		
+		if (curso.cuatDict == Utilidades.CUAT_AMBOS) {
+			return true
+		}
+		
+		def calendario = Calendario.findByAnio(Utilidades.ANIO)
+
+		if (((Utilidades.FECHA > calendario.inicioPrimerCuatrimestre) && (Utilidades.FECHA < calendario.inicioSegundoCuatrimestre)) && 
+			(curso.cuatDict == Utilidades.CUAT_UNO)) {
+			return true
+		}
+
+		if (((Utilidades.FECHA < calendario.inicioPrimerCuatrimestre) || (Utilidades.FECHA > calendario.inicioSegundoCuatrimestre)) &&
+			(curso.cuatDict == Utilidades.CUAT_DOS)) {
+			return true
+		}
+
+		return false
+	}
 }

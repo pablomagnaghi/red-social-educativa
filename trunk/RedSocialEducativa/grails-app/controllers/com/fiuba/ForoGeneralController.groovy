@@ -18,17 +18,17 @@ class ForoGeneralController {
 	}
 
 	def publicaciones() {
-
+		
 		params.max = Utilidades.MAX_PARAMS
-
-		def offset = params.offset ?: 0
-		def publicacionId = params.id
+		
+		Integer offset = params.offset?.toInteger() ?: 0
+		
 		def respuestas = foroGeneralService.obtenerRespuestas(params.id.toLong(), params.max, offset)
-		def respuestasCant = PublicacionGeneral.findAllByPublicacionInicial(PublicacionGeneral.get(publicacionId)).size()+1
+		
+		def respuestasCant = PublicacionGeneral.findAllByPublicacionInicial(PublicacionGeneral.get(params.id)).size()+1
 
-		[publicacion: PublicacionGeneral.get(publicacionId), pubInicialId: publicacionId,
-			respuestas: respuestas, respuestasCant: respuestasCant,
+		[publicacion: PublicacionGeneral.get(params.id), respuestas: respuestas, respuestasCant: respuestasCant,
 			usuario: Usuario.findByUsername(seguridadService.usuarioActual()?.username),
-			administrador: Administrador.findByUsuario(seguridadService.usuarioActual())]
+			administrador: Administrador.findByUsuario(seguridadService.usuarioActual()), params: ['pubInicialId': params.id]]
 	}
 }

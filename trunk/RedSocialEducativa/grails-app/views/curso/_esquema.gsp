@@ -1,16 +1,21 @@
+
 <div>
 	<g:if test="${flash.message}">
 		<div class="message" role="status">${flash.message}</div>
 	</g:if>
 </div>
 <div>
-	<g:if test="${cuatrimestreId}">
-		<g:link controller="foroCurso" action="general" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
-			<g:message code="Foro del curso"/></g:link>
+	<g:if test="${!dictaCuatrimestre}">
+		<p>Este curso se dicta durante solo durante el cuatrimestre ${com.fiuba.Curso.get(cursoId).cuatDict}</p>
 	</g:if>	
 	<g:else>
-		<p>El curso no se dicta durante este cuatrimestre</p>
-		<p>Este curso se dicta durante el (primer/segundo) cuatrimestre</p>
+		<g:if test="${cuatrimestreId}">
+			<g:link controller="foroCurso" action="general" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
+				<g:message code="Foro del curso"/></g:link>
+		</g:if>	
+		<g:else>
+			<p>Las opciones del cuatrimestre de cursada se visualizara en breve</p>
+		</g:else>
 	</g:else>
 </div>
 <div>

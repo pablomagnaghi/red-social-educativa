@@ -1,89 +1,40 @@
 package com.fiuba
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
-
-@Transactional(readOnly = true)
-
 import org.springframework.security.access.annotation.Secured
 
 @Secured('permitAll')
-
 class ForoCursoController {
 
-	def springSecurityService
-	
-	private usuarioActual() {
-		if (springSecurityService.principal.enabled)
-			return Usuario.get(springSecurityService.principal.id)
-		else
-			return null
-	}
-	
-	
-	// TODO VERRRRR
-	def cursoId
-	def cuatrimestreId
+	def seguridadService
+	def foroCursoService
 	
 	def general() {
 		
-		params.max = 5 // Math.min(max ?: 10, 100)
-
-		//println PublicacionCurso.findAllByForoAndPublicacionInicial(ForoCurso.first(), null)
-		
-		println "foro curso general CURSOID: ${params.cursoId}"
-		
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
+		params.max = Utilidades.MAX_PARAMS
 				
-		def cuatrimestre = Cuatrimestre.get(cuatrimestreId)
+		def cuatrimestre = Cuatrimestre.get(params.cuatrimestreId)
 
 		[publicaciones: PublicacionCurso.findAllByForoAndPublicacionInicial(ForoCurso.findByCuatrimestre(cuatrimestre), 
 			null, [max: params.max, offset: params.offset]),
 		publicacionesCant: PublicacionCurso.findAllByForoAndPublicacionInicial(ForoCurso.findByCuatrimestre(cuatrimestre), null).size(),
-		cursoId: cursoId, cuatrimestreId: cuatrimestreId]
+		params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 	}
 	
 	def publicaciones() {
-		//println "foro, publicacion, params ${params}"
-		
-		params.max = 3
+
+		params.max = Utilidades.MAX_PARAMS
 		def offset = params.offset ?: 0
 		
 		def publicacionId = params.id
-
-		println "foro cuatrimestre publicaciones cuatrimestreID: ${params.cuatrimestreId}"
-		
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
-				
-		def cuatrimestre = Cuatrimestre.get(cuatrimestreId)
-		println "cuatrimestre: ${cuatrimestre}"
-		def foroId = cuatrimestre.foro.id
-		
-		def c = PublicacionCurso.createCriteria()
-		def respuestas = c.list([max: params.max, offset: offset]){
-			and {
-				or {
-					eq("id", publicacionId as long)
-					eq("publicacionInicial.id", publicacionId as long)
-				}
-				eq("foro.id", foroId as long)
-			}
-		}
-		
+		def cuatrimestre = Cuatrimestre.get(params.cuatrimestreId)
+		def respuestas = foroCursoService.obtenerRespuestas(cuatrimestre, publicacionId.toLong(), params.max, offset)
 		def respuestasCant = PublicacionCurso.findAllByPublicacionInicialAndForo(PublicacionCurso.get(publicacionId),
 			ForoCurso.findByCuatrimestre(cuatrimestre)).size()+1
+		def usuario = seguridadService.usuarioActual()
 		
-		println "respuestas"
-		println respuestas
-		
-		[publicacion: PublicacionCurso.get(publicacionId), pubInicialId: publicacionId,
-			respuestas: respuestas,
-			respuestasCant: respuestasCant,
-			usuario: Usuario.findByUsername(usuarioActual()?.username),
-			mediador: Mediador.findByUsuarioAndCurso(usuarioActual(), cuatrimestre.curso),
-			cursoId: cursoId, cuatrimestreId: cuatrimestreId]
-		
+		[publicacion: PublicacionCurso.get(publicacionId), pubInicialId: publicacionId, respuestas: respuestas, respuestasCant: respuestasCant,
+			usuario: Usuario.findByUsername(usuario?.username), mediador: Mediador.findByUsuarioAndCurso(usuario, cuatrimestre.curso),
+			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 	}
 }

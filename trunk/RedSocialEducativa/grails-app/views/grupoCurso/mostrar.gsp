@@ -44,7 +44,7 @@
 					
 						<g:each in="${grupoCursoInstance.aprendices}" var="a">
 						<span class="property-value" aria-labelledby="aprendices-label">
-							<g:link controller="usuario" action="show" id="${a.usuario.id}" 
+							<g:link controller="usuario" action="muestraMenuMed" id="${a.usuario.id}" 
 								params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">${a?.encodeAsHTML()}</g:link></span>
 						</g:each>
 					

@@ -10,8 +10,8 @@ class CalendarioController {
 
 	def calendarioService
 
-	def index(Integer max) {
-		params.max = Math.min(max ?: 10, 100)
+	def index() {
+		params.max = Utilidades.MAX_PARAMS
 		respond Calendario.list(params), model:[calendarioInstanceCount: Calendario.count()]
 	}
 
