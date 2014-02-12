@@ -12,29 +12,26 @@ class ForoCursoController {
 	def general() {
 		
 		params.max = Utilidades.MAX_PARAMS
-				
-		def cuatrimestre = Cuatrimestre.get(params.cuatrimestreId)
 
-		[publicaciones: PublicacionCurso.findAllByForoAndPublicacionInicial(ForoCurso.findByCuatrimestre(cuatrimestre), 
-			null, [max: params.max, offset: params.offset]),
-		publicacionesCant: PublicacionCurso.findAllByForoAndPublicacionInicial(ForoCurso.findByCuatrimestre(cuatrimestre), null).size(),
-		params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
+		[publicaciones: PublicacionCurso.findAllByForoAndPublicacionInicial(ForoCurso.findByCuatrimestre(Cuatrimestre.get(params.cuatrimestreId)), 
+			null, [max: params.max, offset: params.offset]), publicacionesCant: PublicacionCurso.findAllByForoAndPublicacionInicial(
+			ForoCurso.findByCuatrimestre(Cuatrimestre.get(params.cuatrimestreId)), null).size(),
+			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 	}
 	
 	def publicaciones() {
 
 		params.max = Utilidades.MAX_PARAMS
-		def offset = params.offset ?: 0
+		Integer offset = params.offset?.toInteger() ?: 0
 		
-		def publicacionId = params.id
 		def cuatrimestre = Cuatrimestre.get(params.cuatrimestreId)
-		def respuestas = foroCursoService.obtenerRespuestas(cuatrimestre, publicacionId.toLong(), params.max, offset)
-		def respuestasCant = PublicacionCurso.findAllByPublicacionInicialAndForo(PublicacionCurso.get(publicacionId),
+		def respuestas = foroCursoService.obtenerRespuestas(cuatrimestre, params.id.toLong(), params.max, offset)
+		def respuestasCant = PublicacionCurso.findAllByPublicacionInicialAndForo(PublicacionCurso.get(params.id),
 			ForoCurso.findByCuatrimestre(cuatrimestre)).size()+1
 		def usuario = seguridadService.usuarioActual()
 		
-		[publicacion: PublicacionCurso.get(publicacionId), pubInicialId: publicacionId, respuestas: respuestas, respuestasCant: respuestasCant,
+		[publicacion: PublicacionCurso.get(params.id), respuestas: respuestas, respuestasCant: respuestasCant,
 			usuario: Usuario.findByUsername(usuario?.username), mediador: Mediador.findByUsuarioAndCurso(usuario, cuatrimestre.curso),
-			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
+			params:['pubInicialId': params.id, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 	}
 }

@@ -14,8 +14,7 @@
 					<g:message code="default.home.label"/></a></li>
 				<li><g:link class="create" controller="foroGeneral" action="general">
 					<g:message code="Foro General" /></g:link></li>
-				<li><g:link class="list" controller="foroGeneral" action="publicaciones" 
-					id="${params.publicacionId}" params="['pubInicialId': params.pubInicialId]">
+				<li><g:link class="list" controller="foroGeneral" action="publicaciones" id="${params.pubInicialId}">
 					<g:message code="Tema actual" /></g:link></li>
 			</ul>
 		</div>

@@ -58,15 +58,15 @@
 							<g:if test="${mediador || (
 								com.fiuba.Aprendiz.findByUsuarioAndCuatrimestre(
 								com.fiuba.Usuario.findByUsername(it.dni), 
-								com.fiuba.Cuatrimestre.get(cuatrimestreId)) && (it.dni == usuario.username))}">
-								<g:if test="${!it.id.equals(pubInicialId as long)}">								
+								com.fiuba.Cuatrimestre.get(params.cuatrimestreId)) && (it.dni == usuario.username))}">
+								<g:if test="${!it.id.equals(params.pubInicialId as long)}">								
 									<td>
-										<g:link controller="publicacionCurso" action="editar" id="${it.id}" 
-											params="['pubInicialId': params.pubInicialId, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
+										<g:link controller="publicacionCurso" action="editar" id="${it.id}" params="['pubInicialId': 
+											params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 											<g:message code="Editar" /></g:link>
 										-
-										<g:link controller="publicacionCurso" action="eliminar" id="${it.id}" 
-											params="['pubInicialId': params.pubInicialId, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
+										<g:link controller="publicacionCurso" action="eliminar" id="${it.id}" params="['pubInicialId': 
+											params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 											<g:message code="Borrar" /></g:link>
 									</td>	
 								</g:if>

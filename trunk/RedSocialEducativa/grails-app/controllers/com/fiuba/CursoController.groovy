@@ -24,13 +24,13 @@ class CursoController {
 		
 		if (!seguridadService.usuarioActual()) {
 			flash.message = "Ingreso como visitante"
-			redirect(action: "general")
+			redirect(action: "general", params: params)
 			return
 		} 
 		
 		if (Administrador.findByUsuario(usuario)) {
 			flash.message = "Ingreso como administrador"
-			redirect(action: "general")
+			redirect(action: "general", params: params)
 			return
 		} 
 		
@@ -52,9 +52,10 @@ class CursoController {
 	// Para visitantes y administradores
 	@Secured('permitAll')
 	def general() {
-		println "general: curso se dicta: ${cursoService.dictandose(cursoId)}"
+		println "general: curso se dicta: ${cursoService.dictandose(cursoId.toLong())}"
 		[dictaCuatrimestre: cursoService.dictandose(cursoId.toLong()), cursoId: cursoId, 
-			cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(cursoId)]
+			cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(cursoId.toLong()),
+			curso: Curso.get(params.cursoId)]
 	}
 
 	@Secured('permitAll')

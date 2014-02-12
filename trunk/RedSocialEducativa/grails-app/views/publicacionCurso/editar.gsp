@@ -15,8 +15,8 @@
 				<li><g:link class="create" controller="foroCurso" action="general" 
 					params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 					<g:message code="Foro Curso" /></g:link></li>
-				<li><g:link class="list" controller="foroCurso" action="publicaciones" 
-					id="${publicacionId}" params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+				<li><g:link class="list" controller="foroCurso" action="publicaciones" id="${params.pubInicialId}" 
+					params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 					<g:message code="Tema actual" /></g:link></li>
 			</ul>
 		</div>

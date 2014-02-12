@@ -6,7 +6,7 @@ import org.springframework.security.access.annotation.Secured
 @Secured("hasRole('ROL_ADMIN')")
 class MateriaController {
 
-	// static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def materiaService
 

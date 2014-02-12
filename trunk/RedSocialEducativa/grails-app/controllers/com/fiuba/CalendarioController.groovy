@@ -6,7 +6,7 @@ import org.springframework.security.access.annotation.Secured
 @Secured("hasRole('ROL_ADMIN')")
 class CalendarioController {
 
-	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def calendarioService
 
@@ -24,11 +24,13 @@ class CalendarioController {
 	}
 
 	def save(Calendario calendarioInstance) {
+
 		if (calendarioInstance == null) {
 			notFound()
 			return
 		}
 
+		
 		if (Calendario.findByAnio(params.fechaPrimerCuatrimestre.getYear() + Utilidades.ANIO_INICIAL)) {
 			flash.message = "Ya existe el calendario para el año ${params.fechaPrimerCuatrimestre.getYear() + Utilidades.ANIO_INICIAL}"
 			redirect action: "create"
@@ -55,6 +57,11 @@ class CalendarioController {
 
 	def edit(Calendario calendarioInstance) {
 
+		if (calendarioInstance == null) {
+			notFound()
+			return
+		}
+
 		Date fechaPCDate = calendarioService.obtenerFecha(calendarioInstance.inicioPrimerCuatrimestre)
 		Date fechaSCDate = calendarioService.obtenerFecha(calendarioInstance.inicioSegundoCuatrimestre)
 
@@ -62,11 +69,12 @@ class CalendarioController {
 	}
 
 	def update(Calendario calendarioInstance) {
+
 		if (calendarioInstance == null) {
 			notFound()
 			return
 		}
-
+		
 		if (!calendarioService.aniosIguales(calendarioInstance, params.fechaPrimerCuatrimestre, params.fechaSegundoCuatrimestre)) {
 			flash.message = "Los años deben coincidir con ${calendarioInstance.anio}"
 			redirect action: "edit", params:['id': calendarioInstance.id]
@@ -84,7 +92,7 @@ class CalendarioController {
 	}
 
 	def delete(Calendario calendarioInstance) {
-
+		
 		if (calendarioInstance == null) {
 			notFound()
 			return
@@ -95,9 +103,9 @@ class CalendarioController {
 		flash.message = message(code: 'default.deleted.message', args: [message(code: 'Calendario.label', default: 'Calendario'), calendarioInstance.id])
 		redirect action:"index", method:"GET"
 	}
-
+	
 	protected void notFound() {
-		flash.message = message(code: 'default.not.found.message', args: [message(code: 'calendarioInstance.label', default: 'Calendario'), params.id])
+		flash.message = message(code: 'default.not.found.message', args: [message(code: 'CalendarioInstance.label', default: 'Calendario'), params.id])
 		redirect action: "index", method: "GET"
 	}
 }

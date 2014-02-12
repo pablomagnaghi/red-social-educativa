@@ -24,7 +24,6 @@ class ForoGeneralController {
 		Integer offset = params.offset?.toInteger() ?: 0
 		
 		def respuestas = foroGeneralService.obtenerRespuestas(params.id.toLong(), params.max, offset)
-		
 		def respuestasCant = PublicacionGeneral.findAllByPublicacionInicial(PublicacionGeneral.get(params.id)).size()+1
 
 		[publicacion: PublicacionGeneral.get(params.id), respuestas: respuestas, respuestasCant: respuestasCant,
