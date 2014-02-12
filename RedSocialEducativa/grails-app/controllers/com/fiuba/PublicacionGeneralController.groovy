@@ -49,8 +49,7 @@ class PublicacionGeneralController {
 	def eliminar(PublicacionGeneral publicacion) {
 
 		if (publicacion == null) {
-			flash.message = "No existe esa publicacion"
-			redirect controller: "foroGeneral", action: "publicaciones", method: "GET", params:['id': params.pubInicialId]
+			notFound()
 			return
 		}
 
@@ -97,6 +96,6 @@ class PublicacionGeneralController {
 
 	protected void notFound() {
 		flash.message = message(code: 'default.not.found.message', args: [message(code: 'publicacionGeneralInstance.label', default: 'PublicacionGeneral'), params.id])
-		redirect controller: "foroGeneral", action: "publicaciones", method: "GET"
+		redirect controller: "foroGeneral", action: "general", method: "GET"
 	}
 }

@@ -5,15 +5,15 @@ abstract class Grupo {
 	Integer numero
 	String nombre
 	
-	String toString() {
-		"${numero}"
-	}
-	
     static constraints = {
-		//nombre nullable: true
+		numero min:1
     }
 	
 	static mapping = {
 		tablePerHierarchy false
+	}
+	
+	String toString() {
+		"${numero}"
 	}
 }

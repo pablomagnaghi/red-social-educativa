@@ -15,7 +15,7 @@
 </g:else>	
 
 <g:if test="${params.pubInicialId}">
-	<g:hiddenField name="titulo" value="${com.fiuba.PublicacionCurso.get(pubInicialId).titulo}"/>
+	<g:hiddenField name="titulo" value="${com.fiuba.PublicacionCurso.get(params.pubInicialId).titulo}"/>
 </g:if>
 <g:else>
 	<div class="fieldcontain ${hasErrors(bean: publicacionCursoInstance, field: 'titulo', 'error')} ">

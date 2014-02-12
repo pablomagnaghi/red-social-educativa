@@ -19,7 +19,6 @@ class PublicacionGeneralService {
 		}
 	}
 
-
 	def guardarRespuesta(PublicacionGeneral publicacion, Long pubInicialId, Usuario usuario) {
 
 		if (!publicacion.validate()) {

@@ -25,7 +25,7 @@
 				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
 				</g:eachError>
 			</ul>
-			<g:form url="[resource:calendarioInstance, action:'save']" >
+			<g:form action= "save" >
 				<fieldset class="form">
 					<div class="fieldcontain">
 						<label for="inicioPrimerCuatrimestre">

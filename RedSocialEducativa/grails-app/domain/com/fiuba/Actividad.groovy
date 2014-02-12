@@ -12,19 +12,11 @@ class Actividad {
 	boolean visibilidad
 	String fechaFinalizacion
 	
-	
-	// Categorias: encuesta, TP, ejercicios, cuestionario, brainstorming, otra
-	// TODO
 	CategoriaActividad categoria
 
 	static belongsTo = [cuatrimestre: Cuatrimestre]
 
-	// Puede estar asociada a uno o mas temas de un curso
 	static hasMany = [grupos: GrupoActividad, materiales: MaterialActividad, temas: TemaActividad]
-	
-	String toString() {
-		"${titulo}"
-	}
 	
 	static constraints = {
 	}
@@ -33,7 +25,9 @@ class Actividad {
 		tablePerHierarchy false
 	}
 	
-	
+	String toString() {
+		"${titulo}"
+	}
 	
 }
 

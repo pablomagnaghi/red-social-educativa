@@ -9,5 +9,4 @@ class GrupoCurso extends Grupo {
     static constraints = {
 		materiales nullable:true
     }
-
 }
