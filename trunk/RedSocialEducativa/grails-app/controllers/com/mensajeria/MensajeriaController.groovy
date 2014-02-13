@@ -105,7 +105,8 @@ class MensajeriaController {
 		def datosCursosAprendiz = [:]
 		def cursosMediador = []
 		def datosCursosMediador = [:]
-		def datosMediadores = []
+		def datosCursos = []
+		def datosMediadores = [:]
 		mediadores.each {
 			def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(it.curso.id)
 			def gruposCurso = cuatrimestre.grupos
@@ -125,11 +126,14 @@ class MensajeriaController {
 			}
 		}
 		if (!cursosMediador.empty){
-			datosMediadores = Mediador.findAll()
+			datosCursos = Curso.findAll()
+			datosCursos.each{
+				datosMediadores.put(it.id + "-mediadoresC", it.mediadores)
+			}
 		}
 		def usuarios = Usuario.findByEnabled(true)
 		render(template:"redactar", model: [usuarios: usuarios, cursosAprendiz : cursosAprendiz, datosCursosAprendiz : datosCursosAprendiz, 
-			cursosMediador : cursosMediador, datosCursosMediador : datosCursosMediador, mediadores : datosMediadores])
+			cursosMediador : cursosMediador, datosCursosMediador : datosCursosMediador, datosMediadores : datosMediadores, cursosTotales: datosCursos])
 	}
 	
 	def traerUsuariosFormateados(){
