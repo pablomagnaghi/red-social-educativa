@@ -4,10 +4,10 @@ class TemaActividad {
 
 	static belongsTo = [actividad: Actividad, tema: Tema]
 	
+    static constraints = {
+    }
+	
 	String toString() {
 		"${tema}"
 	}
-	
-    static constraints = {
-    }
 }

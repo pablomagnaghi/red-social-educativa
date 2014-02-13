@@ -11,12 +11,17 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link controller="actividad" action="index" id="${actividadId}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
-					<g:message code="Lista de actividades del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
-				<li><g:link controller="actividad" action="show" id="${actividadId}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]">
-					<g:message code="Actividad: ${com.fiuba.Actividad.get(actividadId)}" args="[entityName]" /></g:link></li>
+				<li><g:link controller="actividad" action="index" id="${params.actividadId}" params="['cursoId': params.cursoId, 
+						'cuatrimestreId': params.cuatrimestreId]">
+					<g:message code="Lista de actividades del curso ${com.fiuba.Curso.get(params.cursoId)}" args="[entityName]" /></g:link></li>
+				<li><g:link controller="actividad" action="show" id="${params.actividadId}" params="['cursoId': params.cursoId, 
+						'cuatrimestreId': params.cuatrimestreId]">
+					<g:message code="Actividad: ${com.fiuba.Actividad.get(params.actividadId)}" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+		<h3>curso: ${params.cursoId}</h3>
+		<h3>cuatri: ${params.cuatrimestreId}</h3>
+		<h3>act: ${params.actividadId}</h3>
 		<div id="create-temaActividad" class="content scaffold-create" role="main">
 			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -29,7 +34,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="save" params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': params.actividadId]" >
+			<g:form action="save" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]" >
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>

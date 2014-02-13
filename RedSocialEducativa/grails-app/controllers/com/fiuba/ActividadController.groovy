@@ -1,185 +1,110 @@
 package com.fiuba
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
-
-@Transactional(readOnly = true)
-
 import org.springframework.security.access.annotation.Secured
 
-@Secured('permitAll')
 class ActividadController {
 
-	// metodos nuevos
-	def cursoId
-	def cuatrimestreId
-	
+	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
 	def seguridadService
+	def actividadService
+	def aprendizService
 
-	
+	@Secured('permitAll')
 	def general() {
-		params.max = 5 // Math.min(max ?: 10, 100)
 
-		println "actividad cuatrimestreID: ${params.cuatrimestreId}"
+		def actividad = Actividad.get(params.id)
+
+		def grupoActividadAprendiz = aprendizService.obtenerGruposPorActividad(seguridadService.usuarioActual(), 
+			params.cuatrimestreId.toLong(), params.id.toLong())
+
+		[actividad: actividad, grupoActividadAprendiz: grupoActividadAprendiz,
+			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
+	}
+
+
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def index(Integer max) {
+		params.max = Utilidades.MAX_PARAMS
+
+		[actividadInstanceList: Actividad.findAllByCuatrimestre(Cuatrimestre.get(params.cuatrimestreId),[max: params.max, offset: params.offset]),
+			actividadInstanceCount: Actividad.findAllByCuatrimestre(Cuatrimestre.get(params.cuatrimestreId)).size(),
+			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
+
+	}
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def show(Actividad actividadInstance) {
+		respond actividadInstance, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+	}
+
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def create() {
+		respond new Actividad(params), params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+	}
+
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def save(Actividad actividadInstance) {
+		if (actividadInstance == null) {
+			notFound()
+			return
+		}
+
+		if (actividadService.existe(actividadInstance, params.cuatrimestreId.toLong())) {
+			flash.message = "Ya existe la actividad ${actividadInstance.titulo} en el cuatrimestre ${Cuatrimestre.get(params.cuatrimestreId)}"
+			redirect action: "create", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+			return
+		}
+
 		
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
-		def cuatrimestre = Cuatrimestre.get(cuatrimestreId)
-		
-		def actividadId = params.id
-				
-		def actividad = Actividad.get(actividadId)
-		
-		
-		def aprendizId = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), cuatrimestre)?.id
-		def grupoActividadAprendiz = null
-		
-		if (aprendizId) {
-			def c = GrupoActividadAprendiz.createCriteria()
-			grupoActividadAprendiz = c {
-				grupo {
-					eq('actividad.id', actividadId as long)
-				}
-				eq('aprendiz.id', aprendizId as long)
-			}
-		} 
-		
-		[cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId, actividad: actividad, aprendizId: aprendizId,
-			grupoActividadAprendiz: grupoActividadAprendiz]
+		if (!actividadService.guardar(actividadInstance)) {
+			render view:'create', model: [actividadInstance: actividadInstance], 
+				params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+			return
+		}
+
+		flash.message = message(code: 'default.created.message', args: [message(code: 'actividadInstance.label', default: 'Actividad'), actividadInstance.id])
+		redirect action: "index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 	}
 	
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-	
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-		
-		println "index actividad"
-		println params
-		
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
-			
-		[actividadInstanceList: Actividad.findAllByCuatrimestre(Cuatrimestre.get(cuatrimestreId),[max: params.max, offset: params.offset]),
-			actividadInstanceCount: Actividad.findAllByCuatrimestre(Cuatrimestre.get(cuatrimestreId)).size(), 
-			cursoId: cursoId, cuatrimestreId: cuatrimestreId]
-		
-    }
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def edit(Actividad actividadInstance) {
+		respond actividadInstance, params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+	}
 
-    def show(Actividad actividadInstance) {
-		
-		println "actividad show params: ${params}"
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
-		
-        respond actividadInstance, model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId]
-    }
-	
-
-    def create() {
-		
-		println "create actividad cuatrimestre params: ${params}"
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
-		
-		respond new Actividad(params), params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], 
-			model:[cursoId: cursoId, cuatrimestreId: cuatrimestreId]
-    }
-
-    @Transactional
-    def save(Actividad actividadInstance) {
-        if (actividadInstance == null) {
-            notFound()
-            return
-        }
-
-		println "actividad save: params: ${params}"
-		
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
-		
-        if (actividadInstance.hasErrors()) {
-            respond actividadInstance.errors, view:'create', params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], 
-				model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId]
-            return
-        }
-
-        actividadInstance.save flush:true
-
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'actividadInstance.label', default: 'Actividad'), actividadInstance.id])
-                redirect action: "index", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]
-            }
-            '*' { respond actividadInstance, [status: CREATED] }
-        }
-    }
-
-    def edit(Actividad actividadInstance) {
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
-        respond actividadInstance, params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], 
-			model:[cursoId: cursoId, cuatrimestreId: cuatrimestreId]
-    }
-
-
-    @Transactional
-    def update(Actividad actividadInstance) {
-        
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
-		
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def update(Actividad actividadInstance) {
 		if (actividadInstance == null) {
-            notFound()
-            return
-        }
-
-        if (actividadInstance.hasErrors()) {
-            respond actividadInstance.errors, view:'edit', params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], 
-				model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId]
-            return
-        }
-
-        actividadInstance.save flush:true
-
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Actividad.label', default: 'Actividad'), actividadInstance.id])
-				respond actividadInstance, view:"show", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId],
-					model:[cursoId: cursoId, cuatrimestreId: cuatrimestreId]
-            }
-            '*'{ respond actividadInstance, [status: OK] }
-        }
-    }
-
-    @Transactional
-    def delete(Actividad actividadInstance) {
-
-        if (actividadInstance == null) {
-            notFound()
-            return
-        }
+			notFound()
+			return
+		}
+	
+		if (!actividadService.guardar(actividadInstance)) {
+			render view:'edit', model: [actividadInstance: actividadInstance],
+				params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+			return
+		}
 		
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
-		
-        actividadInstance.delete flush:true
+		flash.message = message(code: 'default.updated.message', args: [message(code: 'Actividad.label', default: 'Actividad'), actividadInstance.id])
+		respond actividadInstance, view:"show", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+	}
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Actividad.label', default: 'Actividad'), actividadInstance.id])
-                redirect action:"index", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def delete(Actividad actividadInstance) {
 
-    protected void notFound() {
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'actividadInstance.label', default: 'Actividad'), params.id])
-                redirect action: "index", params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId], method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
+		if (actividadInstance == null) {
+			notFound()
+			return
+		}
+
+		actividadService.eliminar(actividadInstance)
+
+		flash.message = message(code: 'default.deleted.message', args: [message(code: 'Actividad.label', default: 'Actividad'), actividadInstance.id])
+		redirect action:"index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId], method:"GET"
+	}
+
+	protected void notFound() {
+		flash.message = message(code: 'default.not.found.message', args: [message(code: 'actividadInstance.label', default: 'Actividad'), params.id])
+		redirect action: "index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId], method: "GET"
+	}
 }

@@ -34,6 +34,26 @@ class AprendizService {
 		}
 	}
 	
+	def obtenerGrupoPorActividad(Usuario usuario, Long cuatrimestreId, Long actividadId) {
+
+		Long aprendizId = Aprendiz.findByUsuarioAndCuatrimestre(usuarioActual(), Cuatrimestre.get(cuatrimestreId))?.id
+		
+		def grupoActividadAprendiz = null
+		
+		if (aprendizId) {
+			def c = GrupoActividadAprendiz.createCriteria()
+			grupoActividadAprendiz = c.get {
+				grupo {
+					eq('actividad.id', actividadId)
+				}
+				eq('aprendiz.id', aprendizId)
+			}
+		}
+		
+		return grupoActividadAprendiz
+	}
+	
+	
 	def pertenece(Long aprendizId, Integer numeroGrupo) {
 		def aprendiz = Aprendiz.get(aprendizId)
 		return (aprendiz.grupo.numero == numeroGrupo)

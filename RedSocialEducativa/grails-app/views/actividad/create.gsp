@@ -11,12 +11,15 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': cursoId]">
+				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': params.cursoId]">
 					<g:message code="Tareas mediador" /></g:link></li>
-				<li><g:link class="create" action="create" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
+				<li><g:link class="create" action="create" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>	
 			</ul>
 		</div>
+				<h3>curso: ${params.cursoId}</h3>
+		<h3>cuatri: ${params.cuatrimestreId}</h3>
+		<h3>act: ${params.actividadId}</h3>
 		<div id="create-actividad" class="content scaffold-create" role="main">
 			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -29,7 +32,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="save" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+			<g:form action="save" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 				<fieldset class="form">
 					<g:render template="form"/>
 						<div class="fieldcontain ${hasErrors(bean: actividadInstance, field: 'titulo', 'error')} ">

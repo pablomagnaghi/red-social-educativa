@@ -12,17 +12,21 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" controller="actividad" action="general" id="${actividadId}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
+				<li><g:link class="create" controller="actividad" action="general" id="${params.actividadId}" params="['cursoId': params.cursoId, 
+					'cuatrimestreId': params.cuatrimestreId]">
 					<g:message code="Actividad ${actividad}" /></g:link></li>	
 			</ul>
 		</div>
+		<h3>curso: ${params.cursoId}</h3>
+		<h3>cuatri: ${params.cuatrimestreId}</h3>
+		<h3>act: ${params.actividadId}</h3>
 		<div>
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
 		</div>	
 		<div>
-			<p>Tema de la actividad ${actividad} del Curso: ${com.fiuba.Curso.get(cursoId)}</p>
+			<p>Tema de la actividad ${actividad} del Curso: ${com.fiuba.Curso.get(params.cursoId)}</p>
 			<br>
 				<ol>
 					<g:each in="${temas}">
@@ -33,7 +37,8 @@
 					</g:each>
 				</ol>	
 			<div class="pagination">
-				<g:paginate total="${temasCant ?: 0}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId]"/>
+				<g:paginate total="${temasCant ?: 0}" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
+					'actividadId': params.actividadId]"/>
 			</div>
 		</div>	
 	</body>

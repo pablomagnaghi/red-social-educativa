@@ -1,9 +1,5 @@
 <%@ page import="com.fiuba.TemaActividad" %>
 
-<div>
-	<g:hiddenField name="actividad.id" value="${actividadId}"/>
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: temaActividadInstance, field: 'tema', 'error')} required">
 	<label for="tema">
 		<g:message code="temaActividad.tema.label" default="Tema" />
@@ -13,3 +9,4 @@
 		value="${temaActividadInstance?.tema?.id}" class="many-to-one"/>
 </div>
 
+<div><g:hiddenField name="actividad.id" value="${params.actividadId}"/></div>

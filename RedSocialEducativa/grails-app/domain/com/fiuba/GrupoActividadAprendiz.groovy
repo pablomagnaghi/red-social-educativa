@@ -4,10 +4,10 @@ class GrupoActividadAprendiz {
 
 	static belongsTo = [aprendiz: Aprendiz, grupo: GrupoActividad]
 	
+    static constraints = {
+    }
+	
 	String toString() {
 		"${aprendiz}"
 	}
-	
-    static constraints = {
-    }
 }
