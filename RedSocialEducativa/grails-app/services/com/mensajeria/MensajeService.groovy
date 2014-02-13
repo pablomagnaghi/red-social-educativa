@@ -23,6 +23,27 @@ class MensajeService {
 		nuevaConversacion.save()
     }
 	
+	def agregarMensajeABorradores(Mensaje mensaje){
+		def carpeta = Carpeta.findByNombreAndUsuario("Borradores", mensaje.emisor)
+		def conversacion = Conversacion.findByPadre(carpeta)
+		if (conversacion == null){
+			def hilo = new Hilo()
+			hilo.save()
+			mensaje.hilo = hilo
+			mensaje.fecha = new Date()
+			conversacion = new Conversacion(padre: carpeta, hilo: hilo)
+		} else {
+			mensaje.hilo = conversacion.hilo
+		}
+		if (!mensaje.save()){
+			mensaje.errors.each {
+				println it
+			}
+		}
+		conversacion.addToMensajes(mensaje)
+		conversacion.save()
+	}
+	
 	def sendMessage(String para, String asunto, String texto, Usuario emisor, Usuario receptor, Hilo hilo){
 		def mensaje = new Mensaje(para: para, emisor: emisor, receptor: receptor, asunto: asunto,
 			cuerpo: texto, fecha : new Date())

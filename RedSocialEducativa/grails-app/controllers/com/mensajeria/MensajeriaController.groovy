@@ -16,17 +16,24 @@ class MensajeriaController {
 
 	def springSecurityService
 	def mensajeService
+	def cuatrimestreService
 	def conversacionService
 
 	def index() {
-		def usuario = Usuario.get(springSecurityService.principal.id)
+		def usuario = this.usuarioActual()
+		if (!usuario){
+			redirect (controller:"red", action:"principal")
+		}
 		def etiquetasCarpetas = getCarpetas(usuario)
 		def conversacion = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, "Escritorio"))
 		[etiquetasCarpetas: etiquetasCarpetas, conversacionesEscr : conversacion, carpetaSeleccionada: "Escritorio"]
 	}
 
 	def nuevaCarpeta() {
-		def usuario = Usuario.get(springSecurityService.principal.id)
+		def usuario = this.usuarioActual()
+		if (!usuario){
+			redirect (controller:"red", action:"principal")
+		}
 		def nuevaCarpeta = new Carpeta(nombre : params.nombre, usuario: usuario)
 		nuevaCarpeta.save(failOnError: true)
 
@@ -35,7 +42,10 @@ class MensajeriaController {
 	}
 
 	def mostrarMensajes(String nombreCarpeta){
-		def usuario = Usuario.get(springSecurityService.principal.id)
+		def usuario = this.usuarioActual()
+		if (!usuario){
+			redirect (controller:"red", action:"principal")
+		}
 		def matcher = /([^=]+)=/
 		def nombreFormateado = ""
 		nombreCarpeta.eachMatch(matcher) {
@@ -44,11 +54,8 @@ class MensajeriaController {
 		def conversacion = []
 		if (nombreFormateado.equals("Enviados")){
 			def mensajes = Mensaje.findAllByEmisor(usuario)
-			mensajes.each {
-				def conv = new Conversacion()
-				conv.addToMensajes(it)
-				conversacion.add(conv)
-			}
+			render(template:"panelEnviados",model:[mensajes: mensajes, etiquetasCarpetas:  getCarpetas(usuario), carpetaSeleccionada : nombreFormateado])
+			return	
 		} else {
 			conversacion = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, nombreFormateado))
 		}
@@ -56,10 +63,11 @@ class MensajeriaController {
 	}
 
 	def cambiarConversacion(){
-		//si el usuario es null
-		def usuario = Usuario.get(springSecurityService.principal.id)
+		def usuario = this.usuarioActual()
+		if (!usuario){
+			redirect (controller:"red", action:"principal")
+		}
 		def idConversacion = params.conversacion
-		println idConversacion
 		def nombreCarpeta = params.carpeta
 		def matcher = /([^=]+)=/
 		def nombreFormateado = ""
@@ -86,21 +94,41 @@ class MensajeriaController {
 		return etiquetasCarpetas
 	}
 	
-	def redactar(){
-		def usuario = Usuario.get(springSecurityService.principal.id)
+	def redactarMensaje(){
+		def usuario = this.usuarioActual()
+		if (!usuario){
+			redirect (controller:"red", action:"principal")
+		}
 		def mediadores = Mediador.findAllByUsuario(usuario)
 		def aprendices = Aprendiz.findAllByUsuario(usuario)
 		def cursosAprendiz = []
+		def datosCursosAprendiz = [:]
 		def cursosMediador = []
+		def datosCursosMediador = [:]
+		def datosMediadores = []
 		mediadores.each {
+			def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(it.curso.id)
+			def gruposCurso = cuatrimestre.grupos
+			def mediadoresCurso = it.curso.mediadores
 			cursosMediador.add(it.curso)
+			datosCursosMediador.put(it.curso.id + "-gruposM", gruposCurso)
+			datosCursosMediador.put(it.curso.id	 + "-mediadoresM", mediadoresCurso)
 		}
 		aprendices.each {
 			if (it.participa){
-				cursosAprendiz.add(it.curso)
+				def cuatrimestre = it.cuatrimestre
+				def gruposCurso = cuatrimestre.grupos
+				def mediadoresCurso = it.cuatrimestre.curso.mediadores
+				cursosAprendiz.add(it.cuatrimestre.curso)
+				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-gruposA", gruposCurso)
+				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-mediadoresA", mediadoresCurso)
 			}
 		}
-		[cursosAprendiz : cursosAprendiz, cursosMediador : cursosMediador]
+		if (!cursosMediador.empty){
+			datosMediadores = Mediador.findAll()
+		}
+		render(template:"redactar", model: [cursosAprendiz : cursosAprendiz, datosCursosAprendiz : datosCursosAprendiz, 
+			cursosMediador : cursosMediador, datosCursosMediador : datosCursosMediador, mediadores : datosMediadores])
 	}
 	
 	def traerUsuariosFormateados(){
@@ -130,7 +158,10 @@ class MensajeriaController {
 	}
 	
 	def enviarMensajes(){
-		def usuario = Usuario.get(springSecurityService.principal.id)
+		def usuario = this.usuarioActual()
+		if (!usuario){
+			redirect (controller:"red", action:"principal")
+		}
 		def para = params.para
 		def asunto = params.asunto
 		def texto = params.mensaje
@@ -164,15 +195,36 @@ class MensajeriaController {
 		render(action:'index')
 	}
 	
+	def agregarMensajeABorradores(){
+		def usuario = this.usuarioActual()
+		if (!usuario){
+			redirect (controller:"red", action:"principal")
+		}
+		def mensaje = new Mensaje(para: params.para, asunto: params.asunto, cuerpo: params.cuerpo, emisor: usuario)
+		mensajeService.agregarMensajeABorradores(mensaje)
+		render (action: 'index')
+	}
+	
 	def traerDatosCurso(Integer idCurso){
 		def mediadores = Mediador.findAllByCurso(Curso.findById(idCurso))
 		render(template: "datosCurso", model: [mediadores : mediadores])
 	}
 	
+	def mensaje(){
+		def mensaje = Mensaje.findById(params.id)
+		render (template:"mensaje", model: [mensaje : mensaje])
+	}
+	
+	def mensajeBorradores(){
+		def mensaje = Mensaje.findById(params.id)
+		render (template:"redactar", model: [para: mensaje.para, asunto: mensaje.asunto, cuerpo: mensaje.cuerpo])
+	}
+
+	
 	def conversacion(){
 		def conversacion = Conversacion.findById(params.id)
 		def mensajes = conversacion.mensajes
-		[mensajes : mensajes, conversacionId : params.id]
+		render (template:"conversacion", model: [mensajes : mensajes, conversacionId : params.id, carpeta : conversacion.padre])
 	}
 
 	def conversacionAPdf= {
@@ -182,7 +234,10 @@ class MensajeriaController {
 	}
 
 	def buscar_mensajes(){
-		def usuario = Usuario.get(springSecurityService.principal.id)
+		def usuario = this.usuarioActual()
+		if (!usuario){
+			redirect (controller:"red", action:"principal")
+		}
 		def de = null	
 		def para = null
 		def regex = /\s*([^\s]*)\s*([^<]*)<([^>]*)>,?/
@@ -212,4 +267,11 @@ class MensajeriaController {
 		}
 		render(template: "conversaciones", model: [conversaciones: conversaciones])
 	}	
+	
+	private usuarioActual() {
+		if (springSecurityService.principal.enabled)
+			return Usuario.get(springSecurityService.principal.id)
+		else
+			return null
+	}
 }

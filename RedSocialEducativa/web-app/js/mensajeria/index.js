@@ -44,7 +44,7 @@ function when_ready(){
 			}
 		})
 	});
-	$("#para, #de").autocomplete({
+	$("#paraBuscar, #deBuscar, #para").autocomplete({
 		source: function(request, response){
 			if (request.term.match(/,/g)!=null){
 				var regexp = /,\s*(.*)/g;
@@ -70,7 +70,84 @@ function when_ready(){
 			return false;
 		}
 	});
+	redactar_ready()
 }
+
+function buscarMensajes(){
+	$.ajax({
+		url: 'buscar_mensajes',
+		type: 'POST',
+		data : {
+			de : $("#de").val(),
+			para : $("#para").val()
+		},
+		success : function (response) {
+			$("#listaConversaciones").html(response)
+		}
+	})
+}
+
+function mostrarConversacion(id){
+	$.ajax({
+		url: 'conversacion',
+		type: 'POST',
+		data: {
+			id: id
+		},
+		success: function(reply){
+			$("#contenidoMensajes").html(reply);
+		}
+	})
+}
+
+function mostrarMensajeEnConversacion(id){
+	if ($("#conversacion-"+id).is(':empty')){
+		$.ajax({
+			url: 'mensaje',
+			type: 'POST',
+			data: {
+				id: id
+			},
+			success: function(reply){
+				$("#conversacion-"+id).html(reply);
+			}
+		})
+	} else {
+		$("#conversacion-"+id).html('')
+	}
+}
+
+function mostrarMensajeBorradores(id){
+	if ($("#conversacion-"+id).is(':empty')){
+		$.ajax({
+			url: 'mensajeBorradores',
+			type: 'POST',
+			data: {
+				id: id
+			},
+			success: function(reply){
+				$("#conversacion-"+id).html(reply);
+			}
+		})
+	} else {
+		$("#conversacion-"+id).html('')
+	}
+}
+
+
+function mostrarMensaje(id){
+	$.ajax({
+		url: 'mensaje',
+		type: 'POST',
+		data: {
+			id: id
+		},
+		success: function(reply){
+			$("#contenidoMensajes").html(reply);
+		}
+	})
+}
+
 
 function cerrar_form_nueva_carpeta(){
 	$('#div_nueva_carpeta').hide();
