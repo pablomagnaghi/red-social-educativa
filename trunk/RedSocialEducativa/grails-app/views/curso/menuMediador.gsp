@@ -44,7 +44,7 @@
 					<br>
 					<li><g:link class="list" action="index" controller="actividad" 
 						params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
-						<g:message code="Administrar actividades del curso" /></g:link></li>	
+						<g:message code="Actividades" /></g:link></li>	
 
 				</g:if>
 				<g:else>

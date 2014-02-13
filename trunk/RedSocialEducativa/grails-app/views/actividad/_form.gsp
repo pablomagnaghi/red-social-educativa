@@ -1,7 +1,5 @@
 <%@ page import="com.fiuba.Actividad" %>
 
-<div><g:hiddenField name="cuatrimestre.id" value="${cuatrimestreId}"/></div>
-
 <div class="fieldcontain ${hasErrors(bean: actividadInstance, field: 'categoria', 'error')} required">
 	<label for="categoria">
 		<g:message code="actividad.categoria.label" default="Categoria" />
@@ -49,4 +47,6 @@
 	</label>
 	<g:checkBox name="visibilidad" value="${actividadInstance?.visibilidad}" />
 </div>
+
+<div><g:hiddenField name="cuatrimestre.id" value="${params.cuatrimestreId}"/></div>
 

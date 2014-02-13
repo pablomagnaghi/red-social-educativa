@@ -47,7 +47,7 @@ class MaterialContenidoController {
 		}
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'materialContenidoInstance.label', default: 'MaterialContenido'), materialContenidoInstance.id])
-		redirect controller:"contenido", action:"show", params:['id': params.contenidoId, 'cursoId': params.cursoId, 'temaId': params.temaId]
+		redirect controller:"contenido", action:"edit", params:['id': params.contenidoId, 'cursoId': params.cursoId, 'temaId': params.temaId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")

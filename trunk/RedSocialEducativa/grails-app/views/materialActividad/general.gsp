@@ -16,6 +16,9 @@
 					<g:message code="Actividad ${actividad}" /></g:link></li>	
 			</ul>
 		</div>
+		<h3>curso: ${params.cursoId}</h3>
+		<h3>cuatri: ${params.cuatrimestreId}</h3>
+		<h3>act: ${params.actividadId}</h3>
 		<div>
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>

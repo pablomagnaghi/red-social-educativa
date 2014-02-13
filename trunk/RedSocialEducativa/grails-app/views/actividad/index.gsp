@@ -13,14 +13,15 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': cursoId]">
+				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': params.cursoId]">
 					<g:message code="Tareas mediador" /></g:link></li>
-				<li><g:link class="create" action="create" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
+				<li><g:link class="create" action="create" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>	
 			</ul>
 		</div>
-		<h2>Curso: ${com.fiuba.Curso.get(cursoId)}</h2>
-		<h2>Curso Id: ${cursoId}</h2>
+		<h3>curso: ${params.cursoId}</h3>
+		<h3>cuatri: ${params.cuatrimestreId}</h3>
+		<h3>act: ${params.actividadId}</h3>
 		
 		<div id="list-actividad" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
@@ -48,14 +49,14 @@
 						<td>${fieldValue(bean: actividadInstance, field: "categoria")}</td>
 						
 						<td><g:link action="show" id="${actividadInstance.id}" 
-							params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">Ver detalle</g:link></td>
+							params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">Ver detalle</g:link></td>
 						
 					</tr>
 				</g:each>
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${actividadInstanceCount ?: 0}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]" />
+				<g:paginate total="${actividadInstanceCount ?: 0}" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]" />
 			</div>
 		</div>
 	</body>
