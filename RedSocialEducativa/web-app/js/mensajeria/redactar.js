@@ -38,34 +38,51 @@ function redactar_ready(){
 			agregarTipo(id, texto)
 		})
 	});
-	$("#para").autocomplete({
-		source: function(request, response){
-			if (request.term.match(/,/g)!=null){
-				var regexp = /,\s*(.*)/g;
-				var matcher = regexp.exec(request.term);
-				if (matcher != null){
-					request.term = matcher[1]; 
-				}
-			} 
-			$.getJSON( "traerUsuariosFormateados", {
-				term: extractLast( request.term )
-			}, response );
+	$("#e6").select2({
+		placeholder: "Para",
+		multiple: true,
+		minimumInputLength : 2,
+		ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+			url: "traerUsuariosFormateados",
+			dataType: 'json',
+			data: function (request, page) {
+				return {
+					term: extractLast( request ), 
+				};
+			},
+			results: function (data, page) { 
+				return {results: data};
+			}
 		},
-		minLength: 2, // triggered only after minimum 2 characters have been entered.
-		select: function( event, ui ) {
-			var terms = split( this.value );
-			// remove the current input
-			terms.pop();
-			// add the selected item
-			terms.push( ui.item.value);
-			// add placeholder to get the comma-and-space at the end
-			terms.push( "" );
-			this.value = terms.join( ", " );
-			return false;
-		}
+		 formatResult: formatResult, 
+		 formatSelection: formatSelection, 
+		 allowClear: true,
+		 formatSearching : function(){
+			 return "Buscando..."
+		 },
+		 formatNoMatches : function(){
+			 return "No hay coincidencias"	
+		 },
+		 formatInputTooShort : function(term, minLength){
+			 var faltantes = (minLength - term.length)
+			 var stringLetra = "letras"
+			 if (faltantes == 1){
+				 stringLetra = "letra"
+			 }
+			 return "Ingrese "  + faltantes + " " + stringLetra + " más"
+		 }
+		 
 	});
 	prepararArbol()
 }
+
+function formatResult(movie) {
+    return '<div>' + movie.value + '</div>';
+};
+
+function formatSelection(data) {
+    return data.value;
+};
 
 function prepararArbol(){
     $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');

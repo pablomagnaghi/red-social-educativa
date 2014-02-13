@@ -22,6 +22,7 @@
 <r:require module="jquery-ui" />
 <r:layoutResources />
 <g:javascript src="mensajeria/redactar.js" />
+<g:javascript src="select2.min.js" />
 <g:javascript src="mensajeria/index.js" />
 <title>Mensajería</title>
 </head>

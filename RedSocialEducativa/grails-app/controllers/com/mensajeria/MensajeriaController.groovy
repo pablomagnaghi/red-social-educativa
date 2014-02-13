@@ -127,7 +127,8 @@ class MensajeriaController {
 		if (!cursosMediador.empty){
 			datosMediadores = Mediador.findAll()
 		}
-		render(template:"redactar", model: [cursosAprendiz : cursosAprendiz, datosCursosAprendiz : datosCursosAprendiz, 
+		def usuarios = Usuario.findByEnabled(true)
+		render(template:"redactar", model: [usuarios: usuarios, cursosAprendiz : cursosAprendiz, datosCursosAprendiz : datosCursosAprendiz, 
 			cursosMediador : cursosMediador, datosCursosMediador : datosCursosMediador, mediadores : datosMediadores])
 	}
 	
@@ -151,7 +152,7 @@ class MensajeriaController {
 			def companyMap = [:] // add to map. jQuery autocomplete expects the JSON object to be with id/label/value.
 			companyMap.put("id", it[0])
 			companyMap.put("label", it[1] + it[2])
-			companyMap.put("value", it[1] + " " + it[2] + "<" + it[3] + ">")
+			companyMap.put("value", it[1] + " " + it[2] + "&lt;" + it[3] + "&gt;")
 			listaUsuarios.add(companyMap) // add to the arraylist
 		}
 		render (listaUsuarios as JSON)

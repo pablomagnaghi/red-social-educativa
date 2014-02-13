@@ -8,16 +8,14 @@
 		<div class="row">
 			<div class="form-group">
 				<label class="control-label col-md-1"><strong>Para</strong></label>
-				<div class="col-md-11">
-					<g:if test="${para != null }">
-						<input type="text" name="para" id="para" placeholder="Para" class="form-control" value="${para }">
-					</g:if>
-					<g:else>
-						<input type="text" name="para" id="para" placeholder="Para" class="form-control">	
-					</g:else>
-					<g:img file="Treeview.gif" id="img_clickeable" style="cursor: pointer"/>
+					<div class="col-md-9">
+						<input type='hidden' id="e6" style="width: 700px;" />
+					</div>
+					<div class="col-md-2">
+						<g:img file="Treeview.gif" id="img_clickeable"
+								style="cursor: pointer;width: 21px;float: right" />
+					</div>
 				</div>
-			</div>
 		</div>	
 	</div>
 	
