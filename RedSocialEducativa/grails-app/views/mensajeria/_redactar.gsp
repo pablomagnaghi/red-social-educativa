@@ -65,34 +65,46 @@
 </div>
 
 <div id="organigrama" class="tree center_div"  style="display:none; margin-top: 0px; top: 0px;">
-  	<g:img file="cross-icon.png" id="cerrarOrganigrama" style="float:right; cursor: pointer" />
+	<header role="heading">
+					<div role="menu" class="jarviswidget-ctrls">  
+					 <a data-original-title="Delete" href="javascript:void(0);" id="cerrarOrganigrama" class="button-icon jarviswidget-delete-btn" rel="tooltip" onclick="cerrar_form_nueva_carpeta()" title="" data-placement="bottom">
+					  <i class="fa fa-times"></i>
+					 </a>
+					</div>
+					
+					<h2 style="margin-top: 0px; margin-bottom: 0px;">Seleccionar Destinatario</h2>				
+						
+					<span style="display: none;" class="jarviswidget-loader">
+						<i class="fa fa-refresh fa-spin"></i>
+					</span>
+	</header>
     <ul style="margin-top: 16px;">
         <li>
             <span><i class="icon-calendar"></i> Cursos Aprendiz</span>
                         <ul>
             	<g:each in="${cursosAprendiz}" var="cursoAprendiz">
-	            		<li>
+	            		<li style="display:none">
 	                	<span class="badge badge-success"><i class="icon-minus-sign"></i> ${cursoAprendiz.nombre }</span>
 	                    <ul>
 	                    	<g:if test="${!datosCursosAprendiz.get(cursoAprendiz.id +"-mediadoresA").empty}">
-		                        <li>
+		                        <li style="display:none">
 			                        <span class="badge badge-success"><i class="icon-minus-sign"></i> Mediadores</span>
 			                        <g:each in="${datosCursosAprendiz.get(cursoAprendiz.id +"-mediadoresA")}" var="mediador">
 			                        	<ul>
 					                        <li>
-						                        <a href="">${mediador.usuario.nombres }</a>
+						                        ${mediador.jerarquia } - ${mediador.usuario.nombres } ${mediador.usuario.apellido }
 					                        </li>
 					                    </ul>
 			                        </g:each>
 		                        </li>
 	                    	</g:if>
 	                    	<g:if test="${!datosCursosAprendiz.get(cursoAprendiz.id +"-gruposA").empty}">
-		                        <li>
+		                        <li style="display:none">
 			                        <span class="badge badge-success"><i class="icon-minus-sign"></i> Grupos</span>
 									<g:each in="${datosCursosAprendiz.get(cursoAprendiz.id +"-gruposA")}" var="grupo">
 			                        	<ul>
 					                        <li>
-						                        <a href="">${grupo.nombre} ${grupo.numero }</a>
+						                        ${grupo.nombre}
 					                        </li>
 					                    </ul>
 			                        </g:each>
@@ -107,28 +119,28 @@
             <span><i class="icon-calendar"></i> Cursos Mediador</span>
             <ul>
             	<g:each in="${cursosMediador}" var="cursoMediador">
-	            		<li>
+	            		<li style="display:none">
 	                	<span class="badge badge-success"><i class="icon-minus-sign"></i> ${cursoMediador.nombre }</span>
 	                    <ul>
 	                    	<g:if test="${!datosCursosMediador.get(cursoMediador.id +"-mediadoresM").empty}">
-		                        <li>
+		                        <li style="display:none">
 			                        <span class="badge badge-success"><i class="icon-minus-sign"></i> Mediadores</span>
 			                        <g:each in="${datosCursosMediador.get(cursoMediador.id +"-mediadoresM")}" var="mediador">
 			                        	<ul>
-					                        <li>
-						                        <a href="">${mediador.usuario.nombres }</a>
+					                        <li style="display:none">
+						                        ${mediador.jerarquia } - ${mediador.usuario.nombres } ${mediador.usuario.apellido }
 					                        </li>
 					                    </ul>
 			                        </g:each>
 		                        </li>
 	                    	</g:if>
 	                    	<g:if test="${!datosCursosMediador.get(cursoMediador.id +"-gruposM").empty}">
-		                        <li>
+		                        <li style="display:none">
 			                        <span class="badge badge-success"><i class="icon-minus-sign"></i> Grupos</span>
 									<g:each in="${datosCursosMediador.get(cursoMediador.id +"-gruposM")}" var="grupo">
 			                        	<ul>
-					                        <li>
-						                        <a href="">${grupo.nombre} ${grupo.numero }</a>
+					                        <li style="display:none">
+						                        ${grupo.nombre}
 					                        </li>
 					                    </ul>
 			                        </g:each>
@@ -138,21 +150,28 @@
 	                </li>
             	</g:each>
 		    </ul>
+		    <g:if test="${!cursosTotales.empty }">
+		    <li>
+	        	<span><i class="icon-calendar"></i>Mediadores</span>
+	            <ul>
+	            	<g:each in="${cursosTotales}" var="curso">
+		            	<li style="display:none">
+		            	 	<span class="badge badge-success"><i class="icon-minus-sign"></i> ${curso.materia} - ${curso.nombre }</span>
+							<g:each in="${datosMediadores.get(curso.id +"-mediadoresC")}" var="mediador">
+	                        	<ul>
+			                        <li style="display:none">
+				                       ${mediador.jerarquia } - ${mediador.usuario.nombres } ${mediador.usuario.apellido }
+			                        </li>
+			                    </ul>
+	                        </g:each>
+		                </li>
+	            	</g:each>
+			    </ul>
+			</li>
+        	</g:if>
         </li>
     </ul>
 
-
-
-<!--  
-  	<div>Cursos de aprendiz</div>
-  	<g:each in='${cursosAprendiz}' var='cursoAprendiz'>
-  		<div>
-  		<img src="../images/tree_plus.gif" class="link-aprendiz" id="${cursoAprendiz.id}" style="cursor: pointer"/>
-  		<span class="seleccionableOrg" style="margin-left: 10px;" id="curso-${cursoAprendiz.id}">${cursoAprendiz.nombre} - ${cursoAprendiz.materia.codigo}</span>
-  		<div id="aprendiz-${cursoAprendiz.id}"></div>
-  		</div>
-  	</g:each>
--->
   </div>
   ${usuariosFormateados }
 	<div id="spinner" class="center_div"

@@ -93,7 +93,7 @@
 			</table>
 		</div>
 	</div>
-<div id="div_nueva_carpeta" style="display:none">
+<div id="div_nueva_carpeta" class="center_div_carpeta" style="display:none">
    <div id="wid-id-0" class="jarviswidget jarviswidget-sortable" role="widget">
 				
 				<header role="heading">
