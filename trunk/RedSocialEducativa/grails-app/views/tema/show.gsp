@@ -42,7 +42,9 @@
 				<g:if test="${temaInstance?.foro}">
 				<li class="fieldcontain">
 					<span id="foro-label" class="property-label"><g:message code="tema.foro.label" default="Foro" /></span>
-						<span class="property-value" aria-labelledby="foro-label">${temaInstance?.foro?.encodeAsHTML()}</span>
+						<span class="property-value" aria-labelledby="foro-label">
+							<g:link controller="foroTema" action="general" 	params="['cursoId': params.cursoId, 'temaId': temaInstance.id]">
+								${temaInstance?.foro?.encodeAsHTML()}</g:link></span>
 				</li>
 				</g:if>
 				<g:if test="${temaInstance?.contenidos}">

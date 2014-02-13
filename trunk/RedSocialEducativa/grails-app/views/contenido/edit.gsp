@@ -38,34 +38,28 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="update" method="PUT" id="${contenidoInstance.id}" 
-				params="['cursoId': params.cursoId, 'temaId': params.temaId]" >
-				<g:hiddenField name="version" value="${contenidoInstance?.version}" />
-				<fieldset class="form">
-					<g:render template="form"/>
-					<div><g:hiddenField name="titulo" value="${contenidoInstance.titulo}"/></div>
-					<div class="fieldcontain ${hasErrors(bean: contenidoInstance, field: 'materiales', 'error')} ">
-						<label for="materiales">
-							<g:message code="contenido.materiales.label" default="Materiales" />
-						</label>					
-						<ul class="one-to-many">
-							<g:each in="${contenidoInstance?.materiales?}" var="m">
-							    <li><g:link controller="materialContenido" action="show" id="${m.id}"
-							   		params="['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': contenidoInstance.id]">${m?.encodeAsHTML()}</g:link></li>
-							</g:each>
-							<li class="add">
-								<g:link controller="materialContenido" action="create" params="['cursoId': params.cursoId, 
+		<div
+			class="fieldcontain ${hasErrors(bean: contenidoInstance, field: 'materiales', 'error')} ">
+			<label for="materiales"> <g:message
+					code="contenido.materiales.label" default="Materiales" />
+			</label>
+			<ul class="one-to-many">
+				<g:each in="${contenidoInstance?.materiales?}" var="m">
+					<li><g:link controller="materialContenido" action="show"
+							id="${m.id}"
+							params="['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': contenidoInstance.id]">
+							${m?.encodeAsHTML()}
+						</g:link></li>
+				</g:each>
+				<li class="add"><g:link controller="materialContenido"
+						action="create"
+						params="['cursoId': params.cursoId, 
 									'temaId': params.temaId, 'contenidoId': contenidoInstance.id]">
-									${message(code: 'default.add.label', args: [message(code: 'materialContenido.label', default: 'MaterialContenido')])}</g:link>
-						
-							</li>
-						</ul>
-					</div>	
-				</fieldset>
-				<fieldset class="buttons">
-					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-				</fieldset>
-			</g:form>
+						${message(code: 'default.add.label', args: [message(code: 'materialContenido.label', default: 'MaterialContenido')])}
+					</g:link></li>
+			</ul>
 		</div>
+
+	</div>
 	</body>
 </html>

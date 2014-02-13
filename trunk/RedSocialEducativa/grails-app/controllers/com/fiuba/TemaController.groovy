@@ -64,7 +64,7 @@ class TemaController {
 	def edit(Tema temaInstance) {
 		respond temaInstance, params:['cursoId': params.cursoId]
 	}
-
+/*
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def update(Tema temaInstance) {
 
@@ -81,7 +81,7 @@ class TemaController {
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'Tema.label', default: 'Tema'), temaInstance.id])
 		redirect action: "show", params:['id': temaInstance.id, 'cursoId': params.cursoId]
 	}
-
+*/
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def delete(Tema temaInstance) {
 

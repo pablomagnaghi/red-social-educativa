@@ -1,186 +1,100 @@
 package com.fiuba
 
-
-
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
-
-@Transactional(readOnly = true)
-
 import org.springframework.security.access.annotation.Secured
 
-@Secured('permitAll')
+
+@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
 class PublicacionTemaController {
 
-	def springSecurityService
-	
-	private usuarioActual() {
-		if (springSecurityService.principal.enabled)
-			return Usuario.get(springSecurityService.principal.id)
-		else
-			return null
+	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+	def seguridadService
+	def publicacionTemaService
+
+	def nueva() {
+		respond new PublicacionTema(params), model: [usuario: seguridadService.usuarioActual(), 
+			params:['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]]
 	}
 
-	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-	
-	def nueva() {
-		println "publicacion controller nueva params: ${params}"
-		println usuarioActual()
-		def pubInicialId = params.pubInicialId
-		def cursoId = params.cursoId
-		def temaId = params.temaId
-		respond new PublicacionTema(params), model: [usuario: usuarioActual(), 
-			pubInicialId: pubInicialId, cursoId: cursoId, temaId: temaId]
-	}
-	
-	@Transactional
 	def guardar(PublicacionTema publicacionTemaInstance) {
-		
-		println "publicacion controller guardar pubInicialId: ${params.pubInicialId}, temaId: ${params.temaId}"
-		
-		def pubInicialId = params.pubInicialId
-		def temaId = params.temaId
-		def cursoId = params.cursoId
-		
+
 		if (publicacionTemaInstance == null) {
 			notFound()
 			return
 		}
-		
-		if (publicacionTemaInstance.hasErrors()) {
-			respond publicacionTemaInstance.errors, view:'nueva',  model: [pubInicialId: pubInicialId, 
-				usuario: usuarioActual(), cursoId: cursoId, temaId: temaId]
-			return
-		}
-		
-		publicacionTemaInstance.responsable = publicacionTemaInstance.responsable + " (Miembro)"
-	
-		if (pubInicialId) {
-			println "es una respuesta"
-			def publicacion = PublicacionTema.get(pubInicialId)
-			publicacionTemaInstance.titulo = "Respuesta a: " + publicacionTemaInstance.titulo
-			publicacion.addToRespuestas(publicacionTemaInstance)
-			publicacion.save flush:true
-			flash.message = message(code: 'default.created.message', args: [message(code: 'publicacionTemaInstance.label', 
-				default: 'PublicacionTema'), publicacionTemaInstance.id])
-			redirect controller: "foroTema", action: "publicaciones", params: ['id': pubInicialId, 'cursoId': cursoId, 'temaId': temaId]
-			return
-		} else {
-			publicacionTemaInstance.save flush:true
-		}
-		
-		request.withFormat {
-			form {
-				flash.message = message(code: 'default.created.message', args: [message(code: 'publicacionTemaInstance.label', 
-					default: 'PublicacionTema'), publicacionTemaInstance.id])
-				redirect controller: "foroTema", action: "general", params: ['cursoId': cursoId, 'temaId': temaId]
-			}
-			'*' { respond publicacionTemaInstance, [status: CREATED] }
-		}
-	}
-	
-	@Transactional
-	def eliminar() {
-		
-		println "publicacion controller eliminarPublicacion params: ${params}"
-		
-		def publicacionId = params.id
-		def cursoId= params.cursoId
-		def temaId = params.temaId
-		
-		println "publicaion id: ${publicacionId}"
-		
-		def publicacion = PublicacionTema.get(publicacionId)
 
-		println "publicacion: ${publicacion}"
-				
+		if (params.pubInicialId) {
+			if (!publicacionTemaService.guardarRespuesta(publicacionTemaInstance, params.pubInicialId.toLong(), 
+				seguridadService.usuarioActual(), params.cursoId.toLong())) {
+					render view:'nueva', model: [publicacionTemaInstance: publicacionTemaInstance, usuario: seguridadService.usuarioActual()],
+						params: ['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]
+				return
+			}
+			flash.message = message(code: 'default.created.message', args: [message(code: 'publicacionTemaInstance.label', default: 'PublicacionTemao'), publicacionTemaInstance.id])
+			redirect controller: "foroTema", action: "publicaciones", params: ['id': params.pubInicialId, 'cursoId': params.cursoId, 
+				'temaId': params.temaId]
+			return
+		}
+	
+		if	(!publicacionTemaService.guardar(publicacionTemaInstance, seguridadService.usuarioActual(), params.cursoId.toLong())) {
+			render view:'nueva', model: [publicacionTemaInstance: publicacionTemaInstance, usuario: seguridadService.usuarioActual()],
+					params: ['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]
+			return
+		}
+		
+		flash.message = message(code: 'default.created.message', args: [message(code: 'publicacionTemaInstance.label', default: 'PublicacionTema'), publicacionTemaInstance.id])
+		redirect controller: "foroTema", action: "general", params: ['cursoId': params.cursoId, 'temaId': params.temaId]
+	}
+
+	def eliminar(PublicacionTema publicacion) {
+
 		if (publicacion == null) {
-			flash.message = "No existe esa publicacion"
-			redirect controller: "foroTema", action: "publicaciones", method: "GET", 
-				params:['id': params.pubInicialId, 'cursoId': cursoId, 'temaId': temaId]
+			notFound()
 			return
 		}
 		
 		def esTema = false
 		
 		if (!publicacion.publicacionInicial) {
-			//println "es inicialllllllllll"
 			esTema = true
-		} else {
-			//println "NO ES INICIAL"
-			//println publicacion.publicacionInicial
 		}
-		
-		publicacion.delete flush:true
-
-
-		flash.message = message(code: 'default.deleted.message', args: [message(code: 'PublicacionTema.label',
-			default: 'PublicacionTema'), publicacion.id])
+	
+		publicacionTemaService.eliminar(publicacion)
 
 		if (esTema) {
-			redirect controller: "foroTema", action:"general", params:['cursoId': cursoId, 'temaId': temaId]
-		} else {
-			redirect controller: "foroTema", action:"publicaciones", method:"GET", 
-				params:['id': params.pubInicialId, 'cursoId': cursoId, 'temaId':  temaId]
-		}
+			redirect controller: "foroTema", action:"general", params:['cursoId': params.cursoId, 'temaId': params.temaId]
+			return
+		} 
+		
+		redirect controller: "foroTema", action:"publicaciones", method:"GET",
+		params:['id': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]
 	}
-	
+
 	def editar(PublicacionTema publicacionTemaInstance) {
-		
-		println "publicacion controller editar params: ${params}"
-		println usuarioActual()
-		def pubInicialId = params.pubInicialId
-		def publicacionId = params.id
-		def cursoId = params.cursoId
-		def temaId = params.temaId
-		
-		respond publicacionTemaInstance, model: [usuario: usuarioActual(),
-			pubInicialId: pubInicialId, publicacionId: publicacionId, cursoId: cursoId, temaId: temaId]
-		
+		respond publicacionTemaInstance, model: [usuario: seguridadService.usuarioActual()],
+			params: [ 'publicacionId': params.id, 'pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temad': params.temaId]
 	}
 	
-	@Transactional
 	def actualizar(PublicacionTema publicacionTemaInstance) {
 
-		println "publicacion id: ${params.id}, ${publicacionTemaInstance.id}, temaId: ${params.temaId}"
-		
-		println "padreId: ${params.pubInicialId}"
-		
-		println publicacionTemaInstance.properties
-		
 		if (publicacionTemaInstance == null) {
 			notFound()
 			return
 		}
 
-		if (publicacionTemaInstance.hasErrors()) {
-			respond publicacionTemaInstance.errors, view:'editar', model: [usuario: usuarioActual(),
-				pubInicialId: params.pubInicialId, publicacionId: params.id, cursoId: params.cursoId, temaId: params.temaId]
+		if (!publicacionTemaService.guardar(publicacionTemaInstance, seguridadService.usuarioActual(), params.cursoId.toLong())) {
+			render view:'editar', model: [publicacionTemaInstance: publicacionTemaInstance, usuario: seguridadService.usuarioActual()]
+				params: ['publicacionId': params.id, 'pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]
 			return
 		}
-
-		publicacionTemaInstance.save flush:true
-
-		request.withFormat {
-			form {
-				flash.message = message(code: 'default.updated.message', args: [message(code: 'PublicacionTema.label', 
-					default: 'PublicacionTema'), publicacionTemaInstance.id])
-				redirect controller: "foroTema", action: "publicaciones", params: ['id': params.pubInicialId, 
-					'cursoId': params.cursoId, 'temaId': params.temaId],
-					model: [usuario: usuarioActual(), pubInicialId: params.pubInicialId, temaId: params.temaId]
-			}
-			'*'{ respond publicacionTemaInstance, [status: OK] }
-		}
+		
+		flash.message = message(code: 'default.updated.message', args: [message(code: 'PublicacionTema.label', default: 'PublicacionTema'), publicacionTemaInstance.id])
+		redirect controller: "foroTema", action: "publicaciones", params: ['id': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]
 	}
-
+	
 	protected void notFound() {
-		request.withFormat {
-			form {
-				flash.message = message(code: 'default.not.found.message', args: [message(code: 'publicacionTemaInstance.label', 
-					default: 'PublicacionTema'), params.id])
-				redirect controller: "foroTema", action: "publicaciones", method: "GET",  params:['cursoId': cursoId, 'temaId': temaId]
-			}
-			'*'{ render status: NOT_FOUND }
-		}
+		flash.message = message(code: 'default.not.found.message', args: [message(code: 'publicacionTemaInstance.label', default: 'PublicacionTema'), params.id])
+		redirect controller: "foroTema", action: "general", params:['cursoId': params.cursoId, 'temaId': params.temaId], method: "GET"
 	}
 }

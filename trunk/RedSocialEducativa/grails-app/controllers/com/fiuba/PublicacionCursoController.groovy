@@ -29,10 +29,9 @@ class PublicacionCursoController {
 					params: ['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 				return
 			}
-			flash.message = message(code: 'default.created.message', args: [message(code: 'publicacionCursoInstance.label',
-				default: 'PublicacionCurso'), publicacionCursoInstance.id])
-			redirect controller: "foroCurso", action: "publicaciones", params: ['id': params.pubInicialId,
-				'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+			flash.message = message(code: 'default.created.message', args: [message(code: 'publicacionCursoInstance.label', default: 'PublicacionCurso'), publicacionCursoInstance.id])
+			redirect controller: "foroCurso", action: "publicaciones", params: ['id': params.pubInicialId, 'cursoId': 
+				params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 			return
 		}
 
@@ -102,6 +101,6 @@ class PublicacionCursoController {
 
 	protected void notFound() {
 		flash.message = message(code: 'default.not.found.message', args: [message(code: 'publicacionCursoInstance.label', default: 'PublicacionCurso'), params.id])
-		redirect controller: "foroCurso", action: "general", method: "GET"
+		redirect controller: "foroCurso", action: "general", params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId], method: "GET"
 	}
 }

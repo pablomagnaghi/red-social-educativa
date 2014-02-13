@@ -1,35 +1,7 @@
 <%@ page import="com.fiuba.PublicacionTema" %>
 
-<div>
-	<g:hiddenField name="responsable" value="${usuario}"/>
-</div>
-
-<div>
-	<g:hiddenField name="dni" value="${usuario.username}"/>
-</div>
-
-<div>
-	<g:hiddenField name="fecha" value="${(new Date()).format("yyyy-mm-dd")}"/>
-</div>
-
-<div>
-	<g:hiddenField name="hora" value="${(new Date()).getTimeString()}"/>
-</div>
-
-<div>
-	<g:hiddenField name="foro.id" value="${com.fiuba.ForoTema.findByTema(com.fiuba.Tema.get(temaId)).id}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: publicacionTemaInstance, field: 'contenido', 'error')} ">
-	<label for="contenido">
-		<g:message code="publicacionTema.contenido.label" default="Contenido" />
-		
-	</label>
-	<g:textField name="contenido" value="${publicacionTemaInstance?.contenido}"/>
-</div>
-
-<g:if test="${pubInicialId}">
-	<g:hiddenField name="titulo" value="${com.fiuba.PublicacionTema.get(pubInicialId).titulo}"/>
+<g:if test="${params.pubInicialId}">
+	<g:hiddenField name="titulo" value="${com.fiuba.PublicacionTema.get(params.pubInicialId).titulo}"/>
 </g:if>
 <g:else>
 	<div class="fieldcontain ${hasErrors(bean: publicacionTemaInstance, field: 'titulo', 'error')} ">
@@ -40,3 +12,17 @@
 		<g:textField name="titulo" value="${publicacionTemaInstance?.titulo}"/>
 	</div>
 </g:else>
+
+<div class="fieldcontain ${hasErrors(bean: publicacionTemaInstance, field: 'contenido', 'error')} ">
+	<label for="contenido">
+		<g:message code="publicacionTema.contenido.label" default="Contenido" />
+		
+	</label>
+	<g:textField name="contenido" value="${publicacionTemaInstance?.contenido}"/>
+</div>
+
+<div><g:hiddenField name="responsable" value="${usuario}"/></div>
+<div><g:hiddenField name="dni" value="${usuario.username}"/></div>
+<div><g:hiddenField name="fecha" value="${(new Date()).format(com.fiuba.Utilidades.FORMATO_FECHA)}"/></div>
+<div><g:hiddenField name="hora" value="${(new Date()).getTimeString()}"/></div>
+<div><g:hiddenField name="foro.id" value="${com.fiuba.ForoTema.findByTema(com.fiuba.Tema.get(params.temaId)).id}"/></div>

@@ -14,9 +14,10 @@ class PublicacionCursoService {
 
 		if (Administrador.findByUsuario(usuario)) {
 			publicacion.responsable = publicacion.responsable + " " + Utilidades.ADMINISTRADOR
-		} else {
-			publicacion.responsable = publicacion.responsable + " " + Utilidades.MIEMBRO
+			return
 		}
+		
+		publicacion.responsable = publicacion.responsable + " " + Utilidades.MIEMBRO
 	}
 
 	def guardarRespuesta(PublicacionCurso publicacion, Long pubInicialId, Usuario usuario) {

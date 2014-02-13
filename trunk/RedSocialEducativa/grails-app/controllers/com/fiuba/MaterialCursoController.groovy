@@ -45,7 +45,7 @@ class MaterialCursoController {
 		}
 
 		if (materialCursoService.existe(materialCursoInstance, params.cursoId.toLong())) {
-			flash.message = "Ya existe el material ${materialCursoInstance.titulo} del curso ${Curso.get(cursoId)}"
+			flash.message = "Ya existe el material ${materialCursoInstance.titulo} del curso ${Curso.get(params.cursoId)}"
 			redirect action: "create", params:['cursoId': params.cursoId]
 			return
 		}
