@@ -8,7 +8,7 @@
 
 .center_div {
 	position: absolute;
-    height: 100px;
+    height: 400px;
     width: 350px;
     margin: -100px 0 0 -200px;
     top: 50%;
@@ -26,4 +26,13 @@
     text-shadow: none;
 }
     
-    
+.ui-menu .ui-menu-item a{
+    background:#FFFFFF;
+    font-family: "Open Sans",Arial,Helvetica,Sans-Serif;
+    font-size: 13px;
+    line-height: 1.42857;;
+}
+
+.input input{
+	width: 280px;
+}

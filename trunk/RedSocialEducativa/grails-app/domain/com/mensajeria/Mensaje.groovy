@@ -15,6 +15,7 @@ class Mensaje {
 
     static constraints = {
 		conversacion nullable:true
+		receptor nullable: true 
     }
 	static findMessagesByCarpeta(Usuario usuario, String nombreCarpeta){
 		def msg = Mensaje.findAll("from Mensaje as m, Conversacion as conv, Carpeta as carp \
@@ -31,4 +32,11 @@ class Mensaje {
 		return msg.size()
 	}
 	
+	public String getCuerpoResumido(){
+		def length = this.cuerpo.length();
+		if (length > 20){
+			length = 20
+		}
+		return this.cuerpo.substring(0, length)
+	}
 }

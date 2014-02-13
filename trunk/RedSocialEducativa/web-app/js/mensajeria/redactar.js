@@ -1,9 +1,3 @@
-$(document).ready(
-		function(){
-			when_ready()
-		}
-);
-
 function split( val ) {
 	return val.split( /,\s*/ );
 }
@@ -12,9 +6,8 @@ function extractLast( term ) {
 	return split( term ).pop();
 }
 
-function when_ready(){
+function redactar_ready(){
 	$('#img_clickeable').click(function(){
-		$("#organigrama").addClass('center_div');
 		$("#organigrama").show();
 	});
 	$('#cerrarOrganigrama').click(function(){
@@ -71,6 +64,22 @@ function when_ready(){
 			return false;
 		}
 	});
+	prepararArbol()
+}
+
+function prepararArbol(){
+    $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+    $('.tree li.parent_li > span').on('click', function (e) {
+        var children = $(this).parent('li.parent_li').find(' > ul > li');
+        if (children.is(":visible")) {
+            children.hide('fast');
+            $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+        } else {
+            children.show('fast');
+            $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+        }
+        e.stopPropagation();
+    });
 }
 
 function agregarTipo(id, texto){
@@ -97,6 +106,31 @@ function agregarCurso(id, texto){
 function agregarMediador(id){
 	textoAnterior = $("#para").val();
 	$("#para").val(textoAnterior + " Mediador: " + texto+ ",");
+}
+
+function submitMail(){
+	$("#cuerpo").val($("#divCuerpo").html())
+	if ($("#para").is(':empty') || $("#asunto").is(':empty') || $("#cuerpo").is(':empty')){
+		return false;
+	} else {
+		return true;
+	}
+}
+
+function agregarMensajeABorradores(){
+	$("#cuerpo").val($("#divCuerpo").html())
+	$.ajax({
+		url: 'agregarMensajeABorradores',
+		type: 'POST',
+		data: {
+			para: $("#para").val(),
+			asunto : $("#asunto").val(),
+			cuerpo : $("#cuerpo").val()
+		},
+		success: function(reply){
+			window.open('index', '_self')
+		}
+	})
 }
 
 function traerDatosCurso(id){
