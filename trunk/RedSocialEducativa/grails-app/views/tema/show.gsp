@@ -13,12 +13,19 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index" params="['cursoId': cursoId]">
+				<li><g:link class="list" action="mediador" controller="curso" params="['cursoId': params.cursoId]">
+					<g:message code="Pagina principal de mediador"/></g:link></li>		
+				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': params.cursoId]">
+					<g:message code="Tareas mediador" /></g:link></li>
+				<li><g:link class="list" action="index" params="['cursoId': params.cursoId]">
 					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create" params="['cursoId': cursoId]">
+				<li><g:link class="create" action="create" params="['cursoId': params.cursoId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+			<h2>Params: ${params}</h2>
+		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+		<h2>Curso Id: ${params.cursoId}</h2>
 		<div id="show-tema" class="content scaffold-show" role="main">
 			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -44,7 +51,7 @@
 						<g:each in="${temaInstance.contenidos}" var="c">
 						<span class="property-value" aria-labelledby="contenidos-label">
 							<g:link controller="contenido" action="show" id="${c.id}" 
-								params="['cursoId': cursoId, 'temaId': temaInstance.id]">${c?.encodeAsHTML()}</g:link></span>
+								params="['cursoId': params.cursoId, 'temaId': temaInstance.id]">${c?.encodeAsHTML()}</g:link></span>
 						</g:each>
 				</li>
 				</g:if>
@@ -54,15 +61,15 @@
 						<g:each in="${temaInstance.materiales}" var="m">
 						<span class="property-value" aria-labelledby="materiales-label">
 							<g:link controller="materialTema" action="show" id="${m.id}" 
-								params="['cursoId': cursoId, 'temaId': temaInstance.id]">${m?.encodeAsHTML()}</g:link></span>
+								params="['cursoId': params.cursoId, 'temaId': temaInstance.id]">${m?.encodeAsHTML()}</g:link></span>
 						</g:each>
 				</li>
 				</g:if>
 			</ol>
-			<g:form action="delete" method="DELETE" id="${temaInstance.id}" params="['cursoId': cursoId]">
+			<g:form action="delete" method="DELETE" id="${temaInstance.id}" params="['cursoId': params.cursoId]">
 				<fieldset class="buttons">
 					<g:link class="edit" action="edit" resource="${temaInstance}" 
-						id="${temaInstance.id}" params="['cursoId': cursoId]">
+						id="${temaInstance.id}" params="['cursoId': params.cursoId]">
 						<g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
 						onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />

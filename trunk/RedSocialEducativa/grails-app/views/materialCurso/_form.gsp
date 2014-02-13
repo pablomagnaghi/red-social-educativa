@@ -1,9 +1,5 @@
 <%@ page import="com.fiuba.MaterialCurso" %>
 
-<div><g:hiddenField name="curso.id" value="${cursoId}"/></div>
-
-<div><g:hiddenField name="fecha" value="${(new Date()).format("yyyy-MM-dd")}"/></div>
-
 <div class="fieldcontain ${hasErrors(bean: materialCursoInstance, field: 'autor', 'error')} ">
 	<label for="autor">
 		<g:message code="materialCurso.autor.label" default="Autor" />
@@ -28,4 +24,5 @@
 	<g:textField name="descripcion" value="${materialCursoInstance?.descripcion}"/>
 </div>
 
-
+<div><g:hiddenField name="curso.id" value="${params.cursoId}"/></div>
+<div><g:hiddenField name="fecha" value="${(new Date()).format(com.fiuba.Utilidades.FORMATO_FECHA)}"/></div>

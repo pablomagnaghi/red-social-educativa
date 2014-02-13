@@ -24,23 +24,23 @@
 				
 					<li><g:link class="list" action="index" controller="aprendiz" 
 						params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
-						<g:message code="Administrar aprendices" /></g:link></li>
+						<g:message code="Aprendices" /></g:link></li>
 					<br>
 					<li><g:link class="list" action="index" controller="noticiaCurso" 
 						params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
-						<g:message code="Administrar cartelera del curso" /></g:link></li>
+						<g:message code="Cartelera" /></g:link></li>
 					<br>
 					<li><g:link class="list" action="general" controller="foroCurso" 
 						params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
-						<g:message code="Administrar foros generales de cursos" /></g:link></li>
+						<g:message code="Foros general" /></g:link></li>
 					<br>
 					<li><g:link class="list" action="estadisticas" controller="aprendiz" 
 						params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
-						<g:message code="Estadisticas de aprendices" /></g:link></li>
+						<g:message code="Estadisticas" /></g:link></li>
 					<br>
-					<li><g:link class="list" action="menuMediador" controller="grupoCurso" 
+					<li><g:link class="list" action="menuMed" controller="grupoCurso" 
 						params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
-						<g:message code="Grupos del curso" /></g:link></li>	
+						<g:message code="Grupos" /></g:link></li>	
 					<br>
 					<li><g:link class="list" action="index" controller="actividad" 
 						params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
@@ -52,10 +52,10 @@
 				</g:else>
 				<br>
 				<li><g:link class="list" action="index" controller="materialCurso" params="['cursoId': cursoId]">
-					<g:message code="Administrar material del curso" /></g:link></li>
+					<g:message code="Material" /></g:link></li>
 				<br>
 				<li><g:link class="list" action="index" controller="tema" params="['cursoId': cursoId]">
-					<g:message code="Administrar temas del curso" /></g:link></li>
+					<g:message code="Temas" /></g:link></li>
 				<br>
 				<li><g:link class="list" action="index" controller="evaluacion" params="['cursoId': cursoId]">
 					<g:message code="Administrar evaluaciones del curso" /></g:link></li>		

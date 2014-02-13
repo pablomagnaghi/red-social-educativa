@@ -26,7 +26,7 @@ class AprendizController {
 		
 		def cuatrimestre = Cuatrimestre.get(params.cuatrimestreId)
 			
-		[aprendizInstanceList: Aprendiz.findAllByCuatrimestre(cuatrimestre,[max: params.max, offset: params.offset]), 
+		[aprendizInstanceList: Aprendiz.findAllByCuatrimestre(cuatrimestre, [max: params.max, offset: params.offset]), 
 			aprendizInstanceCount: Aprendiz.findAllByCuatrimestre(cuatrimestre).size(), 
 			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
     }

@@ -11,12 +11,18 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link controller="tema" action="index" id="${temaId}" params="['cursoId': cursoId]">
-					<g:message code="Lista de temas del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
-				<li><g:link controller="tema" action="show" id="${temaId}" params="['cursoId': cursoId, 'temaId': temaId]">
-					<g:message code="Tema: ${com.fiuba.Tema.get(temaId)}" args="[entityName]" /></g:link></li>
+				<li><g:link class="list" action="mediador" controller="curso" params="['cursoId': params.cursoId]">
+					<g:message code="Pagina principal de mediador"/></g:link></li>			
+				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': params.cursoId]">
+					<g:message code="Tareas mediador" /></g:link></li>	
+				<li><g:link controller="tema" action="index" id="${temaId}" params="['cursoId': params.cursoId]">
+					<g:message code="Lista de temas del curso ${com.fiuba.Curso.get(params.cursoId)}" args="[entityName]" /></g:link></li>
+				<li><g:link controller="tema" action="edit" id="${params.temaId}" params="['cursoId': params.cursoId]">
+					<g:message code="Tema: ${com.fiuba.Tema.get(params.temaId)}" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+		<h2>cursoId: ${params.cursoId}</h2>
+		<h2>temaId: ${params.temaId}</h2>
 		<div id="create-contenido" class="content scaffold-create" role="main">
 			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">

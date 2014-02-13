@@ -9,7 +9,6 @@ class MediadorController {
 	def mediadorService
 	def aprendizService
 
-	// Metodo para el Menu Mediador
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def activarAprendiz() {
 		
@@ -25,7 +24,6 @@ class MediadorController {
 		redirect(controller: "aprendiz", action: "index", params: params)
 	}
 
-	// Metodos para el menu Administrador
 	@Secured("hasRole('ROL_ADMIN')")
 	def index(Integer max) {
 		params.max = Utilidades.MAX_PARAMS

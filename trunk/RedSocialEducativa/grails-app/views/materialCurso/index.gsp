@@ -13,15 +13,17 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': cursoId]">
+				<li><g:link class="list" action="mediador" controller="curso" params="['cursoId': params.cursoId]">
+					<g:message code="Pagina principal de mediador"/></g:link></li>		
+				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': params.cursoId]">
 					<g:message code="Tareas mediador" /></g:link></li>
-				<li><g:link class="create" action="create" params="['cursoId': cursoId]">
+				<li><g:link class="create" action="create" params="['cursoId': params.cursoId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>	
 			</ul>
 		</div>
 
-		<h2>Curso: ${com.fiuba.Curso.get(cursoId)}</h2>
-		<h2>Curso Id: ${cursoId}</h2>
+		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+		<h2>Curso Id: ${params.cursoId}</h2>
 		
 		<div id="list-materialCurso" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
@@ -54,14 +56,14 @@
 					
 						<td>${fieldValue(bean: materialCursoInstance, field: "fecha")}</td>		
 						
-						<td><g:link action="show" id="${materialCursoInstance.id}">Ver detalle</g:link></td>
+						<td><g:link action="show" id="${materialCursoInstance.id}" params="['cursoId': params.cursoId]" >Ver detalle</g:link></td>
 						
 					</tr>
 				</g:each>
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${materialCursoInstanceCount ?: 0}" params="['cursoId': cursoId]" />
+				<g:paginate total="${materialCursoInstanceCount ?: 0}" params="['cursoId': params.cursoId]" />
 			</div>
 		</div>
 	</body>

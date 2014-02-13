@@ -6,11 +6,9 @@ import org.springframework.security.access.annotation.Secured
 @Secured("hasRole('ROL_ADMIN')")
 class NoticiaRedController {
 
+	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	def seguridadService
 	def noticiaRedService
-
-	// TODO
-	// static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def index() {
 		params.max = Utilidades.MAX_PARAMS

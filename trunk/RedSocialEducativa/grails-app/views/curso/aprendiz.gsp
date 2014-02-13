@@ -38,10 +38,10 @@
 						<g:message code="Mis evaluaciones en el curso"/></g:link>
 					</div>
 					<div>
-						<li><g:link class="list" action="general" controller="grupoCurso" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
+						<li><g:link class="list" action="menuAprendiz" controller="grupoCurso" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 							<g:message code="Los grupos del cuatrimestre"/></g:link></li>
 						<g:if test="${aprendiz?.grupo}">
-							<li><g:link class="list" action="mostrar" controller="grupoCurso" id="${aprendiz?.grupo.id}" 
+							<li><g:link class="list" action="muestraAprendiz" controller="grupoCurso" id="${aprendiz?.grupo.id}" 
 								params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
 								<g:message code="Mi grupo"/></g:link></li>
 						</g:if>	

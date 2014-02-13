@@ -12,14 +12,20 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link controller="tema" action="index" id="${temaId}" params="['cursoId': cursoId]">
-					<g:message code="Lista de temas del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
-				<li><g:link controller="tema" action="show" id="${temaId}" params="['cursoId': cursoId, 'temaId': temaId]">
-					<g:message code="Tema: ${com.fiuba.Tema.get(temaId)}" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create" params="['cursoId': cursoId, 'temaId': temaId]">
+				<li><g:link class="list" action="mediador" controller="curso" params="['cursoId': params.cursoId]">
+					<g:message code="Pagina principal de mediador"/></g:link></li>			
+				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': params.cursoId]">
+					<g:message code="Tareas mediador" /></g:link></li>	
+				<li><g:link controller="tema" action="index" id="${params.temaId}" params="['cursoId': params.cursoId]">
+					<g:message code="Lista de temas del curso ${com.fiuba.Curso.get(params.cursoId)}" args="[entityName]" /></g:link></li>
+				<li><g:link controller="tema" action="edit" id="${params.temaId}" params="['cursoId': params.cursoId]">
+					<g:message code="Tema: ${com.fiuba.Tema.get(params.temaId)}" args="[entityName]" /></g:link></li>
+				<li><g:link class="create" action="create" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+				<h2>cursoId: ${params.cursoId}</h2>
+		<h2>temaId: ${params.temaId}</h2>
 		<div id="edit-contenido" class="content scaffold-edit" role="main">
 			<h1><g:message code="default.edit.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -37,7 +43,7 @@
 				<g:hiddenField name="version" value="${contenidoInstance?.version}" />
 				<fieldset class="form">
 					<g:render template="form"/>
-					<div> <g:hiddenField name="titulo" value="${contenidoInstance.titulo}"/></div>
+					<div><g:hiddenField name="titulo" value="${contenidoInstance.titulo}"/></div>
 					<div class="fieldcontain ${hasErrors(bean: contenidoInstance, field: 'materiales', 'error')} ">
 						<label for="materiales">
 							<g:message code="contenido.materiales.label" default="Materiales" />
@@ -45,10 +51,11 @@
 						<ul class="one-to-many">
 							<g:each in="${contenidoInstance?.materiales?}" var="m">
 							    <li><g:link controller="materialContenido" action="show" id="${m.id}"
-							   		params="['cursoId': cursoId, 'temaId': temaId, 'contenidoId': contenidoInstance.id]">${m?.encodeAsHTML()}</g:link></li>
+							   		params="['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': contenidoInstance.id]">${m?.encodeAsHTML()}</g:link></li>
 							</g:each>
 							<li class="add">
-								<g:link controller="materialContenido" action="create" params="['cursoId': cursoId, 'temaId': temaId, 'contenidoId': contenidoInstance.id]">
+								<g:link controller="materialContenido" action="create" params="['cursoId': params.cursoId, 
+									'temaId': params.temaId, 'contenidoId': contenidoInstance.id]">
 									${message(code: 'default.add.label', args: [message(code: 'materialContenido.label', default: 'MaterialContenido')])}</g:link>
 						
 							</li>

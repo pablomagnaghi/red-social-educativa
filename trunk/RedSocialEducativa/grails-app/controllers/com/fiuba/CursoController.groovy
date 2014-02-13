@@ -40,7 +40,7 @@ class CursoController {
 		} 
 		
 		if (aprendizService.obtenerPorCurso(usuario.id, cursoId.toLong())) {
-			println "Hola aprendiz ${aprendiz}"
+			println "Hola aprendiz ${usuario}"
 			redirect(action: "aprendiz", params: params)
 			return 
 		} 

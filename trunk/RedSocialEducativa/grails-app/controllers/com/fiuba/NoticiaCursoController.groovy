@@ -66,7 +66,7 @@ class NoticiaCursoController {
 		}
 
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'NoticiaCurso.label', default: 'NoticiaCurso'), noticiaCursoInstance.id])
-		respond noticiaCursoInstance, view:"show", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+		redirect action: "show", params:['id': noticiaCursoInstance.id, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 	}
 
 	def delete(NoticiaCurso noticiaCursoInstance) {

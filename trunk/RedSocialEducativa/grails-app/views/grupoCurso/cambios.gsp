@@ -13,20 +13,23 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" controller="curso" action="menuMediador" params="['cursoId': cursoId]">
+				<li><g:link class="create" controller="curso" action="menuMediador" params="['cursoId': params.cursoId]">
 					<g:message code="Tareas mediador" args="[entityName]" /></g:link></li>
-				<li><g:link class="list" action="menuMediador" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+				<li><g:link class="list" action="menuMed" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 					<g:message code="Lista de grupos" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
-		
+		<h2>Params: ${params}</h2>
+		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+		<h2>Curso Id: ${params.cursoId}</h2>
+		<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
 		<div id="show-grupoCurso" class="content scaffold-show" role="main">
 			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			
-			<g:form action="realizarCambio" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+			<g:form action="realizarCambio" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 				<fieldset class="form">
 				<div>
 					<g:message code="Elegir aprendiz a cambiar de grupo" />
@@ -46,4 +49,3 @@
 		</div>
 	</body>
 </html>
-

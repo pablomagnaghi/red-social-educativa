@@ -13,10 +13,11 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': cursoId]">
-					<g:message code="Tareas mediador" /></g:link></li>
+				<p>DIFERENCIA ENTRE MENU APRENDIZ, MENU ADMINISTRADOR, VISITANTE, MEDIADOR</p>
 			</ul>
 		</div>
+		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+		<h2>Curso Id: ${params.cursoId}</h2>
 		<div>
 			<h1><g:message code="Material: ${material.titulo}" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
