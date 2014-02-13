@@ -11,13 +11,20 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link controller="grupoCurso" action="general" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
-					<g:message code="Lista de grupos del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
-				<li><g:link controller="grupoCurso" action="mostrar" id="${grupoId}" 
-					params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'grupoId': grupoId]">
-					<g:message code="Grupo: ${com.fiuba.GrupoCurso.get(grupoId)}" args="[entityName]" /></g:link></li>
+				<li><g:link class="create" controller="curso" action="aprendiz" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+					<g:message code="Menu aprendiz" args="[entityName]" /></g:link></li>
+				<li><g:link controller="grupoCurso" action="menuAprendiz" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+					<g:message code="Lista de grupos del curso ${com.fiuba.Curso.get(params.cursoId)}" args="[entityName]" /></g:link></li>
+				<li><g:link controller="grupoCurso" action="muestraAprendiz" id="${params.grupoId}" 
+					params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+					<g:message code="Grupo: ${com.fiuba.GrupoCurso.get(params.grupoId)}" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+			<h2>Params: ${params}</h2>
+		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+		<h2>Curso Id: ${params.cursoId}</h2>
+		<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
+		<h2>GRUPO ID: ${params.grupoId}</h2>
 		<div id="create-materialGrupo" class="content scaffold-create" role="main">
 			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -31,15 +38,15 @@
 			</ul>
 			</g:hasErrors>
 			<g:form action="save" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'grupoId': params.grupoId]" >
+				<div><g:hiddenField name="responsable" value="${aprendiz}-${aprendiz?.usuario?.padron}"/></div>
 				<fieldset class="form">
+					<div class="fieldcontain ${hasErrors(bean: materialGrupoInstance, field: 'titulo', 'error')} ">
+						<label for="titulo">
+							<g:message code="materialGrupo.titulo.label" default="Titulo" />
+						</label>
+						<g:textField name="titulo" value="${materialGrupoInstance?.titulo}"/>
+					</div>
 					<g:render template="form"/>
-						<div> <g:hiddenField name="responsable" value="${aprendiz}-${aprendiz?.usuario?.padron}"/></div>
-						<div class="fieldcontain ${hasErrors(bean: materialGrupoInstance, field: 'titulo', 'error')} ">
-							<label for="titulo">
-								<g:message code="materialGrupo.titulo.label" default="Titulo" />
-							</label>
-							<g:textField name="titulo" value="${materialGrupoInstance?.titulo}"/>
-						</div>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />

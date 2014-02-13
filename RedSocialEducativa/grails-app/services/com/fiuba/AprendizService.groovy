@@ -33,6 +33,25 @@ class AprendizService {
 		}
 	}
 	
+	def pertenece(Long aprendizId, Integer numeroGrupo) {
+		def aprendiz = Aprendiz.get(aprendizId)
+		return (aprendiz.grupo.numero == numeroGrupo)
+	}
+	
+	def realizarCambio(Long aprendizId, GrupoCurso grupo) {
+	
+		if (!grupo) {
+			return null
+		}
+		
+		def aprendiz = Aprendiz.get(aprendizId)
+		aprendiz.grupo = grupo
+
+		aprendiz.save flush:true
+	
+		return aprendiz
+	}
+	
 	def guardar(Aprendiz aprendiz) {
 		
 		if (aprendiz.save(flush:true)) {

@@ -13,19 +13,35 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link controller="grupoCurso" action="general" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
-					<g:message code="Lista de grupos del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
-				<li><g:link controller="grupoCurso" action="mostrar" id="${grupoId}" 
-					params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'grupoId': grupoId]">
-					<g:message code="Grupo: ${com.fiuba.GrupoCurso.get(grupoId)}" args="[entityName]" /></g:link>
+				<li><g:link class="create" controller="curso" action="aprendiz" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+					<g:message code="Menu aprendiz" args="[entityName]" /></g:link></li>	
+				<li><g:link controller="grupoCurso" action="menuAprendiz" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+					<g:message code="Lista de grupos del curso ${com.fiuba.Curso.get(params.cursoId)}" args="[entityName]" /></g:link></li>
+				<li><g:link controller="grupoCurso" action="muestraAprendiz" id="${params.grupoId}" 
+					params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+					<g:message code="Grupo: ${com.fiuba.GrupoCurso.get(params.grupoId)}" args="[entityName]" /></g:link>
 			</ul>
 		</div>
+			<h2>Params: ${params}</h2>
+		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+		<h2>Curso Id: ${params.cursoId}</h2>
+		<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
+			<h2>GRUPO ID: ${params.grupoId}</h2>
 		<div id="show-materialGrupo" class="content scaffold-show" role="main">
 			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<ol class="property-list materialGrupo">
+			
+				<g:if test="${materialGrupoInstance?.titulo}">
+				<li class="fieldcontain">
+					<span id="titulo-label" class="property-label"><g:message code="materialGrupo.titulo.label" default="Titulo" /></span>
+					
+						<span class="property-value" aria-labelledby="titulo-label"><g:fieldValue bean="${materialGrupoInstance}" field="titulo"/></span>
+					
+				</li>
+				</g:if>
 			
 				<g:if test="${materialGrupoInstance?.autor}">
 				<li class="fieldcontain">
@@ -74,21 +90,13 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${materialGrupoInstance?.titulo}">
-				<li class="fieldcontain">
-					<span id="titulo-label" class="property-label"><g:message code="materialGrupo.titulo.label" default="Titulo" /></span>
-					
-						<span class="property-value" aria-labelledby="titulo-label"><g:fieldValue bean="${materialGrupoInstance}" field="titulo"/></span>
-					
-				</li>
-				</g:if>
-			
 			</ol>
 			<g:form action="delete" method="DELETE" id="${materialGrupoInstance.id}" 
-				params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'grupoId': grupoId]">
+				params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'grupoId': params.grupoId]">
 				<fieldset class="buttons">
 					<g:link class="edit" action="edit" resource="${materialGrupoInstance}"
-						id="${materialGrupoInstance.id}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'grupoId': grupoId]">
+						id="${materialGrupoInstance.id}" params="['cursoId': params.cursoId, 
+							'cuatrimestreId': params.cuatrimestreId, 'grupoId': params.grupoId]">
 						<g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 				</fieldset>

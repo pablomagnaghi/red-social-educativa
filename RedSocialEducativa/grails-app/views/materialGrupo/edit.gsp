@@ -12,13 +12,20 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link controller="grupoCurso" action="general" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
-					<g:message code="Lista de grupos del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
-				<li><g:link controller="grupoCurso" action="mostrar" id="${grupoId}" 
-					params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'grupoId': grupoId]">
-					<g:message code="Grupo: ${com.fiuba.GrupoCurso.get(grupoId)}" args="[entityName]" /></g:link></li>
+				<li><g:link class="create" controller="curso" action="aprendiz" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+					<g:message code="Menu aprendiz" args="[entityName]" /></g:link></li>	
+				<li><g:link controller="grupoCurso" action="menuAprendiz" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+					<g:message code="Lista de grupos del curso ${com.fiuba.Curso.get(params.cursoId)}" args="[entityName]" /></g:link></li>
+				<li><g:link controller="grupoCurso" action="muestraAprendiz" id="${params.grupoId}" 
+					params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+					<g:message code="Grupo: ${com.fiuba.GrupoCurso.get(params.grupoId)}" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+			<h2>Params: ${params}</h2>
+		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+		<h2>Curso Id: ${params.cursoId}</h2>
+		<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
+			<h2>GRUPO ID: ${params.grupoId}</h2>
 		<div id="edit-materialGrupo" class="content scaffold-edit" role="main">
 			<h1><g:message code="default.edit.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -36,8 +43,8 @@
 				<g:hiddenField name="version" value="${materialGrupoInstance?.version}" />
 				<fieldset class="form">
 					<g:render template="form"/>
-						<div> <g:hiddenField name="titulo" value="${materialGrupoInstance.titulo}"/></div>
-						<div> <g:hiddenField name="responsable" value="${materialGrupoInstance.responsable}"/></div>
+						<div><g:hiddenField name="titulo" value="${materialGrupoInstance.titulo}"/></div>
+						<div><g:hiddenField name="responsable" value="${materialGrupoInstance.responsable}"/></div>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />

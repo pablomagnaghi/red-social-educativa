@@ -6,9 +6,9 @@ import org.springframework.security.access.annotation.Secured
 @Secured('permitAll')
 class PublicacionGeneralController {
 
+	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	def seguridadService
 	def publicacionGeneralService
-	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def nueva() {
 	

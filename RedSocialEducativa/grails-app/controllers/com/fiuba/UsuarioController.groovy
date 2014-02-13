@@ -22,4 +22,9 @@ class UsuarioController {
 	def muestraMenuMed(Usuario usuarioInstance) {
 		respond usuarioInstance
 	}
+	
+	@Secured("hasRole('ROL_APRENDIZ')")
+	def muestraMenuAprendiz(Usuario usuarioInstance) {
+		respond usuarioInstance
+	}
 }

@@ -13,14 +13,20 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link controller="tema" action="index" id="${temaId}" params="['cursoId': cursoId]">
-					<g:message code="Lista de temas del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
-				<li><g:link controller="tema" action="show" id="${temaId}" params="['cursoId': cursoId, 'temaId': temaId]">
-					<g:message code="Tema: ${com.fiuba.Tema.get(temaId)}" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create" params="['cursoId': cursoId, 'temaId': temaId]">
+				<li><g:link class="list" action="mediador" controller="curso" params="['cursoId': params.cursoId]">
+					<g:message code="Pagina principal de mediador"/></g:link></li>			
+				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': params.cursoId]">
+					<g:message code="Tareas mediador" /></g:link></li>	
+				<li><g:link controller="tema" action="index" id="${params.temaId}" params="['cursoId': params.cursoId]">
+					<g:message code="Lista de temas del curso ${com.fiuba.Curso.get(params.cursoId)}" args="[entityName]" /></g:link></li>
+				<li><g:link controller="tema" action="edit" id="${params.temaId}" params="['cursoId': params.cursoId]">
+					<g:message code="Tema: ${com.fiuba.Tema.get(params.temaId)}" args="[entityName]" /></g:link></li>
+				<li><g:link class="create" action="create" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+				<h2>cursoId: ${params.cursoId}</h2>
+		<h2>temaId: ${params.temaId}</h2>
 		<div id="show-contenido" class="content scaffold-show" role="main">
 			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -33,7 +39,7 @@
 					<span id="tema-label" class="property-label"><g:message code="contenido.tema.label" default="Tema" /></span>
 					
 						<span class="property-value" aria-labelledby="tema-label">
-							<g:link controller="tema" action="show" id="${contenidoInstance?.tema?.id}" >
+							<g:link controller="tema" action="show" id="${contenidoInstance?.tema?.id}" params="['cursoId': params.cursoId]">
 							${contenidoInstance?.tema?.encodeAsHTML()}</g:link></span>
 					
 				</li>
@@ -56,17 +62,17 @@
 						<g:each in="${contenidoInstance.materiales}" var="m">
 						<span class="property-value" aria-labelledby="materiales-label">
 							<g:link controller="materialContenido" action="show" id="${m.id}"
-								params="['cursoId': cursoId, 'temaId': temaId, 'contenidoId': contenidoInstance.id]">${m?.encodeAsHTML()}</g:link></span>
+								params="['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': contenidoInstance.id]">${m?.encodeAsHTML()}</g:link></span>
 						</g:each>
 					
 				</li>
 				</g:if>
 			
 			</ol>
-			<g:form action="delete" method="DELETE" id="${contenidoInstance.id}" params="['cursoId': cursoId, 'temaId': temaId]">
+			<g:form action="delete" method="DELETE" id="${contenidoInstance.id}" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
 				<fieldset class="buttons">
 					<g:link class="edit" action="edit" resource="${contenidoInstance}" 
-						id="${contenidoInstance.id}" params="['cursoId': cursoId, 'temaId': temaId]">
+						id="${contenidoInstance.id}" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
 						<g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 				</fieldset>

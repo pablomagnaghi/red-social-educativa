@@ -6,6 +6,7 @@ import org.springframework.security.access.annotation.Secured
 
 class RedController {
 
+	// static allowedMethods = [save: "POST", update(actualizar): "PUT", delete: "DELETE"]
 	def redService
 	def seguridadService
 	def mediadorService
@@ -56,8 +57,6 @@ class RedController {
 
 	@Secured("hasRole('ROL_ADMIN')")
 	def actualizarConfiguracion() {
-		println "params: ${params}"
-
 		Red.instance.properties = params
 
 		if (!redService.guardar(Red.instance)) {

@@ -12,12 +12,18 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
+				<li><g:link class="list" action="mediador" controller="curso" params="['cursoId': params.cursoId]">
+					<g:message code="Pagina principal de mediador"/></g:link></li>		
+				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': params.cursoId]">
+					<g:message code="Tareas mediador" /></g:link></li>
 				<li><g:link class="list" action="index" params="['cursoId': params.cursoId]">
 					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
 				<li><g:link class="create" action="create" params="['cursoId': params.cursoId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+		<h2>Curso Id: ${params.cursoId}</h2>
 		<div id="edit-materialCurso" class="content scaffold-edit" role="main">
 			<h1><g:message code="default.edit.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -34,8 +40,8 @@
 				<g:hiddenField name="version" value="${materialCursoInstance?.version}" />
 				<fieldset class="form">
 					<g:render template="form"/>
-					<div> <g:hiddenField name="titulo" value="${materialCursoInstance.titulo}"/></div>
-					<div> <g:hiddenField name="responsable" value="${materialCursoInstance.responsable}"/></div>
+					<div><g:hiddenField name="titulo" value="${materialCursoInstance.titulo}"/></div>
+					<div><g:hiddenField name="responsable" value="${materialCursoInstance.responsable}"/></div>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />

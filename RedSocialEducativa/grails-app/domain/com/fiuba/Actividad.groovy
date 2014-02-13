@@ -28,6 +28,5 @@ class Actividad {
 	String toString() {
 		"${titulo}"
 	}
-	
 }
 
