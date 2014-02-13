@@ -7,9 +7,9 @@ class MaterialCursoService {
 	
 	def existe(MaterialCurso material, Long cursoId) {
 		
-		def materialCursoExistente = MaterialCurso.findByCursoAndTitulo(Curso.get(cursoId), material.titulo)
+		def materialExistente = MaterialCurso.findByCursoAndTitulo(Curso.get(cursoId), material.titulo)
 	
-		return materialCursoExistente
+		return materialExistente
 	}
 	
 	def guardar(MaterialCurso material) {

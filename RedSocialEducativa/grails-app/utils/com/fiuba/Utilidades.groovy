@@ -25,7 +25,10 @@ class Utilidades {
 	
 	final static VISITANTE = "[VISITANTE]"
 	final static MIEMBRO = "[MIEMBRO]"
+	final static APRENDIZ = "[APRENDIZ]"
+	final static MEDIADOR = "[MEDIADOR]"
 	final static ADMINISTRADOR = "[ADMINISTRADOR]"
+	
 	
 	final static CUAT_AMBOS = "1|2"
 	final static CUAT_UNO = "1"

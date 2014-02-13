@@ -12,14 +12,14 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 						<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="general" params="['cursoId': cursoId, 'temaId': temaId]">
+				<li><g:link class="create" action="general" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
 						<g:message code="Volver a foro Tema" /></g:link></li>	
 				<li><g:link class="create" controller="publicacionTema" action="nueva" 
-						params="['pubInicialId': pubInicialId, 'cursoId': cursoId, 'temaId': temaId]">
+						params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">
 						<g:message code="Publicar respuesta" /></g:link></li>
 				<g:if test="${mediador}">
-					<li><g:link class="create" controller="publicacionTema" action="eliminar" id="${pubInicialId}" 
-						params="['pubInicialId': pubInicialId, 'cursoId': cursoId, 'temaId': temaId]">
+					<li><g:link class="create" controller="publicacionTema" action="eliminar" id="${params.pubInicialId}" 
+						params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">
 						<g:message code="Eliminar tema" /></g:link></li>
 				</g:if>	
 			</ul>
@@ -45,11 +45,9 @@
 					</tr>
 					
 			</thead>
-			<!-- TODO VERRRRRRR POSIBILIDAD DE EDITAR/BORRAR COMENTARIOS HECHOS POR EL APRENDIZ-->
-			
+		
 			<h2>Mediador = ${mediador}</h2>
-			<h2>Aprendiz = ${com.fiuba.Aprendiz.findByUsuarioAndCurso(usuario, com.fiuba.Curso.get(cursoId))?.usuario?.username}</h2>
-			
+			<h2>Aprendiz = ${aprendiz}</h2>
 			<tbody>	
 				<g:each in="${respuestas}">	
 					<tr>
@@ -58,27 +56,26 @@
 							<p>Publicado: ${it.fecha} - ${it.hora}<p>
 						</td>
 						<td>${it.contenido}</td>
-							<g:if test="${mediador || (
-								com.fiuba.Aprendiz.findByUsuarioAndCurso(usuario, com.fiuba.Curso.get(cursoId))?.usuario?.username == it.dni)}">
-								<g:if test="${!it.id.equals(pubInicialId as long)}">								
+							<g:if test="${mediador || (aprendiz?.usuario?.username == it.dni)}">
+								<g:if test="${!it.id.equals(params.pubInicialId as long)}">								
 									<td>
 										<g:link controller="publicacionTema" action="editar" id="${it.id}" 
-											params="['pubInicialId': pubInicialId, 'cursoId': cursoId, 'temaId': temaId]">
+											params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">
 											<g:message code="Editar" /></g:link>
 										-
 										<g:link controller="publicacionTema" action="eliminar" 
-											id="${it.id}" params="['pubInicialId': pubInicialId, 'cursoId': cursoId, 'temaId': temaId]">
+											id="${it.id}" params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">
 											<g:message code="Borrar" /></g:link>
 									</td>	
 								</g:if>
 								<g:else>
 									<td>
 										<g:link controller="publicacionTema" action="editar" id="${it.id}" 
-											params="['pubInicialId': pubInicialId, 'cursoId': cursoId, 'temaId': temaId]">
+											params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">
 											<g:message code="Editar" /></g:link>
 										-
 										<g:link controller="publicacionTema" action="eliminar" 
-											id="${it.id}" params="['pubInicialId': pubInicialId, 'cursoId': cursoId, 'temaId': temaId]">
+											id="${it.id}" params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">
 											<g:message code="Borrar" /></g:link>
 											<p>Al borrar la publicacion inicial, se borran todas sus respuestas</p>
 											<p>Equivale a eliminar tema</p>
@@ -90,7 +87,7 @@
 			</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${respuestasCant ?: 0}" id="${pubInicialId}" params="['cursoId': cursoId, 'temaId': temaId]"/>
+				<g:paginate total="${respuestasCant ?: 0}" id="${pubInicialId}" params="['cursoId': params.cursoId, 'temaId': params.temaId]"/>
 			</div>
 		</div>
 	</body>

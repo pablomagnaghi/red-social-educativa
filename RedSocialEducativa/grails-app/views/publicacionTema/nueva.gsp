@@ -27,7 +27,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="guardar" params="['pubInicialId': pubInicialId, 'cursoId': cursoId, 'temaId': temaId]">
+			<g:form action="guardar" params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>

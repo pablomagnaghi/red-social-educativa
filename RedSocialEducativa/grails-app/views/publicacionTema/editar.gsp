@@ -12,10 +12,10 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" controller="foroTema" action="general" params="['cursoId': cursoId, 'temaId': temaId]">
+				<li><g:link class="create" controller="foroTema" action="general" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
 					<g:message code="Foro Tema" /></g:link></li>
 				<li><g:link class="list" controller="foroTema" action="publicaciones" 
-					id="${publicacionId}" params="['pubInicialId': pubInicialId, 'cursoId': cursoId, 'temaId': temaId]">
+					id="${params.pubInicialId}" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
 					<g:message code="Tema actual" /></g:link></li>
 			</ul>
 		</div>
@@ -32,7 +32,7 @@
 			</ul>
 			</g:hasErrors>
 			<g:form action="actualizar" method="PUT" id="${publicacionTemaInstance.id}" 
-				params="['pubInicialId': pubInicialId, 'cursoId': cursoId, 'temaId': temaId]">
+				params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">
 				<g:hiddenField name="version" value="${publicacionTemaInstance?.version}" />
 				<fieldset class="form">
 					<g:render template="form"/>

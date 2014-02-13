@@ -1,163 +1,102 @@
 package com.fiuba
 
-
-
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
-
-@Transactional(readOnly = true)
-
 import org.springframework.security.access.annotation.Secured
 
-@Secured('permitAll')
 class MaterialTemaController {
 
-	def springSecurityService
+	// static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	
-	private usuarioActual() {
-		return Usuario.get(springSecurityService.principal.id)
-	}
-	
-	def cursoId
-	def temaId
-		
+	def seguridadService
+	def materialTemaService
+
+	@Secured('permitAll')
 	def general() {
-		
-		params.max = 5 // Math.min(max ?: 10, 100)
-		
-		println "foro Tema general CURSOID: ${params.cursoId}"
-		println "foro Tema general TEMAID: ${params.temaId}"
-			
-		cursoId = params.cursoId
-		temaId = params.temaId
-					
-		def tema = Tema.get(temaId)
-		
+
+		params.max = Utilidades.MAX_PARAMS
+
+		def tema = Tema.get(params.temaId)
+
 		[materiales: MaterialTema.findAllByTema(tema, [max: params.max, offset: params.offset]),
-			materialesCant: MaterialTema.findAllByTema(tema).size(),
-			tema: tema, cursoId: cursoId, temaId: temaId,
+			materialesCant: MaterialTema.findAllByTema(tema).size(), tema: tema,
 			contenidos: Contenido.findAllByTema(tema, [max: params.max, offset: params.offset]),
-			contenidosCant: Contenido.findAllByTema(tema).size()]
+			contenidosCant: Contenido.findAllByTema(tema).size(),
+			params: ['cursoId': params.cursoId, 'temaId': params.temaId]]
 	}
 
-	// metodos por defecto
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def show(MaterialTema materialTemaInstance) {
+		respond materialTemaInstance, params: ['cursoId': params.cursoId, 'temaId': params.temaId]
+	}
 
-    def show(MaterialTema materialTemaInstance) {
-		
-		println "material tema show: cursoId: ${params.cursoId}, tema Id. ${params.temaId}"
-		println "material Id: ${params.id}"
-		
-		cursoId = params.cursoId
-		temaId = params.temaId
-		
-        respond materialTemaInstance, model: [cursoId: cursoId, temaId: temaId]
-    }
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def create() {
 
-    def create() {
-		println "create material tema params: ${params}"
-		
-		cursoId = params.cursoId
-		temaId = params.temaId
-		def mediador = Mediador.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
-        respond new MaterialTema(params), params:['cursoId': cursoId], 
-			model:[cursoId: cursoId, temaId: temaId, mediador: mediador]
-    }
+		def mediador = Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(params.cursoId))
+		respond new MaterialTema(params), model:[mediador: mediador], params: ['cursoId': params.cursoId, 'temaId': params.temaId]
+	}
 
-    @Transactional
-    def save(MaterialTema materialTemaInstance) {
-        if (materialTemaInstance == null) {
-            notFound()
-            return
-        }
-
-		cursoId = params.cursoId
-		temaId = params.temaId
-		
-        if (materialTemaInstance.hasErrors()) {
-            respond materialTemaInstance.errors, view:'create', params: ['cursoId': cursoId, 'temaId': temaId],
-				model: [cursoId: cursoId, temaId: temaId]
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def save(MaterialTema materialTemaInstance) {
+		if (materialTemaInstance == null) {
+			notFound()
 			return
-        }
-
-        materialTemaInstance.save flush:true
-
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'materialTemaInstance.label', default: 'MaterialTema'), materialTemaInstance.id])
-                redirect controller:"tema", action:"show", params:['id': temaId, 'cursoId': cursoId, 'temaId': temaId]
-            }
-            '*' { respond materialTemaInstance, [status: CREATED] }
-        }
-    }
-
-    def edit(MaterialTema materialTemaInstance) {
-		println "edit material tema para,s: ${params}"
+		}
 		
-		cursoId = params.cursoId
-		temaId = params.temaId
-		respond materialTemaInstance, model: [cursoId: cursoId, temaId: temaId]
-    }
+		if (materialTemaService.existe(materialTemaInstance, params.temaId.toLong())) {
+			flash.message = "Ya existe el material ${materialTemaInstance.titulo} del tema ${Tema.get(params.temaId)}"
+			redirect action: "create", params: ['cursoId': params.cursoId, 'temaId': params.temaId]
+			return
+		}
 
-    @Transactional
-    def update(MaterialTema materialTemaInstance) {
+		if (!materialTemaService.guardar(materialTemaInstance)) {
+			render view:'create', model: [materialTemaInstance: materialTemaInstance],
+			params: ['cursoId': params.cursoId, 'temaId': params.temaId]
+			return
+		}
+
+		flash.message = message(code: 'default.created.message', args: [message(code: 'materialTemaInstance.label', default: 'MaterialTema'), materialTemaInstance.id])
+		redirect controller:"tema", action:"edit", params:['id': params.temaId, 'cursoId': params.cursoId]
+	}
+
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def edit(MaterialTema materialTemaInstance) {
+		respond materialTemaInstance, params: ['cursoId': params.cursoId, 'temaId': params.temaId]
+	}
+
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def update(MaterialTema materialTemaInstance) {
+		if (materialTemaInstance == null) {
+			notFound()
+			return
+		}
 		
-		println "update material tema para,s: ${params}"
-		
-		cursoId = params.cursoId
-		temaId = params.temaId
-		
-        if (materialTemaInstance == null) {
-            notFound()
-            return
-        }
+		if (!materialTemaService.guardar(materialTemaInstance)) {
+			render view:'edit', model: [materialTemaInstance: materialTemaInstance],
+			params: ['cursoId': params.cursoId, 'temaId': params.temaId]
+			return
+		}
 
-        if (materialTemaInstance.hasErrors()) {
-            respond materialTemaInstance.errors, view:'edit', params:['cursoId': cursoId, 'temaId': temaId], 
-				model: [cursoId: cursoId, temaId: temaId]
-            return
-        }
+		flash.message = message(code: 'default.updated.message', args: [message(code: 'MaterialTema.label', default: 'MaterialTema'), materialTemaInstance.id])
+		redirect action:"show", params:['id': materialTemaInstance.id, 'cursoId': params.cursoId, 'temaId': params.temaId]
+	}
 
-        materialTemaInstance.save flush:true
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def delete(MaterialTema materialTemaInstance) {
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'MaterialTema.label', default: 'MaterialTema'), materialTemaInstance.id])
-                redirect action:"show", params:['id': materialTemaInstance.id, 'cursoId': cursoId, 'temaId': temaId]
-            }
-            '*'{ respond materialTemaInstance, [status: OK] }
-        }
-    }
+		if (materialTemaInstance == null) {
+			notFound()
+			return
+		}
 
-    @Transactional
-    def delete(MaterialTema materialTemaInstance) {
+		materialTemaService.eliminar(materialTemaInstance)
 
-        if (materialTemaInstance == null) {
-            notFound()
-            return
-        }
-		
-		cursoId = params.cursoId
-		temaId = params.temaId
+		flash.message = message(code: 'default.deleted.message', args: [message(code: 'MaterialTema.label', default: 'MaterialTema'), materialTemaInstance.id])
+		redirect controller:"tema", action:"edit", params:['id': params.temaId, 'cursoId': params.cursoId], method:"GET"
+	}
 
-        materialTemaInstance.delete flush:true
-
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'MaterialTema.label', default: 'MaterialTema'), materialTemaInstance.id])
-                redirect controller:"tema", action:"show", params:['id': temaId], method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
-
-    protected void notFound() {
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'materialTemaInstance.label', default: 'MaterialTema'), params.id])
-                redirect controller: "tema", action:"show", params:['id': temaId], method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
+	protected void notFound() {
+		flash.message = message(code: 'default.not.found.message', args: [message(code: 'materialTemaInstance.label', default: 'MaterialTema'), params.id])
+		redirect controller:"tema", action:"edit", params:['id': params.temaId, 'cursoId': params.cursoId], method:"GET"
+	}
 }

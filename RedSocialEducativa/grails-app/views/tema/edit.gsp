@@ -38,50 +38,46 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="update" method="PUT" id="${temaInstance.id}" params="['cursoId': params.cursoId]">
-				<g:hiddenField name="version" value="${temaInstance?.version}" />
-				<fieldset class="form">
-					<g:render template="form"/>
-						<div>
-							<g:hiddenField name="titulo" value="${temaInstance.titulo}" />
-						</div>
-						<div class="fieldcontain ${hasErrors(bean: temaInstance, field: 'contenidos', 'error')} ">
-							<label for="contenidos">
-								<g:message code="tema.contenidos.label" default="Contenidos" />
-							</label>
-	
-							<ul class="one-to-many">
-								<g:each in="${temaInstance?.contenidos?}" var="c">
-	    							<li><g:link controller="contenido" action="show" id="${c.id}"
-	    								params="['cursoId': params.cursoId, 'temaId': temaInstance.id]">${c?.encodeAsHTML()}</g:link></li>
-								</g:each>
-								<li class="add">
-									<g:link controller="contenido" action="create" params="['cursoId': params.cursoId, 'temaId': temaInstance.id]">
-										${message(code: 'default.add.label', args: [message(code: 'contenido.label', default: 'Contenido')])}</g:link>
-								</li>
-							</ul>
-						</div>
-						<div class="fieldcontain ${hasErrors(bean: temaInstance, field: 'materiales', 'error')} ">
-							<label for="materiales">
-								<g:message code="tema.materiales.label" default="Materiales" />
-								
-							</label>
-							<ul class="one-to-many">
-								<g:each in="${temaInstance?.materiales?}" var="m">
-								    <li><g:link controller="materialTema" action="show" id="${m.id}"
-								    	params="['cursoId': params.cursoId, 'temaId': temaInstance.id]">${m?.encodeAsHTML()}</g:link></li>
-								</g:each>
-								<li class="add">
-									<g:link controller="materialTema" action="create" params="['cursoId': params.cursoId, 'temaId': temaInstance?.id]">
-										${message(code: 'default.add.label', args: [message(code: 'materialTema.label', default: 'MaterialTema')])}</g:link>
-								</li>
-							</ul>
-						</div>
-				</fieldset>
-				<fieldset class="buttons">
-					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-				</fieldset>
-			</g:form>
+		<div
+			class="fieldcontain ${hasErrors(bean: temaInstance, field: 'contenidos', 'error')} ">
+			<label for="contenidos"> <g:message
+					code="tema.contenidos.label" default="Contenidos" />
+			</label>
+
+			<ul class="one-to-many">
+				<g:each in="${temaInstance?.contenidos?}" var="c">
+					<li><g:link controller="contenido" action="show" id="${c.id}"
+							params="['cursoId': params.cursoId, 'temaId': temaInstance.id]">
+							${c?.encodeAsHTML()}
+						</g:link></li>
+				</g:each>
+				<li class="add"><g:link controller="contenido" action="create"
+						params="['cursoId': params.cursoId, 'temaId': temaInstance.id]">
+						${message(code: 'default.add.label', args: [message(code: 'contenido.label', default: 'Contenido')])}
+					</g:link></li>
+			</ul>
 		</div>
+		<div
+			class="fieldcontain ${hasErrors(bean: temaInstance, field: 'materiales', 'error')} ">
+			<label for="materiales"> <g:message
+					code="tema.materiales.label" default="Materiales" />
+
+			</label>
+			<ul class="one-to-many">
+				<g:each in="${temaInstance?.materiales?}" var="m">
+					<li><g:link controller="materialTema" action="show"
+							id="${m.id}"
+							params="['cursoId': params.cursoId, 'temaId': temaInstance.id]">
+							${m?.encodeAsHTML()}
+						</g:link></li>
+				</g:each>
+				<li class="add"><g:link controller="materialTema"
+						action="create"
+						params="['cursoId': params.cursoId, 'temaId': temaInstance?.id]">
+						${message(code: 'default.add.label', args: [message(code: 'materialTema.label', default: 'MaterialTema')])}
+					</g:link></li>
+			</ul>
+		</div>
+	</div>
 	</body>
 </html>

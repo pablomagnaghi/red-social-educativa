@@ -12,9 +12,9 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" controller="tema" action="general" id="${temaId}" params="['cursoId': cursoId]">
+				<li><g:link class="create" controller="tema" action="general" id="${params.temaId}" params="['cursoId': params.cursoId]">
 					<g:message code="Tema ${tema}" /></g:link></li>	
-				<li><g:link class="create" controller="publicacionTema" action="nueva" params="['cursoId': cursoId, 'temaId': temaId]">
+				<li><g:link class="create" controller="publicacionTema" action="nueva" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
 					<g:message code="Nueva publicacion" /></g:link></li>
 			</ul>
 		</div>
@@ -25,7 +25,7 @@
 		</div>	
 		<div>
 			<h2>Bienvenido al Foro: ${foro}</h2>
-			<p>Foro del tema ${tema} del Curso: ${com.fiuba.Curso.get(cursoId)}</p>
+			<p>Foro del tema ${tema} del Curso: ${com.fiuba.Curso.get(params.cursoId)}</p>
 			<br>
 			<table>
 			<thead>
@@ -40,7 +40,7 @@
 				<g:each in="${publicaciones}" >
 					<tr>
 						<td><g:link action="publicaciones" id="${it.id}" 
-							params="['cursoId': cursoId, 'temaId': temaId]">${it.titulo}</g:link></td>
+							params="['cursoId': params.cursoId, 'temaId': params.temaId]">${it.titulo}</g:link></td>
 						<td>${it.responsable}</td>
 						<td>${it.respuestas?.size()}</td>
 						<td>
@@ -60,7 +60,7 @@
 			</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${publicacionesCant ?: 0}" params="['cursoId': cursoId, 'temaId': temaId]"/>
+				<g:paginate total="${publicacionesCant ?: 0}" params="['cursoId': params.cursoId, 'temaId': params.temaId]"/>
 			</div>
 		</div>
 	</body>

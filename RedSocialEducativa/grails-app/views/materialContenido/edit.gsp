@@ -12,16 +12,24 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link controller="tema" action="index" id="${temaId}" params="['cursoId': cursoId]">
+				<li><g:link class="list" action="mediador" controller="curso" params="['cursoId': params.cursoId]">
+					<g:message code="Pagina principal de mediador"/></g:link></li>			
+				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': params.cursoId]">
+					<g:message code="Tareas mediador" /></g:link></li>		
+				<li><g:link controller="tema" action="index" id="${params.temaId}" params="['cursoId': params.cursoId]">
 					<g:message code="Lista de temas del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
-				<li><g:link controller="tema" action="show" id="${temaId}" params="['cursoId': cursoId, 'temaId': temaId]">
-					<g:message code="Tema: ${com.fiuba.Tema.get(temaId)}" args="[entityName]" /></g:link></li>
-				<li><g:link controller="contenido" action="show" id="${contenidoId}" params="['cursoId': cursoId, 'temaId': temaId]">
-					<g:message code="Tema: ${com.fiuba.Tema.get(temaId)}" args="[entityName]" /></g:link></li>	
-				<li><g:link class="create" action="create" params="['cursoId': cursoId, 'temaId': temaId, 'contenidoId': contenidoId]">
+				<li><g:link controller="tema" action="edit" id="${params.temaId}" params="['cursoId': params.cursoId]">
+					<g:message code="Tema: ${com.fiuba.Tema.get(params.temaId)}" args="[entityName]" /></g:link></li>
+				<li><g:link controller="contenido" action="show" id="${params.contenidoId}" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
+					<g:message code="Contenido: ${com.fiuba.Contenido.get(params.contenidoId)}" args="[entityName]" /></g:link></li>		
+				<li><g:link class="create" action="create" params="['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': params.contenidoId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+		<h2>Curso Id: ${params.cursoId}</h2>
+		<h2>Tema: ${params.temaId}</h2>
+		<h2>Contenido: ${params.contenidoId}</h2>
 		<div id="edit-materialContenido" class="content scaffold-edit" role="main">
 			<h1><g:message code="default.edit.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -35,12 +43,12 @@
 			</ul>
 			</g:hasErrors>
 			<g:form action="update" method="PUT" id="${materialContenidoInstance.id}" 
-				params="['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': contenidoId]" >
+				params="['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': params.contenidoId]" >
 				<g:hiddenField name="version" value="${materialContenidoInstance?.version}" />
 				<fieldset class="form">
 					<g:render template="form"/>
-						<div> <g:hiddenField name="titulo" value="${materialContenidoInstance.titulo}"/></div>
-						<div> <g:hiddenField name="responsable" value="${materialContenidoInstance.responsable}"/></div>
+						<div><g:hiddenField name="titulo" value="${materialContenidoInstance.titulo}"/></div>
+						<div><g:hiddenField name="responsable" value="${materialContenidoInstance.responsable}"/></div>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />

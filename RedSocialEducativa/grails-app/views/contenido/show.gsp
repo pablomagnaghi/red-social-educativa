@@ -17,7 +17,7 @@
 					<g:message code="Pagina principal de mediador"/></g:link></li>			
 				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': params.cursoId]">
 					<g:message code="Tareas mediador" /></g:link></li>	
-				<li><g:link controller="tema" action="index" id="${params.temaId}" params="['cursoId': params.cursoId]">
+				<li><g:link controller="tema" action="index" params="['cursoId': params.cursoId]">
 					<g:message code="Lista de temas del curso ${com.fiuba.Curso.get(params.cursoId)}" args="[entityName]" /></g:link></li>
 				<li><g:link controller="tema" action="edit" id="${params.temaId}" params="['cursoId': params.cursoId]">
 					<g:message code="Tema: ${com.fiuba.Tema.get(params.temaId)}" args="[entityName]" /></g:link></li>

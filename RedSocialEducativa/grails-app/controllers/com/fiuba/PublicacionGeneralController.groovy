@@ -30,8 +30,7 @@ class PublicacionGeneralController {
 					params: ['pubInicialId': params.pubInicialId]
 				return
 			}
-			flash.message = message(code: 'default.created.message', args: [message(code: 'publicacionGeneralInstance.label',
-				default: 'PublicacionGeneral'), publicacionGeneralInstance.id])
+			flash.message = message(code: 'default.created.message', args: [message(code: 'publicacionGeneralInstance.label', default: 'PublicacionGeneral'), publicacionGeneralInstance.id])
 			redirect controller: "foroGeneral", action: "publicaciones", params:['id': params.pubInicialId]
 			return
 		}
