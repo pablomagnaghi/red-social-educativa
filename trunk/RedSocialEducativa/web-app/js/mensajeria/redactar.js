@@ -1,3 +1,5 @@
+var sendArr = [];
+
 function split( val ) {
 	return val.split( /,\s*/ );
 }
@@ -74,6 +76,14 @@ function redactar_ready(){
 		 
 	});
 	prepararArbol()
+	var input = $('#s2id_autogen1');
+	input.on('keydown', function(event) {
+		var key = event.keyCode || event.charCode;
+
+		if( key == 8 || key == 46 ){
+			removeLastLi('select2-choices')
+		}
+	});
 }
 
 function formatResult(movie) {
@@ -164,5 +174,36 @@ function traerDatosCurso(id){
 			$("#" + id).attr('src', '../images/tree_minus.gif');
 		}
 	})
+}
+
+function agregarCurso(nombreCurso, idCurso){
+	
+}
+
+function agregarGrupo(idGrupo, nombreGrupo, nombreCurso, idCurso){
+	
+}
+
+function removeMediadorLi(id){
+	$("#mediador"+id).remove()
+	sendArr.pop("Mediador-"+id)
+}
+
+function removeLastLi(className){
+	$("."+className+" li:last").prev("li").remove()
+}
+
+function agregarMediador(chckboxId, mediadorId, mediadorNombres, mediadorApellido, mediadorEmail){
+	if ($("#mediador"+mediadorId).length==0 && $('#'+chckboxId+mediadorId).is(':checked')){
+		$(".select2-choices").each(function(){
+			$(this).prepend("<li class='select2-search-choice generado' id='mediador"+mediadorId+"'>" +
+					"<div>"+mediadorNombres+" "+ mediadorApellido+" &lt;"+mediadorEmail+"&gt;</div>    " +
+					"<a tabindex='-1' class='select2-search-choice-close removeLink' onclick='removeMediadorLi(\""+mediadorId+"\")' href='#'></a></li>")
+		});
+		sendArr.push("Mediador-"+mediadorId)
+	} else {
+		$("#mediador"+mediadorId).remove();
+		sendArr.pop("Mediador-"+mediadorId)
+	}
 }
 
