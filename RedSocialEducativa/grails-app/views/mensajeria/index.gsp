@@ -36,8 +36,8 @@
 		<div class="inbox-checkbox-triggered">
 
 			<div class="btn-group">
-			<a class="btn btn-default" data-original-title="Move to folder" data-placement="bottom" title="" rel="tooltip" href="javascript:void(0);"><strong><i class="glyphicon glyphicon-arrow-left"></i></strong></a>
-			<a class="deletebutton btn btn-default" data-original-title="Delete" data-placement="bottom" title="" rel="tooltip" href="javascript:void(0);"><strong><i class="fa fa-trash-o fa-lg"></i></strong></a>
+			<a class="btn btn-default"  data-placement="bottom" title="" rel="tooltip" href="javascript:void(0);" onclick="volver()"><strong><i class="glyphicon glyphicon-arrow-left"></i></strong></a>
+			<a class="deletebutton btn btn-default" data-placement="bottom" title="" rel="tooltip" href="javascript:void(0);" onclick="borrarConversacion()"><strong><i class="fa fa-trash-o fa-lg"></i></strong></a>
 			</div>
 
 		</div>

@@ -83,6 +83,19 @@ class MensajeriaController {
 		def conversaciones = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, nombreFormateado))
 		render(template: "panelMensajeria", model: [conversaciones : conversaciones, etiquetasCarpetas:  getCarpetas(usuario), carpetaSeleccionada : nombreFormateado])
 	}
+	
+	def eliminarConversacion(){
+		def usuario = this.usuarioActual()
+		if (!usuario){
+			redirect (controller:"red", action:"principal")
+		}
+		def carpeta = Carpeta.findByNombreAndUsuario("Eliminados", usuario)
+		def conversacion = Conversacion.findById(params.conversacion)
+		conversacion.padre = carpeta;
+		conversacion.save(flush: true)
+		def conversaciones = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, "Eliminados"))
+		render(template: "panelMensajeria", model: [conversaciones : conversaciones, etiquetasCarpetas:  getCarpetas(usuario), carpetaSeleccionada : "Eliminados"])
+	}
 
 	private getCarpetas(Usuario usuario){
 		def carpetas = Carpeta.findAllByUsuario(usuario, [sort:"id", order:"asc"]);
