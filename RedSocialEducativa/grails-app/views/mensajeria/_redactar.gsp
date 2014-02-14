@@ -84,7 +84,7 @@
                         <ul>
             	<g:each in="${cursosAprendiz}" var="cursoAprendiz">
 	            		<li style="display:none">
-	                	<span class="badge badge-success"><i class="icon-minus-sign"></i> ${cursoAprendiz.nombre }</span> <input type="checkbox" onchange="agregarCurso('${cursoAprendiz.nombre }', '${cursoAprendiz.id }')"> 
+	                	<span class="badge badge-success"><i class="icon-minus-sign"></i> ${cursoAprendiz.nombre }</span> <input type="checkbox" id="checkboxCA${cursoAprendiz.id }" onchange="agregarCurso('checkboxCA', '${cursoAprendiz.nombre }', '${cursoAprendiz.id }')"> 
 	                    <ul>
 	                    	<g:if test="${!datosCursosAprendiz.get(cursoAprendiz.id +"-mediadoresA").empty}">
 		                        <li style="display:none">
@@ -104,7 +104,7 @@
 									<g:each in="${datosCursosAprendiz.get(cursoAprendiz.id +"-gruposA")}" var="grupo">
 			                        	<ul>
 					                        <li>
-						                        ${grupo.nombre} <input type="checkbox" onchange="agregarGrupo('${grupo.id }', '${grupo.nombre }', '${cursoAprendiz.nombre}','${cursoAprendiz.id}')">
+						                        ${grupo.nombre} <input type="checkbox" id="checkBoxGA${grupo.id }" onchange="agregarGrupo('checkBoxGA', '${grupo.id }', '${grupo.nombre }', '${cursoAprendiz.nombre}','${cursoAprendiz.id}')">
 					                        </li>
 					                    </ul>
 			                        </g:each>
@@ -120,7 +120,7 @@
             <ul>
             	<g:each in="${cursosMediador}" var="cursoMediador">
 	            		<li style="display:none">
-	                	<span class="badge badge-success"><i class="icon-minus-sign"></i> ${cursoMediador.nombre }</span>  <input type="checkbox" onchange="agregarCurso('${cursoMediador.nombre }', '${cursoMediador.id }')">
+	                	<span class="badge badge-success"><i class="icon-minus-sign"></i> ${cursoMediador.nombre }</span>  <input type="checkbox" id="checkboxCM${cursoMediador.id}" onchange="agregarCurso('checkboxCM', '${cursoMediador.nombre }', '${cursoMediador.id }')">
 	                    <ul>
 	                    	<g:if test="${!datosCursosMediador.get(cursoMediador.id +"-mediadoresM").empty}">
 		                        <li style="display:none">
@@ -140,7 +140,7 @@
 									<g:each in="${datosCursosMediador.get(cursoMediador.id +"-gruposM")}" var="grupo">
 			                        	<ul>
 					                        <li style="display:none">
-						                        ${grupo.nombre} <input type="checkbox" onchange="agregarGrupo('${grupo.id }', '${grupo.nombre }', '${cursoMediador.nombre}','${cursoMediador.id}')">
+						                        ${grupo.nombre} <input type="checkbox" id="checkBoxGM${grupo.id }" onchange="agregarGrupo('checkBoxGM', '${grupo.id }', '${grupo.nombre }', '${cursoMediador.nombre}','${cursoMediador.id}')">
 					                        </li>
 					                    </ul>
 			                        </g:each>
