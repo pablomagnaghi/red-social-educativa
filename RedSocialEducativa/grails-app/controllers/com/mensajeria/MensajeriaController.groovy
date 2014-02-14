@@ -229,8 +229,14 @@ class MensajeriaController {
 	}
 	
 	def mensaje(){
+		def responder
 		def mensaje = Mensaje.findById(params.id)
-		render (template:"mensaje", model: [mensaje : mensaje])
+		if (params.responder == 'true'){
+			responder = true
+		} else {
+			responder = false
+		}
+		render (template:"mensaje", model: [mensaje : mensaje, responder: responder])
 	}
 	
 	def mensajeBorradores(){
@@ -241,8 +247,13 @@ class MensajeriaController {
 	
 	def conversacion(){
 		def conversacion = Conversacion.findById(params.id)
+		def carpeta = conversacion.padre
+		def responder = true
+		if (carpeta.nombre.equals("Eliminados")){
+			responder = false
+		}
 		def mensajes = conversacion.mensajes
-		render (template:"conversacion", model: [mensajes : mensajes, conversacionId : params.id, carpeta : conversacion.padre])
+		render (template:"conversacion", model: [mensajes : mensajes, conversacionId : params.id, carpeta : conversacion.padre, responder: responder])
 	}
 
 	def conversacionAPdf= {

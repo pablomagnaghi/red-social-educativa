@@ -6,10 +6,10 @@
 			<tbody>
 				<g:each in="${mensajes}" var="mensaje">
 					<g:if test="${carpeta.nombre != "Borradores" }">
-						<tr onclick="mostrarMensajeEnConversacion('${mensaje.id}')" height="15px">
+						<tr onclick="mostrarMensajeEnConversacion('${mensaje.id}', ${responder })" height="15px">
 					</g:if>
 					<g:else>
-						<tr onclick="mostrarMensajeBorradores('${mensaje.id}')" height="15px">
+						<tr onclick="mostrarMensajeBorradores('${mensaje.id}', ${responder })" height="15px">
 					</g:else>
 						<td class='inbox-data-from hidden-xs hidden-sm'>
 							<div>
@@ -30,7 +30,7 @@
 							<div>22.30</div>
 						</td>
 					</tr>
-					<tr>
+					<tr style="cursor: default">
 						<td id="conversacion-${conversacionId}" colspan="3"></td>
 					</tr>
 				</g:each>
