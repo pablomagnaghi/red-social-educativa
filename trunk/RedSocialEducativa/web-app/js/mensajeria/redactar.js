@@ -81,7 +81,9 @@ function redactar_ready(){
 		var key = event.keyCode || event.charCode;
 
 		if( key == 8 || key == 46 ){
-			removeLastLi('select2-choices')
+			if ($(this).val()==''){
+				removeLastLi('select2-choices')
+			}
 		}
 	});
 }
@@ -176,17 +178,47 @@ function traerDatosCurso(id){
 	})
 }
 
-function agregarCurso(nombreCurso, idCurso){
-	
+function agregarCurso(encablezado, nombreCurso, idCurso){
+	if ($("#curso"+idCurso).length==0 && $('#'+encabezado+idCurso).is(':checked')){
+		$(".select2-choices").each(function(){
+			$(this).prepend("<li class='select2-search-choice generado' id='curso"+idCurso+"'>" +
+					"<div>Curso: "+nombreCurso+"</div>    " +
+					"<a tabindex='-1' class='select2-search-choice-close removeLink' onclick='removeCursoLi(\""+idCurso+"\")' href='#'></a></li>")
+		});
+		sendArr.push("Curso-" + idCurso)
+	} else {
+		$("#curso"+ idCurso).remove()
+		sendArr.pop("Curso-" + idCurso)
+	}
 }
 
-function agregarGrupo(idGrupo, nombreGrupo, nombreCurso, idCurso){
-	
+function agregarGrupo(encabezado, idGrupo, nombreGrupo, nombreCurso, idCurso){
+	if ($("#grupo"+idGrupo).length==0 && $('#'+encabezado+idGrupo).is(':checked')){
+		$(".select2-choices").each(function(){
+			$(this).prepend("<li class='select2-search-choice generado' id='grupo"+idGrupo+"-"+idCurso+"'>" +
+					"<div>"+nombreCurso+", "+ nombreCurso+"</div>    " +
+					"<a tabindex='-1' class='select2-search-choice-close removeLink' onclick='removeGrupoLi(\""+idGrupo+"\", \""+idCurso+"\")' href='#'></a></li>")
+		});
+		sendArr.push("Grupo-" + idGrupo + "_Curso-" + idCurso)
+	} else {
+		$("#grupo"+ idGrupo +"-"+ idCurso).remove()
+		sendArr.pop("Grupo-" + idGrupo + "_Curso-" + idCurso)
+	}
+}
+
+function removeCursoLi(idCurso){
+	$("#curso"+ idCurso).remove()
+	sendArr.pop("Curso-" + idCurso)
 }
 
 function removeMediadorLi(id){
 	$("#mediador"+id).remove()
 	sendArr.pop("Mediador-"+id)
+}
+
+function removeGrupoLi(idGrupo, idCurso){
+	$("#grupo"+ idGrupo +"-"+ idCurso).remove()
+	sendArr.pop("Grupo-" + idGrupo + "_Curso-" + idCurso)
 }
 
 function removeLastLi(className){
