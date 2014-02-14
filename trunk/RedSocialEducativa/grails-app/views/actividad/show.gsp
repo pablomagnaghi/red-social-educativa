@@ -31,12 +31,44 @@
 			</g:if>
 			<ol class="property-list actividad">
 			
+					
+				<g:if test="${actividadInstance?.titulo}">
+				<li class="fieldcontain">
+					<span id="titulo-label" class="property-label"><g:message code="actividad.titulo.label" default="Titulo" /></span>
+					
+						<span class="property-value" aria-labelledby="titulo-label"><g:fieldValue bean="${actividadInstance}" field="titulo"/></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${actividadInstance?.categoria}">
 				<li class="fieldcontain">
 					<span id="categoria-label" class="property-label"><g:message code="actividad.categoria.label" default="Categoria" /></span>
 					
 						<span class="property-value" aria-labelledby="categoria-label">
 							${actividadInstance?.categoria?.encodeAsHTML()}</span>
+					
+				</li>
+				</g:if>
+			
+				
+				<g:if test="${actividadInstance?.objetivo}">
+				<li class="fieldcontain">
+					<span id="objetivo-label" class="property-label"><g:message code="actividad.objetivo.label" default="Objetivo" /></span>
+					
+						<span class="property-value" aria-labelledby="objetivo-label"><g:fieldValue bean="${actividadInstance}" field="objetivo"/></span>
+					
+				</li>
+				</g:if>
+			
+			
+				<g:if test="${actividadInstance?.fechaFinalizacion}">
+				<li class="fieldcontain">
+					<span id="fechaFinalizacion-label" class="property-label"><g:message code="actividad.fechaFinalizacion.label" 
+						default="Fecha Finalizacion" /></span>
+						
+						<span class="property-value" aria-labelledby="fechaFinalizacion-label">
+							<g:fieldValue bean="${actividadInstance}" field="fechaFinalizacion"/></span>
 					
 				</li>
 				</g:if>
@@ -51,16 +83,6 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${actividadInstance?.fechaFinalizacion}">
-				<li class="fieldcontain">
-					<span id="fechaFinalizacion-label" class="property-label"><g:message code="actividad.fechaFinalizacion.label" 
-						default="Fecha Finalizacion" /></span>
-						
-						<span class="property-value" aria-labelledby="fechaFinalizacion-label">
-							<g:fieldValue bean="${actividadInstance}" field="fechaFinalizacion"/></span>
-					
-				</li>
-				</g:if>
 			
 				<g:if test="${actividadInstance?.grupal}">
 				<li class="fieldcontain">
@@ -71,11 +93,20 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${actividadInstance?.visibilidad}">
+				<li class="fieldcontain">
+					<span id="visibilidad-label" class="property-label"><g:message code="actividad.visibilidad.label" default="Visibilidad" /></span>
+					
+						<span class="property-value" aria-labelledby="visibilidad-label"><g:formatBoolean boolean="${actividadInstance?.visibilidad}" /></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${actividadInstance?.grupos}">
 				<li class="fieldcontain">
 					<span id="grupos-label" class="property-label"><g:message code="actividad.grupos.label" default="Grupos" /></span>
 						<span class="property-value" aria-labelledby="grupos-label">
-							<g:link controller="grupoActividad" action="menuMediador" 
+							<g:link controller="grupoActividad" action="menuMed" 
 							params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadInstance.id]">Ver grupos</g:link></span>
 					
 				</li>
@@ -102,33 +133,10 @@
 						</g:each>
 				</li>
 				</g:if>
-				
-				<g:if test="${actividadInstance?.objetivo}">
-				<li class="fieldcontain">
-					<span id="objetivo-label" class="property-label"><g:message code="actividad.objetivo.label" default="Objetivo" /></span>
-					
-						<span class="property-value" aria-labelledby="objetivo-label"><g:fieldValue bean="${actividadInstance}" field="objetivo"/></span>
-					
-				</li>
-				</g:if>
 			
-				<g:if test="${actividadInstance?.titulo}">
-				<li class="fieldcontain">
-					<span id="titulo-label" class="property-label"><g:message code="actividad.titulo.label" default="Titulo" /></span>
-					
-						<span class="property-value" aria-labelledby="titulo-label"><g:fieldValue bean="${actividadInstance}" field="titulo"/></span>
-					
-				</li>
-				</g:if>
+		
 			
-				<g:if test="${actividadInstance?.visibilidad}">
-				<li class="fieldcontain">
-					<span id="visibilidad-label" class="property-label"><g:message code="actividad.visibilidad.label" default="Visibilidad" /></span>
-					
-						<span class="property-value" aria-labelledby="visibilidad-label"><g:formatBoolean boolean="${actividadInstance?.visibilidad}" /></span>
-					
-				</li>
-				</g:if>
+			
 			
 			</ol>
 			<g:form action="delete" method="DELETE" id="${actividadInstance.id}" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">

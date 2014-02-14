@@ -34,6 +34,7 @@ class AprendizService {
 		}
 	}
 	
+	// Obtener el grupo en el que participa el aprendiz en esa actividad
 	def obtenerGrupoPorActividad(Usuario usuario, Long cuatrimestreId, Long actividadId) {
 
 		Long aprendizId = Aprendiz.findByUsuarioAndCuatrimestre(usuarioActual(), Cuatrimestre.get(cuatrimestreId))?.id

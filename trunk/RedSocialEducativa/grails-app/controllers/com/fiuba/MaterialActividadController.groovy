@@ -52,7 +52,8 @@ class MaterialActividadController {
 		}
 
 		if (!materialActividadService.guardar(materialActividadInstance)) {
-			render view:'create', model: [materialActividadInstance: materialActividadInstance],
+			def mediador = Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(params.cursoId))
+			render view:'create', model: [materialActividadInstance: materialActividadInstance, mediador: mediador],
 			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 			return
 		}

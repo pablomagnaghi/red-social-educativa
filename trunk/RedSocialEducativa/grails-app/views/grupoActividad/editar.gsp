@@ -18,6 +18,11 @@
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+		<h2>Params: ${params}</h2>
+		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+		<h2>Curso Id: ${params.cursoId}</h2>
+		<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
+		<h2>Actividad Id: ${params.actividadId}</h2>
 		<div id="edit-grupoActividad" class="content scaffold-edit" role="main">
 			<h1><g:message code="default.edit.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -34,7 +39,7 @@
 				params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]" >
 				<g:hiddenField name="version" value="${grupoActividadInstance?.version}" />
 				<div><g:hiddenField name="numero" type="number" value="${grupoActividadInstance.numero}"/></div>
-				<div><g:hiddenField name="actividad.id" value="${actividadId}"/></div>
+				<div><g:hiddenField name="actividad.id" value="${params.actividadId}"/></div>
 				<div class="fieldcontain ${hasErrors(bean: grupoActividadInstance, field: 'nombre', 'error')} ">
 					<label for="nombre">
 						<g:message code="grupoActividad.nombre.label" default="Nombre" />

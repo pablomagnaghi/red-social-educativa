@@ -43,7 +43,8 @@ class MaterialGrupoController {
 		}
 		
 		if (!materialGrupoService.guardar(materialGrupoInstance)) {
-			render view:'create', model: [materialGrupoInstance: materialGrupoInstance],
+			def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
+			render view:'create', model: [materialGrupoInstance: materialGrupoInstance, aprendiz: aprendiz],
 				params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'grupoId': params.grupoId]
 			return
 		}

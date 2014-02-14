@@ -39,6 +39,13 @@ class TemaActividadController {
 			notFound()
 			return
 		}
+
+		if (temaActividadService.existe(temaActividadInstance.actividad, temaActividadInstance.tema)) {
+			flash.message = "La actividad ${temaActividadInstance.actividad} ya esta asociada con el tema ${temaActividadInstance.tema}"
+			redirect action: "create", params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
+			return
+		}
+		
 		if (!temaActividadService.guardar(temaActividadInstance)) {
 			render view:'create', model: [temaActividadInstance: temaActividadInstance], params: ['cursoId': params.cursoId, 
 				'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
@@ -48,30 +55,6 @@ class TemaActividadController {
 		flash.message = message(code: 'default.created.message', args: [message(code: 'temaActividadInstance.label', default: 'TemaActividad'), temaActividadInstance.id])
 		redirect controller:"actividad", action:"show", params:['id': params.actividadId, 'cursoId': params.cursoId, 
 			'cuatrimestreId': params.cuatrimestreId]
-	}
-
-	@Secured("hasRole('ROL_MEDIADOR')")
-	def edit(TemaActividad temaActividadInstance) {
-		respond temaActividadInstance, params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
-	}
-
-	@Secured("hasRole('ROL_MEDIADOR')")
-	def update(TemaActividad temaActividadInstance) {
-
-		if (temaActividadInstance == null) {
-			notFound()
-			return
-		}
-
-		if (!temaActividadService.guardar(temaActividadInstance)) {
-			render view:'edit', model: [temaActividadInstance, temaActividadInstance], params:['cursoId': params.cursoId, 
-				'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
-			return
-		}
-
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'TemaActividad.label', default: 'TemaActividad'), temaActividadInstance.id])
-		redirect action:"show", params:['id': temaActividadInstance.id, 'cursoId': params.cursoId, 
-			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")

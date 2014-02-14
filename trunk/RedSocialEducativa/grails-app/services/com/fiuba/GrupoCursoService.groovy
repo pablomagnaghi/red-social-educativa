@@ -14,36 +14,21 @@ class GrupoCursoService {
 		return null
     }
 	
-	def crearGrupo(GrupoCurso grupo, Usuario usuario, Long cuatrimestreId) {
-		
-		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuario, Cuatrimestre.get(cuatrimestreId))
+	def agregarAprendiz(GrupoCurso grupo, Aprendiz aprendiz) {
 		
 		grupo.addToAprendices(aprendiz)
 		
 		return guardar(grupo)
 	}
-	
-	def agregarAprendiz(GrupoCurso grupo, Aprendiz aprendiz) {
-		
-		grupo.addToAprendices(aprendiz)
-		
-		if (grupo.save(flush: true)) {
-			return grupo
-		}
 
-		return null
-	}
+	def obtenerGrupoPorNumero(Cuatrimestre cuatrimestre, Integer numeroGrupo) {
 
-	def obtenerGrupoPorNumero(Long cuatrimestreId, Integer numeroGrupo) {
-		def cuatrimestre = Cuatrimestre.get(cuatrimestreId)
-		
 		return GrupoCurso.findByCuatrimestreAndNumero(cuatrimestre, numeroGrupo)
 	}
 
-	def obtenerGrupos(Long cuatrimestreId) {
-		def cuatrimestre = Cuatrimestre.get(cuatrimestreId)
-		
-		return cuatrimestre.grupos
+	def obtenerGrupos(Cuatrimestre cuatrimestre) {
+	
+		return GrupoCurso.findAllByCuatrimestre(cuatrimestre)
 	}
 	
 	def eliminar(GrupoCurso grupo) {

@@ -48,8 +48,6 @@ class GrupoCursoController {
 		
 		def numGrupo = GrupoCurso.findAllByCuatrimestre(Cuatrimestre.get(params.cuatrimestreId)).size() + 1
 
-		println "numGRUOP: ${numGrupo}"
-		
 		respond new GrupoCurso(params), model: [numGrupo: numGrupo], params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 	}
 
@@ -57,13 +55,8 @@ class GrupoCursoController {
 	def muestraAprendiz(GrupoCurso grupoCursoInstance) {
 			
 		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))	
-		def participa = false
+		def participa = grupoCursoInstance.aprendices.contains(aprendiz)
 		
-		// Si participa en el grupo puede editar el nombre del mismo
-		if (grupoCursoInstance.aprendices.contains(aprendiz)) {
-			participa = true
-		}
-	
 		respond grupoCursoInstance, model: [participa: participa], params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 	}
 	
@@ -75,7 +68,6 @@ class GrupoCursoController {
 	
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def cambios() {
-
 		[aprendices: Aprendiz.findAllByCuatrimestreAndParticipaAndGrupoIsNotNull(Cuatrimestre.get(params.cuatrimestreId), true), 
 			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 	}
@@ -92,9 +84,10 @@ class GrupoCursoController {
 			return
 		}
 
-		if (!aprendizService.realizarCambio(aprendizId, grupoCursoService.obtenerGrupoPorNumero(params.cuatrimestreId.toLong(), numeroGrupo))) {
-			flash.message = "El numero de grupo no es válido. " + 
-				"Los posibles numeros son ${grupoCursoService.obtenerGrupos(params.cuatrimestreId.toLong())}"
+		def cuatrimestre = Cuatrimestre.get(params.cuatrimestreId)
+		
+		if (!aprendizService.realizarCambio(aprendizId, grupoCursoService.obtenerGrupoPorNumero(cuatrimestre, numeroGrupo))) {
+			flash.message = "El numero de grupo no es válido. Los posibles numeros son ${grupoCursoService.obtenerGrupos(cuatrimestre)}"
 			redirect action: "cambios", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 			return
 		}
@@ -114,8 +107,10 @@ class GrupoCursoController {
 			notFound()
 			return
 		}
-
-		if (!grupoCursoService.crearGrupo(grupoCursoInstance, seguridadService.usuarioActual(), params.cuatrimestreId.toLong())) {
+		
+		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
+		
+		if (!grupoCursoService.agregarAprendiz(grupoCursoInstance, aprendiz)) {
 			render view:'crear', model: [grupoCursoInstance: grupoCursoInstance, numGrupo: params.numGrupo],
 				params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 			return
@@ -127,13 +122,13 @@ class GrupoCursoController {
 
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def agregarme(GrupoCurso grupoCursoInstance) {
-		
 		if (grupoCursoInstance == null) {
 			notFound()
 			return
 		}
 		
 		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
+		
 		if (aprendiz?.grupo) {
 			flash.message = "Usted ya pertenece al grupo ${aprendiz.grupo}"
 			redirect action: "muestraAprendiz", params:['id': params.id, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]

@@ -50,10 +50,10 @@
 		</div>
 		<div>
 		
-				<li><g:link class="list" action="general" controller="grupoActividad" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]">
+				<li><g:link class="list" action="menuAprendiz" controller="grupoActividad" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]">
 					<g:message code="Los grupos de la actividad"/></g:link></li>
 				<g:if test="${grupoActividadAprendiz}">	
-					<li><g:link class="list" action="mostrarGrupo" controller="grupoActividad" id="${grupoActividadAprendiz.grupo.id}" 
+					<li><g:link class="list" action="muestraAprendiz" controller="grupoActividad" id="${grupoActividadAprendiz.grupo.id}" 
 						params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]">
 						<g:message code="Mi grupo ${grupoActividadAprendiz.grupo}"/></g:link></li>
 				</g:if>

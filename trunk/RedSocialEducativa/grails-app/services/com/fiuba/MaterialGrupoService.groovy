@@ -7,7 +7,7 @@ class MaterialGrupoService {
 
 	def existe(MaterialGrupo material, Long grupoId) {
 		
-		def materialExistente = MaterialGrupo.findByGrupoAndTitulo(Grupo.get(gSrupoId), material.titulo)
+		def materialExistente = MaterialGrupo.findByGrupoAndTitulo(GrupoCurso.get(grupoId), material.titulo)
 	
 		return materialExistente
 	}
