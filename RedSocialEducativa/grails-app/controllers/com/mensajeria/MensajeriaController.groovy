@@ -252,6 +252,7 @@ class MensajeriaController {
 	}
 
 	def buscar_mensajes(){
+		println params
 		def usuario = this.usuarioActual()
 		if (!usuario){
 			redirect (controller:"red", action:"principal")
