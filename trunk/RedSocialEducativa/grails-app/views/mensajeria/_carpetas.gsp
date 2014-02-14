@@ -3,7 +3,7 @@
 		<li class="active li_clickeable droppable selectedFolder"
 			id="${carpeta}"><g:remoteLink class="inbox-load"
 				action="mostrarMensajes" params='[nombreCarpeta: "${carpeta}"]'
-				update="[success:'inbox-content']" onSuccess="when_ready();">
+				update="[success:'inbox-content']" onSuccess="when_ready();actualizar('carpeta', '${carpeta }')">
 				${carpeta.key}
 				<g:if test="${carpeta.value > 0}">
 		(${carpeta.value})</g:if>
@@ -12,7 +12,7 @@
 	<g:else>
 		<li class="li_clickeable droppable" id="${carpeta}"><g:remoteLink
 				action="mostrarMensajes" params='[nombreCarpeta: "${carpeta}"]'
-				update="[success:'inbox-content']" onSuccess="when_ready();">
+				update="[success:'inbox-content']" onSuccess="when_ready();actualizar('carpeta', '${carpeta }')">
 				${carpeta.key}
 				<g:if test="${carpeta.value > 0}">
 		(${carpeta.value})</g:if>

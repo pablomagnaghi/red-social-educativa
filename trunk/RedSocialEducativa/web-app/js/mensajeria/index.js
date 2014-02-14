@@ -1,9 +1,12 @@
+var historial = new Array()
+var firstItem = { "nombre": 'index', "id": "" };
+historial.push(firstItem)
+
 $(document).ready(
 		function(){
 			when_ready();
 		}
 );
-
 
 function extractLast( term ) {
 	return split( term ).pop();
@@ -65,9 +68,16 @@ function when_ready(){
 		select: function( event, ui ) {
 			var terms = split( this.value );
 			// remove the current input
+			var data = ui.item.value
+			var regExMatch = /&lt;/g;
+			var replaceWith = "<";
+			var resultSet = data.replace(regExMatch, replaceWith);
+			regExMatch = /&gt;/g;
+			replaceWith = ">";
+			var data = resultSet.replace(regExMatch, replaceWith);
 			terms.pop();
 			// add the selected item
-			terms.push( ui.item.value);
+			terms.push(data);
 			// add placeholder to get the comma-and-space at the end
 			terms.push( "" );
 			this.value = terms.join( ", " );
@@ -77,6 +87,8 @@ function when_ready(){
 	$(".showConv").click(function(){
 		id = $(this).closest('tr').attr('conversationid')
 		mostrarConversacion(id)
+		actualizar("conversacion", id)
+		console.log("conversacion")
 	})
 	redactar_ready()
 }
@@ -86,11 +98,14 @@ function buscarMensajes(){
 		url: 'buscar_mensajes',
 		type: 'POST',
 		data : {
-			de : $("#de").val(),
-			para : $("#para").val()
+			de : $("#deBuscar").val(),
+			para : $("#paraBuscar").val()
 		},
 		success : function (response) {
 			$("#listaConversaciones").html(response)
+			var ultimo = historial.pop()
+			historial.push(ultimo)
+			historial.push(ultimo)
 		}
 	})
 }
@@ -118,6 +133,7 @@ function mostrarMensajeEnConversacion(id){
 			},
 			success: function(reply){
 				$("#conversacion-"+id).html(reply);
+				actualizar('mensajeConversacion', id)
 			}
 		})
 	} else {
@@ -135,6 +151,7 @@ function mostrarMensajeBorradores(id){
 			},
 			success: function(reply){
 				$("#conversacion-"+id).html(reply);
+				actualizar('mensajeBorrador', id)
 			}
 		})
 	} else {
@@ -152,6 +169,7 @@ function mostrarMensaje(id){
 		},
 		success: function(reply){
 			$("#contenidoMensajes").html(reply);
+			actualizar('mensaje', id)
 		}
 	})
 }
@@ -185,3 +203,58 @@ function borrarConversacion(){
 		}
 	})
 }
+
+function actualizar(nombre, id){
+	console.log("actualizando")
+	var idMap = ''
+	if (id != null){
+		idMap = id
+	}
+	var item = { "nombre": nombre, "id": idMap };
+	historial.push(item)
+	console.log(historial)
+}
+
+function volver(){
+	var item = historial.pop()
+	console.log("1 er item extraido")
+	console.log(item)
+	item = historial.pop()
+	console.log("2 er item extraido")
+	console.log(item)
+	if (item == null){
+		window.open('index', '_self')
+	} else if (item.nombre == 'index'){
+		window.open('index', '_self')
+	} else if (item.nombre == 'conversacion'){
+		mostrarConversacion(item.id)
+	} else if (item.nombre == 'carpeta') {
+		$.ajax({
+			url: "mostrarMensajes",
+			type: "POST",
+			data : {
+				nombreCarpeta: item.id
+			},
+			success : function (reply){
+				$("#inbox-content").html(reply)
+				when_ready();
+			}
+		});
+	} else if (item.nombre == 'mensajeConversacion'){
+		mostrarMensajeEnConversacion(item.id)
+	} else if (item.nombre == 'mensajeBorrador'){
+		mostrarMensajeBorradores(item.id)
+	} else if (item.nombre == 'mensaje'){
+		mostrarMensaje(item.id)
+	} else if (item.nombre == 'redactar'){
+		$.ajax({
+			url: "redactarMensaje",
+			type: "POST",
+			success : function (reply){
+				$("#contenidoMensajes").html(reply)
+				when_ready();
+			}
+		});
+	}
+}
+

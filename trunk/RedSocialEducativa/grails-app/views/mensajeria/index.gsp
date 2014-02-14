@@ -36,7 +36,8 @@
 		<div class="inbox-checkbox-triggered">
 
 			<div class="btn-group">
-			<a class="btn btn-default"  data-placement="bottom" title="" rel="tooltip" href="javascript:void(0);" onclick="volver()"><strong><i class="glyphicon glyphicon-arrow-left"></i></strong></a>
+			<g:link class="btn btn-default" data-placement="bottom" title="" rel="tooltip" action="principal" controller="red" ><strong><i class="glyphicon glyphicon-home"></i></strong></g:link>
+			<a class="btn btn-default"  data-placement="bottom" title="" rel="tooltip"  onclick="volver()"><strong><i class="glyphicon glyphicon-arrow-left"></i></strong></a>
 			<a class="deletebutton btn btn-default" data-placement="bottom" title="" rel="tooltip" href="javascript:void(0);" onclick="borrarConversacion()"><strong><i class="fa fa-trash-o fa-lg"></i></strong></a>
 			</div>
 
@@ -69,7 +70,7 @@
 	<div class="inbox-body no-content-padding" id="inbox-content" style="height: 900px">
 		<div class="inbox-side-bar">
 			<g:remoteLink action="redactarMensaje"
-				update="[success:'contenidoMensajes']" onSuccess="when_ready();" id="compose-mail"
+				update="[success:'contenidoMensajes']" onSuccess="when_ready();actualizar('redactar', null)" id="compose-mail"
 				class="btn btn-primary btn-block">
 				<span class="glyphicon glyphicon-envelope"></span>
 				<strong>Redactar</strong>
