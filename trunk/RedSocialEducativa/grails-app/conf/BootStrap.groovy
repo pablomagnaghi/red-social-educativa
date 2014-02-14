@@ -104,9 +104,35 @@ class BootStrap {
 		def mensajePabloToLuis = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
 		cuerpo: "Vamos por el campeonato", fecha : new Date())
 		mensajeService.nuevoMensaje(mensajePabloToLuis)
-		def mensajeAgusToLuis = new Mensaje(emisor: usuarioAgus, receptor: usuarioLuis, asunto: "Mensaje de Agus a Luis 1",
+		def mensajePabloToLuisDoss = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
+		cuerpo: "Vamos por el campeonato", fecha : new Date())
+		mensajeService.nuevoMensaje(mensajePabloToLuisDoss)
+		def mensajePabloToLuisTres = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
+		cuerpo: "Vamos por el campeonato", fecha : new Date())
+		mensajeService.nuevoMensaje(mensajePabloToLuisTres)
+		def mensajePabloToLuisCuatro = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
+		cuerpo: "Vamos por el campeonato", fecha : new Date())
+		mensajeService.nuevoMensaje(mensajePabloToLuisCuatro)
+		def mensajePabloToLuisCinco = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
+		cuerpo: "Vamos por el campeonato", fecha : new Date())
+		mensajeService.nuevoMensaje(mensajePabloToLuisCinco)
+		def mensajePabloToLuisSeis = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
+		cuerpo: "Vamos por el campeonato", fecha : new Date())
+		mensajeService.nuevoMensaje(mensajePabloToLuisSeis)
+		def mensajePabloToLuisSiete = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
+		cuerpo: "Vamos por el campeonato", fecha : new Date())
+		mensajeService.nuevoMensaje(mensajePabloToLuisSiete)
+		def mensajePabloToLuisOcho = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
+		cuerpo: "Vamos por el campeonato", fecha : new Date())
+		mensajeService.nuevoMensaje(mensajePabloToLuisOcho)
+		def mensajePabloToLuisNueve = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
+		cuerpo: "Vamos por el campeonato", fecha : new Date())
+		mensajeService.nuevoMensaje(mensajePabloToLuisNueve)
+		
+		def mensajeAgusToLuisDiez = new Mensaje(emisor: usuarioAgus, receptor: usuarioLuis, asunto: "Mensaje de Agus a Luis 1",
 		cuerpo: "Buenas noches!", fecha : new Date())
-		mensajeService.nuevoMensaje(mensajeAgusToLuis)
+		mensajeService.nuevoMensaje(mensajeAgusToLuisDiez)
+		
 		def mensajePabloToLuisDos = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de Pablo a Luis 2",
 		cuerpo: "Vamos por el campeonato mundial", fecha : new Date())
 		mensajeService.nuevoMensaje(mensajePabloToLuisDos)

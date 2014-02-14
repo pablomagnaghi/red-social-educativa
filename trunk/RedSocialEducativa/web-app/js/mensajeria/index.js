@@ -88,7 +88,6 @@ function when_ready(){
 		id = $(this).closest('tr').attr('conversationid')
 		mostrarConversacion(id)
 		actualizar("conversacion", id)
-		console.log("conversacion")
 	})
 	redactar_ready()
 }
@@ -123,13 +122,14 @@ function mostrarConversacion(id){
 	})
 }
 
-function mostrarMensajeEnConversacion(id){
+function mostrarMensajeEnConversacion(id, responder){
 	if ($("#conversacion-"+id).is(':empty')){
 		$.ajax({
 			url: 'mensaje',
 			type: 'POST',
 			data: {
-				id: id
+				id: id,
+				responder : responder
 			},
 			success: function(reply){
 				$("#conversacion-"+id).html(reply);
@@ -165,7 +165,8 @@ function mostrarMensaje(id){
 		url: 'mensaje',
 		type: 'POST',
 		data: {
-			id: id
+			id: id,
+			responder : false
 		},
 		success: function(reply){
 			$("#contenidoMensajes").html(reply);
@@ -205,23 +206,17 @@ function borrarConversacion(){
 }
 
 function actualizar(nombre, id){
-	console.log("actualizando")
 	var idMap = ''
 	if (id != null){
 		idMap = id
 	}
 	var item = { "nombre": nombre, "id": idMap };
 	historial.push(item)
-	console.log(historial)
 }
 
 function volver(){
 	var item = historial.pop()
-	console.log("1 er item extraido")
-	console.log(item)
 	item = historial.pop()
-	console.log("2 er item extraido")
-	console.log(item)
 	if (item == null){
 		window.open('index', '_self')
 	} else if (item.nombre == 'index'){
