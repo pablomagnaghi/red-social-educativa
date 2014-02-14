@@ -20,7 +20,10 @@ function when_ready(){
 	$( ".draggable" ).each(function(){
 		$(this).draggable({
 			 revert: "invalid",
-			 start: function() {
+			 helper: "clone",
+			 appendTo: 'body',
+			 start: function(e, ui) {
+				 $(ui.helper).css("opacity",  0.4)
 			 }
 		});
 	});
@@ -28,6 +31,7 @@ function when_ready(){
 		$(this).droppable({
 			accept: ".draggable",
 			hoverClass: "ui-state-active",
+			tolerance: "pointer",
 			drop: function( event, ui ) {
 				idConversacion = ui.draggable.attr('conversationId')
 				idCarpeta = $(this).attr('id')
@@ -44,7 +48,7 @@ function when_ready(){
 			}
 		})
 	});
-	$("#paraBuscar, #deBuscar, #para").autocomplete({
+	$("#paraBuscar, #deBuscar").autocomplete({
 		source: function(request, response){
 			if (request.term.match(/,/g)!=null){
 				var regexp = /,\s*(.*)/g;
@@ -70,6 +74,10 @@ function when_ready(){
 			return false;
 		}
 	});
+	$(".showConv").click(function(){
+		id = $(this).closest('tr').attr('conversationid')
+		mostrarConversacion(id)
+	})
 	redactar_ready()
 }
 
@@ -157,4 +165,23 @@ function cerrar_form_nueva_carpeta(){
 
 function abrir_form_nueva_carpeta(){
 	$("#div_nueva_carpeta").show();
+}
+
+function borrarConversacion(){
+	$(".checkBoxConv").each(function(){
+		if ($(this).is(':checked')){
+			idConversacion = $(this).attr('id')
+			$.ajax({
+				url: "eliminarConversacion",
+				type: "POST",
+				data: {
+					conversacion : idConversacion,
+				},
+				success : function (reply){
+					$("#inbox-content").html(reply)
+					when_ready();
+				}
+			});
+		}
+	})
 }

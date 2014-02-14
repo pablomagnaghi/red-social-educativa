@@ -17,6 +17,7 @@
 </div>
 <div id="contenidoMensajes" class="table-wrap custom-scroll animated fast fadeInRight"
 	style="height: 950px; opacity: 1;">
+	<g:if test="${!mensajes.empty }">
 	<table id="inbox-table" class="table table-striped table-hover">
 		<tbody>
 			<g:each in="${mensajes}" var="mensaje">
@@ -42,4 +43,10 @@
 			</g:each>
 		</tbody>
 	</table>
+	</g:if>
+	<g:else>
+	<div style="margin-left: 340px; margin-top: 50px;">
+		No hay mensajes para mostrar
+	</div>
+</g:else>
 </div>
