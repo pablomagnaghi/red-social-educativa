@@ -12,13 +12,11 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" controller="curso" action="aprendiz" params="['cursoId': cursoId]">
-						<g:message code="Menu aprendiz del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
-				<li><g:link class="list" controller="curso" action="actividades" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-						<g:message code="Actividades  del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>	
-				<li><g:link class="create" action="crear" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadId]">
-					<g:message code="Crear grupo para la actividad" args="[entityName]" /></g:link></li>		
-			</ul>	
+				<li><g:link class="create" controller="curso" action="menuMediador" params="['cursoId': params.cursoId]">
+					<g:message code="Tareas mediador" args="[entityName]" /></g:link></li>		
+				<li><g:link class="create" action="cambios" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]">
+					<g:message code="Cambiar aprendiz de grupo" args="[entityName]" /></g:link></li>		
+			</ul>
 		</div>
 		<div id="list-aprendiz" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
@@ -30,10 +28,10 @@
 					<tr>
 					
 						<g:sortableColumn property="usuario" title="${message(code: 'Aprendiz')}" 
-							params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadId]" />
+							params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]" />
 					
 						<g:sortableColumn property="grupo" title="${message(code: 'Grupo')}"  
-							params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadId]"/>
+							params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]"/>
 						
 						<td>Detalle</td>	
 					
@@ -46,15 +44,15 @@
 					
 						<td>${it.grupo}</td>			
 						
-						<td><g:link action="mostrarGrupo" id="${it.grupo.id}"
-							params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadId]">Ver detalle grupo ${it.grupo.id}</g:link></td>	
+						<td><g:link action="muestraMed" id="${it.grupo.id}"
+							params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]">Ver detalle grupo ${it.grupo.id}</g:link></td>	
 				
 					</tr>
 				</g:each>
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${aprendicesCant ?: 0}" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadId]" />
+				<g:paginate total="${aprendicesCant ?: 0}" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]" />
 			</div>
 		</div>
 	</body>

@@ -105,7 +105,7 @@ class MaterialGrupoActividadController {
 			form {
 				flash.message = message(code: 'default.created.message', args: [message(code: 'materialGrupoActividadInstance.label', 
 					default: 'MaterialGrupoActividad'), materialGrupoActividadInstance.id])
-				redirect controller:"grupoActividad", action:"mostrarGrupo", params:['id': grupoActividadId, 
+				redirect controller:"grupoActividad", action:"muestraAprendiz", params:['id': grupoActividadId, 
 					'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId, 'grupoActividadId': grupoActividadId]
 			}
 			'*' { respond materialGrupoInstance, [status: CREATED] }
@@ -174,7 +174,7 @@ class MaterialGrupoActividadController {
 			form {
 				flash.message = message(code: 'default.deleted.message', args: [message(code: 'MaterialGrupoActividad.label', 
 					default: 'MaterialGrupo'), materialGrupoActividadInstance.id])
-				redirect controller:"grupoActividad", action:"mostrarGrupo", params:['id': grupoActividadId, 
+				redirect controller:"grupoActividad", action:"muestraAprendiz", params:['id': grupoActividadId, 
 					'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId], method:"GET"
 			}
 			'*'{ render status: NO_CONTENT }

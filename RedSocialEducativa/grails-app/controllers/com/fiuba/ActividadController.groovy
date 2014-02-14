@@ -39,7 +39,7 @@ class ActividadController {
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
-	def create() {
+	def create() {	
 		respond new Actividad(params), params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 	}
 
@@ -49,13 +49,14 @@ class ActividadController {
 			notFound()
 			return
 		}
-
+		
 		if (actividadService.existe(actividadInstance, params.cuatrimestreId.toLong())) {
 			flash.message = "Ya existe la actividad ${actividadInstance.titulo} en el cuatrimestre ${Cuatrimestre.get(params.cuatrimestreId)}"
 			redirect action: "create", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 			return
 		}
 
+		actividadInstance.fechaFinalizacion = params.fechaFinalizacionDate.format(Utilidades.FORMATO_FECHA_NUMERICO)
 		
 		if (!actividadService.guardar(actividadInstance)) {
 			render view:'create', model: [actividadInstance: actividadInstance], 
@@ -79,6 +80,8 @@ class ActividadController {
 			return
 		}
 	
+		actividadInstance.fechaFinalizacion = params.fechaFinalizacionDate.format(Utilidades.FORMATO_FECHA_NUMERICO)
+		
 		if (!actividadService.guardar(actividadInstance)) {
 			render view:'edit', model: [actividadInstance: actividadInstance],
 				params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
