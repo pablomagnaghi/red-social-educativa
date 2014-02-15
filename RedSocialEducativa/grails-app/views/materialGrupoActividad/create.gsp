@@ -14,7 +14,7 @@
 				<li><g:link controller="grupoActividad" action="menuAprendiz" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]">
 					<g:message code="Lista de grupos del curso ${com.fiuba.Curso.get(params.cursoId)}" args="[entityName]" /></g:link></li>
 				<li><g:link controller="grupoActividad" action="muestraAprendiz" id="${params.grupoActividadId}" 
-					params="['cursoId': params.cursoId, 'cuatrimestreId': cparams.uatrimestreId, 'actividadId': params.actividadId]">
+					params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]">
 					<g:message code="Grupo: ${com.fiuba.GrupoActividad.get(params.grupoActividadId)}" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>

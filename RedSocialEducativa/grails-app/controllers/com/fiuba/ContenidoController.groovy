@@ -59,24 +59,7 @@ class ContenidoController {
 	def edit(Contenido contenidoInstance) {
 		respond contenidoInstance, params: ['cursoId': params.cursoId, 'temaId': params.temaId]
 	}
-/*
-	@Secured("hasRole('ROL_MEDIADOR')")
-	def update(Contenido contenidoInstance) {
-
-		if (contenidoInstance == null) {
-			notFound()
-			return
-		}
-
-		if (!contenidoService.guardar(contenidoInstance)) {
-			render view:'edit', model: [contenidoInstance: contenidoInstance], params: ['cursoId': params.cursoId, 'temaId': params.temaId]
-			return
-		}
-		
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'Contenido.label', default: 'Contenido'), contenidoInstance.id])
-		redirect action:"show", params:['id':contenidoInstance.id, 'cursoId': params.cursoId, 'temaId': params.temaId]
-	}
-*/
+	
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def delete(Contenido contenidoInstance) {
 

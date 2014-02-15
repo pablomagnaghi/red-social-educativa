@@ -24,11 +24,10 @@ class BootStrap {
 		roles.add(rolMiembro)
 		
 		for(int i = 0; i<roles.size(); i++){
-			if (!roles.get(i).validate()) {
+			if (!roles.get(i).save()) {
 				println roles.get(i).errors
 			} else {																										
 				println "Roles agregados a la bbdd:"
-				roles.get(i).save()
 				println roles.get(i).authority
 			}																																																																																																																																																													
 		}
@@ -36,66 +35,65 @@ class BootStrap {
 		def ArrayList<Usuario> usuarios = new ArrayList<Usuario>()
 		
 		def usuarioPablo = new Usuario(username: "33300432", password: "33300432", apellido: "Magnaghi", nombres: "Pablo", padron: "88126", 
-			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioPablo)
 		def usuarioLuis = new Usuario(username: "31861315", password: "31861315", apellido: "Paniagua", nombres: "Luis", padron: "86862", 
-			email: "pany100@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+			email: "pany100@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioLuis)
 		def usuarioAgus = new Usuario(username: "32725217", password: "32725217", apellido: "Milla", nombres: "Agustina", padron: "88888", 
-			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioAgus)
 		def usuarioMessi = new Usuario(username: "10101010", password: "10101010", apellido: "Zarate", nombres: "Facundo", padron: "78456", 
-			email: "nanozarate@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+			email: "nanozarate@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioMessi)
 		def usuarioUno = new Usuario(username: "00000001", password: "00000001", apellido: "ApeUNO", nombres: "NomUno", padron: "00001", 
-			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioUno)
 		def usuarioDos = new Usuario(username: "00000002", password: "00000002", apellido: "ApeDOS", nombres: "NomDOS", padron: "00002", 
-			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioDos)
 		def usuarioTres = new Usuario(username: "00000003", password: "00000003", apellido: "ApeTRES", nombres: "NomTRES", padron: "00003", 
-			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"),  fechaMemb: (new Date()).format("yyyy-MM-dd"))
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO),  fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioTres)
 		def usuarioCuatro = new Usuario(username: "00000004", password: "00000004", apellido: "ApeCUATRO", nombres: "NomCUATRO", 
-			padron: "00004", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+			padron: "00004", email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioCuatro)
 		def usuarioCinco = new Usuario(username: "00000005", password: "00000005", apellido: "ApeCINCO", nombres: "NomCINCO", padron: "00005", 
-			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioCinco)
 		def usuarioSeis = new Usuario(username: "00000006", password: "00000006", apellido: "ApeSeis", nombres: "NomSeis", padron: "00006", 
-			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioSeis)
 		def usuarioSiete = new Usuario(username: "00000007", password: "00000007", apellido: "ApeSiete", nombres: "NomSiete", padron: "00007", 
-			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"),  fechaMemb: (new Date()).format("yyyy-MM-dd"))
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO),  fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioSiete)
 		def usuarioOcho = new Usuario(username: "00000008", password: "00000008", apellido: "ApeOcho", nombres: "NomOcho", padron: "00008", 
-			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"),  fechaMemb: (new Date()).format("yyyy-MM-dd"))
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO),  fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioOcho)
 		def usuarioNueve = new Usuario(username: "00000009", password: "00000009", apellido: "ApeNueve", nombres: "NomNueve", padron: "00009", 
-			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioNueve)
 		def usuarioDiez = new Usuario(username: "00000010", password: "00000010", apellido: "ApeDiez", nombres: "NomDiez", padron: "00010", 
-			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioDiez)
 		def usuarioOnce = new Usuario(username: "00000011", password: "00000011", apellido: "ApeOnce", nombres: "NomOnce", padron: "00011", 
-			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioOnce)
 		def usuarioDoce = new Usuario(username: "00000012", password: "00000012", apellido: "ApeDoce", nombres: "NomDoce", padron: "00012", 
-			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), fechaMemb: (new Date()).format("yyyy-MM-dd"))
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioDoce)
 		def usuarioTrece = new Usuario(username: "00000013", password: "00000013", apellido: "ApeTrece", nombres: "NomTrece", padron: "00013", 
-			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), enabled: false)
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), enabled: false)
 		usuarios.add(usuarioTrece)
 		def usuarioCatorce = new Usuario(username: "00000014", password: "00000014", apellido: "ApeCatorce", nombres: "NomCatorce", padron: "00014", 
-			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format("yyyy-MM-dd"), enabled: false)
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), enabled: false)
 		usuarios.add(usuarioCatorce)
 
 		for(int i = 0; i<usuarios.size(); i++){
-			if (!usuarios.get(i).validate()) {
+			if (!usuarioService.guardar(usuarios.get(i))) {
 				println usuarios.get(i).errors
 			} else {
 				println "Usuarios agregados a la bbdd:"
-				usuarioService.guardar(usuarios.get(i))
 				println usuarios.get(i).username
 			}
 		}
@@ -161,35 +159,35 @@ class BootStrap {
 		
 		// Aprendices
 		def aprendizAgus = new Aprendiz(usuario: usuarioAgus, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		def aprendizUno = new Aprendiz(usuario: usuarioUno, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		def aprendizUnoP = new Aprendiz(usuario: usuarioUno, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		def aprendizUnoPP = new Aprendiz(usuario: usuarioUno, rol: rolAprendiz, participa: false, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		def aprendizDos = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		def aprendizTres = new Aprendiz(usuario: usuarioTres, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		def aprendizCuatro = new Aprendiz(usuario: usuarioCuatro, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))		
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))		
 		def aprendizCinco = new Aprendiz(usuario: usuarioCinco, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		def aprendizSeis = new Aprendiz(usuario: usuarioSeis, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		def aprendizSiete = new Aprendiz(usuario: usuarioSiete, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		def aprendizOcho = new Aprendiz(usuario: usuarioOcho, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		def aprendizNueve = new Aprendiz(usuario: usuarioNueve, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		def aprendizDiez = new Aprendiz(usuario: usuarioDiez, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		def aprendizOnce = new Aprendiz(usuario: usuarioOnce, rol: rolAprendiz, participa: false, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		def aprendizDoce = new Aprendiz(usuario: usuarioDoce, rol: rolAprendiz, participa: false, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format("yyyy-MM-dd"))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		
 		// Categorias
 		
@@ -220,11 +218,10 @@ class BootStrap {
 		categoriasMaterial.add(categoriaOtros)
 		
 		for(int i = 0; i<categoriasMaterial.size(); i++){
-			if (!categoriasMaterial.get(i).validate()) {
+			if (!categoriasMaterial.get(i).save()) {
 				println categoriasMaterial.get(i).errors
 			} else {
 				println "Categorias Material agregadas nombre"
-				categoriasMaterial.get(i).save()
 				println categoriasMaterial.get(i).nombre
 			}
 		}
@@ -244,11 +241,10 @@ class BootStrap {
 		categoriasActividad.add(categoriaOtra)
 		
 		for(int i = 0; i<categoriasActividad.size(); i++){
-			if (!categoriasActividad.get(i).validate()) {
+			if (!categoriasActividad.get(i).save()) {
 				println categoriasActividad.get(i).errors
 			} else {
 				println "Categorias Actividad agregadas nombre"
-				categoriasActividad.get(i).save()
 				println categoriasActividad.get(i).nombre
 			}
 		}
@@ -270,15 +266,15 @@ class BootStrap {
 		
 		// Publicaciones generales
 		def publicacionGeneralUno = new PublicacionGeneral(titulo: "PublicacionGeneralUno", contenido: "Contenido", 
-			responsable: "Pablo Magnaghi (Administrador)", dni: "33300432", fecha: (new Date()).format("yyyy-MM-dd"), 
+			responsable: "Pablo Magnaghi (Administrador)", dni: "33300432", fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), 
 			hora: (new Date()).getTimeString())
 		
 		def publicacionGeneralDos = new PublicacionGeneral(titulo: "PublicacionGeneralDos", contenido: "Contenido", 
-			responsable: "Pablo Magnaghi (Administrador)", dni: "33300432", fecha: (new Date()).format("yyyy-MM-dd"), 
+			responsable: "Pablo Magnaghi (Administrador)", dni: "33300432", fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), 
 			hora: (new Date()).getTimeString())
 
 		def publicacionGeneralTres = new PublicacionGeneral(titulo: "PublicacionGeneralTres", contenido: "Contenido", 
-			responsable: "Pablo Magnaghi (Administrador)", dni: "33300432", fecha: (new Date()).format("yyyy-MM-dd"), 
+			responsable: "Pablo Magnaghi (Administrador)", dni: "33300432", fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), 
 			hora: (new Date()).getTimeString())
 				
 		def foroGeneral = new ForoGeneral(nombre: "Foro general")
@@ -286,11 +282,10 @@ class BootStrap {
 		foroGeneral.addToPublicaciones(publicacionGeneralDos)
 		foroGeneral.addToPublicaciones(publicacionGeneralTres)
 		
-		if (!foroGeneral.validate()) {
+		if (!foroGeneral.save()) {
 			println foroGeneral.errors
 		} else {
 			println "foroGeneral agregada a la bbdd:"
-			foroGeneral.save()
 			println foroGeneral
 		}
 		
@@ -298,13 +293,13 @@ class BootStrap {
 		
 		// Material de contenido
 		def materialContenidoUno = new MaterialContenido(titulo: "material contenido 1", descripcion: "opcional", autor: "anonimo", 
-			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
 		def materialContenidoDos = new MaterialContenido(titulo: "material contenido 2", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Presentacion"))
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Presentacion"))
 		def materialContenidoTres = new MaterialContenido(titulo: "material contenido 3", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Enlace"))
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Enlace"))
 		def materialContenidoCuatro = new MaterialContenido(titulo: "material contenido 4", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Glosario"))
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Glosario"))
 
 		// Contenidos
 		def contenidoUnoTemaUnoCursoUno = new Contenido(titulo: "ContenidoUnoTemaUnoCursoUno")
@@ -325,13 +320,13 @@ class BootStrap {
 		
 		// Material de temas
 		def materialTemaUno = new MaterialTema(titulo: "material Tema 1", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
 		def materialTemaDos = new MaterialTema(titulo: "material Tema 2", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Presentacion"))
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Presentacion"))
 		def materialTemaTres = new MaterialTema(titulo: "material Tema 3", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Enlace"))
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Enlace"))
 		def materialTemaCuatro = new MaterialTema(titulo: "material Tema 4", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Glosario"))
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Glosario"))
 		
 		// Temas
 		
@@ -354,17 +349,17 @@ class BootStrap {
 		
 		// Material curso
 		def materialUno = new MaterialCurso(titulo: "material curso 1", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
 		def materialDos = new MaterialCurso(titulo: "material curso 2", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Presentacion"))
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Presentacion"))
 		def materialTres = new MaterialCurso(titulo: "material curso 3", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Enlace"))
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Enlace"))
 		def materialCuatro = new MaterialCurso(titulo: "material curso 4", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Glosario"))
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Glosario"))
 		def materialCinco = new MaterialCurso(titulo: "material curso 5", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Trabajo"))
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Trabajo"))
 		def materialSeis = new MaterialCurso(titulo: "material curso 6", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format("yyyy-MM-dd"), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Cuestionario"))
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Cuestionario"))
 		
 		// Grupos curso		
 		def grupoUno = new GrupoCurso(numero: "1", nombre: "grupo 1")
@@ -379,31 +374,34 @@ class BootStrap {
 		// Grupos actividad: agrego grupoActividadAprendiz a los grupo actividad
 		def grupoActividadUno = new GrupoActividad(numero: "1", nombre: "grupo 1")
 		def grupoActividadDos = new GrupoActividad(numero: "2", nombre: "grupo 2")
-		def grupoActividadTres = new GrupoActividad(numero: "3", nombre: "grupo 3")
+		def grupoActividadTres = new GrupoActividad(numero: "1", nombre: "grupo 3")
 		
 		// Actividades 
 		def actividadUno = new Actividad(titulo: "actividad 1", objetivo: "objetivo", evaluable: true,
-			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("Encuesta"), fechaFinalizacion: "fechafinalizacion")
+			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("Encuesta"), 
+			fechaFinalizacion: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		actividadUno.addToGrupos(grupoActividadUno)
 		actividadUno.addToGrupos(grupoActividadDos)
 		
 		def actividadDos = new Actividad(titulo: "actividad 2", objetivo: "objetivo", evaluable: true,
-			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("TP"), fechaFinalizacion: "fechafinalizacion")	
+			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("TP"), 
+			fechaFinalizacion: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))	
 		actividadDos.addToGrupos(grupoActividadTres)
 		
 		def actividadTres = new Actividad(titulo: "actividad 3", objetivo: "objetivo", evaluable: true,
-			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("Cuestionario"), fechaFinalizacion: "fechafinalizacion")
+			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("Cuestionario"), 
+			fechaFinalizacion: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 
 		// Evaluaciones	
-		def evaluacionUno = new Evaluacion(fecha: (new Date()).format("yyyy-MM-dd"), descripcion: "descripcion", 
+		def evaluacionUno = new Evaluacion(fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), descripcion: "descripcion", 
 			horario: (new Date()).getTimeString(), aula: "1", parcial: true, obligatoria: true, habilitada: true)
-		def evaluacionDos = new Evaluacion(fecha: (new Date()).format("yyyy-MM-dd"), descripcion: "descripcion",
+		def evaluacionDos = new Evaluacion(fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), descripcion: "descripcion",
 			horario: (new Date()).getTimeString(), aula: "2", parcial: true, obligatoria: true, habilitada: true)
-		def evaluacionTres = new Evaluacion(fecha: (new Date()).format("yyyy-MM-dd"), descripcion: "descripcion",
+		def evaluacionTres = new Evaluacion(fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), descripcion: "descripcion",
 			horario: (new Date()).getTimeString(), aula: "3", parcial: true, obligatoria: true, habilitada: true)
-		def evaluacionCuatro = new Evaluacion(fecha: (new Date()).format("yyyy-MM-dd"), descripcion: "descripcion",
+		def evaluacionCuatro = new Evaluacion(fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), descripcion: "descripcion",
 			horario: (new Date()).getTimeString(), aula: "4", parcial: true, obligatoria: true, habilitada: true)
-		def evaluacionCinco = new Evaluacion(fecha: (new Date()).format("yyyy-MM-dd"), descripcion: "descripcion",
+		def evaluacionCinco = new Evaluacion(fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), descripcion: "descripcion",
 			horario: (new Date()).getTimeString(), aula: "5", parcial: true, obligatoria: true, habilitada: true)
 		
 		// Cuatrimestres
@@ -500,45 +498,43 @@ class BootStrap {
 		materias.add(materiaTres)
 		
 		for(int i = 0; i<materias.size(); i++){
-			if (!materias.get(i).validate()) {
+			if (!materias.get(i).save()) {
 				println materias.get(i).errors
 			} else {
 				println "Materias agregadas a la bbdd:"
-				materias.get(i).save()
 				println materias.get(i).codigo
 			}
 		}
 		
 		// Noticias red
 		def noticiaRedUno = new NoticiaRed(titulo: "Noticia Uno", texto: "Inauguracion de la Red Social Educativa 2014", 
-			fecha: (new Date()).format("yyyy-MM-dd"), hora: (new Date()).getTimeString(), visibilidad: true)
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), hora: (new Date()).getTimeString(), visibilidad: true)
 
 		// Noticias curso
 		def ArrayList<NoticiaCurso> noticiasCursoUno = new ArrayList<NoticiaCurso>()
 		
 		def noticiaCursoUno = new NoticiaCurso(titulo: "Noticia Uno 1", texto: "noticiaCursoUno",
-			fecha: (new Date()).format("yyyy-MM-dd"), hora: (new Date()).getTimeString(), visibilidad: true, 
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), hora: (new Date()).getTimeString(), visibilidad: true, 
 			mediador: mediadorAgus, cuatrimestre: cuatrimestreUno)
 		noticiasCursoUno.add(noticiaCursoUno)
 		def noticiaCursoUnoP = new NoticiaCurso(titulo: "Noticia Uno 2", texto: "noticiaCursoUnoP ",
-			fecha: (new Date()).format("yyyy-MM-dd"), hora: (new Date()).getTimeString(), visibilidad: true,
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), hora: (new Date()).getTimeString(), visibilidad: true,
 			mediador: mediadorAgus, cuatrimestre: cuatrimestreUno)
 		noticiasCursoUno.add(noticiaCursoUnoP)
 		def noticiaCursoUnoPP = new NoticiaCurso(titulo: "Noticia Uno 3", texto: "noticiaCursoUnoPP",
-			fecha: (new Date()).format("yyyy-MM-dd"), hora: (new Date()).getTimeString(), visibilidad: true, 
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), hora: (new Date()).getTimeString(), visibilidad: true, 
 			mediador: mediadorUno, cuatrimestre: cuatrimestreUno)
 		noticiasCursoUno.add(noticiaCursoUnoPP)
 		def noticiaCursoUnoPPP = new NoticiaCurso(titulo: "Noticia Uno 4", texto: "noticiaCursoUnoPPP",
-			fecha: (new Date()).format("yyyy-MM-dd"), hora: (new Date()).getTimeString(), visibilidad: true, 
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), hora: (new Date()).getTimeString(), visibilidad: true, 
 			mediador: mediadorUno, cuatrimestre: cuatrimestreUno)
 		noticiasCursoUno.add(noticiaCursoUnoPPP)
 		
 		for(int i = 0; i<noticiasCursoUno.size(); i++){
-			if (!noticiasCursoUno.get(i).validate()) {
+			if (!noticiasCursoUno.get(i).save()) {
 				println noticiasCursoUno.get(i).errors
 			} else {
 				println "Noticias curso uno agregados a la bbdd:"
-				noticiasCursoUno.get(i).save()
 				println noticiasCursoUno.get(i)
 			}
 		}
@@ -555,11 +551,10 @@ class BootStrap {
 		administradores.add(admMessi)
 			
 		for(int i = 0; i<administradores.size(); i++){
-			if (!administradores.get(i).validate()) {
+			if (!administradores.get(i).save()) {
 				println administradores.get(i).errors
 			} else {
 				println "Administradores agregados a la bbdd:"
-				administradores.get(i).save()
 				println administradores.get(i)
 			}
 		}
@@ -595,52 +590,42 @@ class BootStrap {
 		miembros.add(miembroDoce)
 			
 		for(int i = 0; i<miembros.size(); i++){
-			if (!miembros.get(i).validate()) {
+			if (!	miembros.get(i).save()) {
 				println miembros.get(i).errors
 			} else {
 				println "Miembros agregados a la bbdd:"
-				miembros.get(i).save()
 				println miembros.get(i)
 			}
 		}	
 		
+		// TODO
 		// Grupos actividad aprendiz (tabla intermedia para la relacion N N entre grupo actividad y aprendiz)	
 		def ArrayList<GrupoActividadAprendiz> grupos = new ArrayList<GrupoActividadAprendiz>()
 		
-		def grupoActividadAprendizUno = new GrupoActividadAprendiz(numero: "1", nombre: "grupo 1 aprendiz 2",
-			grupo: grupoActividadUno, aprendiz: aprendizDos)
+		def grupoActividadAprendizUno = new GrupoActividadAprendiz(grupo: grupoActividadUno, aprendiz: aprendizDos)
 		grupos.add(grupoActividadAprendizUno)
-		def grupoActividadAprendizDos = new GrupoActividadAprendiz(numero: "1", nombre: "grupo 1 aprendiz 3",
-			grupo: grupoActividadUno, aprendiz: aprendizTres)
+		def grupoActividadAprendizDos = new GrupoActividadAprendiz(grupo: grupoActividadUno, aprendiz: aprendizTres)
 		grupos.add(grupoActividadAprendizDos)
-		def grupoActividadAprendizTres = new GrupoActividadAprendiz(numero: "1", nombre: "grupo 1 aprendiz 4",
-			grupo: grupoActividadUno, aprendiz: aprendizCuatro)
+		def grupoActividadAprendizTres = new GrupoActividadAprendiz(grupo: grupoActividadUno, aprendiz: aprendizCuatro)
 		grupos.add(grupoActividadAprendizTres)
-		def grupoActividadAprendizCuatro = new GrupoActividadAprendiz(numero: "2", nombre: "grupo 2 aprendiz 2",
-			grupo: grupoActividadDos, aprendiz: aprendizCinco)
+		def grupoActividadAprendizCuatro = new GrupoActividadAprendiz(grupo: grupoActividadDos, aprendiz: aprendizCinco)
 		grupos.add(grupoActividadAprendizCuatro)
-		def grupoActividadAprendizCinco = new GrupoActividadAprendiz(numero: "2", nombre: "grupo 2 aprendiz 3",
-			grupo: grupoActividadDos, aprendiz: aprendizSeis)
+		def grupoActividadAprendizCinco = new GrupoActividadAprendiz(grupo: grupoActividadDos, aprendiz: aprendizSeis)
 		grupos.add(grupoActividadAprendizCinco)
-		def grupoActividadAprendizSeis = new GrupoActividadAprendiz(numero: "2", nombre: "grupo 2 aprendiz 4",
-			grupo: grupoActividadDos, aprendiz: aprendizSiete)
+		def grupoActividadAprendizSeis = new GrupoActividadAprendiz(grupo: grupoActividadDos, aprendiz: aprendizSiete)
 		grupos.add(grupoActividadAprendizSeis)
-		def grupoActividadAprendizSiete = new GrupoActividadAprendiz(numero: "3", nombre: "grupo 3 aprendiz 2",
-			grupo: grupoActividadTres, aprendiz: aprendizDos)
+		def grupoActividadAprendizSiete = new GrupoActividadAprendiz(grupo: grupoActividadTres, aprendiz: aprendizDos)
 		grupos.add(grupoActividadAprendizSiete)
-		def grupoActividadAprendizOcho = new GrupoActividadAprendiz(numero: "3", nombre: "grupo 3 aprendiz 3",
-			grupo: grupoActividadTres, aprendiz: aprendizTres)
+		def grupoActividadAprendizOcho = new GrupoActividadAprendiz(grupo: grupoActividadTres, aprendiz: aprendizTres)
 		grupos.add(grupoActividadAprendizOcho)
-		def grupoActividadAprendizNueve = new GrupoActividadAprendiz(numero: "3", nombre: "grupo 3 aprendiz 4",
-			grupo: grupoActividadTres, aprendiz: aprendizCuatro)
+		def grupoActividadAprendizNueve = new GrupoActividadAprendiz(grupo: grupoActividadTres, aprendiz: aprendizCuatro)
 		grupos.add(grupoActividadAprendizNueve)
 			
 		for(int i = 0; i<grupos.size(); i++){
-			if (!grupos.get(i).validate()) {
+			if (!grupos.get(i).save()) {
 				println grupos.get(i).errors
 			} else {
 				println "Grupos agregados a la bbdd:"
-				grupos.get(i).save()
 				println grupos.get(i)
 			}
 		}
@@ -669,12 +654,11 @@ class BootStrap {
 		evaluacionesAprendiz.add(evaluacionAprendizNueve)
 			
 		for(int i = 0; i<evaluacionesAprendiz.size(); i++){
-			if (!evaluacionesAprendiz.get(i).validate()) {
+			if (!evaluacionesAprendiz.get(i).save()) {
 				println evaluacionesAprendiz.get(i).errors
 			} else {
 				println "evaluacionesAprendiz agregados a la bbdd:"
-				evaluacionesAprendiz.get(i).save()
-				println evaluacionesAprendiz.get(i)
+				println "evaluacion: ${evaluacionesAprendiz.get(i).evaluacion} del aprendiz ${evaluacionesAprendiz.get(i).aprendiz}"
 			}
 		}
 		
@@ -687,11 +671,10 @@ class BootStrap {
 		calendarios.add(calendarioDos)
 		
 		for(int i = 0; i<calendarios.size(); i++){
-			if (!calendarios.get(i).validate()) {
+			if (!calendarios.get(i).save()) {
 				println calendarios.get(i).errors
 			} else {
 				println "calendarios agregados a la bbdd:"
-				calendarios.get(i).save()
 				println calendarios.get(i)
 			}
 		}
@@ -699,11 +682,10 @@ class BootStrap {
 		// Red
 		def red = Red.instance
 		
-		if (!red.validate()) {
+		if (!red.save()) {
 			println red.errors
 		} else {
 			println "Red agregada a la bbdd:"
-			red.save()
 			println red.titulo
 		}
     }

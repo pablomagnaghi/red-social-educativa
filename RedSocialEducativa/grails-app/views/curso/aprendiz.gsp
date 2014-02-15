@@ -34,7 +34,7 @@
 						<g:message code="Evaluaciones del cuatrimestre"/></g:link>
 					</div>
 					<div>
-						<g:link action="mostrar" controller="evaluacion" params="['cursoId': cursoId, 'cursoId': cursoId]">
+						<g:link action="evaluacionesAprendiz" controller="evaluacion" params="['cursoId': cursoId, 'cursoId': cursoId]">
 						<g:message code="Mis evaluaciones en el curso"/></g:link>
 					</div>
 					<div>

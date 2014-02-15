@@ -32,15 +32,16 @@ class AprendizService {
 			}
 			eq('usuario.id', usuarioId)
 		}
+		return aprendiz
 	}
-	
+
 	// Obtener el grupo en el que participa el aprendiz en esa actividad
 	def obtenerGrupoPorActividad(Usuario usuario, Long cuatrimestreId, Long actividadId) {
 
-		Long aprendizId = Aprendiz.findByUsuarioAndCuatrimestre(usuarioActual(), Cuatrimestre.get(cuatrimestreId))?.id
-		
+		Long aprendizId = Aprendiz.findByUsuarioAndCuatrimestre(usuario, Cuatrimestre.get(cuatrimestreId))?.id
+
 		def grupoActividadAprendiz = null
-		
+
 		if (aprendizId) {
 			def c = GrupoActividadAprendiz.createCriteria()
 			grupoActividadAprendiz = c.get {
@@ -50,39 +51,36 @@ class AprendizService {
 				eq('aprendiz.id', aprendizId)
 			}
 		}
-		
 		return grupoActividadAprendiz
 	}
-	
-	
+
+
 	def pertenece(Long aprendizId, Integer numeroGrupo) {
 		def aprendiz = Aprendiz.get(aprendizId)
 		return (aprendiz.grupo.numero == numeroGrupo)
 	}
-	
+
 	def realizarCambio(Long aprendizId, GrupoCurso grupo) {
-	
+
 		if (!grupo) {
 			return null
 		}
-		
+
 		def aprendiz = Aprendiz.get(aprendizId)
 		aprendiz.grupo = grupo
 
 		aprendiz.save flush:true
-	
+
 		return aprendiz
 	}
-	
+
 	def guardar(Aprendiz aprendiz) {
-		
 		if (aprendiz.save(flush:true)) {
 			return aprendiz
 		}
-		
 		return null
 	}
-	
+
 	def eliminar(Aprendiz aprendiz) {
 		aprendiz.delete flush:true
 	}

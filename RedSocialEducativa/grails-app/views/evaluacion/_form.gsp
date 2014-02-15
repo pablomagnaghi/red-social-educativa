@@ -1,7 +1,5 @@
 <%@ page import="com.fiuba.Evaluacion" %>
 
-<div> <g:hiddenField name="curso.id" value="${cursoId}"/></div>
-
 <div class="fieldcontain ${hasErrors(bean: evaluacionInstance, field: 'aprendices', 'error')} ">
 	<label for="aprendices">
 		<g:message code="evaluacion.aprendices.label" default="Aprendices" />
@@ -40,7 +38,7 @@
 		<g:message code="evaluacion.fecha.label" default="Fecha" />
 		
 	</label>
-	<g:textField name="fecha" value="${evaluacionInstance?.fecha}"/>
+	<g:datePicker name="fechaDate" precision="minute"  value="${new Date()}"  />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: evaluacionInstance, field: 'habilitada', 'error')} ">
@@ -49,14 +47,6 @@
 		
 	</label>
 	<g:checkBox name="habilitada" value="${evaluacionInstance?.habilitada}" />
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: evaluacionInstance, field: 'horario', 'error')} ">
-	<label for="horario">
-		<g:message code="evaluacion.horario.label" default="Horario" />
-		
-	</label>
-	<g:textField name="horario" value="${evaluacionInstance?.horario}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: evaluacionInstance, field: 'obligatoria', 'error')} ">
@@ -74,4 +64,6 @@
 	</label>
 	<g:checkBox name="parcial" value="${evaluacionInstance?.parcial}" />
 </div>
+
+<div><g:hiddenField name="curso.id" value="${params.cursoId}"/></div>
 

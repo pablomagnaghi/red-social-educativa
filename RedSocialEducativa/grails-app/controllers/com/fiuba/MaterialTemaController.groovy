@@ -44,14 +44,15 @@ class MaterialTemaController {
 		}
 		
 		if (materialTemaService.existe(materialTemaInstance, params.temaId.toLong())) {
-			flash.message = "Ya existe el material ${materialTemaInstance.titulo} del tema ${Tema.get(params.temaId)}"
+			flash.message = "Ya existe el material ${materialTemaInstance.titulo} en el tema ${Tema.get(params.temaId)}"
 			redirect action: "create", params: ['cursoId': params.cursoId, 'temaId': params.temaId]
 			return
 		}
 
 		if (!materialTemaService.guardar(materialTemaInstance)) {
-			render view:'create', model: [materialTemaInstance: materialTemaInstance],
-			params: ['cursoId': params.cursoId, 'temaId': params.temaId]
+			def mediador = Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(params.cursoId))
+			render view:'create', model: [materialTemaInstance: materialTemaInstance, mediador: mediador], params: ['cursoId': params.cursoId, 
+				'temaId': params.temaId]
 			return
 		}
 

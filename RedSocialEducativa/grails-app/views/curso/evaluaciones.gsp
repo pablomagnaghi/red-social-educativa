@@ -33,7 +33,7 @@
 						<li>${it.fecha}-${it.horario}</li>
 					</span>
 					<span>
-						<g:link controller="evaluacion" action="general" id="${it.id}" params="['cursoId': cursoId]">
+						<g:link controller="evaluacion" action="menuAprendiz" id="${it.id}" params="['cursoId': cursoId]">
 							<g:message code="Acceder a la evaluacion"/></g:link>		
 					</span>		
 				</g:each>

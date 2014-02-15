@@ -14,15 +14,18 @@
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
 				<g:if test="${aprendizId}">
-					<li><g:link class="list" controller="curso" action="aprendiz" params="['cursoId': cursoId]">
-						<g:message code="Menu aprendiz  del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
+					<li><g:link class="list" controller="curso" action="aprendiz" params="['cursoId': params.cursoId]">
+						<g:message code="Menu aprendiz  del curso ${com.fiuba.Curso.get(params.cursoId)}" args="[entityName]" /></g:link></li>
 				</g:if>
 				<g:else>
-					<li><g:link class="list" controller="curso" action="mediador" params="['cursoId': cursoId]">
-						<g:message code="Menu mediador  del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
+					<li><g:link class="list" controller="curso" action="mediador" params="['cursoId': params.cursoId]">
+						<g:message code="Menu mediador  del curso ${com.fiuba.Curso.get(params.cursoId)}" args="[entityName]" /></g:link></li>
 				</g:else>	
 			</ul>
 		</div>
+		<h2>Params: ${params}</h2>
+		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+		<h2>Curso Id: ${params.cursoId}</h2>
 		<div>
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>

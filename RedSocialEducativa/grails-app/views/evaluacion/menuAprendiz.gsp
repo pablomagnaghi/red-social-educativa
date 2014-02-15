@@ -13,18 +13,17 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<g:if test="${aprendizId}">
-					<li><g:link class="list" controller="curso" action="aprendiz" params="['cursoId': cursoId]">
-						<g:message code="Menu aprendiz  del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
-				</g:if>
-				<g:else>
-					<li><g:link class="list" controller="curso" action="mediador" params="['cursoId': cursoId]">
-						<g:message code="Menu mediador  del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
-				</g:else>	
-				<li><g:link class="list" controller="curso" action="evaluaciones" params="['cursoId': cursoId]">
-						<g:message code="Evaluaciones del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
+		
+					<li><g:link class="list" controller="curso" action="aprendiz" params="['cursoId': params.cursoId]">
+						<g:message code="Menu aprendiz  del curso ${com.fiuba.Curso.get(params.cursoId)}" args="[entityName]" /></g:link></li>
+		
+				<li><g:link class="list" controller="curso" action="evaluaciones" params="['cursoId': params.cursoId]">
+						<g:message code="Evaluaciones del curso ${com.fiuba.Curso.get(params.cursoId)}" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+			<h2>Params: ${params}</h2>
+		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+		<h2>Curso Id: ${params.cursoId}</h2>
 		<div>
 			<h1><g:message code="Evaluacion: ${evaluacion}" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -37,7 +36,7 @@
 			</g:if>
 			<g:else>
 				<fieldset class="buttons">
-					<g:link class="edit" action="inscribirme" id="${evaluacion.id}" params="['cursoId': cursoId]">
+					<g:link class="edit" action="inscribirme" id="${evaluacion.id}" params="['cursoId': params.cursoId]">
 						<g:message code="Inscribirme" /></g:link>
 				</fieldset>
 			</g:else>

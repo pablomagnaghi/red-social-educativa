@@ -13,12 +13,15 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': cursoId]">
+				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': params.cursoId]">
 					<g:message code="Tareas mediador" /></g:link></li>
-				<li><g:link class="create" action="create" params="['cursoId': cursoId]">
+				<li><g:link class="create" action="create" params="['cursoId': params.cursoId]">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+			<h2>Params: ${params}</h2>
+		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+		<h2>Curso Id: ${params.cursoId}</h2>
 		<div id="list-evaluacion" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -46,7 +49,7 @@
 				<g:each in="${evaluacionInstanceList}" status="i" var="evaluacionInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${evaluacionInstance.id}">${fieldValue(bean: evaluacionInstance, field: "aula")}</g:link></td>
+						<td><g:link action="show" id="${evaluacionInstance.id}"  params="['cursoId': params.cursoId]">${fieldValue(bean: evaluacionInstance, field: "aula")}</g:link></td>
 					
 						<td>${fieldValue(bean: evaluacionInstance, field: "descripcion")}</td>
 					
@@ -56,7 +59,7 @@
 					
 						<td>${fieldValue(bean: evaluacionInstance, field: "horario")}</td>
 						
-						<td><g:link action="show" id="${evaluacionInstance.id}">Ver detalle ${evaluacionInstance.id}</g:link></td>
+						<td><g:link action="show" id="${evaluacionInstance.id}"  params="['cursoId': params.cursoId]">Ver detalle ${evaluacionInstance.id}</g:link></td>
 					
 					
 					</tr>
@@ -64,7 +67,7 @@
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${evaluacionInstanceCount ?: 0}" params="['cursoId': cursoId]"/>
+				<g:paginate total="${evaluacionInstanceCount ?: 0}" params="['cursoId': params.cursoId]"/>
 			</div>
 		</div>
 	</body>
