@@ -48,6 +48,6 @@ class CuatrimestreService {
 	}
 
 	def eliminar(Cuatrimestre cuatrimestre) {
-		cuatrimestreInstance.delete flush:true
+		cuatrimestre.delete flush:true
 	}
 }
