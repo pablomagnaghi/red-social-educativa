@@ -155,13 +155,13 @@ class CursoController {
 		println params
 
 		cursoId = params.cursoId
-		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(cursoId)
+		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
 
 		[actividades: Actividad.findAllByCuatrimestre(cuatrimestre,[max: params.max, offset: params.offset]),
 			actividadesCant: Actividad.findAllByCuatrimestre(cuatrimestre).size(), cursoId: cursoId,
 			cuatrimestreId: cuatrimestre?.id,
 			mediador: Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId)),
-			aprendiz: aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, cursoId.toLong())]
+			aprendiz: aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, params.cursoId.toLong())]
 	}
 
 	@Secured('permitAll')
@@ -176,7 +176,7 @@ class CursoController {
 		[evaluaciones: Evaluacion.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
 			evaluacionesCant: Evaluacion.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId,
 			mediador: Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId)),
-			aprendiz: aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, cursoId)]
+			aprendiz: aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, cursoId.toLong())]
 	}
 
 	@Secured('permitAll')

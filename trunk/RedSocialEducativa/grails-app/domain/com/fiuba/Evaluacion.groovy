@@ -14,10 +14,11 @@ class Evaluacion {
 	
 	static hasMany = [aprendices: EvaluacionAprendiz]
 	
-	String toString() {
-		"${fecha} - ${horario}"
-	}
     static constraints = {
 		
     }
+	
+	String toString() {
+		"${fecha} - ${horario}"
+	}
 }

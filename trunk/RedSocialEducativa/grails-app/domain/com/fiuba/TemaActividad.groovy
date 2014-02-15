@@ -6,8 +6,4 @@ class TemaActividad {
 	
     static constraints = {
     }
-	
-	String toString() {
-		"${tema}"
-	}
 }

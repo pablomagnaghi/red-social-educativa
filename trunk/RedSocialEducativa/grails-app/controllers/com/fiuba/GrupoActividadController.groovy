@@ -13,8 +13,9 @@ class GrupoActividadController {
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def menuAprendiz() {
 		params.max = Utilidades.MAX_PARAMS
-		
-		[aprendices: grupoActividadService.obtenerAprendicesPorActividadPaginado(params.actividadId.toLong(), params.max, params. offset),
+		Integer offset = params.offset?.toInteger() ?: 0
+
+		[aprendices: grupoActividadService.obtenerAprendicesPorActividadPaginado(params.actividadId.toLong(), params.max, offset),
 			aprendicesCant: grupoActividadService.obtenerAprendicesPorActividad(params.actividadId.toLong()).size(), 
 			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
 	}
@@ -23,8 +24,9 @@ class GrupoActividadController {
 	def menuMed() {
 		
 		params.max = Utilidades.MAX_PARAMS
+		Integer offset = params.offset?.toInteger() ?: 0
 		
-		[aprendices: grupoActividadService.obtenerAprendicesPorActividadPaginado(params.actividadId.toLong(), params.max, params. offset),
+		[aprendices: grupoActividadService.obtenerAprendicesPorActividadPaginado(params.actividadId.toLong(), params.max, offset),
 			aprendicesCant: grupoActividadService.obtenerAprendicesPorActividad(params.actividadId.toLong()).size(),
 			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
 	}
@@ -32,7 +34,7 @@ class GrupoActividadController {
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def crear() {
 
-		def aprendizId = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId)).id
+		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
 		def grupoActividadAprendiz = grupoActividadService.obtenerGrupoAprendiz(aprendiz, params.actividadId.toLong())
 		def actividad = Actividad.get(params.actividadId)
 		
@@ -51,9 +53,9 @@ class GrupoActividadController {
 
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def muestraAprendiz(GrupoActividad grupoActividadInstance) {	
-		def aprendizId = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId)).id
+		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
 
-		def participa = grupoActividadService.aprendizParcipa(grupoActividadInstance, aprendiz)
+		def participa = grupoActividadService.aprendizParticipa(grupoActividadInstance, aprendiz)
 		
 		respond grupoActividadInstance, model: [participa: participa], params: ['cursoId' :params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
 			'actividadId': params.actividadId]
@@ -73,14 +75,13 @@ class GrupoActividadController {
 	
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def realizarCambio() {
-
 		Integer grupoActividadAprendizId = params.grupoActividadAprendizId.toInteger()
 		Integer numeroGrupo = params.numero.size() ? params.numero.toInteger(): 0
 		
 		def grupoActividadAprendiz = GrupoActividadAprendiz.get(grupoActividadAprendizId)
 		
 		if (grupoActividadAprendiz.grupo.numero == numeroGrupo) {
-			flash.message = "El aprendiz ${grupoActividadAprendiz.aprendiz} ya pertenece al grupo ${numeroGrupo}"
+			flash.message = "El aprendiz ya pertenece al grupo ${numeroGrupo}"
 			redirect action: "cambios", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
 				'actividadId': params.actividadId]
 			return
@@ -90,13 +91,12 @@ class GrupoActividadController {
 		
 		if (!grupoActividadService.realizarCambio(grupoActividadAprendiz, grupoActividadService.obtenerGrupoPorNumero(actividad, numeroGrupo))) {
 			flash.message = "El numero de grupo no es válido. Los posibles numeros son ${grupoActividadService.obtenerGrupos(actividad)}"
-			redirect action: "cambios", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+			redirect action: "cambios", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 			return
 		}
-			
-		flash.message = "El aprendiz ${grupoActividadAprendiz.aprendiz} ahora pertenece al grupo ${numeroGrupo}"
-		redirect action: "menuMed", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
-			'actividadId': params.actividadId]
+		
+		flash.message = "El aprendiz ahora pertenece al grupo ${numeroGrupo}"
+		redirect action: "menuMed", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 	}
 	
 	@Secured("hasRole('ROL_APRENDIZ')")
@@ -115,7 +115,7 @@ class GrupoActividadController {
 		}
 		
 		if (!grupoActividadService.agregarAprendiz(grupoActividadInstance, seguridadService.usuarioActual(), params.cuatrimestreId.toLong())) {
-			render view:'crear', model: [grupoCursoInstance: grupoCursoInstance, numGrupo: params.numGrupo],
+			render view:'crear', model: [grupoActividadInstance: grupoActividadInstance, numGrupo: params.numGrupo],
 				params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 			return
 		}
@@ -133,8 +133,9 @@ class GrupoActividadController {
 				'actividadId': params.actividadId], method:"GET"
 			return
 		}
-	
-		def grupoActividadAprendiz = grupoActividadService.obtenerGrupoAprendiz(aprendiz.id, params.actividadId.toLong())
+		
+		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
+		def grupoActividadAprendiz = grupoActividadService.obtenerGrupoAprendiz(aprendiz, params.actividadId.toLong())
 		def actividad = Actividad.get(params.actividadId)
 		
 		if (grupoActividadAprendiz) {
@@ -166,7 +167,7 @@ class GrupoActividadController {
 		
 		if (!grupoActividadService.guardar(grupoActividadInstance)) {
 			render view:'editar', model: [grupoActividadInstance: grupoActividadInstance], params:['id': params.id, 'cursoId': params.cursoId, 
-				'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadId]
+				'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 			return
 		}
 

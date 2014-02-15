@@ -49,7 +49,7 @@ class GrupoActividadService {
 		
 		return aprendizParticipa
 	}
-	
+
     def guardar(GrupoActividad grupo) {
 		
 		if (grupo.save(flush:true)) {
@@ -61,11 +61,13 @@ class GrupoActividadService {
 	
 	def agregarAprendiz(GrupoActividad grupo, Usuario usuario, Long cuatrimestreId) {
 		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuario, Cuatrimestre.get(cuatrimestreId))
-		def grupoActividadAprendiz = new GrupoActividadAprendiz(aprendiz: aprendiz, grupo: grupo)
 		
-		if (grupoActividadAprendiz.save(flush:true)) {
+		if (guardar(grupo)) {
+			def grupoActividadAprendiz = new GrupoActividadAprendiz(aprendiz: aprendiz, grupo: grupo)
+			grupoActividadAprendiz.save flush:true
 			return grupo
 		}
+		
 		return null
 	}
 

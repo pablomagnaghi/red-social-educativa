@@ -1,161 +1,93 @@
 package com.fiuba
 
-
-
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
-
-@Transactional(readOnly = true)
-
 import org.springframework.security.access.annotation.Secured
 
-@Secured('permitAll')
 class MaterialGrupoActividadController {
 	
-	def springSecurityService
+	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	
-	private usuarioActual() {
-		return Usuario.get(springSecurityService.principal.id)
-	}
+	def seguridadService
+	def materialGrupoActividadService
+	def grupoActividadService
 	
-	def cursoId
-	def cuatrimestreId
-	def actividadId
-	def grupoActividadId
-	
+	@Secured("hasRole('ROL_MEDIADOR')")
 	def muestraMediador (MaterialGrupoActividad materialGrupoActividadInstance) {
-		
-		println "material grupo show: cursoId: ${params.cursoId}, tema Id. ${params.temaId}"
-		println "material grupo Id: ${params.id}"
-		
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
-		actividadId = params.actividadId
-		grupoActividadId = params.grupoActividadId
-		
-		respond materialGrupoActividadInstance, model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId,
-			actividadId: actividadId, grupoActividadId: grupoActividadId]
+		respond materialGrupoActividadInstance, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
+			'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]
 	}
 	
-	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
+	@Secured("hasRole('ROL_APRENDIZ')")
 	def show(MaterialGrupoActividad materialGrupoActividadInstance) {
-		
-		println "material grupo show: cursoId: ${params.cursoId}, tema Id. ${params.temaId}"
-		println "material grupo Id: ${params.id}"
-		
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
-		actividadId = params.actividadId
-		grupoActividadId = params.grupoActividadId
-		
-		respond materialGrupoActividadInstance, model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId, 
-			actividadId: actividadId, grupoActividadId: grupoActividadId]
+		respond materialGrupoActividadInstance, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
+			'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]
 	}
 
-
+	@Secured("hasRole('ROL_APRENDIZ')")
 	def create() {
+		println "CREATET"
+		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
+		def grupoActividadAprendiz = grupoActividadService.aprendizParticipa(GrupoActividad.get(params.grupoActividadId), aprendiz)
 		
-		println "material grupo params: ${params}"
-		
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
-		actividadId = params.actividadId
-		grupoActividadId = params.grupoActividadId
-		
-		def aprendizId = Aprendiz.findByUsuarioAndCuatrimestre(usuarioActual(), Cuatrimestre.get(cuatrimestreId)).id
-		
-		def c = GrupoActividadAprendiz.createCriteria()
-		def grupoActividadAprendiz = c {
-			eq('grupo.id', grupoActividadId as long)
-			eq('aprendiz.id', aprendizId as long)
-		}
-		
-		println "aprendiz del create grupo actividad aprendiz"
-		println grupoActividadAprendiz
-		
-		//def aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
-		respond new MaterialGrupoActividad(params), params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId],
-			model:[cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId, grupoActividadId: grupoActividadId, 
-				aprendiz: grupoActividadAprendiz.first().aprendiz]
+		respond new MaterialGrupoActividad(params), model:[aprendiz: grupoActividadAprendiz.aprendiz], params:['cursoId': params.cursoId, 
+			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]
 	}
 	
-	@Transactional
+	@Secured("hasRole('ROL_APRENDIZ')")
 	def save(MaterialGrupoActividad materialGrupoActividadInstance) {
 		if (materialGrupoActividadInstance == null) {
 			notFound()
 			return
 		}
 
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
-		actividadId = params.actividadId
-		grupoActividadId = params.grupoActividadId
-		
-		
-		if (materialGrupoActividadInstance.hasErrors()) {
-			respond materialGrupoActividadInstance.errors, view:'create', params: ['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'grupoActividadId': grupoActividadId],
-			model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId, grupoActividadId: grupoActividadId]
+		if (materialGrupoActividadService.existe(materialGrupoActividadInstance, params.grupoActividadId.toLong())) {
+			flash.message = "Ya existe el material ${materialGrupoActividadInstance.titulo} en el grupo ${GrupoActividad.get(params.grupoActividadId)}"
+			redirect action: "create", params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
+				'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]
 			return
 		}
-
-		materialGrupoActividadInstance.save flush:true
-
-		request.withFormat {
-			form {
-				flash.message = message(code: 'default.created.message', args: [message(code: 'materialGrupoActividadInstance.label', 
-					default: 'MaterialGrupoActividad'), materialGrupoActividadInstance.id])
-				redirect controller:"grupoActividad", action:"muestraAprendiz", params:['id': grupoActividadId, 
-					'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId, 'grupoActividadId': grupoActividadId]
-			}
-			'*' { respond materialGrupoInstance, [status: CREATED] }
-		}
-	}
-
-	def edit(MaterialGrupoActividad materialGrupoActividadInstance) {
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
-		actividadId = params.actividadId
-		grupoActividadId = params.grupoActividadId
 		
-		respond materialGrupoActividadInstance, model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId, 
-			grupoActividadId: grupoActividadId]
-	}
-
-	@Transactional
-	def update(MaterialGrupoActividad materialGrupoActividadInstance) {
+		if (!materialGrupoActividadService.guardar(materialGrupoActividadInstance)) {
+			def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
+			def grupoActividadAprendiz = grupoActividadService.aprendizParticipa(GrupoActividad.get(params.grupoActividadId), aprendiz)
 			
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
-		actividadId = params.actividadId
-		grupoActividadId = params.grupoActividadId
+			render view:'create', model: [materialGrupoActividadInstance: materialGrupoActividadInstance, aprendiz: grupoActividadAprendiz.aprendiz],
+				params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId, 
+					'grupoActividadId': params.grupoActividadId]
+			return
+		}
 		
+		flash.message = message(code: 'default.created.message', args: [message(code: 'materialGrupoActividadInstance.label', default: 'MaterialGrupoActividad'), materialGrupoActividadInstance.id])
+		redirect controller:"grupoActividad", action:"muestraAprendiz", params:['id': params.grupoActividadId,  'cursoId': params.cursoId, 
+			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
+	}
+
+	@Secured("hasRole('ROL_APRENDIZ')")
+	def edit(MaterialGrupoActividad materialGrupoActividadInstance) {
+		respond materialGrupoActividadInstance, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
+			'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]
+	}
+
+	@Secured("hasRole('ROL_APRENDIZ')")
+	def update(MaterialGrupoActividad materialGrupoActividadInstance) {
 		if (materialGrupoActividadInstance == null) {
 			notFound()
 			return
 		}
 
-		if (materialGrupoActividadInstance.hasErrors()) {
-			respond materialGrupoActividadInstance.errors, view:'edit', params:['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 
-				'actividadId': actividadId, 'grupoActividadId': grupoActividadId],
-				model: [cursoId: cursoId, cuatrimestreId: cuatrimestreId, actividadId: actividadId, grupoActividadId: grupoActividadId]
+		if (!materialGrupoActividadService.guardar(materialGrupoActividadInstance)) {
+			render view:'edit', model: [materialGrupoActividadInstance: materialGrupoActividadInstance],
+				params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId,
+					'grupoActividadId': params.grupoActividadId]
 			return
 		}
-
-		materialGrupoActividadInstance.save flush:true
-
-		request.withFormat {
-			form {
-				flash.message = message(code: 'default.updated.message', args: [message(code: 'MaterialGrupoActividad.label', 
-					default: 'MaterialGrupoActividad'), materialGrupoActividadInstance.id])
-				redirect action:"show", params:['id': materialGrupoActividadInstance.id, 'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 
-					'actividadId': actividadId, 'grupoActividadId': grupoActividadId]
-			}
-			'*'{ respond materialGrupoActividadInstance, [status: OK] }
-		}
+		
+		flash.message = message(code: 'default.updated.message', args: [message(code: 'MaterialGrupoActividad.label', default: 'MaterialGrupoActividad'), materialGrupoActividadInstance.id])
+		redirect action:"show", params:['id': materialGrupoActividadInstance.id, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
+			'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]
 	}
 
-	@Transactional
+	@Secured("hasRole('ROL_APRENDIZ')")
 	def delete(MaterialGrupoActividad materialGrupoActividadInstance) {
 
 		if (materialGrupoActividadInstance == null) {
@@ -163,34 +95,16 @@ class MaterialGrupoActividadController {
 			return
 		}
 
-		cursoId = params.cursoId
-		cuatrimestreId = params.cuatrimestreId
-		actividadId = params.actividadId
-		grupoActividadId = params.grupoActividadId
-		
-		materialGrupoActividadInstance.delete flush:true
+		materialGrupoActividadService.eliminar(materialGrupoActividadInstanc)
 
-		request.withFormat {
-			form {
-				flash.message = message(code: 'default.deleted.message', args: [message(code: 'MaterialGrupoActividad.label', 
-					default: 'MaterialGrupo'), materialGrupoActividadInstance.id])
-				redirect controller:"grupoActividad", action:"muestraAprendiz", params:['id': grupoActividadId, 
-					'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId], method:"GET"
-			}
-			'*'{ render status: NO_CONTENT }
-		}
+		flash.message = message(code: 'default.deleted.message', args: [message(code: 'MaterialGrupoActividad.label', default: 'MaterialGrupo'), materialGrupoActividadInstance.id])
+		redirect controller:"grupoActividad", action:"muestraAprendiz", params:['id': params.grupoActividadId, 'cursoId': params.cursoId, 
+			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId], method:"GET"
 	}
 
 	protected void notFound() {
-		request.withFormat {
-			form {
-				flash.message = message(code: 'default.not.found.message', args: [message(code: 'materialGrupoActividadInstance.label', 
-					default: 'MaterialGrupoActividad'), params.id])
-				redirect controller: "grupoActividad", action:"mostrar", params:['id': grupoActividadId, 
-					'cursoId': cursoId, 'cuatrimestreId': cuatrimestreId, 'actividadId': actividadId], method: "GET"
-			}
-			'*'{ render status: NOT_FOUND }
-		}
+		flash.message = message(code: 'default.not.found.message', args: [message(code: 'materialGrupoActividadInstance.label', default: 'MaterialGrupoActividad'), params.id])
+		redirect controller: "grupoActividad", action:"mostrar", params:['id': params.grupoActividadId, 
+			'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId], method: "GET"
 	}
 }
-

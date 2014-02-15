@@ -17,10 +17,10 @@ class Cuatrimestre {
 
 	static hasMany = [actividades: Actividad, aprendices: Aprendiz, grupos: GrupoCurso, noticiasCurso: NoticiaCurso]
 
+	static constraints = {
+	}
+	
 	String toString() {
 		"${anio} - ${numero}"
-	}
-
-	static constraints = {
 	}
 }

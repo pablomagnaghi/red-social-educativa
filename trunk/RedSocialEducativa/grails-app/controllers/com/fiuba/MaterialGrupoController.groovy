@@ -37,7 +37,7 @@ class MaterialGrupoController {
 		}
 	
 		if (materialGrupoService.existe(materialGrupoInstance, params.grupoId.toLong())) {
-			flash.message = "Ya existe el material ${materialGrupoInstance.titulo} del grupo ${Grupo.get(params.grupoId)}"
+			flash.message = "Ya existe el material ${materialGrupoInstance.titulo} en el grupo ${Grupo.get(params.grupoId)}"
 			redirect action: "create", params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'grupoId': params.grupoId]
 			return
 		}

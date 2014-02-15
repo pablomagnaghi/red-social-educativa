@@ -58,7 +58,7 @@
 					<g:message code="Temas" /></g:link></li>
 				<br>
 				<li><g:link class="list" action="index" controller="evaluacion" params="['cursoId': cursoId]">
-					<g:message code="Administrar evaluaciones del curso" /></g:link></li>		
+					<g:message code="Evaluaciones" /></g:link></li>		
 				<br>	
 				<li><g:link class="list" action="index" controller="cuatrimestre" params="['cursoId': cursoId]">
 					<g:message code="Consolidar cuatrimestre (IMPLEMENTAR)" /></g:link></li>	

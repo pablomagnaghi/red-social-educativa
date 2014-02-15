@@ -6,8 +6,4 @@ class GrupoActividadAprendiz {
 	
     static constraints = {
     }
-	
-	String toString() {
-		"${aprendiz}"
-	}
 }

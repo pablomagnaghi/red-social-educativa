@@ -1,210 +1,136 @@
 package com.fiuba
 
-
-
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
-
-@Transactional(readOnly = true)
-
 import org.springframework.security.access.annotation.Secured
 
-@Secured('permitAll')
 class EvaluacionController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    // static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-	def springSecurityService
+	def seguridadService
+	def evaluacionService
+	def aprendizService
 	
-	private usuarioActual() {
-		return Usuario.get(springSecurityService.principal.id)
-	}
-	
-	def cursoId
-	
-	def general() {
-		params.max = 5 // Math.min(max ?: 10, 100)
-
-		println "actividad CURSOID: ${params}"
+	@Secured('permitAll')
+	def menuAprendiz(Evaluacion evaluacion) {
 		
-		cursoId = params.cursoId
-		def evaluacionId = params.id
-		
-		println "evaluacionId 1: ${evaluacionId}"
-		
-		def evaluacion = Evaluacion.get(evaluacionId)
-		
-		def aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
-		
+		def aprendiz = aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, params.cursoId.toLong())
 		def evaluacionAprendiz = EvaluacionAprendiz.findByAprendizAndEvaluacion(aprendiz, evaluacion)
 		
-		println "hay evaluacion"
-		println evaluacionAprendiz
-		
-		println "evaluacion ID: ${evaluacion.id}"
-		
-		[cursoId: cursoId, evaluacion: evaluacion, evaluacionAprendiz: evaluacionAprendiz]
+		[evaluacion: evaluacion, evaluacionAprendiz: evaluacionAprendiz, params: ['cursoId': params.cursoId]]
 	}
 	
-	def inscribirme() {
-		cursoId = params.cursoId
-		def evaluacionId = params.id
-		
-		println "INSCRIBIRME"
-		println "curso: ${cursoId}"
-		println "evaluacionIn: ${evaluacionId}"
-		
-		def evaluacion = Evaluacion.get(evaluacionId)
-		def aprendiz = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))
-		
-		def evaluacionAprendiz = new EvaluacionAprendiz(evaluacion: evaluacion, aprendiz: aprendiz)
-		
-		evaluacionAprendiz.save flush:true
-		
-		flash.message = "${evaluacionAprendiz.aprendiz} ya ha sido inscripto en la evaluacion ${evaluacionAprendiz.evaluacion}"
-		redirect action: "general", params:['id': evaluacionId, 'cursoId': cursoId]
-	}
-	
-	def mostrar() {
-		params.max = 5 // Math.min(max ?: 10, 100)
-
-		println "actividad CURSOID: ${params.cursoId}"
-		
-		cursoId = params.cursoId
-		
-		def aprendizId = Aprendiz.findByUsuarioAndCurso(usuarioActual(), Curso.get(cursoId))?.id
-		
-		def evaluacionesAprendiz = null
-		
-		if (aprendizId) {
-			def c = EvaluacionAprendiz.createCriteria()
-			evaluacionesAprendiz = c {
-				evaluacion {
-					eq('curso.id', cursoId as long)
-				}
-				eq('aprendiz.id', aprendizId as long)
-			}
+	@Secured("hasRole('ROL_APRENDIZ')")
+	def inscribirme(Evaluacion evaluacion) {
+		if (evaluacion == null) {
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'evaluacionInstance.label', default: 'Evaluacion'), params.id])
+			redirect action: "menuAprendiz", params:['id': params.id, 'cursoId': params.cursoId], method: "GET"
+			return
 		}
 		
-		[cursoId: cursoId, aprendizId: aprendizId, evaluacionesAprendiz: evaluacionesAprendiz]
+		def aprendiz = aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, params.cursoId.toLong())
+		evaluacionService.inscribirAprendiz(evaluacion, aprendiz)
+
+		flash.message = "La inscripcion ha sido realizada exitosamente"
+		redirect action: "menuAprendiz", params:['id': params.id, 'cursoId': params.cursoId]
 	}
 	
-	// Metodos para el mediador
-    def index(Integer max) {
+	@Secured("hasRole('ROL_APRENDIZ')")
+	def evaluacionesAprendiz(Evaluacion evaluacion) {
 		
-		params.max = 2/* Math.min(max ?: 10, 100)*/
+		def aprendiz = aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, params.cursoId.toLong())
 		
-		println "evaluacion index"
-		println params
-			
-		cursoId = params.cursoId
-				
-		[evaluacionInstanceList: Evaluacion.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
-			evaluacionInstanceCount: Evaluacion.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId]
-    }
+		def evaluacionesAprendiz = evaluacionService.obtenerEvaluacionesPorAprendiz(aprendiz, params.cursoId.toLong())
 
+		[aprendizId: aprendiz?.id, evaluacionesAprendiz: evaluacionesAprendiz, params: ['cursoId': params.cursoId]]
+	}
+	
+	@Secured("hasRole('ROL_MEDIADOR')")
+    def index() {
+		
+		params.max = Utilidades.MAX_PARAMS
+
+		[evaluacionInstanceList: Evaluacion.findAllByCurso(Curso.get(params.cursoId),[max: params.max, offset: params.offset]),
+			evaluacionInstanceCount: Evaluacion.findAllByCurso(Curso.get(params.cursoId)).size(), params: ['cursoId': params.cursoId]]
+    }
+	
+	@Secured("hasRole('ROL_MEDIADOR')")
     def show(Evaluacion evaluacionInstance) {
-		println "evaluacion params: ${params}"
-		respond evaluacionInstance, model:[cursoId: cursoId]
+		respond evaluacionInstance, params:['cursoId': params.cursoId]
     }
-
+	
+	@Secured("hasRole('ROL_MEDIADOR')")
     def create() {
-        respond new Evaluacion(params)
-		
-		println "evaluacion create curso params: ${params}"
-		cursoId = params.cursoId
-
-		respond new Evaluacion(params), params:['cursoId': cursoId], model:[cursoId: cursoId]
+		respond new Evaluacion(params), params:['cursoId': params.cursoId]
     }
 
-    @Transactional
+    @Secured("hasRole('ROL_MEDIADOR')")
     def save(Evaluacion evaluacionInstance) {
         if (evaluacionInstance == null) {
             notFound()
             return
         }
 
-		cursoId = evaluacionInstance.curso.id
+		//TODO vef fecha y horario
+		//actividadInstance.fechaFinalizacion = params.fechaFinalizacionDate.format(Utilidades.FORMATO_FECHA_NUMERICO)
+		println "ANTES"
+		println evaluacionInstance.fecha
+		println evaluacionInstance.horario
 		
-        if (evaluacionInstance.hasErrors()) {
-            respond evaluacionInstance.errors, view:'create', params:['cursoId': cursoId], model: [cursoId: cursoId]
-            return
-        }
-
-        evaluacionInstance.save flush:true
-
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'evaluacionInstance.label', 
-					default: 'Evaluacion'), evaluacionInstance.id])
-                redirect action: "index", params:['cursoId': cursoId]
-            }
-            '*' { respond evaluacionInstance, [status: CREATED] }
-        }
+		evaluacionInstance.fecha = params.fechaDate.format(Utilidades.FORMATO_FECHA_NUMERICO)
+		evaluacionInstance.horario = params.fechaDate.getTimeString()
+		
+		println "DESPUES"
+		println evaluacionInstance.fecha 
+		println evaluacionInstance.horario
+		
+		if (!evaluacionService.guardar(evaluacionInstance)) {
+			render view:'create', model: [evaluacionInstance: evaluacionInstance], params:['cursoId': params.cursoId]
+			return
+		}
+		
+		flash.message = message(code: 'default.created.message', args: [message(code: 'evaluacionInstance.label', default: 'Evaluacion'), evaluacionInstance.id])
+		redirect action: "index", params:['cursoId': params.cursoId]
     }
 
+	@Secured("hasRole('ROL_MEDIADOR')")
     def edit(Evaluacion evaluacionInstance) {
-		cursoId = params.cursoId
-		respond evaluacionInstance, params:['cursoId': cursoId], model:[cursoId: cursoId]
+		respond evaluacionInstance, params:['cursoId': params.cursoId]
     }
 	
-    @Transactional
+    @Secured("hasRole('ROL_MEDIADOR')")
     def update(Evaluacion evaluacionInstance) {
         if (evaluacionInstance == null) {
             notFound()
             return
         }
 
-		cursoId = params.cursoId
-		
-        if (evaluacionInstance.hasErrors()) {
-            respond evaluacionInstance.errors, view:'edit', params:['cursoId': cursoId], model: [cursoId: cursoId]
+        if (!evaluacionService.guardar(evaluacionInstance)) {
+            render view:'edit', model: [evaluacionInstance: evaluacionInstance], params:['cursoId': params.cursoId]
             return
         }
 
-        evaluacionInstance.save flush:true
-
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Evaluacion.label', 
-					default: 'Evaluacion'), evaluacionInstance.id])
-                redirect evaluacionInstance
-            }
-            '*'{ respond evaluacionInstance, [status: OK] }
-        }
+        flash.message = message(code: 'default.updated.message', args: [message(code: 'Evaluacion.label', default: 'Evaluacion'), evaluacionInstance.id])
+		redirect action: "show", params:['id': evaluacionInstance.id, 'cursoId': params.cursoId]
     }
 
-    @Transactional
+    @Secured("hasRole('ROL_MEDIADOR')")
     def delete(Evaluacion evaluacionInstance) {
 
         if (evaluacionInstance == null) {
             notFound()
             return
         }
-		
-		cursoId = params.cursoId
-		
-        evaluacionInstance.delete flush:true
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Evaluacion.label', 
-					default: 'Evaluacion'), evaluacionInstance.id])
-                redirect action:"index", params:['cursoId': cursoId], method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
+		evaluacionService.eliminar(evaluacionInstance)
+		
+        flash.message = message(code: 'default.deleted.message', args: [message(code: 'Evaluacion.label', default: 'Evaluacion'), evaluacionInstance.id]) 
+		redirect action:"index", params:['cursoId': params.cursoId], method:"GET"
     }
 
     protected void notFound() {
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'evaluacionInstance.label', 
-					default: 'Evaluacion'), params.id])
-                redirect action: "index", params:['cursoId': cursoId], method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
+        flash.message = message(code: 'default.not.found.message', args: [message(code: 'evaluacionInstance.label', default: 'Evaluacion'), params.id])
+        redirect action: "index", params:['cursoId': params.cursoId], method: "GET"
     }
 }
 

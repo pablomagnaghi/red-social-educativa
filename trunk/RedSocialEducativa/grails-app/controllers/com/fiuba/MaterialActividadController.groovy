@@ -46,7 +46,7 @@ class MaterialActividadController {
 		println materialActividadService.existe(materialActividadInstance, params.actividadId.toLong())
 		
 		if (materialActividadService.existe(materialActividadInstance, params.actividadId.toLong())) {
-			flash.message = "Ya existe el material ${materialActividadInstance.titulo} de la actividad ${Actividad.get(params.actividadId)}"
+			flash.message = "Ya existe el material ${materialActividadInstance.titulo} en la actividad ${Actividad.get(params.actividadId)}"
 			redirect action: "create", params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 			return
 		}

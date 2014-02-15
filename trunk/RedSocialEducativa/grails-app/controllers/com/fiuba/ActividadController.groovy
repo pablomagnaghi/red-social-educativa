@@ -16,16 +16,16 @@ class ActividadController {
 
 		def actividad = Actividad.get(params.id)
 
-		def grupoActividadAprendiz = aprendizService.obtenerGruposPorActividad(seguridadService.usuarioActual(), 
-			params.cuatrimestreId.toLong(), params.id.toLong())
+		def grupoActividadAprendiz = aprendizService.obtenerGrupoPorActividad(seguridadService.usuarioActual(), params.cuatrimestreId.toLong(), 
+			params.id.toLong())
 
 		[actividad: actividad, grupoActividadAprendiz: grupoActividadAprendiz,
-			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
+			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.id]]
 	}
 
 
 	@Secured("hasRole('ROL_MEDIADOR')")
-	def index(Integer max) {
+	def index() {
 		params.max = Utilidades.MAX_PARAMS
 
 		[actividadInstanceList: Actividad.findAllByCuatrimestre(Cuatrimestre.get(params.cuatrimestreId),[max: params.max, offset: params.offset]),

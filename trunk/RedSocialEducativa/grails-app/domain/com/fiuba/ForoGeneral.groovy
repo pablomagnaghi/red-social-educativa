@@ -6,5 +6,4 @@ class ForoGeneral extends Foro {
 
 	static constraints = {
 	}
-
 }

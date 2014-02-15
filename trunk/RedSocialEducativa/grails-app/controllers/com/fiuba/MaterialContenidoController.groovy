@@ -35,13 +35,14 @@ class MaterialContenidoController {
 		}
 
 		if (materialContenidoService.existe(materialContenidoInstance, params.contenidoId.toLong())) {
-			flash.message = "Ya existe el material ${materialContenidoInstance.titulo} del contenido ${Contenido.get(params.contenidoId)}"
+			flash.message = "Ya existe el material ${materialContenidoInstance.titulo} en el contenido ${Contenido.get(params.contenidoId)}"
 			redirect action: "create", params: ['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': params.contenidoId]
 			return
 		}
 		
 		if (!materialContenidoService.guardar(materialContenidoInstance)) {
-			render view:'create', model: [materialContenidoInstance: materialContenidoInstance],
+			def mediador = Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(params.cursoId))
+			render view:'create', model: [materialContenidoInstance: materialContenidoInstance, mediador: mediador],
 			params: ['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': params.contenidoId]
 			return
 		}
