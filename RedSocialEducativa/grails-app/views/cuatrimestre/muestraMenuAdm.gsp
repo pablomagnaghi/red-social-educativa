@@ -17,7 +17,8 @@
 					<g:message code="Tareas administrativas"/></g:link></li>	
 			</ul>
 		</div>
-		<h4>PARAMS: ${params}</h4>
+		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+		<h2>Curso Id: ${params.cursoId}</h2>
 		<div id="show-cuatrimestre" class="content scaffold-show" role="main">
 			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">

@@ -3,62 +3,55 @@ package com.fiuba
 import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured
 
-
 class CuatrimestreController {
-	// metodos nuevos
 
-	// TODO agregar curso id en todos los metodos
-
+	// static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	
 	def cuatrimestreService
-	def cursoId
-
-	@Secured('permitAll')
-	def historial(Cuatrimestre cuatrimestreInstance) {
-		respond cuatrimestreInstance, model: [cursoId: cursoId]
-	}
 
 	@Secured("hasRole('ROL_ADMIN')")
 	def muestraMenuAdm(Cuatrimestre cuatrimestreInstance) {
-		respond cuatrimestreInstance, model: [cursoId: cursoId]
+		respond cuatrimestreInstance, params: [cursoId: params.cursoId]
 	}
 
-	// metodos viejos
-
-	// static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
-	@Secured('permitAll')
-	def index(Integer max) {
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def indexHistoriales(Integer max) {
 		params.max = Utilidades.MAX_PARAMS
 
-		cursoId = params.cursoId
-
-		[cuatrimestreInstanceList: Cuatrimestre.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
-			cuatrimestreInstanceCount: Cuatrimestre.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId]
+		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
+		
+		[cuatrimestreInstanceList: Cuatrimestre.findAllByCursoAndIdNotEqual(Curso.get(params.cursoId), cuatrimestre.id,[max: params.max, offset: params.offset]),
+			cuatrimestreInstanceCount: Cuatrimestre.findAllByCursoAndIdNotEqual(Curso.get(params.cursoId), cuatrimestre.id).size(), 
+			params: [cursoId: params.cursoId]]
+	}
+	
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def historial(Cuatrimestre cuatrimestreInstance) {
+		respond cuatrimestreInstance, params: [cursoId: params.cursoId]
 	}
 
-	@Secured('permitAll')
+	// TODO CONSOLIDAR CUATRIMESTRE
+	
+	@Secured("hasRole('ROL_MEDIADOR')")
 	def show(Cuatrimestre cuatrimestreInstance) {
-		respond cuatrimestreInstance, model: [cursoId: cursoId]
+		respond cuatrimestreInstance, params:['cursoId': params.cursoId]
 	}
 
-	@Secured('permitAll')
+	@Secured("hasRole('ROL_MEDIADOR')")
 	def create() {
-		cursoId = params.cursoId
-		respond new Cuatrimestre(params), params:['cursoId': cursoId], model:[cursoId: cursoId]
+		respond new Cuatrimestre(params), params:['cursoId': params.cursoId]
 	}
 
-	@Secured('permitAll')
+	@Secured("hasRole('ROL_MEDIADOR')")
 	def save(Cuatrimestre cuatrimestreInstance) {
 		if (cuatrimestreInstance == null) {
 			notFound()
 			return
 		}
 
-		cursoId = params.cursoId
-
-		if (cuatrimestreService.existe(cuatrimestreInstance, cursoId)) {
-			flash.message = "Ya existe el cuatrimestre ${cuatrimestreExistente} del curso ${Curso.get(cursoId)}"
-			redirect action: "create", params:['cursoId': cursoId]
+		if (cuatrimestreService.existe(cuatrimestreInstance, params.cursoId.toLong())) {
+			flash.message = "Ya existe el cuatrimestre ${cuatrimestreExistente} del curso ${Curso.get(params.cursoId)}"
+			redirect action: "create", params:['cursoId': params.cursoId]
 			return
 		}
 
@@ -66,24 +59,21 @@ class CuatrimestreController {
 		cuatrimestreInstance.foro = foro
 
 		if (!cuatrimestreService.guardar(cuatrimestreInstance)) {
-			respond cuatrimestrInstance, view:'create',  params:['cursoId': cursoId], model: [cursoId: cursoId]
+			render view:'create', model: [cuatrimestrInstance: cuatrimestrInstance], params:['cursoId': params.cursoId]
 			return
 		}
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'cuatrimestreInstance.label', default: 'Cuatrimestre'), cuatrimestreInstance.id])
-		redirect action: "index", params:['cursoId': cursoId]
+		redirect action: "indexHistoriales", params:['cursoId': params.cursoId]
 	}
 
-	@Secured('permitAll')
+	@Secured("hasRole('ROL_MEDIADOR')")
 	def edit(Cuatrimestre cuatrimestreInstance) {
-		cursoId = params.cursoId
-		respond cuatrimestreInstance, params:['cursoId': cursoId], model:[cursoId: cursoId]
+		respond cuatrimestreInstance, params:['cursoId': params.cursoId]
 	}
 
-	@Secured('permitAll')
+	@Secured("hasRole('ROL_MEDIADOR')")
 	def update(Cuatrimestre cuatrimestreInstance) {
-
-		cursoId = params.cursoId
 
 		if (cuatrimestreInstance == null) {
 			notFound()
@@ -91,15 +81,15 @@ class CuatrimestreController {
 		}
 
 		if (!cuatrimestreService.guardar(cuatrimestreInstance)) {
-			respond cuatrimestreInstance, view:'edit', params:['cursoId': cursoId], model: [cursoId: cursoId]
+			render view:'edit', model: [cuatrimestrInstance: cuatrimestreInstance], params:['cursoId': params.cursoId]
 			return
 		}
 
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'Cuatrimestre.label', default: 'Cuatrimestre'), cuatrimestreInstance.id])
-		redirect cuatrimestreInstance
+		redirect action: "show", params:['id': cuatrimestreInstance.id, 'cursoId': params.cursoId]
 	}
 
-	@Secured('permitAll')
+	@Secured("hasRole('ROL_MEDIADOR')")
 	def delete(Cuatrimestre cuatrimestreInstance) {
 
 		if (cuatrimestreInstance == null) {
@@ -107,19 +97,15 @@ class CuatrimestreController {
 			return
 		}
 
-		cursoId = params.cursoId
-
 		cuatrimestreService.eliminar(cuatrimestreInstance)
 
 		flash.message = message(code: 'default.deleted.message', args: [message(code: 'Cuatrimestre.label', default: 'Cuatrimestre'), cuatrimestreInstance.id])
-		redirect action:"index", params:['cursoId': cursoId], method:"GET"
-
+		redirect action:"indexHistoriales", params:['cursoId': params.cursoId], method:"GET"
 	}
 
 	protected void notFound() {
 		flash.message = message(code: 'default.not.found.message', args: [message(code: 'cuatrimestreInstance.label', default: 'Cuatrimestre'), params.id])
-		redirect action: "index", params:['cursoId': cursoId], method: "GET"
-
+		redirect action: "indexHistoriales", params:['cursoId': params.cursoId], method: "GET"
 	}
 }
 

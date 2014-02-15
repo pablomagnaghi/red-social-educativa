@@ -258,11 +258,16 @@ class BootStrap {
 		
 		// Foros generales de curso		
 		def foroCursoUno = new ForoCurso(nombre: "ForoGeneralCursoUno")
+		def foroCursoUnoP = new ForoCurso(nombre: "ForoGeneralCursoUnoP")
+		def foroCursoUnoPP = new ForoCurso(nombre: "ForoGeneralCursoUnoPP")
+		def foroCursoUnoPPP = new ForoCurso(nombre: "ForoGeneralCursoUnoPPP")
+		def foroCursoUnoPPPP = new ForoCurso(nombre: "ForoGeneralCursoUnoPPPP")
+		def foroCursoUnoPPPPP = new ForoCurso(nombre: "ForoGeneralCursoUnoPPPPP")
+		def foroCursoUnoPPPPPP = new ForoCurso(nombre: "ForoGeneralCursoUnoPPPPPP")
 		def foroCursoDos = new ForoCurso(nombre: "ForoGeneralCursoDos")
 		def foroCursoTres = new ForoCurso(nombre: "ForoGeneralCursoTres")
 		def foroCursoCuatro = new ForoCurso(nombre: "ForoGeneralCursoCuatro")
 		def foroCursoCinco = new ForoCurso(nombre: "ForoGeneralCursoCinco")
-		def foroCursoSeis = new ForoCurso(nombre: "ForoGeneralCursoSeis")
 		
 		// Publicaciones generales
 		def publicacionGeneralUno = new PublicacionGeneral(titulo: "PublicacionGeneralUno", contenido: "Contenido", 
@@ -423,32 +428,48 @@ class BootStrap {
 		cuatrimestreUno.addToActividades(actividadDos)
 		cuatrimestreUno.addToActividades(actividadTres)
 
-		def cuatrimestreDos = new Cuatrimestre(anio: 2013, numero: 1, habGrupos: true, nroUltGrupo: 0,
+		def cuatrimestreUnoP = new Cuatrimestre(anio: 2013, numero: 1, habGrupos: true, nroUltGrupo: 0,
+			foro: foroCursoUnoP)
+		cuatrimestreUnoP.addToAprendices(aprendizDiez)
+		def cuatrimestreUnoPP = new Cuatrimestre(anio: 2012, numero: 2, habGrupos: true, nroUltGrupo: 0,
+			foro: foroCursoUnoPP)
+		def cuatrimestreUnoPPP = new Cuatrimestre(anio: 2012, numero: 1, habGrupos: true, nroUltGrupo: 0,
+			foro: foroCursoUnoPPP)
+		def cuatrimestreUnoPPPP = new Cuatrimestre(anio: 2011, numero: 2, habGrupos: true, nroUltGrupo: 0,
+			foro: foroCursoUnoPPPP)
+		def cuatrimestreUnoPPPPP = new Cuatrimestre(anio: 2011, numero: 1, habGrupos: true, nroUltGrupo: 0,
+			foro: foroCursoUnoPPPPP)
+		def cuatrimestreUnoPPPPPP = new Cuatrimestre(anio: 2010, numero: 2, habGrupos: true, nroUltGrupo: 0,
+			foro: foroCursoUnoPPPPPP)
+		
+		def cuatrimestreDos = new Cuatrimestre(anio: 2013, numero: 2, habGrupos: true, nroUltGrupo: 0,
 			foro: foroCursoDos)
-		cuatrimestreDos.addToAprendices(aprendizDiez)
-		
-		def cuatrimestreTres = new Cuatrimestre(anio: 2013, numero: 2, habGrupos: true, nroUltGrupo: 0,
+		cuatrimestreDos.addToAprendices(aprendizAgus)
+
+		def cuatrimestreTres= new Cuatrimestre(anio: 2013, numero: 1, habGrupos: true, nroUltGrupo: 0,
 			foro: foroCursoTres)
-		cuatrimestreTres.addToAprendices(aprendizAgus)
-
-		def cuatrimestreCuatro = new Cuatrimestre(anio: 2013, numero: 1, habGrupos: true, nroUltGrupo: 0,
+		cuatrimestreTres.addToAprendices(aprendizUno)
+		
+		def cuatrimestreCuatro = new Cuatrimestre(anio: 2013, numero: 2, habGrupos: true, nroUltGrupo: 0,
 			foro: foroCursoCuatro)
-		cuatrimestreCuatro.addToAprendices(aprendizUno)
-		
-		def cuatrimestreCinco = new Cuatrimestre(anio: 2013, numero: 2, habGrupos: true, nroUltGrupo: 0,
-			foro: foroCursoCinco)
-		cuatrimestreCinco.addToAprendices(aprendizUnoP)
+		cuatrimestreCuatro.addToAprendices(aprendizUnoP)
 
-		def cuatrimestreSeis = new Cuatrimestre(anio: 2013, numero: 1, habGrupos: true, nroUltGrupo: 0, 
-			foro: foroCursoSeis)
-		cuatrimestreSeis.addToAprendices(aprendizUnoPP)
+		def cuatrimestreCinco = new Cuatrimestre(anio: 2013, numero: 1, habGrupos: true, nroUltGrupo: 0, 
+			foro: foroCursoCinco)
+		cuatrimestreCinco.addToAprendices(aprendizUnoPP)
 		
+	
 		// Cursos		
 		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2", nombre: "Curso 1")
 		cursoUno.addToMediadores(mediadorAgus)
 		cursoUno.addToMediadores(mediadorUno)
 		cursoUno.addToCuatrimestres(cuatrimestreUno)
-		cursoUno.addToCuatrimestres(cuatrimestreDos)
+		cursoUno.addToCuatrimestres(cuatrimestreUnoP)
+		cursoUno.addToCuatrimestres(cuatrimestreUnoPP)
+		cursoUno.addToCuatrimestres(cuatrimestreUnoPPP)
+		cursoUno.addToCuatrimestres(cuatrimestreUnoPPPP)
+		cursoUno.addToCuatrimestres(cuatrimestreUnoPPPPP)
+		cursoUno.addToCuatrimestres(cuatrimestreUnoPPPPPP)
 		cursoUno.addToTemas(temaUnoCursoUno)
 		cursoUno.addToTemas(temaDosCursoUno)
 		cursoUno.addToMateriales(materialUno)
@@ -467,21 +488,21 @@ class BootStrap {
 		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", nombre: "Curso 2")
 		cursoDos.addToMediadores(mediadorUnoP)
 		cursoDos.addToMediadores(mediadorDos)
-		cursoDos.addToCuatrimestres(cuatrimestreTres)
+		cursoDos.addToCuatrimestres(cuatrimestreDos)
 		cursoDos.addToTemas(temaUnoCursoDos)
 		
 		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1|2", nombre: "Curso 3")
 		cursoTres.addToMediadores(mediadorTres)
-		cursoTres.addToCuatrimestres(cuatrimestreCuatro)
+		cursoTres.addToCuatrimestres(cuatrimestreTres)
 
 		def cursoCuatro = new Curso(nroRelativo: "04", cuatDict: "1|2", nombre: "Curso 4")
 		cursoCuatro.addToMediadores(mediadorCuatro)
-		cursoCuatro.addToCuatrimestres(cuatrimestreCinco)
+		cursoCuatro.addToCuatrimestres(cuatrimestreCuatro)
 		
 		def cursoCinco = new Curso(nroRelativo: "05", cuatDict: "1|2", nombre: "Curso 5")
 		cursoCinco.addToMediadores(mediadorCinco)
 		cursoCinco.addToMediadores(mediadorSeis)
-		cursoCinco.addToCuatrimestres(cuatrimestreSeis)
+		cursoCinco.addToCuatrimestres(cuatrimestreCinco)
 		
 		// Materias - con carga de cursos
 		def ArrayList<Materia> materias = new ArrayList<Materia>()

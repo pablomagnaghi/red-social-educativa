@@ -11,15 +11,11 @@
 		<a href="#list-cuatrimestre" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}">
-					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': cursoId]">
-					<g:message code="Tareas mediador" /></g:link></li>	
-				<li><g:link class="create" action="create">
-					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
+				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
 			</ul>
 		</div>
-		<h4>PARAMS: ${params}</h4>
+		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+		<h2>Curso Id: ${params.cursoId}</h2>
 		<div id="list-cuatrimestre" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -28,31 +24,44 @@
 			<table>
 			<thead>
 					<tr>
-						<th><g:message code="cuatrimestre.curso.label" default="Curso" /></th>					
+					
 						<g:sortableColumn property="anio" title="${message(code: 'cuatrimestre.anio.label', default: 'Anio')}" />
+					
+						<th><g:message code="cuatrimestre.curso.label" default="Curso" /></th>
+					
+						<th><g:message code="cuatrimestre.foro.label" default="Foro" /></th>
+					
+						<g:sortableColumn property="habGrupos" title="${message(code: 'cuatrimestre.habGrupos.label', default: 'Hab Grupos')}" />
+					
+						<g:sortableColumn property="nroUltGrupo" title="${message(code: 'cuatrimestre.nroUltGrupo.label', default: 'Nro Ult Grupo')}" />
+					
 						<g:sortableColumn property="numero" title="${message(code: 'cuatrimestre.numero.label', default: 'Numero')}" />
 					
-						<td>Detalle</td>
 					</tr>
 				</thead>
 				<tbody>
 				<g:each in="${cuatrimestreInstanceList}" status="i" var="cuatrimestreInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
+						<td><g:link action="historial" id="${cuatrimestreInstance.id}" params="['cursoId': params.cursoId]">
+							<g:formatNumber number="${cuatrimestreInstance.anio}"/></g:link></td>
 					
 						<td>${fieldValue(bean: cuatrimestreInstance, field: "curso")}</td>
-						<td><g:formatNumber number="${cuatrimestreInstance.anio}"/></td>
+					
+						<td>${fieldValue(bean: cuatrimestreInstance, field: "foro")}</td>
+					
+						<td><g:formatBoolean boolean="${cuatrimestreInstance.habGrupos}" /></td>
+					
+						<td>${fieldValue(bean: cuatrimestreInstance, field: "nroUltGrupo")}</td>
+					
 						<td>${fieldValue(bean: cuatrimestreInstance, field: "numero")}</td>
 					
-				
-						<td><g:link action="historial" id="${cuatrimestreInstance.id}">Ver detalle</g:link></td>
-
 					</tr>
 				</g:each>
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${cuatrimestreInstanceCount ?: 0}" />
+				<g:paginate total="${cuatrimestreInstanceCount ?: 0}" params="['cursoId': params.cursoId]"/>
 			</div>
 		</div>
 	</body>

@@ -18,7 +18,7 @@ class CuatrimestreControllerSpec extends Specification {
     void "Test the index action returns the correct model"() {
 
         when:"The index action is executed"
-            controller.index()
+            controller.indexHistoriales()
 
         then:"The model is correct"
             !model.cuatrimestreInstanceList
