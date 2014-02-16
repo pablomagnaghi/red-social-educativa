@@ -253,3 +253,19 @@ function volver(){
 	}
 }
 
+function responder(id, tipo){
+	$.ajax({
+		url : 'responder',
+		type: 'POST',
+		data : {
+			id : id,
+			tipoRespuesta : tipo
+		},
+		success : function(reply){
+			$("#responder-"+id).html(reply)
+			$("#responder-" +id).show()
+			when_ready();
+		}
+	})
+}
+

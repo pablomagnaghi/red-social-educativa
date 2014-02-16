@@ -88,8 +88,8 @@ function redactar_ready(){
 	});
 }
 
-function formatResult(movie) {
-    return '<div>' + movie.value + '</div>';
+function formatResult(data) {
+    return '<div>' + data.value + '</div>';
 };
 
 function formatSelection(data) {
@@ -139,10 +139,23 @@ function agregarMediador(id){
 
 function submitMail(){
 	$("#cuerpo").val($("#divCuerpo").html())
-	if ($("#para").is(':empty') || $("#asunto").is(':empty') || $("#cuerpo").is(':empty')){
-		return false;
-	} else {
+	var para = $.trim($("#e6").val()).length;
+	var asunto = $.trim($("#asunto").val()).length;
+	var cuerpo = $.trim($("#cuerpo").val()).length;
+	var data = $("#e6").val()
+	data += ","
+	$("#e6").val(data)
+	if (para > 0 || asunto > 0 || cuerpo > 0){
+		var item = sendArr.pop()
+		while (item != null){
+			var val = $("#e6").val()
+			val += item
+			$("#e6").val(val)
+			item = sendArr.pop()
+		}
 		return true;
+	} else {
+		return false;
 	}
 }
 
@@ -178,17 +191,17 @@ function traerDatosCurso(id){
 	})
 }
 
-function agregarCurso(encablezado, nombreCurso, idCurso){
+function agregarCurso(encabezado, nombreCurso, idCurso){
 	if ($("#curso"+idCurso).length==0 && $('#'+encabezado+idCurso).is(':checked')){
 		$(".select2-choices").each(function(){
 			$(this).prepend("<li class='select2-search-choice generado' id='curso"+idCurso+"'>" +
 					"<div>Curso: "+nombreCurso+"</div>    " +
 					"<a tabindex='-1' class='select2-search-choice-close removeLink' onclick='removeCursoLi(\""+idCurso+"\")' href='#'></a></li>")
 		});
-		sendArr.push("Curso-" + idCurso)
+		sendArr.push("Curso-" + idCurso + ",")
 	} else {
 		$("#curso"+ idCurso).remove()
-		sendArr.pop("Curso-" + idCurso)
+		sendArr.pop("Curso-" + idCurso + ",")
 	}
 }
 
@@ -196,29 +209,29 @@ function agregarGrupo(encabezado, idGrupo, nombreGrupo, nombreCurso, idCurso){
 	if ($("#grupo"+idGrupo).length==0 && $('#'+encabezado+idGrupo).is(':checked')){
 		$(".select2-choices").each(function(){
 			$(this).prepend("<li class='select2-search-choice generado' id='grupo"+idGrupo+"-"+idCurso+"'>" +
-					"<div>"+nombreCurso+", "+ nombreCurso+"</div>    " +
+					"<div>"+nombreGrupo+", "+ nombreCurso+"</div>    " +
 					"<a tabindex='-1' class='select2-search-choice-close removeLink' onclick='removeGrupoLi(\""+idGrupo+"\", \""+idCurso+"\")' href='#'></a></li>")
 		});
-		sendArr.push("Grupo-" + idGrupo + "_Curso-" + idCurso)
+		sendArr.push("Grupo-" + idGrupo + "_Curso-" + idCurso + ",")
 	} else {
 		$("#grupo"+ idGrupo +"-"+ idCurso).remove()
-		sendArr.pop("Grupo-" + idGrupo + "_Curso-" + idCurso)
+		sendArr.pop("Grupo-" + idGrupo + "_Curso-" + idCurso + ",")
 	}
 }
 
 function removeCursoLi(idCurso){
 	$("#curso"+ idCurso).remove()
-	sendArr.pop("Curso-" + idCurso)
+	sendArr.pop("Curso-" + idCurso + ",")
 }
 
 function removeMediadorLi(id){
 	$("#mediador"+id).remove()
-	sendArr.pop("Mediador-"+id)
+	sendArr.pop("Mediador-"+id + ",")
 }
 
 function removeGrupoLi(idGrupo, idCurso){
 	$("#grupo"+ idGrupo +"-"+ idCurso).remove()
-	sendArr.pop("Grupo-" + idGrupo + "_Curso-" + idCurso)
+	sendArr.pop("Grupo-" + idGrupo + "_Curso-" + idCurso + ",")
 }
 
 function removeLastLi(className){
@@ -232,10 +245,11 @@ function agregarMediador(chckboxId, mediadorId, mediadorNombres, mediadorApellid
 					"<div>"+mediadorNombres+" "+ mediadorApellido+" &lt;"+mediadorEmail+"&gt;</div>    " +
 					"<a tabindex='-1' class='select2-search-choice-close removeLink' onclick='removeMediadorLi(\""+mediadorId+"\")' href='#'></a></li>")
 		});
-		sendArr.push("Mediador-"+mediadorId)
+		sendArr.push("Mediador-"+mediadorId+",")
 	} else {
 		$("#mediador"+mediadorId).remove();
-		sendArr.pop("Mediador-"+mediadorId)
+		sendArr.pop("Mediador-"+mediadorId + ",")
 	}
 }
+
 

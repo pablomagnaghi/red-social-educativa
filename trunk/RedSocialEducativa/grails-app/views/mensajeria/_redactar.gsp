@@ -2,16 +2,21 @@
 	Redactar Mensaje
 </h2>
 
-<form id="email-compose-form" class="form-horizontal" method="POST" action="enviarMensajes" onsubmit="submitMail()" enctype="multipart/form-data">
+<form id="email-compose-form" class="form-horizontal" method="POST" action="enviarMensajes" onsubmit="return submitMail();" enctype="multipart/form-data">
 
 	<div class="inbox-info-bar no-padding">
 		<div class="row">
 			<div class="form-group">
 				<label class="control-label col-md-1"><strong>Para</strong></label>
-					<div class="col-md-9">
-						<input type='hidden' id="e6" style="width: 700px;" name="para" />
+					<div class="col-md-10">
+						<g:if test="${para != null }">
+							<input type='hidden' id="e6" style="width: 700px;" name="para" value="${para }"/>
+						</g:if>
+						<g:else>
+							<input type='hidden' id="e6" style="width: 700px;" name="para" />
+						</g:else>
 					</div>
-					<div class="col-md-2" style="top: 7px;">
+					<div class="col-md-1" style="top: 7px;">
 						<g:img file="Treeview.gif" id="img_clickeable"
 								style="cursor: pointer;width: 21px;float: right" />
 					</div>

@@ -16,7 +16,7 @@
 			</div>
 			<g:if test="${responder == true}">
 				<div class="btn-group text-left">
-					<button class="btn btn-primary btn-sm replythis">
+					<button class="btn btn-primary btn-sm replythis" onclick="responder('${mensaje.id}', 'Responder')">
 						<i class="fa fa-reply"></i> Responder
 					</button>
 					<button data-toggle="dropdown" class="btn btn-primary btn-sm dropdown-toggle">
@@ -24,13 +24,13 @@
 					</button>
 					<ul class="dropdown-menu pull-right">
 						<li>
-							<a class="replythis" href="javascript:void(0);"><i class="fa fa-reply"></i> Responder</a>
+							<a class="replythis" onclick="responder('${mensaje.id}', 'Responder')"><i class="fa fa-reply"></i> Responder</a>
 						</li>
 						<li>
-							<a class="replythis" href="javascript:void(0);"><i class="fa fa-mail-forward"></i> Reenviar</a>
+							<a class="replythis" onclick="responder('${mensaje.id}', 'ResponderTodos')"><i class="fa fa-reply"></i> Responder A Todos</a>
 						</li>
 						<li>
-							<a href="javascript:void(0);"><i class="fa fa-trash-o"></i> Borrar</a>
+							<a class="replythis" onclick="responder('${mensaje.id}', 'Reenviar')"><i class="fa fa-mail-forward"></i> Reenviar</a>
 						</li>
 					</ul>
 				</div>
@@ -38,10 +38,11 @@
 		</div>
 	</div>
 
-	<div class="inbox-message">
-		${mensaje.cuerpo }
-	</div>
-
+	<g:if test="${responder == true}">
+		<div id="responder-${mensaje.id}" class="center_div_respuesta" style="display:none" >
+			
+		</div>			
+	</g:if>
 	<script type="text/javascript">
 		// DO NOT REMOVE : GLOBAL FUNCTIONS!
 		//pageSetUp();
@@ -50,10 +51,6 @@
 
 		$(".table-wrap [rel=tooltip]").tooltip();
 
-		$(".replythis").click(
-				function() {
-					loadURL("ajax/email-reply.html",
-							$('#inbox-content &gt; .table-wrap'));
-				})
+		
 	</script>
 </div>
