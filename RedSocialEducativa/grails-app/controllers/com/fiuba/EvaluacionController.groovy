@@ -11,7 +11,7 @@ class EvaluacionController {
 	def evaluacionService
 	def aprendizService
 	
-	@Secured('permitAll')
+	@Secured("hasRole('ROL_APRENDIZ')")
 	def menuAprendiz(Evaluacion evaluacion) {
 		
 		def aprendiz = aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, params.cursoId.toLong())
@@ -71,22 +71,18 @@ class EvaluacionController {
             return
         }
 
-		//TODO vef fecha y horario
-		//actividadInstance.fechaFinalizacion = params.fechaFinalizacionDate.format(Utilidades.FORMATO_FECHA_NUMERICO)
-		println "ANTES"
-		println evaluacionInstance.fecha
-		println evaluacionInstance.horario
-		
 		evaluacionInstance.fecha = params.fechaDate.format(Utilidades.FORMATO_FECHA_NUMERICO)
 		evaluacionInstance.horario = params.fechaDate.getTimeString()
-		
-		println "DESPUES"
-		println evaluacionInstance.fecha 
-		println evaluacionInstance.horario
-		
+
 		if (!evaluacionService.guardar(evaluacionInstance)) {
 			render view:'create', model: [evaluacionInstance: evaluacionInstance], params:['cursoId': params.cursoId]
 			return
+		}
+		
+		// Verificar si deben inscribirme por defecto todos los alumnos del cuatrimestre
+		if (evaluacionInstance.obligatoria) {
+			println "AGREGAR APRENDICES"
+			evaluacionService.agregarAprendices(evaluacionInstance, params.cursoId.toLong())
 		}
 		
 		flash.message = message(code: 'default.created.message', args: [message(code: 'evaluacionInstance.label', default: 'Evaluacion'), evaluacionInstance.id])
