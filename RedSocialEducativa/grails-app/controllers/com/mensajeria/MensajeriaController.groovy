@@ -148,7 +148,82 @@ class MensajeriaController {
 		render(template:"redactar", model: [usuarios: usuarios, cursosAprendiz : cursosAprendiz, datosCursosAprendiz : datosCursosAprendiz, 
 			cursosMediador : cursosMediador, datosCursosMediador : datosCursosMediador, datosMediadores : datosMediadores, cursosTotales: datosCursos])
 	}
+
+	def responder(){
+		def usuario = this.usuarioActual()
+		if (!usuario){
+			redirect (controller:"red", action:"principal")
+		}
+		def mediadores = Mediador.findAllByUsuario(usuario)
+		def aprendices = Aprendiz.findAllByUsuario(usuario)
+		def cursosAprendiz = []
+		def datosCursosAprendiz = [:]
+		def cursosMediador = []
+		def datosCursosMediador = [:]
+		def datosCursos = []
+		def datosMediadores = [:]
+		mediadores.each {
+			def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(it.curso.id)
+			def gruposCurso = cuatrimestre.grupos
+			def mediadoresCurso = it.curso.mediadores
+			cursosMediador.add(it.curso)
+			datosCursosMediador.put(it.curso.id + "-gruposM", gruposCurso)
+			datosCursosMediador.put(it.curso.id	 + "-mediadoresM", mediadoresCurso)
+		}
+		aprendices.each {
+			if (it.participa){
+				def cuatrimestre = it.cuatrimestre
+				def gruposCurso = cuatrimestre.grupos
+				def mediadoresCurso = it.cuatrimestre.curso.mediadores
+				cursosAprendiz.add(it.cuatrimestre.curso)
+				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-gruposA", gruposCurso)
+				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-mediadoresA", mediadoresCurso)
+			}
+		}
+		if (!cursosMediador.empty){
+			datosCursos = Curso.findAll()
+			datosCursos.each{
+				datosMediadores.put(it.id + "-mediadoresC", it.mediadores)
+			}
+		}
+		def usuarios = Usuario.findByEnabled(true)
+		def mensaje = Mensaje.findById(params.id)
+		def asunto = "FW: " + mensaje.asunto
+		def para = ""
+		if (params.tipoRespuesta == 'Responder'){
+			asunto = "RE: " + mensaje.asunto
+			para = generarDestinatariosRespuesta(mensaje)
+		} else 	if (params.tipoRespuesta == 'ResponderTodos'){
+			asunto = "RE: " + mensaje.asunto
+			para = generarDestinatariosRespuestaATodos(mensaje)
+		}
+		render(template:"redactar", model: [para : para, asunto : asunto, usuarios: usuarios, cursosAprendiz : cursosAprendiz, datosCursosAprendiz : datosCursosAprendiz,
+			cursosMediador : cursosMediador, datosCursosMediador : datosCursosMediador, datosMediadores : datosMediadores, cursosTotales: datosCursos])
+		
+	}
 	
+	private def generarDestinatariosRespuesta(Mensaje m){
+		return m.emisor.nombres + " " + m.emisor.apellido + " <"+m.emisor.email+">"
+	}
+	
+	private def generarDestinatariosRespuestaATodos(Mensaje m){
+		def usuario = this.usuarioActual()
+		if (!usuario){
+			redirect (controller:"red", action:"principal")
+		}
+		def para = ""
+		def receptores = m.para.split(",");
+		receptores.each {
+			if (!it.empty){
+				if (!(it.contains(usuario.nombres) && it.contains(usuario.apellido) && it.contains(usuario.email))){
+					para += it + ","
+				}
+			}
+		}
+		para += this.generarDestinatariosRespuesta(m)
+		return para
+	}
+		
 	def traerUsuariosFormateados(){
 		def query = {
 			or {
@@ -176,6 +251,7 @@ class MensajeriaController {
 	}
 	
 	def enviarMensajes(){
+		println params.para
 		def usuario = this.usuarioActual()
 		if (!usuario){
 			redirect (controller:"red", action:"principal")

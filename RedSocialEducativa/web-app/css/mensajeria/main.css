@@ -6,6 +6,17 @@
 	cursor: pointer;
 }
 
+.center_div_respuesta {
+	position: absolute;
+    height: 180px;
+    width: 350px;
+    margin: -100px 0 0 -200px;
+    top: 50%;
+    left: 50%;
+    display : block;
+    background-color: #AAAAAA
+}
+
 .center_div_carpeta {
 	position: absolute;
     height: 180px;
