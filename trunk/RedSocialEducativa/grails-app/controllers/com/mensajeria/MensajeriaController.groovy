@@ -3,6 +3,7 @@ package com.mensajeria
 import org.springframework.security.access.annotation.Secured
 
 import com.fiuba.Curso;
+import com.fiuba.GrupoCurso;
 import com.fiuba.Mediador
 import com.fiuba.Usuario
 import com.fiuba.Aprendiz
@@ -10,6 +11,9 @@ import com.mensajeria.Conversacion
 import com.fiuba.RedController;
 
 import grails.converters.JSON
+
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 @Secured('permitAll')
 class MensajeriaController {
@@ -251,7 +255,6 @@ class MensajeriaController {
 	}
 	
 	def enviarMensajes(){
-		println params.para
 		def usuario = this.usuarioActual()
 		if (!usuario){
 			redirect (controller:"red", action:"principal")
@@ -259,15 +262,42 @@ class MensajeriaController {
 		def para = params.para
 		def asunto = params.asunto
 		def texto = params.mensaje
-		def matcher = /\s*([^\s]*)\s*([^<]*)<([^>]*)>,/
+		Pattern usuarioPattern = Pattern.compile("(\\d+)")
+		Pattern mediadorPattern = Pattern.compile("Mediador-(\\d+)")
+		Pattern cursoPattern = Pattern.compile("^Curso-(\\d+)")
+		Pattern grupoPattern = Pattern.compile("Grupo-(\\d+)_Curso-(\\d+)")
 		Hilo hilo = new Hilo()
 		hilo.save(flush: true)
-		para.eachMatch(matcher) {
-			def nombres = it[1]
-			def apellido = it[2]
-			def email = it[3]
-			def receptor = Usuario.findByNombresAndApellidoAndEmail(nombres, apellido, email)
-			mensajeService.sendMessage(para, asunto, texto, usuario, receptor, hilo)
+		def paraArray = para.split(",")
+		paraArray.each {
+			Matcher m = usuarioPattern.matcher(it.toString());
+			if (m.find()){
+				def receptor = Usuario.findById(m.group(1))
+				mensajeService.sendMessage(para, asunto, texto, usuario, receptor, hilo)
+			} else {
+				m = mediadorPattern.matcher(it.toString());
+				if (m.find()){
+					def receptor = Mediador.findById(m.group(1))
+					mensajeService.sendMessage(para, asunto, texto, usuario, receptor.usuario, hilo)
+				} else {
+					m = cursoPattern.matcher(it.toString());
+					if (m.find()){
+						def curso = Curso.findById(m.group(1))
+						def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(curso.id)
+						cuatrimestre.aprendices.each{
+							mensajeService.sendMessage(para, asunto, texto, usuario, it.usuario, hilo)
+						}
+					} else {
+						m = grupoPattern.matcher(it.toString());
+						if (m.find()){
+							def grupo = GrupoCurso.findById(m.group(1))
+							grupo.aprendices.each{
+								mensajeService.sendMessage(para, asunto, texto, usuario, it.usuario, hilo)
+							}
+						}
+					}
+				}
+			}
 		}
 		redirect(action: 'index')
 	}
