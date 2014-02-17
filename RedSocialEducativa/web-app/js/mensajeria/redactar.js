@@ -191,6 +191,13 @@ function traerDatosCurso(id){
 	})
 }
 
+function removeFromSendArr(id){
+	var index = sendArr.indexOf(id);
+	if (index > -1) {
+		sendArr.splice(index, 1);
+	}
+}
+
 function agregarCurso(encabezado, nombreCurso, idCurso){
 	if ($("#curso"+idCurso).length==0 && $('#'+encabezado+idCurso).is(':checked')){
 		$(".select2-choices").each(function(){
@@ -201,7 +208,7 @@ function agregarCurso(encabezado, nombreCurso, idCurso){
 		sendArr.push("Curso-" + idCurso + ",")
 	} else {
 		$("#curso"+ idCurso).remove()
-		sendArr.pop("Curso-" + idCurso + ",")
+		removeFromSendArr("Curso-" + idCurso + ",")
 	}
 }
 
@@ -215,23 +222,23 @@ function agregarGrupo(encabezado, idGrupo, nombreGrupo, nombreCurso, idCurso){
 		sendArr.push("Grupo-" + idGrupo + "_Curso-" + idCurso + ",")
 	} else {
 		$("#grupo"+ idGrupo +"-"+ idCurso).remove()
-		sendArr.pop("Grupo-" + idGrupo + "_Curso-" + idCurso + ",")
+		removeFromSendArr("Grupo-" + idGrupo + "_Curso-" + idCurso + ",")
 	}
 }
 
 function removeCursoLi(idCurso){
 	$("#curso"+ idCurso).remove()
-	sendArr.pop("Curso-" + idCurso + ",")
+	removeFromSendArr("Curso-" + idCurso + ",")
 }
 
 function removeMediadorLi(id){
 	$("#mediador"+id).remove()
-	sendArr.pop("Mediador-"+id + ",")
+	removeFromSendArr("Mediador-"+id + ",")
 }
 
 function removeGrupoLi(idGrupo, idCurso){
 	$("#grupo"+ idGrupo +"-"+ idCurso).remove()
-	sendArr.pop("Grupo-" + idGrupo + "_Curso-" + idCurso + ",")
+	removeFromSendArr("Grupo-" + idGrupo + "_Curso-" + idCurso + ",")
 }
 
 function removeLastLi(className){
@@ -248,7 +255,7 @@ function agregarMediador(chckboxId, mediadorId, mediadorNombres, mediadorApellid
 		sendArr.push("Mediador-"+mediadorId+",")
 	} else {
 		$("#mediador"+mediadorId).remove();
-		sendArr.pop("Mediador-"+mediadorId + ",")
+		removeFromSendArr("Mediador-"+mediadorId + ",")
 	}
 }
 
