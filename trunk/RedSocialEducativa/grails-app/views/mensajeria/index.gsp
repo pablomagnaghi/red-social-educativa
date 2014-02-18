@@ -43,12 +43,17 @@
 
 		</div>
 		
-		<div class="btn-group pull-right inbox-paging">
-			<g:remoteLink class="btn btn-default btn-sm" action="redactarMensaje" 
-				update="[success:'inbox-content']" onSuccess="when_ready();"><strong><i
-					class="fa fa-chevron-left"></i></strong></g:remoteLink> <a class="btn btn-default btn-sm"
-				href="javascript:void(0);"><strong><i
-					class="fa fa-chevron-right"></i></strong></a>
+		<div class="pagination btn-group pull-right inbox-paging">
+			<!--<a class="btn btn-default btn-sm"
+				href="javascript:void(0);">
+				
+			</a>
+			<a class="btn btn-default btn-sm"
+				href="javascript:void(0);"><strong>
+				<i class="fa fa-chevron-right"></i></strong>
+			</a>
+			-->
+			<g:paginate prev="" next="" total="${conversacionCount ?: 0}" params="['nombreCarpeta' : nombreCarpeta]"/>
 		</div>
 		
 		<span>
@@ -63,7 +68,7 @@
 			</button>
 		</span>
 		
-		<span class="pull-right"><strong>1-30</strong> of <strong>3,452</strong></span>
+		<span class="pull-right"><strong>${offset+1}-${offset + params.max }</strong> de <strong>${conversacionCount }</strong></span>
 
 	</div>
 
@@ -75,23 +80,13 @@
 				<span class="glyphicon glyphicon-envelope"></span>
 				<strong>Redactar</strong>
 			</g:remoteLink>
-			<h6>
-				Carpetas <a class="pull-right txt-color-darken"
-					data-original-title="Refresh" data-placement="right" title=""
-					rel="tooltip" href="javascript:void(0);"><i
-					class="fa fa-refresh"></i></a>
-			</h6>
 			<ul class="inbox-menu-lg" id="lista_carpetas">
 				<g:render template="carpetas"
 					model="['etiquetasCarpetas' : etiquetasCarpetas, 'seleccionada' : carpetaSeleccionada]"></g:render>
 			</ul>
 		</div>
 		<div class="table-wrap custom-scroll animated fast fadeInRight" id="contenidoMensajes" style="height: 950px; opacity: 1;">
-			<table id="inbox-table" class="table table-striped table-hover">
-				<tbody id="listaConversaciones">
-					<g:render template="conversaciones" model="['conversaciones' : conversacionesEscr]"></g:render>
-				</tbody>
-			</table>
+			<g:render template="conversaciones" model="['conversaciones' : conversaciones]"></g:render>
 		</div>
 	</div>
 <div id="div_nueva_carpeta" class="center_div_carpeta" style="display:none">
@@ -112,23 +107,23 @@
 				</header>
 					
 				<!-- widget div-->
-				<div role="content" style="height: 150px">
+				<div role="content" style="height: 160px">
 					
 					<!-- widget edit box -->
-					<g:formRemote onSuccess="cerrar_form_nueva_carpeta();" name="nuevaCarpetaForm" url="[controller:'mensajeria', action:'nuevaCarpeta']" update="lista_carpetas">
+					<form onsubmit="return submitFormNuevaCarpeta()">
 					
-					<div class="jarviswidget-editbox" style="display: block;">
-						<!-- This area used as dropdown edit box -->
-						<input type="text" name="nombre" id="nombre" class="form-control">
-						<span class="note">Nombre de carpeta</span>
-						
-					</div>
-					<!-- end widget edit box -->
-					<div style="padding-left: 57px;">
-						<button class="btn btn-default btn-lg" onclick="cerrar_form_nueva_carpeta()"> Cancelar </button>
-						<g:submitButton name="Guardar" class="btn btn-default btn-lg" id="guardar_carpeta"/>
-					</div>
-					 </g:formRemote>
+						<div class="jarviswidget-editbox" style="display: block;">
+							<!-- This area used as dropdown edit box -->
+							<input type="text" name="nombre" id="nombre" class="form-control">
+							<span class="note">Nombre de carpeta</span>
+							<div id="carpetaNuevaError" class="message" role="status" style="display:none">No se ha especificado ningún nombre.</div>
+						</div>
+						<!-- end widget edit box -->
+						<div style="padding-left: 57px;">
+							<button class="btn btn-default btn-lg" onclick="cerrar_form_nueva_carpeta()"> Cancelar </button>
+							<button type="submit" name="Guardar" class="btn btn-default btn-lg" id="guardar_carpeta"> Guardar </button>
+						</div>
+					</form>
 					<!-- end widget content -->
 					
 				</div>

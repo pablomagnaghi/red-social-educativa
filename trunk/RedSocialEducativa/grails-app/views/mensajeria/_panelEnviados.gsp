@@ -5,11 +5,6 @@
 				<span class="glyphicon glyphicon-envelope"></span>
 				<strong>Redactar</strong>
 	</g:remoteLink>
-	<h6>
-		Carpetas <a class="pull-right txt-color-darken"
-			data-original-title="Refresh" data-placement="right" title=""
-			rel="tooltip" href="javascript:void(0);"><i class="fa fa-refresh"></i></a>
-	</h6>
 	<ul class="inbox-menu-lg" id="lista_carpetas">
 		<g:render template="carpetas"
 			model="['etiquetasCarpetas' : etiquetasCarpetas, 'seleccionada' : carpetaSeleccionada]"></g:render>

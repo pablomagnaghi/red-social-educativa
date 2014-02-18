@@ -1,5 +1,5 @@
 <div class="table-wrap custom-scroll animated fast fadeInLeft"
-	style="height: 389px; margin-left: 0px; opacity: 1;">
+	style="height: 200px; margin-left: 0px; opacity: 1;">
 	<h2 class="email-open-header">
 		${mensaje.asunto }
 		<a class="txt-color-darken pull-right" data-original-title="Export"
@@ -38,11 +38,6 @@
 		</div>
 	</div>
 
-	<g:if test="${responder == true}">
-		<div id="responder-${mensaje.id}" class="center_div_respuesta" style="display:none" >
-			
-		</div>			
-	</g:if>
 	<script type="text/javascript">
 		// DO NOT REMOVE : GLOBAL FUNCTIONS!
 		//pageSetUp();
@@ -54,3 +49,9 @@
 		
 	</script>
 </div>
+
+<g:if test="${responder == true}">
+	<div id="responder-${mensaje.id}"  style="display:none; border:medium solid; border-color: #F5F5F5" >
+			
+	</div>			
+</g:if>

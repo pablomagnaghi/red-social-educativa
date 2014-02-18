@@ -5,7 +5,6 @@ import com.fiuba.Usuario
 class Carpeta {
 	
 	String nombre
-	Carpeta padre = null
 	
 	static belongsTo = [usuario : Usuario] 
 
