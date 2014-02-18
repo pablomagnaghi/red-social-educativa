@@ -10,7 +10,10 @@
 		<div class="nav" role="navigation">
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="indexHistoriales"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
+				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': params.cursoId]">
+					<g:message code="Tareas mediador" /></g:link></li>	
+				<li><g:link class="list" action="indexHistoriales" params="['cursoId': params.cursoId]">
+					<g:message code="Historiales" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
 		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
@@ -27,7 +30,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form url="[resource:cuatrimestreInstance, action:'save']" >
+			<g:form action="save" params="['cursoId': params.cursoId]">
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>

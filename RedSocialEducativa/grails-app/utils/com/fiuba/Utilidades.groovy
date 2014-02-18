@@ -1,5 +1,7 @@
 package com.fiuba
 
+import java.util.Date;
+
 class Utilidades {
 	
 	final static TITULO_RED = "Red Social Educativa del Departamento de Computacion de la FIUBA"
@@ -12,8 +14,14 @@ class Utilidades {
 	final static ANIO = new Date().getYear() + ANIO_INICIAL
 	final static MES =  new Date().getMonth() + 1
 	final static DIA = new Date().getAt(Calendar.DAY_OF_MONTH)
-	final static FECHA = 10000 * (ANIO) + 100 * MES + DIA
+	// TODO ir tocando la fecha para pruebas
+	final static FECHA = 20140505//10000 * (ANIO) + 100 * MES + DIA
 	
+	final static ANIO_PROXIMA_SEMANA = new Date(new Date().getTime() + (7 * 24* 60 * 60 * 1000)).getYear() + ANIO_INICIAL
+	final static MES_PROXIMA_SEMANA =  new Date(new Date().getTime() + (7 * 24* 60 * 60 * 1000)).getMonth() + 1
+	final static DIA_PROXIMA_SEMANA = new Date(new Date().getTime() + (7 * 24* 60 * 60 * 1000)).getAt(Calendar.DAY_OF_MONTH)
+	final static FECHA_PROXIMA_SEMANA = 10000 * (ANIO_PROXIMA_SEMANA) + 100 * MES_PROXIMA_SEMANA + DIA_PROXIMA_SEMANA
+
 	final static MAX_PARAMS = 5
 	
 	final static MENSAJE_BIENVENIDA = "Bienvenido a la Red Social del Departamento de Computacion de la FIUBA"

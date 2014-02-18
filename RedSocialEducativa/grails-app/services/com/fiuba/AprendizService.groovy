@@ -22,8 +22,7 @@ class AprendizService {
 		return cursosAprendiz
 	}
 
-	// TODO agregar el participa true, porque si ya se le vencio o aprobo pasa a participa false
-	// METODO USADO EN FORO TEMA PUBLICACIONES, CLAVE PARA SABER SI ESTA ACTIVO EL APRENDIZ EN EL CURSO
+	// Metodo usado en foro de tema en publicaciones
 	def obtenerPorCurso(Long usuarioId, Long cursoId) {
 		def c = Aprendiz.createCriteria()
 		def aprendiz = c.get {
@@ -31,6 +30,7 @@ class AprendizService {
 				eq('curso.id', cursoId)
 			}
 			eq('usuario.id', usuarioId)
+			eq('participa', true)
 		}
 		return aprendiz
 	}

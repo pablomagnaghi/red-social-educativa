@@ -24,7 +24,7 @@ class CursoService {
 		curso.delete flush:true
 	}
 	
-	def dictandose(Long cursoId) {
+	def seDicta(Long cursoId) {
 		
 		def curso = Curso.get(cursoId)
 		

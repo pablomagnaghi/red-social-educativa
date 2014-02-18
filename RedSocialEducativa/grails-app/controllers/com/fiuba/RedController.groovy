@@ -17,7 +17,6 @@ class RedController {
 	def principal() {
 
 		params.max = Utilidades.MAX_PARAMS
-
 		def cursosMediador = mediadorService.obtenerCursos(seguridadService.usuarioActual())
 		def cursosAprendiz = aprendizService.obtenerCursos(seguridadService.usuarioActual())
 		def administrador = Administrador.findByUsuario(seguridadService.usuarioActual())

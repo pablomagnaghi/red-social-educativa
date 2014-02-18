@@ -52,8 +52,8 @@ class CursoController {
 	// Para visitantes y administradores
 	@Secured('permitAll')
 	def general() {
-		//println "general: curso se dicta: ${cursoService.dictandose(cursoId.toLong())}"
-		[dictaCuatrimestre: cursoService.dictandose(cursoId.toLong()), cursoId: cursoId, 
+		//println "general: curso se dicta: ${cursoService.seDicta(cursoId.toLong())}"
+		[dictaCuatrimestre: cursoService.seDicta(cursoId.toLong()), cursoId: cursoId, 
 			cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(cursoId.toLong()),
 			curso: Curso.get(params.cursoId)]
 	}
@@ -62,10 +62,10 @@ class CursoController {
 	def miembro() {
 		cursoId = params.cursoId
 
-		//println "miembro: curso se dicta: ${cursoService.dictandose(cursoId.toLong())}"
+		//println "miembro: curso se dicta: ${cursoService.seDicta(cursoId.toLong())}"
 		def miembro = Miembro.findByUsuario(seguridadService.usuarioActual())
 
-		[dictaCuatrimestre: cursoService.dictandose(cursoId.toLong()), miembro: miembro, cursoId: cursoId]
+		[dictaCuatrimestre: cursoService.seDicta(cursoId.toLong()), miembro: miembro, cursoId: cursoId]
 	}
 
 	@Secured('permitAll')
@@ -73,7 +73,7 @@ class CursoController {
 		//println "aprendiz: ${params}"
 
 		cursoId = params.cursoId
-		println "aprendiz: curso se dicta: ${cursoService.dictandose(cursoId.toLong())}"
+		println "aprendiz: curso se dicta: ${cursoService.seDicta(cursoId.toLong())}"
 		def aprendiz = aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, cursoId.toLong())
 		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(cursoId.toLong())
 		def noticiasCurso = NoticiaCurso.findAllByCuatrimestre(cuatrimestre)
@@ -85,7 +85,7 @@ class CursoController {
 
 		def nombreobtenerAprendizCurso
 
-		[dictaCuatrimestre: cursoService.dictandose(cursoId.toLong()), aprendiz: aprendiz, 
+		[dictaCuatrimestre: cursoService.seDicta(cursoId.toLong()), aprendiz: aprendiz, 
 			cursando: cursando, cursoId: cursoId, cuatrimestreId: cuatrimestre?.id, noticiasCurso: noticiasCurso]
 	}
 
@@ -96,13 +96,13 @@ class CursoController {
 
 		cursoId = params.cursoId
 
-		//println "mediador: curso se dicta: ${cursoService.dictandose(cursoId.toLong())}"
+		//println "mediador: curso se dicta: ${cursoService.seDicta(cursoId.toLong())}"
 		
 		def mediador = Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId))
 
 		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(cursoId.toLong())
 
-		[dictaCuatrimestre: cursoService.dictandose(cursoId.toLong()), materia: Curso.get(cursoId).materia, 
+		[dictaCuatrimestre: cursoService.seDicta(cursoId.toLong()), materia: Curso.get(cursoId).materia, 
 			cursoId: cursoId, mediador: mediador, cuatrimestreId: cuatrimestre?.id,
 			noticiasCurso: NoticiaCurso.findAllByCuatrimestre(cuatrimestre)]
 	}
@@ -111,9 +111,9 @@ class CursoController {
 	def menuMediador() {
 
 		//println "params menu mediador: ${params}"
-
+			// TODO VER QUE MOSTRAR CUANDO NO HAY CUATRIMESTRE ID
 		cursoId = params.cursoId
-		def cuatrimestreId = cuatrimestreService.obtenerCuatrimestreActual(cursoId.toLong()).id
+		def cuatrimestreId = cuatrimestreService.obtenerCuatrimestreActual(cursoId.toLong())?.id
 
 		[materia: Curso.get(cursoId).materia, cursoId: cursoId, cuatrimestreId: cuatrimestreId]
 	}

@@ -159,35 +159,47 @@ class BootStrap {
 		
 		// Aprendices
 		def aprendizAgus = new Aprendiz(usuario: usuarioAgus, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)
 		def aprendizUno = new Aprendiz(usuario: usuarioUno, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)
 		def aprendizUnoP = new Aprendiz(usuario: usuarioUno, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)
 		def aprendizUnoPP = new Aprendiz(usuario: usuarioUno, rol: rolAprendiz, participa: false, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)	
 		def aprendizDos = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)
+		// TODO usado para probar cursando participa
+		def aprendizDosP = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: false, msjEnviados: "0",
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: false)
+		def aprendizDosPP = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: true, msjEnviados: "0",
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: false)
+		def aprendizDosPPP = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: false, msjEnviados: "0",
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: false)
+		//def aprendizDosPPPP = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: true, msjEnviados: "0",
+		//	msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)
+		//def aprendizDosPPPPP = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: true, msjEnviados: "0",
+		//	msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)
+		
 		def aprendizTres = new Aprendiz(usuario: usuarioTres, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)
 		def aprendizCuatro = new Aprendiz(usuario: usuarioCuatro, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))		
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)		
 		def aprendizCinco = new Aprendiz(usuario: usuarioCinco, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)
 		def aprendizSeis = new Aprendiz(usuario: usuarioSeis, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)
 		def aprendizSiete = new Aprendiz(usuario: usuarioSiete, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)
 		def aprendizOcho = new Aprendiz(usuario: usuarioOcho, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)
 		def aprendizNueve = new Aprendiz(usuario: usuarioNueve, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)
 		def aprendizDiez = new Aprendiz(usuario: usuarioDiez, rol: rolAprendiz, participa: true, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)
 		def aprendizOnce = new Aprendiz(usuario: usuarioOnce, rol: rolAprendiz, participa: false, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: false)
 		def aprendizDoce = new Aprendiz(usuario: usuarioDoce, rol: rolAprendiz, participa: false, msjEnviados: "0",
-			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: false)
 		
 		// Categorias
 		
@@ -256,6 +268,7 @@ class BootStrap {
 		def foroTemaDosCursoUno = new ForoTema(nombre: "ForoGeneralTemaDosCursoUno")
 		def foroTemaUnoCursoDos = new ForoTema(nombre: "ForoGeneralTemaUnoCursoDos")
 		
+		// TODO para prueba general
 		// Foros generales de curso		
 		def foroCursoUno = new ForoCurso(nombre: "ForoGeneralCursoUno")
 		def foroCursoUnoP = new ForoCurso(nombre: "ForoGeneralCursoUnoP")
@@ -267,6 +280,11 @@ class BootStrap {
 		def foroCursoDos = new ForoCurso(nombre: "ForoGeneralCursoDos")
 		def foroCursoTres = new ForoCurso(nombre: "ForoGeneralCursoTres")
 		def foroCursoCuatro = new ForoCurso(nombre: "ForoGeneralCursoCuatro")
+		def foroCursoCuatroP = new ForoCurso(nombre: "ForoGeneralCursoCuatroP")
+		def foroCursoCuatroPP = new ForoCurso(nombre: "ForoGeneralCursoCuatroPP")
+		def foroCursoCuatroPPP = new ForoCurso(nombre: "ForoGeneralCursoCuatroPPP")
+		def foroCursoCuatroPPPP = new ForoCurso(nombre: "ForoGeneralCursoCuatroPPPP")
+
 		def foroCursoCinco = new ForoCurso(nombre: "ForoGeneralCursoCinco")
 		
 		// Publicaciones generales
@@ -298,13 +316,13 @@ class BootStrap {
 		
 		// Material de contenido
 		def materialContenidoUno = new MaterialContenido(titulo: "material contenido 1", descripcion: "opcional", autor: "anonimo", 
-			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
+			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
 		def materialContenidoDos = new MaterialContenido(titulo: "material contenido 2", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Presentacion"))
+			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Presentacion"))
 		def materialContenidoTres = new MaterialContenido(titulo: "material contenido 3", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Enlace"))
+			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Enlace"))
 		def materialContenidoCuatro = new MaterialContenido(titulo: "material contenido 4", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Glosario"))
+			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Glosario"))
 
 		// Contenidos
 		def contenidoUnoTemaUnoCursoUno = new Contenido(titulo: "ContenidoUnoTemaUnoCursoUno")
@@ -325,13 +343,13 @@ class BootStrap {
 		
 		// Material de temas
 		def materialTemaUno = new MaterialTema(titulo: "material Tema 1", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
+			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
 		def materialTemaDos = new MaterialTema(titulo: "material Tema 2", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Presentacion"))
+			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Presentacion"))
 		def materialTemaTres = new MaterialTema(titulo: "material Tema 3", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Enlace"))
+			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Enlace"))
 		def materialTemaCuatro = new MaterialTema(titulo: "material Tema 4", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Glosario"))
+			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Glosario"))
 		
 		// Temas
 		
@@ -354,17 +372,17 @@ class BootStrap {
 		
 		// Material curso
 		def materialUno = new MaterialCurso(titulo: "material curso 1", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
+			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
 		def materialDos = new MaterialCurso(titulo: "material curso 2", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Presentacion"))
+			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Presentacion"))
 		def materialTres = new MaterialCurso(titulo: "material curso 3", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Enlace"))
+			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Enlace"))
 		def materialCuatro = new MaterialCurso(titulo: "material curso 4", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Glosario"))
+			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Glosario"))
 		def materialCinco = new MaterialCurso(titulo: "material curso 5", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Trabajo"))
+			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Trabajo"))
 		def materialSeis = new MaterialCurso(titulo: "material curso 6", descripcion: "opcional", autor: "anonimo",
-			fecha: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Cuestionario"))
+			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Cuestionario"))
 		
 		// Grupos curso		
 		def grupoUno = new GrupoCurso(numero: "1", nombre: "grupo 1")
@@ -410,6 +428,7 @@ class BootStrap {
 			horario: (new Date()).getTimeString(), aula: "5", parcial: true, obligatoria: true, habilitada: true)
 		
 		// Cuatrimestres
+		// TODO para prueba final
 		def cuatrimestreUno = new Cuatrimestre(anio: 2013, numero: 2, habGrupos: true, nroUltGrupo: 0, 
 			foro: foroCursoUno)
 		cuatrimestreUno.addToAprendices(aprendizDos)
@@ -420,6 +439,7 @@ class BootStrap {
 		cuatrimestreUno.addToAprendices(aprendizSiete)
 		cuatrimestreUno.addToAprendices(aprendizOcho)
 		cuatrimestreUno.addToAprendices(aprendizNueve)
+		cuatrimestreUno.addToAprendices(aprendizDiez)
 		cuatrimestreUno.addToAprendices(aprendizOnce)
 		cuatrimestreUno.addToAprendices(aprendizDoce)
 		cuatrimestreUno.addToGrupos(grupoUno)
@@ -430,7 +450,6 @@ class BootStrap {
 
 		def cuatrimestreUnoP = new Cuatrimestre(anio: 2013, numero: 1, habGrupos: true, nroUltGrupo: 0,
 			foro: foroCursoUnoP)
-		cuatrimestreUnoP.addToAprendices(aprendizDiez)
 		def cuatrimestreUnoPP = new Cuatrimestre(anio: 2012, numero: 2, habGrupos: true, nroUltGrupo: 0,
 			foro: foroCursoUnoPP)
 		def cuatrimestreUnoPPP = new Cuatrimestre(anio: 2012, numero: 1, habGrupos: true, nroUltGrupo: 0,
@@ -439,6 +458,7 @@ class BootStrap {
 			foro: foroCursoUnoPPPP)
 		def cuatrimestreUnoPPPPP = new Cuatrimestre(anio: 2011, numero: 1, habGrupos: true, nroUltGrupo: 0,
 			foro: foroCursoUnoPPPPP)
+		cuatrimestreUnoPPPPP.addToAprendices(aprendizDosPPP)
 		def cuatrimestreUnoPPPPPP = new Cuatrimestre(anio: 2010, numero: 2, habGrupos: true, nroUltGrupo: 0,
 			foro: foroCursoUnoPPPPPP)
 		
@@ -446,15 +466,25 @@ class BootStrap {
 			foro: foroCursoDos)
 		cuatrimestreDos.addToAprendices(aprendizAgus)
 
-		def cuatrimestreTres= new Cuatrimestre(anio: 2013, numero: 1, habGrupos: true, nroUltGrupo: 0,
+		def cuatrimestreTres = new Cuatrimestre(anio: 2013, numero: 1, habGrupos: true, nroUltGrupo: 0,
 			foro: foroCursoTres)
 		cuatrimestreTres.addToAprendices(aprendizUno)
+		cuatrimestreTres.addToAprendices(aprendizDosP)
 		
 		def cuatrimestreCuatro = new Cuatrimestre(anio: 2013, numero: 2, habGrupos: true, nroUltGrupo: 0,
 			foro: foroCursoCuatro)
 		cuatrimestreCuatro.addToAprendices(aprendizUnoP)
+		def cuatrimestreCuatroP = new Cuatrimestre(anio: 2012, numero: 2, habGrupos: true, nroUltGrupo: 0,
+			foro: foroCursoCuatroP)
+		def cuatrimestreCuatroPP = new Cuatrimestre(anio: 2012, numero: 1, habGrupos: true, nroUltGrupo: 0,
+			foro: foroCursoCuatroPP)
+		def cuatrimestreCuatroPPP = new Cuatrimestre(anio: 2011, numero: 2, habGrupos: true, nroUltGrupo: 0,
+			foro: foroCursoCuatroPPP)
+		def cuatrimestreCuatroPPPP = new Cuatrimestre(anio: 2011, numero: 1, habGrupos: true, nroUltGrupo: 0,
+			foro: foroCursoCuatroPPPP)
+		cuatrimestreCuatroPPPP.addToAprendices(aprendizDosPP)
 
-		def cuatrimestreCinco = new Cuatrimestre(anio: 2013, numero: 1, habGrupos: true, nroUltGrupo: 0, 
+		def cuatrimestreCinco = new Cuatrimestre(anio: 2012, numero: 2, habGrupos: true, nroUltGrupo: 0, 
 			foro: foroCursoCinco)
 		cuatrimestreCinco.addToAprendices(aprendizUnoPP)
 		
@@ -491,15 +521,19 @@ class BootStrap {
 		cursoDos.addToCuatrimestres(cuatrimestreDos)
 		cursoDos.addToTemas(temaUnoCursoDos)
 		
-		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1|2", nombre: "Curso 3")
+		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1", nombre: "Curso 3")
 		cursoTres.addToMediadores(mediadorTres)
 		cursoTres.addToCuatrimestres(cuatrimestreTres)
 
 		def cursoCuatro = new Curso(nroRelativo: "04", cuatDict: "1|2", nombre: "Curso 4")
 		cursoCuatro.addToMediadores(mediadorCuatro)
 		cursoCuatro.addToCuatrimestres(cuatrimestreCuatro)
+		cursoCuatro.addToCuatrimestres(cuatrimestreCuatroP)
+		cursoCuatro.addToCuatrimestres(cuatrimestreCuatroPP)
+		cursoCuatro.addToCuatrimestres(cuatrimestreCuatroPPP)
+		cursoCuatro.addToCuatrimestres(cuatrimestreCuatroPPPP)
 		
-		def cursoCinco = new Curso(nroRelativo: "05", cuatDict: "1|2", nombre: "Curso 5")
+		def cursoCinco = new Curso(nroRelativo: "05", cuatDict: "2", nombre: "Curso 5")
 		cursoCinco.addToMediadores(mediadorCinco)
 		cursoCinco.addToMediadores(mediadorSeis)
 		cursoCinco.addToCuatrimestres(cuatrimestreCinco)
