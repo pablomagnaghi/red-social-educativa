@@ -15,7 +15,7 @@ class Utilidades {
 	final static MES =  new Date().getMonth() + 1
 	final static DIA = new Date().getAt(Calendar.DAY_OF_MONTH)
 	// TODO ir tocando la fecha para pruebas
-	final static FECHA = 20140505//10000 * (ANIO) + 100 * MES + DIA
+	final static FECHA = 10000 * (ANIO) + 100 * MES + DIA
 	
 	final static ANIO_PROXIMA_SEMANA = new Date(new Date().getTime() + (7 * 24* 60 * 60 * 1000)).getYear() + ANIO_INICIAL
 	final static MES_PROXIMA_SEMANA =  new Date(new Date().getTime() + (7 * 24* 60 * 60 * 1000)).getMonth() + 1

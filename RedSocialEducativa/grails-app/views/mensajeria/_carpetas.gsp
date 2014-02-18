@@ -1,22 +1,20 @@
 <g:each in="${etiquetasCarpetas}" var="carpeta">
 	<g:if test="${seleccionada == carpeta.key}">
 		<li class="active li_clickeable droppable selectedFolder"
-			id="${carpeta}"><g:remoteLink class="inbox-load"
-				action="mostrarMensajes" params='[nombreCarpeta: "${carpeta}"]'
-				update="[success:'inbox-content']" onSuccess="when_ready();actualizar('carpeta', '${carpeta }')">
+			id="${carpeta}"><g:link class="inbox-load"
+				action="mostrarMensajes" params='[nombreCarpeta: "${carpeta}"]'>
 				${carpeta.key}
 				<g:if test="${carpeta.value > 0}">
 		(${carpeta.value})</g:if>
-			</g:remoteLink></li>
+			</g:link></li>
 	</g:if>
 	<g:else>
-		<li class="li_clickeable droppable" id="${carpeta}"><g:remoteLink
-				action="mostrarMensajes" params='[nombreCarpeta: "${carpeta}"]'
-				update="[success:'inbox-content']" onSuccess="when_ready();actualizar('carpeta', '${carpeta }')">
+		<li class="li_clickeable droppable" id="${carpeta}"><g:link
+				action="mostrarMensajes" params='[nombreCarpeta: "${carpeta}"]'>
 				${carpeta.key}
 				<g:if test="${carpeta.value > 0}">
 		(${carpeta.value})</g:if>
-			</g:remoteLink></li>
+			</g:link></li>
 	</g:else>
 </g:each>
 <h6>

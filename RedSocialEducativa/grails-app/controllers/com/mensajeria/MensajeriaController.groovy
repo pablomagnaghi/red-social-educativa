@@ -9,6 +9,7 @@ import com.fiuba.Usuario
 import com.fiuba.Aprendiz
 import com.mensajeria.Conversacion
 import com.fiuba.RedController;
+import com.fiuba.Utilidades;
 
 import grails.converters.JSON
 
@@ -24,13 +25,19 @@ class MensajeriaController {
 	def conversacionService
 
 	def index() {
+		params.max = Utilidades.MAX_PARAMS
+		Integer offset = params.offset?.toInteger() ?: 0
+		println offset
+		println params.max
 		def usuario = this.usuarioActual()
 		if (!usuario){
 			redirect (controller:"red", action:"principal")
 		}
 		def etiquetasCarpetas = getCarpetas(usuario)
-		def conversacion = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, "Escritorio"))
-		[etiquetasCarpetas: etiquetasCarpetas, conversacionesEscr : conversacion, carpetaSeleccionada: "Escritorio"]
+		def conversacion = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, "Escritorio"), [max: params.max, offset: offset])
+		def conversacionCount = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, "Escritorio")).size()
+		
+		[etiquetasCarpetas: etiquetasCarpetas, conversaciones : conversacion, conversacionCount: conversacionCount, carpetaSeleccionada: "Escritorio", offset: offset]
 	}
 
 	def nuevaCarpeta() {
@@ -39,13 +46,20 @@ class MensajeriaController {
 			redirect (controller:"red", action:"principal")
 		}
 		def nuevaCarpeta = new Carpeta(nombre : params.nombre, usuario: usuario)
-		nuevaCarpeta.save(failOnError: true)
-
+		if(!nuevaCarpeta.save()){
+			return
+		}
 		def etiquetasCarpetas = getCarpetas(usuario)
 		render(template:"carpetas",model:[etiquetasCarpetas: etiquetasCarpetas])
 	}
 
 	def mostrarMensajes(String nombreCarpeta){
+		params.max = Utilidades.MAX_PARAMS
+		Integer offset = params.offset?.toInteger() ?: 0
+		
+		if (!nombreCarpeta){
+			nombreCarpeta = params.nombreCarpeta
+		}
 		def usuario = this.usuarioActual()
 		if (!usuario){
 			redirect (controller:"red", action:"principal")
@@ -56,14 +70,16 @@ class MensajeriaController {
 			nombreFormateado = it[1]
 		}
 		def conversacion = []
+		def conversacionCount = 0
 		if (nombreFormateado.equals("Enviados")){
 			def mensajes = Mensaje.findAllByEmisor(usuario)
 			render(template:"panelEnviados",model:[mensajes: mensajes, etiquetasCarpetas:  getCarpetas(usuario), carpetaSeleccionada : nombreFormateado])
 			return	
 		} else {
-			conversacion = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, nombreFormateado))
+			conversacion = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, nombreFormateado), [max: params.max, offset: offset])
+			conversacionCount = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, nombreFormateado)).size()
 		}
-		render(template:"panelMensajeria",model:[conversaciones: conversacion, etiquetasCarpetas:  getCarpetas(usuario), carpetaSeleccionada : nombreFormateado])
+		render(view:"index",model:[conversaciones: conversacion, conversacionCount: conversacionCount, etiquetasCarpetas:  getCarpetas(usuario), carpetaSeleccionada : nombreFormateado, nombreCarpeta : nombreCarpeta, offset: offset])
 	}
 
 	def cambiarConversacion(){
@@ -201,7 +217,8 @@ class MensajeriaController {
 			asunto = "RE: " + mensaje.asunto
 			para = generarDestinatariosRespuestaATodos(mensaje)
 		}
-		render(template:"redactar", model: [para : para, asunto : asunto, usuarios: usuarios, cursosAprendiz : cursosAprendiz, datosCursosAprendiz : datosCursosAprendiz,
+		println para
+		render(template:"redactarRespuesta", model: [para : para, asunto : asunto, usuarios: usuarios, cursosAprendiz : cursosAprendiz, datosCursosAprendiz : datosCursosAprendiz,
 			cursosMediador : cursosMediador, datosCursosMediador : datosCursosMediador, datosMediadores : datosMediadores, cursosTotales: datosCursos])
 		
 	}
@@ -259,7 +276,6 @@ class MensajeriaController {
 		if (!usuario){
 			redirect (controller:"red", action:"principal")
 		}
-		def para = params.para
 		def asunto = params.asunto
 		def texto = params.mensaje
 		Pattern usuarioPattern = Pattern.compile("(\\d+)")
@@ -268,36 +284,49 @@ class MensajeriaController {
 		Pattern grupoPattern = Pattern.compile("Grupo-(\\d+)_Curso-(\\d+)")
 		Hilo hilo = new Hilo()
 		hilo.save(flush: true)
-		def paraArray = para.split(",")
+		def paraArray = params.para.split(",")
+		def para = "" 
+		def usuarios = []
 		paraArray.each {
 			Matcher m = usuarioPattern.matcher(it.toString());
 			if (m.find()){
 				def receptor = Usuario.findById(m.group(1))
-				mensajeService.sendMessage(para, asunto, texto, usuario, receptor, hilo)
+				usuarios.add(receptor)
+				para += (receptor.nombres + " " + receptor.apellido + "<"+receptor.email+">")
 			} else {
 				m = mediadorPattern.matcher(it.toString());
 				if (m.find()){
 					def receptor = Mediador.findById(m.group(1))
-					mensajeService.sendMessage(para, asunto, texto, usuario, receptor.usuario, hilo)
+					usuarios.add(receptor)
+					para += (receptor.nombres + " " + receptor.apellido + "<"+receptor.email+">")
 				} else {
 					m = cursoPattern.matcher(it.toString());
 					if (m.find()){
 						def curso = Curso.findById(m.group(1))
 						def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(curso.id)
 						cuatrimestre.aprendices.each{
-							mensajeService.sendMessage(para, asunto, texto, usuario, it.usuario, hilo)
+							def receptor = it.usuario 
+							usuarios.add(receptor)
 						}
+						para += "Curso " + curso.id + ", "
 					} else {
 						m = grupoPattern.matcher(it.toString());
 						if (m.find()){
 							def grupo = GrupoCurso.findById(m.group(1))
+							def curso = Curso.findById(m.group(2))
 							grupo.aprendices.each{
-								mensajeService.sendMessage(para, asunto, texto, usuario, it.usuario, hilo)
+								def receptor = it.usuario
+								usuarios.add(receptor)
 							}
+							para += "Grupo " + grupo.id+",Curso: " + curso.id +", "
 						}
 					}
 				}
 			}
+		}
+		usuarios.each {
+			def receptor = it
+			mensajeService.sendMessage(para, asunto, texto, usuario, receptor, hilo)
 		}
 		redirect(action: 'index')
 	}

@@ -253,6 +253,35 @@ function volver(){
 	}
 }
 
+function validarNombre(){
+	if ($("#nombre").val()==""){
+		$("#carpetaNuevaError").show()
+		return false
+	} else {
+		$("#carpetaNuevaError").hide()
+		return true
+	}
+}
+
+function submitFormNuevaCarpeta(){
+	if (validarNombre()){
+		$.ajax({
+			url : 'nuevaCarpeta',
+			type : 'POST',
+			data : {
+				nombre : $("#nombre").val()
+			},
+			success: function(reply){
+				$("#lista_carpetas").html(reply);
+				cerrar_form_nueva_carpeta();
+			}
+		})
+		return true
+	} else {
+		return false
+	}
+}
+
 function responder(id, tipo){
 	$.ajax({
 		url : 'responder',
