@@ -7,6 +7,6 @@ class EvaluacionAprendiz {
 	static belongsTo = [aprendiz: Aprendiz, evaluacion: Evaluacion]
 	
     static constraints = {
-		nota nulable: true, min:0
+		nota nullable: true, min:0
     }
 }

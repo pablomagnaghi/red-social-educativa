@@ -54,7 +54,11 @@
 					<span id="aprendices-label" class="property-label"><g:message code="cuatrimestre.aprendices.label" default="Aprendices" /></span>
 					
 						<g:each in="${cuatrimestreInstance.aprendices}" var="a">
-						<span class="property-value" aria-labelledby="aprendices-label"><g:link controller="aprendiz" action="show" id="${a.id}">${a?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="aprendices-label">
+							<g:link controller="usuario" action="muestraMenuMed" id="${a.usuario.id}"
+								params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestreInstance.id]">${a?.encodeAsHTML()}</g:link></span>
+							<p>Mostrar si participa y cursa sacar de curso</p>
+							<p>agregar la opcion de dejar de participar</p>
 						</g:each>
 					
 				</li>

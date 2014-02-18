@@ -8,10 +8,6 @@ class UsuarioRol implements Serializable {
 
 	Usuario usuario
 	Rol rol
-
-	String toString() {
-		"${usuario}"
-	}
 	
 	boolean equals(other) {
 		if (!(other instanceof UsuarioRol)) {
@@ -68,4 +64,5 @@ class UsuarioRol implements Serializable {
 		// id composite: ['rol', 'usuario']
 		// version false
 	}
+	
 }

@@ -12,7 +12,7 @@ class Curso {
 		mediadores: Mediador, temas: Tema]
 
 	static constraints = {
-		nroRelativo min:(Short)1
+		nroRelativo min: (Short)1
 		cuatDict inList:[Utilidades.CUAT_UNO, Utilidades.CUAT_DOS, Utilidades.CUAT_AMBOS]
 	}
 

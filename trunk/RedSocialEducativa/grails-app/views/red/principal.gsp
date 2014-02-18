@@ -156,6 +156,7 @@
 			<p>Mes: ${com.fiuba.Utilidades.MES}</p>
 			<p>Anio: ${com.fiuba.Utilidades.ANIO}</p>
 			<p>Fecha: ${com.fiuba.Utilidades.FECHA}</p>
+			<p>Fecha proxima semana: ${com.fiuba.Utilidades.FECHA_PROXIMA_SEMANA}</p>
 			<p>FORMATO FECHA: ${(new Date()).format(com.fiuba.Utilidades.FORMATO_FECHA)}</p>
 		</div>
 	</body>

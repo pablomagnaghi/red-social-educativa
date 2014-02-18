@@ -6,7 +6,7 @@ abstract class Grupo {
 	String nombre
 	
     static constraints = {
-		numero min:1
+		numero min: 1
     }
 	
 	static mapping = {

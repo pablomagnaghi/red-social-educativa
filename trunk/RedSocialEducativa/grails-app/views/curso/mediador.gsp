@@ -8,7 +8,7 @@
 			<h2>
 				<p>"${com.fiuba.Curso.get(cursoId)}"</p>
 				<br>
-				<p>Bienvenido mediador "${mediador}"</p>
+				<p>Bienvenido mediador "${mediador.usuario}"</p>
 			</h2> 
 			<br>
 			<ol>
