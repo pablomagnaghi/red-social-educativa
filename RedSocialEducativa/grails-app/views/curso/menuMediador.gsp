@@ -7,7 +7,7 @@
 		<div>
 			<h3>Menu de tareas para el mediador del curso "${com.fiuba.Curso.get(cursoId)}"</h3>
 			<br>
-			
+			<h3>Los cuatrimestre que tuvo el curso: ${cuatrimestres}</h3>
 			<h4>Cuatrimestre actual: ${com.fiuba.Cuatrimestre.get(cuatrimestreId)}</h4>
 			<br>
 			
@@ -61,12 +61,11 @@
 					<g:message code="Evaluaciones" /></g:link></li>		
 				<br>	
 				<li><g:link class="list" action="create" controller="cuatrimestre" params="['cursoId': cursoId]">
-					<g:message code="Consolidar cuatrimestre (IMPLEMENTAR)" /></g:link></li>	
+					<g:message code="Consolidar cuatrimestre ${cuatrimestres.first()}" /></g:link></li>	
 				<br>	
 					<li><g:link class="list" action="indexHistoriales" controller="cuatrimestre" params="['cursoId': cursoId]">
 					<g:message code="Historial de cuatrimestres" /></g:link></li>
 				<br>		
-				<p>AGREGAR CONSOLIDAR CUATRIMESTRE, ESTE METODO TIENE QUE LLAMAR A NEW CUATRIMESTRE Y ADEMAS CONSOLIDAR EL ANTERIOR</p>	
 			</ol>
 		</div>
 		<div>
