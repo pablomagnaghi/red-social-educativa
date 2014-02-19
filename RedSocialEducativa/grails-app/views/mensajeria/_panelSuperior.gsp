@@ -25,40 +25,38 @@
 
 	</div>
 
-	<div class="pagination btn-group pull-right inbox-paging">
-		<!--<a class="btn btn-default btn-sm"
-				href="javascript:void(0);">
-				
-			</a>
-			<a class="btn btn-default btn-sm"
-				href="javascript:void(0);"><strong>
-				<i class="fa fa-chevron-right"></i></strong>
-			</a>
-			-->
+	<div class="pagination btn-group pull-right inbox-paging" style="margin-left: 10px; right: 20px; margin-top: 0px;">
+		<strong> ${offset+1}-${offset + params.max }
+		</strong> de <strong> <g:if test="${conversacionCount != null }">
+					${conversacionCount }
+				</g:if> <g:else>
+					${mensajesCount}
+				</g:else>
+		</strong>
 		<g:if test="${conversacionCount != null }">
 			<g:if test="${deBusqueda != null && paraBusqueda != null}">
-				<g:paginate prev="" next="" total="${conversacionCount ?: 0}"
+				<g:paginate prev="" next="" total="${conversacionCount ?: 0}"
 					params="['nombreCarpeta' : nombreCarpeta, 'de' : deBusqueda, 'para': paraBusqueda]" />
 			</g:if>
 			<g:else>
 				<g:if test="${paraBusqueda != null }">
-					<g:paginate prev="" next="" total="${conversacionCount ?: 0}"
+					<g:paginate prev="" next="" total="${conversacionCount ?: 0}"
 						params="['nombreCarpeta' : nombreCarpeta, 'para': paraBusqueda]" />	
 				</g:if>
 				<g:else>
 					<g:if test="${deBusqueda != null }">
-						<g:paginate prev="" next="" total="${conversacionCount ?: 0}"
+						<g:paginate prev="" next="" total="${conversacionCount ?: 0}"
 							params="['nombreCarpeta' : nombreCarpeta, 'de' : deBusqueda]" />
 					</g:if>
 					<g:else>
-						<g:paginate prev="" next="" total="${conversacionCount ?: 0}"
+						<g:paginate prev="" next="" total="${conversacionCount ?: 0}"
 						params="['nombreCarpeta' : nombreCarpeta]" />
 					</g:else>
 				</g:else>
 			</g:else>
 		</g:if>
 		<g:else>
-			<g:paginate prev="" next="" total="${mensajesCount ?: 0}"
+			<g:paginate prev="" next="" total="${mensajesCount ?: 0}"
 				params="['nombreCarpeta' : nombreCarpeta]" />
 		</g:else>
 	</div>
@@ -76,12 +74,5 @@
 		</button>
 	</span> 
 	</form>
-	<span class="pull-right"><strong> ${offset+1}-${offset + params.max }
-	</strong> de <strong> <g:if test="${conversacionCount != null }">
-				${conversacionCount }
-			</g:if> <g:else>
-				${mensajesCount}
-			</g:else>
-	</strong></span>
 
 </div>
