@@ -462,7 +462,7 @@ class BootStrap {
 		def cuatrimestreUnoPPPPPP = new Cuatrimestre(anio: 2010, numero: 2, habGrupos: true, nroUltGrupo: 0,
 			foro: foroCursoUnoPPPPPP)
 		
-		def cuatrimestreDos = new Cuatrimestre(anio: 2013, numero: 2, habGrupos: true, nroUltGrupo: 0,
+		def cuatrimestreDos = new Cuatrimestre(anio: 2013, numero: 1, habGrupos: true, nroUltGrupo: 0,
 			foro: foroCursoDos)
 		cuatrimestreDos.addToAprendices(aprendizAgus)
 

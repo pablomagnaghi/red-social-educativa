@@ -16,6 +16,16 @@ class CuatrimestreService {
 		}
 	}
 	
+	def obtenerAnio() {
+		def anio = Utilidades.ANIO
+		def calendario = Calendario.findByAnio(Utilidades.ANIO)
+		
+		if (Utilidades.FECHA < calendario.inicioPrimerCuatrimestre) {
+			anio--
+		}
+		return anio
+	}
+	
 	def obtenerNumero() {
 		def calendario = Calendario.findByAnio(Utilidades.ANIO)
 		def numero = 2
@@ -29,20 +39,25 @@ class CuatrimestreService {
 	
 	// Revisa en que periodo del año estamos, para determinar que cuatrimestre tendria que existir en el curso
 	def obtenerCuatrimestreActual(Long cursoId) {
-
-		def anio = Utilidades.ANIO
-		def calendario = Calendario.findByAnio(Utilidades.ANIO)
 		
-		if (Utilidades.FECHA < calendario.inicioPrimerCuatrimestre) {
-			anio--
-		}
-		
+		def anio = obtenerAnio()
 		def numero = obtenerNumero()
 		def curso = Curso.get(cursoId)
 		def cuatrimestre = Cuatrimestre.findByCursoAndAnioAndNumero(curso, anio, numero)
 
 		return cuatrimestre
 	}
+	
+	def obtenerCuatrimestresOrdenados(Long cursoId) {
+		def cuatrimestres = Cuatrimestre.withCriteria {
+			eq('curso.id', cursoId)
+			and {
+				order('anio', 'desc')
+				order('numero', 'desc')
+			}
+		}
+	}
+	
 /*//TODO probar si no se usa en otro lado
 	def existe(Cuatrimestre cuatrimeste, Long cursoId) {
 

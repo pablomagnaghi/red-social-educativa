@@ -52,12 +52,12 @@ class CuatrimestreController {
 	
 		// Si ya se dicta ese cuatrimestre salgo
 		if (cuatrimestre) {
-			flash.message = "Ya existe el cuatrimestre ${cuatrimestre} del curso ${Curso.get(params.cursoId)}"
+			flash.message = "Para consolidar el ${cuatrimestre} del curso ${Curso.get(params.cursoId)} debe esperar a la finalizacion del cuatrimestre"
 			redirect controller: "curso", action: "menuMediador", params:['cursoId': params.cursoId]
 			return
 		}
 		
-		Integer anio = Utilidades.ANIO
+		Integer anio = cuatrimestreService.obtenerAnio()
 		Integer numero = cuatrimestreService.obtenerNumero()
 	
 	
@@ -78,9 +78,8 @@ class CuatrimestreController {
 		cuatrimestreInstance.foro = foro
 	
 		// Obtengo el ultimo cuatrimestre 
-		def cuatrimestres = Cuatrimestre.findAllByCurso(Curso.get(params.cursoId), [sort: 'anio', order: 'desc'])
+		def cuatrimestres = cuatrimestreService.obtenerCuatrimestresOrdenados(params.cursoId.toLong())
 		println "cuatrimestres: ${cuatrimestres}"
-		// el orden es [2013 - 2, 2013 - 1, 2012 - 2, 2012 - 1, 2011 - 2, 2011 - 1, 2010 - 2]
 		def cuatrimestreUltimo = cuatrimestres.first()
 		println "cuatrimestre ultimo del curso"
 		println "${cuatrimestreUltimo}"

@@ -114,8 +114,9 @@ class CursoController {
 			// TODO VER QUE MOSTRAR CUANDO NO HAY CUATRIMESTRE ID
 		cursoId = params.cursoId
 		def cuatrimestreId = cuatrimestreService.obtenerCuatrimestreActual(cursoId.toLong())?.id
-
-		[materia: Curso.get(cursoId).materia, cursoId: cursoId, cuatrimestreId: cuatrimestreId]
+		def cuatrimestres = cuatrimestreService.obtenerCuatrimestresOrdenados(params.cursoId.toLong())
+			
+		[materia: Curso.get(cursoId).materia, cursoId: cursoId, cuatrimestreId: cuatrimestreId, cuatrimestres: cuatrimestres]
 	}
 
 	@Secured('permitAll')
