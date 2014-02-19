@@ -18,14 +18,15 @@
 }
 
 .center_div_carpeta {
-	position: absolute;
-    height: 180px;
-    width: 350px;
-    margin: -100px 0 0 -200px;
+	position:fixed;
     top: 50%;
     left: 50%;
-    display : block;
-    background-color: #AAAAAA
+    height: 180px;
+    width: 350px;
+    margin-top: -90px; /*set to a negative number 1/2 of your height*/
+    margin-left: -175px; /*set to a negative number 1/2 of your width*/
+    background-color: #AAAAAA;
+    z-index: 2
 }
 
 .ui-state-active {
