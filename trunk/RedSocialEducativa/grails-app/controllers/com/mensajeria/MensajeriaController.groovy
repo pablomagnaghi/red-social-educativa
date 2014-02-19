@@ -27,8 +27,6 @@ class MensajeriaController {
 	def index() {
 		params.max = Utilidades.MAX_PARAMS
 		Integer offset = params.offset?.toInteger() ?: 0
-		println offset
-		println params.max
 		def usuario = this.usuarioActual()
 		if (!usuario){
 			redirect (controller:"red", action:"principal")
@@ -37,7 +35,8 @@ class MensajeriaController {
 		def conversacion = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, "Escritorio"), [max: params.max, offset: offset])
 		def conversacionCount = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, "Escritorio")).size()
 		
-		[etiquetasCarpetas: etiquetasCarpetas, conversaciones : conversacion, conversacionCount: conversacionCount, carpetaSeleccionada: "Escritorio", offset: offset]
+		[etiquetasCarpetas: etiquetasCarpetas, conversaciones : conversacion, 
+		conversacionCount: conversacionCount, carpetaSeleccionada: "Escritorio", offset: offset]
 	}
 
 	def nuevaCarpeta() {
@@ -50,13 +49,12 @@ class MensajeriaController {
 			return
 		}
 		def etiquetasCarpetas = getCarpetas(usuario)
-		render(template:"carpetas",model:[etiquetasCarpetas: etiquetasCarpetas])
+		redirect(action:"mostrarMensajes", params:[nombreCarpeta: params.nombre])
 	}
 
 	def mostrarMensajes(String nombreCarpeta){
 		params.max = Utilidades.MAX_PARAMS
 		Integer offset = params.offset?.toInteger() ?: 0
-		
 		if (!nombreCarpeta){
 			nombreCarpeta = params.nombreCarpeta
 		}
@@ -64,22 +62,17 @@ class MensajeriaController {
 		if (!usuario){
 			redirect (controller:"red", action:"principal")
 		}
-		def matcher = /([^=]+)=/
-		def nombreFormateado = ""
-		nombreCarpeta.eachMatch(matcher) {
-			nombreFormateado = it[1]
-		}
 		def conversacion = []
 		def conversacionCount = 0
-		if (nombreFormateado.equals("Enviados")){
-			def mensajes = Mensaje.findAllByEmisor(usuario)
-			render(template:"panelEnviados",model:[mensajes: mensajes, etiquetasCarpetas:  getCarpetas(usuario), carpetaSeleccionada : nombreFormateado])
+		if (nombreCarpeta.equals("Enviados")){
+			def mensajes = Mensaje.findAllByEmisor(usuario, [max: params.max, offset: offset])
+			render(view:"index",model:[mensajes: mensajes, mensajesCount : mensajes.size(), etiquetasCarpetas:  getCarpetas(usuario), carpetaSeleccionada : nombreCarpeta, offset: offset])
 			return	
 		} else {
-			conversacion = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, nombreFormateado), [max: params.max, offset: offset])
-			conversacionCount = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, nombreFormateado)).size()
+			conversacion = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, nombreCarpeta), [max: params.max, offset: offset])
+			conversacionCount = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, nombreCarpeta)).size()
 		}
-		render(view:"index",model:[conversaciones: conversacion, conversacionCount: conversacionCount, etiquetasCarpetas:  getCarpetas(usuario), carpetaSeleccionada : nombreFormateado, nombreCarpeta : nombreCarpeta, offset: offset])
+		render(view:"index",model:[conversaciones: conversacion, conversacionCount: conversacionCount, etiquetasCarpetas:  getCarpetas(usuario), carpetaSeleccionada : nombreCarpeta, nombreCarpeta : nombreCarpeta, offset: offset])
 	}
 
 	def cambiarConversacion(){
@@ -88,20 +81,12 @@ class MensajeriaController {
 			redirect (controller:"red", action:"principal")
 		}
 		def idConversacion = params.conversacion
-		def nombreCarpeta = params.carpeta
-		def matcher = /([^=]+)=/
-		def nombreFormateado = ""
-		nombreCarpeta.eachMatch(matcher) {
-			nombreFormateado = it[1]
-		}
+		def nombreFormateado = params.carpeta
 		def carpeta = Carpeta.findByNombreAndUsuario(nombreFormateado, usuario)
 		def conversacion = Conversacion.findById(idConversacion)
-		/*println conversacion
-		println carpeta*/
 		conversacion.padre = carpeta;
 		conversacion.save(flush: true)
-		def conversaciones = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, nombreFormateado))
-		render(template: "panelMensajeria", model: [conversaciones : conversaciones, etiquetasCarpetas:  getCarpetas(usuario), carpetaSeleccionada : nombreFormateado])
+		redirect(action:"mostrarMensajes", params:[nombreCarpeta: nombreFormateado])
 	}
 	
 	def eliminarConversacion(){
@@ -113,8 +98,7 @@ class MensajeriaController {
 		def conversacion = Conversacion.findById(params.conversacion)
 		conversacion.padre = carpeta;
 		conversacion.save(flush: true)
-		def conversaciones = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, "Eliminados"))
-		render(template: "panelMensajeria", model: [conversaciones : conversaciones, etiquetasCarpetas:  getCarpetas(usuario), carpetaSeleccionada : "Eliminados"])
+		redirect(action:"mostrarMensajes", params:[nombreCarpeta: "Eliminados"])
 	}
 
 	private getCarpetas(Usuario usuario){
@@ -398,7 +382,10 @@ class MensajeriaController {
 	}
 
 	def buscar_mensajes(){
-		println params
+		
+		params.max = Utilidades.MAX_PARAMS
+		Integer offset = params.offset?.toInteger() ?: 0
+		
 		def usuario = this.usuarioActual()
 		if (!usuario){
 			redirect (controller:"red", action:"principal")
@@ -407,30 +394,45 @@ class MensajeriaController {
 		def para = null
 		def regex = /\s*([^\s]*)\s*([^<]*)<([^>]*)>,?/
 		def mensajes = []
+		def deBusqueda = null
+		def paraBusqueda = null
 		if (!params.de.trim().empty){
 			def matcher = (params.de =~ regex)
-			def nombres = matcher[0][1]
-			def apellido = matcher[0][2]
-			def email = matcher[0][3]
-			de = Usuario.findByNombresAndApellidoAndEmail(nombres, apellido, email)
+			if (matcher.matches()){
+				def nombres = matcher[0][1]
+				def apellido = matcher[0][2]
+				def email = matcher[0][3]
+				de = Usuario.findByNombresAndApellidoAndEmail(nombres, apellido, email)
+				deBusqueda = params.de.trim()
+			}
 		} else 	if (!params.para.trim().empty){
 			def matcher = (params.para =~ regex)
-			def nombres = matcher[0][1]
-			def apellido = matcher[0][2]
-			def email = matcher[0][3]
-			para = Usuario.findByNombresAndApellidoAndEmail(nombres, apellido, email)
+			if (matcher.matches()){
+				def nombres = matcher[0][1]
+				def apellido = matcher[0][2]
+				def email = matcher[0][3]
+				para = Usuario.findByNombresAndApellidoAndEmail(nombres, apellido, email)
+				paraBusqueda = params.para.trim()
+			}
 		}
+		def conversacionCount = 0
 		if (de == null && para != null){
-			mensajes = Mensaje.findAllByEmisorAndReceptor(usuario, para)
+			mensajes = Mensaje.findAllByEmisorAndReceptor(usuario, para, [max: params.max, offset: offset])
+			conversacionCount = Mensaje.findAllByEmisorAndReceptor(usuario, para).size()
 		} else if (para == null && de != null){
-			mensajes = Mensaje.findAllByEmisorAndReceptor(de, usuario)
-		}
+			mensajes = Mensaje.findAllByEmisorAndReceptor(de, usuario, [max: params.max, offset: offset])
+			conversacionCount = Mensaje.findAllByEmisorAndReceptor(de, usuario).size()
+		} 
 		def conversaciones = []
 		mensajes.each {
 			def conversacion = conversacionService.findConversacionByMessage(it, usuario)
 			conversaciones.add(conversacion)
 		}
-		render(template: "conversaciones", model: [conversaciones: conversaciones])
+		render(view: "index", model: [deBusqueda: deBusqueda, paraBusqueda: paraBusqueda,
+									etiquetasCarpetas : getCarpetas(usuario), 
+									carpetaSeleccionada: params.nombreCarpeta, 
+									conversaciones: conversaciones, 
+									conversacionCount: conversacionCount, offset : offset])
 	}	
 	
 	private usuarioActual() {

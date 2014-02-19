@@ -44,8 +44,7 @@ function when_ready(){
 					data: { conversacion : idConversacion,
 							carpeta : idCarpeta},
 					success : function (reply){
-						$("#panel_mensajes").html(reply)
-						when_ready();
+						window.open("mostrarMensajes?nombreCarpeta="+idCarpeta, '_self')
 					}
 				});
 			}
@@ -90,23 +89,6 @@ function when_ready(){
 		actualizar("conversacion", id)
 	})
 	redactar_ready()
-}
-
-function buscarMensajes(){
-	$.ajax({
-		url: 'buscar_mensajes',
-		type: 'POST',
-		data : {
-			de : $("#deBuscar").val(),
-			para : $("#paraBuscar").val()
-		},
-		success : function (response) {
-			$("#listaConversaciones").html(response)
-			var ultimo = historial.pop()
-			historial.push(ultimo)
-			historial.push(ultimo)
-		}
-	})
 }
 
 function mostrarConversacion(id){
@@ -195,10 +177,6 @@ function borrarConversacion(){
 				type: "POST",
 				data: {
 					conversacion : idConversacion,
-				},
-				success : function (reply){
-					$("#inbox-content").html(reply)
-					when_ready();
 				}
 			});
 		}
@@ -260,25 +238,6 @@ function validarNombre(){
 	} else {
 		$("#carpetaNuevaError").hide()
 		return true
-	}
-}
-
-function submitFormNuevaCarpeta(){
-	if (validarNombre()){
-		$.ajax({
-			url : 'nuevaCarpeta',
-			type : 'POST',
-			data : {
-				nombre : $("#nombre").val()
-			},
-			success: function(reply){
-				$("#lista_carpetas").html(reply);
-				cerrar_form_nueva_carpeta();
-			}
-		})
-		return true
-	} else {
-		return false
 	}
 }
 
