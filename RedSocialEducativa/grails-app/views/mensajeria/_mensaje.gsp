@@ -7,15 +7,15 @@
 			class="fa fa-print"></i></a>
 	</h2>
 
-	<div class="inbox-info-bar">
-		<div class="row">
-			<div class="col-sm-9">
+	<div class="inbox-info-bar" style="margin-right: 0px;">
+		<div class="row" style="width: 800px">
+			<div class="span9">
 				<strong>${mensaje.emisor.nombres } ${mensaje.emisor.apellido }</strong> <span class="hidden-mobile">&lt;${mensaje.emisor.email}&gt; Para: 
 					<strong>${mensaje.receptor.nombres} ${mensaje.receptor.apellido}</strong> el <i>${mensaje.fecha }</i>
 				</span>
 			</div>
 			<g:if test="${responder == true}">
-				<div class="btn-group text-left">
+				<div class="btn-group text-left span1">
 					<button class="btn btn-primary btn-sm replythis" onclick="responder('${mensaje.id}', 'Responder')">
 						<i class="fa fa-reply"></i> Responder
 					</button>

@@ -1,16 +1,7 @@
-<div role="navigation" class="navbar navbar-default navbar-static-top">
-	<div class="container">
-		<div class="navbar-header">
-			<button data-target=".navbar-collapse" data-toggle="collapse"
-				class="navbar-toggle" type="button">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-		</div>
-		<div class="navbar-collapse collapse">
-			<g:img file="logo.png" />
-			<ul class="nav navbar-nav navbar-right">
+<div style="height: 100px">
+	<div class="container" style="margin-left: 40px; width: 95%;">
+		<g:img file="logo.png" />
+			<span style="float: right">
 				<sec:ifLoggedIn>
 				Bienvenido <sec:username /> (<g:link controller='logout'>Salir</g:link>)
 			</sec:ifLoggedIn>
@@ -43,7 +34,7 @@
 						</form>
 					</div>
 				</sec:ifNotLoggedIn>
-			</ul>
+			</span>
 		</div>
 		<!--/.nav-collapse -->
 	</div>
