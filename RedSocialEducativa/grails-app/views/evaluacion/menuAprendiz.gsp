@@ -21,9 +21,8 @@
 						<g:message code="Evaluaciones del curso ${com.fiuba.Curso.get(params.cursoId)}" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
-			<h2>Params: ${params}</h2>
-		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
-		<h2>Curso Id: ${params.cursoId}</h2>
+		<h3>curso: ${params.cursoId}</h3>
+		<h3>cuatri: ${params.cuatrimestreId}</h3>
 		<div>
 			<h1><g:message code="Evaluacion: ${evaluacion}" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -32,7 +31,7 @@
 		</div>
 		<div>
 			<g:if test="${evaluacionAprendiz}">
-				<div>La nota del aprendiz ${evaluacionAprendiz.aprendiz} es: PONER NOTA</div>
+				<div>Usted ya esta inscripto en la evaluacion ${evaluacionAprendiz.aprendiz}</div>
 			</g:if>
 			<g:else>
 				<fieldset class="buttons">

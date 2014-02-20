@@ -19,9 +19,8 @@
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
-			<h2>Params: ${params}</h2>
-		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
-		<h2>Curso Id: ${params.cursoId}</h2>
+		<h3>curso: ${params.cursoId}</h3>
+		<h3>cuatri: ${params.cuatrimestreId}</h3>
 		<div id="list-evaluacion" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">

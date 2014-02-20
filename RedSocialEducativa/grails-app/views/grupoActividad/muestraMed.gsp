@@ -53,6 +53,19 @@
 						<g:each in="${grupoActividadInstance.aprendices}" var="a">
 						<span class="property-value" aria-labelledby="aprendices-label">
 							<g:link controller="usuario" action="muestraMenuMed" id="${a.aprendiz.usuario.id}">${a?.encodeAsHTML()}</g:link></span>
+							<g:if test="${com.fiuba.Actividad.get(params.actividadId).evaluable}">
+								<g:link controller="grupoActividadAprendiz" action="calificar" 
+									id="${com.fiuba.GrupoActividadAprendiz.findByAprendizAndGrupo(com.fiuba.Aprendiz.get(a.aprendiz.id), 
+										 com.fiuba.GrupoActividad.get(grupoActividadInstance.id)).id}"								
+									params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId, 
+									'grupoActividadId': grupoActividadInstance.id]">
+									Calificar</g:link>
+									
+									<p>Aprendiz Id: ${a.id} - ${com.fiuba.Aprendiz.get(a.aprendiz.id)}</p>
+									<p>Grupo actividad Id: ${grupoActividadInstance.id} - ${com.fiuba.GrupoActividad.get(grupoActividadInstance.id)}</p>
+									<p>Grupo actividad aprendiz Id: ${com.fiuba.GrupoActividadAprendiz.findByAprendizAndGrupo(com.fiuba.Aprendiz.get(a.aprendiz.id), 
+										 com.fiuba.GrupoActividad.get(grupoActividadInstance.id)).id}</p>
+							</g:if>
 						</g:each>
 					
 				</li>

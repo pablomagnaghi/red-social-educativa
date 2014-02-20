@@ -36,8 +36,7 @@
 				<h1><g:message code="Evaluaciones del aprendiz: ${evaluacionesAprendiz.first().aprendiz} en el curso
 					${evaluacionesAprendiz.first().evaluacion.curso}" args="[entityName]" /></h1>
 				<g:each in="${evaluacionesAprendiz}">
-					<p>Evaluacion: ${it.evaluacion}</p>
-					<p>Nota: AGREGAR NOTA</p>	
+					<p>Evaluacion: ${it.evaluacion}	- Nota: ${it.nota}</p>	
 				</g:each>
 			</g:if>
 			<g:else>

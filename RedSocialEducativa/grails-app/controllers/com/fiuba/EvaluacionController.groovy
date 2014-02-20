@@ -42,7 +42,7 @@ class EvaluacionController {
 		
 		def evaluacionesAprendiz = evaluacionService.obtenerEvaluacionesPorAprendiz(aprendiz, params.cursoId.toLong())
 
-		[aprendizId: aprendiz?.id, evaluacionesAprendiz: evaluacionesAprendiz, params: ['cursoId': params.cursoId]]
+		[evaluacionesAprendiz: evaluacionesAprendiz, params: ['cursoId': params.cursoId]]
 	}
 	
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -79,9 +79,7 @@ class EvaluacionController {
 			return
 		}
 		
-		// Verificar si deben inscribirme por defecto todos los alumnos del cuatrimestre
 		if (evaluacionInstance.obligatoria) {
-			println "AGREGAR APRENDICES"
 			evaluacionService.agregarAprendices(evaluacionInstance, params.cursoId.toLong())
 		}
 		
