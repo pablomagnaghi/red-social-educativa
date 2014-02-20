@@ -59,8 +59,7 @@ class AprendizController {
 			return
 		}
 
-		// TODO verificar si todavia adeuda la materia
-		// Falta
+		// TODO ¿verificar si todavia adeuda la materia?
 		
 		if (!aprendizService.guardar(aprendizInstance)) {
 			respond aprendizInstance, view:'create', params:['cursoId': params.CursoId, 'cuatrimestreId': params.cuatrimestreId]
