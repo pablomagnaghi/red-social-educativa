@@ -34,6 +34,17 @@ class AprendizService {
 		}
 		return aprendiz
 	}
+	
+	def obtenerTodosAprendicesDeCurso(Long cursoId) {
+		def c = Aprendiz.createCriteria()
+		def aprendices = c {
+			cuatrimestre {
+				eq('curso.id', cursoId)
+			}
+			eq('participa', true)
+		}
+		return aprendices
+	}
 
 	// Obtener el grupo en el que participa el aprendiz en esa actividad
 	def obtenerGrupoPorActividad(Usuario usuario, Long cuatrimestreId, Long actividadId) {

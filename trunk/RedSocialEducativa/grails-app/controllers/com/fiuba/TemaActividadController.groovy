@@ -47,7 +47,7 @@ class TemaActividadController {
 		}
 		
 		if (!temaActividadService.guardar(temaActividadInstance)) {
-			render view:'create', model: [temaActividadInstance: temaActividadInstance], params: ['cursoId': params.cursoId, 
+			render view:'create', model: [temaActividadInstance: temaActividadInstance, temas: Tema.findAllByCurso(Curso.get(params.cursoId))], params: ['cursoId': params.cursoId, 
 				'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 			return
 		}

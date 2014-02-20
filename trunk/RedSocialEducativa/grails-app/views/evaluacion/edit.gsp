@@ -18,9 +18,8 @@
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
-			<h2>Params: ${params}</h2>
-		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
-		<h2>Curso Id: ${params.cursoId}</h2>
+		<h3>curso: ${params.cursoId}</h3>
+		<h3>cuatri: ${params.cuatrimestreId}</h3>
 		<div id="edit-evaluacion" class="content scaffold-edit" role="main">
 			<h1><g:message code="default.edit.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -36,7 +35,7 @@
 			<g:form action="update" method="PUT" id="${evaluacionInstance.id}" params="['cursoId': params.cursoId]">
 				<g:hiddenField name="version" value="${evaluacionInstance?.version}" />
 				<fieldset class="form">
-					<g:render template="form"/>
+					<g:render template="formEdit"/>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />

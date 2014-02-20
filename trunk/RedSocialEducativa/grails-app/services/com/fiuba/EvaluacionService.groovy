@@ -14,11 +14,9 @@ class EvaluacionService {
 			}
 		}
 		
-		println "aprendices"
-		println aprendices
-		
+		// TODO si se tienen que agregar todos los que cursaron a lo largo de los N cuatrimestres, sacar el it.cursando
 		aprendices.each {
-			if (it.participa) {
+			if (it.participa && it.cursando) {
 				inscribirAprendiz(evaluacion, it)
 			}
 		}

@@ -63,6 +63,11 @@ class ActividadController {
 				params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 			return
 		}
+		// TODO individual
+		if (!actividadInstance.grupal) {
+			println "asignar al curso"
+			actividadService.asignarAlCurso(actividadInstance, params.cursoId.toLong())
+		}
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'actividadInstance.label', default: 'Actividad'), actividadInstance.id])
 		redirect action: "index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
