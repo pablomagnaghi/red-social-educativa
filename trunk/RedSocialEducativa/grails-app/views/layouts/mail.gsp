@@ -10,6 +10,7 @@
 		<title><g:layoutTitle default="Grails"/></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap.css')}" type="text/css">
+		<link rel="stylesheet" href="${resource(dir: 'css', file: 'glyphicons.css')}" type="text/css">
 		<g:layoutHead/>
 		<g:javascript library="bootstrap"/>
 		<r:layoutResources />

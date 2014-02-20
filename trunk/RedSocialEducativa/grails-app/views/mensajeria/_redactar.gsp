@@ -5,18 +5,18 @@
 <form id="email-compose-form" class="form-horizontal" method="POST" action="enviarMensajes" onsubmit="return submitMail();" enctype="multipart/form-data">
 
 	<div class="inbox-info-bar no-padding">
-		<div class="row">
+		<div class="row" style="height: 40px;">
 			<div class="form-group">
-				<label class="control-label col-md-1"><strong>Para</strong></label>
-					<div class="col-md-10">
+				<label class="control-label span" style="width: 33px;"><strong>Para</strong></label>
+					<div class="span9" style="margin-top: 3px;">
 						<g:if test="${para != null }">
-							<input type='hidden' id="e6" style="width: 700px;" name="para" value="${para }"/>
+							<input type='hidden' id="e6" style="width: 700px" name="para" value="${para }"/>
 						</g:if>
 						<g:else>
-							<input type='hidden' id="e6" style="width: 700px;" name="para" />
+							<input type='hidden' id="e6" style="width: 700px" name="para" />
 						</g:else>
 					</div>
-					<div class="col-md-1" style="top: 7px;">
+					<div class="span" style="top: 7px; width: 33px; margin-top: 6px">
 						<g:img file="Treeview.gif" id="img_clickeable"
 								style="cursor: pointer;width: 21px;float: right" />
 					</div>
@@ -25,10 +25,10 @@
 	</div>
 	
 	<div class="inbox-info-bar no-padding">
-		<div class="row">
+		<div class="row" style="height: 40px;">
 			<div class="form-group">
-				<label class="control-label col-md-1"><strong>Asunto</strong></label>
-				<div class="col-md-11">
+				<label class="control-label span" style="width: 33px;"><strong>Asunto</strong></label>
+				<div class="span9" style="margin-top: 3px;">
 				<g:if test="${asunto != null }">
 					<input type="text" name="asunto" id="asunto" placeholder="Asunto del mensaje" class="form-control" value="${asunto }">
 				</g:if>
