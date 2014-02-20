@@ -5,7 +5,8 @@ import org.springframework.security.access.annotation.Secured
 
 class CursoController {
 
-	// Metodos nuevos
+	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	
 	def seguridadService
 	def cursoService
 	def mediadorService
@@ -18,9 +19,8 @@ class CursoController {
 	def revisarRol() {
 		println "Revisar rol params: ${params}"
 
-		cursoId = params.cursoId
 		def usuario = seguridadService.usuarioActual()
-		def curso = Curso.get(cursoId)
+		def curso = Curso.get(params.cursoId)
 		
 		if (!seguridadService.usuarioActual()) {
 			flash.message = "Ingreso como visitante"
@@ -39,7 +39,7 @@ class CursoController {
 			return
 		} 
 		
-		if (aprendizService.obtenerPorCurso(usuario.id, cursoId.toLong())) {
+		if (aprendizService.obtenerPorCurso(usuario.id, params.cursoId.toLong())) {
 			println "Hola aprendiz ${usuario}"
 			redirect(action: "aprendiz", params: params)
 			return 
@@ -52,73 +52,46 @@ class CursoController {
 	// Para visitantes y administradores
 	@Secured('permitAll')
 	def general() {
-		//println "general: curso se dicta: ${cursoService.seDicta(cursoId.toLong())}"
-		[dictaCuatrimestre: cursoService.seDicta(cursoId.toLong()), cursoId: cursoId, 
-			cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(cursoId.toLong()),
-			curso: Curso.get(params.cursoId)]
+		[dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), 
+			cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong()), params: ['cursoId': params.cursoId]]
 	}
 
-	@Secured('permitAll')
+	@Secured("hasRole('ROL_MIEMBRO')")
 	def miembro() {
-		cursoId = params.cursoId
-
-		//println "miembro: curso se dicta: ${cursoService.seDicta(cursoId.toLong())}"
 		def miembro = Miembro.findByUsuario(seguridadService.usuarioActual())
-
-		[dictaCuatrimestre: cursoService.seDicta(cursoId.toLong()), miembro: miembro, cursoId: cursoId]
+		[miembro: miembro, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()),
+			cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong()), params: ['cursoId': params.cursoId]]
 	}
 
-	@Secured('permitAll')
+	@Secured("hasRole('ROL_APRENDIZ')")
 	def aprendiz() {
-		//println "aprendiz: ${params}"
-
-		cursoId = params.cursoId
-		println "aprendiz: curso se dicta: ${cursoService.seDicta(cursoId.toLong())}"
-		def aprendiz = aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, cursoId.toLong())
-		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(cursoId.toLong())
-		def noticiasCurso = NoticiaCurso.findAllByCuatrimestre(cuatrimestre)
-		def cursando = false // para diferenciar entre aprendiz cuatrimestre y aprendiz curso
-
-		if (aprendiz.cuatrimestre.equals(cuatrimestre)) {
-			cursando = true
-		}
-
-		def nombreobtenerAprendizCurso
-
-		[dictaCuatrimestre: cursoService.seDicta(cursoId.toLong()), aprendiz: aprendiz, 
-			cursando: cursando, cursoId: cursoId, cuatrimestreId: cuatrimestre?.id, noticiasCurso: noticiasCurso]
-	}
-
-	@Secured('permitAll')
-	def mediador() {
-
-		//println "mediador params: ${params}"
-
-		cursoId = params.cursoId
-
-		//println "mediador: curso se dicta: ${cursoService.seDicta(cursoId.toLong())}"
+		def aprendiz = aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, params.cursoId.toLong())
+		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
 		
-		def mediador = Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId))
-
-		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(cursoId.toLong())
-
-		[dictaCuatrimestre: cursoService.seDicta(cursoId.toLong()), materia: Curso.get(cursoId).materia, 
-			cursoId: cursoId, mediador: mediador, cuatrimestreId: cuatrimestre?.id,
-			noticiasCurso: NoticiaCurso.findAllByCuatrimestre(cuatrimestre)]
+		[aprendiz: aprendiz, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), cuatrimestre: cuatrimestre, 
+			noticiasCurso: NoticiaCurso.findAllByCuatrimestre(cuatrimestre), params: ['cursoId': params.cursoId]]
 	}
 
-	@Secured('permitAll')
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def mediador() {
+		def mediador = Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(params.cursoId))
+		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
+
+		[mediador: mediador, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), cuatrimestre: cuatrimestre, 
+			noticiasCurso: NoticiaCurso.findAllByCuatrimestre(cuatrimestre), params: ['cursoId': params.cursoId]]
+	}
+
+	@Secured("hasRole('ROL_MEDIADOR')")
 	def menuMediador() {
 
-		//println "params menu mediador: ${params}"
-			// TODO VER QUE MOSTRAR CUANDO NO HAY CUATRIMESTRE ID
-		cursoId = params.cursoId
-		def cuatrimestreId = cuatrimestreService.obtenerCuatrimestreActual(cursoId.toLong())?.id
 		def cuatrimestres = cuatrimestreService.obtenerCuatrimestresOrdenados(params.cursoId.toLong())
-			
-		[materia: Curso.get(cursoId).materia, cursoId: cursoId, cuatrimestreId: cuatrimestreId, cuatrimestres: cuatrimestres]
+		def cuatrimestre= cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
+		
+		[materia: Curso.get(params.cursoId).materia, cuatrimestreId: cuatrimestre?.id, cuatrimestres: cuatrimestres, 
+			params: ['cursoId': params.cursoId]]
 	}
 
+	// TODO
 	@Secured('permitAll')
 	def material() {
 		params.max = Utilidades.MAX_PARAMS
@@ -180,33 +153,28 @@ class CursoController {
 			aprendiz: aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, cursoId.toLong())]
 	}
 
-	@Secured('permitAll')
+	@Secured("hasRole('ROL_MIEMBRO')")
 	def solicitarParticipacionEnElCurso() {
 
 		def aprendiz = new Aprendiz(usuario: usuarioActual(), rol: Rol.findByAuthority('ROL_APRENDIZ'), participa: false, msjEnviados: "0",
-		msjLeidos: "0", pubForos: "0", descMaterial: "0")
-
-		// println "solicitar participacion params: ${params}"
-
-		cursoId = params.cursoId
-		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(cursoId)
+		msjLeidos: "0", pubForos: "0", descMaterial: "0", cursando: false)
+		
+		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId)
 		cuatrimestre.addToAprendices(aprendiz)
 
 		if(!aprendiz.validate()) {
 			flash.message = "Problemas con la solitud de participacion"
 			println aprendiz.errors
-			redirect(action:"aprendiz", params:['cursoId': cursoId])
+			redirect(action:"aprendiz", params:['cursoId': params.cursoId])
 			return
 		}
 
 		aprendiz.save()
 		flash.message = "Solicitud aceptada. A la brevedad se le enviara un mail de confirmacion"
-		redirect(action:"aprendiz", params:['cursoId': cursoId])
+		redirect(action:"aprendiz", params:['cursoId': params.cursoId])
 	}
 
 	// TODO: Metodos para ABM de cursos en menu administrador
-
-	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	@Secured("hasRole('ROL_ADMIN')")
 	def index() {

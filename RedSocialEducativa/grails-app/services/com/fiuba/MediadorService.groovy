@@ -39,9 +39,10 @@ class MediadorService {
 		mediador.delete flush:true
 	}
 
-	def activarUsuario(Long aprendizId) {
+	def activarAprendiz(Long aprendizId) {
 		def aprendiz = Aprendiz.get(aprendizId)
 		aprendiz.participa = true
+		aprendiz.cursando = true
 		def mail = aprendiz.usuario.email
 		def username = aprendiz.usuario.username
 		

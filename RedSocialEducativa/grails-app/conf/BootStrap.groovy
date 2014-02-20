@@ -169,9 +169,9 @@ class BootStrap {
 		def aprendizDos = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: true, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)
 		// TODO usado para probar cursando participa
-		def aprendizDosP = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: false, msjEnviados: "0",
+		def aprendizDosP = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: true, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: false)
-		def aprendizDosPP = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: true, msjEnviados: "0",
+		def aprendizDosPP = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: false, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: false)
 		def aprendizDosPPP = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: false, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: false)

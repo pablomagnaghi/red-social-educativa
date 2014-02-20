@@ -12,7 +12,7 @@ class MediadorController {
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def activarAprendiz() {
 		
-		if (!mediadorService.activarUsuario(params.id.toLong())) {
+		if (!mediadorService.activarAprendiz(params.id.toLong())) {
 			flash.message = "Problemas con el aprendiz"
 			redirect(controller: "curso", action: "menuMediador", params: params)
 			return
