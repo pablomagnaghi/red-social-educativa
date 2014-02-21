@@ -7,7 +7,7 @@ import org.springframework.security.access.annotation.Secured
 class NoticiaRedController {
 
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-	def seguridadService
+	def usuarioService
 	def noticiaRedService
 
 	def index() {
@@ -20,7 +20,7 @@ class NoticiaRedController {
 	}
 
 	def create() {
-		[noticiaRedInstance: new NoticiaRed(params), usuario: seguridadService.usuarioActual()]
+		[noticiaRedInstance: new NoticiaRed(params), usuario: usuarioService.usuarioActual()]
 	}
 
 	def save(NoticiaRed noticiaRedInstance) {
@@ -40,7 +40,7 @@ class NoticiaRedController {
 	}
 
 	def edit(NoticiaRed noticiaRedInstance) {
-		respond noticiaRedInstance, model: [usuario: seguridadService.usuarioActual()]
+		respond noticiaRedInstance, model: [usuario: usuarioService.usuarioActual()]
 	}
 
 	def update(NoticiaRed noticiaRedInstance) {

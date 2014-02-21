@@ -2,8 +2,9 @@ package com.mensajeria
 
 import org.springframework.security.access.annotation.Secured
 
+
 import com.fiuba.Curso;
-import com.fiuba.GrupoCurso;
+//import com.fiuba.GrupoCurso;
 import com.fiuba.Mediador
 import com.fiuba.Usuario
 import com.fiuba.Aprendiz
@@ -16,7 +17,7 @@ import grails.converters.JSON
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-@Secured('permitAll')
+@Secured('isFullyAuthenticated()')
 class MensajeriaController {
 
 	def springSecurityService
@@ -126,6 +127,7 @@ class MensajeriaController {
 		def datosMediadores = [:]
 		mediadores.each {
 			def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(it.curso.id)
+			// TODO
 			def gruposCurso = cuatrimestre.grupos
 			def mediadoresCurso = it.curso.mediadores
 			cursosMediador.add(it.curso)
@@ -135,6 +137,7 @@ class MensajeriaController {
 		aprendices.each {
 			if (it.participa){
 				def cuatrimestre = it.cuatrimestre
+				// TODO
 				def gruposCurso = cuatrimestre.grupos
 				def mediadoresCurso = it.cuatrimestre.curso.mediadores
 				cursosAprendiz.add(it.cuatrimestre.curso)
@@ -168,6 +171,7 @@ class MensajeriaController {
 		def datosMediadores = [:]
 		mediadores.each {
 			def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(it.curso.id)
+			// TODO
 			def gruposCurso = cuatrimestre.grupos
 			def mediadoresCurso = it.curso.mediadores
 			cursosMediador.add(it.curso)
@@ -177,6 +181,7 @@ class MensajeriaController {
 		aprendices.each {
 			if (it.participa){
 				def cuatrimestre = it.cuatrimestre
+				// TODO
 				def gruposCurso = cuatrimestre.grupos
 				def mediadoresCurso = it.cuatrimestre.curso.mediadores
 				cursosAprendiz.add(it.cuatrimestre.curso)
@@ -265,6 +270,7 @@ class MensajeriaController {
 		Pattern usuarioPattern = Pattern.compile("(\\d+)")
 		Pattern mediadorPattern = Pattern.compile("Mediador-(\\d+)")
 		Pattern cursoPattern = Pattern.compile("^Curso-(\\d+)")
+		// TODO
 		Pattern grupoPattern = Pattern.compile("Grupo-(\\d+)_Curso-(\\d+)")
 		Hilo hilo = new Hilo()
 		hilo.save(flush: true)
@@ -294,6 +300,7 @@ class MensajeriaController {
 						}
 						para += "Curso " + curso.id + ", "
 					} else {
+						// TODO
 						m = grupoPattern.matcher(it.toString());
 						if (m.find()){
 							def grupo = GrupoCurso.findById(m.group(1))

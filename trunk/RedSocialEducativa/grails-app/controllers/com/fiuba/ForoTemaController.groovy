@@ -7,7 +7,7 @@ import org.springframework.security.access.annotation.Secured
 @Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
 class ForoTemaController {
 
-	def seguridadService
+	def usuarioService
 	def foroTemaService
 	def aprendizService
 	
@@ -30,7 +30,7 @@ class ForoTemaController {
 		def respuestas = foroTemaService.obtenerRespuestas(tema, params.id.toLong(), params.max, offset)
 		def respuestasCant = PublicacionTema.findAllByPublicacionInicialAndForo(PublicacionTema.get(params.id),
 			ForoTema.findByTema(tema)).size()+1
-		def usuario = seguridadService.usuarioActual()
+		def usuario = usuarioService.usuarioActual()
 		
 		[publicacion: PublicacionTema.get(params.id), respuestas: respuestas, respuestasCant: respuestasCant, usuario: usuario, 
 			mediador: Mediador.findByUsuarioAndCurso(usuario, Curso.get(params.cursoId)), 

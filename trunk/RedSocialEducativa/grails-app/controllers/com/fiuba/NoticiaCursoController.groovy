@@ -8,7 +8,7 @@ class NoticiaCursoController {
 
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-	def seguridadService
+	def usuarioService
 	def noticiaCursoService
 
 	def index() {
@@ -26,7 +26,7 @@ class NoticiaCursoController {
 	}
 
 	def create() {
-		def mediadorId = Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(params.cursoId)).id
+		def mediadorId = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId)).id
 		
 		respond new NoticiaCurso(params), model: [mediadorId: mediadorId], 
 			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
@@ -39,7 +39,7 @@ class NoticiaCursoController {
 		}
 		
 		if (!noticiaCursoService.guardar(noticiaCursoInstance)) {
-			def mediadorId = Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(params.cursoId)).id
+			def mediadorId = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId)).id
 			render view:'create', model: [noticiaCursoInstance: noticiaCursoInstance, mediadorId: mediadorId], 
 				params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 			return

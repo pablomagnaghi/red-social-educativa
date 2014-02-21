@@ -7,7 +7,6 @@ class TemaActividadController {
 
 	// static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-	def seguridadService
 	def temaActividadService
 
 	@Secured('permitAll')

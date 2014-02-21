@@ -7,14 +7,14 @@ class EvaluacionController {
 
     // static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-	def seguridadService
+	def usuarioService
 	def evaluacionService
 	def aprendizService
 	
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def menuAprendiz(Evaluacion evaluacion) {
 		
-		def aprendiz = aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, params.cursoId.toLong())
+		def aprendiz = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
 		def evaluacionAprendiz = EvaluacionAprendiz.findByAprendizAndEvaluacion(aprendiz, evaluacion)
 		
 		[evaluacion: evaluacion, evaluacionAprendiz: evaluacionAprendiz, params: ['cursoId': params.cursoId]]
@@ -28,7 +28,7 @@ class EvaluacionController {
 			return
 		}
 		
-		def aprendiz = aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, params.cursoId.toLong())
+		def aprendiz = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
 		evaluacionService.inscribirAprendiz(evaluacion, aprendiz)
 
 		flash.message = "La inscripcion ha sido realizada exitosamente"
@@ -38,7 +38,7 @@ class EvaluacionController {
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def evaluacionesAprendiz(Evaluacion evaluacion) {
 		
-		def aprendiz = aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, params.cursoId.toLong())
+		def aprendiz = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
 		
 		def evaluacionesAprendiz = evaluacionService.obtenerEvaluacionesPorAprendiz(aprendiz, params.cursoId.toLong())
 

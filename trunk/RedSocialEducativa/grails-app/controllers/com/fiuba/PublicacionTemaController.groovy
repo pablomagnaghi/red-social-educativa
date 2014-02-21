@@ -9,11 +9,11 @@ class PublicacionTemaController {
 
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-	def seguridadService
+	def usuarioService
 	def publicacionTemaService
 
 	def nueva() {
-		respond new PublicacionTema(params), model: [usuario: seguridadService.usuarioActual(), 
+		respond new PublicacionTema(params), model: [usuario: usuarioService.usuarioActual(), 
 			params:['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]]
 	}
 
@@ -26,8 +26,8 @@ class PublicacionTemaController {
 
 		if (params.pubInicialId) {
 			if (!publicacionTemaService.guardarRespuesta(publicacionTemaInstance, params.pubInicialId.toLong(), 
-				seguridadService.usuarioActual(), params.cursoId.toLong())) {
-					render view:'nueva', model: [publicacionTemaInstance: publicacionTemaInstance, usuario: seguridadService.usuarioActual()],
+				usuarioService.usuarioActual(), params.cursoId.toLong())) {
+					render view:'nueva', model: [publicacionTemaInstance: publicacionTemaInstance, usuario: usuarioService.usuarioActual()],
 						params: ['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]
 				return
 			}
@@ -37,8 +37,8 @@ class PublicacionTemaController {
 			return
 		}
 	
-		if	(!publicacionTemaService.guardar(publicacionTemaInstance, seguridadService.usuarioActual(), params.cursoId.toLong())) {
-			render view:'nueva', model: [publicacionTemaInstance: publicacionTemaInstance, usuario: seguridadService.usuarioActual()],
+		if	(!publicacionTemaService.guardar(publicacionTemaInstance, usuarioService.usuarioActual(), params.cursoId.toLong())) {
+			render view:'nueva', model: [publicacionTemaInstance: publicacionTemaInstance, usuario: usuarioService.usuarioActual()],
 					params: ['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]
 			return
 		}
@@ -72,7 +72,7 @@ class PublicacionTemaController {
 	}
 
 	def editar(PublicacionTema publicacionTemaInstance) {
-		respond publicacionTemaInstance, model: [usuario: seguridadService.usuarioActual()],
+		respond publicacionTemaInstance, model: [usuario: usuarioService.usuarioActual()],
 			params: [ 'publicacionId': params.id, 'pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temad': params.temaId]
 	}
 	
@@ -83,8 +83,8 @@ class PublicacionTemaController {
 			return
 		}
 
-		if (!publicacionTemaService.guardar(publicacionTemaInstance, seguridadService.usuarioActual(), params.cursoId.toLong())) {
-			render view:'editar', model: [publicacionTemaInstance: publicacionTemaInstance, usuario: seguridadService.usuarioActual()]
+		if (!publicacionTemaService.guardar(publicacionTemaInstance, usuarioService.usuarioActual(), params.cursoId.toLong())) {
+			render view:'editar', model: [publicacionTemaInstance: publicacionTemaInstance, usuario: usuarioService.usuarioActual()]
 				params: ['publicacionId': params.id, 'pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]
 			return
 		}

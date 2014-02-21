@@ -7,7 +7,7 @@ class CursoController {
 
 	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	
-	def seguridadService
+	def usuarioService
 	def cursoService
 	def mediadorService
 	def aprendizService
@@ -19,10 +19,10 @@ class CursoController {
 	def revisarRol() {
 		println "Revisar rol params: ${params}"
 
-		def usuario = seguridadService.usuarioActual()
+		def usuario = usuarioService.usuarioActual()
 		def curso = Curso.get(params.cursoId)
 		
-		if (!seguridadService.usuarioActual()) {
+		if (!usuarioService.usuarioActual()) {
 			flash.message = "Ingreso como visitante"
 			redirect(action: "general", params: params)
 			return
@@ -49,8 +49,7 @@ class CursoController {
 		redirect(action: "miembro", params: params)
 	}
 
-	// Para visitantes y administradores
-	@Secured('permitAll')
+	@Secured("hasRole('ROL_ADMIN')")
 	def general() {
 		[dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), 
 			cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong()), params: ['cursoId': params.cursoId]]
@@ -58,14 +57,14 @@ class CursoController {
 
 	@Secured("hasRole('ROL_MIEMBRO')")
 	def miembro() {
-		def miembro = Miembro.findByUsuario(seguridadService.usuarioActual())
+		def miembro = Miembro.findByUsuario(usuarioService.usuarioActual())
 		[miembro: miembro, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()),
 			cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong()), params: ['cursoId': params.cursoId]]
 	}
 
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def aprendiz() {
-		def aprendiz = aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, params.cursoId.toLong())
+		def aprendiz = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
 		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
 		
 		[aprendiz: aprendiz, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), cuatrimestre: cuatrimestre, 
@@ -74,7 +73,7 @@ class CursoController {
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def mediador() {
-		def mediador = Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(params.cursoId))
+		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
 
 		[mediador: mediador, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), cuatrimestre: cuatrimestre, 
@@ -102,8 +101,8 @@ class CursoController {
 
 		[materialesCurso: MaterialCurso.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
 			materialesCursoCant: MaterialCurso.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId,
-			mediador: Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId)),
-			aprendiz: aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, cursoId.toLong())]
+			mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(cursoId)),
+			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, cursoId.toLong())]
 	}
 
 	@Secured('permitAll')
@@ -116,8 +115,8 @@ class CursoController {
 
 		[temasCurso: Tema.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
 			temasCursoCant: Tema.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId,
-			mediador: Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId)),
-			aprendiz: aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, cursoId.toLong()),
+			mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(cursoId)),
+			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, cursoId.toLong()),
 			cursoId: cursoId]
 	}
 
@@ -134,8 +133,8 @@ class CursoController {
 		[actividades: Actividad.findAllByCuatrimestre(cuatrimestre,[max: params.max, offset: params.offset]),
 			actividadesCant: Actividad.findAllByCuatrimestre(cuatrimestre).size(), cursoId: cursoId,
 			cuatrimestreId: cuatrimestre?.id,
-			mediador: Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId)),
-			aprendiz: aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, params.cursoId.toLong())]
+			mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(cursoId)),
+			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())]
 	}
 
 	@Secured('permitAll')
@@ -149,8 +148,8 @@ class CursoController {
 
 		[evaluaciones: Evaluacion.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
 			evaluacionesCant: Evaluacion.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId,
-			mediador: Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(cursoId)),
-			aprendiz: aprendizService.obtenerPorCurso(seguridadService.usuarioActual().id, cursoId.toLong())]
+			mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(cursoId)),
+			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, cursoId.toLong())]
 	}
 
 	@Secured("hasRole('ROL_MIEMBRO')")

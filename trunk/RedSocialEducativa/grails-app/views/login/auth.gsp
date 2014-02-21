@@ -114,6 +114,12 @@
 			</p>
 		</form>
 	</div>
+	<div class="nav" role="navigation">
+	   	<ul>
+	   		<li><g:link class="list" controller="red" action="solicitarMembresia">
+	   			<g:message code="Solicitar Membresía" args="[entityName]" /></g:link></li>
+	   	</ul>
+	</div>
 </div>
 <script type='text/javascript'>
 	<!--

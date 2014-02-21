@@ -6,7 +6,7 @@ import org.springframework.security.access.annotation.Secured
 class MaterialCursoController {
 
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-	def seguridadService
+	def usuarioService
 	def materialCursoService
 
 	// TODO ver solo este metodo cuando se haga el menu para visitantes/miembros/aprendices
@@ -32,7 +32,7 @@ class MaterialCursoController {
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def create() {
 
-		def mediador = Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(params.cursoId))
+		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 
 		respond new MaterialCurso(params), model: [mediador: mediador], params: ['cursoId': params.cursoId]
 	}
@@ -51,7 +51,7 @@ class MaterialCursoController {
 		}
 
 		if (!materialCursoService.guardar(materialCursoInstance)) {
-			def mediador = Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(params.cursoId))
+			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 			render view:'create', model: [materialCursoInstance: materialCursoInstance, mediador: mediador], params:['cursoId': params.cursoId]
 			return
 		}
@@ -62,7 +62,7 @@ class MaterialCursoController {
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def edit(MaterialCurso materialCursoInstance) {
-		respond materialCursoInstance, model:[usuario: seguridadService.usuarioActual()],  params:['cursoId': params.cursoId]
+		respond materialCursoInstance, model:[usuario: usuarioService.usuarioActual()],  params:['cursoId': params.cursoId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")

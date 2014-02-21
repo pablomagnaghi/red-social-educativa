@@ -3,11 +3,18 @@ package com.fiuba
 import com.fiuba.Usuario
 import com.mensajeria.Carpeta;
 
+import org.springframework.security.access.annotation.Secured
 import grails.transaction.Transactional
 
 @Transactional
 class UsuarioService {
 
+	def springSecurityService
+	
+	def usuarioActual() {
+		return Usuario.get(springSecurityService.principal.id)
+	}
+	
 	def guardar(Usuario usuario) {
 
 		if (usuario.save(flush: true)) {
