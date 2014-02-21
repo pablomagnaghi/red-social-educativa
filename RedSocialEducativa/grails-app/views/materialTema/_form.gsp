@@ -25,7 +25,5 @@
 </div>
 
 <div><g:hiddenField name="tema.id" value="${params.temaId}"/></div>
-<div><g:hiddenField name="fecha" value="${(new Date()).format(com.fiuba.Utilidades.FORMATO_FECHA)}"/></div>
-
 
 

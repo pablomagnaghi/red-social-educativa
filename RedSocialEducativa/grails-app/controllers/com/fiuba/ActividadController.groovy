@@ -56,7 +56,7 @@ class ActividadController {
 			return
 		}
 
-		actividadInstance.fechaFinalizacion = params.fechaFinalizacionDate.format(Utilidades.FORMATO_FECHA_NUMERICO)
+		actividadInstance.fechaFinalizacion = params.fechaFinalizacionDate.format(Utilidades.FORMATO_FECHA)
 		
 		if (!actividadService.guardar(actividadInstance)) {
 			render view:'create', model: [actividadInstance: actividadInstance], 
@@ -85,7 +85,7 @@ class ActividadController {
 			return
 		}
 	
-		actividadInstance.fechaFinalizacion = params.fechaFinalizacionDate.format(Utilidades.FORMATO_FECHA_NUMERICO)
+		actividadInstance.fechaFinalizacion = params.fechaFinalizacionDate.format(Utilidades.FORMATO_FECHA)
 		
 		if (!actividadService.guardar(actividadInstance)) {
 			render view:'edit', model: [actividadInstance: actividadInstance],

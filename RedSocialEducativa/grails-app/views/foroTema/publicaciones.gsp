@@ -37,11 +37,6 @@
 					<tr>
 						<td>Autor</td>
 						<td>Pubilicacion</td>
-						
-						<g:if test="${administrador}">
-							<td></td>
-						</g:if>	
-						
 					</tr>
 					
 			</thead>

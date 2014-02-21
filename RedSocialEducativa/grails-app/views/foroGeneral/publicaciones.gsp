@@ -25,7 +25,6 @@
 		</div>
 		
 		<h3>PARAMS : ${params}</h3>
-		<h3>usuario: ${usuario}</h3>
 		
 		<div id="list-foroGeneral" class="content scaffold-list" role="main">
 			<g:if test="${flash.message}">

@@ -13,7 +13,7 @@ class Usuario {
 	Integer legajo
 	Integer padron
 	String email
-	String fechaSolicitud
+	String fechaSolicitud = new Date().format(Utilidades.FORMATO_FECHA)
 	String fechaMemb
 
 	boolean enabled = true

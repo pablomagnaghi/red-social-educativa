@@ -5,28 +5,23 @@ import grails.transaction.Transactional
 @Transactional
 class PublicacionCursoService {
 
-   private asignarResponsable(PublicacionCurso publicacion, Usuario usuario) {
-
-		if (!usuario) {
-			publicacion.responsable = publicacion.responsable + " " + Utilidades.VISITANTE
-			return
-		}
-
-		if (Administrador.findByUsuario(usuario)) {
-			publicacion.responsable = publicacion.responsable + " " + Utilidades.ADMINISTRADOR
+   private asignarResponsable(PublicacionCurso publicacion, Usuario usuario, Long cursoId) {
+		
+		if (Mediador.findByUsuarioAndCurso(usuario, Curso.get(cursoId))) {
+			publicacion.responsable = publicacion.responsable + " " + Utilidades.MEDIADOR
 			return
 		}
 		
-		publicacion.responsable = publicacion.responsable + " " + Utilidades.MIEMBRO
+		publicacion.responsable = publicacion.responsable + " " + Utilidades.APRENDIZ
 	}
 
-	def guardarRespuesta(PublicacionCurso publicacion, Long pubInicialId, Usuario usuario) {
+	def guardarRespuesta(PublicacionCurso publicacion, Long pubInicialId, Usuario usuario, Long cursoId) {
 
 		if (!publicacion.validate()) {
 			return null
 		}
 					
-		asignarResponsable(publicacion, usuario)
+		asignarResponsable(publicacion, usuario, cursoId)
 						
 		def publicacionPadre = PublicacionCurso.get(pubInicialId)
 		publicacion.titulo = "Respuesta a: " + publicacion.titulo
@@ -39,10 +34,10 @@ class PublicacionCursoService {
 		return publicacionPadre
 	}
 
-	def guardar(PublicacionCurso publicacion, Usuario usuario) {
+	def guardar(PublicacionCurso publicacion, Usuario usuario, Long cursoId) {
 
 		if (publicacion.validate()) {
-			asignarResponsable(publicacion, usuario)
+			asignarResponsable(publicacion, usuario, cursoId)
 			publicacion.save flush:true
 			return publicacion
 		}

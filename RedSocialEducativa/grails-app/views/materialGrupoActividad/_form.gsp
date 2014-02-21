@@ -25,6 +25,5 @@
 </div>
 
 <div><g:hiddenField name="grupo.id" value="${params.grupoActividadId}"/></div>
-<div><g:hiddenField name="fecha" value="${(new Date()).format(com.fiuba.Utilidades.FORMATO_FECHA)}"/></div>
 
 
