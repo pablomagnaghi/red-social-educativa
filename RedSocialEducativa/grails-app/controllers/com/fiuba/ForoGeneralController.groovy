@@ -6,7 +6,7 @@ import org.springframework.security.access.annotation.Secured
 @Secured('permitAll')
 class ForoGeneralController {
 
-	def seguridadService
+	def usuarioService
 	def foroGeneralService
 
 	def general() {
@@ -27,7 +27,7 @@ class ForoGeneralController {
 		def respuestasCant = PublicacionGeneral.findAllByPublicacionInicial(PublicacionGeneral.get(params.id)).size()+1
 
 		[publicacion: PublicacionGeneral.get(params.id), respuestas: respuestas, respuestasCant: respuestasCant,
-			usuario: Usuario.findByUsername(seguridadService.usuarioActual()?.username),
-			administrador: Administrador.findByUsuario(seguridadService.usuarioActual()), params: ['pubInicialId': params.id]]
+			usuario: Usuario.findByUsername(usuarioService.usuarioActual()?.username),
+			administrador: Administrador.findByUsuario(usuarioService.usuarioActual()), params: ['pubInicialId': params.id]]
 	}
 }

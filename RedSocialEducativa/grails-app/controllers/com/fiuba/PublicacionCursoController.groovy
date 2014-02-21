@@ -7,12 +7,12 @@ import org.springframework.security.access.annotation.Secured
 class PublicacionCursoController {
 
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-	def seguridadService
+	def usuarioService
 	def publicacionCursoService
 
 	def nueva() {
 		
-		respond new PublicacionCurso(params), model: [usuario: seguridadService.usuarioActual(), 
+		respond new PublicacionCurso(params), model: [usuario: usuarioService.usuarioActual(), 
 			params:['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 	}
 	
@@ -24,8 +24,8 @@ class PublicacionCursoController {
 		}
 	
 		if (params.pubInicialId) {
-			if (!publicacionCursoService.guardarRespuesta(publicacionCursoInstance, params.pubInicialId.toLong(), seguridadService.usuarioActual())) {
-				render view:'nueva', model: [publicacionCursoInstance: publicacionCursoInstance, usuario: seguridadService.usuarioActual()],
+			if (!publicacionCursoService.guardarRespuesta(publicacionCursoInstance, params.pubInicialId.toLong(), usuarioService.usuarioActual())) {
+				render view:'nueva', model: [publicacionCursoInstance: publicacionCursoInstance, usuario: usuarioService.usuarioActual()],
 					params: ['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 				return
 			}
@@ -35,8 +35,8 @@ class PublicacionCursoController {
 			return
 		}
 
-		if	(!publicacionCursoService.guardar(publicacionCursoInstance, seguridadService.usuarioActual())) {
-			render view:'nueva', model: [publicacionCursoInstance: publicacionCursoInstance, usuario: seguridadService.usuarioActual()],
+		if	(!publicacionCursoService.guardar(publicacionCursoInstance, usuarioService.usuarioActual())) {
+			render view:'nueva', model: [publicacionCursoInstance: publicacionCursoInstance, usuario: usuarioService.usuarioActual()],
 					params: ['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 			return
 		}
@@ -74,7 +74,7 @@ class PublicacionCursoController {
 	
 	def editar(PublicacionCurso publicacionCursoInstance) {
 		
-		respond publicacionCursoInstance, model: [usuario: seguridadService.usuarioActual()],
+		respond publicacionCursoInstance, model: [usuario: usuarioService.usuarioActual()],
 			params: [ 'publicacionId': params.id, 'pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 
 				'cuatrimestreId': params.cuatrimestreId]
 	}
@@ -86,8 +86,8 @@ class PublicacionCursoController {
 			return
 		}
 
-		if (!publicacionCursoService.guardar(publicacionCursoInstance, seguridadService.usuarioActual())) {
-			render view:'editar', model: [publicacionCursoInstance: publicacionCursoInstance, usuario: seguridadService.usuarioActual()]
+		if (!publicacionCursoService.guardar(publicacionCursoInstance, usuarioService.usuarioActual())) {
+			render view:'editar', model: [publicacionCursoInstance: publicacionCursoInstance, usuario: usuarioService.usuarioActual()]
 				params: ['publicacionId': params.id, 'pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 
 					'cuatrimestreId': params.cuatrimestreId]
 			return
@@ -95,7 +95,7 @@ class PublicacionCursoController {
 
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'PublicacionCurso.label', default: 'PublicacionCurso'), publicacionCursoInstance.id])
 		redirect controller: "foroCurso", action: "publicaciones", 
-			model: [usuario: seguridadService.usuarioActual(), pubInicialId: params.pubInicialId], 
+			model: [usuario: usuarioService.usuarioActual(), pubInicialId: params.pubInicialId], 
 			params: ['id': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId':  params.cuatrimestreId]
 	}
 

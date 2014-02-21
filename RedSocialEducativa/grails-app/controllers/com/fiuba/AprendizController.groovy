@@ -7,7 +7,6 @@ import org.springframework.security.access.annotation.Secured
 class AprendizController {
 	
 	// static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-	def seguridadService
 	def aprendizService
 	def mediadorService
 	

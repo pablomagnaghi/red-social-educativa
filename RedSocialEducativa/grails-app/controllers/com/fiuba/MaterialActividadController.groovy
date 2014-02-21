@@ -7,7 +7,7 @@ class MaterialActividadController {
 
 	// static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-	def seguridadService
+	def usuarioService
 	def materialActividadService
 
 	@Secured('permitAll')
@@ -30,7 +30,7 @@ class MaterialActividadController {
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def create() {
 
-		def mediador = Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(params.cursoId))
+		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 
 		respond new MaterialActividad(params), model:[mediador: mediador], params: ['cursoId': params.cursoId, 
 			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
@@ -52,7 +52,7 @@ class MaterialActividadController {
 		}
 
 		if (!materialActividadService.guardar(materialActividadInstance)) {
-			def mediador = Mediador.findByUsuarioAndCurso(seguridadService.usuarioActual(), Curso.get(params.cursoId))
+			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 			render view:'create', model: [materialActividadInstance: materialActividadInstance, mediador: mediador],
 			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 			return

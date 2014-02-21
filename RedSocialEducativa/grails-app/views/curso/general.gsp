@@ -10,7 +10,7 @@
 		</div>
 		<h2>Curso id: ${params.cursoId}</h2>
 		<h2>Dicta cuatrimestre: ${dictaCuatrimestre}</h2>
-		<h2>cuat id: ${cuatrimestre?.id}</h2>
+		<h2>cuat id: ${cuatrimestreId}</h2>
 		<h2>Noticia curso: ${noticiasCurso}</h2>
 		<div>	
 			<g:link class="list" action="principal" controller="red">

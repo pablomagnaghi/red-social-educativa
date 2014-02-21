@@ -132,6 +132,8 @@ grails {
  }
 
 // Added by the Spring Security Core plugin:
+// TODO: la primer linea esta agregada a mano para redirigir la vista, no estaba por defecto
+grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/red/principal'
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.fiuba.Usuario'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.fiuba.UsuarioRol'
 grails.plugin.springsecurity.authority.className = 'com.fiuba.Rol'

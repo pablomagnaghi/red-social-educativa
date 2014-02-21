@@ -26,20 +26,12 @@ class Usuario {
 	static transients = ['springSecurityService']
 
 	static constraints = {
-		username blank: false, matches:"[0-9]{8}", unique: true
-		password blank: false, minSize: 6
+		username blank: false//, matches:"[0-9]{8}", unique: true
+		password blank: false//, minSize: 6
 		apellido blank: false
 		nombres blank: false
-		legajo nullable: true, unique: true, validator: { val, obj ->
-			if (!val && !obj.padron)
-				return false
-			return true
-		}
-		padron nullable: true, matches:"[0-9]{5}", unique: true, validator: { val, obj ->
-			if (!val && ! obj.legajo)
-				return false
-			return true
-		}
+		legajo nullable: true, unique: true
+		padron nullable: true//, matches:"[0-9]{5}", unique: true
 		email email: true
 		fechaMemb nullable: true
 	}

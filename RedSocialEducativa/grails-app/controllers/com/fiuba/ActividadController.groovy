@@ -7,16 +7,16 @@ class ActividadController {
 
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-	def seguridadService
+	def usuarioService
 	def actividadService
 	def aprendizService
-
+	
 	@Secured('permitAll')
 	def general() {
 
 		def actividad = Actividad.get(params.id)
 
-		def grupoActividadAprendiz = aprendizService.obtenerGrupoPorActividad(seguridadService.usuarioActual(), params.cuatrimestreId.toLong(), 
+		def grupoActividadAprendiz = aprendizService.obtenerGrupoPorActividad(usuarioService.usuarioActual(), params.cuatrimestreId.toLong(), 
 			params.id.toLong())
 
 		[actividad: actividad, grupoActividadAprendiz: grupoActividadAprendiz,

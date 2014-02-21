@@ -31,9 +31,6 @@
 				<br>
 				<li><g:link class="list" action="general" controller="foroGeneral">
 					<g:message code="Foros general" /></g:link></li>	
-				<br>
-				<li><g:link class="list" action="index" controller="usuario">
-					<g:message code="Aceptar miembros" /></g:link></li>
 			</ol>
 		</div>
 		<div>

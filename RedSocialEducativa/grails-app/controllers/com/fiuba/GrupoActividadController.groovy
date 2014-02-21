@@ -7,7 +7,7 @@ class GrupoActividadController {
 
 	// static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	
-	def seguridadService
+	def usuarioService
 	def grupoActividadService
 	
 	@Secured("hasRole('ROL_APRENDIZ')")
@@ -34,7 +34,7 @@ class GrupoActividadController {
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def crear() {
 
-		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
+		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuarioService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
 		def grupoActividadAprendiz = grupoActividadService.obtenerGrupoAprendiz(aprendiz, params.actividadId.toLong())
 		def actividad = Actividad.get(params.actividadId)
 		
@@ -53,7 +53,7 @@ class GrupoActividadController {
 
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def muestraAprendiz(GrupoActividad grupoActividadInstance) {	
-		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
+		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuarioService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
 
 		def participa = grupoActividadService.aprendizParticipa(grupoActividadInstance, aprendiz)
 		
@@ -114,7 +114,7 @@ class GrupoActividadController {
 			return
 		}
 		
-		if (!grupoActividadService.agregarAprendiz(grupoActividadInstance, seguridadService.usuarioActual(), params.cuatrimestreId.toLong())) {
+		if (!grupoActividadService.agregarAprendiz(grupoActividadInstance, usuarioService.usuarioActual(), params.cuatrimestreId.toLong())) {
 			render view:'crear', model: [grupoActividadInstance: grupoActividadInstance, numGrupo: params.numGrupo],
 				params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 			return
@@ -134,7 +134,7 @@ class GrupoActividadController {
 			return
 		}
 		
-		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
+		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuarioService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
 		def grupoActividadAprendiz = grupoActividadService.obtenerGrupoAprendiz(aprendiz, params.actividadId.toLong())
 		def actividad = Actividad.get(params.actividadId)
 		
@@ -145,7 +145,7 @@ class GrupoActividadController {
 			return
 		}
 		
-		if (grupoActividadService.agregarAprendiz(grupoActividadInstance, seguridadService.usuarioActual(), params.cuatrimestreId.toLong())) {
+		if (grupoActividadService.agregarAprendiz(grupoActividadInstance, usuarioService.usuarioActual(), params.cuatrimestreId.toLong())) {
 			render view:'mostrarGrupo', model: [grupoActividadInstance: grupoActividadInstance], params:['id': params.id, 'cursoId': params.cursoId, 
 				'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 		}

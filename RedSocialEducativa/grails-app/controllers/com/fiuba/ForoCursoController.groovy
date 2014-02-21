@@ -6,7 +6,7 @@ import org.springframework.security.access.annotation.Secured
 @Secured('permitAll')
 class ForoCursoController {
 
-	def seguridadService
+	def usuarioService
 	def foroCursoService
 	
 	def general() {
@@ -28,7 +28,7 @@ class ForoCursoController {
 		def respuestas = foroCursoService.obtenerRespuestas(cuatrimestre, params.id.toLong(), params.max, offset)
 		def respuestasCant = PublicacionCurso.findAllByPublicacionInicialAndForo(PublicacionCurso.get(params.id),
 			ForoCurso.findByCuatrimestre(cuatrimestre)).size()+1
-		def usuario = seguridadService.usuarioActual()
+		def usuario = usuarioService.usuarioActual()
 		
 		[publicacion: PublicacionCurso.get(params.id), respuestas: respuestas, respuestasCant: respuestasCant,
 			usuario: Usuario.findByUsername(usuario?.username), mediador: Mediador.findByUsuarioAndCurso(usuario, cuatrimestre.curso),

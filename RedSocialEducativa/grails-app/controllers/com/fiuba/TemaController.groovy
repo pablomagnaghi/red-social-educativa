@@ -7,7 +7,6 @@ class TemaController {
 
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-	def seguridadService
 	def temaService
 
 	// TODO ver solo este metodo cuando se haga el menu para visitantes/miembros/aprendices

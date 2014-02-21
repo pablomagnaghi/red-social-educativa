@@ -1,6 +1,7 @@
 package com.fiuba
 
 import com.mensajeria.Mensaje;
+
 import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured
 
@@ -8,19 +9,18 @@ class RedController {
 
 	// static allowedMethods = [save: "POST", update(actualizar): "PUT", delete: "DELETE"]
 	def redService
-	def seguridadService
+	def usuarioService
 	def mediadorService
 	def aprendizService
-	def usuarioService
 
-	@Secured('permitAll')
+	@Secured('isFullyAuthenticated()')
 	def principal() {
 
 		params.max = Utilidades.MAX_PARAMS
-		def cursosMediador = mediadorService.obtenerCursos(seguridadService.usuarioActual())
-		def cursosAprendiz = aprendizService.obtenerCursos(seguridadService.usuarioActual())
-		def administrador = Administrador.findByUsuario(seguridadService.usuarioActual())
-		def mensajes = Mensaje.findAllByReceptorAndLeido(seguridadService.usuarioActual(), Boolean.FALSE)
+		def cursosMediador = mediadorService.obtenerCursos(usuarioService.usuarioActual())
+		def cursosAprendiz = aprendizService.obtenerCursos(usuarioService.usuarioActual())
+		def administrador = Administrador.findByUsuario(usuarioService.usuarioActual())
+		def mensajes = Mensaje.findAllByReceptorAndLeido(usuarioService.usuarioActual(), Boolean.FALSE)
 
 		[cursos: Curso.list(params), cursoCant: Curso.count(), noticiasRed: NoticiaRed.list(), administrador: administrador,
 			cursosMediador: cursosMediador, cursosAprendiz: cursosAprendiz, cantMensajes: mensajes.size()]
@@ -44,9 +44,15 @@ class RedController {
 			respond usuario, view:'solicitarMembresia'
 			return
 		}
-
+		
+		if (!redService.activarUsuario(usuario)) {
+			flash.message = "Problemas al activar crear la cuenta"
+			redirect controller: "login", action: "auth"
+			return
+		}
+		
 		flash.message = "Solicitud aceptada. A la brevedad se le enviara un mail de confirmacion"
-		redirect action:"principal"
+		redirect controller: "login", action: "auth"
 	}
 
 	@Secured("hasRole('ROL_ADMIN')")

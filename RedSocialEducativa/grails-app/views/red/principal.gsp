@@ -11,6 +11,7 @@
 	    	<ul class="menuBar">
 				<li id="tituloRed"><g:message code="Red Social Educativa FIUBA" /></li>
 				<li><msg:showNotifications cantMensajes="${cantMensajes}"/></li>
+				<g:link controller="mensajeria" action="index">Mensajeria (hace click aca, el cartel de mensajito falla con la seguridad)</g:link>
 			</ul>
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
@@ -18,33 +19,6 @@
 			<sec:ifLoggedIn>
 				Bienvenido <sec:username/> (<g:link controller='logout'>Salir</g:link>)
 			</sec:ifLoggedIn>
-			<sec:ifNotLoggedIn>
-				<div>
-					<g:link class="list" action="solicitarMembresia">
-			       	<g:message code="Solicitar Membresía" /></g:link>
-				</div>
-        		<div id="loginForm">
-           			<form method="POST" action="${resource(file: 'j_spring_security_check')}">
-                		<table>
-                  			<tr>
-                    			<td>DNI:</td>
-                    			<td><input type='text' class='text_' name='j_username' id='username'/></td>
-                  			</tr>
-                  			<tr>
-                    			<td>Password:</td>
-                    			<td><input type='password' class='text_' name='j_password' id='password'/></td>
-                  			</tr>
-                  			<tr>
-                    			<td>Recordarme</td>
-                    			<td><input type='checkbox' class='chk' id='remember_me' name='_spring_security_remember_me'/></td>
-                  			</tr>
-                  			<tr>
-                    			<td colspan="2"><g:submitButton name="login" value="Login"/></td>
-                  			</tr>
-                		</table>
-            		</form>
-				</div>
-			</sec:ifNotLoggedIn>
 		</div>
 		<div>
 			<g:if test="${administrador}">
@@ -150,7 +124,6 @@
 			<p>Foro general; "${com.fiuba.ForoGeneral.first()}"</p>
 			<p>Foro curso; "${com.fiuba.ForoCurso.first()}"</p>
 			<p>Foro tema; "${com.fiuba.ForoTema.first()}"</p>
-			<p>Grupo curso: "${com.fiuba.GrupoCurso.first().aprendices}"</p>
 			<p>Grupo actividad: "${com.fiuba.GrupoActividad.first().aprendices}"</p>
 			<p>Dia: ${com.fiuba.Utilidades.DIA}</p>
 			<p>Mes: ${com.fiuba.Utilidades.MES}</p>

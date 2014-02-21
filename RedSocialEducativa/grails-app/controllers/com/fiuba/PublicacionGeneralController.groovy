@@ -7,12 +7,12 @@ import org.springframework.security.access.annotation.Secured
 class PublicacionGeneralController {
 
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-	def seguridadService
+	def usuarioService
 	def publicacionGeneralService
 
 	def nueva() {
 	
-		respond new PublicacionGeneral(params), model: [usuario: seguridadService.usuarioActual()], 
+		respond new PublicacionGeneral(params), model: [usuario: usuarioService.usuarioActual()], 
 			params: ['pubInicialId': params.pubInicialId]
 	}
 
@@ -25,8 +25,8 @@ class PublicacionGeneralController {
 		}
 
 		if (params.pubInicialId) {
-			if (!publicacionGeneralService.guardarRespuesta(publicacionGeneralInstance, params.pubInicialId.toLong(), seguridadService.usuarioActual())) {	
-				render view:'nueva', model: [publicacionGeneralInstance: publicacionGeneralInstance, usuario: seguridadService.usuarioActual()],
+			if (!publicacionGeneralService.guardarRespuesta(publicacionGeneralInstance, params.pubInicialId.toLong(), usuarioService.usuarioActual())) {	
+				render view:'nueva', model: [publicacionGeneralInstance: publicacionGeneralInstance, usuario: usuarioService.usuarioActual()],
 					params: ['pubInicialId': params.pubInicialId]
 				return
 			}
@@ -35,8 +35,8 @@ class PublicacionGeneralController {
 			return
 		}
 		
-		if	(!publicacionGeneralService.guardar(publicacionGeneralInstance, seguridadService.usuarioActual())) {
-			render view:'nueva', model: [publicacionGeneralInstance: publicacionGeneralInstance, usuario: seguridadService.usuarioActual()],
+		if	(!publicacionGeneralService.guardar(publicacionGeneralInstance, usuarioService.usuarioActual())) {
+			render view:'nueva', model: [publicacionGeneralInstance: publicacionGeneralInstance, usuario: usuarioService.usuarioActual()],
 				params: ['pubInicialId': params.pubInicialId]
 			return
 		}
@@ -72,7 +72,7 @@ class PublicacionGeneralController {
 
 	def editar(PublicacionGeneral publicacionGeneralInstance) {
 
-		respond publicacionGeneralInstance, model: [usuario: seguridadService.usuarioActual()], 
+		respond publicacionGeneralInstance, model: [usuario: usuarioService.usuarioActual()], 
 			params: ['publicacionId': params.id, 'pubInicialId': params.pubInicialId]
 	}
 
@@ -83,8 +83,8 @@ class PublicacionGeneralController {
 			return
 		}
 
-		if (!publicacionGeneralService.guardar(publicacionGeneralInstance, seguridadService.usuarioActual())) {
-			render view:'editar', model: [publicacionGeneralInstance: publicacionGeneralInstance, usuario: seguridadService.usuarioActual()]
+		if (!publicacionGeneralService.guardar(publicacionGeneralInstance, usuarioService.usuarioActual())) {
+			render view:'editar', model: [publicacionGeneralInstance: publicacionGeneralInstance, usuario: usuarioService.usuarioActual()]
 				params: ['publicacionId': params.id, 'pubInicialId': params.pubInicialId]
 			return
 		}

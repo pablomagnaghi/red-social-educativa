@@ -7,7 +7,7 @@ class MaterialGrupoActividadController {
 	
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	
-	def seguridadService
+	def usuarioService
 	def materialGrupoActividadService
 	def grupoActividadService
 	
@@ -26,7 +26,7 @@ class MaterialGrupoActividadController {
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def create() {
 		println "CREATET"
-		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
+		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuarioService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
 		def grupoActividadAprendiz = grupoActividadService.aprendizParticipa(GrupoActividad.get(params.grupoActividadId), aprendiz)
 		
 		respond new MaterialGrupoActividad(params), model:[aprendiz: grupoActividadAprendiz.aprendiz], params:['cursoId': params.cursoId, 
@@ -48,7 +48,7 @@ class MaterialGrupoActividadController {
 		}
 		
 		if (!materialGrupoActividadService.guardar(materialGrupoActividadInstance)) {
-			def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(seguridadService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
+			def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuarioService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
 			def grupoActividadAprendiz = grupoActividadService.aprendizParticipa(GrupoActividad.get(params.grupoActividadId), aprendiz)
 			
 			render view:'create', model: [materialGrupoActividadInstance: materialGrupoActividadInstance, aprendiz: grupoActividadAprendiz.aprendiz],

@@ -83,10 +83,10 @@ class BootStrap {
 			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioDoce)
 		def usuarioTrece = new Usuario(username: "00000013", password: "00000013", apellido: "ApeTrece", nombres: "NomTrece", padron: "00013", 
-			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), enabled: false)
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioTrece)
 		def usuarioCatorce = new Usuario(username: "00000014", password: "00000014", apellido: "ApeCatorce", nombres: "NomCatorce", padron: "00014", 
-			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), enabled: false)
+			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioCatorce)
 
 		for(int i = 0; i<usuarios.size(); i++){
@@ -175,11 +175,7 @@ class BootStrap {
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: false)
 		def aprendizDosPPP = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: false, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: false)
-		//def aprendizDosPPPP = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: true, msjEnviados: "0",
-		//	msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)
-		//def aprendizDosPPPPP = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: true, msjEnviados: "0",
-		//	msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)
-		
+
 		def aprendizTres = new Aprendiz(usuario: usuarioTres, rol: rolAprendiz, participa: true, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)
 		def aprendizCuatro = new Aprendiz(usuario: usuarioCuatro, rol: rolAprendiz, participa: true, msjEnviados: "0",
@@ -384,16 +380,6 @@ class BootStrap {
 		def materialSeis = new MaterialCurso(titulo: "material curso 6", descripcion: "opcional", autor: "anonimo",
 			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Cuestionario"))
 		
-		// Grupos curso		
-		def grupoUno = new GrupoCurso(numero: "1", nombre: "grupo 1")
-		grupoUno.addToAprendices(aprendizDos)
-		grupoUno.addToAprendices(aprendizTres)
-		grupoUno.addToAprendices(aprendizCuatro)
-		def grupoDos = new GrupoCurso(numero: "2", nombre: "grupo 2")
-		grupoDos.addToAprendices(aprendizCinco)
-		grupoDos.addToAprendices(aprendizSeis)
-		grupoDos.addToAprendices(aprendizSiete)
-		
 		// Grupos actividad: agrego grupoActividadAprendiz a los grupo actividad
 		def grupoActividadUno = new GrupoActividad(numero: "1", nombre: "grupo 1")
 		def grupoActividadDos = new GrupoActividad(numero: "2", nombre: "grupo 2")
@@ -442,8 +428,6 @@ class BootStrap {
 		cuatrimestreUno.addToAprendices(aprendizDiez)
 		cuatrimestreUno.addToAprendices(aprendizOnce)
 		cuatrimestreUno.addToAprendices(aprendizDoce)
-		cuatrimestreUno.addToGrupos(grupoUno)
-		cuatrimestreUno.addToGrupos(grupoDos)
 		cuatrimestreUno.addToActividades(actividadUno)
 		cuatrimestreUno.addToActividades(actividadDos)
 		cuatrimestreUno.addToActividades(actividadTres)
@@ -643,6 +627,10 @@ class BootStrap {
 		miembros.add(miembroOnce)
 		def miembroDoce = new Miembro(usuario: usuarioDoce, rol: rolMiembro)
 		miembros.add(miembroDoce)
+		def miembroTrece = new Miembro(usuario: usuarioTrece, rol: rolMiembro)
+		miembros.add(miembroTrece)
+		def miembroCatorce = new Miembro(usuario: usuarioCatorce, rol: rolMiembro)
+		miembros.add(miembroCatorce)
 			
 		for(int i = 0; i<miembros.size(); i++){
 			if (!	miembros.get(i).save()) {
