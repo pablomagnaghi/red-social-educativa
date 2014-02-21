@@ -24,7 +24,7 @@
 			<g:if test="${administrador}">
 				<br><h2>Bienvenido administrador ${administrador}</h2><br> 
 				<span class = "menuButton">
-					<g:link action="general" controller="administrador">
+					<g:link action="menu" controller="administrador">
 					<g:message code="Tareas administrativas" /></g:link>
 				</span>
 				<br>

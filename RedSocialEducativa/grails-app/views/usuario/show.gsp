@@ -1,3 +1,4 @@
+
 <%@ page import="com.fiuba.Usuario" %>
 <!DOCTYPE html>
 <html>
@@ -22,15 +23,19 @@
 					<g:message code="Administrar mediadores"/></g:link></li>
 			</ul>
 		</div>
-		<fieldset class="form">
-			<g:render template="datos"/>
-		</fieldset>
-		<g:form action="delete" method="DELETE" id="${usuarioInstance.id}">
-			<fieldset class="buttons">
-				<g:actionSubmit class="delete" action="delete"  
-					value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
-					onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+		<div id="show-usuario" class="content scaffold-show" role="main">
+			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
+			<g:if test="${flash.message}">
+			<div class="message" role="status">${flash.message}</div>
+			</g:if>
+			<fieldset class="form">
+				<g:render template="datos"/>
 			</fieldset>
-		</g:form>
+			<g:form url="[resource:usuarioInstance, action:'delete']" method="DELETE">
+				<fieldset class="buttons">
+					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+				</fieldset>
+			</g:form>
+		</div>
 	</body>
 </html>

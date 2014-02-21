@@ -31,10 +31,6 @@
 					
 						<th><g:message code="cuatrimestre.foro.label" default="Foro" /></th>
 					
-						<g:sortableColumn property="habGrupos" title="${message(code: 'cuatrimestre.habGrupos.label', default: 'Hab Grupos')}" />
-					
-						<g:sortableColumn property="nroUltGrupo" title="${message(code: 'cuatrimestre.nroUltGrupo.label', default: 'Nro Ult Grupo')}" />
-					
 						<g:sortableColumn property="numero" title="${message(code: 'cuatrimestre.numero.label', default: 'Numero')}" />
 					
 					</tr>
@@ -49,11 +45,7 @@
 						<td>${fieldValue(bean: cuatrimestreInstance, field: "curso")}</td>
 					
 						<td>${fieldValue(bean: cuatrimestreInstance, field: "foro")}</td>
-					
-						<td><g:formatBoolean boolean="${cuatrimestreInstance.habGrupos}" /></td>
-					
-						<td>${fieldValue(bean: cuatrimestreInstance, field: "nroUltGrupo")}</td>
-					
+								
 						<td>${fieldValue(bean: cuatrimestreInstance, field: "numero")}</td>
 					
 					</tr>
