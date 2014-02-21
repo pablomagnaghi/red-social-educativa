@@ -40,12 +40,12 @@ class BootStrap {
 		def usuarioLuis = new Usuario(username: "31861315", password: "31861315", apellido: "Paniagua", nombres: "Luis", padron: "86862", 
 			email: "pany100@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioLuis)
+		def usuarioMessi = new Usuario(username: "10101010", password: "10101010", apellido: "Zarate", nombres: "Facundo", padron: "78456",
+			email: "nanozarate@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
+		usuarios.add(usuarioMessi)
 		def usuarioAgus = new Usuario(username: "32725217", password: "32725217", apellido: "Milla", nombres: "Agustina", padron: "88888", 
 			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioAgus)
-		def usuarioMessi = new Usuario(username: "10101010", password: "10101010", apellido: "Zarate", nombres: "Facundo", padron: "78456", 
-			email: "nanozarate@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
-		usuarios.add(usuarioMessi)
 		def usuarioUno = new Usuario(username: "00000001", password: "00000001", apellido: "ApeUNO", nombres: "NomUno", padron: "00001", 
 			email: "pablomagnaghi@gmail.com", fechaSolicitud: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO))
 		usuarios.add(usuarioUno)
@@ -168,14 +168,12 @@ class BootStrap {
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)	
 		def aprendizDos = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: true, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)
-		// TODO usado para probar cursando participa
 		def aprendizDosP = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: true, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: false)
 		def aprendizDosPP = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: false, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: false)
 		def aprendizDosPPP = new Aprendiz(usuario: usuarioDos, rol: rolAprendiz, participa: false, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: false)
-
 		def aprendizTres = new Aprendiz(usuario: usuarioTres, rol: rolAprendiz, participa: true, msjEnviados: "0",
 			msjLeidos: "0", pubForos: "0", descMaterial: "0", ultVisita: (new Date()).format(Utilidades.FORMATO_FECHA_NUMERICO), cursando: true)
 		def aprendizCuatro = new Aprendiz(usuario: usuarioCuatro, rol: rolAprendiz, participa: true, msjEnviados: "0",
@@ -264,7 +262,6 @@ class BootStrap {
 		def foroTemaDosCursoUno = new ForoTema(nombre: "ForoGeneralTemaDosCursoUno")
 		def foroTemaUnoCursoDos = new ForoTema(nombre: "ForoGeneralTemaUnoCursoDos")
 		
-		// TODO para prueba general
 		// Foros generales de curso		
 		def foroCursoUno = new ForoCurso(nombre: "ForoGeneralCursoUno")
 		def foroCursoUnoP = new ForoCurso(nombre: "ForoGeneralCursoUnoP")
@@ -414,7 +411,6 @@ class BootStrap {
 			horario: (new Date()).getTimeString(), aula: "5", parcial: true, obligatoria: true, habilitada: true)
 		
 		// Cuatrimestres
-		// TODO para prueba final
 		def cuatrimestreUno = new Cuatrimestre(anio: 2013, numero: 2, habGrupos: true, nroUltGrupo: 0, 
 			foro: foroCursoUno)
 		cuatrimestreUno.addToAprendices(aprendizDos)
@@ -472,7 +468,6 @@ class BootStrap {
 			foro: foroCursoCinco)
 		cuatrimestreCinco.addToAprendices(aprendizUnoPP)
 		
-	
 		// Cursos		
 		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2", nombre: "Curso 1")
 		cursoUno.addToMediadores(mediadorAgus)
@@ -601,6 +596,12 @@ class BootStrap {
 		// Miembros
 		def ArrayList<Miembro> miembros = new ArrayList<Miembro>()
 		
+		def miembroPablo = new Miembro(usuario: usuarioPablo, rol: rolMiembro)
+		miembros.add(miembroPablo)
+		def miembroLuis = new Miembro(usuario: usuarioLuis, rol: rolMiembro)
+		miembros.add(miembroLuis)
+		def miembroMessi = new Miembro(usuario: usuarioMessi, rol: rolMiembro)
+		miembros.add(miembroMessi)
 		def miembroAgus = new Miembro(usuario: usuarioAgus, rol: rolMiembro)
 		miembros.add(miembroAgus)
 		def miembroUno = new Miembro(usuario: usuarioUno, rol: rolMiembro)
@@ -644,7 +645,7 @@ class BootStrap {
 		// TODO
 		// Grupos actividad aprendiz (tabla intermedia para la relacion N N entre grupo actividad y aprendiz)	
 		def ArrayList<GrupoActividadAprendiz> grupos = new ArrayList<GrupoActividadAprendiz>()
-		
+			
 		def grupoActividadAprendizUno = new GrupoActividadAprendiz(grupo: grupoActividadUno, aprendiz: aprendizDos)
 		grupos.add(grupoActividadAprendizUno)
 		def grupoActividadAprendizDos = new GrupoActividadAprendiz(grupo: grupoActividadUno, aprendiz: aprendizTres)

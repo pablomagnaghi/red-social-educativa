@@ -12,7 +12,7 @@
 				<li><g:link class="list" action="principal">
 						<g:message code="Pagina inicial" args="[entityName]" />
 					</g:link></li>
-				<li><g:link class="create" action="general"
+				<li><g:link class="create" action="menu"
 						controller="administrador">
 						<g:message code="Volver a tareas administrativas"
 							args="[entityName]" />

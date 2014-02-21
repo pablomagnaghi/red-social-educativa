@@ -73,27 +73,7 @@
 					
 				</li>
 				</g:if>
-			
-				<g:if test="${cuatrimestreInstance?.grupos}">
-				<li class="fieldcontain">
-					<span id="grupos-label" class="property-label"><g:message code="cuatrimestre.grupos.label" default="Grupos" /></span>
-					
-						<g:each in="${cuatrimestreInstance.grupos}" var="g">
-						<span class="property-value" aria-labelledby="grupos-label"><g:link controller="grupoCurso" action="show" id="${g.id}">${g?.encodeAsHTML()}</g:link></span>
-						</g:each>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${cuatrimestreInstance?.habGrupos}">
-				<li class="fieldcontain">
-					<span id="habGrupos-label" class="property-label"><g:message code="cuatrimestre.habGrupos.label" default="Hab Grupos" /></span>
-					
-						<span class="property-value" aria-labelledby="habGrupos-label"><g:formatBoolean boolean="${cuatrimestreInstance?.habGrupos}" /></span>
-					
-				</li>
-				</g:if>
-			
+						
 				<g:if test="${cuatrimestreInstance?.noticiasCurso}">
 				<li class="fieldcontain">
 					<span id="noticiasCurso-label" class="property-label"><g:message code="cuatrimestre.noticiasCurso.label" default="Noticias Curso" /></span>
@@ -101,15 +81,6 @@
 						<g:each in="${cuatrimestreInstance.noticiasCurso}" var="n">
 						<span class="property-value" aria-labelledby="noticiasCurso-label"><g:link controller="noticiaCurso" action="show" id="${n.id}">${n?.encodeAsHTML()}</g:link></span>
 						</g:each>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${cuatrimestreInstance?.nroUltGrupo}">
-				<li class="fieldcontain">
-					<span id="nroUltGrupo-label" class="property-label"><g:message code="cuatrimestre.nroUltGrupo.label" default="Nro Ult Grupo" /></span>
-					
-						<span class="property-value" aria-labelledby="nroUltGrupo-label"><g:fieldValue bean="${cuatrimestreInstance}" field="nroUltGrupo"/></span>
 					
 				</li>
 				</g:if>

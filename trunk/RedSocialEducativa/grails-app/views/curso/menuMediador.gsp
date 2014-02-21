@@ -47,10 +47,6 @@
 						params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestreId]">
 						<g:message code="Estadisticas" /></g:link></li>
 					<br>
-					<li><g:link class="list" action="menuMed" controller="grupoCurso" 
-						params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestreId]">
-						<g:message code="Grupos" /></g:link></li>	
-					<br>
 					<li><g:link class="list" action="index" controller="actividad" 
 						params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestreId]">
 						<g:message code="Actividades" /></g:link></li>	

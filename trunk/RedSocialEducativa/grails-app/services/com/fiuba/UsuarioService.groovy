@@ -31,5 +31,41 @@ class UsuarioService {
 
 		return null
 	}
-}
+	
+	def actualizar(Usuario usuario) {
+		if (usuario.save(flush:true)) {
+			return usuario
+		}
+		return null
+	}
+	
+	def eliminar(Usuario usuario) {
 
+		def ArrayList<Administrador> administradores = Administrador.findAllByUsuario(usuario)
+		administradores.each {
+			println "se elimina el administrador ${it}"
+			it.delete flush:true
+		}
+
+		def ArrayList<Mediador> mediadores = Mediador.findAllByUsuario(usuario)
+		mediadores.each {
+			println "se elimina el mediador ${it}"
+			it.delete flush:true
+		}
+
+		def ArrayList<Aprendiz> aprendices = Aprendiz.findAllByUsuario(usuario)
+		aprendices.each {
+			println "se elimina el aprendiz ${it}"
+			it.delete flush:true
+		}
+		
+		def ArrayList<Miembro> miembros = Miembro.findAllByUsuario(usuario)
+		miembros.each {
+			println "se elimina el miembro ${it}"
+			it.delete flush:true
+		}
+		
+		// TODO ver la eliminacion de todas las carpetas del usuario
+		//usuario.delete flush:true
+	}
+}
