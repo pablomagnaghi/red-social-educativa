@@ -71,7 +71,7 @@ class EvaluacionController {
             return
         }
 
-		evaluacionInstance.fecha = params.fechaDate.format(Utilidades.FORMATO_FECHA_NUMERICO)
+		evaluacionInstance.fecha = params.fechaDate.format(Utilidades.FORMATO_FECHA)
 		evaluacionInstance.horario = params.fechaDate.getTimeString()
 
 		if (!evaluacionService.guardar(evaluacionInstance)) {

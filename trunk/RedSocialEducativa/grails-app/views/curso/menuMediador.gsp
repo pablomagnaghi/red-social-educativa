@@ -41,7 +41,7 @@
 					<br>
 					<li><g:link class="list" action="general" controller="foroCurso" 
 						params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestreId]">
-						<g:message code="Foros general" /></g:link></li>
+						<g:message code="Foro de cursada" /></g:link></li>
 					<br>
 					<li><g:link class="list" action="estadisticas" controller="aprendiz" 
 						params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestreId]">

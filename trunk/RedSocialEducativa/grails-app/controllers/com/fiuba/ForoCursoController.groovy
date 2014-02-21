@@ -3,11 +3,12 @@ package com.fiuba
 import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured
 
-@Secured('permitAll')
+@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
 class ForoCursoController {
 
 	def usuarioService
 	def foroCursoService
+	def aprendizService
 	
 	def general() {
 		
@@ -28,10 +29,10 @@ class ForoCursoController {
 		def respuestas = foroCursoService.obtenerRespuestas(cuatrimestre, params.id.toLong(), params.max, offset)
 		def respuestasCant = PublicacionCurso.findAllByPublicacionInicialAndForo(PublicacionCurso.get(params.id),
 			ForoCurso.findByCuatrimestre(cuatrimestre)).size()+1
-		def usuario = usuarioService.usuarioActual()
 		
 		[publicacion: PublicacionCurso.get(params.id), respuestas: respuestas, respuestasCant: respuestasCant,
-			usuario: Usuario.findByUsername(usuario?.username), mediador: Mediador.findByUsuarioAndCurso(usuario, cuatrimestre.curso),
+			mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), cuatrimestre.curso),
+			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
 			params:['pubInicialId': params.id, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 	}
 }

@@ -15,5 +15,3 @@
 </div>
 
 <div><g:hiddenField name="administrador.id" value="${com.fiuba.Administrador.findByUsuario(usuario).id}"/></div>
-<div><g:hiddenField name="fecha" value="${(new Date()).format(com.fiuba.Utilidades.FORMATO_FECHA)}"/></div>
-<div><g:hiddenField name="hora" value="${(new Date()).getTimeString()}"/></div>

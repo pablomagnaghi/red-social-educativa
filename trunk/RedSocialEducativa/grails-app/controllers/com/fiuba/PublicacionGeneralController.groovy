@@ -3,7 +3,7 @@ package com.fiuba
 import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured
 
-@Secured('permitAll')
+@Secured('isFullyAuthenticated()')
 class PublicacionGeneralController {
 
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]

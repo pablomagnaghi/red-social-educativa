@@ -3,7 +3,7 @@ package com.fiuba
 import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured
 
-@Secured('permitAll')
+@Secured('isFullyAuthenticated()')
 class ForoGeneralController {
 
 	def usuarioService
@@ -27,7 +27,6 @@ class ForoGeneralController {
 		def respuestasCant = PublicacionGeneral.findAllByPublicacionInicial(PublicacionGeneral.get(params.id)).size()+1
 
 		[publicacion: PublicacionGeneral.get(params.id), respuestas: respuestas, respuestasCant: respuestasCant,
-			usuario: Usuario.findByUsername(usuarioService.usuarioActual()?.username),
 			administrador: Administrador.findByUsuario(usuarioService.usuarioActual()), params: ['pubInicialId': params.id]]
 	}
 }

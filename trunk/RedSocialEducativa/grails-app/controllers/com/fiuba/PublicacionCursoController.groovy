@@ -3,7 +3,7 @@ package com.fiuba
 import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured
 
-@Secured('permitAll')
+@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
 class PublicacionCursoController {
 
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -24,7 +24,8 @@ class PublicacionCursoController {
 		}
 	
 		if (params.pubInicialId) {
-			if (!publicacionCursoService.guardarRespuesta(publicacionCursoInstance, params.pubInicialId.toLong(), usuarioService.usuarioActual())) {
+			if (!publicacionCursoService.guardarRespuesta(publicacionCursoInstance, params.pubInicialId.toLong(), 
+				usuarioService.usuarioActual(), params.cursoId.toLong())) {
 				render view:'nueva', model: [publicacionCursoInstance: publicacionCursoInstance, usuario: usuarioService.usuarioActual()],
 					params: ['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 				return
@@ -35,7 +36,7 @@ class PublicacionCursoController {
 			return
 		}
 
-		if	(!publicacionCursoService.guardar(publicacionCursoInstance, usuarioService.usuarioActual())) {
+		if	(!publicacionCursoService.guardar(publicacionCursoInstance, usuarioService.usuarioActual(), params.cursoId.toLong())) {
 			render view:'nueva', model: [publicacionCursoInstance: publicacionCursoInstance, usuario: usuarioService.usuarioActual()],
 					params: ['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 			return
@@ -86,7 +87,7 @@ class PublicacionCursoController {
 			return
 		}
 
-		if (!publicacionCursoService.guardar(publicacionCursoInstance, usuarioService.usuarioActual())) {
+		if (!publicacionCursoService.guardar(publicacionCursoInstance, usuarioService.usuarioActual(), params.cursoId.toLong())) {
 			render view:'editar', model: [publicacionCursoInstance: publicacionCursoInstance, usuario: usuarioService.usuarioActual()]
 				params: ['publicacionId': params.id, 'pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 
 					'cuatrimestreId': params.cuatrimestreId]

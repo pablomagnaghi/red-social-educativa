@@ -7,11 +7,6 @@ class PublicacionGeneralService {
 
 	private asignarResponsable(PublicacionGeneral publicacion, Usuario usuario) {
 
-		if (!usuario) {
-			publicacion.responsable = publicacion.responsable + " " + Utilidades.VISITANTE
-			return
-		}
-
 		if (Administrador.findByUsuario(usuario)) {
 			publicacion.responsable = publicacion.responsable + " " + Utilidades.ADMINISTRADOR
 			return
@@ -29,7 +24,7 @@ class PublicacionGeneralService {
 		asignarResponsable(publicacion, usuario)
 		
 		def publicacionPadre = PublicacionGeneral.get(pubInicialId)
-		publicacion.titulo = "Respuesta a: " + publicacion.titulo
+		publicacion.titulo = Utilidades.RESPUESTA + publicacion.titulo
 		publicacionPadre.addToRespuestas(publicacion)
 
 		if (!publicacionPadre.save(flush:true)) {

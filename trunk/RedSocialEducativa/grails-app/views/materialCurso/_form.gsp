@@ -25,4 +25,3 @@
 </div>
 
 <div><g:hiddenField name="curso.id" value="${params.cursoId}"/></div>
-<div><g:hiddenField name="fecha" value="${(new Date()).format(com.fiuba.Utilidades.FORMATO_FECHA)}"/></div>

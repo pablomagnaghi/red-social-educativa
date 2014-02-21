@@ -12,8 +12,8 @@ class CalendarioService {
 		def anioFSC = fechaSegundoCuatrimestre.getYear() + Utilidades.ANIO_INICIAL
 
 		if ((anioFPC == anioFSC) && (anioFPC == calendario.anio)) {
-			calendario.inicioPrimerCuatrimestre = fechaPrimerCuatrimestre.format(Utilidades.FORMATO_FECHA_NUMERICO).toInteger()
-			calendario.inicioSegundoCuatrimestre = fechaSegundoCuatrimestre.format(Utilidades.FORMATO_FECHA_NUMERICO).toInteger()
+			calendario.inicioPrimerCuatrimestre = fechaPrimerCuatrimestre.format(Utilidades.FORMATO_FECHA).toInteger()
+			calendario.inicioSegundoCuatrimestre = fechaSegundoCuatrimestre.format(Utilidades.FORMATO_FECHA).toInteger()
 			return true
 		}
 
@@ -23,7 +23,7 @@ class CalendarioService {
 	def obtenerFecha(Integer fechaCalendario) {
 
 		String fecha = fechaCalendario.toString()
-		def formato = new SimpleDateFormat(Utilidades.FORMATO_FECHA_NUMERICO);
+		def formato = new SimpleDateFormat(Utilidades.FORMATO_FECHA);
 		Date fechaDate = (Date) formato.parse(fecha);
 
 		return fechaDate

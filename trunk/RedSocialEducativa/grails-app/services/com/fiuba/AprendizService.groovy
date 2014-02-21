@@ -22,7 +22,6 @@ class AprendizService {
 		return cursosAprendiz
 	}
 
-	// Metodo usado en foro de tema en publicaciones
 	def obtenerPorCurso(Long usuarioId, Long cursoId) {
 		def c = Aprendiz.createCriteria()
 		def aprendiz = c.get {

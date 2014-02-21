@@ -6,8 +6,8 @@ abstract class Publicacion {
 	String contenido
 	String responsable
 	String dni
-	String fecha
-	String hora
+	String fecha = new Date().format(Utilidades.FORMATO_FECHA)
+	String hora = new Date().getTimeString()
 
 	static constraints = {
 		dni nullable: true

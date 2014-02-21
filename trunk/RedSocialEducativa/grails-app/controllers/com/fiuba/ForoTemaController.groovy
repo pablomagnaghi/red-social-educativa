@@ -4,7 +4,7 @@ import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured
 
 
-@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
+@Secured('isFullyAuthenticated()')
 class ForoTemaController {
 
 	def usuarioService
@@ -30,11 +30,10 @@ class ForoTemaController {
 		def respuestas = foroTemaService.obtenerRespuestas(tema, params.id.toLong(), params.max, offset)
 		def respuestasCant = PublicacionTema.findAllByPublicacionInicialAndForo(PublicacionTema.get(params.id),
 			ForoTema.findByTema(tema)).size()+1
-		def usuario = usuarioService.usuarioActual()
 		
-		[publicacion: PublicacionTema.get(params.id), respuestas: respuestas, respuestasCant: respuestasCant, usuario: usuario, 
-			mediador: Mediador.findByUsuarioAndCurso(usuario, Curso.get(params.cursoId)), 
-			aprendiz: aprendizService.obtenerPorCurso(usuario.id, params.cursoId.toLong()),
+		[publicacion: PublicacionTema.get(params.id), respuestas: respuestas, respuestasCant: respuestasCant, 
+			mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId)), 
+			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
 			params:['pubInicialId': params.id, 'cursoId': params.cursoId, 'temaId': params.temaId]]
 	}
 }

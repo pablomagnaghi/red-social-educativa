@@ -53,38 +53,32 @@
 							<p>Publicado: ${it.fecha} - ${it.hora}<p>
 						</td>
 						<td>${it.contenido}</td>
-						<g:if test="${usuario}">
-							<h2>es usuario</h2>
-							<g:if test="${mediador || (
-								com.fiuba.Aprendiz.findByUsuarioAndCuatrimestre(
-								com.fiuba.Usuario.findByUsername(it.dni), 
-								com.fiuba.Cuatrimestre.get(params.cuatrimestreId)) && (it.dni == usuario.username))}">
-								<g:if test="${!it.id.equals(params.pubInicialId as long)}">								
-									<td>
-										<g:link controller="publicacionCurso" action="editar" id="${it.id}" params="['pubInicialId': 
-											params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-											<g:message code="Editar" /></g:link>
-										-
-										<g:link controller="publicacionCurso" action="eliminar" id="${it.id}" params="['pubInicialId': 
-											params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-											<g:message code="Borrar" /></g:link>
-									</td>	
-								</g:if>
-								<g:else>
-									<td>
-										<g:link controller="publicacionCurso" action="editar" id="${it.id}" params="['pubInicialId': 
-											params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-											<g:message code="Editar" /></g:link>
-										-
-										<g:link controller="publicacionCurso" action="eliminar" id="${it.id}" params="['pubInicialId': 
-											params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-											<g:message code="Borrar" /></g:link>
-											<p>Al borrar la publicacion inicial, se borran todas sus respuestas</p>
-											<p>Equivale a eliminar tema</p>
-									</td>
-								</g:else>	
-							</g:if>	
-						</g:if>
+						<g:if test="${mediador || ((aprendiz?.cursando) && (aprendiz?.usuario?.username == it.dni))}">
+							<g:if test="${!it.id.equals(params.pubInicialId as long)}">								
+								<td>
+									<g:link controller="publicacionCurso" action="editar" id="${it.id}" params="['pubInicialId': 
+										params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+										<g:message code="Editar" /></g:link>
+									-
+									<g:link controller="publicacionCurso" action="eliminar" id="${it.id}" params="['pubInicialId': 
+										params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+										<g:message code="Borrar" /></g:link>
+								</td>	
+							</g:if>
+							<g:else>
+								<td>
+									<g:link controller="publicacionCurso" action="editar" id="${it.id}" params="['pubInicialId': 
+										params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+										<g:message code="Editar" /></g:link>
+									-
+									<g:link controller="publicacionCurso" action="eliminar" id="${it.id}" params="['pubInicialId': 
+										params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+										<g:message code="Borrar" /></g:link>
+										<p>Al borrar la publicacion inicial, se borran todas sus respuestas</p>
+										<p>Equivale a eliminar tema</p>
+								</td>
+							</g:else>	
+						</g:if>	
 					</tr>
 				</g:each>
 			</tbody>

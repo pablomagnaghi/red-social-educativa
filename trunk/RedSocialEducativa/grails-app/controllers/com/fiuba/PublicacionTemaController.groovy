@@ -4,7 +4,7 @@ import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured
 
 
-@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
+@Secured('isFullyAuthenticated()')
 class PublicacionTemaController {
 
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]

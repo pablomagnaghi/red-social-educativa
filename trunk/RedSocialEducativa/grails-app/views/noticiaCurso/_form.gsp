@@ -15,6 +15,3 @@
 	</label>
 	<g:textArea name="texto" value="${noticiaCursoInstance?.texto}"/>
 </div>
-
-<div><g:hiddenField name="fecha" value="${(new Date()).format(com.fiuba.Utilidades.FORMATO_FECHA)}"/></div>
-<div><g:hiddenField name="hora" value="${(new Date()).getTimeString()}"/></div>
