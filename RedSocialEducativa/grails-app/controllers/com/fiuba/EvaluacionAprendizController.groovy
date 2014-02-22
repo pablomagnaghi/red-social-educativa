@@ -10,7 +10,8 @@ class EvaluacionAprendizController {
 	def evaluacionAprendizService
 	def aprendizService
 	
-	@Secured('permitAll')
+	/* TODO: no se usa, posible implementacion en menu mediador para ver todas las notas de una evaluacion y exportar
+	@Secured("hasRole('ROL_MEDIADOR')")
     def general(Integer max) {
         params.max = Utilidades.MAX_PARAMS
 		
@@ -19,7 +20,7 @@ class EvaluacionAprendizController {
 		[evaluaciones: EvaluacionAprendiz.findAllByEvaluacion(evaluacion, [max: params.max, offset: params.offset]),
 			evaluacionCant:EvaluacionAprendiz.findAllByEvaluacion(evaluacion).size(), params: ['cursoId': 
 			params.cursoId, 'evaluacionId': params.evaluacionId]]
-    }
+    }*/
 
 	@Secured("hasRole('ROL_MEDIADOR')")
     def show(EvaluacionAprendiz evaluacionAprendizInstance) {

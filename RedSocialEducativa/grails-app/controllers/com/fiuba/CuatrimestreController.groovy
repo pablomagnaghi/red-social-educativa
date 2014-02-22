@@ -59,10 +59,6 @@ class CuatrimestreController {
 		
 		Integer anio = cuatrimestreService.obtenerAnio()
 		Integer numero = cuatrimestreService.obtenerNumero()
-	
-	
-		println "Cuatrimestre actual"
-		println "${cuatrimestre}"
 		
 		respond new Cuatrimestre(params), model: [anio: anio, numero: numero], params:['cursoId': params.cursoId]
 	}
@@ -79,11 +75,8 @@ class CuatrimestreController {
 	
 		// Obtengo el ultimo cuatrimestre 
 		def cuatrimestres = cuatrimestreService.obtenerCuatrimestresOrdenados(params.cursoId.toLong())
-		println "cuatrimestres: ${cuatrimestres}"
 		def cuatrimestreUltimo = cuatrimestres.first()
-		println "cuatrimestre ultimo del curso"
-		println "${cuatrimestreUltimo}"
-		
+
 		if (!cuatrimestreService.guardar(cuatrimestreInstance)) {
 			render view:'create', model: [cuatrimestreInstance: cuatrimestreInstance], params:['cursoId': params.cursoId]
 			return

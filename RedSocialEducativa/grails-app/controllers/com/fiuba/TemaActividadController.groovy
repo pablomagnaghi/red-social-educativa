@@ -9,11 +9,9 @@ class TemaActividadController {
 
 	def temaActividadService
 
-	@Secured('permitAll')
-	def general() {
-
+	@Secured("hasRole('ROL_APRENDIZ')")
+	def aprendiz() {
 		params.max = Utilidades.MAX_PARAMS
-
 		def actividad = Actividad.get(params.actividadId)
 
 		[temas: TemaActividad.findAllByActividad(actividad, [max: params.max, offset: params.offset]),

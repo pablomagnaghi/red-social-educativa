@@ -30,7 +30,7 @@ class Usuario {
 		password blank: false//, minSize: 6
 		apellido blank: false
 		nombres blank: false
-		legajo nullable: true, unique: true
+		legajo nullable: true, unique: true // 6 a 9 digitos
 		padron nullable: true, unique: true //, matches:"[0-9]{5}", unique: true
 		email email: true
 		fechaMemb nullable: true

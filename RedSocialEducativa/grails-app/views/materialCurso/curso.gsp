@@ -13,7 +13,7 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<p>DIFERENCIA ENTRE MENU APRENDIZ, MENU ADMINISTRADOR, VISITANTE, MEDIADOR</p>
+				<p>VOLVER AL CURSO</p>
 			</ul>
 		</div>
 		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>

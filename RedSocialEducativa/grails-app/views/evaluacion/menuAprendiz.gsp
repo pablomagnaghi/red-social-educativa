@@ -22,7 +22,6 @@
 			</ul>
 		</div>
 		<h3>curso: ${params.cursoId}</h3>
-		<h3>cuatri: ${params.cuatrimestreId}</h3>
 		<div>
 			<h1><g:message code="Evaluacion: ${evaluacion}" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">

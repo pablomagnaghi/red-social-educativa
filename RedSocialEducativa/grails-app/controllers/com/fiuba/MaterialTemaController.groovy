@@ -10,15 +10,13 @@ class MaterialTemaController {
 	def usuarioService
 	def materialTemaService
 
-	@Secured('permitAll')
-	def general() {
-
+	@Secured("hasAnyRole('ROL_APRENDIZ', 'ROL_MEDIADOR')")
+	def curso() {
 		params.max = Utilidades.MAX_PARAMS
-
 		def tema = Tema.get(params.temaId)
 
 		[materiales: MaterialTema.findAllByTema(tema, [max: params.max, offset: params.offset]),
-			materialesCant: MaterialTema.findAllByTema(tema).size(), tema: tema,
+			materialesCant: MaterialTema.findAllByTema(tema).size(), 
 			contenidos: Contenido.findAllByTema(tema, [max: params.max, offset: params.offset]),
 			contenidosCant: Contenido.findAllByTema(tema).size(),
 			params: ['cursoId': params.cursoId, 'temaId': params.temaId]]

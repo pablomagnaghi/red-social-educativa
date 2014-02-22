@@ -12,8 +12,8 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" controller="tema" action="general" id="${temaId}" params="['cursoId': params.cursoId]">
-					<g:message code="Tema ${tema}" /></g:link></li>	
+				<li><g:link class="create" controller="tema" action="curso" id="${params.temaId}" params="['cursoId': params.cursoId]">
+					<g:message code="Tema ${com.fiuba.Tema.get(params.temaId)}" /></g:link></li>	
 			</ul>
 		</div>
 		<div>
@@ -21,10 +21,10 @@
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
 		</div>	
-				<h2>cursoId: ${params.cursoId}</h2>
+		<h2>cursoId: ${params.cursoId}</h2>
 		<h2>temaId: ${params.temaId}</h2>
 		<div>
-			<p>Contenidos del ${tema} del Curso: ${com.fiuba.Curso.get(cursoId)}</p>
+			<p>Contenidos del ${com.fiuba.Tema.get(params.temaId)} del Curso: ${com.fiuba.Curso.get(params.cursoId)}</p>
 			<br>
 				<ol>
 					<g:each in="${contenidos}" >

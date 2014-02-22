@@ -5,6 +5,23 @@ import grails.transaction.Transactional
 @Transactional
 class CursoService {
 
+	def cuatrimestreService
+	
+	def agregarAprendiz(Usuario usuario, Long cursoId) {
+		
+		def aprendiz = new Aprendiz(usuario: usuario, rol: Rol.findByAuthority('ROL_APRENDIZ'), participa: false, msjEnviados: "0",
+			msjLeidos: "0", pubForos: "0", descMaterial: "0", cursando: false)
+		
+		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(cursoId)
+		cuatrimestre.addToAprendices(aprendiz)
+
+		if (aprendiz.save(flush: true)) {
+			return aprendiz
+		}
+		
+		return null
+	}
+	
 	def existe(Curso curso) {
 		def cursoExistente = Curso.findByMateriaAndNroRelativo(Materia.get(curso.materia.id), curso.nroRelativo)
 
