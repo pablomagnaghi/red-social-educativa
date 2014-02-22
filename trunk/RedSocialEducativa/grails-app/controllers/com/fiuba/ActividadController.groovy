@@ -11,18 +11,16 @@ class ActividadController {
 	def actividadService
 	def aprendizService
 	
-	@Secured('permitAll')
-	def general() {
+	@Secured("hasRole('ROL_APRENDIZ')")
+	def aprendiz() {
 
 		def actividad = Actividad.get(params.id)
-
 		def grupoActividadAprendiz = aprendizService.obtenerGrupoPorActividad(usuarioService.usuarioActual(), params.cuatrimestreId.toLong(), 
 			params.id.toLong())
 
-		[actividad: actividad, grupoActividadAprendiz: grupoActividadAprendiz,
-			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.id]]
+		[actividad: actividad, grupoActividadAprendiz: grupoActividadAprendiz, params: ['cursoId': params.cursoId, 
+			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.id]]
 	}
-
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def index() {
@@ -63,7 +61,7 @@ class ActividadController {
 				params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 			return
 		}
-		// TODO individual
+		
 		if (!actividadInstance.grupal) {
 			println "asignar al curso"
 			actividadService.asignarAlCurso(actividadInstance, params.cursoId.toLong())

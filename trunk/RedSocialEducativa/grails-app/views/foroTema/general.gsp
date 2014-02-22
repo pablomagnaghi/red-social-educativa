@@ -12,7 +12,7 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" controller="tema" action="general" id="${params.temaId}" params="['cursoId': params.cursoId]">
+				<li><g:link class="create" controller="tema" action="curso" id="${params.temaId}" params="['cursoId': params.cursoId]">
 					<g:message code="Tema ${tema}" /></g:link></li>	
 				<li><g:link class="create" controller="publicacionTema" action="nueva" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
 					<g:message code="Nueva publicacion" /></g:link></li>

@@ -5,7 +5,7 @@ import org.springframework.security.access.annotation.Secured
 
 class CursoController {
 
-	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	
 	def usuarioService
 	def cursoService
@@ -13,52 +13,22 @@ class CursoController {
 	def aprendizService
 	def cuatrimestreService
 
-	def cursoId
-
-	@Secured('permitAll')
-	def revisarRol() {
-		println "Revisar rol params: ${params}"
-
-		def usuario = usuarioService.usuarioActual()
-		def curso = Curso.get(params.cursoId)
-		
-		if (!usuarioService.usuarioActual()) {
-			flash.message = "Ingreso como visitante"
-			redirect(action: "general", params: params)
-			return
-		} 
-		
-		if (Administrador.findByUsuario(usuario)) {
-			flash.message = "Ingreso como administrador"
-			redirect(action: "general", params: params)
-			return
-		} 
-		
-		if (Mediador.findByUsuarioAndCurso(usuario, curso)) {
-			redirect(action: "mediador", params: params)
-			return
-		} 
-		
-		if (aprendizService.obtenerPorCurso(usuario.id, params.cursoId.toLong())) {
-			println "Hola aprendiz ${usuario}"
-			redirect(action: "aprendiz", params: params)
-			return 
-		} 
-		
-		flash.message = "Hola miembro ${usuario}"
-		redirect(action: "miembro", params: params)
-	}
-
 	@Secured("hasRole('ROL_ADMIN')")
-	def general() {
-		[dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), 
+	def administrador() {
+		[usuario: usuarioService.usuarioActual(), dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), 
 			cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong()), params: ['cursoId': params.cursoId]]
 	}
 
 	@Secured("hasRole('ROL_MIEMBRO')")
 	def miembro() {
-		def miembro = Miembro.findByUsuario(usuarioService.usuarioActual())
-		[miembro: miembro, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()),
+		// Verifico si el miembro ya pidio la participacion en el curso durante este cuatrimestre
+		// Se necesita para decidir si se muestra o no la opcion de solicitar participacion en el curso en la vista
+		def usuario = usuarioService.usuarioActual()
+		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
+		
+		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestreAndParticipa(usuario, cuatrimestre, false)
+		
+		[usuario: usuario, solicitoParticipacion: aprendiz, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()),
 			cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong()), params: ['cursoId': params.cursoId]]
 	}
 
@@ -90,91 +60,63 @@ class CursoController {
 			params: ['cursoId': params.cursoId]]
 	}
 
-	// TODO
-	@Secured('permitAll')
-	def material() {
+	@Secured('isFullyAuthenticated()')
+	def materiales() {
 		params.max = Utilidades.MAX_PARAMS
 
-		println "action materias controller curso params: ${params}"
-
-		cursoId = params.cursoId
-
-		[materialesCurso: MaterialCurso.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
-			materialesCursoCant: MaterialCurso.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId,
-			mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(cursoId)),
-			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, cursoId.toLong())]
+		[materiales: MaterialCurso.findAllByCurso(Curso.get(params.cursoId),[max: params.max, offset: params.offset]),
+			materialesCant: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)).size(),
+			mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId)),
+			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()), 
+			params: ['cursoId': params.cursoId]]
 	}
 
-	@Secured('permitAll')
+	@Secured('isFullyAuthenticated()')
 	def temas() {
 		params.max = Utilidades.MAX_PARAMS
 
-		println "action temas controller curso params: ${params}"
-
-		cursoId = params.cursoId
-
-		[temasCurso: Tema.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
-			temasCursoCant: Tema.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId,
-			mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(cursoId)),
-			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, cursoId.toLong()),
-			cursoId: cursoId]
+		[temas: Tema.findAllByCurso(Curso.get(params.cursoId),[max: params.max, offset: params.offset]),
+			temasCant: Tema.findAllByCurso(Curso.get(params.cursoId)).size(),
+			mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId)),
+			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
+			params: ['cursoId': params.cursoId]]
 	}
 
-	@Secured('permitAll')
+	@Secured("hasRole('ROL_APRENDIZ')")
 	def actividades() {
-		params.max = 5
+		params.max = Utilidades.MAX_PARAMS
 
-		println "action actividades controller curso"
-		println params
-
-		cursoId = params.cursoId
 		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
 
 		[actividades: Actividad.findAllByCuatrimestre(cuatrimestre,[max: params.max, offset: params.offset]),
-			actividadesCant: Actividad.findAllByCuatrimestre(cuatrimestre).size(), cursoId: cursoId,
-			cuatrimestreId: cuatrimestre?.id,
-			mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(cursoId)),
-			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())]
+			actividadesCant: Actividad.findAllByCuatrimestre(cuatrimestre).size(), cuatrimestre: cuatrimestre,
+			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
+			params: ['cursoId': params.cursoId]]
 	}
 
-	@Secured('permitAll')
+	@Secured("hasRole('ROL_APRENDIZ')")
 	def evaluaciones() {
-		params.max = 5
+		params.max = Utilidades.MAX_PARAMS
 
-		println "action actividades controller curso"
-		println params
-
-		cursoId = params.cursoId
-
-		[evaluaciones: Evaluacion.findAllByCurso(Curso.get(cursoId),[max: params.max, offset: params.offset]),
-			evaluacionesCant: Evaluacion.findAllByCurso(Curso.get(cursoId)).size(), cursoId: cursoId,
-			mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(cursoId)),
-			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, cursoId.toLong())]
+		[evaluaciones: Evaluacion.findAllByCurso(Curso.get(params.cursoId),[max: params.max, offset: params.offset]),
+			evaluacionesCant: Evaluacion.findAllByCurso(Curso.get(params.cursoId)).size(),
+			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
+			params: ['cursoId': params.cursoId]]
 	}
-
+	
 	@Secured("hasRole('ROL_MIEMBRO')")
 	def solicitarParticipacionEnElCurso() {
 
-		def aprendiz = new Aprendiz(usuario: usuarioActual(), rol: Rol.findByAuthority('ROL_APRENDIZ'), participa: false, msjEnviados: "0",
-		msjLeidos: "0", pubForos: "0", descMaterial: "0", cursando: false)
-		
-		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId)
-		cuatrimestre.addToAprendices(aprendiz)
-
-		if(!aprendiz.validate()) {
+		if (!cursoService.agregarAprendiz(usuarioService.usuarioActual(), params.cursoId.toLong())) {
 			flash.message = "Problemas con la solitud de participacion"
-			println aprendiz.errors
-			redirect(action:"aprendiz", params:['cursoId': params.cursoId])
+			redirect action: "miembro", params:['cursoId': params.cursoId]
 			return
 		}
 
-		aprendiz.save()
 		flash.message = "Solicitud aceptada. A la brevedad se le enviara un mail de confirmacion"
-		redirect(action:"aprendiz", params:['cursoId': params.cursoId])
+		redirect action: "miembro", params:['cursoId': params.cursoId]
 	}
-
-	// TODO: Metodos para ABM de cursos en menu administrador
-
+	
 	@Secured("hasRole('ROL_ADMIN')")
 	def index() {
 		params.max = Utilidades.MAX_PARAMS

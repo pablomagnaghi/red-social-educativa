@@ -5,10 +5,6 @@ import grails.transaction.Transactional
 @Transactional
 class AprendizService {
 
-	// TODO cuando un aprendiz pierde la cursada, reprueba tres veces el final o se le vence la materia
-	// participa pasa a ser false o agregar atributo estado en aprendiz
-	// Estado [inactivo/activo/cursada aprobada/curso terminado]
-
 	def obtenerCursos(Usuario usuario) {
 
 		def ArrayList<Curso> cursosAprendiz = new ArrayList<Curso>()

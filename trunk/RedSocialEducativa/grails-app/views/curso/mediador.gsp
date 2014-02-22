@@ -8,7 +8,8 @@
 			<h2>
 				<p>"${com.fiuba.Curso.get(params.cursoId)}"</p>
 				<br>
-				<p>Bienvenido mediador "${mediador.usuario}"</p>
+				<p>"Bienvenido mediador ${usuario} al curso ${com.fiuba.Curso.get(params.cursoId).nroRelativo} de la 
+				materia ${com.fiuba.Curso.get(params.cursoId).materia}"</p>
 			</h2> 
 			<br>
 			<ol>
@@ -24,13 +25,13 @@
 		<h2>cuat id: ${cuatrimestre?.id}</h2>
 		<h2>Noticia curso: ${noticiasCurso}</h2>
 		<div>	
-			<div>
-				<g:link action="actividades" params="['cursoId': cursoId]">
-					<g:message code="Actividades del curso"/></g:link>
-			</div>
 			<fieldset class="form">
-				<g:render template="esquema"/>
+				<g:render template="general"/>
 			</fieldset>
+			<fieldset class="form">
+				<g:render template="noticias"/>
+			</fieldset>   
 		</div>
+		
 	</body>
 </html>

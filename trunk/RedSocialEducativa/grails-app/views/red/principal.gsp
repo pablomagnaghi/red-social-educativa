@@ -105,7 +105,7 @@
 			<h3>Los cursos de la red Social son estos</h3>
 			<br>
 				<g:each in="${cursos}" var="cursoInstance">
-					<p><g:link action="revisarRol" controller="curso" params="['cursoId': cursoInstance.id]">
+					<p><g:link action="revisarRol" params="['cursoId': cursoInstance.id]">
 							${com.fiuba.Materia.get(cursoInstance.materia.id)}-${cursoInstance}</g:link><p>	
 					<br>
 				</g:each>
@@ -113,9 +113,6 @@
 				<g:paginate total="${cursoCant ?: 0}" />
 			</div>
 		</div>
-		<g:render template='/login/ajaxLogin'/>
-		
-		
 		<div>
 			<p>Noticia red; "${com.fiuba.NoticiaRed.first()}"</p>
 			<p>Noticia curso; "${com.fiuba.NoticiaCurso.first()}"</p>

@@ -5,7 +5,8 @@
 		</head>
 	<body>
 		<div>
-			<h2>"Bienvenido al curso ${com.fiuba.Curso.get(params.cursoId).nroRelativo} de la materia ${com.fiuba.Curso.get(params.cursoId).materia}"</h2>
+			<h2>"Bienvenido administrador ${usuario} al curso ${com.fiuba.Curso.get(params.cursoId).nroRelativo} de la 
+				materia ${com.fiuba.Curso.get(params.cursoId).materia}"</h2>
 			<br>
 		</div>
 		<h2>Curso id: ${params.cursoId}</h2>
@@ -18,11 +19,8 @@
 		</div>
 		<div>
 			<fieldset class="form">
-				<g:render template="esquema"/>
+				<g:render template="general"/>
 			</fieldset>
-		</div>
-		<div>
-			<p>Para tener mayores accesos por favor, inicie sesion</p>	
 		</div>
 	</body>
 </html>

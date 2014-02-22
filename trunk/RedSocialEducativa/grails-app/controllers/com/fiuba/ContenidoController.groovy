@@ -9,17 +9,12 @@ class ContenidoController {
 
 	def contenidoService
 
-	// TODO ver solo este metodo cuando se haga el menu para visitantes/miembros/aprendices
-	@Secured('permitAll')
-	def general() {
-
+	@Secured("hasAnyRole('ROL_APRENDIZ', 'ROL_MEDIADOR')")
+	def curso() {
 		params.max = Utilidades.MAX_PARAMS
 
-		def tema = Tema.get(params.temaId)
-
-		[contenidos: Contenido.findAllByTema(tema, [max: params.max, offset: params.offset]),
-			contenidosCant: Contenido.findAllByTema(tema).size(),
-			tema: tema, params: ['cursoId': params.cursoId, 'temaId': params.temaId]]
+		[contenidos: Contenido.findAllByTema(Tema.get(params.temaId), [max: params.max, offset: params.offset]),
+			contenidosCant: Contenido.findAllByTema(Tema.get(params.temaId)).size(), params: ['cursoId': params.cursoId, 'temaId': params.temaId]]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")

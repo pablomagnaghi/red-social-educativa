@@ -11,18 +11,14 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<g:if test="${aprendiz}">
-					<li><g:link class="list" controller="curso" action="aprendiz" params="['cursoId': cursoId]">
-						<g:message code="Menu aprendiz del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
-				</g:if>
-				<g:else>
-					<li><g:link class="list" controller="curso" action="mediador" params="['cursoId': cursoId]">
-						<g:message code="Menu mediador del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
-				</g:else>				
+				<li><g:link class="list" controller="curso" action="aprendiz" params="['cursoId': params.cursoId]">
+					<g:message code="Menu aprendiz del curso ${com.fiuba.Curso.get(params.cursoId)}" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>		
+		<h2>Curso id: ${params.cursoId}</h2>
+		<h2>Cuat id: ${cuatrimestre.id}</h2>
 		<div>
-			<h1><g:message code="Actividades del curso: ${com.fiuba.Curso.get(cursoId)}" /></h1>
+			<h1><g:message code="Actividades del curso: ${com.fiuba.Curso.get(params.cursoId)}  en el cuatrimestre ${cuatrimestre}" /></h1>
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
@@ -33,14 +29,15 @@
 						<li>${it.titulo}</li>
 					</span>
 					<span>
-						<g:link controller="actividad" action="general" id="${it.id}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]">
+						<g:link controller="actividad" action="aprendiz" id="${it.id}" params="['cursoId': params.cursoId, 
+							'cuatrimestreId': cuatrimestre.id]">
 							<g:message code="Acceder a la actividad"/></g:link>		
 					</span>		
 				</g:each>
 				</ol>
 			</div>
 			<div class="pagination">
-				<g:paginate total="${actividadesCant ?: 0}" params="['cursoId': cursoId, 'cuatrimestreId': cuatrimestreId]"/>
+				<g:paginate total="${actividadesCant ?: 0}" params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre.id]"/>
 			</div>
 		</div>
 	</body>

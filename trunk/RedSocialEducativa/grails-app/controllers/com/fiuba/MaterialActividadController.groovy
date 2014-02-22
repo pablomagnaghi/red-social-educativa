@@ -10,14 +10,13 @@ class MaterialActividadController {
 	def usuarioService
 	def materialActividadService
 
-	@Secured('permitAll')
-	def general() {
-
+	@Secured("hasRole('ROL_APRENDIZ')")
+	def aprendiz() {
 		params.max = Utilidades.MAX_PARAMS
 		def actividad = Actividad.get(params.actividadId)
 
 		[materiales: MaterialActividad.findAllByActividad(actividad, [max: params.max, offset: params.offset]),
-			materialesCant: MaterialActividad.findAllByActividad(actividad).size(), actividad: actividad,
+			materialesCant: MaterialActividad.findAllByActividad(actividad).size(), 
 			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
 	}
 

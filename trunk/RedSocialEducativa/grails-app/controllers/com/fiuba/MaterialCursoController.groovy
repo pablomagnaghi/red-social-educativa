@@ -9,9 +9,8 @@ class MaterialCursoController {
 	def usuarioService
 	def materialCursoService
 
-	// TODO ver solo este metodo cuando se haga el menu para visitantes/miembros/aprendices
-	@Secured('permitAll')
-	def general(MaterialCurso material) {
+	@Secured('isFullyAuthenticated()')
+	def curso(MaterialCurso material) {
 
 		[material: material, params: ['cursoId': params.cursoId]]
 	}

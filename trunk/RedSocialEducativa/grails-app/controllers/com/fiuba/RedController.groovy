@@ -25,6 +25,30 @@ class RedController {
 		[cursos: Curso.list(params), cursoCant: Curso.count(), noticiasRed: NoticiaRed.list(), administrador: administrador,
 			cursosMediador: cursosMediador, cursosAprendiz: cursosAprendiz, cantMensajes: mensajes.size()]
 	}
+	
+	@Secured('permitAll')
+	def revisarRol() {
+
+		def usuario = usuarioService.usuarioActual()
+		def curso = Curso.get(params.cursoId)
+			
+		if (Administrador.findByUsuario(usuario)) {
+			redirect controller: "curso", action: "administrador", params: params
+			return
+		}
+		
+		if (Mediador.findByUsuarioAndCurso(usuario, curso)) {
+			redirect controller: "curso", action: "mediador", params: params
+			return
+		}
+		
+		if (aprendizService.obtenerPorCurso(usuario.id, params.cursoId.toLong())) {
+			redirect controller: "curso", action: "aprendiz", params: params
+			return
+		}
+		
+		redirect controller: "curso", action: "miembro", params: params
+	}
 
 	@Secured('permitAll')
 	def solicitarMembresia() {

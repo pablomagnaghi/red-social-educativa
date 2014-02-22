@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.TemaActividad" %>
+<%@ page import="com.fiuba.MaterialActividad" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -12,9 +12,9 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" controller="actividad" action="general" id="${params.actividadId}" params="['cursoId': params.cursoId, 
+				<li><g:link class="create" controller="actividad" action="aprendiz" id="${params.actividadId}" params="['cursoId': params.cursoId, 
 					'cuatrimestreId': params.cuatrimestreId]">
-					<g:message code="Actividad ${actividad}" /></g:link></li>	
+					<g:message code="Actividad ${com.fiuba.Actividad.get(params.actividadId)}" /></g:link></li>	
 			</ul>
 		</div>
 		<h3>curso: ${params.cursoId}</h3>
@@ -26,18 +26,23 @@
 			</g:if>
 		</div>	
 		<div>
-			<p>Tema de la actividad ${actividad} del Curso: ${com.fiuba.Curso.get(params.cursoId)}</p>
+			<p>Material del actividad ${com.fiuba.Actividad.get(params.actividadId)} del Curso: ${com.fiuba.Curso.get(params.cursoId)}</p>
 			<br>
 				<ol>
-					<g:each in="${temas}">
-						<div><h1><g:message code="Tema: ${it.tema.titulo}" args="[entityName]" /></h1></div>
+					<g:each in="${materiales}">
+						<div><h1><g:message code="Material: ${it.titulo}" args="[entityName]" /></h1></div>
 						<div>
-							<p>Poner link al tema(URL)</p>
+							<p>Autor: ${it.autor}</p>
+							<p>Descripcion: ${it.descripcion}</p>
+							<p>Categoria": ${it.categoria}</p>	
+							<p>Responsable: ${it.responsable}</p>
+							<p>Fecha"${it.fecha}</p>
+							<p>Poner link al material(URL)</p>
 						</div>
 					</g:each>
 				</ol>	
 			<div class="pagination">
-				<g:paginate total="${temasCant ?: 0}" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
+				<g:paginate total="${materialesCant ?: 0}" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
 					'actividadId': params.actividadId]"/>
 			</div>
 		</div>	

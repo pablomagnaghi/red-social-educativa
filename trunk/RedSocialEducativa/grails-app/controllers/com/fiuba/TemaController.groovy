@@ -9,12 +9,11 @@ class TemaController {
 
 	def temaService
 
-	// TODO ver solo este metodo cuando se haga el menu para visitantes/miembros/aprendices
-	@Secured('permitAll')
-	def general(Tema tema) {
+	@Secured('isFullyAuthenticated()')
+	def curso(Tema tema) {
 
-		[contenidos: Contenido.findAllByTema(tema), materiales: MaterialTema.findAllByTema(tema), tema: tema,
-			paramas: ['cursoId': params.cursoId, 'temaId': params.temaId]]
+		[contenidos: Contenido.findAllByTema(tema), materiales: MaterialTema.findAllByTema(tema), 
+			params: ['cursoId': params.cursoId, 'temaId': params.id]]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")

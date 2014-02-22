@@ -12,11 +12,11 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link action="general" controller="curso" params="['cursoId': params.cursoId]">
-					<g:message code="Curso: ${com.fiuba.Curso.get(params.cursoId)}"/></g:link></li>
 			</ul>
 		</div>		
 		<h2>Curso Id: ${params.cursoId}</h2>
+		<h2>Tema Id: ${params.temaId}</h2>
+		
 		<div>
 			<h1><g:message code="Tema ${com.fiuba.Tema.get(params.temaId)} del curso: ${com.fiuba.Curso.get(params.cursoId)}" /></h1>
 			<g:if test="${flash.message}">
@@ -30,12 +30,12 @@
 		</div>
 		<div>
 			<hr>
-			<h2><g:link controller="materialTema" action="general" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
+			<h2><g:link controller="materialTema" action="curso" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
 				<g:message code="Material del tema"/></g:link></h2>
 		</div>
 		<div>
 			<hr>
-			<h2><g:link controller="contenido" action="general" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
+			<h2><g:link controller="contenido" action="curso" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
 				<g:message code="Contenidos del tema"/></g:link></h2>
 		</div>
 	</body>
