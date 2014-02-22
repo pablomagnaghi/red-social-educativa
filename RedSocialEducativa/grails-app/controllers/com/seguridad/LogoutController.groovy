@@ -1,4 +1,4 @@
-package com.fiuba
+package com.seguridad
 
 import grails.plugin.springsecurity.SpringSecurityUtils
 
