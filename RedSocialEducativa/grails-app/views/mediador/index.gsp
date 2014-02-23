@@ -13,8 +13,6 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" controller="administrador" action="menu">
-					<g:message code="Tareas administrativas"/></g:link></li>
 				<li><g:link class="create" action="create">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
@@ -27,7 +25,7 @@
 						<g:sortableColumn property="usuario" title="${message(code: 'mediador.usuario.label', default: 'Usuario')}" />	
 						<g:sortableColumn property="curso" title="${message(code: 'mediador.curso.label', default: 'Curso')}" />
 						<g:sortableColumn property="jerarquia" title="${message(code: 'mediador.jerarquia.label', default: 'Jerarquia')}" />	
-						<td> Detalle </td>	
+						<td> Opciones </td>	
 					</tr>
 				</thead>
 				<tbody>
@@ -40,8 +38,14 @@
 					
 						<td>${fieldValue(bean: mediadorInstance, field: "jerarquia")}</td>
 						
-						<td><g:link action="show" id="${mediadorInstance.id}">
-							Ver detalle</g:link></td>
+						<td>					
+							<g:form action="delete" method="DELETE" id="${mediadorInstance.id}">
+								<fieldset class="buttons">
+								<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
+									onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+								</fieldset>
+							</g:form>
+						</td>
 			
 					</tr>
 				</g:each>

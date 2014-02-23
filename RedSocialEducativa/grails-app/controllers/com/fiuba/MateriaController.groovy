@@ -15,10 +15,6 @@ class MateriaController {
 		respond Materia.list(params), model:[materiaInstanceCount: Materia.count()]
 	}
 
-	def show(Materia materiaInstance) {
-		respond materiaInstance
-	}
-
 	def create() {
 		respond new Materia(params)
 	}
@@ -35,7 +31,7 @@ class MateriaController {
 		}
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'materiaInstance.label', default: 'Materia'), materiaInstance.id])
-		redirect materiaInstance
+		redirect action:"index"
 	}
 
 	def edit(Materia materiaInstance) {
@@ -54,7 +50,7 @@ class MateriaController {
 		}
 
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'Materia.label', default: 'Materia'), materiaInstance.id])
-		redirect materiaInstance
+		redirect action:"index"
 	}
 
 	def delete(Materia materiaInstance) {

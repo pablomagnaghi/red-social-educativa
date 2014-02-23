@@ -13,8 +13,6 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" controller="administrador" action="menu">
-					<g:message code="Tareas administrativas"/></g:link></li>
 				<li><g:link class="create" action="create">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
@@ -31,8 +29,10 @@
 						<g:sortableColumn property="materia" title="${message(code: 'curso.nroRelativo.label', default: 'Materia')}" />
 						<g:sortableColumn property="nroRelativo" title="${message(code: 'curso.nroRelativo.label', default: 'Nro Relativo')}" />
 						<g:sortableColumn property="nombre" title="${message(code: 'curso.nombre.label', default: 'Nombre')}" />
-	
-						<td> Detalle </td>	
+						<g:sortableColumn property="cuatDict" title="${message(code: 'curso.nombre.label', default: 'Cuat Dict')}" />
+						<td> Mediadores </td>
+						<td> Cuatrimestres </td>
+						<td> Opciones </td>	
 					
 					</tr>
 				</thead>
@@ -43,8 +43,27 @@
 						<td>${fieldValue(bean: cursoInstance, field: "materia")}</td>					
 						<td>${fieldValue(bean: cursoInstance, field: "nroRelativo")}</td>						
 						<td>${fieldValue(bean: cursoInstance, field: "nombre")}</td>
-				
-						<td><g:link action="show" id="${cursoInstance.id}">Ver detalle</g:link></td>
+						<td>${fieldValue(bean: cursoInstance, field: "cuatDict")}</td>
+						<td>
+							<g:each in="${cursoInstance.mediadores}" var="m">
+								<p>${m.usuario}</p>
+							</g:each>
+						</td>
+						<td>
+							<g:each in="${cursoInstance.cuatrimestres}" var="c">
+								<p>${c}</p>
+							</g:each>
+						</td>
+						<td>
+							<g:form action="delete" method="DELETE" id="${cursoInstance.id}" >
+							<fieldset class="buttons">
+								<g:link class="edit" action="edit" resource="${cursoInstance}" id="${cursoInstance.id}">
+									<g:message code="default.button.edit.label" default="Edit" /></g:link>
+								<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
+								onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+							</fieldset>
+							</g:form>					
+						</td>
 					
 					</tr>
 				</g:each>

@@ -21,6 +21,9 @@ class Utilidades {
 	final static DIA_PROXIMA_SEMANA = new Date(new Date().getTime() + (7 * 24* 60 * 60 * 1000)).getAt(Calendar.DAY_OF_MONTH)
 	final static FECHA_PROXIMA_SEMANA = 10000 * (ANIO_PROXIMA_SEMANA) + 100 * MES_PROXIMA_SEMANA + DIA_PROXIMA_SEMANA
 
+	final static FECHA_PRIMER_CUATRIMESTRE = 10000 * (ANIO) + 100 * 3 + 1
+	final static FECHA_SEGUNDO_CUATRIMESTRE = 10000 * (ANIO) + 100 * 8 + 15
+	
 	final static MAX_PARAMS = 5
 	
 	final static MENSAJE_BIENVENIDA = "Bienvenido a la Red Social del Departamento de Computacion de la FIUBA"

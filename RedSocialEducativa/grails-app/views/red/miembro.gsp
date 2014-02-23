@@ -21,16 +21,6 @@
 			</sec:ifLoggedIn>
 		</div>
 		<div>
-			<g:if test="${administrador}">
-				<br><h2>Bienvenido administrador ${administrador}</h2><br> 
-				<span class = "menuButton">
-					<g:link action="menu" controller="administrador">
-					<g:message code="Tareas administrativas" /></g:link>
-				</span>
-				<br>
-			</g:if>
-		</div>
-		<div>
 			<span>
 				<g:if test="${cursosMediador}">
 					<br><h2>Mis cursos como mediador</h2><br> 
@@ -105,7 +95,7 @@
 			<h3>Los cursos de la red Social son estos</h3>
 			<br>
 				<g:each in="${cursos}" var="cursoInstance">
-					<p><g:link action="revisarRol" params="['cursoId': cursoInstance.id]">
+					<p><g:link action="revisarRolEnCurso" params="['cursoId': cursoInstance.id]">
 							${com.fiuba.Materia.get(cursoInstance.materia.id)}-${cursoInstance}</g:link><p>	
 					<br>
 				</g:each>

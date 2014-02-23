@@ -27,6 +27,8 @@
 						<th><g:message code="administrador.rol.label" default="Rol" /></th>
 					
 						<th><g:message code="administrador.usuario.label" default="Usuario" /></th>
+						
+						<td>Opciones</td>
 					
 					</tr>
 				</thead>
@@ -34,9 +36,18 @@
 				<g:each in="${administradorInstanceList}" status="i" var="administradorInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${administradorInstance.id}">${fieldValue(bean: administradorInstance, field: "rol")}</g:link></td>
+						<td>${fieldValue(bean: administradorInstance, field: "rol")}</td>
 					
 						<td>${fieldValue(bean: administradorInstance, field: "usuario")}</td>
+					
+						<td>
+							<g:form action= "delete" method="DELETE" id="${administradorInstance.id}">
+							<fieldset class="buttons">
+								<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
+									onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+							</fieldset>
+							</g:form>
+						</td>
 					
 					</tr>
 				</g:each>

@@ -43,6 +43,9 @@
 						<g:datePicker name="fechaSegundoCuatrimestre" precision="day"  value="${new Date()}" />
 						
 					</div>
+					<div><g:hiddenField name="anio" value="${com.fiuba.Utilidades.ANIO}"/></div>
+					<div><g:hiddenField name="inicioPrimerCuatrimestre" value="${com.fiuba.Utilidades.FECHA_PRIMER_CUATRIMESTRE}"/></div>
+					<div><g:hiddenField name="inicioSegundoCuatrimestre" value="${com.fiuba.Utilidades.FECHA_SEGUNDO_CUATRIMESTRE}"/></div>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />

@@ -13,4 +13,14 @@ class AdministradorService {
 		return null
 	}
 
+	def eliminar(Administrador administrador) {
+		println administrador.usuario
+		def miembro = Miembro.findByUsuario(administrador.usuario)
+		miembro.delete flush:true
+		administrador.delete flush:true
+		
+		// TODO esto es lo que va, cuando se haga la mensajeria
+		//Administrador.removeAll(usuario)
+		//Miembro.removeAll(usuario)
+	}	
 }

@@ -29,7 +29,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="update" method="PUT" >
+			<g:form action="update" method="PUT" id="${calendarioInstance.id}">
 				<g:hiddenField name="version" value="${calendarioInstance?.version}" />
 				<fieldset class="form">
 					<div><g:hiddenField name="anio" value="${calendarioInstance.anio}"/></div>

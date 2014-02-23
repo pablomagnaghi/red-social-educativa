@@ -12,12 +12,8 @@
 	
 		<div class="nav" role="navigation">
 			<ul>
-				<li><g:link class="list" action="principal">
-						<g:message code="Pagina inicial" args="[entityName]" />
-					</g:link></li>
-				<li><g:link class="create" action="menu" controller="administrador">
-						<g:message code="Volver a tareas administrativas" args="[entityName]" />
-					</g:link></li>
+				<li><a class="home" href="${createLink(uri: '/')}">
+					<g:message code="Pagina inicial (SACAR CUANDO ESTE EL PANEL)" args="[entityName]" />
 				<li><g:link class="create" action="create">
 						<g:message code="default.new.label" args="[entityName]" />
 					</g:link></li>
@@ -31,24 +27,32 @@
 			<thead>
 					<tr>
 					
-						<g:sortableColumn property="anio" title="${message(code: 'calendario.anio.label', default: 'Anio')}" />
-					
-						<g:sortableColumn property="inicioPrimerCuatrimestre" title="${message(code: 'calendario.inicioPrimerCuatrimestre.label', default: 'Inicio Primer Cuatrimestre')}" />
-					
+						<g:sortableColumn property="anio" title="${message(code: 'calendario.anio.label', default: 'Anio')}" />					
+						<g:sortableColumn property="inicioPrimerCuatrimestre" title="${message(code: 'calendario.inicioPrimerCuatrimestre.label', default: 'Inicio Primer Cuatrimestre')}" />				
 						<g:sortableColumn property="inicioSegundoCuatrimestre" title="${message(code: 'calendario.inicioSegundoCuatrimestre.label', default: 'Inicio Segundo Cuatrimestre')}" />
 					
+						<td>Opciones</td>
 					</tr>
 				</thead>
 				<tbody>
 				<g:each in="${calendarioInstanceList}" status="i" var="calendarioInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${calendarioInstance.id}">
-							<g:formatNumber number="${calendarioInstance.anio}"/></g:link></td>				
-					
+						<td><g:formatNumber number="${calendarioInstance.anio}"/></td>				
 						<td><g:formatNumber number="${calendarioInstance.inicioPrimerCuatrimestre}"/></td>
-						
 						<td><g:formatNumber number="${calendarioInstance.inicioSegundoCuatrimestre}"/></td>
+						
+						<td> 
+							<g:form action="delete" method="DELETE" id="${calendarioInstance.id}">
+							<fieldset class="buttons">
+							<g:link class="edit" action="edit" resource="${calendarioInstance}" id="${calendarioInstance.id}">
+								<g:message code="default.button.edit.label" default="Edit" /></g:link>
+							<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', 
+								default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', 
+								default: 'Are you sure?')}');" />
+							</fieldset>
+							</g:form>	
+						</td>
 					
 					</tr>
 				</g:each>

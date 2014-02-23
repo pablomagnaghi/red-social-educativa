@@ -24,45 +24,41 @@
 			<g:if test="${administrador}">
 				<br><h2>Bienvenido administrador ${administrador}</h2><br> 
 				<span class = "menuButton">
-					<g:link action="menu" controller="administrador">
-					<g:message code="Tareas administrativas" /></g:link>
+					<g:message code="Tareas administrativas (PANEL LATERAL PROXIMAMENTE)" />				
+						<h3>Menu principal de administrador</h3>
+							<br>
+							<ol>		
+								<li><g:link class="list" controller="calendario" action="index">
+									<g:message code="Calendario" /></g:link></li>	
+								<br>
+								<li><g:link class="list" action="configuracion" >
+									<g:message code="Configuracion de la red" /></g:link></li>	
+								<br>
+								<li><g:link class="list" controller="materia" action="index" >
+									<g:message code="Materias" /></g:link></li>
+								<br>
+								<li><g:link class="list" controller="curso" action="index" >
+									<g:message code="Cursos" /></g:link></li>
+								<br>	
+								<li><g:link class="list" controller="mediador" action="index" >
+									<g:message code="Mediadores" /></g:link></li>
+								<br>	
+								<li><g:link class="list" controller="noticiaRed" action="index" >
+									<g:message code="Cartelera general" /></g:link></li>
+								<br>
+								<li><g:link class="list" controller="foroGeneral" action="general" >
+									<g:message code="Foros general" /></g:link></li>	
+								<br>		
+								<li><g:link class="list" controller="administrador" action="index">
+									<g:message code="Administradores" /></g:link></li>	
+								<br>
+								<li><g:link class="list" controller="usuario" action="index" >
+									<g:message code="Usuarios" /></g:link></li>	
+							</ol>
+						</div>		
 				</span>
 				<br>
 			</g:if>
-		</div>
-		<div>
-			<span>
-				<g:if test="${cursosMediador}">
-					<br><h2>Mis cursos como mediador</h2><br> 
-					<ol>
-						<g:each in="${cursosMediador}" var="cursoMediador">
-							<li>
-								<span class = "menuButton">
-									<g:link action="mediador" controller="curso" params="['cursoId': cursoMediador.id]">
-									<g:message code="${com.fiuba.Materia.get(cursoMediador.materia.id)}-${cursoMediador}" /></g:link>
-								</span>
-								<br>
-							</li>
-						</g:each>
-					</ol>
-				</g:if>
-			</span>
-			<span>
-				<g:if test="${cursosAprendiz}">
-					<br><h2>Mis cursos como aprendiz</h2><br> 
-					<ol>
-						<g:each in="${cursosAprendiz}" var="cursoAprendiz">
-							<li>
-								<span class = "menuButton">
-									<g:link action="aprendiz" controller="curso" params="['cursoId': cursoAprendiz.id]">
-									<g:message code="${com.fiuba.Materia.get(cursoAprendiz.materia.id)}-${cursoAprendiz}" /></g:link>
-								</span>
-								<br>
-							</li>
-						</g:each>
-					</ol>
-				</g:if>
-			</span>
 		</div>
 		<br>
 		<div>
@@ -105,7 +101,7 @@
 			<h3>Los cursos de la red Social son estos</h3>
 			<br>
 				<g:each in="${cursos}" var="cursoInstance">
-					<p><g:link action="revisarRol" params="['cursoId': cursoInstance.id]">
+					<p><g:link action="revisarRolEnCurso" params="['cursoId': cursoInstance.id]">
 							${com.fiuba.Materia.get(cursoInstance.materia.id)}-${cursoInstance}</g:link><p>	
 					<br>
 				</g:each>
@@ -130,8 +126,7 @@
 			<p>FORMATO FECHA: ${(new Date()).format(com.fiuba.Utilidades.FORMATO_FECHA)}</p>
 			<p>Fecha PCUAT: ${com.fiuba.Utilidades.FECHA_PRIMER_CUATRIMESTRE}</p>
 			<p>Fecha SCUAT: ${com.fiuba.Utilidades.FECHA_SEGUNDO_CUATRIMESTRE}</p>
-			
-			
+						
 		</div>
 	</body>
 </html>

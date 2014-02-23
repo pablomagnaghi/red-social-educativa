@@ -12,8 +12,6 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" controller="administrador" action="menu">
-					<g:message code="Volver a tareas administrativas"/></g:link></li>
 				<li><g:link class="list" action="index">
 					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
 				<li><g:link class="create" action="create">
@@ -32,7 +30,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form url="[resource:materiaInstance, action:'update']" method="PUT" >
+			<g:form action="update" method="PUT" id="${materiaInstance.id}">
 				<g:hiddenField name="version" value="${materiaInstance?.version}" />
 				<fieldset class="form">
 					<g:render template="form"/>

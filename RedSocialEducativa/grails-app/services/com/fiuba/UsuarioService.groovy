@@ -1,6 +1,5 @@
 package com.fiuba
 
-import com.fiuba.Usuario
 import com.mensajeria.Carpeta;
 
 import org.springframework.security.access.annotation.Secured
@@ -40,19 +39,19 @@ class UsuarioService {
 	}
 	
 	def eliminar(Usuario usuario) {
-
+		
 		def ArrayList<Administrador> administradores = Administrador.findAllByUsuario(usuario)
 		administradores.each {
 			println "se elimina el administrador ${it}"
 			it.delete flush:true
 		}
-
+		
 		def ArrayList<Mediador> mediadores = Mediador.findAllByUsuario(usuario)
 		mediadores.each {
 			println "se elimina el mediador ${it}"
 			it.delete flush:true
 		}
-
+		
 		def ArrayList<Aprendiz> aprendices = Aprendiz.findAllByUsuario(usuario)
 		aprendices.each {
 			println "se elimina el aprendiz ${it}"
@@ -65,6 +64,11 @@ class UsuarioService {
 			it.delete flush:true
 		}
 		
+		// TODO esto es lo que va, cuando se haga la mensajeria
+		//Administrador.removeAll(usuario)
+		//Mediador.removeAll(usuario)
+		//Aprendiz.removeAll(usuario)
+		//Miembro.removeAll(usuario)
 		// TODO ver la eliminacion de todas las carpetas del usuario
 		//usuario.delete flush:true
 	}

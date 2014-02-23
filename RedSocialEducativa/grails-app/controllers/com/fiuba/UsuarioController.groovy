@@ -20,12 +20,6 @@ class UsuarioController {
 		respond new Usuario(params)
 	}
 
-	// TODO se llama desde nuevo administrador
-	@Secured("hasRole('ROL_ADMIN')")
-	def show(Usuario usuarioInstance) {
-		respond usuarioInstance
-	}
-	
 	@Secured("hasRole('ROL_ADMIN')")
 	def save(Usuario usuarioInstance) {
 		if (usuarioInstance == null) {
@@ -86,7 +80,13 @@ class UsuarioController {
 			notFound()
 			return
 		}
-
+		
+		if (usuarioInstance == usuarioService.usuarioActual()) {
+			usuarioService.eliminar(usuarioInstance)
+			redirect controller: "red", action: "principal", method:"GET"
+			return
+		}
+		
 		usuarioService.eliminar(usuarioInstance)
 
 		flash.message = message(code: 'default.deleted.message', args: [message(code: 'usuario.label', default: 'Usuario'), usuarioInstance.id])
