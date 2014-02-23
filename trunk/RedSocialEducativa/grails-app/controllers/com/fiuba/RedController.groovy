@@ -13,43 +13,17 @@ class RedController {
 	def mediadorService
 	def aprendizService
 
-	@Secured('isFullyAuthenticated()')
-	def principal() {
-
-		params.max = Utilidades.MAX_PARAMS
-		def cursosMediador = mediadorService.obtenerCursos(usuarioService.usuarioActual())
-		def cursosAprendiz = aprendizService.obtenerCursos(usuarioService.usuarioActual())
-		def administrador = Administrador.findByUsuario(usuarioService.usuarioActual())
-		def mensajes = Mensaje.findAllByReceptorAndLeido(usuarioService.usuarioActual(), Boolean.FALSE)
-
-		[cursos: Curso.list(params), cursoCant: Curso.count(), noticiasRed: NoticiaRed.list(), administrador: administrador,
-			cursosMediador: cursosMediador, cursosAprendiz: cursosAprendiz, cantMensajes: mensajes.size()]
-	}
-	
 	@Secured('permitAll')
 	def revisarRol() {
 
-		def usuario = usuarioService.usuarioActual()
-		def curso = Curso.get(params.cursoId)
-			
-		if (Administrador.findByUsuario(usuario)) {
-			redirect controller: "curso", action: "administrador", params: params
+		if (Administrador.findByUsuario(usuarioService.usuarioActual())) {
+			redirect action: "administrador"
 			return
 		}
 		
-		if (Mediador.findByUsuarioAndCurso(usuario, curso)) {
-			redirect controller: "curso", action: "mediador", params: params
-			return
-		}
-		
-		if (aprendizService.obtenerPorCurso(usuario.id, params.cursoId.toLong())) {
-			redirect controller: "curso", action: "aprendiz", params: params
-			return
-		}
-		
-		redirect controller: "curso", action: "miembro", params: params
+		redirect action: "miembro"
 	}
-
+	
 	@Secured('permitAll')
 	def solicitarMembresia() {
 		respond new Usuario(params)
@@ -79,6 +53,49 @@ class RedController {
 		redirect controller: "login", action: "auth"
 	}
 
+	@Secured("hasRole('ROL_ADMIN')")
+	def administrador() {
+		def mensajes = Mensaje.findAllByReceptorAndLeido(usuarioService.usuarioActual(), Boolean.FALSE)
+		
+		model: [administrador: Administrador.findByUsuario(usuarioService.usuarioActual()), cursos: Curso.list(params), cursoCant: Curso.count(), 
+			noticiasRed: NoticiaRed.list(), cantMensajes: mensajes.size()]
+	}
+	
+	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ', 'ROL_MIEMBRO')")
+	def miembro() {
+		def mensajes = Mensaje.findAllByReceptorAndLeido(usuarioService.usuarioActual(), Boolean.FALSE)
+		def cursosMediador = mediadorService.obtenerCursos(usuarioService.usuarioActual())
+		def cursosAprendiz = aprendizService.obtenerCursos(usuarioService.usuarioActual())
+
+		model: [usuario: usuarioService.usuarioActual(), cursos: Curso.list(params), cursoCant: Curso.count(), noticiasRed: NoticiaRed.list(),
+			cantMensajes: mensajes.size(), cursosMediador: cursosMediador, cursosAprendiz: cursosAprendiz]
+	}
+
+	// TODO: ver en detalle, puede ser innecesario redirigir a administrador
+	@Secured('isFullyAuthenticated()')
+	def revisarRolEnCurso() {
+
+		def usuario = usuarioService.usuarioActual()
+		def curso = Curso.get(params.cursoId)
+			
+		if (Administrador.findByUsuario(usuario)) {
+			redirect controller: "curso", action: "administrador", params: params
+			return
+		}
+		
+		if (Mediador.findByUsuarioAndCurso(usuario, curso)) {
+			redirect controller: "curso", action: "mediador", params: params
+			return
+		}
+		
+		if (aprendizService.obtenerPorCurso(usuario.id, params.cursoId.toLong())) {
+			redirect controller: "curso", action: "aprendiz", params: params
+			return
+		}
+		
+		redirect controller: "curso", action: "miembro", params: params
+	}
+	
 	@Secured("hasRole('ROL_ADMIN')")
 	def configuracion() {
 		[redInstance: Red.instance]

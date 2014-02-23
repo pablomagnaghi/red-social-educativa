@@ -8,16 +8,12 @@ class AdministradorController {
 
     //static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-	def menu() {
-	}
-
+	def administradorService
+	def usuarioService
+	
     def index() {
         params.max = Utilidades.MAX_PARAMS
         respond Administrador.list(params), model:[administradorInstanceCount: Administrador.count()]
-    }
-
-    def show(Administrador administradorInstance) {
-        respond administradorInstance
     }
 
     def delete(Administrador administradorInstance) {
@@ -26,11 +22,18 @@ class AdministradorController {
             notFound()
             return
         }
+		
+		if (administradorInstance.usuario == usuarioService.usuarioActual()) {
+			administradorService.eliminar(administradorInstance)
+			redirect controller: "red", action: "principal", method:"GET"
+			return
+		}
 
-        administradorInstance.delete flush:true
+        administradorService.eliminar(administradorInstance)
 
         flash.message = message(code: 'default.deleted.message', args: [message(code: 'Administrador.label', default: 'Administrador'), administradorInstance.id])
-		redirect action:"index", method:"GET"
+		// TODO probar esto
+		redirect action: "index", method:"GET"
     }
 
     protected void notFound() {

@@ -14,25 +14,20 @@ class MediadorController {
 		
 		if (!mediadorService.activarAprendiz(params.id.toLong())) {
 			flash.message = "Problemas con el aprendiz"
-			redirect(controller: "curso", action: "menuMediador", params: params)
+			redirect controller: "curso", action: "menuMediador", params: params
 			return
 		}
 	
 		def aprendiz = Aprendiz.get(params.id)
 		
 		flash.message = "Autorización enviada para el aprendiz ${aprendiz.usuario.username} del curso ${aprendiz.cuatrimestre.curso}"
-		redirect(controller: "aprendiz", action: "index", params: params)
+		redirect controller: "aprendiz", action: "index", params: params
 	}
 
 	@Secured("hasRole('ROL_ADMIN')")
 	def index(Integer max) {
 		params.max = Utilidades.MAX_PARAMS
 		respond Mediador.list(params), model:[mediadorInstanceCount: Mediador.count()]
-	}
-
-	@Secured("hasRole('ROL_ADMIN')")
-	def show(Mediador mediadorInstance) {
-		respond mediadorInstance
 	}
 
 	@Secured("hasRole('ROL_ADMIN')")
@@ -66,7 +61,7 @@ class MediadorController {
 		}
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'mediadorInstance.label', default: 'Mediador'), mediadorInstance.id])
-		redirect mediadorInstance
+		redirect action:"index"
 	}
 
 	@Secured("hasRole('ROL_ADMIN')")

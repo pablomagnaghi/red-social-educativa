@@ -13,7 +13,7 @@
 			</h2> 
 			<br>
 			<ol>
-				<li><g:link class="list" action="principal" controller="red">
+				<li><g:link class="list" controller="red" action="revisarRol">
 					<g:message code="Pagina principal"/></g:link></li>
 				<li><g:link class="list" action="menuMediador" controller="curso" params="['cursoId': params.cursoId]">
 					<g:message code="Tareas administrativas de mediador" /></g:link></li>

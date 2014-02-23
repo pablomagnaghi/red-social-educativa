@@ -15,12 +15,9 @@ class CalendarioController {
 		respond Calendario.list(params), model:[calendarioInstanceCount: Calendario.count()]
 	}
 
-	def show(Calendario calendarioInstance) {
-		respond calendarioInstance
-	}
-
 	def create() {
-		respond new Calendario()
+		respond new Calendario(anio: params.anio, inicioPrimerCuatrimestre: params.inicioPrimerCuatrimestre, 
+			inicioSegundoCuatrimestre: params.inicioSegundoCuatrimestre)
 	}
 
 	def save(Calendario calendarioInstance) {
@@ -30,6 +27,7 @@ class CalendarioController {
 			return
 		}
 
+		println calendarioInstance.errors
 		
 		if (Calendario.findByAnio(params.fechaPrimerCuatrimestre.getYear() + Utilidades.ANIO_INICIAL)) {
 			flash.message = "Ya existe el calendario para el año ${params.fechaPrimerCuatrimestre.getYear() + Utilidades.ANIO_INICIAL}"
@@ -52,7 +50,7 @@ class CalendarioController {
 		}
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'calendarioInstance.label', default: 'Calendario'), calendarioInstance.id])
-		redirect calendarioInstance
+		redirect action: "index"
 	}
 
 	def edit(Calendario calendarioInstance) {
@@ -88,7 +86,7 @@ class CalendarioController {
 		}
 
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'Calendario.label', default: 'Calendario'), calendarioInstance.id])
-		redirect calendarioInstance
+		redirect action: "index"
 	}
 
 	def delete(Calendario calendarioInstance) {

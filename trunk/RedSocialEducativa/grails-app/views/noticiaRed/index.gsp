@@ -13,8 +13,6 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}">
 					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" controller="administrador" action="menu">
-					<g:message code="Tareas administrativas"/></g:link></li>
 				<li><g:link class="create" action="create">
 					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
@@ -31,9 +29,10 @@
 						<g:sortableColumn property="titulo" title="${message(code: 'noticiaRed.titulo.label', default: 'Titulo')}" />
 						<g:sortableColumn property="fecha" title="${message(code: 'noticiaRed.fecha.label', default: 'Fecha')}" />
 						<g:sortableColumn property="hora" title="${message(code: 'noticiaRed.hora.label', default: 'Hora')}" />
-						<th><g:message code="noticiaRed.administrador.label" default="Administrador" /></th>
-
-						<td> Detalle </td>	
+						<g:sortableColumn property="administrador" title="${message(code: 'noticiaRed.hora.label', default: 'Administrador')}" />
+						<g:sortableColumn property="visibilidad" title="${message(code: 'noticiaRed.hora.label', default: 'Visibilidad')}" />
+						<g:sortableColumn property="texo" title="${message(code: 'noticiaRed.hora.label', default: 'Texto')}" />
+						<td> Opciones </td>	
 					
 					</tr>
 				</thead>
@@ -44,10 +43,23 @@
 						<td>${fieldValue(bean: noticiaRedInstance, field: "titulo")}</td>
 						<td>${fieldValue(bean: noticiaRedInstance, field: "fecha")}</td>
 						<td>${fieldValue(bean: noticiaRedInstance, field: "hora")}</td>
-						<td>${fieldValue(bean: noticiaRedInstance, field: "administrador")}</td>
+						<td>${fieldValue(bean: noticiaRedInstance, field: "administrador.usuario")}</td>
+						<td>${fieldValue(bean: noticiaRedInstance, field: "visibilidad")}</td>
+						<td>${fieldValue(bean: noticiaRedInstance, field: "texto")}</td>
 						
-						<td><g:link action="show" id="${noticiaRedInstance.id}">Ver detalle</g:link></td>
-					
+						<td>
+							<g:form action="delete" method="DELETE" id="${noticiaRedInstance.id}">
+							<fieldset class="buttons">
+								<g:link class="edit" action="edit" resource="${noticiaRedInstance}" id="${noticiaRedInstance.id}"> 
+									<g:message code="default.button.edit.label" default="Edit" /></g:link>
+								<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
+									onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+							</fieldset>
+							</g:form>
+						</td>
+
+
+
 					</tr>
 				</g:each>
 				</tbody>

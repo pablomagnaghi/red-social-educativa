@@ -9,13 +9,8 @@
 		<a href="#edit-red" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
-				<li><g:link class="list" action="principal">
+				<li><g:link class="list" action="administrador">
 						<g:message code="Pagina inicial" args="[entityName]" />
-					</g:link></li>
-				<li><g:link class="create" action="menu"
-						controller="administrador">
-						<g:message code="Volver a tareas administrativas"
-							args="[entityName]" />
 					</g:link></li>
 			</ul>
 		</div>
@@ -37,17 +32,24 @@
 			</g:hasErrors>
 			<g:form controller="red" action="actualizarConfiguracion" >
 				<g:hiddenField name="version" value="${redInstance?.version}" />
-				<div class="fieldcontain ${hasErrors(bean: redInstance, field: 'cicloConservacion', 'error')} required">
-					<label for="cicloConservacion">
-					<g:message code="red.cicloConservacion.label" default="Ciclo Conservacion" />
-						<span class="required-indicator">*</span>
-					</label>
-					<g:field name="cicloConservacion" type="number" value="${redInstance.cicloConservacion}" required=""/>
-				</div>
-				<fieldset class="buttons">
-					<g:submitButton name="actualizar" class ="save" value="Actualizar"/>	
-				</fieldset>
-				
+				<table>
+				<tr>
+					<td>
+						<div class="fieldcontain ${hasErrors(bean: redInstance, field: 'cicloConservacion', 'error')} required">
+							<label for="cicloConservacion">
+								<g:message code="red.cicloConservacion.label" default="Ciclo Conservacion" />
+								<span class="required-indicator">*</span>
+							</label>
+							<g:field name="cicloConservacion" type="number" value="${redInstance.cicloConservacion}" required=""/>
+						</div>
+					</td>
+					<td>
+						<fieldset class="buttons">
+							<g:submitButton name="actualizar" class ="save" value="Actualizar"/>	
+						</fieldset>
+					</td>
+				</tr>
+				</table>
 			</g:form>
 		</div>
 	</body>

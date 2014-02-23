@@ -15,10 +15,6 @@ class NoticiaRedController {
 		respond NoticiaRed.list(params), model:[noticiaRedInstanceCount: NoticiaRed.count()]
 	}
 
-	def show(NoticiaRed noticiaRedInstance) {
-		respond noticiaRedInstance
-	}
-
 	def create() {
 		[noticiaRedInstance: new NoticiaRed(params), usuario: usuarioService.usuarioActual()]
 	}
@@ -36,7 +32,7 @@ class NoticiaRedController {
 		}
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'noticiaRedInstance.label', default: 'NoticiaRed'), noticiaRedInstance.id])
-		redirect noticiaRedInstance
+		redirect action: "index"
 	}
 
 	def edit(NoticiaRed noticiaRedInstance) {
@@ -56,7 +52,7 @@ class NoticiaRedController {
 		}
 
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'NoticiaRed.label', default: 'NoticiaRed'), noticiaRedInstance.id])
-		redirect noticiaRedInstance
+		redirect action: "index"
 	}
 
 	def delete(NoticiaRed noticiaRedInstance) {
@@ -69,7 +65,7 @@ class NoticiaRedController {
 		noticiaRedService.eliminar(noticiaRedInstance)
 
 		flash.message = message(code: 'default.deleted.message', args: [message(code: 'NoticiaRed.label', default: 'NoticiaRed'), noticiaRedInstance.id])
-		redirect action:"index", method:"GET"
+		redirect action: "index", method:"GET"
 	}
 
 	protected void notFound() {

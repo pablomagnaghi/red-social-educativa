@@ -124,11 +124,6 @@ class CursoController {
 	}
 
 	@Secured("hasRole('ROL_ADMIN')")
-	def show(Curso cursoInstance) {
-		respond cursoInstance
-	}
-
-	@Secured("hasRole('ROL_ADMIN')")
 	def create() {
 		respond new Curso(params)
 	}
@@ -153,7 +148,7 @@ class CursoController {
 		}
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'cursoInstance.label', default: 'Curso'), cursoInstance.id])
-		redirect cursoInstance
+		redirect action:"index"
 	}
 
 	@Secured("hasRole('ROL_ADMIN')")
@@ -174,7 +169,7 @@ class CursoController {
 		}
 
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'Curso.label', default: 'Curso'), cursoInstance.id])
-		redirect cursoInstance
+		redirect action:"index"
 	}
 
 	@Secured("hasRole('ROL_ADMIN')")

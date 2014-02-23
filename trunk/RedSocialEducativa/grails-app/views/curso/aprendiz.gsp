@@ -13,7 +13,7 @@
 			</h2> 
 		</div>
 		<div>
-			<g:link class="list" action="principal" controller="red">
+			<g:link class="list" controller="red" action="revisarRol">
 			<g:message code="Pagina Inicial" args="[entityName]" /></g:link>
 		</div>
 		<div>
