@@ -19,6 +19,6 @@
 <div class="control-group">
 	<label class="control-label" >Contenidos Minimos</label>			
 	<div class="controls">
-		<g:textField name="contenidosMinimos" value="${materiaInstance?.contenidosMinimos}"/>
+		<g:textArea name="contenidosMinimos" value="${materiaInstance?.contenidosMinimos}" rows="5" />
 	</div>	
 </div>				

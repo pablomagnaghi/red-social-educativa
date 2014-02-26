@@ -41,7 +41,7 @@
 								</ul>
 							</g:hasErrors>
 					        <div class="box-content">
-					        	<g:form class="form-horizontal" action="save" method="PUT" id="${materiaInstance.id}">
+					        	<g:form class="form-horizontal" action="update" method="PUT" id="${materiaInstance.id}">
 					        		<g:hiddenField name="version" value="${materiaInstance?.version}" />
 						            <fieldset>
 						            	<g:render template="form"/>			
