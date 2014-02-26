@@ -22,15 +22,11 @@
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
 		            <div class="row-fluid">
-					    <div class="box span12">
-					        <div class="box-header">
-					        	<h1><g:link class="create" action="create">
-									<g:message code="default.new.label" args="[entityName]" /></g:link></h1>
-					            <h2><i class="icon-edit"></i>Form Elements</h2>
+					    <div class="box span4">
+					        <div class="box-header">     	
+					            <h2><i class="icon-edit"></i>Editar</h2>
 					            <div class="box-icon">
-					                <a href="#" class="btn-setting"><i class="icon-wrench"></i></a>
-					                <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
-					                <a href="#" class="btn-close"><i class="icon-remove"></i></a>
+					                <g:link action="create"><i class="icon-plus"></i></g:link>
 					            </div>
 					        </div>
 					        <g:if test="${flash.message}">
@@ -51,8 +47,6 @@
 						            	<g:render template="form"/>			
 						            	<div class="form-actions">
 											<button type="submit" class="btn btn-primary">Actualizar</button>
-											<button class="btn">Cancel</button>
-											<button type="submit" class="btn btn-primary span12">Abrir una cuenta</button>	
 										</div>		    
 						            </fieldset>
 					            </g:form>
