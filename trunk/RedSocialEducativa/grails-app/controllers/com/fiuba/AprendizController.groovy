@@ -11,22 +11,24 @@ class AprendizController {
 	def mediadorService
 	
 	def estadisticas() {
-		params.max = Utilidades.MAX_PARAMS
+		params.max = 100 //Utilidades.MAX_PARAMS
 		
 		def cuatrimestre = Cuatrimestre.get(params.cuatrimestreId)
-			
+		/*	
 		[aprendizInstanceList: Aprendiz.findAllByCuatrimestreAndParticipa(cuatrimestre, true, [max: params.max, offset: params.offset]),
 			aprendizInstanceCount: Aprendiz.findAllByCuatrimestreAndParticipa(cuatrimestre, true).size(), 
+			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]*/
+		[aprendizInstanceList: Aprendiz.findAllByCuatrimestreAndParticipa(cuatrimestre, true),
+			aprendizInstanceCount: Aprendiz.findAllByCuatrimestreAndParticipa(cuatrimestre, true).size(),
 			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 	}
 
     def index() {
-        params.max = Utilidades.MAX_PARAMS
+        params.max = 100// Utilidades.MAX_PARAMS
 		
 		def cuatrimestre = Cuatrimestre.get(params.cuatrimestreId)
 			
-		[aprendizInstanceList: Aprendiz.findAllByCuatrimestre(cuatrimestre, [max: params.max, offset: params.offset]), 
-			aprendizInstanceCount: Aprendiz.findAllByCuatrimestre(cuatrimestre).size(), 
+		[aprendizInstanceList: Aprendiz.findAllByCuatrimestre(cuatrimestre), 
 			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
     }
 

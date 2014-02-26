@@ -11,8 +11,8 @@ class MateriaController {
 	def materiaService
 
 	def index() {
-		params.max = Utilidades.MAX_PARAMS
-		respond Materia.list(params), model:[materiaInstanceCount: Materia.count()]
+		params.max = 100//Utilidades.MAX_PARAMS
+		respond Materia.list(params)
 	}
 
 	def create() {
@@ -25,6 +25,12 @@ class MateriaController {
 			return
 		}
 
+		if (materiaService.existe(materiaInstance)) {
+			flash.message = "Ya existe la materia ${materiaInstance.codigo}"
+			redirect action: "create"
+			return
+		}
+		
 		if (!materiaService.guardar(materiaInstance)) {
 			respond materiaInstance, view:'create'
 			return
