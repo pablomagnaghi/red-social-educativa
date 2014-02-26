@@ -540,6 +540,12 @@ class BootStrap {
 		// Noticias red
 		def noticiaRedUno = new NoticiaRed(titulo: "Noticia Uno", texto: "Inauguracion de la Red Social Educativa 2014", 
 			fecha: (new Date()).format(Utilidades.FORMATO_FECHA), hora: (new Date()).getTimeString(), visibilidad: true)
+		def noticiaRedDos = new NoticiaRed(titulo: "Noticia Dos", texto: "Ajustar panel lateral",
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA), hora: (new Date()).getTimeString(), visibilidad: true)
+		def noticiaRedTres = new NoticiaRed(titulo: "Noticia Tres", texto: "Ajustar limites de la cartelera",
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA), hora: (new Date()).getTimeString(), visibilidad: true)
+		def noticiaRedCuatro = new NoticiaRed(titulo: "Noticia Cuatro", texto: "Revisar mejor opcion de mensajeria",
+			fecha: (new Date()).format(Utilidades.FORMATO_FECHA), hora: (new Date()).getTimeString(), visibilidad: true)
 
 		// Noticias curso
 		def ArrayList<NoticiaCurso> noticiasCursoUno = new ArrayList<NoticiaCurso>()
@@ -571,8 +577,11 @@ class BootStrap {
 		
 		def admPablo = new Administrador(usuario: usuarioPablo, rol: rolAdmin)
 		admPablo.addToNoticiasRed(noticiaRedUno)
+		admPablo.addToNoticiasRed(noticiaRedDos)
 		administradores.add(admPablo)
 		def admLuis = new Administrador(usuario: usuarioLuis, rol: rolAdmin)
+		admLuis.addToNoticiasRed(noticiaRedTres)
+		admLuis.addToNoticiasRed(noticiaRedCuatro)
 		administradores.add(admLuis)
 		def admMessi = new Administrador(usuario: usuarioMessi, rol: rolAdmin)
 		administradores.add(admMessi)

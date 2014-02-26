@@ -1,9 +1,9 @@
 package com.fiuba
 
-import com.mensajeria.Mensaje;
-
 import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured
+
+import com.mensajeria.Mensaje;
 
 class RedController {
 
@@ -20,7 +20,6 @@ class RedController {
 			redirect action: "administrador"
 			return
 		}
-		
 		redirect action: "miembro"
 	}
 	
@@ -34,12 +33,12 @@ class RedController {
 
 		if (params.password != params.passwordConfirmado) {
 			flash.message = "El password confirmado es incorrecto"
-			redirect action: "solicitarMembresia"
+			redirect controller: "login", action: "auth"
 			return
 		}
 
 		if (!usuarioService.guardar(usuario)) {
-			respond usuario, view:'solicitarMembresia'
+			respond usuario, view:'/login/auth'
 			return
 		}
 		
@@ -53,25 +52,28 @@ class RedController {
 		redirect controller: "login", action: "auth"
 	}
 
+	@Secured('isFullyAuthenticated()') 
+	def cursos() {
+		model: [cursos: Curso.list(params), cursoCant: Curso.count()]
+	}
+
 	@Secured("hasRole('ROL_ADMIN')")
 	def administrador() {
-		def mensajes = Mensaje.findAllByReceptorAndLeido(usuarioService.usuarioActual(), Boolean.FALSE)
-		
-		model: [administrador: Administrador.findByUsuario(usuarioService.usuarioActual()), cursos: Curso.list(params), cursoCant: Curso.count(), 
-			noticiasRed: NoticiaRed.list(), cantMensajes: mensajes.size()]
+		def mensajes = Mensaje.findAllByReceptorAndLeido(usuarioService.usuarioActual(), Boolean.FALSE)	
+		model: [noticiasRed: NoticiaRed.list()]
 	}
 	
 	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ', 'ROL_MIEMBRO')")
 	def miembro() {
-		def mensajes = Mensaje.findAllByReceptorAndLeido(usuarioService.usuarioActual(), Boolean.FALSE)
-		def cursosMediador = mediadorService.obtenerCursos(usuarioService.usuarioActual())
-		def cursosAprendiz = aprendizService.obtenerCursos(usuarioService.usuarioActual())
-
-		model: [usuario: usuarioService.usuarioActual(), cursos: Curso.list(params), cursoCant: Curso.count(), noticiasRed: NoticiaRed.list(),
-			cantMensajes: mensajes.size(), cursosMediador: cursosMediador, cursosAprendiz: cursosAprendiz]
+		model: [noticiasRed: NoticiaRed.list()]
 	}
+	/*
+	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ', 'ROL_MIEMBRO')")
+	def miembro() {
+		def mensajes = Mensaje.findAllByReceptorAndLeido(usuarioService.usuarioActual(), Boolean.FALSE)
+		model: [noticiasRed: NoticiaRed.list(), cantMensajes: mensajes.size()]
+	}*/
 
-	// TODO: ver en detalle, puede ser innecesario redirigir a administrador
 	@Secured('isFullyAuthenticated()')
 	def revisarRolEnCurso() {
 

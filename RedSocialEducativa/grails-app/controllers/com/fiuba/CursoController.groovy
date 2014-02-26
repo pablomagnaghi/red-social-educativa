@@ -3,6 +3,8 @@ package com.fiuba
 import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured
 
+import com.mensajeria.Mensaje;
+
 class CursoController {
 
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -44,12 +46,14 @@ class CursoController {
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def mediador() {
 		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
+		def cuatrimestres = cuatrimestreService.obtenerCuatrimestresOrdenados(params.cursoId.toLong())
 		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
 
-		[mediador: mediador, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), cuatrimestre: cuatrimestre, 
-			noticiasCurso: NoticiaCurso.findAllByCuatrimestre(cuatrimestre), params: ['cursoId': params.cursoId]]
+		[materia: Curso.get(params.cursoId).materia, mediador: mediador, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), 
+			cuatrimestres: cuatrimestres, cuatrimestre: cuatrimestre, noticiasCurso: NoticiaCurso.findAllByCuatrimestre(cuatrimestre), 
+			params: ['cursoId': params.cursoId]]
 	}
-
+/*
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def menuMediador() {
 
@@ -59,7 +63,7 @@ class CursoController {
 		[materia: Curso.get(params.cursoId).materia, cuatrimestreId: cuatrimestre?.id, cuatrimestres: cuatrimestres, 
 			params: ['cursoId': params.cursoId]]
 	}
-
+*/
 	@Secured('isFullyAuthenticated()')
 	def materiales() {
 		params.max = Utilidades.MAX_PARAMS

@@ -15,7 +15,7 @@
 					<g:message code="Pagina principal de mediador"/></g:link></li>	
 				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': params.cursoId]">
 					<g:message code="Tareas mediador" /></g:link></li>
-				<li><g:link class="list" action="index" params="['cursoId': cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+				<li><g:link class="list" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>

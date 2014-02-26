@@ -19,8 +19,6 @@ class RedService {
 	
 	def activarUsuario(Usuario usuario) {
 
-		usuario.fechaMemb = new Date().format(Utilidades.FORMATO_FECHA)
-
 		def mail = usuario.email
 		def username = usuario.username
 
