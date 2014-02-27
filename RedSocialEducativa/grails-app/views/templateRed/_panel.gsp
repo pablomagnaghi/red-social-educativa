@@ -10,10 +10,8 @@
             <g:if test="${administrador}">
 				<g:render template="/templateRed/tareasAdmin"></g:render>
             </g:if>
-            <g:else>
-	            <li><g:link controller="red" action="revisarRol"><i class="icon-folder-open"></i><span class="hidden-tablet"> Cartelera general</span></g:link>
-				</li> 
-            </g:else>
+            <li><g:link controller="red" action="revisarRol"><i class="icon-folder-open"></i><span class="hidden-tablet"> Inicio</span></g:link>
+			</li> 
 			<li><g:link controller="foroGeneral" action="general"><i class="icon-folder-open"></i><span class="hidden-tablet"> Foro general</span></g:link>
 			</li>       
             <li><g:link controller="red" action="cursos"><i class="icon-edit"></i><span class="hidden-tablet"> Cursos</span></g:link>

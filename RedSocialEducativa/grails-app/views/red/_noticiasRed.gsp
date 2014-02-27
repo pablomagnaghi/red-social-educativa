@@ -3,7 +3,8 @@
 	<div class="box chat span12">
         <div class="cartelera">
             <div class="actions">
-            	<a>Cartelera</a>
+            	<span class="titulo">Cartelera</span>    
+            	<span class="cant">${noticiasRed.size()} noticias</span> 	
             </div>
             <ul class="talk">
                 <g:each in="${noticiasRed}">

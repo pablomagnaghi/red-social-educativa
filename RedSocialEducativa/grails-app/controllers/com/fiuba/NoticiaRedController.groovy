@@ -12,8 +12,7 @@ class NoticiaRedController {
 
 	def index() {
 		params.max = Utilidades.MAX_PARAMS
-		// TODO ordenar por fecha y hora a las noticias, llamar a un servicio	
-		respond NoticiaRed.list(params), model:[noticiaRedInstanceCount: NoticiaRed.count()]
+		model:[noticiasRed: noticiaRedService.obtenerNoticiasOrdenadas()]
 	}
 
 	def create() {
@@ -26,7 +25,7 @@ class NoticiaRedController {
 			notFound()
 			return
 		}
-
+		
 		if (!noticiaRedService.guardar(noticiaRedInstance)) {
 			respond noticiaRedInstance, view:'create'
 			return
@@ -56,6 +55,24 @@ class NoticiaRedController {
 		redirect action: "index"
 	}
 
+	def cambiarVisibilidad(NoticiaRed noticiaRedInstance) {
+		
+		if (noticiaRedInstance == null) {
+			notFound()
+			return
+		}
+		
+		noticiaRedInstance.visibilidad = noticiaRedInstance.visibilidad ? false : true
+
+		if (!noticiaRedService.guardar(noticiaRedInstance)) {
+			flash.message = "Problemas al cambiar la visibilidad"
+			redirect action: "index"
+			return
+		}
+		
+		redirect action: "index"
+	}
+	
 	def delete(NoticiaRed noticiaRedInstance) {
 
 		if (noticiaRedInstance == null) {

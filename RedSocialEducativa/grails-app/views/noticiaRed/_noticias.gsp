@@ -3,19 +3,24 @@
 	<div class="box chat span12">
         <div class="cartelera">
             <div class="actions">
-            	<a>Cartelera</a>
+            	<span class="titulo">Cartelera</span>    
+            	<span class="cant">${noticiasRed.size()} noticias</span> 	
             </div>
             <ul class="talk">
-                <g:each in="${noticiaRedInstanceList}">
-                	
+                <g:each in="${noticiasRed}">
                 		<li>
 		                    <span class="name">${it.titulo} - ${it.administrador.usuario} </span>
 		                    <span class="time">
 		                    	<div>${it.fecha} - ${it.hora}</div>
-		                    	<div>
-		                    		<g:if test="${it.visibilidad}"><a class="btn btn-success"></g:if>
-		                    		<g:else><a class="btn btn-inverse"></g:else>	
-									<i class="icon-plus-sign"></i></a>
+		                    	<div> 		
+		                    		<g:if test="${it.visibilidad}">
+		                    			<g:link class="btn btn-success" action="cambiarVisibilidad" id="${it.id}">
+		                    			<i class="icon-plus-sign"></i></g:link>	
+		                    		</g:if>
+		                    		<g:else>
+		                    			<g:link class="btn btn-inverse" action="cambiarVisibilidad" id="${it.id}">	                    		
+											<i class="icon-plus-sign"></i></g:link>	
+									</g:else>	
 			                    	<g:link class="btn btn-info" action="edit" id="${it.id}">
 		                                <i class="icon-edit "></i> 
 		                            </g:link>
