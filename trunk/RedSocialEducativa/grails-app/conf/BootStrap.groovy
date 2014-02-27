@@ -282,19 +282,38 @@ class BootStrap {
 		
 		// Publicaciones generales
 		def publicacionGeneralUno = new PublicacionGeneral(titulo: "PublicacionGeneralUno", contenido: "Contenido", 
-			responsable: "Pablo Magnaghi (Administrador)", dni: "33300432")
+			responsable: "Pablo Magnaghi ${Utilidades.ADMINISTRADOR}", dni: "33300432")
 		
+		def respuestaUnoPublicacionGeneralUno = new PublicacionGeneral(titulo: "PublicacionGeneralUno", 
+			contenido: "Respuesta 1 para saber si funciona el foro principal de la red",
+			responsable: "Pablo Magnaghi ${Utilidades.ADMINISTRADOR}", dni: "33300432")
+		def respuestaDosPublicacionGeneralUno = new PublicacionGeneral(titulo: "PublicacionGeneralUno",
+			contenido: "Respuesta 2 para saber si funciona el foro principal de la red, agregamos mas palabras",
+			responsable: "Luis Paniagua ${Utilidades.ADMINISTRADOR}", dni: "33300432")
+		def respuestaTresPublicacionGeneralUno = new PublicacionGeneral(titulo: "PublicacionGeneralUno",
+			contenido: "Respuesta 3 para saber si funciona el foro principal de la red",
+			responsable: "Juan Perez ${Utilidades.MIEMBRO}", dni: "33300432")
+
 		def publicacionGeneralDos = new PublicacionGeneral(titulo: "PublicacionGeneralDos", contenido: "Contenido", 
-			responsable: "Pablo Magnaghi (Administrador)", dni: "33300432")
+			responsable: "Pablo Magnaghi ${Utilidades.ADMINISTRADOR}", dni: "33300432")
 
 		def publicacionGeneralTres = new PublicacionGeneral(titulo: "PublicacionGeneralTres", contenido: "Contenido", 
-			responsable: "Pablo Magnaghi (Administrador)", dni: "33300432")
+			responsable: "Pablo Magnaghi ${Utilidades.ADMINISTRADOR}", dni: "33300432")
 				
 		def foroGeneral = new ForoGeneral(nombre: "Foro general")
 		foroGeneral.addToPublicaciones(publicacionGeneralUno)
+		// Agrego respuestas al foro
+		foroGeneral.addToPublicaciones(respuestaUnoPublicacionGeneralUno)
+		foroGeneral.addToPublicaciones(respuestaDosPublicacionGeneralUno)
+		foroGeneral.addToPublicaciones(respuestaTresPublicacionGeneralUno)
+		// Agrego respuestas al tema
+		publicacionGeneralUno.addToRespuestas(respuestaUnoPublicacionGeneralUno)
+		publicacionGeneralUno.addToRespuestas(respuestaDosPublicacionGeneralUno)
+		publicacionGeneralUno.addToRespuestas(respuestaTresPublicacionGeneralUno)
+		
 		foroGeneral.addToPublicaciones(publicacionGeneralDos)
 		foroGeneral.addToPublicaciones(publicacionGeneralTres)
-		
+
 		if (!foroGeneral.save()) {
 			println foroGeneral.errors
 		} else {
