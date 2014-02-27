@@ -25,9 +25,10 @@ class PublicacionGeneralController {
 		}
 
 		if (params.pubInicialId) {
+			// TODO
 			if (!publicacionGeneralService.guardarRespuesta(publicacionGeneralInstance, params.pubInicialId.toLong(), usuarioService.usuarioActual())) {	
-				render view:'nueva', model: [publicacionGeneralInstance: publicacionGeneralInstance, usuario: usuarioService.usuarioActual()],
-					params: ['pubInicialId': params.pubInicialId]
+				flash.message = "No hay ingresado comentario"
+				redirect controller: "foroGeneral", action: "publicaciones", params: ['id': params.pubInicialId,'pubInicialId': params.pubInicialId]
 				return
 			}
 			flash.message = message(code: 'default.created.message', args: [message(code: 'publicacionGeneralInstance.label', default: 'PublicacionGeneral'), publicacionGeneralInstance.id])
