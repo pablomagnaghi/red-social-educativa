@@ -5,6 +5,13 @@ import grails.transaction.Transactional
 @Transactional
 class NoticiaRedService {
 
+	def obtenerNoticiasOrdenadas() {
+		def noticias = NoticiaRed.withCriteria {
+			order('fecha', 'desc')
+			order('hora', 'desc')
+		}
+	}
+	
 	def guardar(NoticiaRed noticia) {
 
 		if (noticia.save(flush: true)) {

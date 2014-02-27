@@ -12,6 +12,7 @@ class RedController {
 	def usuarioService
 	def mediadorService
 	def aprendizService
+	def noticiaRedService
 
 	@Secured('permitAll')
 	def revisarRol() {
@@ -33,23 +34,24 @@ class RedController {
 
 		if (params.password != params.passwordConfirmado) {
 			flash.message = "El password confirmado es incorrecto"
-			redirect controller: "login", action: "auth"
+			redirect uri: "/"
 			return
 		}
 
 		if (!usuarioService.guardar(usuario)) {
-			respond usuario, view:'/login/auth'
+			flash.message = "Revise el formulario"
+			redirect uri: "/"
 			return
 		}
 		
 		if (!redService.activarUsuario(usuario)) {
 			flash.message = "Problemas al activar crear la cuenta"
-			redirect controller: "login", action: "auth"
+			redirect uri: "/"
 			return
 		}
 		
 		flash.message = "Solicitud aceptada. A la brevedad se le enviara un mail de confirmacion"
-		redirect controller: "login", action: "auth"
+		redirect uri: "/"
 	}
 
 	@Secured('isFullyAuthenticated()') 
@@ -60,12 +62,12 @@ class RedController {
 	@Secured("hasRole('ROL_ADMIN')")
 	def administrador() {
 		def mensajes = Mensaje.findAllByReceptorAndLeido(usuarioService.usuarioActual(), Boolean.FALSE)	
-		model: [noticiasRed: NoticiaRed.list()]
+		model: [noticiasRed: noticiaRedService.obtenerNoticiasOrdenadas()]
 	}
 	
 	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ', 'ROL_MIEMBRO')")
 	def miembro() {
-		model: [noticiasRed: NoticiaRed.list()]
+		model: [noticiasRed: noticiaRedService.obtenerNoticiasOrdenadas()]
 	}
 	/*
 	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ', 'ROL_MIEMBRO')")

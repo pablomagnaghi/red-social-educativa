@@ -1,46 +1,69 @@
 <%@ page import="com.fiuba.NoticiaRed" %>
+<%
+	def usuarioService = grailsApplication.classLoader.loadClass('com.fiuba.UsuarioService').newInstance()
+%>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'noticiaRed.label', default: 'NoticiaRed')}" />
-		<title><g:message code="default.edit.label" args="[entityName]" /></title>
-	</head>
-	<body>
-		<a href="#edit-noticiaRed" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}">
-					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index">
-					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create">
-					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
-			</ul>
-		</div>
-		<div id="edit-noticiaRed" class="content scaffold-edit" role="main">
-			<h1><g:message code="default.edit.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<g:hasErrors bean="${noticiaRedInstance}">
-			<ul class="errors" role="alert">
-				<g:eachError bean="${noticiaRedInstance}" var="error">
-				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>>
-					<g:message error="${error}"/></li>
-				</g:eachError>
-			</ul>
-			</g:hasErrors>
-			<g:form action="update" method="PUT" id="${noticiaRedInstance.id}">
-				<g:hiddenField name="version" value="${noticiaRedInstance?.version}" />
-				<fieldset class="form">
-					<div><g:hiddenField name="titulo" value="${noticiaRedInstance.titulo}"/></div>
-					<g:render template="form"/>
-				</fieldset>
-				<fieldset class="buttons">
-					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-				</fieldset>
-			</g:form>
-		</div>
+    <head>
+        <meta name="layout" content="red">
+        <g:set var="entityName" value="${message(code: 'noticiaRed.label', default: 'NoticiaRed')}" />
+		<title><g:message code="default.list.label" args="[entityName]" /></title>
+    </head>
+    <body>
+    	<!-- Para el header y el panel lateral -->
+    	<g:set var="varUsuarioService" bean="usuarioService"/>
+    	<g:set var="usuario" value="${varUsuarioService.usuarioActual()}"/>
+    	<g:set var="administrador" value="${com.fiuba.Administrador.findByUsuario(usuario)}"/>
+ 	
+    	<div class="container-fluid-full">
+			<div class="row-fluid">   
+	            <g:render template="/templateRed/panel" />
+	            <!-- start: Content -->
+	            <!-- PANEL CENTRAL -->
+	            <div id="content" class="span10">
+		            <div class="row-fluid">
+					    <div class="box span4">
+					        <div class="box-header">     	
+					            <h2><i class="icon-edit"></i>Editar</h2>
+					            <div class="box-icon">
+					                <g:link action="create"><i class="icon-plus"></i></g:link>
+					            </div>
+					        </div>
+					        <g:if test="${flash.message}">
+								<div class="message" role="status">${flash.message}</div>
+							</g:if>      
+							<g:hasErrors bean="${noticiaRedInstance}">
+								<ul class="errors" role="alert">
+									<g:eachError bean="${noticiaRedInstance}" var="error">
+										<li <g:if test="${error in org.springframework.validation.FieldError}">
+												data-field-id="${error.field}"</g:if>>
+											<g:message error="${error}"/></li>
+									</g:eachError>
+								</ul>
+							</g:hasErrors>
+					        <div class="box-content">
+					        	<g:form class="form-horizontal" action="update" method="PUT" id="${noticiaRedInstance.id}">
+					        		<g:hiddenField name="version" value="${noticiaRedInstance?.version}" />
+						            <fieldset>
+						            	<div><g:hiddenField name="titulo" value="${noticiaRedInstance?.titulo}"/></div>
+						            	<div><g:hiddenField name="visibilidad" value="${noticiaRedInstance?.visibilidad}"/></div>
+						            	<g:render template="form"/>			
+						            	<div class="form-actions">
+											<button type="submit" class="btn btn-primary">Actualizar</button>
+										</div>		    
+						            </fieldset>
+					            </g:form>
+					        </div>
+					    </div>
+					    <!--/span-->
+					</div>
+					<!--/row-->    		
+ 				</div>
+            	<!-- end: Content -->
+        	</div>
+        	<!--/fluid-row-->
+        </div>
+        <!--CLAVE ESTE DIV, SI SE SACA, NO APARECE NADA -->
+        <div class="clearfix"></div>					
 	</body>
 </html>

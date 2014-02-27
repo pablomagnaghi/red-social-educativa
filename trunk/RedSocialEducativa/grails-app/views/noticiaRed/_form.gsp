@@ -1,17 +1,11 @@
 <%@ page import="com.fiuba.NoticiaRed" %>
+							
+<div class="control-group">
+	<label class="control-label" >Texto</label>			
+	<div class="controls">
+		<g:textArea name="texto" value="${noticiaRedInstance?.texto}" />
+	</div>	
+</div>			
 
-<div class="fieldcontain ${hasErrors(bean: noticiaRedInstance, field: 'visibilidad', 'error')} ">
-	<label for="visibilidad">
-		<g:message code="noticiaRed.visibilidad.label" default="Visibilidad" />
-	</label>
-	<g:checkBox name="visibilidad" value="${noticiaRedInstance?.visibilidad}" />
-</div>
+<div><g:hiddenField name="administrador.id" value="${administrador.id}"/></div>
 
-<div class="fieldcontain ${hasErrors(bean: noticiaRedInstance, field: 'texto', 'error')} ">
-	<label for="texto">
-		<g:message code="noticiaRed.texto.label" default="Texto" />
-	</label>
-	<g:textArea name="texto" value="${noticiaRedInstance?.texto}"/>
-</div>
-
-<div><g:hiddenField name="administrador.id" value="${com.fiuba.Administrador.findByUsuario(usuario).id}"/></div>
