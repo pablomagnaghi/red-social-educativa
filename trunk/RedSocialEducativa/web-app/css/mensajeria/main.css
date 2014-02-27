@@ -21,22 +21,16 @@
 	position:fixed;
     top: 50%;
     left: 50%;
-    height: 180px;
-    width: 350px;
-    margin-top: -90px; /*set to a negative number 1/2 of your height*/
-    margin-left: -175px; /*set to a negative number 1/2 of your width*/
-    background-color: #AAAAAA;
+    height: 330px;
+    width: 330px;
+    margin-top: -165px; /*set to a negative number 1/2 of your height*/
+    margin-left: -165px; /*set to a negative number 1/2 of your width*/
     z-index: 2
 }
 
 .ui-state-active {
 	background-color: #CCCCCC !important;
 	border-color: #357EBD !important
-}
-
-.selectedFolder {
-	background-color:#FFCC66;
-    text-shadow: none;
 }
     
 .ui-menu .ui-menu-item a{

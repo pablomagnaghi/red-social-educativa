@@ -170,14 +170,6 @@
 	color: #000
 }
 
-*,*:before,*:after {
-	-moz-box-sizing: border-box;
-}
-
-*,*:before,*:after {
-	-moz-box-sizing: border-box;
-}
-
 .form-control {
 	box-shadow: none !important;
 }

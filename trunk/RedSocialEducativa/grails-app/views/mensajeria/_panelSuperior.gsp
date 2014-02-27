@@ -1,4 +1,4 @@
-<div class="inbox-nav-bar no-content-padding" style="height: 80px">
+<div style="height: 80px">
 	<span class="span2">
 		<h1 class="page-title txt-color-blueDark hidden-tablet">
 			<i class="fa fa-fw fa-inbox"></i> Inbox &nbsp;
@@ -6,35 +6,35 @@
 	</span>
 	<span class="span2">
 		<div class="btn-group">
-			<g:link class="btn btn-default" data-placement="bottom" title=""
-				rel="tooltip" action="principal" controller="red">
+			<g:link class="btn btn-success" data-placement="bottom" title=""
+				rel="tooltip" action="principal" controller="red" style="margin-right: 3px">
 				<strong><i class="icon-home"></i></strong>
 			</g:link>
-			<a class="btn btn-default" data-placement="bottom" title=""
+			<a class="btn btn-info" data-placement="bottom" title=""
 				rel="tooltip" onclick="volver()"><strong>
 				<i class="icon-arrow-left"></i></strong></a> 
 			
-			<g:link	class="deletebutton btn btn-default" data-placement="bottom"
+			<g:link	class="deletebutton btn btn-danger" data-placement="bottom"
 				title="" rel="tooltip" action="mostrarMensajes" controller="mensajeria"
 				params="['nombreCarpeta': 'Eliminados']"
-				onclick="borrarConversacion()"><strong><i
+				onclick="borrarConversacion()" style="margin-left: 2px"><strong><i
 					class="fa fa-trash-o fa-lg"></i></strong>
 				</g:link>
 		</div>
 	</span>
 	
-	<span class="span8"> 
+	<span class="span7"> 
 	<form action="buscar_mensajes">
 		<label style="display:inline"> <i class="icon-prepend fa fa-user"></i> 
-			<input style="height: 28px" type="text" id="deBuscar" name="de" placeholder="De:">
+			<input style="height: 28px; color:#6C6C6C !important" type="text" id="deBuscar" name="de" placeholder="De:">
 		</label> 
 		<input type="hidden" name="nombreCarpeta" value="${nombreCarpeta}">
 		
 		<label style="display:inline"> <i class="icon-prepend fa fa-user"></i>
-			<input style="height: 28px" type="text" id="paraBuscar" name="para" placeholder="Para:">
+			<input style="height: 28px; color:#6C6C6C !important" type="text" id="paraBuscar" name="para" placeholder="Para:">
 		</label>
 		
-		<button class="btn btn-default" type="submit" style="display:inline">
+		<button class="btn btn-default" type="submit" style="display:inline; padding-top: 3px; margin-bottom: 10px;">
 			<span class="glyphicon glyphicon-search"></span> Buscar
 		</button>
 	</form>
