@@ -8918,8 +8918,6 @@ tr.highlight td, tr.unread.highlight td {
     text-decoration: none;
 }
 .inbox-menu-lg li.active a {
-    background: none repeat scroll 0 0 #F0F0F0;
-    border-bottom: 1px solid #E7E7E7;
     color: #3276B1;
     font-weight: 700;
 }

@@ -127,21 +127,17 @@ class MensajeriaController {
 		def datosMediadores = [:]
 		mediadores.each {
 			def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(it.curso.id)
-			// TODO
-			def gruposCurso = cuatrimestre.grupos
 			def mediadoresCurso = it.curso.mediadores
 			cursosMediador.add(it.curso)
-			datosCursosMediador.put(it.curso.id + "-gruposM", gruposCurso)
+			datosCursosMediador.put(it.curso.id + "-cuatrimestreM", cuatrimestre)
 			datosCursosMediador.put(it.curso.id	 + "-mediadoresM", mediadoresCurso)
 		}
 		aprendices.each {
 			if (it.participa){
 				def cuatrimestre = it.cuatrimestre
-				// TODO
-				def gruposCurso = cuatrimestre.grupos
 				def mediadoresCurso = it.cuatrimestre.curso.mediadores
 				cursosAprendiz.add(it.cuatrimestre.curso)
-				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-gruposA", gruposCurso)
+				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-cuatrimestreM", cuatrimestre)
 				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-mediadoresA", mediadoresCurso)
 			}
 		}
@@ -171,21 +167,17 @@ class MensajeriaController {
 		def datosMediadores = [:]
 		mediadores.each {
 			def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(it.curso.id)
-			// TODO
-			def gruposCurso = cuatrimestre.grupos
 			def mediadoresCurso = it.curso.mediadores
 			cursosMediador.add(it.curso)
-			datosCursosMediador.put(it.curso.id + "-gruposM", gruposCurso)
+			datosCursosMediador.put(it.curso.id + "-cuatrimestreM", cuatrimestre)
 			datosCursosMediador.put(it.curso.id	 + "-mediadoresM", mediadoresCurso)
 		}
 		aprendices.each {
 			if (it.participa){
 				def cuatrimestre = it.cuatrimestre
-				// TODO
-				def gruposCurso = cuatrimestre.grupos
 				def mediadoresCurso = it.cuatrimestre.curso.mediadores
 				cursosAprendiz.add(it.cuatrimestre.curso)
-				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-gruposA", gruposCurso)
+				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-cuatrimestreA", cuatrimestre)
 				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-mediadoresA", mediadoresCurso)
 			}
 		}

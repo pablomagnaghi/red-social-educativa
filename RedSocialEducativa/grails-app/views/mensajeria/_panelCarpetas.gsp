@@ -1,4 +1,4 @@
-<div class="inbox-side-bar">
+<div class="span" style="width: 200px; margin-left: 0px; margin-right: 14px;">
 	<g:remoteLink action="redactarMensaje"
 		update="[success:'contenidoMensajes']"
 		onSuccess="when_ready();actualizar('redactar', null)"
@@ -30,62 +30,48 @@
 				</li>
 			</g:else>
 		</g:each>
-		<h6>
-			Agregar Carpeta <a class="pull-right txt-color-darken"
-				data-original-title="Add Another" data-placement="right" title=""
-				rel="tooltip" href="javascript:void(0);" id="nueva_carpeta"><i
-				class="fa fa-plus"></i></a>
-		</h6>
+		<li>
+			<a 	data-original-title="Add Another" data-placement="right" title=""
+				rel="tooltip" href="javascript:void(0);" id="nueva_carpeta">Agregar Carpeta 
+					<span class="pull-right">
+					<i class="fa fa-plus"></i>
+					</span>
+				</a>
+		</li>
 	</ul>
 </div>
 
 <div id="div_nueva_carpeta" class="center_div_carpeta"
 	style="display: none">
-	<div id="wid-id-0" class="jarviswidget jarviswidget-sortable"
-		role="widget">
-
-		<header role="heading">
-			<div class="jarviswidget-ctrls" role="menu">
-				<a data-placement="bottom" title=""
-					onclick="cerrar_form_nueva_carpeta()" rel="tooltip"
-					class="button-icon jarviswidget-delete-btn"
-					href="javascript:void(0);" data-original-title="Delete"> <i
-					class="fa fa-times"></i>
-				</a>
+	<div class="box span4" style="width: 330px" ondesktop="span4" ontablet="span6">
+		<div class="box-header" style="height: 40px; font-size: 18px;">
+			<h2><i class="icon-list"></i>
+				Crear Carpeta
+			</h2>
+			<div class="box-icon">
+				<a href="#" onclick="cerrar_form_nueva_carpeta()"><i class="icon-remove"></i></a>
 			</div>
-
-			<h2>Crear Carpeta</h2>
-
-			<span class="jarviswidget-loader" style="display: none;"> <i
-				class="fa fa-refresh fa-spin"></i>
-			</span>
-		</header>
-
+		</div>
 		<!-- widget div-->
-		<div role="content" style="height: 160px">
+		<div class="box-content" style="height: 160px">
 
 			<!-- widget edit box -->
 			<form action="nuevaCarpeta" onsubmit="return validarNombre()">
-
-				<div class="jarviswidget-editbox" style="display: block;">
-					<!-- This area used as dropdown edit box -->
-					<input type="text" name="nombre" id="nombre" class="form-control">
-					<span class="note">Nombre de carpeta</span>
+				<div class="control-group">
+					<label for="focusedInput" class="control-label">Nombre de carpeta</label>
+					<div class="controls">
+						<input type="text" name="nombre" id="nombre" class="input-xlarge focused">
+					</div>
 					<div id="carpetaNuevaError" class="message" role="status"
 						style="display: none">No se ha especificado ningún nombre.</div>
 				</div>
-				<!-- end widget edit box -->
-				<div style="padding-left: 57px;">
-					<button class="btn btn-default btn-lg"
-						onclick="cerrar_form_nueva_carpeta()">Cancelar</button>
-					<button type="submit" name="Guardar" class="btn btn-default btn-lg"
-						id="guardar_carpeta">Guardar</button>
+				<div class="form-actions" style="height: 72px;">
+					<button class="btn btn-primary" type="submit" id="guardar_carpeta">Guardar</button>
+					<button class="btn" onclick="cerrar_form_nueva_carpeta()">Cancelar</button>
 				</div>
 			</form>
-			<!-- end widget content -->
 
 		</div>
 		<!-- end widget div -->
-
 	</div>
 </div>
