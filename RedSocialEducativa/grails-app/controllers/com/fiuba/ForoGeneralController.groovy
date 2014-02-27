@@ -32,8 +32,7 @@ class ForoGeneralController {
 		*/
 		
 		def respuestas = PublicacionGeneral.findAllByPublicacionInicial(PublicacionGeneral.get(params.id))
-		
-	
+
 		[tema: PublicacionGeneral.get(params.id), respuestas: respuestas, respuestasCant: respuestas.size(),
 			params: ['pubInicialId': params.id]]
 	}

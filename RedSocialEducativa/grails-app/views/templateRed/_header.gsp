@@ -11,7 +11,7 @@
             <a id="main-menu-toggle" class="hidden-phone open"><i class="icon-reorder"></i></a>	
             <div class="row-fluid">
                 <a class="brand span2">
-                    <span>Red Social Educativa FIUBA</span>
+                    <span>Red Social FIUBA</span>
                 </a>
             </div>
             <!-- start: Header Menu -->
