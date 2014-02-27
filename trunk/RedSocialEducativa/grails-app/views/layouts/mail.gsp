@@ -84,5 +84,3 @@
 		<g:render template="/templateRed/footer"/>
 	</body>
 </html>
-
-    	
