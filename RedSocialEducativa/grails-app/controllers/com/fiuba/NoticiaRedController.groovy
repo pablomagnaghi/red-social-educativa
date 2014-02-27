@@ -12,6 +12,7 @@ class NoticiaRedController {
 
 	def index() {
 		params.max = Utilidades.MAX_PARAMS
+		// TODO ordenar por fecha y hora a las noticias, llamar a un servicio	
 		respond NoticiaRed.list(params), model:[noticiaRedInstanceCount: NoticiaRed.count()]
 	}
 
