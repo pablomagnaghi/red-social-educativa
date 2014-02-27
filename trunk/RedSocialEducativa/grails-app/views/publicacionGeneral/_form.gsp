@@ -1,17 +1,13 @@
 <%@ page import="com.fiuba.PublicacionGeneral" %>
 
-<g:if test="${params.pubInicialId}">
-	<div><g:hiddenField name="titulo" value="${com.fiuba.PublicacionGeneral.get(params.pubInicialId).titulo}"/></div>
-</g:if>
-<g:else>
+<g:if test="${!publicacionGeneralInstance.titulo}">
 	<div class="fieldcontain ${hasErrors(bean: publicacionGeneralInstance, field: 'titulo', 'error')} ">
 		<label for="titulo">
-			<g:message code="publicacionGeneral.titulo.label" default="Titulo" />
-			
+			<g:message code="publicacionGeneral.titulo.label" default="Titulo" />	
 		</label>
 		<g:textField name="titulo" value="${publicacionGeneralInstance?.titulo}"/>
 	</div>
-</g:else>
+</g:if>
 
 <div class="fieldcontain ${hasErrors(bean: publicacionGeneralInstance, field: 'contenido', 'error')} ">
 	<label for="contenido">
