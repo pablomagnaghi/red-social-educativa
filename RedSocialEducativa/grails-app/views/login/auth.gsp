@@ -5,19 +5,15 @@
 </head>
 <body>
 	<div class="row-fluid">
-		<div class="span3"></div>	
-		<div class="span6">	
+		<div class="span2"></div>	
+		<div class="span7">	
 			<div class="row-fluid">
-				<div class="span7">
-					<div class="box-content">     
-						<g:render template="/red/membresia"></g:render>
-					</div>
+				<div class="span6">  
+					<g:render template="/red/membresia"></g:render>
 				</div>		
 				<div class="span1"></div>		
-				<div class="span4">
-					<div class="box-content">     
-						<g:render template="/login/login"></g:render>
-					</div>
+				<div class="span5">    
+					<g:render template="/login/login"></g:render>
 				</div>		
 			</div>
 		</div>

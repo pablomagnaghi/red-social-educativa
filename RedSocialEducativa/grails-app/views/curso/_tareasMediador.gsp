@@ -1,7 +1,7 @@
 <div class="row-fluid">
 	<div class="box span12">
 		<div class="box-header">
-			<h2><i class="icon-font"></i><span class="break"></span>Mis tareas como mediador</h2>
+			<h2><i class="icon-font"></i><span class="break"></span>Mis tareas</h2>
 		</div>
 		<div class="box-content">	
 			<dl>

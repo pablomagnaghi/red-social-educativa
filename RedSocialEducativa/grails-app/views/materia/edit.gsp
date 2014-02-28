@@ -22,7 +22,7 @@
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
 		            <div class="row-fluid">
-					    <div class="box span4">
+					    <div class="box span12">
 					        <div class="box-header">     	
 					            <h2><i class="icon-edit"></i>Editar</h2>
 					            <div class="box-icon">

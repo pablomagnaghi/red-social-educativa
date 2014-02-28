@@ -13,56 +13,14 @@
 	</g:hasErrors>
 	<g:form class="form-horizontal" controller="red" action="revisarDatosUsuario">
 		<fieldset>	
-			<div class="control-group">
-				<label class="control-label" >DNI</label>			
-				<div class="controls">
-					<g:textField name="username" type="number" value="${usuarioInstance?.username}" />
-				</div>	
-			</div>								
-			<div class="control-group">
-				<label class="control-label" >Apellido</label>			
-				<div class="controls">
-					<g:textField name="apellido" value="${usuarioInstance?.apellido}"/>
-				</div>	
-			</div>				
-			<div class="control-group">
-				<label class="control-label" >Nombres</label>			
-				<div class="controls">
-					<g:textField name="nombres" value="${usuarioInstance?.nombres}"/>
-				</div>	
-			</div>			
-			<div class="control-group">
-				<label class="control-label" >Legajo</label>			
-				<div class="controls">
-					<g:textField name="legajo" type="number" value="${usuarioInstance?.legajo}"/>
-					<div>Si aun no tiene, no completar</div>
-				</div>	
-			</div>		
-			<div class="control-group">
-				<label class="control-label" >Padron</label>			
-				<div class="controls">
-					<g:textField name="padron" type="number" value="${usuarioInstance?.padron}"/>
-					<div>Si aun no tiene, no completar</div>
-				</div>	
-			</div>	
-			<div class="control-group">
-				<label class="control-label" >Email</label>			
-				<div class="controls">
-					<g:textField name="email" value="${usuarioInstance?.email}" />
-				</div>	
-			</div>					
-			<div class="control-group">
-				<label class="control-label" >Password</label>			
-				<div class="controls">
-					<g:passwordField name="password" maxlength="12" />
-				</div>	
-			</div>				
-			<div class="control-group">
-				<label class="control-label" >Confirmar password</label>			
-				<div class="controls">
-					<g:passwordField name="passwordConfirmado" maxlength="12" />
-				</div>	
-			</div>	
+			<input class="input-large span12" name='username' type="text" placeholder="DNI" />
+			<input class="input-large span12" name='apellido' type="text" placeholder="Apellido" />
+			<input class="input-large span12" name='nombres' type="text" placeholder="Nombres" />
+			<input class="input-large span12" name='legajo' type="text" placeholder="Legajo" />
+			<input class="input-large span12" name='padron' type="text" placeholder="Padron" />
+			<input class="input-large span12" name='email' type="text" placeholder="Email" />
+			<input class="input-large span12" name='password' type="password" placeholder="password" />
+			<input class="input-large span12" name='passwordConfirmado' type="password" placeholder="Confirmar password" />
 			<button type="submit" class="btn btn-primary span12">Abrir una cuenta</button>	
 		</fieldset>	
 	</g:form>
