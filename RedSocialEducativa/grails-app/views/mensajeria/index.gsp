@@ -17,12 +17,6 @@
 	href="${resource(dir: 'css', file: 'mensajeria/main.css')}"
 	type="text/css">
 <link rel="stylesheet"
-	href="${resource(dir: 'css', file: 'mensajeria/mail-production.css')}"
-	type="text/css">
-<link rel="stylesheet"
-	href="${resource(dir: 'css', file: 'mensajeria/mail-skins.css')}"
-	type="text/css">
-<link rel="stylesheet"
 	href="${resource(dir: 'css', file: 'mensajeria/font-awesome.css')}"
 	type="text/css">
 <link rel="stylesheet"

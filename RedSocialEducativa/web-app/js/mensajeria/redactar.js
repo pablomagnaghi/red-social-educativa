@@ -41,7 +41,6 @@ function redactar_ready(){
 		})
 	});
 	$("#e6").select2({
-		placeholder: "Para",
 		multiple: true,
 		minimumInputLength : 2,
 		ajax: { // instead of writing the function to execute the request we use Select2's convenient helper

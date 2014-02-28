@@ -84,7 +84,7 @@ function when_ready(){
 		}
 	});
 	$(".showConv").click(function(){
-		id = $(this).closest('tr').attr('conversationid')
+		id = $(this).closest('li').attr('conversationid')
 		mostrarConversacion(id)
 		actualizar("conversacion", id)
 	})
