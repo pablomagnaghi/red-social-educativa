@@ -137,7 +137,7 @@ class MensajeriaController {
 				def cuatrimestre = it.cuatrimestre
 				def mediadoresCurso = it.cuatrimestre.curso.mediadores
 				cursosAprendiz.add(it.cuatrimestre.curso)
-				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-cuatrimestreM", cuatrimestre)
+				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-cuatrimestreA", cuatrimestre)
 				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-mediadoresA", mediadoresCurso)
 			}
 		}
@@ -253,6 +253,7 @@ class MensajeriaController {
 	}
 	
 	def enviarMensajes(){
+		
 		def usuario = this.usuarioActual()
 		if (!usuario){
 			redirect (controller:"red", action:"principal")

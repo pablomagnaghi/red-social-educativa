@@ -1,3 +1,8 @@
+.active a{
+	color : #0099FF;
+	font-weight: bold;
+}
+
 .quickMenu {
 	float: right;
     text-align: right;

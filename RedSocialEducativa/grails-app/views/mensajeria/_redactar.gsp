@@ -37,7 +37,7 @@
 						<g:else>
 							<input type="text" name="asunto" id="asunto"
 								placeholder="Asunto del mensaje" class="span10"
-								style="color: #685555 !important"">
+								style="color: #685555 !important">
 						</g:else>
 
 					</div>
@@ -48,7 +48,7 @@
 					<div class="controls">
 						<div class="cleditorMain" style="width: 500px; height: 250px;">
 							<g:if test="${cuerpo != null }">
-								<textarea rows="3" id="textarea2" class="cleditor" id="cuerpo"
+								<textarea rows="3" id="cuerpo" class="cleditor" id="cuerpo"
 									name="mensaje"
 									style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 73px; display: none; width: 500px;"></textarea>
 								<div contenteditable="true" id="divCuerpo" class="note-editable"
@@ -57,7 +57,7 @@
 								</div>
 							</g:if>
 							<g:else>
-								<textarea rows="3" id="textarea2" class="cleditor" id="mensaje"
+								<textarea rows="3" id="cuerpo" class="cleditor" id="mensaje"
 									name="mensaje"
 									style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 73px; display: none; width: 500px;"></textarea>
 								<div contenteditable="true" id="divCuerpo" class="note-editable"
@@ -122,10 +122,11 @@
 									</g:each></li>
 							</g:if>
 							<g:if
-								test="${datosCursosAprendiz.get(cursoAprendiz.id +"-cuatrimestreA") != null}">
-								<li style="display: none"><span class="badge badge-success"><i
-										class="icon-minus-sign"></i> Actividades</span> <g:each
-										in="${datosCursosMediador.get(cursoMediador.id +"-cuatrimestreA").actividades}"
+								test="${datosCursosAprendiz.get(cursoAprendiz.id +"-cuatrimestreA") != null && 
+								!datosCursosAprendiz.get(cursoAprendiz.id +"-cuatrimestreA").actividades.empty}">
+								<li style="display: none">
+									<span class="badge badge-success"><i class="icon-minus-sign"></i> Actividades</span> 
+										<g:each	in="${datosCursosAprendiz.get(cursoAprendiz.id +"-cuatrimestreA").actividades}"
 										var="actividad">
 										<ul>
 											<li style="display: none"><span
@@ -170,7 +171,8 @@
 									</g:each></li>
 							</g:if>
 							<g:if
-								test="${datosCursosMediador.get(cursoMediador.id +"-cuatrimestreM") != null}">
+								test="${datosCursosMediador.get(cursoMediador.id +"-cuatrimestreM") != null &&
+								!datosCursosMediador.get(cursoMediador.id +"-cuatrimestreM").actividades.empty}">
 								<li style="display: none"><span class="badge badge-success"><i
 										class="icon-minus-sign"></i> Actividades</span> <g:each
 										in="${datosCursosMediador.get(cursoMediador.id +"-cuatrimestreM").actividades}"
