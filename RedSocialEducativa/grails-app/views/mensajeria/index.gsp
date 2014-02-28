@@ -22,6 +22,9 @@
 <link rel="stylesheet"
 	href="${resource(dir: 'css', file: 'mensajeria/redactar.css')}"
 	type="text/css">
+<link rel="stylesheet"
+	href="${resource(dir: 'css', file: 'mensajeria/select2.css')}"
+	type="text/css">
 
 <g:set var="entityName" value="Mensajeria" />
 <title><g:message code="Mensajeria" args="[entityName]" /></title>
