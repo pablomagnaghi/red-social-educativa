@@ -6,11 +6,12 @@
 		<span class="glyphicon glyphicon-envelope"></span>
 		<strong>Redactar</strong>
 	</g:remoteLink>
-	<ul class="inbox-menu-lg" id="lista_carpetas">
+	<ul class="list" id="lista_carpetas" style="margin-left: 0px">
 		<g:each in="${etiquetasCarpetas}" var="carpeta">
 			<g:if test="${carpetaSeleccionada == carpeta.key}">
 				<li class="active li_clickeable droppable selectedFolder"
-					id="${carpeta.key}"><g:link class="inbox-load"
+					id="${carpeta.key}">
+					<g:link class="inbox-load"
 						action="mostrarMensajes" params='[nombreCarpeta: "${carpeta.key}"]'>
 						${carpeta.key}
 						<g:if test="${carpeta.value > 0}">
@@ -30,7 +31,7 @@
 				</li>
 			</g:else>
 		</g:each>
-		<li>
+		<li id="li_nueva_carpeta">
 			<a 	data-original-title="Add Another" data-placement="right" title=""
 				rel="tooltip" href="javascript:void(0);" id="nueva_carpeta">Agregar Carpeta 
 					<span class="pull-right">
@@ -43,19 +44,16 @@
 
 <div id="div_nueva_carpeta" class="center_div_carpeta"
 	style="display: none">
-	<div class="box span4" style="width: 330px" ondesktop="span4" ontablet="span6">
-		<div class="box-header" style="height: 40px; font-size: 18px;">
-			<h2><i class="icon-list"></i>
-				Crear Carpeta
+	<div ondesktop="span4" ontablet="span6" class="box span4" style="width: 330px;">
+		<div class="box-header">
+			<h2>
+				<i class="icon-list"></i>Nueva Carpeta
 			</h2>
 			<div class="box-icon">
 				<a href="#" onclick="cerrar_form_nueva_carpeta()"><i class="icon-remove"></i></a>
 			</div>
 		</div>
-		<!-- widget div-->
 		<div class="box-content" style="height: 160px">
-
-			<!-- widget edit box -->
 			<form action="nuevaCarpeta" onsubmit="return validarNombre()">
 				<div class="control-group">
 					<label for="focusedInput" class="control-label">Nombre de carpeta</label>
@@ -65,13 +63,11 @@
 					<div id="carpetaNuevaError" class="message" role="status"
 						style="display: none">No se ha especificado ningún nombre.</div>
 				</div>
-				<div class="form-actions" style="height: 72px;">
+				<div class="form-actions" style="height: 72px; background-color: #FFFFFF">
 					<button class="btn btn-primary" type="submit" id="guardar_carpeta">Guardar</button>
 					<button class="btn" onclick="cerrar_form_nueva_carpeta()">Cancelar</button>
 				</div>
 			</form>
-
 		</div>
-		<!-- end widget div -->
 	</div>
 </div>

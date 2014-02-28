@@ -8094,7 +8094,6 @@ input.checkbox[type="checkbox"] + span, input.checkbox[type="checkbox"] + span:a
 input.checkbox[type="checkbox"], input.radiobox[type="radio"] {
     height: 18px;
     position: absolute;
-    visibility: hidden;
     width: 18px;
     z-index: 20;
 }
@@ -9711,7 +9710,6 @@ body {
     direction: ltr;
     height: 100%;
     margin: 0;
-    overflow: hidden;
     padding: 0;
 }
 a:active, a:focus, a:hover, button, button:active, button:focus, embed, input::-moz-focus-inner, object {

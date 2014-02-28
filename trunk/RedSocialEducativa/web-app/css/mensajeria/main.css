@@ -1,9 +1,18 @@
+.quickMenu {
+	float: right;
+    text-align: right;
+}
+
 .msgNoLeido {
 	background-color: #6CCC99
 }
 
-.li_clickeable, #nueva_carpeta {
-	cursor: pointer;
+.li_clickeable, #li_nueva_carpeta {
+	border-bottom: 1px solid #D6D9E0;
+    cursor: pointer;
+    padding: 5px 10px;
+    position: relative;
+    list-style: none outside none;
 }
 
 .center_div_respuesta {

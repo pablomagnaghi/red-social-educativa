@@ -1,9 +1,13 @@
+.select2-choices{
+	margin-left: 0px;
+}
 .select2-choices li{
 	line-height: 30px;
+	list-style: none outside none;
 }
 
 .select2-input {
-	height: 30px !important;
+	width: 465px !important;
 }
 
 .step {

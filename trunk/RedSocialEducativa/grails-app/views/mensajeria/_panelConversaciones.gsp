@@ -1,4 +1,4 @@
-<div class="span7">
+<div class="span9" id="contenidoMensajes">
 	<ul class="messagesList">
 	<g:if test="${conversaciones!= null }">
 		<g:if test="${!conversaciones.empty }">
@@ -10,17 +10,19 @@
 				<g:else>
 					<li conversationId="${conversacion.id}" class="draggable">
 				</g:else>
-				<span class="from">
+				<span style="display: inline-flex;">
 					<input type="checkbox" id="${conversacion.id}"
 						class="checkbox style-2 checkBoxConv">
+				</span>
+				<span class="from showConv">
 					
 					${mensaje.emisor.nombres}
 					${mensaje.emisor.apellido}
 				</span>
-				<span class="title" style="width: 54%;">
+				<span class="title showConv" style="width: 49%;">
 					${mensaje.asunto} - ${mensaje.getCuerpoResumido()}...
 				</span>
-				<span class="date">
+				<span class="date showConv">
 					22.30
 				</span>
 				</li>
@@ -31,13 +33,15 @@
 		<g:if test="${!mensajes.empty}">
 			<g:each in="${mensajes}" var="mensaje">
 			<li onclick="mostrarMensaje('${mensaje.id}')">
-				<span class="from">
+				<span style="display: inline-flex;">
 					<input type="checkbox" id="${mensaje.id}"
-						class="checkbox style-2"> 
+						class="checkbox style-2">
+				</span> 
+				<span class="from showConv">
 					${mensaje.emisor.nombres}
 					${mensaje.emisor.apellido}
 				</span>
-				<span class="title" style="width: 54%;">
+				<span class="title" style="width: 49%;">
 					${mensaje.asunto} - ${mensaje.getCuerpoResumido()}...
 				</span>
 				<span class="date">
