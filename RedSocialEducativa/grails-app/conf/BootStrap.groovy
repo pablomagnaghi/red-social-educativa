@@ -732,7 +732,7 @@ class BootStrap {
 		def calendarioUno = new Calendario(anio: 2013, inicioPrimerCuatrimestre: 20130220, inicioSegundoCuatrimestre: 20130810)
 		calendarios.add(calendarioUno)
 		
-		def calendarioDos = new Calendario(anio: 2014, inicioPrimerCuatrimestre: 20140228, inicioSegundoCuatrimestre: 20140815)
+		def calendarioDos = new Calendario(anio: 2014, inicioPrimerCuatrimestre: 20140328, inicioSegundoCuatrimestre: 20140815)
 		calendarios.add(calendarioDos)
 		
 		for(int i = 0; i<calendarios.size(); i++){
