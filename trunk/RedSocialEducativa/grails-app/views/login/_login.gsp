@@ -2,7 +2,7 @@
 	<g:if test='${flash.message}'>
 		<div class='login_message'>${flash.message}</div>
 	</g:if>
-	<h3>Bienvenido a la red social educativa FIUBA</h3>
+	<h3>Bienvenido a la red social FIUBA</h3>
 	<p>Mantente actualizado con la facultad</p>
 	<form class="form-horizontal" action='${postUrl}' method='POST' id='loginForm' autocomplete='off'>
 		<fieldset>								
@@ -19,5 +19,5 @@
 		</fieldset>	
 	</form>
 	<hr />
-	<h3>¿Olvidaste tu contraseña? <small><a href="#">Obtener una nueva.</a></small></h3>
+	<h4><small><a href="#">¿Olvidaste tu contraseña?</a></small></h4>
 </div>				

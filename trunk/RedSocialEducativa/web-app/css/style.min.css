@@ -3034,7 +3034,7 @@ ul.messagesList li span.date {
 .login-box {
     width:300px;
     padding:20px;
-    margin:100px auto;
+    margin:100px 10px 10px 10px;
     background:#fff;
     -webkit-border-radius:2px;
     -moz-border-radius:2px;
@@ -3063,7 +3063,7 @@ ul.messagesList li span.date {
 .membresia-box {
     width:400px;
     padding:20px;
-    margin:100px auto;
+    margin:100px 10px 10px 10px;
     background:#fff;
     -webkit-border-radius:2px;
     -moz-border-radius:2px;
