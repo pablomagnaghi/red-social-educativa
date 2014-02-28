@@ -45,7 +45,6 @@ function redactar_ready(){
 		minimumInputLength : 2,
 		ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
 			url: "traerUsuariosFormateados",
-			dataType: 'json',
 			data: function (request, page) {
 				return {
 					term: extractLast( request ), 
@@ -258,4 +257,8 @@ function agregarMediador(chckboxId, mediadorId, mediadorNombres, mediadorApellid
 	}
 }
 
+function redactarRespuesta(idMensaje){
+	$('#form_reply_' + idMensaje).show()
+	redactar_ready()
+}
 

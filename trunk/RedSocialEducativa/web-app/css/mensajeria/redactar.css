@@ -1,4 +1,8 @@
 .select2-choices{
+	width: 465px;
+}
+
+.select2-choices{
 	margin-left: 0px;
 }
 .select2-choices li{

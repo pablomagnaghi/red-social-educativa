@@ -364,6 +364,10 @@ class MensajeriaController {
 
 	
 	def conversacion(){
+		def usuario = this.usuarioActual()
+		if (!usuario){
+			redirect (controller:"red", action:"principal")
+		}
 		def conversacion = Conversacion.findById(params.id)
 		def carpeta = conversacion.padre
 		def responder = true
@@ -371,7 +375,43 @@ class MensajeriaController {
 			responder = false
 		}
 		def mensajes = conversacion.mensajes
-		render (template:"conversacion", model: [mensajes : mensajes, conversacionId : params.id, carpeta : conversacion.padre, responder: responder])
+		def mediadores = Mediador.findAllByUsuario(usuario)
+		def aprendices = Aprendiz.findAllByUsuario(usuario)
+		def cursosAprendiz = []
+		def datosCursosAprendiz = [:]
+		def cursosMediador = []
+		def datosCursosMediador = [:]
+		def datosCursos = []
+		def datosMediadores = [:]
+		mediadores.each {
+			def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(it.curso.id)
+			def mediadoresCurso = it.curso.mediadores
+			cursosMediador.add(it.curso)
+			datosCursosMediador.put(it.curso.id + "-cuatrimestreM", cuatrimestre)
+			datosCursosMediador.put(it.curso.id	 + "-mediadoresM", mediadoresCurso)
+		}
+		aprendices.each {
+			if (it.participa){
+				def cuatrimestre = it.cuatrimestre
+				def mediadoresCurso = it.cuatrimestre.curso.mediadores
+				cursosAprendiz.add(it.cuatrimestre.curso)
+				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-cuatrimestreM", cuatrimestre)
+				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-mediadoresA", mediadoresCurso)
+			}
+		}
+		if (!cursosMediador.empty){
+			datosCursos = Curso.findAll()
+			datosCursos.each{
+				datosMediadores.put(it.id + "-mediadoresC", it.mediadores)
+			}
+		}
+		def usuarios = Usuario.findByEnabled(true)
+		render (template:"conversacion", model: [mensajes : mensajes, 
+			conversacionId : params.id, carpeta : conversacion.padre, 
+			responder: responder,
+			cursosAprendiz : cursosAprendiz, datosCursosAprendiz : datosCursosAprendiz,
+			cursosMediador : cursosMediador, datosCursosMediador : datosCursosMediador, 
+			datosMediadores : datosMediadores, cursosTotales: datosCursos])
 	}
 
 	def conversacionAPdf= {
