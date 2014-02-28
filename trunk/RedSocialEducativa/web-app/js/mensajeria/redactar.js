@@ -266,7 +266,7 @@ function redactarRespuesta(idMensaje, tipoRespuesta, argumento, excepcion){
 			var paraArray = split( argumento );
 			$.each(paraArray, function(index, value){
 				if (value != ""){
-					if (excepcion != null && (!(value.indexOf(excepcion) >= 0))){
+					if (excepcion == null || (!(value.indexOf(excepcion) >= 0))){
 						agregarCampoAPara(value)
 					}
 				}
