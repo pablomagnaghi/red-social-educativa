@@ -28,6 +28,10 @@
 				</li>
 			</g:each>
 		</g:if>
+		<g:else>
+			<div style="margin-left: 275px; margin-top: 50px;">No hay
+				mensajes para mostrar</div>
+		</g:else>
 	</g:if>
 	<g:else>
 		<g:if test="${!mensajes.empty}">
@@ -51,7 +55,7 @@
 			</g:each>
 		</g:if>
 		<g:else>
-			<div style="margin-left: 340px; margin-top: 50px;">No hay
+			<div style="margin-left: 275px; margin-top: 50px;">No hay
 				mensajes para mostrar</div>
 		</g:else>
 	</g:else>

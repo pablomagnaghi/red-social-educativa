@@ -5,10 +5,34 @@
 	<ul class="talk">
 		<g:each in="${mensajes}" var="mensaje">
 			<li>
-				<!-- <img alt="avatar" src="img/avatar.jpg" class="avatar"> --> <span
-				class="quickMenu"> <a class="glyphicons share" href="#"
-					onclick="redactarRespuesta('${mensaje.id}')"><i></i></a>
-			</span> <span class="name">
+				<!-- <img alt="avatar" src="img/avatar.jpg" class="avatar"> --> 
+				<div class="btn-group text-left" style="float:right">
+					<button class="btn btn-primary btn-sm replythis" onclick="redactarRespuesta('${mensaje.id}', 'respuesta', 
+						'${mensaje.emisor.nombres} ${mensaje.emisor.apellido} &lt;${mensaje.emisor.email}&gt;', null)">
+						<i class="fa fa-reply"></i> Responder
+					</button>
+					<button data-toggle="dropdown" class="btn btn-primary btn-sm dropdown-toggle">
+						<i class="fa fa-angle-down"></i>
+					</button>
+					<ul class="dropdown-menu pull-right">
+						<li>
+							<a class="replythis" href="javascript:void(0);" onclick="redactarRespuesta('${mensaje.id}', 'respuestaTodos', 
+							'${mensaje.emisor.nombres} ${mensaje.emisor.apellido} &lt;${mensaje.emisor.email}&gt;, ${mensaje.para }', 
+							'${mensaje.receptor.nombres} ${mensaje.receptor.apellido}')">
+							<i class="fa fa-reply"></i> Responder a todos</a>
+						</li>
+						<li>
+							<a class="replythis" href="javascript:void(0);" onclick="redactarRespuesta('${mensaje.id}', 'reenviar', '${mensaje.cuerpo }', null)">
+							<i class="fa fa-mail-forward"></i> Reenviar</a>
+						</li>
+						<li>
+							<a href="javascript:void(0);">
+							<i class="fa fa-print"></i> Exportar</a>
+						</li>
+					</ul>
+				</div>
+				
+			<span class="name">
 					${mensaje.emisor.nombres } ${mensaje.emisor.apellido }
 			</span> <span class="time">
 					${mensaje.fecha }
@@ -29,11 +53,11 @@
 										<g:img file="Treeview.gif" id="img_clickeable"
 											style="cursor: pointer;width: 21px;float: right;margin-right: 65px; margin-top: 6px;" />
 										<g:if test="${para != null }">
-											<input type='hidden' id="e6" name="para" value="${para }"
+											<input type='hidden' id="e6" class="para_${mensaje.id }" name="para" value="${para }"
 												style="margin-bottom: 11px;" />
 										</g:if>
 										<g:else>
-											<input type='hidden' id="e6" name="para"
+											<input type='hidden' id="e6" class="para_${mensaje.id }" name="para"
 												style="margin-bottom: 11px;" />
 										</g:else>
 
@@ -43,10 +67,10 @@
 							<tr>
 								<td>
 										<textarea rows="3" id="textarea2" class="cleditor"
-										id="mensaje" name="mensaje"
+										id="cuerpo_${mensaje.id }" name="mensaje"
 										style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 73px; display: none; width: 500px;"></textarea>
 									<div contenteditable="true" style="height: 140px;"
-										class="note-editable" id="divCuerpo"></div>
+										class="note-editable cuerpo_${mensaje.id }" id="divCuerpo"></div>
 								</td>
 							</tr>
 							<tr>
@@ -208,3 +232,5 @@ ${usuariosFormateados }
 	style="display: none; height: 16px; width: 16px;">
 	<g:img file="spinner.gif" />
 </div>
+
+
