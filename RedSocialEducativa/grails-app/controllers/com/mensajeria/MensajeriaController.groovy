@@ -4,7 +4,7 @@ import org.springframework.security.access.annotation.Secured
 
 
 import com.fiuba.Curso;
-//import com.fiuba.GrupoCurso;
+import com.fiuba.GrupoActividad;
 import com.fiuba.Mediador
 import com.fiuba.Usuario
 import com.fiuba.Aprendiz
@@ -260,7 +260,7 @@ class MensajeriaController {
 		}
 		def asunto = params.asunto
 		def texto = params.mensaje
-		Pattern usuarioPattern = Pattern.compile("(\\d+)")
+		Pattern usuarioPattern = Pattern.compile("^(\\d+)")
 		Pattern mediadorPattern = Pattern.compile("Mediador-(\\d+)")
 		Pattern cursoPattern = Pattern.compile("^Curso-(\\d+)")
 		// TODO
@@ -296,10 +296,11 @@ class MensajeriaController {
 						// TODO
 						m = grupoPattern.matcher(it.toString());
 						if (m.find()){
-							def grupo = GrupoCurso.findById(m.group(1))
+							def grupo = GrupoActividad.findById(m.group(1))
 							def curso = Curso.findById(m.group(2))
 							grupo.aprendices.each{
-								def receptor = it.usuario
+								println (it.aprendiz.usuario.id)
+								def receptor = it.aprendiz.usuario
 								usuarios.add(receptor)
 							}
 							para += "Grupo " + grupo.id+",Curso: " + curso.id +", "
