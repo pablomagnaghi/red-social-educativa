@@ -15,7 +15,7 @@
 			<br>
 				<g:each in="${cursos}" var="cursoInstance">
 					<p><g:link action="revisarRolEnCurso" params="['cursoId': cursoInstance.id]">
-							${com.fiuba.Materia.get(cursoInstance.materia.id)}-${cursoInstance}</g:link><p>	
+							${com.fiuba.Asignatura.get(cursoInstance.asignatura.id)}-${cursoInstance}</g:link><p>	
 					<br>
 				</g:each>
 			<div class="pagination">
@@ -25,7 +25,8 @@
 		<div>
 			<p>Noticia red; "${com.fiuba.NoticiaRed.first()}"</p>
 			<p>Noticia curso; "${com.fiuba.NoticiaCurso.first()}"</p>
-			<p>Material curso; "${com.fiuba.MaterialCurso.first()}"</p>
+			<p>Asignatura: "${com.fiuba.Asignatura.first()}"</p>
+			<p>Curso: "${com.fiuba.Curso.first()}"</p>
 			<p>Material tema; "${com.fiuba.MaterialTema.first()}"</p>
 			<p>Foro general; "${com.fiuba.ForoGeneral.first()}"</p>
 			<p>Foro curso; "${com.fiuba.ForoCurso.first()}"</p>

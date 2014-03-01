@@ -3,8 +3,6 @@ package com.fiuba
 import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured
 
-import com.mensajeria.Mensaje;
-
 class RedController {
 
 	// static allowedMethods = [save: "POST", update(actualizar): "PUT", delete: "DELETE"]
@@ -16,7 +14,6 @@ class RedController {
 
 	@Secured('permitAll')
 	def revisarRol() {
-
 		if (Administrador.findByUsuario(usuarioService.usuarioActual())) {
 			redirect action: "administrador"
 			return
@@ -31,29 +28,48 @@ class RedController {
 
 	@Secured('permitAll')
 	def revisarDatosUsuario(Usuario usuario) {
-
 		if (params.password != params.passwordConfirmado) {
 			flash.message = "El password confirmado es incorrecto"
-			redirect uri: "/"
+			redirect action: "solicitarMembresia"
 			return
 		}
-
 		if (!usuarioService.guardar(usuario)) {
 			flash.message = "Revise el formulario"
-			redirect uri: "/"
+			render view: "solicitarMembresia", model: [usuarioInstance: usuario]
 			return
 		}
-		
-		if (!redService.activarUsuario(usuario)) {
-			flash.message = "Problemas al activar crear la cuenta"
-			redirect uri: "/"
-			return
-		}
-		
-		flash.message = "Solicitud aceptada. A la brevedad se le enviara un mail de confirmacion"
-		redirect uri: "/"
+		sendMail {
+			to params.email
+			subject Utilidades.TITULO_CONFIRMACION
+			html g.render(template: "mailTemplate", model: [codigo: usuario.codigoConfirmacion])
+		}	
+		flash.message = "Tu cuenta ha sido creada. Revisa tu dirección de email para activarla."
+		redirect uri: "/", model: [mensaje: "Tu cuenta ha sido creada. Revisa tu dirección de email para activarla."]
 	}
+	
+	@Secured('permitAll')
+	def confirmacion (String id) {
 
+		Usuario usuario = Usuario.findByCodigoConfirmacion(id)
+		if(!usuario) {
+			flash.message = "Problema al activar la cuenta"
+			redirect uri: "/", model: [mensaje: "Problema al activar la cuenta"]
+			return
+		}		
+		if (usuario.enabled) {
+			flash.message = "Su cuenta ya ha sido activada anteriormente"
+			redirect uri: "/", model: [mensaje: "Su cuenta ya ha sido activada"]
+			return
+		}
+		if (!redService.activarUsuario(usuario)) {
+			flash.message = "Problema al activar la cuenta"
+			redirect uri: "/", model: [mensaje: "Problema al activar la cuenta"]
+			return
+		}	
+		flash.message = "Tu cuenta ha sido activada exitosamente"
+		redirect uri: "/", model: [mensaje: "Tu cuenta ha sido exitosamente activada"]
+	}
+	
 	@Secured('isFullyAuthenticated()') 
 	def cursos() {
 		model: [cursos: Curso.list(params), cursoCant: Curso.count()]
@@ -61,7 +77,6 @@ class RedController {
 
 	@Secured("hasRole('ROL_ADMIN')")
 	def administrador() {
-		def mensajes = Mensaje.findAllByReceptorAndLeido(usuarioService.usuarioActual(), Boolean.FALSE)	
 		model: [noticiasRed: noticiaRedService.obtenerNoticiasOrdenadas()]
 	}
 	
@@ -69,52 +84,24 @@ class RedController {
 	def miembro() {
 		model: [noticiasRed: noticiaRedService.obtenerNoticiasOrdenadas()]
 	}
-	/*
-	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ', 'ROL_MIEMBRO')")
-	def miembro() {
-		def mensajes = Mensaje.findAllByReceptorAndLeido(usuarioService.usuarioActual(), Boolean.FALSE)
-		model: [noticiasRed: NoticiaRed.list(), cantMensajes: mensajes.size()]
-	}*/
 
 	@Secured('isFullyAuthenticated()')
 	def revisarRolEnCurso() {
-
 		def usuario = usuarioService.usuarioActual()
 		def curso = Curso.get(params.cursoId)
 			
 		if (Administrador.findByUsuario(usuario)) {
 			redirect controller: "curso", action: "administrador", params: params
 			return
-		}
-		
+		}	
 		if (Mediador.findByUsuarioAndCurso(usuario, curso)) {
 			redirect controller: "curso", action: "mediador", params: params
 			return
 		}
-		
 		if (aprendizService.obtenerPorCurso(usuario.id, params.cursoId.toLong())) {
 			redirect controller: "curso", action: "aprendiz", params: params
 			return
 		}
-		
 		redirect controller: "curso", action: "miembro", params: params
-	}
-	
-	@Secured("hasRole('ROL_ADMIN')")
-	def configuracion() {
-		[redInstance: Red.instance]
-	}
-
-	@Secured("hasRole('ROL_ADMIN')")
-	def actualizarConfiguracion() {
-		Red.instance.properties = params
-
-		if (!redService.guardar(Red.instance)) {
-			respond Red.instance, view:'configuracion'
-			return
-		}
-
-		flash.message = "La actualizacion ha sido realizada"
-		redirect(action:"configuracion")
 	}
 }

@@ -6,18 +6,20 @@
 <body>
 	<div class="row-fluid">
 		<div class="span2"></div>	
-		<div class="span7">	
+		<div class="span8">	
 			<div class="row-fluid">
-				<div class="span6">  
-					<g:render template="/red/membresia"></g:render>
-				</div>		
-				<div class="span1"></div>		
-				<div class="span5">    
+				<div class="span8">  
+					<div class="row-fluid">
+						<br><br><br><br><br>
+						<g:render template="info"></g:render>
+					</div>
+				</div>			
+				<div class="span4">    
 					<g:render template="/login/login"></g:render>
 				</div>		
 			</div>
 		</div>
-		<div class="span3"></div>		
+		<div class="span2"></div>		
 	</div>
 	
 	<script type='text/javascript'>

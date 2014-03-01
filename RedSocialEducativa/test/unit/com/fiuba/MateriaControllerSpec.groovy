@@ -5,8 +5,8 @@ package com.fiuba
 import grails.test.mixin.*
 import spock.lang.*
 
-@TestFor(MateriaController)
-@Mock(Materia)
+@TestFor(AsignaturaController)
+@Mock(Asignatura)
 class MateriaControllerSpec extends Specification {
 
     def populateValidParams(params) {
@@ -36,7 +36,7 @@ class MateriaControllerSpec extends Specification {
     void "Test the save action correctly persists an instance"() {
 
         when:"The save action is executed with an invalid instance"
-            def materia = new Materia()
+            def materia = new Asignatura()
             materia.validate()
             controller.save(materia)
 
@@ -47,14 +47,14 @@ class MateriaControllerSpec extends Specification {
         when:"The save action is executed with a valid instance"
             response.reset()
             populateValidParams(params)
-            materia = new Materia(params)
+            materia = new Asignatura(params)
 
             controller.save(materia)
 
         then:"A redirect is issued to the show action"
             response.redirectedUrl == '/materia/show/1'
             controller.flash.message != null
-            Materia.count() == 1
+            Asignatura.count() == 1
     }
 
     void "Test that the show action returns the correct model"() {
@@ -66,7 +66,7 @@ class MateriaControllerSpec extends Specification {
 
         when:"A domain instance is passed to the show action"
             populateValidParams(params)
-            def materia = new Materia(params)
+            def materia = new Asignatura(params)
             controller.show(materia)
 
         then:"A model is populated containing the domain instance"
@@ -82,7 +82,7 @@ class MateriaControllerSpec extends Specification {
 
         when:"A domain instance is passed to the edit action"
             populateValidParams(params)
-            def materia = new Materia(params)
+            def materia = new Asignatura(params)
             controller.edit(materia)
 
         then:"A model is populated containing the domain instance"
@@ -100,7 +100,7 @@ class MateriaControllerSpec extends Specification {
 
         when:"An invalid domain instance is passed to the update action"
             response.reset()
-            def materia = new Materia()
+            def materia = new Asignatura()
             materia.validate()
             controller.update(materia)
 
@@ -111,7 +111,7 @@ class MateriaControllerSpec extends Specification {
         when:"A valid domain instance is passed to the update action"
             response.reset()
             populateValidParams(params)
-            materia = new Materia(params).save(flush: true)
+            materia = new Asignatura(params).save(flush: true)
             controller.update(materia)
 
         then:"A redirect is issues to the show action"
@@ -130,16 +130,16 @@ class MateriaControllerSpec extends Specification {
         when:"A domain instance is created"
             response.reset()
             populateValidParams(params)
-            def materia = new Materia(params).save(flush: true)
+            def materia = new Asignatura(params).save(flush: true)
 
         then:"It exists"
-            Materia.count() == 1
+            Asignatura.count() == 1
 
         when:"The domain instance is passed to the delete action"
             controller.delete(materia)
 
         then:"The instance is deleted"
-            Materia.count() == 0
+            Asignatura.count() == 0
             response.redirectedUrl == '/materia/index'
             flash.message != null
     }

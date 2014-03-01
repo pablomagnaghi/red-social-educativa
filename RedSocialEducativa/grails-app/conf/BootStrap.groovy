@@ -35,58 +35,58 @@ class BootStrap {
 		def ArrayList<Usuario> usuarios = new ArrayList<Usuario>()
 		
 		def usuarioPablo = new Usuario(username: "33300432", password: "33300432", apellido: "Magnaghi", nombres: "Pablo", padron: "88126", 
-			email: "pablomagnaghi@gmail.com", fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pablomagnaghi@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioPablo)
 		def usuarioLuis = new Usuario(username: "31861315", password: "31861315", apellido: "Paniagua", nombres: "Luis", padron: "86862", 
-			email: "pany100@gmail.com", fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pany100@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioLuis)
 		def usuarioMessi = new Usuario(username: "10101010", password: "10101010", apellido: "Zarate", nombres: "Facundo", padron: "78456",
-			email: "nanozarate@gmail.com", fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "nanozarate@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioMessi)
 		def usuarioAgus = new Usuario(username: "32725217", password: "32725217", apellido: "Milla", nombres: "Agustina", padron: "88888", 
-			email: "pablomagnaghi@gmail.com", fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pablomagnaghi@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioAgus)
 		def usuarioUno = new Usuario(username: "00000001", password: "00000001", apellido: "ApeUNO", nombres: "NomUno", padron: "00001", 
-			email: "pablomagnaghi@gmail.com", fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pablomagnaghi@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioUno)
 		def usuarioDos = new Usuario(username: "00000002", password: "00000002", apellido: "ApeDOS", nombres: "NomDOS", padron: "00002", 
-			email: "pablomagnaghi@gmail.com", fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pablomagnaghi@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioDos)
 		def usuarioTres = new Usuario(username: "00000003", password: "00000003", apellido: "ApeTRES", nombres: "NomTRES", padron: "00003", 
-			email: "pablomagnaghi@gmail.com", fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pablomagnaghi@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioTres)
 		def usuarioCuatro = new Usuario(username: "00000004", password: "00000004", apellido: "ApeCUATRO", nombres: "NomCUATRO", padron: "00004", 
-			email: "pablomagnaghi@gmail.com", fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pablomagnaghi@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioCuatro)
 		def usuarioCinco = new Usuario(username: "00000005", password: "00000005", apellido: "ApeCINCO", nombres: "NomCINCO", padron: "00005", 
-			email: "pablomagnaghi@gmail.com", fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pablomagnaghi@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioCinco)
 		def usuarioSeis = new Usuario(username: "00000006", password: "00000006", apellido: "ApeSeis", nombres: "NomSeis", padron: "00006", 
-			email: "pablomagnaghi@gmail.com", fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pablomagnaghi@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioSeis)
 		def usuarioSiete = new Usuario(username: "00000007", password: "00000007", apellido: "ApeSiete", nombres: "NomSiete", padron: "00007", 
-			email: "pablomagnaghi@gmail.com", fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pablomagnaghi@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioSiete)
 		def usuarioOcho = new Usuario(username: "00000008", password: "00000008", apellido: "ApeOcho", nombres: "NomOcho", padron: "00008", 
-			email: "pablomagnaghi@gmail.com", fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pablomagnaghi@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioOcho)
 		def usuarioNueve = new Usuario(username: "00000009", password: "00000009", apellido: "ApeNueve", nombres: "NomNueve", padron: "00009", 
-			email: "pablomagnaghi@gmail.com", fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pablomagnaghi@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioNueve)
 		def usuarioDiez = new Usuario(username: "00000010", password: "00000010", apellido: "ApeDiez", nombres: "NomDiez", padron: "00010", 
-			email: "pablomagnaghi@gmail.com", fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pablomagnaghi@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioDiez)
 		def usuarioOnce = new Usuario(username: "00000011", password: "00000011", apellido: "ApeOnce", nombres: "NomOnce", padron: "00011", 
-			email: "pablomagnaghi@gmail.com", fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pablomagnaghi@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioOnce)
 		def usuarioDoce = new Usuario(username: "00000012", password: "00000012", apellido: "ApeDoce", nombres: "NomDoce", padron: "00012", 
-			email: "pablomagnaghi@gmail.com", fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pablomagnaghi@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioDoce)
 		def usuarioTrece = new Usuario(username: "00000013", password: "00000013", apellido: "ApeTrece", nombres: "NomTrece", padron: "00013", 
-			email: "pablomagnaghi@gmail.com", fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pablomagnaghi@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioTrece)
 		def usuarioCatorce = new Usuario(username: "00000014", password: "00000014", apellido: "ApeCatorce", nombres: "NomCatorce", padron: "00014", 
-			email: "pablomagnaghi@gmail.com", fechaMemb: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pablomagnaghi@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioCatorce)
 
 		for(int i = 0; i<usuarios.size(); i++){
@@ -533,26 +533,26 @@ class BootStrap {
 		cursoCinco.addToMediadores(mediadorSeis)
 		cursoCinco.addToCuatrimestres(cuatrimestreCinco)
 		
-		// Materias - con carga de cursos
-		def ArrayList<Materia> materias = new ArrayList<Materia>()
-		def materiaUno = new Materia(codigo: "75.01", nombre: "materiaUno", creditos: "6", contenidosMinimos: "contenidos")
-		materiaUno.addToCursos(cursoUno)
-		materiaUno.addToCursos(cursoDos)
-		materiaUno.addToCursos(cursoTres)
-		materias.add(materiaUno)
-		def materiaDos = new Materia(codigo: "75.02", nombre: "materiaDos", creditos: "6", contenidosMinimos: "contenidos")
-		materiaDos.addToCursos(cursoCuatro)
-		materias.add(materiaDos)
-		def materiaTres = new Materia(codigo: "75.03", nombre: "materiaTres", creditos: "6", contenidosMinimos: "contenidos")
-		materiaTres.addToCursos(cursoCinco)
-		materias.add(materiaTres)
+		// Asignaturas - con carga de cursos
+		def ArrayList<Asignatura> asignaturas = new ArrayList<Asignatura>()
+		def asignaturaUno = new Asignatura(codigo: "75.01", nombre: "asignaturaUno", creditos: "6", contenidosMinimos: "contenidos")
+		asignaturaUno.addToCursos(cursoUno)
+		asignaturaUno.addToCursos(cursoDos)
+		asignaturaUno.addToCursos(cursoTres)
+		asignaturas.add(asignaturaUno)
+		def asignaturaDos = new Asignatura(codigo: "75.02", nombre: "asignaturaDos", creditos: "6", contenidosMinimos: "contenidos")
+		asignaturaDos.addToCursos(cursoCuatro)
+		asignaturas.add(asignaturaDos)
+		def asignaturaTres = new Asignatura(codigo: "75.03", nombre: "asignaturaTres", creditos: "6", contenidosMinimos: "contenidos")
+		asignaturaTres.addToCursos(cursoCinco)
+		asignaturas.add(asignaturaTres)
 		
-		for(int i = 0; i<materias.size(); i++){
-			if (!materias.get(i).save()) {
-				println materias.get(i).errors
+		for(int i = 0; i<asignaturas.size(); i++){
+			if (!asignaturas.get(i).save()) {
+				println asignaturas.get(i).errors
 			} else {
-				println "Materias agregadas a la bbdd:"
-				println materias.get(i).codigo
+				println "Asignaturas agregadas a la bbdd:"
+				println asignaturas.get(i).codigo
 			}
 		}
 		

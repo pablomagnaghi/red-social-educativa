@@ -5,8 +5,9 @@ import java.util.Date;
 class Utilidades {
 	
 	final static TITULO_RED = "Red Social Educativa del Departamento de Computacion de la FIUBA"
-	final static CICLO_CONSERVACION = 4
-	
+	final static TITULO_CONFIRMACION = TITULO_RED + " - Nueva confirmacion de usuario"
+	final static MSJ_MAIL_BIENVENIDA = "Bienvenido a la red social" 
+
 	final static FORMATO_FECHA = "yyyyMMdd"
 	
 	final static ANIO_INICIAL = 1900
@@ -26,8 +27,6 @@ class Utilidades {
 	
 	final static MAX_PARAMS = 5
 	
-	final static MENSAJE_BIENVENIDA = "Bienvenido a la Red Social del Departamento de Computacion de la FIUBA"
-	
 	final static RESPUESTA = "Respuesta a: "
 	
 	final static ROL_ADMIN = "ROL_ADMIN"
@@ -40,7 +39,6 @@ class Utilidades {
 	final static APRENDIZ = "[APRENDIZ]"
 	final static MEDIADOR = "[MEDIADOR]"
 	final static ADMINISTRADOR = "[ADMINISTRADOR]"
-	
 	
 	final static CUAT_AMBOS = "1|2"
 	final static CUAT_UNO = "1"

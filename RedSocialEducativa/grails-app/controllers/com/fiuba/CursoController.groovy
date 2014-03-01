@@ -49,21 +49,11 @@ class CursoController {
 		def cuatrimestres = cuatrimestreService.obtenerCuatrimestresOrdenados(params.cursoId.toLong())
 		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
 
-		[materia: Curso.get(params.cursoId).materia, mediador: mediador, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), 
+		[asignatura: Curso.get(params.cursoId).asignatura, mediador: mediador, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), 
 			cuatrimestres: cuatrimestres, cuatrimestre: cuatrimestre, noticiasCurso: NoticiaCurso.findAllByCuatrimestre(cuatrimestre), 
 			params: ['cursoId': params.cursoId]]
 	}
-/*
-	@Secured("hasRole('ROL_MEDIADOR')")
-	def menuMediador() {
 
-		def cuatrimestres = cuatrimestreService.obtenerCuatrimestresOrdenados(params.cursoId.toLong())
-		def cuatrimestre= cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
-		
-		[materia: Curso.get(params.cursoId).materia, cuatrimestreId: cuatrimestre?.id, cuatrimestres: cuatrimestres, 
-			params: ['cursoId': params.cursoId]]
-	}
-*/
 	@Secured('isFullyAuthenticated()')
 	def materiales() {
 		params.max = Utilidades.MAX_PARAMS

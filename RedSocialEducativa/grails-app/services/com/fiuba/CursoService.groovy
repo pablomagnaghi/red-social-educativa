@@ -23,7 +23,7 @@ class CursoService {
 	}
 	
 	def existe(Curso curso) {
-		def cursoExistente = Curso.findByMateriaAndNroRelativo(Materia.get(curso.materia.id), curso.nroRelativo)
+		def cursoExistente = Curso.findByAsignaturaAndNroRelativo(Asignatura.get(curso.asignatura.id), curso.nroRelativo)
 
 		return cursoExistente
 	}
