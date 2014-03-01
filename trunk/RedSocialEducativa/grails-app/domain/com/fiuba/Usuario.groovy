@@ -14,6 +14,9 @@ class Usuario {
 	Integer padron
 	String email
 	String fechaSolicitud = new Date().format(Utilidades.FORMATO_FECHA)
+	String fechaMembresia
+	
+	String codigoConfirmacion = UUID.randomUUID().toString()
 
 	boolean enabled = true
 	boolean accountExpired
@@ -32,6 +35,7 @@ class Usuario {
 		legajo nullable: true, unique: true // 6 a 9 digitos
 		padron nullable: true, unique: true //, matches:"[0-9]{5}", unique: true
 		email email: true
+		fechaMembresia nullable: true 
 	}
 
 	static mapping = {

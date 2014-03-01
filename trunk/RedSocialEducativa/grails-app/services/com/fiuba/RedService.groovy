@@ -7,41 +7,30 @@ import grails.transaction.Transactional
 class RedService {
 
 	private crearMiembro(Usuario usuario) {
-
 		def miembro = new Miembro(usuario: usuario, rol: Rol.findByAuthority(Utilidades.ROL_MIEMBRO))
 
 		if (miembro.save(flush: true)) {
 			return miembro
 		}
-
 		return null
 	}
 	
 	def activarUsuario(Usuario usuario) {
-
-		def mail = usuario.email
-		def username = usuario.username
-
+		usuario.enabled = true
+		usuario.fechaMembresia = new Date().format(Utilidades.FORMATO_FECHA)
 		if (!usuario.save(flush: true)) {
 			return false
 		}
 		if (!crearMiembro(usuario)) {
 			return false
 		}
-
+		def email = usuario.email
+		String msj = Utilidades.MSJ_MAIL_BIENVENIDA + " miembro ${usuario.username}."
 		sendMail {
-			to mail
+			to email
 			subject Utilidades.TITULO_RED
-			body Utilidades.MENSAJE_BIENVENIDA
+			body msj
 		}
-		
 		return true
-	}
-
-	def guardar(Red red) {
-		if(red.save(flush: true)) {
-			return red
-		}
-		return null
 	}
 }

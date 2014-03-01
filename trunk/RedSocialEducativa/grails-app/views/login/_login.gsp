@@ -1,7 +1,4 @@
 <div class="login-box">
-	<g:if test='${flash.message}'>
-		<div class='login_message'>${flash.message}</div>
-	</g:if>
 	<h3>Bienvenido a la red social FIUBA</h3>
 	<p>Mantente actualizado con la facultad</p>
 	<form class="form-horizontal" action='${postUrl}' method='POST' id='loginForm' autocomplete='off'>
@@ -11,7 +8,8 @@
 			<div class="clearfix"></div>
 				<p id="remember_me_holder">
 					<label class="remember" for="remember"><input type="checkbox" name='${rememberMeParameter}' id='remember_me' 
-						<g:if test='${hasCookie}'>checked='checked'</g:if>/> Recordarme</label>
+						<g:if test='${hasCookie}'>checked='checked'</g:if>/> Recordarme <a href="#">¿Olvidaste tu contraseña?</a></label>
+					
 				</p>	
 			<div class="clearfix"></div>
 								
@@ -19,5 +17,12 @@
 		</fieldset>	
 	</form>
 	<hr />
-	<h4><small><a href="#">¿Olvidaste tu contraseña?</a></small></h4>
+	<g:form class="form-horizontal" controller="red" action="solicitarMembresia">
+		<fieldset>								
+			<button type="submit" class="btn btn-success span6">Crear una cuenta</button>
+		</fieldset>	
+	</g:form>
+	<g:if test='${flash.message}'>
+		<div class='login_message'>${flash.message}</div>
+	</g:if>
 </div>				

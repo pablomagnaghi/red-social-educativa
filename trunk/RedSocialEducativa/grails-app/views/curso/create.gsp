@@ -29,12 +29,12 @@
 			</g:hasErrors>
 			<g:form action="save" >
 				<fieldset class="form">
-					<div class="fieldcontain ${hasErrors(bean: cursoInstance, field: 'materia', 'error')} required">
-						<label for="materia">
-							<g:message code="curso.materia.label" default="Materia" />
+					<div class="fieldcontain ${hasErrors(bean: cursoInstance, field: 'asignatura', 'error')} required">
+						<label for="asignatura">
+							<g:message code="curso.asignatura.label" default="Asignatura" />
 							<span class="required-indicator">*</span>
 						</label>
-						<g:select id="materia" name="materia.id" from="${com.fiuba.Materia.list()}" optionKey="id" required="" value="${cursoInstance?.materia?.id}" class="many-to-one"/>
+						<g:select id="asignatura" name="asignatura.id" from="${com.fiuba.Asignatura.list()}" optionKey="id" required="" value="${cursoInstance?.asignatura?.id}" class="many-to-one"/>
 					</div>
 					<div class="fieldcontain ${hasErrors(bean: cursoInstance, field: 'nroRelativo', 'error')} required">
 						<label for="nroRelativo">

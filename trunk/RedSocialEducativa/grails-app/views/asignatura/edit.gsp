@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.Materia" %>
+<%@ page import="com.fiuba.Asignatura" %>
 <%
 	def usuarioService = grailsApplication.classLoader.loadClass('com.fiuba.UsuarioService').newInstance()
 %>
@@ -6,7 +6,7 @@
 <html>
     <head>
         <meta name="layout" content="red">
-        <g:set var="entityName" value="${message(code: 'materia.label', default: 'Materia')}" />
+        <g:set var="entityName" value="${message(code: 'asignatura.label', default: 'Asignatura')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -22,6 +22,7 @@
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
 		            <div class="row-fluid">
+					    <div class="span2"></div>
 					    <div class="box span12">
 					        <div class="box-header">     	
 					            <h2><i class="icon-edit"></i>Editar</h2>
@@ -32,9 +33,9 @@
 					        <g:if test="${flash.message}">
 								<div class="message" role="status">${flash.message}</div>
 							</g:if>      
-							<g:hasErrors bean="${materiaInstance}">
+							<g:hasErrors bean="${asignaturaInstance}">
 								<ul class="errors" role="alert">
-									<g:eachError bean="${materiaInstance}" var="error">
+									<g:eachError bean="${asignaturaInstance}" var="error">
 										<li <g:if test="${error in org.springframework.validation.FieldError}">
 												data-field-id="${error.field}"</g:if>>
 											<g:message error="${error}"/></li>
@@ -42,8 +43,8 @@
 								</ul>
 							</g:hasErrors>
 					        <div class="box-content">
-					        	<g:form class="form-horizontal" action="update" method="PUT" id="${materiaInstance.id}">
-					        		<g:hiddenField name="version" value="${materiaInstance?.version}" />
+					        	<g:form class="form-horizontal" action="update" method="PUT" id="${asignaturaInstance.id}">
+					        		<g:hiddenField name="version" value="${asignaturaInstance?.version}" />
 						            <fieldset>
 						            	<g:render template="form"/>			
 						            	<div class="form-actions">
@@ -53,6 +54,7 @@
 					            </g:form>
 					        </div>
 					    </div>
+					    <div class="span2"></div>
 					    <!--/span-->
 					</div>
 					<!--/row-->    		

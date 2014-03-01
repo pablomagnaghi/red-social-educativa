@@ -1,6 +1,6 @@
 package com.fiuba
 
-class Materia {
+class Asignatura {
 
 	String codigo
 	String nombre

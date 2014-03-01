@@ -15,7 +15,6 @@ class UsuarioService {
 	}
 	
 	def guardar(Usuario usuario) {
-
 		if (usuario.save(flush: true)) {
 			def escritorio = new Carpeta(nombre : "Escritorio", usuario: usuario)
 			escritorio.save(flush: true)
@@ -27,7 +26,6 @@ class UsuarioService {
 			borradores.save(flush: true)
 			return usuario
 		}
-
 		return null
 	}
 	

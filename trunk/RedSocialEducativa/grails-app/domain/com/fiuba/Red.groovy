@@ -8,12 +8,6 @@ class Red {
 
 	String titulo = Utilidades.TITULO_RED
 
-	Short cicloConservacion = Utilidades.CICLO_CONSERVACION
-
-	static constraints = {
-		cicloConservacion min:(Short)1
-	}
-
 	String toString() {
 		"${titulo}"
 	}

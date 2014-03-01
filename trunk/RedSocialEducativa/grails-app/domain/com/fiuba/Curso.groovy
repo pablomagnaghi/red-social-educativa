@@ -6,7 +6,7 @@ class Curso {
 	String nombre
 	String cuatDict
 
-	static belongsTo = [materia: Materia]
+	static belongsTo = [asignatura: Asignatura]
 
 	static hasMany = [cuatrimestres: Cuatrimestre, evaluaciones: Evaluacion, materiales: MaterialCurso,
 		mediadores: Mediador, temas: Tema]

@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.Materia" %>
+<%@ page import="com.fiuba.Asignatura" %>
 <%
 	def usuarioService = grailsApplication.classLoader.loadClass('com.fiuba.UsuarioService').newInstance()
 %>
@@ -34,4 +34,3 @@
         <div class="clearfix"></div>					
 	</body>
 </html>
-
