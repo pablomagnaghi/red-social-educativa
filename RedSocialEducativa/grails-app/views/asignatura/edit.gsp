@@ -22,8 +22,7 @@
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
 		            <div class="row-fluid">
-					    <div class="span2"></div>
-					    <div class="box span12">
+					    <div class="box span8">
 					        <div class="box-header">     	
 					            <h2><i class="icon-edit"></i>Editar</h2>
 					            <div class="box-icon">
@@ -54,7 +53,7 @@
 					            </g:form>
 					        </div>
 					    </div>
-					    <div class="span2"></div>
+					    <div class="span4"></div>
 					    <!--/span-->
 					</div>
 					<!--/row-->    		

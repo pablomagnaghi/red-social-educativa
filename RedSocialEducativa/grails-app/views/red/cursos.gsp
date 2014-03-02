@@ -1,47 +1,42 @@
 <%@ page import="com.fiuba.Red" %>
-<!doctype html>
+<%@ page import="com.fiuba.UsuarioService" %>
+<%@ page import="com.fiuba.MediadorService" %>
+<%@ page import="com.fiuba.AprendizService" %>
+<%
+	def usuarioService = grailsApplication.classLoader.loadClass('com.fiuba.UsuarioService').newInstance()
+	def mediadorService = grailsApplication.classLoader.loadClass('com.fiuba.MediadorService').newInstance()
+	def aprendizService = grailsApplication.classLoader.loadClass('com.fiuba.AprendizService').newInstance()
+%>
+
+<!DOCTYPE html>
 <html>
     <head>
-        <meta name="layout" content="main">
+        <meta name="layout" content="red">
         <g:set var="entityName" value="Red Social Login" />
         <title><g:message code="Red Social Login" args="[entityName]" /></title>
     </head>
     <body>
-		<div>
-			<br>
-			<h2>Sector destinado a visualizar informacion y material de los cursos (foros, temas y material general)</h2>
-			<br>
-			<h3>Los cursos de la red Social son estos</h3>
-			<br>
-				<g:each in="${cursos}" var="cursoInstance">
-					<p><g:link action="revisarRolEnCurso" params="['cursoId': cursoInstance.id]">
-							${com.fiuba.Asignatura.get(cursoInstance.asignatura.id)}-${cursoInstance}</g:link><p>	
-					<br>
-				</g:each>
-			<div class="pagination">
-				<g:paginate total="${cursoCant ?: 0}" />
-			</div>
-		</div>
-		<div>
-			<p>Noticia red; "${com.fiuba.NoticiaRed.first()}"</p>
-			<p>Noticia curso; "${com.fiuba.NoticiaCurso.first()}"</p>
-			<p>Asignatura: "${com.fiuba.Asignatura.first()}"</p>
-			<p>Curso: "${com.fiuba.Curso.first()}"</p>
-			<p>Material tema; "${com.fiuba.MaterialTema.first()}"</p>
-			<p>Foro general; "${com.fiuba.ForoGeneral.first()}"</p>
-			<p>Foro curso; "${com.fiuba.ForoCurso.first()}"</p>
-			<p>Foro tema; "${com.fiuba.ForoTema.first()}"</p>
-			<p>Grupo actividad: "${com.fiuba.GrupoActividad.first().aprendices}"</p>
-			<p>Dia: ${com.fiuba.Utilidades.DIA}</p>
-			<p>Mes: ${com.fiuba.Utilidades.MES}</p>
-			<p>Anio: ${com.fiuba.Utilidades.ANIO}</p>
-			<p>Fecha: ${com.fiuba.Utilidades.FECHA}</p>
-			<p>Fecha proxima semana: ${com.fiuba.Utilidades.FECHA_PROXIMA_SEMANA}</p>
-			<p>FORMATO FECHA: ${(new Date()).format(com.fiuba.Utilidades.FORMATO_FECHA)}</p>
-			<p>Fecha PCUAT: ${com.fiuba.Utilidades.FECHA_PRIMER_CUATRIMESTRE}</p>
-			<p>Fecha SCUAT: ${com.fiuba.Utilidades.FECHA_SEGUNDO_CUATRIMESTRE}</p>
-			
-			
-		</div>
+    	<!-- Para el header y el panel lateral -->
+    	<g:set var="varUsuarioService" bean="usuarioService"/>
+    	<g:set var="varMediadorService" bean="mediadorService"/>
+    	<g:set var="varAprendizService" bean="aprendizService"/>
+    	<g:set var="usuario" value="${varUsuarioService.usuarioActual()}"/>
+    	<g:set var="administrador" value="${com.fiuba.Administrador.findByUsuario(usuario)}"/>
+    	<g:set var="cursosMediador" value="${varMediadorService.obtenerCursos(usuario)}"/>
+    	<g:set var="cursosAprendiz" value="${varAprendizService.obtenerCursos(usuario)}"/>
+    	<div class="container-fluid-full">
+			<div class="row-fluid">
+				<g:render template="/templateRed/panel" />
+	            <!-- start: Content -->
+	            <!-- PANEL CENTRAL -->
+	            <div id="content" class="span10">
+	                <g:render template="cursosRed" />		
+ 				</div>
+            	<!-- end: Content -->
+        	</div>
+        	<!--/fluid-row-->
+        </div>
+        <!--CLAVE ESTE DIV, SI SE SACA, NO APARECE NADA -->
+        <div class="clearfix"></div>					
 	</body>
 </html>

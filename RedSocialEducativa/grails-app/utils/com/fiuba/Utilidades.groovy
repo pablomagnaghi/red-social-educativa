@@ -22,7 +22,8 @@ class Utilidades {
 	final static DIA_PROXIMA_SEMANA = new Date(new Date().getTime() + (7 * 24* 60 * 60 * 1000)).getAt(Calendar.DAY_OF_MONTH)
 	final static FECHA_PROXIMA_SEMANA = 10000 * (ANIO_PROXIMA_SEMANA) + 100 * MES_PROXIMA_SEMANA + DIA_PROXIMA_SEMANA
 
-	final static FECHA_PRIMER_CUATRIMESTRE = 10000 * (ANIO) + 100 * 3 + 1
+	// TODO despues poner fechas coherentes
+	final static FECHA_PRIMER_CUATRIMESTRE = 10000 * (ANIO) + 100 * 3 + 30
 	final static FECHA_SEGUNDO_CUATRIMESTRE = 10000 * (ANIO) + 100 * 8 + 15
 	
 	final static MAX_PARAMS = 5
@@ -34,11 +35,10 @@ class Utilidades {
 	final static ROL_APRENDIZ = "ROL_APRENDIZ"
 	final static ROL_MIEMBRO =	"ROL_MIEMBRO"	
 	
-	final static VISITANTE = "[VISITANTE]"
-	final static MIEMBRO = "[MIEMBRO]"
-	final static APRENDIZ = "[APRENDIZ]"
-	final static MEDIADOR = "[MEDIADOR]"
-	final static ADMINISTRADOR = "[ADMINISTRADOR]"
+	final static MIEMBRO = "[Miembro]"
+	final static APRENDIZ = "[Aprendiz]"
+	final static MEDIADOR = "[Mediador]"
+	final static ADMINISTRADOR = "[Administrador]"
 	
 	final static CUAT_AMBOS = "1|2"
 	final static CUAT_UNO = "1"

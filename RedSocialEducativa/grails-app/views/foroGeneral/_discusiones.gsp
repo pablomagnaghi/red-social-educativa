@@ -6,7 +6,7 @@
    				<div class="author">
 					<img src="${resource(dir: 'img', file: 'avatar2.jpg')}">
 	            </div>
-                <div class="name">Tema ${tema.titulo} creado por ${tema.responsable} - ${tema.dni}}</div>
+                <div class="name">Tema ${tema.titulo} creado por ${tema.responsable}</div>
                 <div class="date">${tema.fecha} - ${tema.hora}</div>
                 <g:if test="${administrador}">
 					<div class="opciones">
