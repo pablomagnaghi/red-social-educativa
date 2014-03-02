@@ -27,8 +27,6 @@ class CalendarioController {
 			return
 		}
 
-		println calendarioInstance.errors
-		
 		if (Calendario.findByAnio(params.fechaPrimerCuatrimestre.getYear() + Utilidades.ANIO_INICIAL)) {
 			flash.message = "Ya existe el calendario para el año ${params.fechaPrimerCuatrimestre.getYear() + Utilidades.ANIO_INICIAL}"
 			redirect action: "create"

@@ -46,7 +46,8 @@
 					        	<g:form class="form-horizontal" action="update" method="PUT" id="${calendarioInstance.id}">
 					        		<g:hiddenField name="version" value="${calendarioInstance?.version}" />
 						            <fieldset>
-						            	<g:render template="form"/>			
+						            	<g:render template="form"/>		
+						            	<div><g:hiddenField name="anio" value="${calendarioInstance.anio}"/></div>	
 						            	<div class="form-actions">
 											<button type="submit" class="btn btn-primary">Actualizar</button>
 										</div>		    
