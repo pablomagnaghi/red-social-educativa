@@ -1,59 +1,36 @@
-
 <%@ page import="com.fiuba.Mediador" %>
+<%
+	def usuarioService = grailsApplication.classLoader.loadClass('com.fiuba.UsuarioService').newInstance()
+%>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'mediador.label', default: 'Mediador')}" />
+    <head>
+        <meta name="layout" content="red">
+        <g:set var="entityName" value="${message(code: 'mediador.label', default: 'Mediador')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
-	</head>
-	<body>
-		<a href="#list-mediador" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}">
-					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="create">
-					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
-			</ul>
-		</div>
-		<div id="list-mediador" class="content scaffold-list" role="main">
-			<h1><g:message code="Lista de mediadores" /></h1>
-			<table>
-			<thead>
-					<tr>
-						<g:sortableColumn property="usuario" title="${message(code: 'mediador.usuario.label', default: 'Usuario')}" />	
-						<g:sortableColumn property="curso" title="${message(code: 'mediador.curso.label', default: 'Curso')}" />
-						<g:sortableColumn property="jerarquia" title="${message(code: 'mediador.jerarquia.label', default: 'Jerarquia')}" />	
-						<td> Opciones </td>	
-					</tr>
-				</thead>
-				<tbody>
-				<g:each in="${mediadorInstanceList}" status="i" var="mediadorInstance">
-					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-										
-						<td>${fieldValue(bean: mediadorInstance, field: "usuario")}</td>
-					
-						<td>${fieldValue(bean: mediadorInstance, field: "curso")}</td>
-					
-						<td>${fieldValue(bean: mediadorInstance, field: "jerarquia")}</td>
-						
-						<td>					
-							<g:form action="delete" method="DELETE" id="${mediadorInstance.id}">
-								<fieldset class="buttons">
-								<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
-									onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-								</fieldset>
-							</g:form>
-						</td>
-			
-					</tr>
-				</g:each>
-				</tbody>
-			</table>
-			<div class="pagination">
-				<g:paginate total="${mediadorInstanceCount ?: 0}" />
-			</div>
-		</div>
+    </head>
+    <body>
+    	<!-- Para el header y el panel lateral -->
+    	<g:set var="varUsuarioService" bean="usuarioService"/>
+    	<g:set var="usuario" value="${varUsuarioService.usuarioActual()}"/>
+    	<g:set var="administrador" value="${com.fiuba.Administrador.findByUsuario(usuario)}"/>
+ 	
+    	<div class="container-fluid-full">
+			<div class="row-fluid">   
+	            <g:render template="/templateRed/panel" />
+	            <!-- start: Content -->
+	            <!-- PANEL CENTRAL -->
+	            <div id="content" class="span10">
+					<g:if test="${flash.message}">
+						<div class="message" role="status">${flash.message}</div>
+					</g:if>
+	                <g:render template="tabla" />		
+ 				</div>
+            	<!-- end: Content -->
+        	</div>
+        	<!--/fluid-row-->
+        </div>
+        <!--CLAVE ESTE DIV, SI SE SACA, NO APARECE NADA -->
+        <div class="clearfix"></div>					
 	</body>
 </html>

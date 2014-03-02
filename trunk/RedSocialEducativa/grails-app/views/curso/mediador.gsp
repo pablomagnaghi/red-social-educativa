@@ -37,7 +37,8 @@
 						<div class="box span12">
 							<div class="box-header">
 								<h2><i class="icon-font"></i><span class="break"></span>
-									Bienvenido al curso ${com.fiuba.Curso.get(params.cursoId)} de la materia ${com.fiuba.Curso.get(params.cursoId).materia}</h2>
+									Bienvenido mediador ${usuario} al curso ${com.fiuba.Curso.get(params.cursoId)} 
+									de la asignatura ${com.fiuba.Curso.get(params.cursoId).asignatura}</h2>
 								<div class="box-icon">
 									<a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
 								</div>
@@ -78,11 +79,3 @@
         <div class="clearfix"></div>					
 	</body>
 </html>
-
-
-
-
-
-
-
-

@@ -11,7 +11,7 @@ class UsuarioController {
 	
 	@Secured("hasRole('ROL_ADMIN')")
 	def index() {
-		params.max = Utilidades.MAX_PARAMS
+		params.max = 100//Utilidades.MAX_PARAMS
 		respond Usuario.list(params), model:[usuarioInstanceCount: Usuario.count()]
 	}
 
@@ -27,12 +27,12 @@ class UsuarioController {
 			return
 		}
 
-		if (!usuarioService.guardar(usuarioInstance)) {
+		if (!usuarioInstance.validate()) {
 			respond usuarioInstance, view:'create'
 			return
 		}
 
-		if (!redService.activarUsuario(usuarioInstance)) {
+		if (!redService.activarUsuarioAdm(usuarioInstance)) {
 			flash.message = "Problemas con la activacion del usuario"
 			redirect controller: 'administrador', action: 'index'
 			return

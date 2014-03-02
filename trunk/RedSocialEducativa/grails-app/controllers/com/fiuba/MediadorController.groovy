@@ -26,13 +26,14 @@ class MediadorController {
 
 	@Secured("hasRole('ROL_ADMIN')")
 	def index(Integer max) {
-		params.max = Utilidades.MAX_PARAMS
-		respond Mediador.list(params), model:[mediadorInstanceCount: Mediador.count()]
+		params.max = 100 //Utilidades.MAX_PARAMS
+		respond Mediador.list(params)
 	}
 
 	@Secured("hasRole('ROL_ADMIN')")
 	def create() {
-		respond new Mediador(params)
+		println mediadorService.obtenerCandidatos()
+		respond new Mediador(params), model: [usuarios: mediadorService.obtenerCandidatos()]
 	}
 
 	@Secured("hasRole('ROL_ADMIN')")

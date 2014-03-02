@@ -16,6 +16,7 @@ class AdministradorService {
 	def eliminar(Administrador administrador) {
 		println administrador.usuario
 		def miembro = Miembro.findByUsuario(administrador.usuario)
+		println "miembro eliminedo ${miembro}"
 		miembro.delete flush:true
 		administrador.delete flush:true
 		

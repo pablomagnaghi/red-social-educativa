@@ -113,8 +113,8 @@ class CursoController {
 	
 	@Secured("hasRole('ROL_ADMIN')")
 	def index() {
-		params.max = Utilidades.MAX_PARAMS
-		respond Curso.list(params), model:[cursoInstanceCount: Curso.count()]
+		params.max = 100//Utilidades.MAX_PARAMS
+		respond Curso.list(params)
 	}
 
 	@Secured("hasRole('ROL_ADMIN')")

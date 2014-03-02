@@ -15,8 +15,7 @@ class RedService {
 		return null
 	}
 	
-	def activarUsuario(Usuario usuario) {
-		usuario.enabled = true
+	private activacionCorrecta(Usuario usuario) {
 		usuario.fechaMembresia = new Date().format(Utilidades.FORMATO_FECHA)
 		if (!usuario.save(flush: true)) {
 			return false
@@ -24,13 +23,33 @@ class RedService {
 		if (!crearMiembro(usuario)) {
 			return false
 		}
-		def email = usuario.email
-		String msj = Utilidades.MSJ_MAIL_BIENVENIDA + " miembro ${usuario.username}."
+		return true
+	}
+	
+	private enviarEmail(String email, String msj) {
 		sendMail {
 			to email
 			subject Utilidades.TITULO_RED
 			body msj
 		}
+	}
+	
+	def activarUsuario(Usuario usuario) {
+		usuario.enabled = true
+		if (!activacionCorrecta(usuario)) {
+			return false
+		}
+		String msj = Utilidades.MSJ_MAIL_BIENVENIDA + " miembro ${usuario.username}."
+		enviarEmail(usuario.email, msj)
+		return true
+	}
+	
+	def activarUsuarioAdm(Usuario usuario) {
+		String msj = Utilidades.MSJ_MAIL_BIENVENIDA + " administrador ${usuario.username} con password ${usuario.password}."
+		if (!activacionCorrecta(usuario)) {
+			return false
+		}
+		enviarEmail(usuario.email, msj)
 		return true
 	}
 }

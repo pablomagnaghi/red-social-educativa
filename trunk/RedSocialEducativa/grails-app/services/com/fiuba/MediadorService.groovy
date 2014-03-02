@@ -5,6 +5,18 @@ import grails.transaction.Transactional
 @Transactional
 class MediadorService {
 
+	def obtenerCandidatos() {
+		def ArrayList<Usuario> usuarios = new ArrayList<Usuario>()
+		def ArrayList<Miembro> miembros = Miembro.list()
+
+		miembros.each {
+			if (!Administrador.findByUsuario(it.usuario)) {
+				usuarios.add(it.usuario)
+			} 
+		}
+		return usuarios
+	}
+		
 	def obtenerCursos(Usuario usuario) {
 
 		def ArrayList<Curso> cursosMediador = new ArrayList<Curso>()

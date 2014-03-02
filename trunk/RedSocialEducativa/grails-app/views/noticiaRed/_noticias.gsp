@@ -9,9 +9,11 @@
             <ul class="talk">
                 <g:each in="${noticiasRed}">
                 		<li>
-		                    <span class="name">${it.titulo} - ${it.administrador.usuario} </span>
+		                    <span class="title">${it.titulo}</span>
+		                    <span class="name"> publicada por ${it.administrador.usuario}</span>
 		                    <span class="time">
 		                    	<div>${it.fecha} - ${it.hora}</div>
+		                    	<div>${it.administrador.usuario}</div>	
 		                    	<div> 		
 		                    		<g:if test="${it.visibilidad}">
 		                    			<g:link class="btn btn-success" action="cambiarVisibilidad" id="${it.id}">

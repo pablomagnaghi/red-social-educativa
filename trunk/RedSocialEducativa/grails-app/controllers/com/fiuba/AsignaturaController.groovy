@@ -14,6 +14,11 @@ class AsignaturaController {
 		params.max = 100//Utilidades.MAX_PARAMS
 		respond Asignatura.list(params)
 	}
+	
+	// TODO
+	def show(Asignatura asignaturaInstance) {
+		respond asignaturaInstance
+	}
 
 	def create() {
 		respond new Asignatura(params)

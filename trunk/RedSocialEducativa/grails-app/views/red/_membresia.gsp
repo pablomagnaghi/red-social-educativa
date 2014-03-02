@@ -73,7 +73,6 @@
 					</div> 
 					<div class="form-actions">
 						<button type="submit" class="btn btn-primary">Enviar datos</button>
-						<button class="btn">Cancel</button>
                 	</div>	
 					<div><g:hiddenField name="enabled" value="${false}"/></div>
 	            </fieldset>
