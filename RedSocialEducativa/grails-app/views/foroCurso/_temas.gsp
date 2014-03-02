@@ -4,8 +4,8 @@
             <h2><i class="icon-table"></i>
                 <span class="break"></span>${com.fiuba.ForoGeneral.first()}</h2>
             <div class="box-icon">
-                <g:link controller="publicacionGeneral" action="nueva">
-                	<i class="icon-plus"></i></g:link>
+                <g:link controller="publicacionCurso" action="nueva" 
+					params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-plus"></i></g:link>
             </div>
         </div>
         <div class="box-content">
@@ -16,7 +16,8 @@
                         <th>Autor</th>
                         <th>Replicas</th>
                         <th>Ultimo mensaje</th> 
-                        <th>Acciones</th>         			               
+                        <th>Acciones</th>         		
+                                       
                     </tr>
                 </thead>
                 <tbody>
@@ -36,11 +37,13 @@
 								</g:else>
 							</td>
 							<td class="center">
-								<span><g:link class="btn btn-success" action="publicaciones" id="${it.id}">	                        	
-		                        	<i class="icon-external-link"></i></g:link>
+								<span><g:link class="btn btn-success" action="publicaciones" id="${it.id}" 
+									params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">	                        	
+		                        	<i class="icon-external-link"></i></g:link> 	
 		                       </span>
-		                       <g:if test="${administrador}">
-		                           <span><g:link class="btn btn-danger" controller="publicacionGeneral" action="eliminar" id="${it.id}" params="['pubInicialId': params.pubInicialId]" 
+		                       <g:if test="${mediador}">
+		                           <span><g:link class="btn btn-danger" controller="publicacionCurso" action="eliminar" id="${it.id}" 
+		                         	  	params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"
 		                            	onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >	                          
 		                                <i class="icon-trash "></i></g:link>     
 		                           </span>     

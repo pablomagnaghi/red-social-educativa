@@ -11,14 +11,15 @@
                 <div class="nombre">${tema.responsable}</div>
                 <div class="opciones">
                 	<span>${tema.responsable}</span>
-                	<span><g:link controller="publicacionGeneral" action="nueva">
-                		<i class="icon-plus"></i></g:link></span>
-                	<g:if test="${administrador}">
-						<span><g:link controller="publicacionGeneral" action="editar" 
-							id="${params.pubInicialId}" params="['pubInicialId': params.pubInicialId]">	                        	
+                	<span><g:link controller="publicacionCurso" action="nueva"
+		                	params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+                			<i class="icon-plus"></i></g:link></span>
+                	<g:if test="${mediador || ((aprendiz?.cursando) && (aprendiz?.usuario?.username == tema.dni))}">
+						<span><g:link controller="publicacionCurso" action="editar" id="${tema.id}" 
+							params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">      	
 							<i class="icon-edit"></i></g:link></span>
-						<span><g:link controller="publicacionGeneral" action="eliminar" 
-							id="${params.pubInicialId}" params="['pubInicialId': params.pubInicialId]">	                        	
+						<span><g:link controller="publicacionCurso" action="eliminar" id="${tema.id}" 
+							params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">      	
 							<i class="icon-remove"></i></g:link></span>
 					</g:if>
 				</div>
@@ -34,17 +35,17 @@
 	                        <div class="name"><h3>${it.responsable}</h3></div>
 	                        <div class="nombre">${it.responsable}</div>
 	                        <div class="date">${it.fecha} - ${it.hora}</div>
-							<g:if test="${administrador}">
+							<g:if test="${mediador || ((aprendiz?.cursando) && (aprendiz?.usuario?.username == tema.dni))}">
 		                        <div class="opciones">
-		                        	<span><g:link controller="publicacionGeneral" action="editar" 
-		                        		id="${it.id}" params="['pubInicialId': params.pubInicialId]">	                        	
+		                        	<span><g:link controller="publicacionCurso" action="editar" id="${it.id}" 
+		                        		params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">                	
 		                        		<i class="icon-edit"></i></g:link>
 		                        	</span>
-		                        	<span><g:link controller="publicacionGeneral" action="eliminar" 
-		                        		id="${it.id}" params="['pubInicialId': params.pubInicialId]">	                        	
+		                        	<span><g:link controller="publicacionCurso" action="eliminar" id="${it.id}" 
+		                        			params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">          	
 		                        		<i class="icon-remove"></i></g:link>
 		                        	</span>
-		                        </div>
+		                        </div>	                        
 							</g:if>
 	                        <div class="message">
 								${it.contenido}
@@ -58,18 +59,18 @@
 						<div class="author">
 							<img src="img/avatar.jpg" alt="avatar" />
 						</div>
-						<g:form controller="publicacionGeneral" action="guardar" 
-							params="['pubInicialId': params.pubInicialId]">
+						<g:form controller="publicacionCurso" action="guardar" 
+							params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">   
 							<fieldset class="form">
 								<div class="control-group">	
 									<div class="controls">
 									<textarea class="diss-form" name="contenido" placeholder="Escribe un comentario"></textarea>
 									</div>	
 								</div>	
-								<div><g:hiddenField name="titulo" value="${com.fiuba.PublicacionGeneral.get(params.pubInicialId).titulo}"/></div>
+								<div><g:hiddenField name="titulo" value="${com.fiuba.PublicacionCurso.get(params.pubInicialId).titulo}"/></div>
 								<div><g:hiddenField name="responsable" value="${usuario}"/></div>
 								<div><g:hiddenField name="dni" value="${usuario.username}"/></div>
-								<div><g:hiddenField name="foro.id" value="${com.fiuba.ForoGeneral.first().id}"/></div>	
+								<div><g:hiddenField name="foro.id" value="${com.fiuba.ForoCurso.findByCuatrimestre(com.fiuba.Cuatrimestre.get(params.cuatrimestreId)).id}"/></div>	
 							</fieldset>
 							<fieldset class="buttons">
 								<button type="submit" class="btn btn-primary">Publicar</button>

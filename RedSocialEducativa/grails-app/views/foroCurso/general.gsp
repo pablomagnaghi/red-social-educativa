@@ -1,67 +1,51 @@
 <%@ page import="com.fiuba.ForoCurso" %>
+<%@ page import="com.fiuba.UsuarioService" %>
+<%@ page import="com.fiuba.MediadorService" %>
+<%@ page import="com.fiuba.AprendizService" %>
+<%
+	def usuarioService = grailsApplication.classLoader.loadClass('com.fiuba.UsuarioService').newInstance()
+	def mediadorService = grailsApplication.classLoader.loadClass('com.fiuba.MediadorService').newInstance()
+	def aprendizService = grailsApplication.classLoader.loadClass('com.fiuba.AprendizService').newInstance()
+%>
+
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'foroCurso.label', default: 'ForoCurso')}" />
+    <head>
+        <meta name="layout" content="red">
+        <g:set var="entityName" value="${message(code: 'foroCurso.label', default: 'ForoCurso')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
-	</head>
-	<body>
-		<a href="#list-foroCurso" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}">
-					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" controller="publicacionCurso" action="nueva" 
-					params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-					<g:message code="Nueva publicacion" /></g:link></li>
-			</ul>
-		</div>
-		<div id="list-foroCurso" class="content scaffold-list" role="main">
-			<g:if test="${flash.message}">
-				<div class="message" role="status">${flash.message}</div>
-			</g:if>
-		</div>	
-		<div>
-			<h2>Foro Curso: ${com.fiuba.ForoCurso.findByCuatrimestre(com.fiuba.Cuatrimestre.get(params.cuatrimestreId))}</h2>
-			<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
-			<h2>Cuatrimestre: ${com.fiuba.Cuatrimestre.get(params.cuatrimestreId)}</h2>
-			<br>
-			<table>
-			<thead>
-				<tr>
-					<g:sortableColumn property="Tema" title="Tema" />
-					<g:sortableColumn property="Autor" title="Autor" />
-					<g:sortableColumn property="Replicas" title="Replicas" />
-					<g:sortableColumn property="Ultimo mensaje" title="Ultimo mensaje" />
-				</tr>
-			</thead>
-			<tbody>
-				<g:each in="${publicaciones}" >
-					<tr>
-						<td><g:link action="publicaciones" id="${it.id}" 
-							params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">${it.titulo}</g:link></td>
-						<td>${it.responsable}</td>
-						<td>${it.respuestas?.size()}</td>
-						<td>
-							<g:if test="${it.respuestas}">
-								<p>${it.respuestas.last().responsable}</p>
-								<p>${it.respuestas.last().fecha}</p>
-								<p>${it.respuestas.last().hora}</p>
-							</g:if>
-							<g:else>
-								<p>${it.responsable}</p>
-								<p>${it.fecha}</p>
-								<p>${it.hora}</p>
-							</g:else>
-						</td>
-					</tr>
-				</g:each>
-			</tbody>
-			</table>
-			<div class="pagination">
-				<g:paginate total="${publicacionesCant ?: 0}" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"/>
-			</div>
-		</div>
+    </head>
+    <body>	
+ 	    <!-- Para el header y el panel lateral -->
+    	<g:set var="varUsuarioService" bean="usuarioService"/>
+    	<g:set var="varMediadorService" bean="mediadorService"/>
+    	<g:set var="varAprendizService" bean="aprendizService"/>
+    	<g:set var="usuario" value="${varUsuarioService.usuarioActual()}"/>
+    	<g:set var="administrador" value="${com.fiuba.Administrador.findByUsuario(usuario)}"/>
+    	<g:set var="cursosMediador" value="${varMediadorService.obtenerCursos(usuario)}"/>
+    	<g:set var="cursosAprendiz" value="${varAprendizService.obtenerCursos(usuario)}"/>
+ 	
+    	<div class="container-fluid-full">
+			<div class="row-fluid">   
+	            <g:render template="/templateRed/panel" />
+	            <!-- start: Content -->
+	            <!-- PANEL CENTRAL -->
+	            <div id="content" class="span10">
+					<g:if test="${flash.message}">
+						<div class="message" role="status">${flash.message}</div>
+					</g:if>
+					<h2>Foro Curso: ${com.fiuba.ForoCurso.findByCuatrimestre(com.fiuba.Cuatrimestre.get(params.cuatrimestreId))}</h2>
+					<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+					<h2>Cuatrimestre: ${com.fiuba.Cuatrimestre.get(params.cuatrimestreId)}</h2>
+					<h2>Mediador: ${mediador}</h2>
+					<h2>Aprendiz: ${aprendiz}</h2>
+	                <g:render template="temas" />		
+ 				</div>
+            	<!-- end: Content -->
+        	</div>
+        	<!--/fluid-row-->
+        </div>
+        <!--CLAVE ESTE DIV, SI SE SACA, NO APARECE NADA -->
+        <div class="clearfix"></div>					
 	</body>
 </html>

@@ -12,16 +12,24 @@ class ForoCursoController {
 	
 	def general() {
 		
-		params.max = Utilidades.MAX_PARAMS
-
+		params.max = 100//Utilidades.MAX_PARAMS
+/*
 		[publicaciones: PublicacionCurso.findAllByForoAndPublicacionInicial(ForoCurso.findByCuatrimestre(Cuatrimestre.get(params.cuatrimestreId)), 
 			null, [max: params.max, offset: params.offset]), publicacionesCant: PublicacionCurso.findAllByForoAndPublicacionInicial(
 			ForoCurso.findByCuatrimestre(Cuatrimestre.get(params.cuatrimestreId)), null).size(),
 			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
+		*/
+		def cuatrimestre = Cuatrimestre.get(params.cuatrimestreId)
+		
+		
+		 [publicaciones: foroCursoService.obtenerPublicacionesOrdenadas(ForoCurso.findByCuatrimestre(Cuatrimestre.get(params.cuatrimestreId))), 
+			 mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), cuatrimestre.curso),
+			 aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
+			 params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 	}
 	
 	def publicaciones() {
-
+		/*
 		params.max = Utilidades.MAX_PARAMS
 		Integer offset = params.offset?.toInteger() ?: 0
 		
@@ -34,5 +42,16 @@ class ForoCursoController {
 			mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), cuatrimestre.curso),
 			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
 			params:['pubInicialId': params.id, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
+		*/
+		def cuatrimestre = Cuatrimestre.get(params.cuatrimestreId)
+		def respuestas = PublicacionCurso.findAllByPublicacionInicial(PublicacionCurso.get(params.id))
+		
+		println "mediador publicaciones foro curso: ${Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), cuatrimestre.curso)}"
+		
+		[tema: PublicacionCurso.get(params.id), respuestas: respuestas, 
+			mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), cuatrimestre.curso),
+			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
+			params:['pubInicialId': params.id, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 	}
+	
 }

@@ -1364,6 +1364,17 @@ footer a {
     -moz-box-shadow:0 1px 0 1px #e4e6eb;
     box-shadow:0 1px 0 1px #e4e6eb
 }
+.discussions ul li .title {
+    position:absolute;
+    top:10px;
+    left:10px;
+    width:80%;
+    background:#fbfcfc;
+    padding:5px 10px 5px 10px;
+    -webkit-border-radius:2px 0 0 2px;
+    -moz-border-radius:2px 0 0 2px;
+    border-radius:2px 0 0 2px
+}
 .discussions ul li .name {
     position:absolute;
     top:10px;
@@ -1385,6 +1396,17 @@ footer a {
     -webkit-border-radius:2px 0 0 2px;
     -moz-border-radius:2px 0 0 2px;
     border-radius:2px 0 0 2px
+}
+.discussions ul li .nombre {
+    position:absolute;
+    -webkit-border-radius:1px 2px 2px 0;
+    -moz-border-radius:1px 2px 2px 0;
+    border-radius:1px 2px 2px 1px;
+    top:-20px;
+    right:0px;
+    padding:0px 10px 0px 10px;
+    font-size:12px;
+    top:40px
 }
 .discussions ul li .opciones {
     position:absolute;
