@@ -12,29 +12,28 @@ class ForoTemaController {
 	
 	def general() {
 		
-		params.max = Utilidades.MAX_PARAMS
+		params.max = 100//Utilidades.MAX_PARAMS
 				
 		def tema = Tema.get(params.temaId)
+		def foro = ForoTema.findByTema(tema)
 		
-		[publicaciones: PublicacionTema.findAllByForoAndPublicacionInicial(ForoTema.findByTema(tema),null, [max: params.max, offset: params.offset]), 
-			publicacionesCant: PublicacionTema.findAllByForoAndPublicacionInicial(ForoTema.findByTema(tema), null).size(),tema: tema, 
-			foro: ForoTema.findByTema(tema), params: ['cursoId': params.cursoId, 'temaId': params.temaId]]
+		[publicaciones: foroTemaService.obtenerPublicacionesOrdenadas(foro),tema: tema, foro: foro, 
+			mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId)), 
+			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
+			params: ['cursoId': params.cursoId, 'temaId': params.temaId]]
 	}
 	
 	def publicaciones() {
-		params.max = Utilidades.MAX_PARAMS
-		Integer offset = params.offset?.toInteger() ?: 0
+		/*params.max = Utilidades.MAX_PARAMS
+		Integer offset = params.offset?.toInteger() ?: 0*/
 		
 		def tema = Tema.get(params.temaId)
-		def respuestas = foroTemaService.obtenerRespuestas(tema, params.id.toLong(), params.max, offset)
-		def respuestasCant = PublicacionTema.findAllByPublicacionInicialAndForo(PublicacionTema.get(params.id),
-			ForoTema.findByTema(tema)).size()+1
+		def foro = ForoTema.findByTema(tema)
+		def respuestas = PublicacionTema.findAllByPublicacionInicial(PublicacionTema.get(params.id))
 		
-		[publicacion: PublicacionTema.get(params.id), respuestas: respuestas, respuestasCant: respuestasCant, 
+		[tema: PublicacionTema.get(params.id), respuestas: respuestas, foro: foro,
 			mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId)), 
 			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
 			params:['pubInicialId': params.id, 'cursoId': params.cursoId, 'temaId': params.temaId]]
 	}
 }
-
-

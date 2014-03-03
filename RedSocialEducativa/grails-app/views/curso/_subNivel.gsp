@@ -38,9 +38,6 @@
 		<h2><i class="icon-list"></i><span class="break"></span>Informacion a borrar para corrobora params</h2>
 	</div>
 	<div class="box-content">
-		<h2>Curso id: ${params.cursoId}</h2>
-		<h2>Dicta cuatrimestre: ${dictaCuatrimestre}</h2>
-		<h2>cuat id: ${cuatrimestre?.id}</h2>
-		<h2>Noticia curso: ${noticiasCurso}</h2>     
+		<h2>BOX 3</h2>
 	</div>
 </div><!--/span-->	

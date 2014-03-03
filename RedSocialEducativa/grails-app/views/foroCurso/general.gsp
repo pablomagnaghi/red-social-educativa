@@ -21,7 +21,6 @@
     	<g:set var="varMediadorService" bean="mediadorService"/>
     	<g:set var="varAprendizService" bean="aprendizService"/>
     	<g:set var="usuario" value="${varUsuarioService.usuarioActual()}"/>
-    	<g:set var="administrador" value="${com.fiuba.Administrador.findByUsuario(usuario)}"/>
     	<g:set var="cursosMediador" value="${varMediadorService.obtenerCursos(usuario)}"/>
     	<g:set var="cursosAprendiz" value="${varAprendizService.obtenerCursos(usuario)}"/>
  	

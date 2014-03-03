@@ -4,8 +4,8 @@
             <h2><i class="icon-table"></i>
                 <span class="break"></span>${foro}</h2>
             <div class="box-icon">
-                <g:link controller="publicacionCurso" action="nueva" 
-					params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-plus"></i></g:link>
+                <g:link controller="publicacionTema" action="nueva" 
+					params="['cursoId': params.cursoId, 'temaId': params.temaId]"><i class="icon-plus"></i></g:link>
             </div>
         </div>
         <div class="box-content">
@@ -37,12 +37,12 @@
 							</td>
 							<td class="center">
 								<span><g:link class="btn btn-success" action="publicaciones" id="${it.id}" 
-									params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">	                        	
+									params="['cursoId': params.cursoId, 'temaId': params.temaId]">	                        	
 		                        	<i class="icon-external-link"></i></g:link> 	
 		                       </span>
 		                       <g:if test="${mediador || ((aprendiz?.cursando) && (aprendiz?.usuario?.username == it.dni))}">
-		                           <span><g:link class="btn btn-danger" controller="publicacionCurso" action="eliminar" id="${it.id}" 
-		                         	  	params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"
+		                           <span><g:link class="btn btn-danger" controller="publicacionTema" action="eliminar" id="${it.id}" 
+		                         	  	params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]"
 		                            	onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >	                          
 		                                <i class="icon-trash "></i></g:link>     
 		                           </span>     
@@ -57,3 +57,4 @@
     <!--/span-->
 </div>
 <!--/row-->
+		
