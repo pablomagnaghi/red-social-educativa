@@ -17,8 +17,9 @@ class CursoController {
 
 	@Secured("hasRole('ROL_ADMIN')")
 	def administrador() {
-		[usuario: usuarioService.usuarioActual(), dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), 
-			cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong()), params: ['cursoId': params.cursoId]]
+		[dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), 
+			cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong()), 
+			materiales: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)), params: ['cursoId': params.cursoId]]
 	}
 
 	@Secured("hasRole('ROL_MIEMBRO')")
@@ -30,8 +31,10 @@ class CursoController {
 		
 		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestreAndParticipa(usuario, cuatrimestre, false)
 		
-		[usuario: usuario, solicitoParticipacion: aprendiz, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()),
-			cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong()), params: ['cursoId': params.cursoId]]
+		[solicitoParticipacion: aprendiz, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()),
+			cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong()), 
+			materiales: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)),
+			params: ['cursoId': params.cursoId]]
 	}
 
 	@Secured("hasRole('ROL_APRENDIZ')")
@@ -40,7 +43,9 @@ class CursoController {
 		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
 		
 		[aprendiz: aprendiz, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), cuatrimestre: cuatrimestre, 
-			noticiasCurso: NoticiaCurso.findAllByCuatrimestre(cuatrimestre), params: ['cursoId': params.cursoId]]
+			noticiasCurso: NoticiaCurso.findAllByCuatrimestre(cuatrimestre),
+			materiales: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)),
+			params: ['cursoId': params.cursoId],]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -50,18 +55,9 @@ class CursoController {
 		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
 
 		[asignatura: Curso.get(params.cursoId).asignatura, mediador: mediador, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), 
-			cuatrimestres: cuatrimestres, cuatrimestre: cuatrimestre, noticiasCurso: NoticiaCurso.findAllByCuatrimestre(cuatrimestre), 
-			params: ['cursoId': params.cursoId]]
-	}
-
-	@Secured('isFullyAuthenticated()')
-	def materiales() {
-		params.max = Utilidades.MAX_PARAMS
-
-		[materiales: MaterialCurso.findAllByCurso(Curso.get(params.cursoId),[max: params.max, offset: params.offset]),
-			materialesCant: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)).size(),
-			mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId)),
-			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()), 
+			cuatrimestres: cuatrimestres, cuatrimestre: cuatrimestre, 
+			noticiasCurso: NoticiaCurso.findAllByCuatrimestre(cuatrimestre), 
+			materiales: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)),
 			params: ['cursoId': params.cursoId]]
 	}
 

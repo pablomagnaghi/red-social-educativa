@@ -17,10 +17,9 @@ class MaterialCursoController {
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def index() {
-		params.max = Utilidades.MAX_PARAMS
+		params.max = 100//Utilidades.MAX_PARAMS
 
-		[materialCursoInstanceList: MaterialCurso.findAllByCurso(Curso.get(params.cursoId),[max: params.max, offset: params.offset]),
-			materialCursoInstanceCount: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)).size(), params: ['cursoId': params.cursoId]]
+		[materialCursoInstanceList: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)), params: ['cursoId': params.cursoId]]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -78,7 +77,7 @@ class MaterialCursoController {
 		}
 
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'MaterialCurso.label', default: 'MaterialCurso'), materialCursoInstance.id])
-		redirect action: "show", params:['id': materialCursoInstance.id, 'cursoId': params.cursoId]
+		redirect action: "index", params:['cursoId': params.cursoId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")

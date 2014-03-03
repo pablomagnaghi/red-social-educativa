@@ -10,7 +10,7 @@
 					<dd><g:link controller="tema" action="index" params="['cursoId': params.cursoId]">Temas</g:link></dd>
 					<dd><g:link controller="evaluacion" action="index" params="['cursoId': params.cursoId]">Evaluaciones</g:link></dd>		
 					<dd><g:link controller="cuatrimestre" action="create" params="['cursoId': params.cursoId]">Consolidar cuatrimestre ${cuatrimestres.first()}</g:link></dd>				
-					<dd><g:link  controller="cuatrimestre" action="indexHistoriales" params="['cursoId': params.cursoId]">Historial de cuatrimestres</g:link></dd>				
+					<dd><g:link controller="cuatrimestre" action="indexHistoriales" params="['cursoId': params.cursoId]">Historial de cuatrimestres</g:link></dd>				
 			</dl>
 			<g:if test="${cuatrimestre?.id}">
 				<dl>
@@ -20,7 +20,6 @@
 						<dd><g:link controller="foroCurso" action="general" params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]">Foro de cursada</g:link></dd>	
 						<dd><g:link controller="aprendiz" action="estadisticas" params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]">Estadisticas</g:link></dd>	
 						<dd><g:link controller="actividad" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]">Actividades</g:link></dd>		
-					
 				</dl>
 			</g:if>                        	 
 		</div>						

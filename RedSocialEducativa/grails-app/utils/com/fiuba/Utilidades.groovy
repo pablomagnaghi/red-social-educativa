@@ -43,4 +43,6 @@ class Utilidades {
 	final static CUAT_AMBOS = "1|2"
 	final static CUAT_UNO = "1"
 	final static CUAT_DOS = "2"
+	
+	final static AUTOR_ANONIMO = "Anónimo"
 }
