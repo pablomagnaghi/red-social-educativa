@@ -1,18 +1,54 @@
-<%@ page import="com.fiuba.ForoCurso" %>
+<%@ page import="com.fiuba.ForoTema" %>
+<%@ page import="com.fiuba.UsuarioService" %>
+<%@ page import="com.fiuba.MediadorService" %>
+<%@ page import="com.fiuba.AprendizService" %>
+<%
+	def usuarioService = grailsApplication.classLoader.loadClass('com.fiuba.UsuarioService').newInstance()
+	def mediadorService = grailsApplication.classLoader.loadClass('com.fiuba.MediadorService').newInstance()
+	def aprendizService = grailsApplication.classLoader.loadClass('com.fiuba.AprendizService').newInstance()
+%>
+
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'foroCurso.label', default: 'ForoCurso')}" />
+    <head>
+        <meta name="layout" content="red">
+        <g:set var="entityName" value="${message(code: 'foroTema.label', default: 'ForoTema')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
-	</head>
-	<body>
-		<a href="#list-foroCurso" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}">
-						<g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="general" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
+    </head>
+    <body>
+ 		<!-- Para el header y el panel lateral -->
+    	<g:set var="varUsuarioService" bean="usuarioService"/>
+    	<g:set var="varMediadorService" bean="mediadorService"/>
+    	<g:set var="varAprendizService" bean="aprendizService"/>
+    	<g:set var="usuario" value="${varUsuarioService.usuarioActual()}"/>
+    	<g:set var="administrador" value="${com.fiuba.Administrador.findByUsuario(usuario)}"/>
+    	<g:set var="cursosMediador" value="${varMediadorService.obtenerCursos(usuario)}"/>
+    	<g:set var="cursosAprendiz" value="${varAprendizService.obtenerCursos(usuario)}"/>
+ 	
+    	<div class="container-fluid-full">
+			<div class="row-fluid">   
+	            <g:render template="/templateRed/panel" />
+	            <!-- start: Content -->
+	            <!-- PANEL CENTRAL -->
+	            <div id="content" class="span10">
+					<g:if test="${flash.message}">
+						<div class="message" role="status">${flash.message}</div>
+					</g:if>
+					<h2>Mediador = ${mediador}</h2>
+					<h2>Aprendiz = ${aprendiz}</h2>
+	                <g:render template="discusiones" />		
+ 				</div>
+            	<!-- end: Content -->
+        	</div>
+        	<!--/fluid-row-->
+        </div>
+        <!--CLAVE ESTE DIV, SI SE SACA, NO APARECE NADA -->
+        <div class="clearfix"></div>					
+	</body>
+</html>
+
+<!-- BREADCRUMBS -->
+<!-- <li><g:link class="create" action="general" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
 						<g:message code="Volver a foro Tema" /></g:link></li>	
 				<li><g:link class="create" controller="publicacionTema" action="nueva" 
 						params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">
@@ -21,69 +57,4 @@
 					<li><g:link class="create" controller="publicacionTema" action="eliminar" id="${params.pubInicialId}" 
 						params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">
 						<g:message code="Eliminar tema" /></g:link></li>
-				</g:if>	
-			</ul>
-		</div>
-		<div id="list-foroCurso" class="content scaffold-list" role="main">
-			<g:if test="${flash.message}">
-				<div class="message" role="status">${flash.message}</div>
-			</g:if>
-		</div>	
-		<div>
-			<h2>Tema: ${publicacion}</h2>
-			<br>
-			<table>
-			<thead>
-					<tr>
-						<td>Autor</td>
-						<td>Pubilicacion</td>
-					</tr>
-					
-			</thead>
-		
-			<h2>Mediador = ${mediador}</h2>
-			<h2>Aprendiz = ${aprendiz}</h2>
-			<tbody>	
-				<g:each in="${respuestas}">	
-					<tr>
-						<td>
-							<p>${it.responsable}<p>
-							<p>Publicado: ${it.fecha} - ${it.hora}<p>
-						</td>
-						<td>${it.contenido}</td>
-							<g:if test="${mediador || (aprendiz?.usuario?.username == it.dni)}">
-								<g:if test="${!it.id.equals(params.pubInicialId as long)}">								
-									<td>
-										<g:link controller="publicacionTema" action="editar" id="${it.id}" 
-											params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">
-											<g:message code="Editar" /></g:link>
-										-
-										<g:link controller="publicacionTema" action="eliminar" 
-											id="${it.id}" params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">
-											<g:message code="Borrar" /></g:link>
-									</td>	
-								</g:if>
-								<g:else>
-									<td>
-										<g:link controller="publicacionTema" action="editar" id="${it.id}" 
-											params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">
-											<g:message code="Editar" /></g:link>
-										-
-										<g:link controller="publicacionTema" action="eliminar" 
-											id="${it.id}" params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">
-											<g:message code="Borrar" /></g:link>
-											<p>Al borrar la publicacion inicial, se borran todas sus respuestas</p>
-											<p>Equivale a eliminar tema</p>
-									</td>
-								</g:else>	
-							</g:if>	
-					</tr>
-				</g:each>
-			</tbody>
-			</table>
-			<div class="pagination">
-				<g:paginate total="${respuestasCant ?: 0}" id="${pubInicialId}" params="['cursoId': params.cursoId, 'temaId': params.temaId]"/>
-			</div>
-		</div>
-	</body>
-</html>
+				</g:if>	 -->

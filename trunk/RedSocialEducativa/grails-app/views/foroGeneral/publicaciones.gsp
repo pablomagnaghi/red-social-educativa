@@ -16,7 +16,7 @@
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
- 		 <!-- Para el header y el panel lateral -->
+ 		<!-- Para el header y el panel lateral -->
     	<g:set var="varUsuarioService" bean="usuarioService"/>
     	<g:set var="varMediadorService" bean="mediadorService"/>
     	<g:set var="varAprendizService" bean="aprendizService"/>
@@ -24,7 +24,6 @@
     	<g:set var="administrador" value="${com.fiuba.Administrador.findByUsuario(usuario)}"/>
     	<g:set var="cursosMediador" value="${varMediadorService.obtenerCursos(usuario)}"/>
     	<g:set var="cursosAprendiz" value="${varAprendizService.obtenerCursos(usuario)}"/>
- 	
  	
     	<div class="container-fluid-full">
 			<div class="row-fluid">   

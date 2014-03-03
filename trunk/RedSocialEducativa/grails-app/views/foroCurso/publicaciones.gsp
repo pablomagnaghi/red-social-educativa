@@ -12,19 +12,17 @@
 <html>
     <head>
         <meta name="layout" content="red">
-        <g:set var="entityName" value="${message(code: 'foroGeneral.label', default: 'ForoGeneral')}" />
+        <g:set var="entityName" value="${message(code: 'foroCurso.label', default: 'ForoCurso')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
- 		 <!-- Para el header y el panel lateral -->
+ 		<!-- Para el header y el panel lateral -->
     	<g:set var="varUsuarioService" bean="usuarioService"/>
     	<g:set var="varMediadorService" bean="mediadorService"/>
     	<g:set var="varAprendizService" bean="aprendizService"/>
     	<g:set var="usuario" value="${varUsuarioService.usuarioActual()}"/>
-    	<g:set var="administrador" value="${com.fiuba.Administrador.findByUsuario(usuario)}"/>
     	<g:set var="cursosMediador" value="${varMediadorService.obtenerCursos(usuario)}"/>
     	<g:set var="cursosAprendiz" value="${varAprendizService.obtenerCursos(usuario)}"/>
- 	
  	
     	<div class="container-fluid-full">
 			<div class="row-fluid">   
@@ -45,16 +43,4 @@
         <div class="clearfix"></div>					
 	</body>
 </html>
-		
-				<!--  
-				<li><g:link class="create" controller="publicacionCurso" action="nueva" 
-					params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-					<g:message code="Publicar respuesta" /></g:link></li>
-				<g:if test="${mediador}">
-					<li><g:link class="create" controller="publicacionCurso" action="eliminar" id="${params.pubInicialId}" 
-						params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-						<g:message code="Eliminar tema" /></g:link></li>
-				</g:if>	
--->
-		
-		
+	

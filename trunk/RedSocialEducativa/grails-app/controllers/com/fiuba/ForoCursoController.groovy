@@ -20,12 +20,12 @@ class ForoCursoController {
 			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 		*/
 		def cuatrimestre = Cuatrimestre.get(params.cuatrimestreId)
+		def foro = ForoCurso.findByCuatrimestre(cuatrimestre)
 		
-		
-		 [publicaciones: foroCursoService.obtenerPublicacionesOrdenadas(ForoCurso.findByCuatrimestre(Cuatrimestre.get(params.cuatrimestreId))), 
-			 mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), cuatrimestre.curso),
-			 aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
-			 params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
+		[publicaciones: foroCursoService.obtenerPublicacionesOrdenadas(foro), 
+			mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), cuatrimestre.curso),
+			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
+			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 	}
 	
 	def publicaciones() {
@@ -44,11 +44,10 @@ class ForoCursoController {
 			params:['pubInicialId': params.id, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 		*/
 		def cuatrimestre = Cuatrimestre.get(params.cuatrimestreId)
+		def foro = ForoCurso.findByCuatrimestre(cuatrimestre)
 		def respuestas = PublicacionCurso.findAllByPublicacionInicial(PublicacionCurso.get(params.id))
 		
-		println "mediador publicaciones foro curso: ${Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), cuatrimestre.curso)}"
-		
-		[tema: PublicacionCurso.get(params.id), respuestas: respuestas, 
+		[tema: PublicacionCurso.get(params.id), respuestas: respuestas, foro: foro,
 			mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), cuatrimestre.curso),
 			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
 			params:['pubInicialId': params.id, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
