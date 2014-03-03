@@ -1,27 +1,20 @@
-<%@ page import="com.fiuba.MaterialCurso" %>
-
-<div class="fieldcontain ${hasErrors(bean: materialCursoInstance, field: 'autor', 'error')} ">
-	<label for="autor">
-		<g:message code="materialCurso.autor.label" default="Autor" />
-		
-	</label>
-	<g:textField name="autor" value="${materialCursoInstance?.autor}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: materialCursoInstance, field: 'categoria', 'error')} required">
-	<label for="categoria">
-		<g:message code="materialCurso.categoria.label" default="Categoria" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="categoria" name="categoria.id" from="${com.fiuba.CategoriaMaterial.list()}" optionKey="id" required="" value="${materialCursoInstance?.categoria?.id}" class="many-to-one"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: materialCursoInstance, field: 'descripcion', 'error')} ">
-	<label for="descripcion">
-		<g:message code="materialCurso.descripcion.label" default="Descripcion" />
-		
-	</label>
-	<g:textField name="descripcion" value="${materialCursoInstance?.descripcion}"/>
-</div>
-
-<div><g:hiddenField name="curso.id" value="${params.cursoId}"/></div>
+<div class="control-group">
+	<label class="control-label" >Autor</label>			
+	<div class="controls">
+		<g:textField name="autor" value="${materialCursoInstance?.autor}"/>
+	</div>	
+</div>								
+<div class="control-group">
+	<label class="control-label" >Categoria</label>			
+	<div class="controls">
+		<g:select id="categoria" name="categoria.id" from="${com.fiuba.CategoriaMaterial.list()}" optionKey="id" 
+			value="${materialCursoInstance?.categoria?.id}" class="many-to-one"/>
+	</div>	
+</div>			
+<div class="control-group">
+	<label class="control-label" >Descripcion</label>			
+	<div class="controls">
+		<g:textField name="descripcion" value="${materialCursoInstance?.descripcion}"/>
+	</div>	
+</div>				
+<g:hiddenField name="curso.id" value="${params.cursoId}"/>

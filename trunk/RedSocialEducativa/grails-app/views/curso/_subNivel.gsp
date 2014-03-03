@@ -1,22 +1,23 @@
-<div class="box span3">
+<div class="box span6">
 	<div class="box-header" data-original-title="">
 		<h2><i class="icon-list"></i><span class="break"></span>Material del curso</h2>
 	</div>
 	<div class="box-content">
 		<ol>
-			<li>Lorem ipsum dolor sit amet</li>
-			<li>Consectetur adipiscing elit</li>
-			<li>Integer molestie lorem at massa</li>
-			<li>Facilisis in pretium nisl aliquet</li>
-			<li>Nulla volutpat aliquam velit</li>
-			<li>Faucibus porta lacus fringilla vel</li>
-			<li>Aenean sit amet erat nunc</li>
-			<li>Eget porttitor lorem</li>
-		</ol>           
+			<g:each in="${materiales}">
+				<g:if test="${it.categoria.nombre == "RefBibliografica" || it.categoria.nombre == "Enlace" || it.categoria.nombre == "Glosario" || mediador || aprendiz}">
+					<li><h4>${it.titulo} poner aca al lado link de descarga</h4></dt>
+						<ul>
+							<li>Categoria: ${it.categoria}</li>
+							<li>${it.responsable} - ${it.fecha}</li> 
+						</ul>
+				</g:if>
+			</g:each>
+		</ol>        
 	</div>
 </div><!--/span-->
 						
-<div class="box span3">
+<div class="box span6">
 	<div class="box-header">
 		<h2><i class="icon-list"></i>Temas del curso</h2>
 	</div>
@@ -30,14 +31,5 @@
 			<dt>Malesuada porta</dt>
 			<dd>Etiam porta sem malesuada magna mollis euismod.</dd>
 		</dl>            
-	</div>
-</div><!--/span-->	
-
-<div class="box span3">
-	<div class="box-header" data-original-title="">
-		<h2><i class="icon-list"></i><span class="break"></span>Informacion a borrar para corrobora params</h2>
-	</div>
-	<div class="box-content">
-		<h2>BOX 3</h2>
 	</div>
 </div><!--/span-->	
