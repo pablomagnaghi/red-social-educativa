@@ -5,7 +5,7 @@ import grails.transaction.Transactional
 @Transactional
 class ForoTemaService {
 
-	def obtenerPublicacionesOrdenadas(ForoCurso foro) {
+	def obtenerPublicacionesOrdenadas(ForoTema foro) {
 		def c = PublicacionTema.createCriteria()
 		def publicaciones = c.list {
 			eq('foro.id', foro.id)

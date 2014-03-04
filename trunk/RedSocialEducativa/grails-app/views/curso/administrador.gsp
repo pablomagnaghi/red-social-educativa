@@ -53,9 +53,15 @@
 								</div>
 							</div>
 						</div><!--/span-->
+					</div>
+					<div class="row-fluid">
+						<g:render template="opcion2"/>      
 					</div>	
 					<div class="row-fluid">
-						<g:render template="materiales"></g:render>      
+						<g:render template="subNivel"/>      
+					</div>		
+					<div class="row-fluid">
+						<g:render template="materiales"/>      
 						<g:render template="temas"/>
 					</div>	
 				</div>			

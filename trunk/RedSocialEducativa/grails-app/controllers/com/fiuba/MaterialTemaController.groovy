@@ -55,7 +55,7 @@ class MaterialTemaController {
 		}
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'materialTemaInstance.label', default: 'MaterialTema'), materialTemaInstance.id])
-		redirect controller:"tema", action:"edit", params:['id': params.temaId, 'cursoId': params.cursoId]
+		redirect controller:"tema", action:"index", params:['cursoId': params.cursoId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -77,7 +77,7 @@ class MaterialTemaController {
 		}
 
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'MaterialTema.label', default: 'MaterialTema'), materialTemaInstance.id])
-		redirect action:"show", params:['id': materialTemaInstance.id, 'cursoId': params.cursoId, 'temaId': params.temaId]
+		redirect action:"show", params:['id': params.id, 'cursoId': params.cursoId, 'temaId': params.temaId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -91,7 +91,7 @@ class MaterialTemaController {
 		materialTemaService.eliminar(materialTemaInstance)
 
 		flash.message = message(code: 'default.deleted.message', args: [message(code: 'MaterialTema.label', default: 'MaterialTema'), materialTemaInstance.id])
-		redirect controller:"tema", action:"edit", params:['id': params.temaId, 'cursoId': params.cursoId], method:"GET"
+		redirect controller:"tema", action:"index", params:['cursoId': params.cursoId], method:"GET"
 	}
 
 	protected void notFound() {

@@ -80,9 +80,6 @@
 	</body>
 </html>
 
-
-
-
 <!-- BREADCRUM -->
 <!-- <li><g:link class="list" action="index" params="['cursoId': params.cursoId]">
 					<g:message code="default.list.label" args="[entityName]" /></g:link></li>

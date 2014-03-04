@@ -46,7 +46,7 @@ class ContenidoController {
 		}
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'contenidoInstance.label', default: 'Contenido'), contenidoInstance.id])
-		redirect controller:"tema", action:"edit", params:['id': params.temaId, 'cursoId': params.cursoId]
+		redirect controller:"tema", action:"index", params:['cursoId': params.cursoId]
 	}
 	
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -65,7 +65,7 @@ class ContenidoController {
 		contenidoService.eliminar(contenidoInstance)
 
 		flash.message = message(code: 'default.deleted.message', args: [message(code: 'Contenido.label', default: 'Contenido'), contenidoInstance.id])
-		redirect controller:"tema", action:"edit", params:['id': params.temaId, 'cursoId': params.cursoId], method:"GET"
+		redirect controller:"tema", action:"index", params:['cursoId': params.cursoId], method:"GET"
 	}
 
 	protected void notFound() {

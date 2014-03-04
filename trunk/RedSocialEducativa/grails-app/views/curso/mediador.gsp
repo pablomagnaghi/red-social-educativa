@@ -74,6 +74,9 @@
 					<div class="row-fluid">
 						<g:render template="subNivel"></g:render>
 					</div>	
+					<div class="row-fluid">
+						<g:render template="opcion2"></g:render>
+					</div>	
 				</div>			
 			</div><!--/fluid-row-->	
 		</div>
