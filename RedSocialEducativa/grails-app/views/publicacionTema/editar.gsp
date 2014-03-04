@@ -52,6 +52,10 @@
 								<g:form class="form-horizontal" action="actualizar" method="PUT" id="${publicacionTemaInstance.id}" 
 									params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">
 									<g:hiddenField name="version" value="${publicacionTemaInstance?.version}" />
+									<g:hiddenField name="foro.id" value="${com.fiuba.ForoTema.findByTema(com.fiuba.Tema.get(params.temaId)).id}"/>
+									<g:hiddenField name="dni" value="${usuario.username}" />
+									<g:hiddenField name="responsable" value="${usuario}"/>
+	
 									<fieldset>
 										<g:render template="form"/>	
 										<div class="form-actions">

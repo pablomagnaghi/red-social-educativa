@@ -19,7 +19,9 @@ class CursoController {
 	def administrador() {
 		[dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), 
 			cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong()), 
-			materiales: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)), params: ['cursoId': params.cursoId]]
+			materiales: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)), 
+			temas: Tema.findAllByCurso(Curso.get(params.cursoId)),
+			params: ['cursoId': params.cursoId]]
 	}
 
 	@Secured("hasRole('ROL_MIEMBRO')")
@@ -34,6 +36,7 @@ class CursoController {
 		[solicitoParticipacion: aprendiz, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()),
 			cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong()), 
 			materiales: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)),
+			temas: Tema.findAllByCurso(Curso.get(params.cursoId)),
 			params: ['cursoId': params.cursoId]]
 	}
 
@@ -45,6 +48,7 @@ class CursoController {
 		[aprendiz: aprendiz, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), cuatrimestre: cuatrimestre, 
 			noticiasCurso: NoticiaCurso.findAllByCuatrimestre(cuatrimestre),
 			materiales: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)),
+			temas: Tema.findAllByCurso(Curso.get(params.cursoId)),
 			params: ['cursoId': params.cursoId],]
 	}
 
@@ -58,9 +62,10 @@ class CursoController {
 			cuatrimestres: cuatrimestres, cuatrimestre: cuatrimestre, 
 			noticiasCurso: NoticiaCurso.findAllByCuatrimestre(cuatrimestre), 
 			materiales: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)),
+			temas: Tema.findAllByCurso(Curso.get(params.cursoId)),
 			params: ['cursoId': params.cursoId]]
 	}
-
+/*
 	@Secured('isFullyAuthenticated()')
 	def temas() {
 		params.max = Utilidades.MAX_PARAMS
@@ -71,7 +76,7 @@ class CursoController {
 			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
 			params: ['cursoId': params.cursoId]]
 	}
-
+*/
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def actividades() {
 		params.max = Utilidades.MAX_PARAMS

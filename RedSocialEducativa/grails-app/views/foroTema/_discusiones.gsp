@@ -14,7 +14,7 @@
                 	<span><g:link controller="publicacionTema" action="nueva"
 		                	params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">
                 			<i class="icon-plus"></i></g:link></span>
-                	<g:if test="${mediador || (aprendiz?.usuario?.username == it.dni)}">
+                	<g:if test="${mediador || (aprendiz?.usuario?.username == tema.dni)}">
 						<span><g:link controller="publicacionTema" action="editar" id="${tema.id}" 
 							params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">      	
 							<i class="icon-edit"></i></g:link></span>

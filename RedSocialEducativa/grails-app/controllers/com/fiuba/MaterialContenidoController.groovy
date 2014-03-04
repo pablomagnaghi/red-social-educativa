@@ -48,7 +48,7 @@ class MaterialContenidoController {
 		}
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'materialContenidoInstance.label', default: 'MaterialContenido'), materialContenidoInstance.id])
-		redirect controller:"contenido", action:"edit", params:['id': params.contenidoId, 'cursoId': params.cursoId, 'temaId': params.temaId]
+		redirect controller:"tema", action:"index", params:['cursoId': params.cursoId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -85,12 +85,12 @@ class MaterialContenidoController {
 		materialContenidoService.eliminar(materialContenidoInstance)
 
 		flash.message = message(code: 'default.deleted.message', args: [message(code: 'MaterialContenido.label', default: 'MaterialContenido'), materialContenidoInstance.id])
-		redirect controller:"contenido", action:"edit", params:['id': params.contenidoId, 'cursoId': params.cursoId, 'temaId': params.temaId], method:"GET"
+		redirect controller:"tema", action:"index", params:['cursoId': params.cursoId], method:"GET"
 	}
 
 	protected void notFound() {
 		flash.message = message(code: 'default.not.found.message', args: [message(code: 'materialContenidoInstance.label', default: 'MaterialContenido'), params.id])
-		redirect controller: "contenido", action:"edit", params:['id': params.contenidoId, 'cursoId': params.cursoId, 'temaId': params.temaId], method: "GET"
+		redirect controller:"tema", action:"index", params:['cursoId': params.cursoId], method: "GET"
 	}
 }
 

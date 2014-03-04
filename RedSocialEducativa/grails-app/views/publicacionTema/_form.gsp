@@ -1,5 +1,5 @@
 <g:if test="${params.pubInicialId}">
-	<g:hiddenField name="titulo" value="${com.fiuba.PublicacionCurso.get(params.pubInicialId).titulo}"/>
+	<g:hiddenField name="titulo" value="${com.fiuba.PublicacionTema.get(params.pubInicialId).titulo}"/>
 </g:if>
 <g:else>
 	<div class="control-group">
@@ -16,8 +16,4 @@
 		<g:textField name="contenido" value="${publicacionTemaInstance?.contenido}"/>
 	</div>	
 </div>		
-
-<div><g:hiddenField name="responsable" value="${usuario}"/></div>
-<div><g:hiddenField name="dni" value="${usuario.username}"/></div>
-<div><g:hiddenField name="foro.id" value="${com.fiuba.ForoTema.findByTema(com.fiuba.Tema.get(params.temaId)).id}"/></div>
 

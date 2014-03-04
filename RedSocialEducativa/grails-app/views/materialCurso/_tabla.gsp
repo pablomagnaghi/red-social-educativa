@@ -14,8 +14,8 @@
                         <th>Titulo</th>
                         <th>Categoria</th>
                         <th>Responsable</th>
+                        <th>Fecha</th>  
                         <th>Autor</th>
-                        <th>Fecha</th>         
 						<th>Descripcion</th>
 						<th>Acciones</th>            
 					</tr>
@@ -26,8 +26,8 @@
     	                    <td>${fieldValue(bean: materialCursoInstance, field: "titulo")}</td>
         	                <td class="center">${fieldValue(bean: materialCursoInstance, field: "categoria")}</td>
             	            <td class="center">${fieldValue(bean: materialCursoInstance, field: "responsable")}</td>
-            	            <td class="center">${fieldValue(bean: materialCursoInstance, field: "autor")}</td>
             	            <td class="center">${fieldValue(bean: materialCursoInstance, field: "fecha")}</td>
+            	            <td class="center">${fieldValue(bean: materialCursoInstance, field: "autor")}</td>
             	            <td class="center">${fieldValue(bean: materialCursoInstance, field: "descripcion")}</td>
 	                        <td class="center">
 	                            <g:link class="btn btn-info" action="edit" resource="${materialCursoInstance}" id="${materialCursoInstance.id}"

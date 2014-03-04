@@ -1,28 +1,19 @@
-<%@ page import="com.fiuba.MaterialContenido" %>
-
-<div class="fieldcontain ${hasErrors(bean: materialContenidoInstance, field: 'autor', 'error')} ">
-	<label for="autor">
-		<g:message code="materialContenido.autor.label" default="Autor" />
-		
-	</label>
-	<g:textField name="autor" value="${materialContenidoInstance?.autor}"/>
+<div class="control-group">
+	<label class="control-label" >Categoria</label>			
+	<div class="controls">
+		<g:select id="categoria" name="categoria.id" from="${com.fiuba.CategoriaMaterial.list()}" optionKey="id"
+			value="${materialContenidoInstance?.categoria?.id}" class="many-to-one"/>
+	</div>	
 </div>
-
-<div class="fieldcontain ${hasErrors(bean: materialContenidoInstance, field: 'categoria', 'error')} required">
-	<label for="categoria">
-		<g:message code="materialContenido.categoria.label" default="Categoria" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="categoria" name="categoria.id" from="${com.fiuba.CategoriaMaterial.list()}" optionKey="id" required="" value="${materialContenidoInstance?.categoria?.id}" class="many-to-one"/>
+<div class="control-group">
+	<label class="control-label" >Autor</label>			
+	<div class="controls">
+		<g:textField name="autor" value="${materialContenidoInstance?.autor}"/>
+	</div>	
 </div>
-
-<div class="fieldcontain ${hasErrors(bean: materialContenidoInstance, field: 'descripcion', 'error')} ">
-	<label for="descripcion">
-		<g:message code="materialContenido.descripcion.label" default="Descripcion" />
-		
-	</label>
-	<g:textField name="descripcion" value="${materialContenidoInstance?.descripcion}"/>
+<div class="control-group">
+	<label class="control-label" >Descripcion</label>			
+	<div class="controls">
+		<g:textField name="descripcion" value="${materialContenidoInstance?.descripcion}"/>
+	</div>	
 </div>
-
-<div><g:hiddenField name="contenido.id" value="${params.contenidoId}"/></div>
-
