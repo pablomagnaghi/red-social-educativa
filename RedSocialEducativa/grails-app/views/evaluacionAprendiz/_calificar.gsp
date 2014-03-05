@@ -23,7 +23,8 @@
 			</ul>
 		</g:hasErrors>
 		<div class="box-content">
-			<g:form class="form-horizontal" action="guardarCalificacion" id="${params.id}" params="['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId]"> 
+			<g:form class="form-horizontal" action="guardarCalificacion" id="${params.id}" 
+				params="['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId, 'aprendizId': params.aprendizId]"> 
 				<g:hiddenField name="evaluacion.id" value="${evaluacionAprendizInstance.evaluacion.id}"/>
 				<g:hiddenField name="aprendiz.id" value="${evaluacionAprendizInstance.aprendiz.id}"/>
 				<fieldset>		

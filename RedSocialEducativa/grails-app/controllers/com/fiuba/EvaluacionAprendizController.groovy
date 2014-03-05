@@ -16,6 +16,14 @@ class EvaluacionAprendizController {
 		[evaluacion: Evaluacion.get(params.evaluacionId), evaluaciones: EvaluacionAprendiz.findAllByEvaluacion(Evaluacion.get(params.evaluacionId)), 
 			params: ['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId]]
     }
+	
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def mostrarAprendiz() {
+		
+		[aprendiz: Aprendiz.get(params.aprendizId), evaluaciones: EvaluacionAprendiz.findAllByAprendiz(Aprendiz.get(params.aprendizId)),
+			params: ['cursoId': params.cursoId]]
+	}
+	
 /*
 	@Secured("hasRole('ROL_MEDIADOR')")
     def show(EvaluacionAprendiz evaluacionAprendizInstance) {
@@ -30,7 +38,8 @@ class EvaluacionAprendizController {
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def calificar(EvaluacionAprendiz evaluacionAprendizInstance) {
-		respond evaluacionAprendizInstance, params: ['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId]
+		println "calificar params: ${params}"
+		respond evaluacionAprendizInstance, params: ['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId, 'aprendizId': params.aprendizId]
 	}
 	
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -43,10 +52,15 @@ class EvaluacionAprendizController {
 		
 		if (!evaluacionAprendizService.guardar(evaluacionAprendizInstance)) {
 			render view:'show', model: [evaluacionAprendizInstance: evaluacionAprendizInstance], params: ['cursoId': params.cursoId,
-				'evaluacionId': params.evaluacionId]
+				'evaluacionId': params.evaluacionId, 'aprendizId': params.aprendizId]
 			return
 		}
-				
+
+		if (params.aprendizId) {
+			println "DESVIOOOO"
+			redirect action:"mostrarAprendiz", params:['cursoId': params.cursoId, 'aprendizId': params.aprendizId], method: "GET"
+			return
+		}		
 		flash.message = message(code: 'default.deleted.message', args: [message(code: 'EvaluacionAprendiz.label', default: 'EvaluacionAprendiz'), evaluacionAprendizInstance.id])
 		redirect action:"mostrarEvaluacion", params:['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId], method: "GET"
 	}

@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.EvaluacionAprendiz" %>
+<%@ page import="com.fiuba.Aprendiz" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>
@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta name="layout" content="red">
-        <g:set var="entityName" value="${message(code: 'evaluacionAprendiz.label', default: 'EvaluacionAprendiz')}" />
+        <g:set var="entityName" value="${message(code: 'aprendiz.label', default: 'Aprendiz')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -23,18 +23,18 @@
     	<g:set var="usuario" value="${varUsuarioService.usuarioActual()}"/>
     	<g:set var="cursosMediador" value="${varMediadorService.obtenerCursos(usuario)}"/>
     	<g:set var="cursosAprendiz" value="${varAprendizService.obtenerCursos(usuario)}"/>
- 	
     	<div class="container-fluid-full">
-			<div class="row-fluid">   
+			<div class="row-fluid">
 	            <g:render template="/templateRed/panel" />
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-	            	<h3>curso: ${params.cursoId}</h3>
+	
+	                <h1>Aprendices</h1>
 					<g:if test="${flash.message}">
 						<div class="message" role="status">${flash.message}</div>
 					</g:if>
-	                <g:render template="evaluacion" />		
+	                <g:render template="aprendicesCurso" />		
  				</div>
             	<!-- end: Content -->
         	</div>

@@ -30,6 +30,7 @@ class AprendizService {
 		return aprendiz
 	}
 	
+	// Para evaluacionAprendiz
 	def obtenerTodosAprendicesDeCurso(Long cursoId) {
 		def c = Aprendiz.createCriteria()
 		def aprendices = c {
@@ -37,6 +38,17 @@ class AprendizService {
 				eq('curso.id', cursoId)
 			}
 			eq('participa', true)
+		}
+		return aprendices
+	}
+
+	// Para aprendiz
+	def obtenerAprendices(Long cursoId) {
+		def c = Aprendiz.createCriteria()
+		def aprendices = c {
+			cuatrimestre {
+				eq('curso.id', cursoId)
+			}
 		}
 		return aprendices
 	}

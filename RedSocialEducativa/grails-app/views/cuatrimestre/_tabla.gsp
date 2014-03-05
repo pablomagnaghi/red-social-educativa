@@ -21,7 +21,7 @@
 	                        <td class="center">
 	                        	<g:link class="btn btn-success" controller="foroCurso" action="general" 
 	                        		params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestreInstance.id]">Foro</g:link>
-	                            <g:link class="btn btn-info" action="historial" resource="${cuatrimestreInstance}" id="${cuatrimestreInstance.id}"
+	                            <g:link class="btn btn-success" action="historial" resource="${cuatrimestreInstance}" id="${cuatrimestreInstance.id}"
 	                            	params="['cursoId': params.cursoId]"><i class="icon-search "></i> 
 	                            </g:link>
 	                            <g:link class="btn btn-danger" action="delete" method="DELETE" id="${cuatrimestreInstance.id}" params="['cursoId': params.cursoId]"

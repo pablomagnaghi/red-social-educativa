@@ -9,6 +9,14 @@ class AprendizController {
 	// static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	def aprendizService
 	def mediadorService
+	def cuatrimestreService
+	
+	def aprendicesCurso() {
+		params.max = 100// Utilidades.MAX_PARAMSS	
+		[aprendices: aprendizService.obtenerAprendices(params.cursoId.toLong()), 
+			cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong()),
+			params:['cursoId': params.cursoId]]
+	}
 	
 	def estadisticas() {
 		params.max = 100 //Utilidades.MAX_PARAMS

@@ -16,7 +16,7 @@
                         <th>Horario</th>
                         <th>Aula</th>  
                         <th>Habilitada</th>
-						<th>Descripcion</th>
+                        <th>Obligatoria</th>
 						<th>Acciones</th>         
 					</tr>
 				</thead>
@@ -28,7 +28,7 @@
             	            <td class="center">${fieldValue(bean: evaluacionInstance, field: "horario")}</td>
             	            <td class="center">${fieldValue(bean: evaluacionInstance, field: "aula")}</td>
             	            <td class="center">${fieldValue(bean: evaluacionInstance, field: "habilitada")}</td>
-            	            <td class="center">${fieldValue(bean: evaluacionInstance, field: "descripcion")}</td>
+            	             <td class="center">${fieldValue(bean: evaluacionInstance, field: "obligatoria")}</td>
 	                        <td class="center">
 	                        	<g:link class="btn btn-success" controller="evaluacionAprendiz" action="mostrarEvaluacion"
 	                            	params="['cursoId': params.cursoId, 'evaluacionId': evaluacionInstance.id]"><i class="icon-search"></i> 

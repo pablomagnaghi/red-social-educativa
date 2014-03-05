@@ -52,12 +52,7 @@
 								</div>         
 								<div class="row-fluid">            	 
 									<div class="span9">
-										<g:if test="${noticiasCurso}">
-											<g:render template="noticias"></g:render>
-										</g:if>
-										<g:else>
-											<h3>No hay noticia en la cartelera</h3>
-										</g:else>
+										<g:render template="noticias"></g:render>
 									</div>
 									<div class="span3">
 										<g:render template="tareasMediador"/>
