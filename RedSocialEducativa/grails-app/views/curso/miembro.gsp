@@ -29,8 +29,7 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-
-					<g:if test="${flash.message}">
+	            	<g:if test="${flash.message}">
 						<div class="message" role="status">${flash.message}</div>
 					</g:if>
 					<div class="row-fluid">
@@ -46,16 +45,16 @@
 							<div class="box-content">
 								<div class="page-header">
 									<g:render template="tituloGeneral"></g:render>
+										<h2>Curso id: ${params.cursoId}</h2>
+										<h2>Dicta cuatrimestre: ${dictaCuatrimestre}</h2>
+										<h2>cuat id: ${cuatrimestre?.id}</h2>
+										<h2>Noticia curso: ${noticiasCurso}</h2>
+										<h2>"PARTICIPA: ${aprendiz.participa}"</h2>	
+										<h2>"APRENDIZ CURSNADO": ${aprendiz.cursando}</h2>
+										<h2>"CURSANDO: ${cursando}"</h2>
 								</div>         
 								<div class="row-fluid">            	 
-									<div class="span9">		
-										SOLO VE MATERIAL GENERAL Y TEMAS CON FOROS DE TEMAS
-											<h2>Curso id: ${params.cursoId}</h2>
-											<h2>Dicta cuatrimestre: ${dictaCuatrimestre}</h2>
-											<h2>cuat id: ${cuatrimestre?.id}</h2>
-											<h2>Noticia curso: ${noticiasCurso}</h2>   
-											
-												   
+									<div class="span9">
 										<g:if test="${cuatrimestre?.id}">
 											<g:if test="${solicitoParticipacion}">
 											<div>
@@ -66,10 +65,9 @@
 												<g:link class="list" action="solicitarParticipacionEnElCurso" params="['cursoId': params.cursoId]">
 												<g:message code="Solicitar partipacion en el curso" args="[entityName]" /></g:link>  
 											</g:else>
-										</g:if>	
-					
+										</g:if>
 									</div>
-									<div class="span3">	
+									<div class="span3">							
 									</div>
 								</div>
 							</div>
@@ -79,7 +77,13 @@
 						<g:render template="materiales"></g:render>      
 						<g:render template="temas"/>
 					</div>	
-				</div>			
+					<div class="row-fluid">
+						<g:render template="subNivel"></g:render>
+					</div>	
+					<div class="row-fluid">
+						<g:render template="opcion2"></g:render>
+					</div>
+				</div>	
 			</div><!--/fluid-row-->	
 		</div>
 		<!-- end: Content -->

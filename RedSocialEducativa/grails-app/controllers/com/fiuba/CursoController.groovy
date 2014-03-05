@@ -88,7 +88,7 @@ class CursoController {
 			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
 			params: ['cursoId': params.cursoId]]
 	}
-
+/*
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def evaluaciones() {
 		params.max = Utilidades.MAX_PARAMS
@@ -98,7 +98,7 @@ class CursoController {
 			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
 			params: ['cursoId': params.cursoId]]
 	}
-	
+	*/
 	@Secured("hasRole('ROL_MIEMBRO')")
 	def solicitarParticipacionEnElCurso() {
 
