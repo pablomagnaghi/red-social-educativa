@@ -30,7 +30,12 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-	                <g:render template="calificar" />		
+	            	<h3>curso: ${params.cursoId}</h3>
+					<h3>cuatri: ${params.cuatrimestreId}</h3>
+					<g:if test="${flash.message}">
+						<div class="message" role="status">${flash.message}</div>
+					</g:if>
+	                <g:render template="evaluacion" />		
  				</div>
             	<!-- end: Content -->
         	</div>

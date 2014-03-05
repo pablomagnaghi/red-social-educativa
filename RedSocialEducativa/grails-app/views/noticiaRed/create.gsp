@@ -43,6 +43,7 @@
 					</g:hasErrors>	
 					<div class="box-content">
 						<g:form class="form-horizontal" action="save">
+							<g:hiddenField name="administrador.id" value="${administrador.id}"/>
 							<fieldset>
 								<div class="control-group">
 									<label class="control-label" >Titulo</label>			

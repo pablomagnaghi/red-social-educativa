@@ -16,7 +16,6 @@
                         <th>Responsable</th>
                         <th>Fecha</th>  
                         <th>Autor</th>
-						<th>Descripcion</th>
 						<th>Acciones</th>            
 					</tr>
 				</thead>
@@ -28,16 +27,14 @@
             	            <td class="center">${fieldValue(bean: materialCursoInstance, field: "responsable")}</td>
             	            <td class="center">${fieldValue(bean: materialCursoInstance, field: "fecha")}</td>
             	            <td class="center">${fieldValue(bean: materialCursoInstance, field: "autor")}</td>
-            	            <td class="center">${fieldValue(bean: materialCursoInstance, field: "descripcion")}</td>
 	                        <td class="center">
+	                        	<g:link class="btn btn-success" action="show" resource="${materialCursoInstance}" id="${materialCursoInstance.id}"
+	                            	params="['cursoId': params.cursoId]"><i class="icon-search "></i></g:link>
 	                            <g:link class="btn btn-info" action="edit" resource="${materialCursoInstance}" id="${materialCursoInstance.id}"
-	                            	params="['cursoId': params.cursoId]">
-	                                <i class="icon-edit "></i> 
-	                            </g:link>
+	                            	params="['cursoId': params.cursoId]"><i class="icon-edit "></i></g:link>
 	                            <g:link class="btn btn-danger" action="delete" method="DELETE" id="${materialCursoInstance.id}" params="['cursoId': params.cursoId]"
 	                            	onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >	                          
-	                                <i class="icon-trash "></i>                        
-								</g:link>
+	                                <i class="icon-trash "></i></g:link>
 	                        </td>
 	                    </tr>
 					</g:each>   

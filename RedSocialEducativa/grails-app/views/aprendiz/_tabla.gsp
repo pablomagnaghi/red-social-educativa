@@ -12,7 +12,10 @@
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
                 <thead>
                     <tr>
-                        <th>Usuario</th>                    
+                        <th>Apellido</th>
+                        <th>Nombres</th>
+                        <th>Padron</th>     
+                        <th>Email</th>               
                         <th>Estado</th>    
                         <th>Acciones</th>            
                     </tr>
@@ -20,10 +23,10 @@
                 <tbody>
                 	<g:each in="${aprendizInstanceList}" var="aprendizInstance">
 	                    <tr>
-    	                    <td><g:link controller="usuario" action="muestraMenuMed" id="${aprendizInstance.usuario.id}" 
-								params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-								${fieldValue(bean: aprendizInstance, field: "usuario")}</g:link>  
-    	                    </td>
+    	                    <td>${aprendizInstance.usuario.apellido}</td>
+    	                    <td>${aprendizInstance.usuario.nombres}</td>
+    	            		<td>${aprendizInstance.usuario.padron}</td>
+    	                    <td>${aprendizInstance.usuario.email}</td>
 							<td class="center">
 								 <g:if test="${!aprendizInstance.participa}">
 									<button class="btn btn-primary btn-danger">Esperando aceptacion</button>
@@ -40,6 +43,11 @@
 										<i class="icon-ok"></i></g:link>
 								</g:if>
 								<g:else>		
+									<g:link class="btn btn-info" action="" id="${aprendizInstance.id}" 
+										params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"
+										value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
+										onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+										<i class="icon-trash"></i></g:link>
 									<g:link class="btn btn-danger" action="delete" id="${aprendizInstance.id}" 
 										params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"
 										value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
@@ -54,7 +62,6 @@
         </div>
     </div>
     <!--/span-->
-
 </div>
 <!--/row-->
 

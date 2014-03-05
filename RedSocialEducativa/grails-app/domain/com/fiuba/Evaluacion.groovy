@@ -2,6 +2,7 @@ package com.fiuba
 
 class Evaluacion {
 
+	String nombre
 	String fecha
 	String descripcion
 	String horario
@@ -19,6 +20,6 @@ class Evaluacion {
     }
 	
 	String toString() {
-		"${fecha} - ${horario}"
+		"${nombre} - ${fecha}"
 	}
 }

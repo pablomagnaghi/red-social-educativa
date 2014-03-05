@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.Asignatura" %>
+<%@ page import="com.fiuba.Curso" %>
 <%
 	def usuarioService = grailsApplication.classLoader.loadClass('com.fiuba.UsuarioService').newInstance()
 %>
@@ -6,7 +6,7 @@
 <html>
     <head>
         <meta name="layout" content="red">
-        <g:set var="entityName" value="${message(code: 'asignatura.label', default: 'Asignatura')}" />
+        <g:set var="entityName" value="${message(code: 'curso.label', default: 'Curso')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -24,7 +24,7 @@
 					<g:if test="${flash.message}">
 						<div class="message" role="status">${flash.message}</div>
 					</g:if>
-	                <g:render template="tabla" />		
+	                <g:render template="curso" />		
  				</div>
             	<!-- end: Content -->
         	</div>
