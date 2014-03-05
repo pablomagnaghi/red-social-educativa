@@ -34,7 +34,7 @@
 					<g:if test="${flash.message}">
 						<div class="message" role="status">${flash.message}</div>
 					</g:if>
-	                <g:render template="evaluacion" />		
+	                <g:render template="aprendiz" />		
  				</div>
             	<!-- end: Content -->
         	</div>

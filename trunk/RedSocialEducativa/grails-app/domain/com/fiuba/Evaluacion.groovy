@@ -4,7 +4,6 @@ class Evaluacion {
 
 	String nombre
 	String fecha
-	String descripcion
 	String horario
 	String aula // opcional
 	boolean parcial //el tipo (parcial o integradora)

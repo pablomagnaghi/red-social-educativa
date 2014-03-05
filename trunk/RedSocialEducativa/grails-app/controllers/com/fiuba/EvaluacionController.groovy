@@ -48,10 +48,9 @@ class EvaluacionController {
 	@Secured("hasRole('ROL_MEDIADOR')")
     def index() {
 		
-		params.max = Utilidades.MAX_PARAMS
+		params.max = 100//Utilidades.MAX_PARAMS
 
-		[evaluacionInstanceList: Evaluacion.findAllByCurso(Curso.get(params.cursoId),[max: params.max, offset: params.offset]),
-			evaluacionInstanceCount: Evaluacion.findAllByCurso(Curso.get(params.cursoId)).size(), params: ['cursoId': params.cursoId]]
+		[evaluacionInstanceList: Evaluacion.findAllByCurso(Curso.get(params.cursoId)), params: ['cursoId': params.cursoId]]
     }
 	/*
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -105,7 +104,7 @@ class EvaluacionController {
         }
 
         flash.message = message(code: 'default.updated.message', args: [message(code: 'Evaluacion.label', default: 'Evaluacion'), evaluacionInstance.id])
-		redirect action: "show", params:['id': evaluacionInstance.id, 'cursoId': params.cursoId]
+		redirect action:"index", params:['cursoId': params.cursoId]
     }
 
     @Secured("hasRole('ROL_MEDIADOR')")
