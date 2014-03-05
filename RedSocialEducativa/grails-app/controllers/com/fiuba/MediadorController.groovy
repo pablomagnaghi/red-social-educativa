@@ -8,6 +8,7 @@ class MediadorController {
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	def mediadorService
 	def aprendizService
+	def usuarioService
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def activarAprendiz() {
@@ -32,8 +33,7 @@ class MediadorController {
 
 	@Secured("hasRole('ROL_ADMIN')")
 	def create() {
-		println mediadorService.obtenerCandidatos()
-		respond new Mediador(params), model: [usuarios: mediadorService.obtenerCandidatos()]
+		respond new Mediador(params)
 	}
 
 	@Secured("hasRole('ROL_ADMIN')")

@@ -4,11 +4,8 @@
             <h2><i class="icon-user"></i>
                 <span class="break"></span>Aprendices</h2>
             <div class="box-icon">
-            	<a href="#" class="btn-setting"><g:link action="create" params="['cursoId': params.cursoId, 
-            		'cuatrimestreId': params.cuatrimestreId]">nuevo aprendiz</g:link></a>
-                <a href="#" class="btn-setting"><i class="icon-wrench"></i></a>
-                <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
-                <a href="#" class="btn-close"><i class="icon-remove"></i></a>
+            	<g:link action="create" params="['cursoId': params.cursoId, 
+            		'cuatrimestreId': params.cuatrimestreId]"><i class="icon-plus"></i></g:link></a>
             </div>
         </div>
         <div class="box-content">
@@ -16,7 +13,8 @@
                 <thead>
                     <tr>
                         <th>Usuario</th>                    
-                        <th>Estado</th>                
+                        <th>Estado</th>    
+                        <th>Acciones</th>            
                     </tr>
                 </thead>
                 <tbody>
@@ -26,26 +24,29 @@
 								params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 								${fieldValue(bean: aprendizInstance, field: "usuario")}</g:link>  
     	                    </td>
-        	               
-        	                <g:if test="${!aprendizInstance.participa}">
-								<td>Esperando aceptacion (<g:link controller="mediador" action="activarAprendiz" id="${aprendizInstance.id}" 
-									params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"
-									value="${message(code: 'Activar')}" 
-									onclick="return confirm('${message(code: 'default.button.delete.confirm.message', 
-									default: 'Are you sure?')}');">
-									<i class="icon-zoom-in "></i></g:link>)
-								</td>
-							</g:if>		
-              				<g:else>
-								<td>Aprendiz activo (<g:link action="delete" id="${aprendizInstance.id}" 
-									params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"
-									value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
-									onclick="return confirm('${message(code: 'default.button.delete.confirm.message', 
-									default: 'Are you sure?')}');">
-									<g:message code="Eliminar aprendiz" /></g:link>)
-								</td>
-							</g:else>
-
+							<td class="center">
+								 <g:if test="${!aprendizInstance.participa}">
+									<button class="btn btn-primary btn-danger">Esperando aceptacion</button>
+								</g:if>		
+              					<g:else>
+									<button class="btn btn-primary btn-success">Activo</button>
+								</g:else>
+							</td>						
+							<td class="center">
+								<g:if test="${!aprendizInstance.participa}">
+									<g:link class="btn btn-success" controller="mediador" action="activarAprendiz" id="${aprendizInstance.id}" 
+										params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]" value="${message(code: 'Activar')}" 
+										onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+										<i class="icon-ok"></i></g:link>
+								</g:if>
+								<g:else>		
+									<g:link class="btn btn-danger" action="delete" id="${aprendizInstance.id}" 
+										params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"
+										value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
+										onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+										<i class="icon-trash"></i></g:link>
+								</g:else>		
+							</td>
 	                    </tr>
 					</g:each>   
                 </tbody>            
@@ -56,3 +57,4 @@
 
 </div>
 <!--/row-->
+

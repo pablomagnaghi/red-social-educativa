@@ -14,6 +14,18 @@ class UsuarioService {
 		return Usuario.get(springSecurityService.principal.id)
 	}
 	
+	def obtenerCandidatos() {
+		def ArrayList<Usuario> usuarios = new ArrayList<Usuario>()
+		def ArrayList<Miembro> miembros = Miembro.list()
+
+		miembros.each {
+			if (!Administrador.findByUsuario(it.usuario)) {
+				usuarios.add(it.usuario)
+			}
+		}
+		return usuarios
+	}
+	
 	def guardar(Usuario usuario) {
 		if (usuario.save(flush: true)) {
 			def escritorio = new Carpeta(nombre : "Escritorio", usuario: usuario)
