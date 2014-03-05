@@ -325,13 +325,13 @@ class BootStrap {
 		
 		// Material de contenido
 		def materialContenidoUno = new MaterialContenido(titulo: "material contenido 1", descripcion: "opcional", autor: "anonimo", 
-			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
+			responsable: "${mediadorUno.usuario}-${mediadorUno.jerarquia}", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
 		def materialContenidoDos = new MaterialContenido(titulo: "material contenido 2", descripcion: "opcional", autor: "anonimo",
-			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Presentacion"))
+			responsable: "${mediadorUno.usuario}-${mediadorUno.jerarquia}", categoria: CategoriaMaterial.findByNombre("Presentacion"))
 		def materialContenidoTres = new MaterialContenido(titulo: "material contenido 3", descripcion: "opcional", autor: "anonimo",
-			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Enlace"))
+			responsable: "${mediadorUno.usuario}-${mediadorUno.jerarquia}", categoria: CategoriaMaterial.findByNombre("Enlace"))
 		def materialContenidoCuatro = new MaterialContenido(titulo: "material contenido 4", descripcion: "opcional", autor: "anonimo",
-			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Glosario"))
+			responsable: "${mediadorUno.usuario}-${mediadorUno.jerarquia}", categoria: CategoriaMaterial.findByNombre("Glosario"))
 
 		// Contenidos
 		def contenidoUnoTemaUnoCursoUno = new Contenido(titulo: "ContenidoUnoTemaUnoCursoUno")
@@ -352,13 +352,13 @@ class BootStrap {
 		
 		// Material de temas
 		def materialTemaUno = new MaterialTema(titulo: "material Tema 1", descripcion: "opcional", autor: "anonimo",
-			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
+			responsable: "${mediadorUno.usuario}-${mediadorUno.jerarquia}", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
 		def materialTemaDos = new MaterialTema(titulo: "material Tema 2", descripcion: "opcional", autor: "anonimo",
-			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Presentacion"))
+			responsable: "${mediadorUno.usuario}-${mediadorUno.jerarquia}", categoria: CategoriaMaterial.findByNombre("Presentacion"))
 		def materialTemaTres = new MaterialTema(titulo: "material Tema 3", descripcion: "opcional", autor: "anonimo",
-			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Enlace"))
+			responsable: "${mediadorDos.usuario}-${mediadorDos.jerarquia}", categoria: CategoriaMaterial.findByNombre("Enlace"))
 		def materialTemaCuatro = new MaterialTema(titulo: "material Tema 4", descripcion: "opcional", autor: "anonimo",
-			responsable: "responsable", categoria: CategoriaMaterial.findByNombre("Glosario"))
+			responsable: "${mediadorDos.usuario}-${mediadorDos.jerarquia}", categoria: CategoriaMaterial.findByNombre("Glosario"))
 		
 		// Temas
 		
@@ -415,15 +415,15 @@ class BootStrap {
 			fechaFinalizacion: (new Date()).format(Utilidades.FORMATO_FECHA))
 
 		// Evaluaciones	
-		def evaluacionUno = new Evaluacion(fecha: (new Date()).format(Utilidades.FORMATO_FECHA), descripcion: "descripcion", 
+		def evaluacionUno = new Evaluacion(nombre: "evaluacion 1", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), descripcion: "descripcion", 
 			horario: (new Date()).getTimeString(), aula: "1", parcial: true, obligatoria: true, habilitada: true)
-		def evaluacionDos = new Evaluacion(fecha: (new Date()).format(Utilidades.FORMATO_FECHA), descripcion: "descripcion",
+		def evaluacionDos = new Evaluacion(nombre: "evaluacion 2", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), descripcion: "descripcion",
 			horario: (new Date()).getTimeString(), aula: "2", parcial: true, obligatoria: true, habilitada: true)
-		def evaluacionTres = new Evaluacion(fecha: (new Date()).format(Utilidades.FORMATO_FECHA), descripcion: "descripcion",
+		def evaluacionTres = new Evaluacion(nombre: "evaluacion 3", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), descripcion: "descripcion",
 			horario: (new Date()).getTimeString(), aula: "3", parcial: true, obligatoria: true, habilitada: true)
-		def evaluacionCuatro = new Evaluacion(fecha: (new Date()).format(Utilidades.FORMATO_FECHA), descripcion: "descripcion",
+		def evaluacionCuatro = new Evaluacion(nombre: "evaluacion 4", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), descripcion: "descripcion",
 			horario: (new Date()).getTimeString(), aula: "4", parcial: true, obligatoria: true, habilitada: true)
-		def evaluacionCinco = new Evaluacion(fecha: (new Date()).format(Utilidades.FORMATO_FECHA), descripcion: "descripcion",
+		def evaluacionCinco = new Evaluacion(nombre: "evaluacion 5", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), descripcion: "descripcion",
 			horario: (new Date()).getTimeString(), aula: "5", parcial: true, obligatoria: true, habilitada: true)
 		
 		// Cuatrimestres

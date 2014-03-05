@@ -10,23 +10,18 @@ class EvaluacionAprendizController {
 	def evaluacionAprendizService
 	def aprendizService
 	
-	/* TODO: no se usa, posible implementacion en menu mediador para ver todas las notas de una evaluacion y exportar
 	@Secured("hasRole('ROL_MEDIADOR')")
-    def general(Integer max) {
-        params.max = Utilidades.MAX_PARAMS
+    def mostrarEvaluacion() {
 		
-		def evaluacion = Evaluacion.get(params.evaluacionId)
-
-		[evaluaciones: EvaluacionAprendiz.findAllByEvaluacion(evaluacion, [max: params.max, offset: params.offset]),
-			evaluacionCant:EvaluacionAprendiz.findAllByEvaluacion(evaluacion).size(), params: ['cursoId': 
-			params.cursoId, 'evaluacionId': params.evaluacionId]]
-    }*/
-
+		[evaluacion: Evaluacion.get(params.evaluacionId), evaluaciones: EvaluacionAprendiz.findAllByEvaluacion(Evaluacion.get(params.evaluacionId)), 
+			params: ['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId]]
+    }
+/*
 	@Secured("hasRole('ROL_MEDIADOR')")
     def show(EvaluacionAprendiz evaluacionAprendizInstance) {
         respond evaluacionAprendizInstance, params: ['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId]
     }
-
+*/
 	@Secured("hasRole('ROL_MEDIADOR')")
     def create() {
         respond new EvaluacionAprendiz(params), model: [aprendices: aprendizService.obtenerTodosAprendicesDeCurso(params.cursoId.toLong()), 
@@ -53,7 +48,7 @@ class EvaluacionAprendizController {
 		}
 				
 		flash.message = message(code: 'default.deleted.message', args: [message(code: 'EvaluacionAprendiz.label', default: 'EvaluacionAprendiz'), evaluacionAprendizInstance.id])
-		redirect action:"show", params:['id': params.id, 'cursoId': params.cursoId, 'evaluacionId': params.evaluacionId], method: "GET"
+		redirect action:"mostrarEvaluacion", params:['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId], method: "GET"
 	}
 	
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -91,7 +86,7 @@ class EvaluacionAprendizController {
 		evaluacionAprendizService.eliminar(evaluacionAprendizInstance)
 		
         flash.message = message(code: 'default.deleted.message', args: [message(code: 'EvaluacionAprendiz.label', default: 'EvaluacionAprendiz'), evaluacionAprendizInstance.id])
-		redirect controller: "evaluacion", action:"show", params:['id': params.evaluacionId, 'cursoId': params.cursoId], method: "GET"
+		redirect action:"mostrarEvaluacion", params:['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId], method: "GET"
   
     }
 

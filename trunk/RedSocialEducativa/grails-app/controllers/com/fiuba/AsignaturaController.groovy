@@ -15,7 +15,6 @@ class AsignaturaController {
 		respond Asignatura.list(params)
 	}
 	
-	// TODO
 	def show(Asignatura asignaturaInstance) {
 		respond asignaturaInstance
 	}

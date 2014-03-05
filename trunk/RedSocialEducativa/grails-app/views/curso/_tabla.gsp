@@ -15,8 +15,6 @@
                         <th>Nro relativo</th>
                         <th>Nombre</th>
                         <th>Cuat dict</th>         
-						<!--<td>Mediadores</td>-->
-						<!--<td>Cuatrimestres</td>-->
 						<th>Acciones</th>                      
                     </tr>
                 </thead>
@@ -27,26 +25,12 @@
 							<td>${fieldValue(bean: cursoInstance, field: "nroRelativo")}</td>						
 							<td>${fieldValue(bean: cursoInstance, field: "nombre")}</td>
 							<td>${fieldValue(bean: cursoInstance, field: "cuatDict")}</td>
-            	            <!-- 
-                        	<td class="center">
-                    	       	<g:each in="${cursoInstance.mediadores}" var="c">
-									<p>${c}</p>
-								</g:each>	
-                        	</td>
-                        	<td class="center">
-								<g:each in="${cursoInstance.cuatrimestres}" var="c">
-									<p>${c}</p>
-								</g:each>
-							</td>
-                        	-->
 	                        <td class="center">
-	                            <g:link class="btn btn-info" action="edit" resource="${cursoInstance}" id="${cursoInstance.id}">
-	                                <i class="icon-edit "></i> 
-	                            </g:link>
+	                        	<g:link class="btn btn-success" action="show" id="${cursoInstance.id}"><i class="icon-search"></i></g:link>
+	                            <g:link class="btn btn-info" action="edit" id="${cursoInstance.id}"><i class="icon-edit"></i></g:link>
 	                            <g:link class="btn btn-danger" action="delete" method="DELETE" id="${cursoInstance.id}" 
 	                            	onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >	                          
-	                                <i class="icon-trash "></i>                        
-								</g:link>
+	                                <i class="icon-trash"></i></g:link>
 	                        </td>
 	                    </tr>
 					</g:each>   

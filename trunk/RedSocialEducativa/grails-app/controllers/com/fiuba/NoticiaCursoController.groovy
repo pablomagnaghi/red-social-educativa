@@ -12,12 +12,9 @@ class NoticiaCursoController {
 	def noticiaCursoService
 
 	def index() {
-		params.max = Utilidades.MAX_PARAMS
-
-		def cuatrimestre = Cuatrimestre.get(params.cuatrimestreId)
-
-		[noticiaCursoInstanceList: NoticiaCurso.findAllByCuatrimestre(cuatrimestre,[max: params.max, offset: params.offset]),
-			noticiaCursoInstanceCount: NoticiaCurso.findAllByCuatrimestre(cuatrimestre).size(),
+		params.max = 100//Utilidades.MAX_PARAMS
+		println "params: ${params}"
+		[noticiasCurso: noticiaCursoService.obtenerNoticiasOrdenadas(params.cuatrimestreId.toLong()),
 			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 	}
 
@@ -66,7 +63,25 @@ class NoticiaCursoController {
 		}
 
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'NoticiaCurso.label', default: 'NoticiaCurso'), noticiaCursoInstance.id])
-		redirect action: "show", params:['id': noticiaCursoInstance.id, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+		redirect action:"index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+	}
+	
+	def cambiarVisibilidad(NoticiaCurso noticiaCursoInstance) {
+		
+		if (noticiaCursoInstance == null) {
+			notFound()
+			return
+		}
+		
+		noticiaCursoInstance.visibilidad = noticiaCursoInstance.visibilidad ? false : true
+
+		if (!noticiaCursoService.guardar(noticiaCursoInstance)) {
+			flash.message = "Problemas al cambiar la visibilidad"
+			redirect action:"index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+			return
+		}
+		
+		redirect action:"index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 	}
 
 	def delete(NoticiaCurso noticiaCursoInstance) {

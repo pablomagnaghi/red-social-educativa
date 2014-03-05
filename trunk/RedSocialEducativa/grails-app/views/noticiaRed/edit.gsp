@@ -44,9 +44,10 @@
 					        <div class="box-content">
 					        	<g:form class="form-horizontal" action="update" method="PUT" id="${noticiaRedInstance.id}">
 					        		<g:hiddenField name="version" value="${noticiaRedInstance?.version}" />
+					        		<g:hiddenField name="administrador.id" value="${administrador.id}"/>
+					        		<g:hiddenField name="titulo" value="${noticiaRedInstance?.titulo}"/>
+						            <g:hiddenField name="visibilidad" value="${noticiaRedInstance?.visibilidad}"/>
 						            <fieldset>
-						            	<div><g:hiddenField name="titulo" value="${noticiaRedInstance?.titulo}"/></div>
-						            	<div><g:hiddenField name="visibilidad" value="${noticiaRedInstance?.visibilidad}"/></div>
 						            	<g:render template="form"/>			
 						            	<div class="form-actions">
 											<button type="submit" class="btn btn-primary">Actualizar</button>

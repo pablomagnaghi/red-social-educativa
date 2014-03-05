@@ -117,6 +117,11 @@ class CursoController {
 		params.max = 100//Utilidades.MAX_PARAMS
 		respond Curso.list(params)
 	}
+	
+	@Secured("hasRole('ROL_ADMIN')")
+	def show(Curso cursoInstance) {
+		respond cursoInstance
+	}
 
 	@Secured("hasRole('ROL_ADMIN')")
 	def create() {

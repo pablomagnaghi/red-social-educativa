@@ -10,9 +10,7 @@
                     <tr>
                         <th>Anio</th>
                         <th>Numero</th>
-
 						<th>Acciones</th>  
-     
 					</tr>
 				</thead>
                 <tbody>
@@ -20,12 +18,11 @@
 	                    <tr>
     	                    <td>"${fieldValue(bean: cuatrimestreInstance, field: "anio")}"</td>
         	                <td class="center">${fieldValue(bean: cuatrimestreInstance, field: "numero")}</td>
-        
-
 	                        <td class="center">
-	                            <g:link class="btn btn-info" action="edit" resource="${cuatrimestreInstance}" id="${cuatrimestreInstance.id}"
-	                            	params="['cursoId': params.cursoId]">
-	                                <i class="icon-edit ">MostrarForo</i> 
+	                        	<g:link class="btn btn-success" controller="foroCurso" action="general" 
+	                        		params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestreInstance.id]">Foro</g:link>
+	                            <g:link class="btn btn-info" action="historial" resource="${cuatrimestreInstance}" id="${cuatrimestreInstance.id}"
+	                            	params="['cursoId': params.cursoId]"><i class="icon-search "></i> 
 	                            </g:link>
 	                            <g:link class="btn btn-danger" action="delete" method="DELETE" id="${cuatrimestreInstance.id}" params="['cursoId': params.cursoId]"
 	                            	onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >	                          

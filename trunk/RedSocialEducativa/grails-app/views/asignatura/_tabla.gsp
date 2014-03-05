@@ -14,8 +14,6 @@
                         <th>Codigo</th>
                         <th>Nombre</th>
                         <th>Creditos</th>
-                        <th>Contenidos Minimos</th>         
-						<!--<th>Curso</th>-->
 						<th>Acciones</th>                      
                     </tr>
                 </thead>
@@ -25,22 +23,16 @@
     	                    <td>${fieldValue(bean: asignaturaInstance, field: "codigo")}</td>
         	                <td class="center">${fieldValue(bean: asignaturaInstance, field: "nombre")}</td>
             	            <td class="center">${fieldValue(bean: asignaturaInstance, field: "creditos")}</td>
-            	            <td class="center">${fieldValue(bean: asignaturaInstance, field: "contenidosMinimos")}
-            	            </td>
-            	            <!-- 
-                	        <td class="center">
-                    	       	<g:each in="${asignaturaInstance.cursos}" var="c">
-									<p>${c}</p>
-								</g:each>	
-                        	</td>
-                        	-->
 	                        <td class="center">
-	                            <g:link class="btn btn-info" action="edit" resource="${asignaturaInstance}" id="${asignaturaInstance.id}">
-	                                <i class="icon-edit "></i> 
+	                        	<g:link class="btn btn-success" action="show" id="${asignaturaInstance.id}">
+	                                <i class="icon-search"></i> 
+	                            </g:link>
+	                            <g:link class="btn btn-info" action="edit" id="${asignaturaInstance.id}">
+	                                <i class="icon-edit"></i> 
 	                            </g:link>
 	                            <g:link class="btn btn-danger" action="delete" method="DELETE" id="${asignaturaInstance.id}" 
 	                            	onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >	                          
-	                                <i class="icon-trash "></i>                        
+	                                <i class="icon-trash"></i>                        
 								</g:link>
 	                        </td>
 	                    </tr>

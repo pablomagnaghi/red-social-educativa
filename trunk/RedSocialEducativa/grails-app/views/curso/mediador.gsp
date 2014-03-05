@@ -49,7 +49,6 @@
 										<h2>Curso id: ${params.cursoId}</h2>
 										<h2>Dicta cuatrimestre: ${dictaCuatrimestre}</h2>
 										<h2>cuat id: ${cuatrimestre?.id}</h2>
-										<h2>Noticia curso: ${noticiasCurso}</h2>     
 								</div>         
 								<div class="row-fluid">            	 
 									<div class="span9">

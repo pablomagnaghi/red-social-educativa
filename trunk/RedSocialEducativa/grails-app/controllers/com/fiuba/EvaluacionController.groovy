@@ -53,11 +53,11 @@ class EvaluacionController {
 		[evaluacionInstanceList: Evaluacion.findAllByCurso(Curso.get(params.cursoId),[max: params.max, offset: params.offset]),
 			evaluacionInstanceCount: Evaluacion.findAllByCurso(Curso.get(params.cursoId)).size(), params: ['cursoId': params.cursoId]]
     }
-	
+	/*
 	@Secured("hasRole('ROL_MEDIADOR')")
     def show(Evaluacion evaluacionInstance) {
 		respond evaluacionInstance, params:['cursoId': params.cursoId]
-    }
+    }*/
 	
 	@Secured("hasRole('ROL_MEDIADOR')")
     def create() {

@@ -1,63 +1,97 @@
+<%@ page import="com.fiuba.NoticiaCurso" %>
+<%@ page import="com.fiuba.UsuarioService" %>
+<%@ page import="com.fiuba.MediadorService" %>
+<%@ page import="com.fiuba.AprendizService" %>
+<%
+	def usuarioService = grailsApplication.classLoader.loadClass('com.fiuba.UsuarioService').newInstance()
+	def mediadorService = grailsApplication.classLoader.loadClass('com.fiuba.MediadorService').newInstance()
+	def aprendizService = grailsApplication.classLoader.loadClass('com.fiuba.AprendizService').newInstance()
+%>
+
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'noticiaCurso.label', default: 'NoticiaCurso')}" />
-		<title><g:message code="default.create.label" args="[entityName]" /></title>
-	</head>
-	<body>
-		<a href="#create-noticiaCurso" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		
-
-		<h2>params: ${params}</h2>
-		<h2>cuatrimestr : ${cuatrimstreId}</h2>
-		<h2>mediadorID: ${noticiaCurso?.mediador?.id}</h2>
-		<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
-		<h2>Curso Id: ${params.cursoId}</h2>
-		<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
-		
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}">
-					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="mediador" controller="curso" params="['cursoId': params.cursoId]">
-					<g:message code="Pagina principal de mediador"/></g:link></li>	
-				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': params.cursoId]">
-					<g:message code="Tareas mediador" /></g:link></li>
-				<li><g:link class="list" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
-			</ul>
+    <head>
+        <meta name="layout" content="red">
+        <g:set var="entityName" value="${message(code: 'noticiaCurso.label', default: 'NoticiaCurso')}" />
+		<title><g:message code="default.list.label" args="[entityName]" /></title>
+    </head>
+    <body>
+    	 <!-- Para el header y el panel lateral -->
+    	<g:set var="varUsuarioService" bean="usuarioService"/>
+    	<g:set var="varMediadorService" bean="mediadorService"/>
+    	<g:set var="varAprendizService" bean="aprendizService"/>
+    	<g:set var="usuario" value="${varUsuarioService.usuarioActual()}"/>
+    	<g:set var="cursosMediador" value="${varMediadorService.obtenerCursos(usuario)}"/>
+    	<g:set var="cursosAprendiz" value="${varAprendizService.obtenerCursos(usuario)}"/>
+ 	
+    	<div class="container-fluid-full">
+			<div class="row-fluid">   
+	            <g:render template="/templateRed/panel" />
+	            <!-- start: Content -->
+	            <!-- PANEL CENTRAL -->
+	            <div id="content" class="span10">    
+					<div class="box span4">
+						<div class="box-header">
+							<h2><i class="icon-plus"></i>Crear</h2>
+						<div class="box-icon">
+							<a href="#" class="btn-setting"><i class="icon-wrench"></i></a>
+							<a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
+							<a href="#" class="btn-close"><i class="icon-remove"></i></a>
+						</div>
+					</div>       
+					<g:if test="${flash.message}">
+						<div class="message" role="status">${flash.message}</div>
+					</g:if>
+					<g:hasErrors bean="${noticiaCursoInstance}">
+						<ul class="errors" role="alert">
+							<g:eachError bean="${noticiaCursoInstance}" var="error">
+								<li <g:if test="${error in org.springframework.validation.FieldError}">
+										data-field-id="${error.field}"</g:if>>
+									<g:message error="${error}"/></li>
+							</g:eachError>
+						</ul>
+					</g:hasErrors>	
+					<h2>mediadorID: ${mediadorId}</h2>
+					<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+					<h2>Curso Id: ${params.cursoId}</h2>
+					<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
+					<div class="box-content">
+						<g:form class="form-horizontal" action="save" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+							<g:hiddenField name="cuatrimestre.id" value="${params.cuatrimestreId}"/>
+							<g:hiddenField name="mediador.id" value="${mediadorId}"/>
+							<fieldset>
+								<div class="control-group">
+									<label class="control-label" >Titulo</label>			
+									<div class="controls">
+										<g:textField name="titulo"/>
+									</div>	
+								</div>
+								<div class="control-group">
+									<label class="control-label" >Visibilidad</label>			
+									<div class="controls">
+										<g:checkBox name="visibilidad" value="${noticiaCursoInstance?.visibilidad}" />
+									</div>	
+								</div>	
+								<g:render template="form"/>			
+								<div class="form-actions">
+									<button type="submit" class="btn btn-primary">Crear</button>
+								</div>		    
+							</fieldset>
+						</g:form>
+					</div>	
+				</div>
+				<!--/span-->
+			</div>
+			<!-- end: Content -->
 		</div>
-		<h4>PARAMS: ${params}</h4>
-		<div id="create-noticiaCurso" class="content scaffold-create" role="main">
-			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<g:hasErrors bean="${noticiaCursoInstance}">
-			<ul class="errors" role="alert">
-				<g:eachError bean="${noticiaCursoInstance}" var="error">
-				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-				</g:eachError>
-			</ul>
-			</g:hasErrors>
-			<g:form action="save" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-				<fieldset class="form">
-					<div class="fieldcontain ${hasErrors(bean: noticiaCursoInstance, field: 'titulo', 'error')} ">
-						<label for="titulo">
-							<g:message code="noticiaCurso.titulo.label" default="Titulo" />
-		
-						</label>
-						<g:textField name="titulo" value="${noticiaCursoInstance?.titulo}"/>
-					</div>
-					<div><g:hiddenField name="mediador.id" value="${mediadorId}"/></div>
-					<div><g:hiddenField name="cuatrimestre.id" value="${params.cuatrimestreId}"/></div>
-					<g:render template="form"/>
-				</fieldset>
-				<fieldset class="buttons">
-					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
-				</fieldset>
-			</g:form>
-		</div>
+		<!--/fluid-row-->
+        </div>
+        <!--CLAVE ESTE DIV, SI SE SACA, NO APARECE NADA -->
+        <div class="clearfix"></div>					
 	</body>
 </html>
+
+
+
+
+
