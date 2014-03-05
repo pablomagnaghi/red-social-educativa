@@ -1,7 +1,7 @@
 <div class="control-group">
 	<label class="control-label" >Usuario</label>			
 	<div class="controls">
-		<g:select id="usuario" name="usuario.id" from="${usuarios}" optionKey="id" class="many-to-one"/>
+		<g:select id="usuario" name="usuario.id" from="${varUsuarioService.obtenerCandidatos()}" optionKey="id" class="many-to-one"/>
 	</div>	
 </div>		
 <div class="control-group">

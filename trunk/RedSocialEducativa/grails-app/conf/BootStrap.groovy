@@ -427,8 +427,7 @@ class BootStrap {
 			horario: (new Date()).getTimeString(), aula: "5", parcial: true, obligatoria: true, habilitada: true)
 		
 		// Cuatrimestres
-		def cuatrimestreUno = new Cuatrimestre(anio: 2013, numero: 2, habGrupos: true, nroUltGrupo: 0, 
-			foro: foroCursoUno)
+		def cuatrimestreUno = new Cuatrimestre(anio: 2013, numero: 2, foro: foroCursoUno)
 		cuatrimestreUno.addToAprendices(aprendizDos)
 		cuatrimestreUno.addToAprendices(aprendizTres)
 		cuatrimestreUno.addToAprendices(aprendizCuatro)
@@ -444,44 +443,32 @@ class BootStrap {
 		cuatrimestreUno.addToActividades(actividadDos)
 		cuatrimestreUno.addToActividades(actividadTres)
 
-		def cuatrimestreUnoP = new Cuatrimestre(anio: 2013, numero: 1, habGrupos: true, nroUltGrupo: 0,
-			foro: foroCursoUnoP)
-		def cuatrimestreUnoPP = new Cuatrimestre(anio: 2012, numero: 2, habGrupos: true, nroUltGrupo: 0,
-			foro: foroCursoUnoPP)
-		def cuatrimestreUnoPPP = new Cuatrimestre(anio: 2012, numero: 1, habGrupos: true, nroUltGrupo: 0,
-			foro: foroCursoUnoPPP)
-		def cuatrimestreUnoPPPP = new Cuatrimestre(anio: 2011, numero: 2, habGrupos: true, nroUltGrupo: 0,
-			foro: foroCursoUnoPPPP)
-		def cuatrimestreUnoPPPPP = new Cuatrimestre(anio: 2011, numero: 1, habGrupos: true, nroUltGrupo: 0,
-			foro: foroCursoUnoPPPPP)
+		def cuatrimestreUnoP = new Cuatrimestre(anio: 2013, numero: 1, foro: foroCursoUnoP)
+		def cuatrimestreUnoPP = new Cuatrimestre(anio: 2012, numero: 2, foro: foroCursoUnoPP)
+		def cuatrimestreUnoPPP = new Cuatrimestre(anio: 2012, numero: 1, foro: foroCursoUnoPPP)
+		def cuatrimestreUnoPPPP = new Cuatrimestre(anio: 2011, numero: 2, foro: foroCursoUnoPPPP)
+		def cuatrimestreUnoPPPPP = new Cuatrimestre(anio: 2011, numero: 1, foro: foroCursoUnoPPPPP)
 		cuatrimestreUnoPPPPP.addToAprendices(aprendizDosPPP)
-		def cuatrimestreUnoPPPPPP = new Cuatrimestre(anio: 2010, numero: 2, habGrupos: true, nroUltGrupo: 0,
-			foro: foroCursoUnoPPPPPP)
 		
-		def cuatrimestreDos = new Cuatrimestre(anio: 2013, numero: 1, habGrupos: true, nroUltGrupo: 0,
-			foro: foroCursoDos)
+		def cuatrimestreUnoPPPPPP = new Cuatrimestre(anio: 2010, numero: 2, foro: foroCursoUnoPPPPPP)
+		
+		def cuatrimestreDos = new Cuatrimestre(anio: 2013, numero: 1, foro: foroCursoDos)
 		cuatrimestreDos.addToAprendices(aprendizAgus)
 
-		def cuatrimestreTres = new Cuatrimestre(anio: 2013, numero: 1, habGrupos: true, nroUltGrupo: 0,
-			foro: foroCursoTres)
+		def cuatrimestreTres = new Cuatrimestre(anio: 2013, numero: 1, foro: foroCursoTres)
 		cuatrimestreTres.addToAprendices(aprendizUno)
 		cuatrimestreTres.addToAprendices(aprendizDosP)
 		
-		def cuatrimestreCuatro = new Cuatrimestre(anio: 2013, numero: 2, habGrupos: true, nroUltGrupo: 0,
-			foro: foroCursoCuatro)
+		def cuatrimestreCuatro = new Cuatrimestre(anio: 2013, numero: 2, foro: foroCursoCuatro)
 		cuatrimestreCuatro.addToAprendices(aprendizUnoP)
-		def cuatrimestreCuatroP = new Cuatrimestre(anio: 2012, numero: 2, habGrupos: true, nroUltGrupo: 0,
-			foro: foroCursoCuatroP)
-		def cuatrimestreCuatroPP = new Cuatrimestre(anio: 2012, numero: 1, habGrupos: true, nroUltGrupo: 0,
-			foro: foroCursoCuatroPP)
-		def cuatrimestreCuatroPPP = new Cuatrimestre(anio: 2011, numero: 2, habGrupos: true, nroUltGrupo: 0,
-			foro: foroCursoCuatroPPP)
-		def cuatrimestreCuatroPPPP = new Cuatrimestre(anio: 2011, numero: 1, habGrupos: true, nroUltGrupo: 0,
-			foro: foroCursoCuatroPPPP)
+		
+		def cuatrimestreCuatroP = new Cuatrimestre(anio: 2012, numero: 2, foro: foroCursoCuatroP)
+		def cuatrimestreCuatroPP = new Cuatrimestre(anio: 2012, numero: 1, foro: foroCursoCuatroPP)
+		def cuatrimestreCuatroPPP = new Cuatrimestre(anio: 2011, numero: 2, foro: foroCursoCuatroPPP)
+		def cuatrimestreCuatroPPPP = new Cuatrimestre(anio: 2011, numero: 1, foro: foroCursoCuatroPPPP)
 		cuatrimestreCuatroPPPP.addToAprendices(aprendizDosPP)
 
-		def cuatrimestreCinco = new Cuatrimestre(anio: 2012, numero: 2, habGrupos: true, nroUltGrupo: 0, 
-			foro: foroCursoCinco)
+		def cuatrimestreCinco = new Cuatrimestre(anio: 2012, numero: 2, foro: foroCursoCinco)
 		cuatrimestreCinco.addToAprendices(aprendizUnoPP)
 		
 		// Cursos		

@@ -38,13 +38,15 @@ class CuatrimestreController {
 	}
 
 	// TODO: consolidar cuatrimestre
+	
+	/*
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def create() {
 		
 		// Si no se dicta ese cuatrimestre salgo
 		if (!cursoService.seDicta(params.cursoId.toLong())) {
 			flash.message = "El curso se dicta durante el cuatrimestre ${Curso.get(params.cursoId).cuatDict}"
-			redirect controller: "curso", action: "menuMediador", params:['cursoId': params.cursoId]
+			redirect controller: "curso", action: "mediador", params:['cursoId': params.cursoId]
 			return
 		}
 		
@@ -53,7 +55,7 @@ class CuatrimestreController {
 		// Si ya se dicta ese cuatrimestre salgo
 		if (cuatrimestre) {
 			flash.message = "Para consolidar el ${cuatrimestre} del curso ${Curso.get(params.cursoId)} debe esperar a la finalizacion del cuatrimestre"
-			redirect controller: "curso", action: "menuMediador", params:['cursoId': params.cursoId]
+			redirect controller: "curso", action: "mediador", params:['cursoId': params.cursoId]
 			return
 		}
 		
@@ -88,7 +90,53 @@ class CuatrimestreController {
 		println "Se crea el cuatrimestre ${cuatrimestreInstance.anio}-${cuatrimestreInstance.numero}"
 		
 		flash.message = message(code: 'default.created.message', args: [message(code: 'cuatrimestreInstance.label', default: 'Cuatrimestre'), cuatrimestreInstance.id])
-		redirect controller: "curso", action: "menuMediador", params:['cursoId': params.cursoId]
+		redirect controller: "curso", action: "mediador", params:['cursoId': params.cursoId]
+	}*/
+	
+	// TODO: consolidar cuatrimestre
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def consolidar() {
+		
+		// Si no se dicta ese cuatrimestre salgo
+		if (!cursoService.seDicta(params.cursoId.toLong())) {
+			flash.message = "El curso se dicta durante el cuatrimestre ${Curso.get(params.cursoId).cuatDict}"
+			redirect controller: "curso", action: "mediador", params:['cursoId': params.cursoId]
+			return
+		}
+
+		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
+	
+		// Si ya se dicta ese cuatrimestre salgo
+		if (cuatrimestre) {
+			flash.message = "Para consolidar el ${cuatrimestre} del curso ${Curso.get(params.cursoId)} debe esperar a la finalizacion del cuatrimestre"
+			redirect controller: "curso", action: "mediador", params:['cursoId': params.cursoId]
+			return
+		}
+
+		Integer anio = cuatrimestreService.obtenerAnio()
+		Integer numero = cuatrimestreService.obtenerNumero()
+		
+		def foro = new ForoCurso(nombre: "Foro general del curso ${Curso.get(params.cursoId)} durante el cuatrimestre ${anio} - ${numero}")
+		def cuatrimestreInstance = new Cuatrimestre(anio: anio, numero: numero, foro: foro, curso: Curso.get(params.cursoId))
+		
+		// Obtengo el ultimo cuatrimestre
+		def cuatrimestres = cuatrimestreService.obtenerCuatrimestresOrdenados(params.cursoId.toLong())
+		def cuatrimestreUltimo = cuatrimestres.first()
+		
+		if (!cuatrimestreService.guardar(cuatrimestreInstance)) {
+			println cuatrimestreInstance.errors
+			flash.message = "Problemas al consolidar el cuatrimestre ${cuatrimestreInstance}"	
+			redirect controller: "curso", action: "mediador", params:['cursoId': params.cursoId]
+			return
+		}
+	
+		// Se creo el nuevo cuatrimestre => Pasar a cursando false a todos los aprendices del cuatrimestre anterior
+		cuatrimestreService.consolidar(cuatrimestreUltimo)
+
+		println "Se crea el cuatrimestre ${cuatrimestreInstance.anio}-${cuatrimestreInstance.numero}"
+		
+		flash.message = message(code: 'default.created.message', args: [message(code: 'cuatrimestreInstance.label', default: 'Cuatrimestre'), cuatrimestreInstance.id])
+		redirect controller: "curso", action: "mediador", params:['cursoId': params.cursoId]
 	}
 
 	// TODO: por ahora no se usa
