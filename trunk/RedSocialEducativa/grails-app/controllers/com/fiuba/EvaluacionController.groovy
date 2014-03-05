@@ -12,12 +12,10 @@ class EvaluacionController {
 	def aprendizService
 	
 	@Secured("hasRole('ROL_APRENDIZ')")
-	def menuAprendiz(Evaluacion evaluacion) {
-		
-		def aprendiz = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
-		def evaluacionAprendiz = EvaluacionAprendiz.findByAprendizAndEvaluacion(aprendiz, evaluacion)
-		
-		[evaluacion: evaluacion, evaluacionAprendiz: evaluacionAprendiz, params: ['cursoId': params.cursoId]]
+	def menuAprendiz() {
+		[evaluaciones: Evaluacion.findAllByCurso(Curso.get(params.cursoId)),
+			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
+			params: ['cursoId': params.cursoId]]
 	}
 	
 	@Secured("hasRole('ROL_APRENDIZ')")
