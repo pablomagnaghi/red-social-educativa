@@ -24,13 +24,12 @@ class ActividadController {
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def index() {
-		params.max = Utilidades.MAX_PARAMS
+		params.max = 100//Utilidades.MAX_PARAMS
 
-		[actividadInstanceList: Actividad.findAllByCuatrimestre(Cuatrimestre.get(params.cuatrimestreId),[max: params.max, offset: params.offset]),
-			actividadInstanceCount: Actividad.findAllByCuatrimestre(Cuatrimestre.get(params.cuatrimestreId)).size(),
+		[actividadInstanceList: Actividad.findAllByCuatrimestre(Cuatrimestre.get(params.cuatrimestreId)),
 			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
-
 	}
+	
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def show(Actividad actividadInstance) {
 		respond actividadInstance, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]

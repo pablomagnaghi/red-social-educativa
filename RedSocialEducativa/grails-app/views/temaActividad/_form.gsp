@@ -1,12 +1,7 @@
-<%@ page import="com.fiuba.TemaActividad" %>
-
-<div class="fieldcontain ${hasErrors(bean: temaActividadInstance, field: 'tema', 'error')} required">
-	<label for="tema">
-		<g:message code="temaActividad.tema.label" default="Tema" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="tema" name="tema.id" from="${temas}" optionKey="id" required="" 
+<div class="control-group">
+	<label class="control-label" >Tema</label>			
+	<div class="controls">
+		<g:select id="tema" name="tema.id" from="${temas}" optionKey="id" required="" 
 		value="${temaActividadInstance?.tema?.id}" class="many-to-one"/>
+	</div>	
 </div>
-
-<div><g:hiddenField name="actividad.id" value="${params.actividadId}"/></div>

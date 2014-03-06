@@ -10,6 +10,16 @@ class GrupoActividadController {
 	def usuarioService
 	def grupoActividadService
 	
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def gruposMediador() {
+		
+		params.max = 100//Utilidades.MAX_PARAMS
+
+		[grupoActividadAprendices:  grupoActividadService.obtenerAprendicesPorActividad(params.actividadId.toLong()),
+			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
+	}
+
+	/*
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def menuAprendiz() {
 		params.max = Utilidades.MAX_PARAMS
@@ -30,7 +40,7 @@ class GrupoActividadController {
 			aprendicesCant: grupoActividadService.obtenerAprendicesPorActividad(params.actividadId.toLong()).size(),
 			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
 	}
-	
+	*/
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def crear() {
 
@@ -50,7 +60,7 @@ class GrupoActividadController {
 		respond new GrupoActividad(params), model:[numGrupo: numGrupo], params:['cursoId': params.cursoId, 
 			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 	}
-
+/*
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def muestraAprendiz(GrupoActividad grupoActividadInstance) {	
 		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuarioService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
@@ -66,7 +76,7 @@ class GrupoActividadController {
 		respond grupoActividadInstance, params: ['cursoId' :params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
 			'actividadId': params.actividadId]
 	}
-	
+	*/
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def cambios() {
 		[aprendices: grupoActividadService.obtenerAprendicesPorActividad(params.actividadId.toLong()), params: ['cursoId' :params.cursoId, 

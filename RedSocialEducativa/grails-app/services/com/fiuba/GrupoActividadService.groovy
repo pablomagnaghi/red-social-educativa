@@ -4,7 +4,7 @@ import grails.transaction.Transactional
 
 @Transactional
 class GrupoActividadService {
-
+/*
 	def obtenerAprendicesPorActividadPaginado(Long actividadId, Integer max, Integer offset) {
 		
 		def c = GrupoActividadAprendiz.createCriteria()
@@ -16,7 +16,8 @@ class GrupoActividadService {
 		
 		return aprendices
 	}
-	
+	*/
+
 	def obtenerAprendicesPorActividad(Long actividadId) {
 		def c = GrupoActividadAprendiz.createCriteria()
 		def aprendices = c.list() {
