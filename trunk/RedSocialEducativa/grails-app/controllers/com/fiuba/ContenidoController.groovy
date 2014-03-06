@@ -8,7 +8,7 @@ class ContenidoController {
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def contenidoService
-
+/*
 	@Secured("hasAnyRole('ROL_APRENDIZ', 'ROL_MEDIADOR')")
 	def curso() {
 		params.max = Utilidades.MAX_PARAMS
@@ -16,12 +16,12 @@ class ContenidoController {
 		[contenidos: Contenido.findAllByTema(Tema.get(params.temaId), [max: params.max, offset: params.offset]),
 			contenidosCant: Contenido.findAllByTema(Tema.get(params.temaId)).size(), params: ['cursoId': params.cursoId, 'temaId': params.temaId]]
 	}
-
+*//*
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def show(Contenido contenidoInstance) {
 		respond contenidoInstance, params: ['cursoId': params.cursoId, 'temaId': params.temaId]
 	}
-	
+	*/
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def create() {
 		respond new Contenido(params), params: ['cursoId': params.cursoId, 'temaId': params.temaId]
@@ -48,12 +48,12 @@ class ContenidoController {
 		flash.message = message(code: 'default.created.message', args: [message(code: 'contenidoInstance.label', default: 'Contenido'), contenidoInstance.id])
 		redirect controller:"tema", action:"index", params:['cursoId': params.cursoId]
 	}
-	
+	/*
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def edit(Contenido contenidoInstance) {
 		respond contenidoInstance, params: ['cursoId': params.cursoId, 'temaId': params.temaId]
 	}
-	
+	*/
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def delete(Contenido contenidoInstance) {
 

@@ -9,12 +9,12 @@ class CuatrimestreController {
 	
 	def cuatrimestreService
 	def cursoService
-
+/*
 	@Secured("hasRole('ROL_ADMIN')")
 	def muestraMenuAdm(Cuatrimestre cuatrimestreInstance) {
 		respond cuatrimestreInstance, params: [cursoId: params.cursoId]
 	}
-
+*/
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def indexHistoriales(Integer max) {
 		params.max = Utilidades.MAX_PARAMS
@@ -31,11 +31,11 @@ class CuatrimestreController {
 		respond cuatrimestreInstance, params: [cursoId: params.cursoId]
 	}
 
-	// TODO: por ahora no se usa	
+	/*// TODO: por ahora no se usa	
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def show(Cuatrimestre cuatrimestreInstance) {
 		respond cuatrimestreInstance, params:['cursoId': params.cursoId]
-	}
+	}*/
 
 	// TODO: consolidar cuatrimestre
 	
@@ -138,7 +138,7 @@ class CuatrimestreController {
 		flash.message = message(code: 'default.created.message', args: [message(code: 'cuatrimestreInstance.label', default: 'Cuatrimestre'), cuatrimestreInstance.id])
 		redirect controller: "curso", action: "mediador", params:['cursoId': params.cursoId]
 	}
-
+/*
 	// TODO: por ahora no se usa
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def edit(Cuatrimestre cuatrimestreInstance) {
@@ -162,7 +162,7 @@ class CuatrimestreController {
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'Cuatrimestre.label', default: 'Cuatrimestre'), cuatrimestreInstance.id])
 		redirect action: "show", params:['id': cuatrimestreInstance.id, 'cursoId': params.cursoId]
 	}
-
+*/
 	// TODO: por ahora no se usa
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def delete(Cuatrimestre cuatrimestreInstance) {
