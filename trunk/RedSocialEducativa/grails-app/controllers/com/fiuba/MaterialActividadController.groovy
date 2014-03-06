@@ -58,14 +58,12 @@ class MaterialActividadController {
 		}
 
 		flash.message = message(code: 'default.created.message', args: [message(code: 'materialActividadInstance.label', default: 'MaterialActividad'), materialActividadInstance.id])
-		redirect controller:"actividad", action:"edit", params:['id': params.actividadId, 'cursoId': params.cursoId, 'cuatrimestreId': 
-			params.cuatrimestreId]
+		redirect controller:"actividad", action:"index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 
 	}
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def edit(MaterialActividad materialActividadInstance) {
-		respond materialActividadInstance, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
-			'actividadId': params.actividadId]
+		respond materialActividadInstance, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -83,8 +81,7 @@ class MaterialActividadController {
 		}
 
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'MaterialActividad.label', default: 'MaterialActividad'), materialActividadInstance.id])
-		redirect action:"show", params:['id': materialActividadInstance.id, 'cursoId': params.cursoId, 
-			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
+		redirect controller:"actividad", action:"index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -98,13 +95,11 @@ class MaterialActividadController {
 		materialActividadService.eliminar(materialActividadInstance)
 
 		flash.message = message(code: 'default.deleted.message', args: [message(code: 'MaterialActividad.label', default: 'MaterialActividad'), materialActividadInstance.id])
-		redirect controller:"actividad", action:"show", params:['id': params.actividadId, 'cursoId': params.cursoId, 
-			'cuatrimestreId': params.cuatrimestreId], method:"GET"
+		redirect controller:"actividad", action:"index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId], method:"GET"
 	}
 
 	protected void notFound() {
 		flash.message = message(code: 'default.not.found.message', args: [message(code: 'materialActividadInstance.label', default: 'MaterialActividad'), params.id])
-		redirect controller: "actividad", action:"show", params:['id': params.actividadId, 'cursoId': params.cursoId, 
-			'cuatrimestreId': params.cuatrimestreId], method: "GET"
+		redirect controller: "actividad", action:"index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId], method: "GET"
 	}
 }
