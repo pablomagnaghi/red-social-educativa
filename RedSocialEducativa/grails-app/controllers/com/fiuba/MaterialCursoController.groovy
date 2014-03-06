@@ -8,12 +8,12 @@ class MaterialCursoController {
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	def usuarioService
 	def materialCursoService
-
+/*
 	@Secured('isFullyAuthenticated()')
 	def curso(MaterialCurso material) {
 
 		[material: material, params: ['cursoId': params.cursoId]]
-	}
+	}*/
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def index() {

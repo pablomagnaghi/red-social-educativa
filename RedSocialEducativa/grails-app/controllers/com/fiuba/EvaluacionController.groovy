@@ -12,7 +12,7 @@ class EvaluacionController {
 	def aprendizService
 	
 	@Secured("hasRole('ROL_APRENDIZ')")
-	def menuAprendiz() {
+	def evaluacionesCurso() {
 		[evaluaciones: Evaluacion.findAllByCurso(Curso.get(params.cursoId)),
 			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
 			params: ['cursoId': params.cursoId]]
@@ -26,19 +26,19 @@ class EvaluacionController {
 			return
 		}
 		
-		def aprendiz = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
-		evaluacionService.inscribirAprendiz(evaluacion, aprendiz)
+		def evaluacionesCurso = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
+		evaluacionService.inscribirAprendiz(evaluacion, evaluacionesCurso)
 
 		flash.message = "La inscripcion ha sido realizada exitosamente"
-		redirect action: "menuAprendiz", params:['id': params.id, 'cursoId': params.cursoId]
+		redirect action: "evaluacionesCurso", params:['cursoId': params.cursoId]
 	}
 	
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def evaluacionesAprendiz(Evaluacion evaluacion) {
 		
-		def aprendiz = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
+		def evaluacionesCurso = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
 		
-		def evaluacionesAprendiz = evaluacionService.obtenerEvaluacionesPorAprendiz(aprendiz, params.cursoId.toLong())
+		def evaluacionesAprendiz = evaluacionService.obtenerEvaluacionesPorAprendiz(evaluacionesCurso, params.cursoId.toLong())
 
 		[evaluacionesAprendiz: evaluacionesAprendiz, params: ['cursoId': params.cursoId]]
 	}

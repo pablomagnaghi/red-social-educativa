@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta name="layout" content="red">
-        <g:set var="entityName" value="${message(code: 'asignatura.label', default: 'Asignatura')}" />
+        <g:set var="entityName" value="${message(code: 'evaluacion.label', default: 'Evaluacion')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -30,12 +30,13 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-	            	<h3>curso: ${params.cursoId}</h3>
-					<h3>cuatri: ${params.cuatrimestreId}</h3>
 					<g:if test="${flash.message}">
 						<div class="message" role="status">${flash.message}</div>
 					</g:if>
-	                <g:render template="evaluacion" />		
+					<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+					<h2>Curso Id: ${params.cursoId}</h2>
+					<h2>Aprendiz: ${aprendiz}</h2>
+	                <g:render template="evaluacionesCurso" />		
  				</div>
             	<!-- end: Content -->
         	</div>

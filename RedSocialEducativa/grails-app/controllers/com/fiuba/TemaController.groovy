@@ -8,14 +8,14 @@ class TemaController {
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def temaService
-
+/*
 	@Secured('isFullyAuthenticated()')
 	def curso(Tema tema) {
 
 		[contenidos: Contenido.findAllByTema(tema), materiales: MaterialTema.findAllByTema(tema), 
 			params: ['cursoId': params.cursoId, 'temaId': params.id]]
 	}
-
+*/
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def index() {
 		params.max = Utilidades.MAX_PARAMS
@@ -23,12 +23,12 @@ class TemaController {
 		[temaInstanceList: Tema.findAllByCurso(Curso.get(params.cursoId),[max: params.max, offset: params.offset]),
 			temaInstanceCount: Tema.findAllByCurso(Curso.get(params.cursoId)).size(), params: ['cursoId': params.cursoId]]
 	}
-
+/*
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def show(Tema temaInstance) {
 		respond temaInstance, params: ['cursoId': params.cursoId]
 	}
-	
+	*/
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def create() {
 		respond new Tema(params), params: ['cursoId': params.cursoId]
@@ -57,12 +57,12 @@ class TemaController {
 		flash.message = message(code: 'default.created.message', args: [message(code: 'temaInstance.label', default: 'Tema'), temaInstance.id])
 		redirect action: "index", params:['cursoId': params.cursoId]
 	}
-
+/*
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def edit(Tema temaInstance) {
 		respond temaInstance, params:['cursoId': params.cursoId]
 	}
-
+*/
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def delete(Tema temaInstance) {
 

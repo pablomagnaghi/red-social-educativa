@@ -72,7 +72,7 @@
 											<p>Usted curso la materia durante el cuatrimestre: ${aprendiz.cuatrimestre.anio} - ${aprendiz.cuatrimestre.numero}</p>
 										</g:else>	 	    
 										<div>
-											<g:link controller="evaluacion" action="menuAprendiz" params="['cursoId': params.cursoId]">
+											<g:link controller="evaluacion" action="evaluacionesCurso" params="['cursoId': params.cursoId]">
 											<g:message code="Evaluaciones del curso" /></g:link>
 										</div>
 										<div>

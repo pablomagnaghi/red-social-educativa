@@ -9,7 +9,7 @@ class MaterialTemaController {
 	
 	def usuarioService
 	def materialTemaService
-
+/*
 	@Secured("hasAnyRole('ROL_APRENDIZ', 'ROL_MEDIADOR')")
 	def curso() {
 		params.max = Utilidades.MAX_PARAMS
@@ -21,7 +21,7 @@ class MaterialTemaController {
 			contenidosCant: Contenido.findAllByTema(tema).size(),
 			params: ['cursoId': params.cursoId, 'temaId': params.temaId]]
 	}
-
+*/
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def show(MaterialTema materialTemaInstance) {
 		respond materialTemaInstance, params: ['cursoId': params.cursoId, 'temaId': params.temaId]

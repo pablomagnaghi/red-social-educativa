@@ -92,7 +92,7 @@ class UsuarioController {
 		flash.message = message(code: 'default.deleted.message', args: [message(code: 'usuario.label', default: 'Usuario'), usuarioInstance.id])
 		redirect action:"index", method:"GET"
 	}
-
+/*
 	@Secured("hasRole('ROL_ADMIN')")
 	def muestraMenuAdm(Usuario usuarioInstance) {
 		respond usuarioInstance
@@ -107,7 +107,7 @@ class UsuarioController {
 	def muestraMenuAprendiz(Usuario usuarioInstance) {
 		respond usuarioInstance
 	}
-	
+	*/
 	protected void notFound() {
 		flash.message = message(code: 'default.not.found.message', args: [message(code: 'usuarioInstance.label', default: 'Usuario'), params.id])
 		redirect action: "index", method: "GET"
