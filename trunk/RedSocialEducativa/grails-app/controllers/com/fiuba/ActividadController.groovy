@@ -10,7 +10,8 @@ class ActividadController {
 	def usuarioService
 	def actividadService
 	def aprendizService
-	
+	def cuatrimestreService
+	/*
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def aprendiz() {
 
@@ -20,6 +21,14 @@ class ActividadController {
 
 		[actividad: actividad, grupoActividadAprendiz: grupoActividadAprendiz, params: ['cursoId': params.cursoId, 
 			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.id]]
+	}*/
+
+	@Secured("hasRole('ROL_APRENDIZ')")
+	def actividadesCurso() {
+		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
+		
+		[actividades: Actividad.findAllByCuatrimestre(cuatrimestre), 
+			params: ['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre.id]]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
