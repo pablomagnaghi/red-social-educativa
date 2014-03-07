@@ -17,7 +17,7 @@
 					</tr>
 				</thead>
                 <tbody>
-                	<g:each in="${materialCursoInstanceList}" var="materialCursoInstance">
+                	<g:each in="${materiales}" var="materialCursoInstance">
 	                    <tr>
     	                    <td>${fieldValue(bean: materialCursoInstance, field: "titulo")}</td>
         	                <td class="center">${fieldValue(bean: materialCursoInstance, field: "categoria")}</td>

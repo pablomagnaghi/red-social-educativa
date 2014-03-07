@@ -3,6 +3,13 @@
         <div class="box-header" data-original-title="">
             <h2><i class="icon-table"></i>
                 <span class="break"></span>Grupos de la actividad</h2>
+                <div class="box-icon">
+                	<g:link class="create" action="cambiarAprendiz" 
+	                	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]">
+						<g:message code="Cambiar aprendiz de grupo"/></g:link>
+            	</div>
+                
+                
         </div>
         <div class="box-content">
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
@@ -32,10 +39,9 @@
 	            	    	<td class="center">
 	            	    		<!-- REVISAR ESTO -->
 	            	    		<g:each in="${it.grupo.materiales}" var="m">
-									<span class="property-value" aria-labelledby="materiales-label">
-										<g:link controller="materialGrupoActividad" action="muestraMediador" id="${m.id}"
-											params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId, 
-											'grupoActividadId': it.id]">${m?.encodeAsHTML()}</g:link></span>
+									<p><g:link controller="materialGrupoActividad" action="materialAprendiz" id="${m.id}"
+										params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId, 
+										'grupoActividadId': it.id]">${m?.encodeAsHTML()}</g:link></p>
 								</g:each>
 	            	    	</td>
 	            	    	

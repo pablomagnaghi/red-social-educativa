@@ -12,7 +12,7 @@ class MaterialGrupoActividadController {
 	def grupoActividadService
 	
 	@Secured("hasRole('ROL_MEDIADOR')")
-	def muestraMediador (MaterialGrupoActividad materialGrupoActividadInstance) {
+	def materialAprendiz (MaterialGrupoActividad materialGrupoActividadInstance) {
 		respond materialGrupoActividadInstance, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
 			'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]
 	}
@@ -58,7 +58,7 @@ class MaterialGrupoActividadController {
 		}
 		
 		flash.message = message(code: 'default.created.message', args: [message(code: 'materialGrupoActividadInstance.label', default: 'MaterialGrupoActividad'), materialGrupoActividadInstance.id])
-		redirect controller:"grupoActividad", action:"muestraAprendiz", params:['id': params.grupoActividadId,  'cursoId': params.cursoId, 
+		redirect controller:"grupoActividad", action:"gruposAprendiz", params:['id': params.grupoActividadId,  'cursoId': params.cursoId, 
 			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 	}
 
@@ -95,10 +95,10 @@ class MaterialGrupoActividadController {
 			return
 		}
 
-		materialGrupoActividadService.eliminar(materialGrupoActividadInstanc)
+		materialGrupoActividadService.eliminar(materialGrupoActividadInstance)
 
 		flash.message = message(code: 'default.deleted.message', args: [message(code: 'MaterialGrupoActividad.label', default: 'MaterialGrupo'), materialGrupoActividadInstance.id])
-		redirect controller:"grupoActividad", action:"muestraAprendiz", params:['id': params.grupoActividadId, 'cursoId': params.cursoId, 
+		redirect controller:"grupoActividad", action:"gruposAprendiz", params:['cursoId': params.cursoId, 
 			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId], method:"GET"
 	}
 
