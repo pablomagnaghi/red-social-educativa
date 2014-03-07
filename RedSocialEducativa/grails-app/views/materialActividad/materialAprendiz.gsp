@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.Cuatrimestre" %>
+<%@ page import="com.fiuba.MaterialActividad" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>
@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta name="layout" content="red">
-        <g:set var="entityName" value="${message(code: 'cuatrimestre.label', default: 'Cuatrimestre')}" />
+        <g:set var="entityName" value="${message(code: 'materialActividad.label', default: 'MaterialActividad')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -35,7 +35,9 @@
 					</g:if>
 					<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
 					<h2>Curso Id: ${params.cursoId}</h2>
-	                <g:render template="cuatrimestre" />		
+					<h3>cuatri: ${params.cuatrimestreId}</h3>
+					<h3>act: ${params.actividadId}</h3>
+	                <g:render template="materialAprendiz" />		
  				</div>
             	<!-- end: Content -->
         	</div>
@@ -45,5 +47,3 @@
         <div class="clearfix"></div>					
 	</body>
 </html>
-
-	

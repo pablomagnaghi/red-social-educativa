@@ -40,7 +40,7 @@
 							<td class="center">
 								<g:if test="${!aprendizInstance.participa && aprendizInstance.cuatrimestre == cuatrimestre}">
 									<g:link class="btn btn-success" controller="mediador" action="activarAprendiz" id="${aprendizInstance.id}" 
-										params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre.id]" value="${message(code: 'Activar')}" 
+										params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]" value="${message(code: 'Activar')}" 
 										onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
 										<i class="icon-ok"></i></g:link>
 								</g:if>
@@ -49,7 +49,7 @@
 	                            		params="['cursoId': params.cursoId, 'aprendizId': aprendizInstance.id]"><i class="icon-search"></i> 
 	                          		</g:link>		
 									<g:link class="btn btn-danger" action="delete" id="${aprendizInstance.id}" 
-										params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre.id]"
+										params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]"
 										value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
 										onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
 										<i class="icon-trash"></i></g:link>

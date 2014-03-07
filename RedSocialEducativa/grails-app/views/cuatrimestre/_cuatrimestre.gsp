@@ -10,11 +10,11 @@
         </div>
         <div class="box-content">
 			<dl>
-            	<dt>Anio: ${fieldValue(bean: cuatrimestreCursoInstance, field: "anio")}</dt>
-                <dt>Numero: ${fieldValue(bean: cuatrimestreCursoInstance, field: "numero")}</dt>
+            	<dt>Anio: ${fieldValue(bean: cuatrimestreInstance, field: "anio")}</dt>
+                <dt>Numero: ${fieldValue(bean: cuatrimestreInstance, field: "numero")}</dt>
                 <dt>Foro: <g:link controller="foroCurso" action="general" id="${cuatrimestreInstance?.foro?.id}" 
 					params="['cursoId': cuatrimestreInstance.curso.id, 'cuatrimestreId': cuatrimestreInstance.id]">	
-					${fieldValue(bean: cuatrimestreCursoInstance, field: "foro")}</g:link>
+					${fieldValue(bean: cuatrimestreInstance, field: "foro")}</g:link>
                 </dt>
                 <g:if test="${cuatrimestreInstance.noticiasCurso}">
                 	<dt>Noticias curso: <g:link controller="noticiaCurso" action="index" params="['cursoId': params.cursoId]"><i class="icon-trash"></i></g:link></dt>

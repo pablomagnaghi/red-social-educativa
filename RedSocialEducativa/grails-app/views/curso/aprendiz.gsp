@@ -60,7 +60,8 @@
 									<div class="span3">
 										<g:if test="${aprendiz.cursando}">	
 											<div>
-												<g:link action="actividades" params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]">
+												<g:link controller="actividad" action="actividadesCurso" 
+													params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]">
 													<g:message code="Actividades del cuatrimestre" /></g:link>
 											</div>	
 											<div>

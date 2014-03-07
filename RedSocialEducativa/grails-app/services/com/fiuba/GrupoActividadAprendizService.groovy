@@ -11,4 +11,8 @@ class GrupoActividadAprendizService {
 		}
 		return null
 	}
+	
+	def eliminar(GrupoActividadAprendiz grupo) {
+		grupo.delete flush:true
+	}
 }

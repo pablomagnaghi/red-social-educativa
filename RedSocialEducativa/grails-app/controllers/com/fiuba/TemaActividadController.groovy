@@ -8,7 +8,7 @@ class TemaActividadController {
 	// static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def temaActividadService
-
+/*
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def aprendiz() {
 		params.max = Utilidades.MAX_PARAMS
@@ -18,7 +18,14 @@ class TemaActividadController {
 			temasCant: TemaActividad.findAllByActividad(actividad).size(), actividad: actividad, 
 			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
 	}
-
+*/
+	@Secured("hasRole('ROL_APRENDIZ')")
+	def temaAprendiz() {
+		params.max = 100//Utilidades.MAX_PARAMS
+		[temas: TemaActividad.findAllByActividad(Actividad.get(params.actividadId)),
+			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
+	}
+	
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def show(TemaActividad temaActividadInstance) {
 		respond temaActividadInstance, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]

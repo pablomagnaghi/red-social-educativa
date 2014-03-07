@@ -199,7 +199,7 @@ class GrupoActividadController {
 		grupoActividadService.eliminar(grupoActividadInstance)
 		
 		flash.message = message(code: 'default.deleted.message', args: [message(code: 'GrupoActividad.label', default: 'GrupoActividad'), grupoActividadInstance.id])
-		redirect action:"menuMed", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
+		redirect action:"gruposMediador", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
 			'actividadId': params.actividadId], method:"GET"
 	}
 

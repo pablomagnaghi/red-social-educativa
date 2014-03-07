@@ -9,7 +9,7 @@ class MaterialActividadController {
 
 	def usuarioService
 	def materialActividadService
-
+/*
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def aprendiz() {
 		params.max = Utilidades.MAX_PARAMS
@@ -17,6 +17,13 @@ class MaterialActividadController {
 
 		[materiales: MaterialActividad.findAllByActividad(actividad, [max: params.max, offset: params.offset]),
 			materialesCant: MaterialActividad.findAllByActividad(actividad).size(), 
+			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
+	}*/
+
+	@Secured("hasRole('ROL_APRENDIZ')")
+	def materialAprendiz() {
+		params.max = 100//Utilidades.MAX_PARAMS
+		[materiales: MaterialActividad.findAllByActividad(Actividad.get(params.actividadId)),
 			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
 	}
 

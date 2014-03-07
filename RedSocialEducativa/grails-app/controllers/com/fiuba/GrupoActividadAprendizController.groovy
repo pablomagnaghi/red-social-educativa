@@ -29,10 +29,14 @@ class GrupoActividadAprendizController {
 				'grupoActividadId': params.grupoActividadId]
 			return
 		}
-				
+		
+		flash.message = message(code: 'default.updated.message', args: [message(code: 'GrupoActividadAprendiz.label', default: 'GrupoActividadAprendiz'), grupoActividadAprendizInstance.id])
+		redirect controller: "grupoActividad", action: "gruposMediador", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
+			'actividadId': params.actividadId], method:"GET"
+		/*
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'GrupoActividadAprendiz.label', default: 'GrupoActividadAprendiz'), grupoActividadAprendizInstance.id])
         redirect action: "show", params: [id: params.id, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId,
-			'grupoActividadId': params.grupoActividadId], method: "GET"
+			'grupoActividadId': params.grupoActividadId], method: "GET"*/
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -41,6 +45,24 @@ class GrupoActividadAprendizController {
 			'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]
     }
 	
+	
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def delete(GrupoActividadAprendiz grupoActividadAprendizInstance) {
+
+		if (grupoActividadAprendizInstance == null) {
+			notFound()
+			redirect controller: "grupoActividad", action: "gruposMediador", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
+				'actividadId': params.actividadId], method:"GET"
+			return
+		}
+		
+		grupoActividadAprendizService.eliminar(grupoActividadAprendizInstance)
+		
+		flash.message = message(code: 'default.deleted.message', args: [message(code: 'GrupoActividad.label', default: 'GrupoActividad'), grupoActividadAprendizInstance.id])
+		redirect controller: "grupoActividad", action:"gruposMediador", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
+			'actividadId': params.actividadId], method:"GET"
+	}
+
     protected void notFound() {
         flash.message = message(code: 'default.not.found.message', args: [message(code: 'grupoActividadAprendizInstance.label', default: 'GrupoActividadAprendiz'), params.id])
 		redirect controller: "grupoActividad", action: "show", params: ['id': params.grupoActividadId, 'cursoId': params.cursoId, 
