@@ -39,7 +39,7 @@
 						<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
 						<h2>Actividad Id: ${params.actividadId}</h2>
 						<h2>Grupo actividad Id: ${params.grupoActividadId}</h2>
-	                <g:render template="material" />		
+	                <g:render template="materialAprendiz" />		
  				</div>
             	<!-- end: Content -->
         	</div>
