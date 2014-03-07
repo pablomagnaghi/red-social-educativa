@@ -30,11 +30,34 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
+	            
+	            	<!-- comienzo: BREADCRUM -->
+		            <p class="breadcrumb">
+					  	<g:link controller="curso" action="mediador" controller="curso" params="['cursoId': params.cursoId]">
+					  		${com.fiuba.Curso.get(params.cursoId)}</g:link>
+					</p>
+					
+					<div class="box-content buttons">
+						<p class="btn-group">
+							<button class="btn">Left</button>
+				  			<button class="btn">Middle</button>
+				        	<button class="btn">Right</button>
+						</p>
+				   		<p>
+				   			<button class="btn btn-small"><i class="icon-star"></i> Icon button</button>
+				 			<button class="btn btn-small btn-primary">Small button</button>
+							<button class="btn btn-small btn-danger">Small button</button>
+							<button class="btn btn-small btn-warning">Small button</button>
+				 			<button class="btn btn-small btn-success">Small button</button>
+							<button class="btn btn-small btn-info">Small button</button>
+							<button class="btn btn-small btn-inverse">Small button</button>
+						</p>
+				    </div>
+					<!-- Fin: BREADCRUM -->            
+	            
 					<g:if test="${flash.message}">
 						<div class="message" role="status">${flash.message}</div>
 					</g:if>
-					<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
-					<h2>Curso Id: ${params.cursoId}</h2>
 	                <g:render template="tabla" />		
  				</div>
             	<!-- end: Content -->
@@ -45,16 +68,3 @@
         <div class="clearfix"></div>					
 	</body>
 </html>
-
-
-			<!-- BREADCRUM 
-				
-				<li><g:link class="list" action="mediador" controller="curso" params="['cursoId': params.cursoId]">
-					<g:message code="Pagina principal de mediador"/></g:link></li>		
-				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': params.cursoId]">
-					<g:message code="Tareas mediador" /></g:link></li>	
-				<li><g:link class="list" action="index" params="['cursoId': params.cursoId]">
-					<g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create" params="['cursoId': params.cursoId]">
-					<g:message code="default.new.label" args="[entityName]" /></g:link></li>
-		--> 
