@@ -25,7 +25,7 @@
 	                    <div class="controls">
 	                        <input class="input-large focused" id="focusedInput" name="username" type="text" value="${usuarioInstance?.username}"  />
 	                        <g:if test="${hasErrors(bean: usuarioInstance, field: 'username', 'error')}">
-	                        	<p>ERROR CON EL DNI</p>
+	                        	
 	                        </g:if>
 	                    </div>
 					</div> 

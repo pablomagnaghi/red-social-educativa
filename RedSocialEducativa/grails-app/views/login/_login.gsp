@@ -8,8 +8,8 @@
 			<div class="clearfix"></div>
 				<p id="remember_me_holder">
 					<label class="remember" for="remember"><input type="checkbox" name='${rememberMeParameter}' id='remember_me' 
-						<g:if test='${hasCookie}'>checked='checked'</g:if>/> Recordarme <a href="#">¿Olvidaste tu contraseña?</a></label>
-					
+						<g:if test='${hasCookie}'>checked='checked'</g:if>/> Recordarme <a href="#" class="btn-setting">&nbsp;&nbsp;¿Olvidaste tu contraseña?</a>
+					</label>	
 				</p>	
 			<div class="clearfix"></div>
 								
