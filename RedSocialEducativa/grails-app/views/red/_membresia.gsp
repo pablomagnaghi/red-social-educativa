@@ -13,8 +13,9 @@
 			<g:hasErrors bean="${usuarioInstance}">
 				<ul class="errors" role="alert">
 					<g:eachError bean="${usuarioInstance}" var="error">
-						<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>>
-							<g:message error="${error}"/></li>
+						<g:if test="${error in org.springframework.validation.FieldError}">
+							<p><g:message error="${error}"/></p>
+						</g:if>
 					</g:eachError>
 				</ul>
 			</g:hasErrors>
@@ -25,6 +26,7 @@
 	                    <div class="controls">
 	                        <input class="input-large focused" id="focusedInput" name="username" type="text" value="${usuarioInstance?.username}"  />
 	                        <g:if test="${hasErrors(bean: usuarioInstance, field: 'username', 'error')}">
+	                        	<g:renderErrors bean="${usuarioInstance}" as="list" field="username"/>
 	                        	
 	                        </g:if>
 	                    </div>
