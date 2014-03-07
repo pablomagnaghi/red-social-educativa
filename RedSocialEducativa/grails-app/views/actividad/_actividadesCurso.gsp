@@ -46,7 +46,7 @@
         	                	<g:set var="grupoActividadAprendiz" 
         	                		value="${varAprendizService.obtenerGrupoPorActividad(usuario, params.cuatrimestreId.toLong(), actividadInstance.id)}"/>
         	                	<g:if test="${grupoActividadAprendiz}">	
-									<g:link class="list" action="muestraAprendiz" controller="grupoActividad" id="${grupoActividadAprendiz.grupo.id}" 
+									<g:link class="list" controller="grupoActividad" action="grupoAprendiz" id="${grupoActividadAprendiz.grupo.id}" 
 										params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadInstance.id]">
 										<g:message code="Mi grupo ${grupoActividadAprendiz.grupo}"/></g:link>
 								</g:if>

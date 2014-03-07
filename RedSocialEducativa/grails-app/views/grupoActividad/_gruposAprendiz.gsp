@@ -4,7 +4,7 @@
             <h2><i class="icon-table"></i>
                 <span class="break"></span>Grupos de la actividad</h2>
         	<div class="box-icon">
-                <g:link action="create" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]">
+                <g:link action="crearGrupo" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]">
                 	<i class="icon-plus"></i></g:link>
           	</div>
         </div>
