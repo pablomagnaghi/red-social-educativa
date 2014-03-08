@@ -28,23 +28,29 @@ class RedController {
 
 	@Secured('permitAll')
 	def revisarDatosUsuario(Usuario usuario) {
-		if (params.password != params.passwordConfirmado) {
-			flash.message = "El password confirmado es incorrecto"
-			redirect action: "solicitarMembresia"
-			return
-		}
-		if (!usuarioService.guardar(usuario)) {
+
+		if (!usuario.validate()) {
 			flash.message = "Revise el formulario"
 			render view: "solicitarMembresia", model: [usuarioInstance: usuario]
 			return
 		}
+		if (params.password != params.passwordConfirmado) {
+			flash.message = "El password confirmado es incorrecto"
+			render view: "solicitarMembresia", model: [usuarioInstance: usuario]
+			return
+		}
+		
+		usuarioService.guardar(usuario)
+		def email = usuario.email
+
 		sendMail {
-			to params.email
+			to email
 			subject Utilidades.TITULO_CONFIRMACION
-			html g.render(template: "mailActivacion", model: [codigo: usuario.codigoConfirmacion])
+			html g.render(template: "mailActivacion", model: [codigo: usuario.codigoConfirmacion, username: usuario.username])
 		}	
-		flash.message = "Tu cuenta ha sido creada. Revisa tu dirección de email para activarla."
-		redirect uri: "/", model: [mensaje: "Tu cuenta ha sido creada. Revisa tu dirección de email para activarla."]
+		println "asfadfasdasdasda"
+		def mensaje = "Revisa tu dirección de email para activarla"
+		render view: "/login/auth", model: [mensajeCreacionCuenta: mensaje]
 	}
 	
 	@Secured('permitAll')
@@ -69,7 +75,7 @@ class RedController {
 		sendMail {
 			to email
 			subject Utilidades.CLAVE_CONFIRMACION
-			html g.render(template: "mailClave", model: [codigo: usuario.codigoConfirmacion])
+			html g.render(template: "mailClave", model: [codigo: usuario.codigoConfirmacion, username: usuario.username])
 		}
 		flash.message = "Revisa tu dirección de email para cambiar tu contraseña"
 		redirect uri: "/", model: [mensaje: "Revisa tu dirección de email para cambiar tu contraseña"]

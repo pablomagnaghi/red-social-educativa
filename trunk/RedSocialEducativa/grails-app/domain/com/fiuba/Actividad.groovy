@@ -4,11 +4,8 @@ class Actividad {
 
 	String titulo
 	String objetivo
-	// Indicador de si es evaluable o no
 	boolean evaluable
-	// Indicador si es para todo el curso o grupal
 	boolean grupal
-	// Indicador de visibilidad para los aprendices
 	boolean visibilidad
 	String fechaFinalizacion
 	

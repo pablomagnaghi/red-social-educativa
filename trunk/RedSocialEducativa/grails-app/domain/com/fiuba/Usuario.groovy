@@ -7,7 +7,7 @@ class Usuario {
 
 	String username
 	String password
-
+	String dni
 	String apellido
 	String nombres
 	Integer legajo
@@ -30,6 +30,7 @@ class Usuario {
 	static constraints = {
 		username blank: false, unique: true//, matches:"[0-9]{8}", unique: true
 		password blank: false//, minSize: 6
+		dni blank: false, unique: true
 		apellido blank: false
 		nombres blank: false
 		legajo nullable: true, unique: true // 6 a 9 digitos
@@ -39,7 +40,6 @@ class Usuario {
 	}
 
 	static mapping = {
-		username column: 'dni'
 		password column: '`password`'
 	}
 

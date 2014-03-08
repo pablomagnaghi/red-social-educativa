@@ -9,6 +9,6 @@ class Mediador extends UsuarioRol {
 	static hasMany = [noticiasCurso: NoticiaCurso]
 
 	static constraints = {
-		jerarquia inList:["JTP", "AP", "AS", "Colaborador"]
+		jerarquia inList:["Profesor", "JTP", "AP", "AS", "Colaborador"]
 	}
 }
