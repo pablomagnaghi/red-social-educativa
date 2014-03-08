@@ -1,47 +1,44 @@
 <div class="box span12">
 	<div class="box-header">
-		<h2><i class="icon-th"></i>Entorno virtual de enseñanza y aprendizaje</h2>
+		<h2><i class="icon-th"></i></h2>
 	</div>
 	<div class="box-content">
 		<ul class="nav tab-menu nav-tabs" id="myTab">
-			<li class="active"><a href="#info">Info</a></li>
-			<li><a href="#custom">Custom</a></li>
-			<li><a href="#messages">Messages</a></li>
+			<li class="active"><a href="#info">Introduccion</a></li>
+			<li><a href="#objetivo">Objetivo</a></li>
+			<li><a href="#acceso">Acceso</a></li>
 		</ul>
 		<div id="myTabContent" class="tab-content">
 			<div class="tab-pane active" id="info">		
 				<div class="box-content">
 					<img src="${resource(dir: 'img/fiuba', file: 'fiuba1.jpg')}"/>
-					<p>Duis autem vel eum iriure dolor in hendrerit in vulputate
-						velit esse molestie consequat, vel illum dolore eu feugiat nulla
-						facilisis at vero eros et accumsan et iusto odio dignissim qui
-						blandit praesent luptatum zzril delenit augue duis dolore te
-						feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer
-						adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
-						dolore magna aliquam erat volutpat.</p>
+					<p>La red social es un entorno virtual de enseñanza y aprendizaje para uso de docentes y alumnos
+						del Departamento de Computación que posibilita la organización de cursos y la instrumentación
+						de modalidades de enseñanza y aprendizaje colaborativos e incluye actividades de estimulación
+						de la creatividad.</p>
 				</div>
 			</div>
-			<div class="tab-pane" id="custom">
+			<div class="tab-pane" id="objetivo">
 				<div class="box-content">
 					<img src="${resource(dir: 'img/fiuba', file: 'fiuba4.jpg')}"/>
-					<p>Duis autem vel eum iriure dolor in hendrerit in vulputate
-						velit esse molestie consequat, vel illum dolore eu feugiat nulla
-						facilisis at vero eros et accumsan et iusto odio dignissim qui
-						blandit praesent luptatum zzril delenit augue duis dolore te
-						feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer
-						adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
-						dolore magna aliquam erat volutpat.</p>
+					<p>Utilizando la Red Social los docentes y alumnos podrán flexibilizar el proceso de enseñanza y
+						aprendizaje, como herramienta de desarrollo colectivo de contenidos y de
+						propuestas de conceptualización y aplicación. Posibilitando la recuperación de espacios áulicos para el
+						dictado de clases prácticas permitiendo que los alumnos no tengan que trasladarse físicamente hasta la facultad 
+						para asistir. 	
+					</p>
 				</div>
 			</div>
-			<div class="tab-pane" id="messages">
+			<div class="tab-pane" id="acceso">
 				<div class="box-content">
 					<img src="${resource(dir: 'img/fiuba', file: 'fiuba3.jpg')}"/>
-					<p>Duis autem vel eum iriure dolor in hendrerit in vulputate
-						velit esse molestie consequat, vel illum dolore eu feugiat nulla
-						facilisis at vero eros et accumsan et iusto odio dignissim qui</p>
+					<p>En cualquier lugar donde se encuentre y contando con una conexión a Internet,
+						accederá a sus cursos dentro de este espacio para compartir material de estudio, 
+						comunicarse y generar una experiencia educativa en forma virtual.</p>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <!--/span-->
+

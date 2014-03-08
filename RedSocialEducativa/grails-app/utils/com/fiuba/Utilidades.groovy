@@ -5,8 +5,9 @@ import java.util.Date;
 class Utilidades {
 	
 	final static TITULO_RED = "Red Social Educativa del Departamento de Computacion de la FIUBA"
-	final static TITULO_CONFIRMACION = TITULO_RED + " - Nueva confirmacion de usuario"
-	final static CLAVE_CONFIRMACION = TITULO_RED + " - Cambio de clave"
+	final static TITULO_CONFIRMACION = TITULO_RED + " - Confirmacion de cuenta"
+	final static TITULO_BIENVENIDA = TITULO_RED + " - Cuenta activada"
+	final static TITULO_CAMBIO_CLAVE = TITULO_RED + " - Cambio de clave"
 	final static MSJ_MAIL_BIENVENIDA = "Bienvenido a la red social" 
 
 	final static FORMATO_FECHA = "yyyyMMdd"

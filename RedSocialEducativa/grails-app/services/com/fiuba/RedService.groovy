@@ -29,7 +29,7 @@ class RedService {
 	private enviarEmail(String email, String msj) {
 		sendMail {
 			to email
-			subject Utilidades.TITULO_RED
+			subject Utilidades.TITULO_BIENVENIDA
 			body msj
 		}
 	}
@@ -43,7 +43,7 @@ class RedService {
 		enviarEmail(usuario.email, msj)
 		return true
 	}
-	
+	/* TODO
 	def activarUsuarioAdm(Usuario usuario) {
 		String msj = Utilidades.MSJ_MAIL_BIENVENIDA + " administrador ${usuario.username} con password ${usuario.password}."
 		if (!activacionCorrecta(usuario)) {
@@ -51,5 +51,5 @@ class RedService {
 		}
 		enviarEmail(usuario.email, msj)
 		return true
-	}
+	}*/
 }

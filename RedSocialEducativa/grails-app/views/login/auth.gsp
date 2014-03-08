@@ -11,7 +11,7 @@
 				<div class="span8">  
 					<div class="row-fluid">
 						<br><br><br><br><br>
-						<g:render template="info"></g:render>
+						<g:render template="/login/info"></g:render>
 					</div>
 				</div>			
 				<div class="span4">    
@@ -31,7 +31,7 @@
 			<g:form class="form-horizontal" controller="red" action="revisarUsername">
 				<fieldset>					
 					<div class="control-group">
-						<label class="control-label" >Usuario</label>			
+						<label class="control-label" >Nombre de usuario</label>			
 						<div class="controls">
 							<g:textField name="username"/>
 						</div>	
