@@ -21,11 +21,13 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-		            <div class="row-fluid">
-					    <div class="box span4">
+	            	<div class="row-fluid">
+	            		<div class="span2"></div>	
+					    <div class="box span8">
 					        <div class="box-header">     	
 					            <h2><i class="icon-edit"></i>Editar</h2>
 					            <div class="box-icon">
+					            	<g:link class="list" controller="login" action="auth"><i class="icon-home"></i></g:link>
 					                <g:link action="create"><i class="icon-plus"></i></g:link>
 					            </div>
 					        </div>
@@ -56,6 +58,7 @@
 					            </g:form>
 					        </div>
 					    </div>
+					    <div class="span2"></div>	
 					    <!--/span-->
 					</div>
 					<!--/row-->    		

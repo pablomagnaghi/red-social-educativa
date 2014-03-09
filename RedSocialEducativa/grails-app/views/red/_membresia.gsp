@@ -9,11 +9,11 @@
         <div class="box-content">
         		
 			<h4>Los campos indicados por el (*) son obligatorios.</h4>
-			<g:if test="${flash.message}">
+			<g:if test="${mensajeError}">
 				<div class="box-content alerts">
 				    <div class="alert alert-error">
 				        <button class="close" data-dismiss="alert" type="button"></button>
-				        <strong>${flash.message}</strong>
+				        <strong>${mensajeError}</strong>
 				    </div>
 				</div>    
 			</g:if>
@@ -24,7 +24,7 @@
 		                <div class="control-group">
 		                    <label class="control-label">DNI *</label>
 		                    <div class="controls">
-		                        <g:textField name="dni" value="${usuarioInstance?.dni}"/>
+		                        <g:textField name="dni" value="${usuarioInstance?.dni}" maxlength="8"/>
 		                    </div>
 						</div>
 					</g:if>
@@ -32,7 +32,7 @@
 						<div class="control-group error">
 						    <label class="control-label">DNI *</label>
 						    <div class="controls">
-						        <g:textField name="dni" value="${usuarioInstance?.dni}"/>
+						        <g:textField name="dni" value="${usuarioInstance?.dni}" maxlength="8"/>
 						        <span class="help-inline">
 						        	 <g:renderErrors bean="${usuarioInstance}" as="list" field="dni"/>
 						        </span>
@@ -79,18 +79,48 @@
 						    </div>
 						</div>   
 					</g:else>
-					<div class="control-group">
-	                    <label class="control-label">Legajo</label>
+					<!-- LEGAJO -->
+					<g:if test="${!hasErrors(bean: usuarioInstance, field: 'legajo', 'error')}">
+		                <div class="control-group">
+		                    <label class="control-label">Legajo</label>
+		                    <div class="controls">
+		                    	<g:textField name="legajo" value="${usuarioInstance?.legajo}" maxlength="9"/> 
+		                    </div>
+		                </div>    
+					</g:if>
+					<g:else>
+						<div class="control-group error">
+						    <label class="control-label">Legajo</label>
+						    <div class="controls">
+						        <g:textField name="legajo" value="${usuarioInstance?.legajo}" maxlength="9"/> 
+						        <span class="help-inline">
+						        	 <g:renderErrors bean="${usuarioInstance}" as="list" field="legajo"/>
+						        </span>
+						    </div>
+						</div>   
+					</g:else>
+	
+					<!-- PADRON -->
+					<g:if test="${!hasErrors(bean: usuarioInstance, field: 'padron', 'error')}">
+		                <div class="control-group">
+	                    <label class="control-label">Padron</label>
 	                    <div class="controls">
-	                    	<g:textField name="legajo" value="${usuarioInstance?.legajo}"/> 
+	                   		<g:textField name="padron" value="${usuarioInstance?.padron}" maxlength="6"/> 
 	                    </div>
-					</div> 
-					<div class="control-group">
-	                    <label class="control-label" for="focusedInput">Padron</label>
-	                    <div class="controls">
-	                   		<g:textField name="padron" value="${usuarioInstance?.padron}"/> 
-	                    </div>
-					</div> 
+					</div>    
+					</g:if>
+					<g:else>
+						<div class="control-group error">
+						    <label class="control-label">Padron</label>
+						    <div class="controls">
+						        <g:textField name="padron" value="${usuarioInstance?.padron}" maxlength="6"/> 
+						        <span class="help-inline">
+						        	 <g:renderErrors bean="${usuarioInstance}" as="list" field="padron"/>
+						        </span>
+						    </div>
+						</div>   
+					</g:else>
+					
 					<!-- EMAIL -->
 					<g:if test="${!hasErrors(bean: usuarioInstance, field: 'email', 'error')}">
 		                <div class="control-group">
@@ -134,9 +164,9 @@
 					<!-- CONTRASEÑA -->
 						<g:if test="${!hasErrors(bean: usuarioInstance, field: 'password', 'error')}">
 		                <div class="control-group">
-		                    <label class="control-label" for="focusedInput">Contraseña *</label>
+		                    <label class="control-label">Contraseña *</label>
 		                    <div class="controls">
-		                    	<g:field type="password" name="password" value="${usuarioInstance?.password}" maxlength="12" />
+		                    	<g:field type="password" name="password" value="${usuarioInstance?.password}" maxlength="16" />
 	                    	</div>
 						</div>    
 					</g:if>
@@ -144,7 +174,7 @@
 						<div class="control-group error">
 						    <label class="control-label">Contraseña *</label>
 						    <div class="controls">
-						       <g:field type="password" name="password" value="${usuarioInstance?.password}" maxlength="12" />
+						       <g:field type="password" name="password" value="${usuarioInstance?.password}" maxlength="16" />
 						        <span class="help-inline">
 						        	 <g:renderErrors bean="${usuarioInstance}" as="list" field="password"/>
 						        </span>
@@ -152,9 +182,9 @@
 						</div>   
 					</g:else>
 					<div class="control-group">
-	                    <label class="control-label" for="focusedInput">Confirmar contraseña *</label>
+	                    <label class="control-label">Confirmar contraseña *</label>
 	                    <div class="controls">
-	                    	<g:field type="password" name="passwordConfirmado" maxlength="12" />
+	                    	<g:field type="password" name="passwordConfirmado" maxlength="16" />
 	                    </div>
 					</div> 
 					<div class="form-actions">

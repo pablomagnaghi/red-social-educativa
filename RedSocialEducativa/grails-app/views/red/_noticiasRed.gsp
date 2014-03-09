@@ -4,14 +4,16 @@
         <div class="cartelera">
             <div class="actions">
             	<span class="titulo">Cartelera</span>    
-            	<span class="cant">${noticiasRed.size()} noticias</span> 	
+            	<span class="cant">
+            		<g:if test="${noticiasRed.size() == 1}">1 noticia</g:if>
+            		<g:if test="${noticiasRed.size() > 1}">${noticiasRed.size()} noticias</g:if>
+            	</span> 	
             </div>
             <ul class="talk">
                 <g:each in="${noticiasRed}">
                 	<g:if test="${it.visibilidad}">
                 		<li>
-		                    <span class="title">${it.titulo}</span>
-		                    <span class="name"> publicada por ${it.administrador.usuario}</span>
+		                    <span class="title">${it.titulo}</span>		                    
 		                    <span class="time">
 		                    	<div>${it.fecha} - ${it.hora}</div>
 								<div>${it.administrador.usuario}</div>							

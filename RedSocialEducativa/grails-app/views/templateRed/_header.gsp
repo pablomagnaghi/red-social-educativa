@@ -68,13 +68,8 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li class="dropdown-menu-title">
-
                             </li>
                             <li><a href="#"><i class="icon-user"></i> Perfil</a>
-                            </li>
-                            <li><a href="#"><i class="icon-cog"></i> Configuracion</a>
-                            </li>
-                            <li><a href="#"><i class="icon-envelope"></i> Mensajes</a>
                             </li>
                             <li><g:link controller='logout'><i class="icon-off"></i> Salir</g:link>
                             </li>

@@ -10,9 +10,12 @@ abstract class Noticia {
 	Boolean visibilidad 
 
     static constraints = {
+		titulo maxSize: 48
+		texto maxSize: 512
     }
 	
 	static mapping = {
 		tablePerHierarchy false
+		texto type: 'text'
 	}
 }

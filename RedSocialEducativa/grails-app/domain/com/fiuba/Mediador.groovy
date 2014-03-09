@@ -2,6 +2,7 @@ package com.fiuba
 
 class Mediador extends UsuarioRol {
 
+	Boolean activo = true
 	String jerarquia
 
 	static belongsTo = [curso: Curso]
