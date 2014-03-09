@@ -7,12 +7,10 @@
 	<span class="span2">
 		<div class="btn-group">
 			<g:link class="btn btn-success" data-placement="bottom" title=""
-				rel="tooltip" action="principal" controller="red" style="margin-right: 3px">
-				<strong><i class="icon-home"></i></strong>
+				rel="tooltip" onclick="volver()" style="margin-right: 3px">
+				<strong>
+				<i class="icon-arrow-left"></i></strong>
 			</g:link>
-			<a class="btn btn-info" data-placement="bottom" title=""
-				rel="tooltip" onclick="volver()"><strong>
-				<i class="icon-arrow-left"></i></strong></a> 
 			
 			<g:link	class="deletebutton btn btn-danger" data-placement="bottom"
 				title="" rel="tooltip" action="mostrarMensajes" controller="mensajeria"

@@ -34,7 +34,7 @@
 									</g:link>
 								</div>
 		                    </span>
-		                    <div class="message">${it.texto}</div>
+		                    <div class="message" style="width: 820px;">${it.texto}</div>
 		                </li>
 				</g:each>                
             </ul>
