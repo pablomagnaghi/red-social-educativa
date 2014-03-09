@@ -22,7 +22,7 @@
 							<i class="icon-remove"></i></g:link></span>
 					</g:if>
 				</div>
-				<div class="message">
+				<div class="message" style="width: 650px;">
                    ${tema.contenido}
                 </div>
 				<g:each in="${respuestas}">	
@@ -46,7 +46,7 @@
 		                        	</span>
 		                        </div>
 							</g:if>
-	                        <div class="message">
+	                        <div class="message" style="width: 650px;">
 								${it.contenido}
 	                        </div>
 	
