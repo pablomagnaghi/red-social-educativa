@@ -49,8 +49,8 @@
 										<h2>Dicta cuatrimestre: ${dictaCuatrimestre}</h2>
 										<h2>cuat id: ${cuatrimestre?.id}</h2>
 										<h2>Noticia curso: ${noticiasCurso}</h2>
-										<h2>"PARTICIPA: ${aprendiz.participa}"</h2>	
-										<h2>"APRENDIZ CURSNADO": ${aprendiz.cursando}</h2>
+										<h2>"PARTICIPA: ${aprendiz?.participa}"</h2>	
+										<h2>"APRENDIZ CURSNADO": ${aprendiz?.cursando}</h2>
 										<h2>"CURSANDO: ${cursando}"</h2>
 								</div>         
 								<div class="row-fluid">            	 

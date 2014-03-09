@@ -3,8 +3,8 @@
 	<p>Entorno virtual de enseñanza y aprendizaje</p>
 	<form class="form-horizontal" action='${postUrl}' method='POST' id='loginForm' autocomplete='off'>
 		<fieldset>								
-			<input class="input-large span12" name='j_username' id='username' type="text" placeholder="nombre de usuario" />
-			<input class="input-large span12" name='j_password' id='password' type="password" placeholder="contraseña" />
+			<input class="input-large span12" name='j_username' id='username' type="text" placeholder="nombre de usuario"  maxlength="16"/>
+			<input class="input-large span12" name='j_password' id='password' type="password" placeholder="contraseña"  maxlength="16"/>
 			<div class="clearfix"></div>
 				<p id="remember_me_holder">
 					<label class="remember" for="remember"><input type="checkbox" name='${rememberMeParameter}' id='remember_me' 
@@ -16,23 +16,27 @@
 			<button type="submit" class="btn btn-primary span12">Iniciar sesión</button>
 		</fieldset>	
 	</form>
+	<g:if test='${params.size() == 4 && flash.message}'>
+		<div class="box-content alerts">
+    		<div class="alert alert-error">
+				<button class="close" data-dismiss="alert" type="button"></button>
+				${flash.message}
+		    </div>
+		</div> 
+	</g:if>
 	<hr />
 	<g:form class="form-horizontal" controller="red" action="solicitarMembresia">
 		<fieldset>								
 			<button type="submit" class="btn btn-success span6">Crear una cuenta</button>
 		</fieldset>	
 	</g:form>
-	<g:if test='${flash.message}'>
-		<div class='login_message'>${flash.message}</div>
-	</g:if>
-	<g:if test='${mensajeCreacionCuenta}'>
+	<g:if test='${params.size() == 2 && flash.message}'>
 		<div class="box-content alerts">
-    		<div class="alert alert-success">
+    		<div class="alert alert-info">
 				<button class="close" data-dismiss="alert" type="button"></button>
-				<strong>Tu cuenta ha sido creada. </strong> ${mensajeCreacionCuenta}
+				<strong></strong> 
+				${flash.message}
 		    </div>
 		</div>    
 	</g:if>
-
-	
 </div>				

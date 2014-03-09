@@ -8,12 +8,10 @@ class AprendizService {
 	def obtenerCursos(Usuario usuario) {
 
 		def ArrayList<Curso> cursosAprendiz = new ArrayList<Curso>()
-		def ArrayList<Aprendiz> aprendices = Aprendiz.findAllByUsuario(usuario)
+		def ArrayList<Aprendiz> aprendices = Aprendiz.findAllByUsuarioAndParticipa(usuario, true)
 
 		aprendices.each {
-			if (it.participa) {
-				cursosAprendiz.add(it.cuatrimestre.curso)
-			}
+			cursosAprendiz.add(it.cuatrimestre.curso)
 		}
 		return cursosAprendiz
 	}

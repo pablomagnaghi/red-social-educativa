@@ -8,7 +8,7 @@ class MediadorService {
 	def obtenerCursos(Usuario usuario) {
 
 		def ArrayList<Curso> cursosMediador = new ArrayList<Curso>()
-		def ArrayList<Mediador> mediadores = Mediador.findAllByUsuario(usuario)
+		def ArrayList<Mediador> mediadores = Mediador.findAllByUsuarioAndActivo(usuario, true)
 
 		mediadores.each {
 			cursosMediador.add(it.curso)

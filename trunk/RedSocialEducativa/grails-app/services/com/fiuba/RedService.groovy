@@ -5,7 +5,6 @@ import grails.transaction.Transactional
 
 @Transactional
 class RedService {
-
 	private crearMiembro(Usuario usuario) {
 		def miembro = new Miembro(usuario: usuario, rol: Rol.findByAuthority(Utilidades.ROL_MIEMBRO))
 
@@ -14,7 +13,6 @@ class RedService {
 		}
 		return null
 	}
-	
 	private activacionCorrecta(Usuario usuario) {
 		usuario.fechaMembresia = new Date().format(Utilidades.FORMATO_FECHA)
 		if (!usuario.save(flush: true)) {
@@ -25,7 +23,6 @@ class RedService {
 		}
 		return true
 	}
-	
 	private enviarEmail(String email, String msj) {
 		sendMail {
 			to email
@@ -33,7 +30,6 @@ class RedService {
 			body msj
 		}
 	}
-	
 	def activarUsuario(Usuario usuario) {
 		usuario.enabled = true
 		if (!activacionCorrecta(usuario)) {
@@ -43,13 +39,4 @@ class RedService {
 		enviarEmail(usuario.email, msj)
 		return true
 	}
-	/* TODO
-	def activarUsuarioAdm(Usuario usuario) {
-		String msj = Utilidades.MSJ_MAIL_BIENVENIDA + " administrador ${usuario.username} con password ${usuario.password}."
-		if (!activacionCorrecta(usuario)) {
-			return false
-		}
-		enviarEmail(usuario.email, msj)
-		return true
-	}*/
 }

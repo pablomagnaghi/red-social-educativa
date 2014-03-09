@@ -14,7 +14,7 @@ class RedController {
 
 	@Secured('permitAll')
 	def revisarRol() {
-		if (Administrador.findByUsuario(usuarioService.usuarioActual())) {
+		if (Administrador.findByUsuarioAndActivo(usuarioService.usuarioActual(), true)) {
 			redirect action: "administrador"
 			return
 		}
@@ -28,120 +28,103 @@ class RedController {
 
 	@Secured('permitAll')
 	def revisarDatosUsuario(Usuario usuario) {
-
 		if (!usuario.validate()) {
-			flash.message = "Revise el formulario"
-			render view: "solicitarMembresia", model: [usuarioInstance: usuario]
+			render view: "solicitarMembresia", model: [usuarioInstance: usuario, mensajeError: "Revise el formulario"]
 			return
 		}
 		if (params.password != params.passwordConfirmado) {
-			flash.message = "El password confirmado es incorrecto"
-			render view: "solicitarMembresia", model: [usuarioInstance: usuario]
+			render view: "solicitarMembresia", model: [usuarioInstance: usuario, mensajeError: "El password confirmado es incorrecto"]
 			return
 		}
-		
 		usuarioService.guardar(usuario)
 		def email = usuario.email
-
 		sendMail {
 			to email
 			subject Utilidades.TITULO_CONFIRMACION
 			html g.render(template: "mailActivacion", model: [codigo: usuario.codigoConfirmacion, username: usuario.username])
 		}	
-		println "asfadfasdasdasda"
-		def mensaje = "Revisa tu dirección de email para activarla"
-		render view: "/login/auth", model: [mensajeCreacionCuenta: mensaje]
+		flash.message = "Tu cuenta ha sido creada. Revisa tu dirección de email para activarla"
+		redirect uri: "/"
 	}
 	
 	@Secured('permitAll')
 	def revisarUsername() {
-
 		Usuario usuario = Usuario.findByUsername(params.username)
 		if(!usuario) {
 			flash.message = "No existe usuario"
-			redirect uri: "/", model: [mensaje: "Problema al activar la cuenta"]
+			redirect uri: "/"
 			return
 		}
 		if (!usuario.enabled) {
 			flash.message = "Todavia no esta en condiciones de cambiar su clave, primero debe activar su cuenta"
-			redirect uri: "/", model: [mensaje: "Su cuenta ya ha sido activada"]
+			redirect uri: "/"
 			return
 		}
-		
 		usuario.codigoConfirmacion = UUID.randomUUID().toString()
 		usuarioService.actualizar(usuario)
 		def email = usuario.email
-
 		sendMail {
 			to email
-			subject Utilidades.CLAVE_CONFIRMACION
+			subject Utilidades.TITULO_CAMBIO_CLAVE 
 			html g.render(template: "mailClave", model: [codigo: usuario.codigoConfirmacion, username: usuario.username])
 		}
 		flash.message = "Revisa tu dirección de email para cambiar tu contraseña"
-		redirect uri: "/", model: [mensaje: "Revisa tu dirección de email para cambiar tu contraseña"]
+		redirect uri: "/"
 	}
 	
 	@Secured('permitAll')
 	def cambiarClave(String id) {
-
-		println "ENTROOO"
-		
 		Usuario usuario = Usuario.findByCodigoConfirmacion(id)
 		if(!usuario) {
 			flash.message = "Problemas con la cuenta"
-			redirect uri: "/", model: [mensaje: "Problema al activar la cuenta"]
+			redirect uri: "/"
 			return
 		}
 		if (!usuario.enabled) {
 			flash.message = "Todavia no esta en condiciones de cambiar su clave, primero debe activar su cuenta"
-			redirect uri: "/", model: [mensaje: "Su cuenta ya ha sido activada"]
+			redirect uri: "/"
 			return
 		}
 	}
 
 	@Secured('permitAll')
 	def revisarClave(String id) {
-
 		Usuario usuario = Usuario.findByCodigoConfirmacion(id)
-		
-		if (params.password != params.passwordConfirmado) {
+		if ((!params.password) || (params.password != params.passwordConfirmado)) {
 			flash.message = "El password confirmado es incorrecto"
 			redirect action: "cambiarClave", params: params
 			return
 		}
-		
 		usuario.password = params.password
-		
 		if (!usuarioService.actualizar(usuario)) {
 			flash.message = "Problemas al actualizar la contraseña"
 			render action: "cambiarClave", params: params
 			return
 		}
 		flash.message = "Tu contraseña ha sido actualizada"
-		redirect uri: "/", model: [mensaje: "Tu contraseña ha sido actualizada"]
+		redirect uri: "/"
 	}
 
 	@Secured('permitAll')
 	def activarCuenta(String id) {
-
 		Usuario usuario = Usuario.findByCodigoConfirmacion(id)
 		if(!usuario) {
 			flash.message = "Problema al activar la cuenta"
-			redirect uri: "/", model: [mensaje: "Problema al activar la cuenta"]
+			redirect uri: "/"
 			return
 		}		
 		if (usuario.enabled) {
 			flash.message = "Su cuenta ya ha sido activada anteriormente"
-			redirect uri: "/", model: [mensaje: "Su cuenta ya ha sido activada"]
+			redirect uri: "/"
 			return
 		}
 		if (!redService.activarUsuario(usuario)) {
 			flash.message = "Problema al activar la cuenta"
-			redirect uri: "/", model: [mensaje: "Problema al activar la cuenta"]
+			redirect uri: "/"
 			return
 		}	
 		flash.message = "Tu cuenta ha sido activada exitosamente"
-		redirect uri: "/", model: [mensaje: "Tu cuenta ha sido exitosamente activada"]
+		redirect uri: "/"
 	}
 	
 	@Secured('isFullyAuthenticated()') 
@@ -164,11 +147,11 @@ class RedController {
 		def usuario = usuarioService.usuarioActual()
 		def curso = Curso.get(params.cursoId)
 			
-		if (Administrador.findByUsuario(usuario)) {
+		if (Administrador.findByUsuarioAndActivo(usuario, true)) {
 			redirect controller: "curso", action: "administrador", params: params
 			return
 		}	
-		if (Mediador.findByUsuarioAndCurso(usuario, curso)) {
+		if (Mediador.findByUsuarioAndCursoAndActivo(usuario, curso, true)) {
 			redirect controller: "curso", action: "mediador", params: params
 			return
 		}
