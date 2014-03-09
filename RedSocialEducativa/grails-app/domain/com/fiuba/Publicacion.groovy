@@ -15,6 +15,7 @@ abstract class Publicacion {
 
 	static mapping = {
 		tablePerHierarchy false
+		contenido type: 'text'
 	}
 
 	String toString() {

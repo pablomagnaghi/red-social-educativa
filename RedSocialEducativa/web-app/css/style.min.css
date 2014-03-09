@@ -1642,7 +1642,7 @@ footer a {
     color:#fff
 }
 
-<!-- Agregado carteleta -->
+<!-- Agregado cartelera -->
 .chat .cartelera {
     width:100%;
     float:right
@@ -1716,6 +1716,7 @@ footer a {
     color:#A7ADB2;
     font-size:12px
 }
+<!-- REVISAR -->
 .chat .cartelera ul li .message {
     margin-top:10px;
     min-height:30px;
