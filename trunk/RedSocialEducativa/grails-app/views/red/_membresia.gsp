@@ -20,7 +20,7 @@
             <g:form class="form-horizontal" controller="red" action="revisarDatosUsuario">
 	            <fieldset>
 	            	<!-- DNI -->
-	            	 <g:if test="${!hasErrors(bean: usuarioInstance, field: 'dni', 'error')}">
+	            	<g:if test="${!hasErrors(bean: usuarioInstance, field: 'dni', 'error')}">
 		                <div class="control-group">
 		                    <label class="control-label">DNI *</label>
 		                    <div class="controls">
@@ -40,9 +40,9 @@
 						</div>    
 					</g:else>
 					<!-- APELLIDO -->
-					 <g:if test="${!hasErrors(bean: usuarioInstance, field: 'apellido', 'error')}">
-		                <div class="control-group">
-		                    <label class="control-label">Apellido *</label>
+					<g:if test="${!hasErrors(bean: usuarioInstance, field: 'apellido', 'error')}">
+		         		<div class="control-group">
+		              		<label class="control-label">Apellido *</label>
 		                    <div class="controls">
 		                    	<g:textField name="apellido" value="${usuarioInstance?.apellido}"/> 
 		                    </div>
@@ -99,7 +99,6 @@
 						    </div>
 						</div>   
 					</g:else>
-	
 					<!-- PADRON -->
 					<g:if test="${!hasErrors(bean: usuarioInstance, field: 'padron', 'error')}">
 		                <div class="control-group">
@@ -119,8 +118,7 @@
 						        </span>
 						    </div>
 						</div>   
-					</g:else>
-					
+					</g:else>					
 					<!-- EMAIL -->
 					<g:if test="${!hasErrors(bean: usuarioInstance, field: 'email', 'error')}">
 		                <div class="control-group">
@@ -146,7 +144,7 @@
 		                <div class="control-group">
 		                    <label class="control-label">Nombre de usuario *</label>
 		                    <div class="controls">
-		                        <g:textField name="username" value="${usuarioInstance?.username}"/>
+		                        <g:textField name="username" value="${usuarioInstance?.username}" maxlength="16" />
 		                    </div>
 						</div>    
 					</g:if>
@@ -154,7 +152,7 @@
 						<div class="control-group error">
 						    <label class="control-label" for="inputError">Nombre de usuario *</label>
 						    <div class="controls">
-						        <g:textField name="username" value="${usuarioInstance?.username}"/>
+						        <g:textField name="username" value="${usuarioInstance?.username}" maxlength="16" />
 						        <span class="help-inline">
 						        	 <g:renderErrors bean="${usuarioInstance}" as="list" field="username"/>
 						        </span>
@@ -162,7 +160,7 @@
 						</div>   
 					</g:else>
 					<!-- CONTRASEÑA -->
-						<g:if test="${!hasErrors(bean: usuarioInstance, field: 'password', 'error')}">
+					<g:if test="${!hasErrors(bean: usuarioInstance, field: 'password', 'error')}">
 		                <div class="control-group">
 		                    <label class="control-label">Contraseña *</label>
 		                    <div class="controls">

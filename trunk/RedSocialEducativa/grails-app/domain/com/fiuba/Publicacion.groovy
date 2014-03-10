@@ -10,7 +10,8 @@ abstract class Publicacion {
 	String hora = new Date().getTimeString()
 
 	static constraints = {
-		dni nullable: true
+		titulo maxSize: Utilidades.MAX_TITULO
+		contenido maxSize: Utilidades.MAX_SIZE
 	}
 
 	static mapping = {

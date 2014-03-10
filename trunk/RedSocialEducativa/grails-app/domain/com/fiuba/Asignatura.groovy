@@ -10,8 +10,9 @@ class Asignatura {
 	static hasMany = [cursos: Curso]
 
 	static constraints = {
+		nombre  maxSize: Utilidades.MAX_TITULO
 		creditos min:(Short)1
-		contenidosMinimos nullable:true
+		contenidosMinimos nullable:true, maxSize: Utilidades.MAX_SIZE
 	}
 
 	String toString() {
