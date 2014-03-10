@@ -21,10 +21,13 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-					<g:if test="${flash.message}">
-						<div class="message" role="status">${flash.message}</div>
-					</g:if>
-	                <g:render template="curso" />		
+	            	<div class="row-fluid">  
+						<div class="span2"></div>
+						<div class="box span8">
+	                			<g:render template="curso" />			
+	                		</div>	
+	                	<div class="span2"></div>		
+	                </div>
  				</div>
             	<!-- end: Content -->
         	</div>

@@ -7,6 +7,32 @@ class CursoService {
 
 	def cuatrimestreService
 	
+	def obtenerCursosOrdenados() {
+		def c = Curso.createCriteria()
+		def cursos = c.list {
+			and {
+				order('asignatura', 'desc')
+				order('nroRelativo', 'asc')
+			}
+		}
+	}
+	
+	def existe(Curso curso) {
+		def cursoExistente = Curso.findByAsignaturaAndNroRelativoAndIdNotEqual(Asignatura.get(curso.asignatura.id), curso.nroRelativo, curso?.id)
+		return cursoExistente
+	}
+
+	def guardar(Curso curso) {
+		if (curso.save(flush: true)) {
+			return curso
+		}
+		return null
+	}
+
+	def eliminar(Curso curso) {
+		curso.delete flush:true
+	}
+	
 	def agregarAprendiz(Usuario usuario, Long cursoId) {
 		
 		def aprendiz = new Aprendiz(usuario: usuario, rol: Rol.findByAuthority('ROL_APRENDIZ'), participa: false, msjEnviados: "0",
@@ -20,25 +46,6 @@ class CursoService {
 		}
 		
 		return null
-	}
-	
-	def existe(Curso curso) {
-		def cursoExistente = Curso.findByAsignaturaAndNroRelativo(Asignatura.get(curso.asignatura.id), curso.nroRelativo)
-
-		return cursoExistente
-	}
-
-	def guardar(Curso curso) {
-
-		if (curso.save(flush: true)) {
-			return curso
-		}
-
-		return null
-	}
-
-	def eliminar(Curso curso) {
-		curso.delete flush:true
 	}
 	
 	def seDicta(Long cursoId) {

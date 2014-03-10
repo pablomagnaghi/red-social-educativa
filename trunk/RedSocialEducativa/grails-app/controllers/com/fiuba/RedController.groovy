@@ -11,6 +11,7 @@ class RedController {
 	def mediadorService
 	def aprendizService
 	def noticiaRedService
+	def cursoService
 
 	@Secured('permitAll')
 	def revisarRol() {
@@ -129,7 +130,7 @@ class RedController {
 	
 	@Secured('isFullyAuthenticated()') 
 	def cursos() {
-		model: [cursos: Curso.list(params), cursoCant: Curso.count()]
+		model: [cursos: cursoService.obtenerCursosOrdenados()]
 	}
 
 	@Secured("hasRole('ROL_ADMIN')")

@@ -65,40 +65,7 @@ class CursoController {
 			temas: Tema.findAllByCurso(Curso.get(params.cursoId)),
 			params: ['cursoId': params.cursoId]]
 	}
-/*
-	@Secured('isFullyAuthenticated()')
-	def temas() {
-		params.max = Utilidades.MAX_PARAMS
-
-		[temas: Tema.findAllByCurso(Curso.get(params.cursoId),[max: params.max, offset: params.offset]),
-			temasCant: Tema.findAllByCurso(Curso.get(params.cursoId)).size(),
-			mediador: Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId)),
-			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
-			params: ['cursoId': params.cursoId]]
-	}
-
-	@Secured("hasRole('ROL_APRENDIZ')")
-	def actividades() {
-		params.max = Utilidades.MAX_PARAMS
-
-		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
-
-		[actividades: Actividad.findAllByCuatrimestre(cuatrimestre,[max: params.max, offset: params.offset]),
-			actividadesCant: Actividad.findAllByCuatrimestre(cuatrimestre).size(), cuatrimestre: cuatrimestre,
-			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
-			params: ['cursoId': params.cursoId]]
-	}
-/*
-	@Secured("hasRole('ROL_APRENDIZ')")
-	def evaluaciones() {
-		params.max = Utilidades.MAX_PARAMS
-
-		[evaluaciones: Evaluacion.findAllByCurso(Curso.get(params.cursoId),[max: params.max, offset: params.offset]),
-			evaluacionesCant: Evaluacion.findAllByCurso(Curso.get(params.cursoId)).size(),
-			aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
-			params: ['cursoId': params.cursoId]]
-	}
-	*/
+	
 	@Secured("hasRole('ROL_MIEMBRO')")
 	def solicitarParticipacionEnElCurso() {
 
@@ -111,11 +78,11 @@ class CursoController {
 		flash.message = "Solicitud aceptada. A la brevedad se le enviara un mail de confirmacion"
 		redirect action: "miembro", params:['cursoId': params.cursoId]
 	}
-	
+	// TODO: de aca para abajo listo
 	@Secured("hasRole('ROL_ADMIN')")
 	def index() {
 		params.max = 100//Utilidades.MAX_PARAMS
-		respond Curso.list(params)
+		[cursoInstanceList: cursoService.obtenerCursosOrdenados()]
 	}
 	
 	@Secured("hasRole('ROL_ADMIN')")
@@ -130,30 +97,27 @@ class CursoController {
 
 	@Secured("hasRole('ROL_ADMIN')")
 	def save(Curso cursoInstance) {
-
 		if (cursoInstance == null) {
 			notFound()
 			return
 		}
-
 		if (cursoService.existe(cursoInstance)) {
 			flash.message = "Ya existe el curso ${cursoInstance.nroRelativo}"
 			redirect action: "create"
 			return
 		}
-
 		if (!cursoService.guardar(cursoInstance)) {
 			respond cursoInstance, view:'create'
 			return
 		}
-
-		flash.message = message(code: 'default.created.message', args: [message(code: 'cursoInstance.label', default: 'Curso'), cursoInstance.id])
+		flash.message = "Curso ${cursoInstance} creado"
 		redirect action:"index"
 	}
 
 	@Secured("hasRole('ROL_ADMIN')")
 	def edit(Curso cursoInstance) {
-		respond cursoInstance
+		def numero = Curso.get(cursoInstance.id).nroRelativo
+		respond cursoInstance, model: [numero: numero]
 	}
 
 	@Secured("hasRole('ROL_ADMIN')")
@@ -162,33 +126,33 @@ class CursoController {
 			notFound()
 			return
 		}
-
+		if (cursoService.existe(cursoInstance)) {
+			flash.message = "Ya existe el curso ${cursoInstance.nroRelativo}"
+			cursoInstance.nroRelativo = params.numeroAnterior.toShort()
+			redirect action:'edit', params: params
+			return	
+		}
 		if (!cursoService.guardar(cursoInstance)) {
 			respond cursoInstance, view:'edit'
 			return
 		}
-
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'Curso.label', default: 'Curso'), cursoInstance.id])
+		flash.message = "Curso ${cursoInstance} actualizado"
 		redirect action:"index"
 	}
 
 	@Secured("hasRole('ROL_ADMIN')")
 	def delete(Curso cursoInstance) {
-
 		if (cursoInstance == null) {
 			notFound()
 			return
 		}
-
 		cursoService.eliminar(cursoInstance)
-
-		flash.message = message(code: 'default.deleted.message', args: [message(code: 'Curso.label', default: 'Curso'), cursoInstance.id])
+		flash.message = "Curso ${cursoInstance} eliminado"
 		redirect action:"index", method:"GET"
-
 	}
 
 	protected void notFound() {
-		flash.message = message(code: 'default.not.found.message', args: [message(code: 'cursoInstance.label', default: 'Curso'), params.id])
+		flash.message = "No se encuentra ese curso"
 		redirect action: "index", method: "GET"
 	}
 }
