@@ -27,39 +27,12 @@
 					        <div class="box-header">
 					            <h2><i class="icon-plus"></i>Crear</h2>
 					            <div class="box-icon">
-					                <a href="#" class="btn-setting"><i class="icon-wrench"></i></a>
-					                <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
-					                <a href="#" class="btn-close"><i class="icon-remove"></i></a>
+					                <g:link action="index"><i class="icon-table"></i></g:link>
 					            </div>
 					        </div>
-					        <g:if test="${flash.message}">
-								<div class="message" role="status">${flash.message}</div>
-							</g:if>      
-							<g:hasErrors bean="${cursoInstance}">
-								<ul class="errors" role="alert">
-									<g:eachError bean="${cursoInstance}" var="error">
-										<li <g:if test="${error in org.springframework.validation.FieldError}">
-												data-field-id="${error.field}"</g:if>>
-											<g:message error="${error}"/></li>
-									</g:eachError>
-								</ul>
-							</g:hasErrors>
 					        <div class="box-content">
 					        	<g:form class="form-horizontal" action="save">
-						            <fieldset>					
-										<div class="control-group">
-											<label class="control-label" >Asignatura</label>			
-											<div class="controls">
-												<g:select id="asignatura" name="asignatura.id" from="${com.fiuba.Asignatura.list()}" 
-													optionKey="id" required="" value="${cursoInstance?.asignatura?.id}" class="many-to-one"/>
-											</div>	
-										</div>				
-										<div class="control-group">
-											<label class="control-label" >Nro relativo</label>			
-											<div class="controls">
-												<g:field name="nroRelativo" type="number" value="${cursoInstance.nroRelativo}" required=""/>
-											</div>	
-										</div>				
+						            <fieldset>															
 						            	<g:render template="form"/>			
 						            	<div class="form-actions">
 											<button type="submit" class="btn btn-primary">Crear</button>
