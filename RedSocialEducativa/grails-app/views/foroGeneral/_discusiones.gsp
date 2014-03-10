@@ -6,11 +6,9 @@
    				<div class="author">
 					<img src="${resource(dir: 'img', file: 'avatar2.jpg')}">
 	            </div>
-                <div class="title"><h3>Tema ${tema.titulo} <small>creado por ${tema.responsable}</h3></div>
-                <div class="date">${tema.fecha} - ${tema.hora}</div>
-                <div class="nombre">${tema.responsable}</div>
+                <div class="name"><h3>Tema ${tema.titulo}</h3></div>
+                <div class="date">${tema.fecha} - ${tema.hora}<br>${tema.responsable}</div>
                 <div class="opciones">
-                	<span>${tema.responsable}</span>
                 	<span><g:link controller="publicacionGeneral" action="nueva">
                 		<i class="icon-plus"></i></g:link></span>
                 	<g:if test="${administrador}">
@@ -22,9 +20,7 @@
 							<i class="icon-remove"></i></g:link></span>
 					</g:if>
 				</div>
-				<div class="message" style="width: 650px;">
-                   ${tema.contenido}
-                </div>
+				<div class="message">${tema.contenido}</div>
 				<g:each in="${respuestas}">	
 	                <ul>
 	                    <li>
@@ -32,8 +28,7 @@
 	                            <img src="${resource(dir: 'img', file: 'avatar3.jpg')}" alt="avatar">
 	                        </div>
 	                        <div class="name"><h3>${it.responsable}</h3></div>
-	                        <div class="nombre">${it.responsable}</div>
-	                        <div class="date">${it.fecha} - ${it.hora}</div>
+	                        <div class="date">${it.fecha} - ${it.hora}<br>${it.responsable}</div>
 							<g:if test="${administrador}">
 		                        <div class="opciones">
 		                        	<span><g:link controller="publicacionGeneral" action="editar" 
@@ -46,7 +41,7 @@
 		                        	</span>
 		                        </div>
 							</g:if>
-	                        <div class="message" style="width: 650px;">
+	                        <div class="message" style="width: 99%">
 								${it.contenido}
 	                        </div>
 	

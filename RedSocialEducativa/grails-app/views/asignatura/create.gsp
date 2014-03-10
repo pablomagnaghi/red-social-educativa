@@ -27,23 +27,9 @@
 					        <div class="box-header">
 					            <h2><i class="icon-plus"></i>Crear</h2>
 					            <div class="box-icon">
-					                <a href="#" class="btn-setting"><i class="icon-wrench"></i></a>
-					                <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
-					                <a href="#" class="btn-close"><i class="icon-remove"></i></a>
+					                <g:link action="index"><i class="icon-table"></i></g:link>
 					            </div>
-					        </div>
-					        <g:if test="${flash.message}">
-								<div class="message" role="status">${flash.message}</div>
-							</g:if>      
-							<g:hasErrors bean="${asignaturaInstance}">
-								<ul class="errors" role="alert">
-									<g:eachError bean="${asignaturaInstance}" var="error">
-										<li <g:if test="${error in org.springframework.validation.FieldError}">
-												data-field-id="${error.field}"</g:if>>
-											<g:message error="${error}"/></li>
-									</g:eachError>
-								</ul>
-							</g:hasErrors>
+					        </div>     
 					        <div class="box-content">
 					        	<g:form class="form-horizontal" action="save">
 						            <fieldset>

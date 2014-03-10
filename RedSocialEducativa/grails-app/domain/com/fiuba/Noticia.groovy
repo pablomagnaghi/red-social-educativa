@@ -10,8 +10,8 @@ abstract class Noticia {
 	Boolean visibilidad 
 
     static constraints = {
-		titulo maxSize: 48
-		texto maxSize: 512
+		titulo maxSize: Utilidades.MAX_TITULO
+		texto maxSize: Utilidades.MAX_SIZE
     }
 	
 	static mapping = {

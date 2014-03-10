@@ -6,7 +6,7 @@ import grails.transaction.Transactional
 class AsignaturaService {
 
 	def existe(Asignatura asignatura) {
-		def asignaturaExistente = Asignatura.findByCodigo(asignatura.codigo)
+		def asignaturaExistente = Asignatura.findByCodigoAndIdNotEqual(asignatura.codigo, asignatura?.id)
 		return asignaturaExistente
 	}
 	

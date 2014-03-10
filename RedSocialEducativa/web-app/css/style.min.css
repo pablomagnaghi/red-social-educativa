@@ -1345,7 +1345,7 @@ footer a {
     left:-20px;
     position:absolute;
     background:url("../img/disc-arrow.png") no-repeat;
-    background-size:20px 20px
+    background-size:20px 20px;
 }
 .discussions ul li .author {
     position:absolute;
@@ -1364,17 +1364,6 @@ footer a {
     -moz-box-shadow:0 1px 0 1px #e4e6eb;
     box-shadow:0 1px 0 1px #e4e6eb
 }
-.discussions ul li .title {
-    position:absolute;
-    top:10px;
-    left:10px;
-    width:80%;
-    background:#fbfcfc;
-    padding:5px 10px 5px 10px;
-    -webkit-border-radius:2px 0 0 2px;
-    -moz-border-radius:2px 0 0 2px;
-    border-radius:2px 0 0 2px
-}
 .discussions ul li .name {
     position:absolute;
     top:10px;
@@ -1384,7 +1373,7 @@ footer a {
     padding:5px 10px 5px 10px;
     -webkit-border-radius:2px 0 0 2px;
     -moz-border-radius:2px 0 0 2px;
-    border-radius:2px 0 0 2px
+    border-radius:2px 0 0 2px;
 }
 .discussions ul li .date {
     position:absolute;
@@ -1395,18 +1384,8 @@ footer a {
     padding:5px 20px 5px 10px;
     -webkit-border-radius:2px 0 0 2px;
     -moz-border-radius:2px 0 0 2px;
+    text-align:right;
     border-radius:2px 0 0 2px
-}
-.discussions ul li .nombre {
-    position:absolute;
-    -webkit-border-radius:1px 2px 2px 0;
-    -moz-border-radius:1px 2px 2px 0;
-    border-radius:1px 2px 2px 1px;
-    top:-20px;
-    right:0px;
-    padding:0px 10px 0px 10px;
-    font-size:12px;
-    top:40px
 }
 .discussions ul li .opciones {
     position:absolute;
@@ -1434,7 +1413,7 @@ footer a {
 .discussions ul li .message {
     border-bottom:1px solid #e4e6eb;
     margin:20px -10px 0 -10px;
-    padding:20px
+    padding:40px 10px 10px 20px
 }
 .discussions ul li ul {
     border-bottom:1px solid #e4e6eb;
@@ -1721,10 +1700,12 @@ footer a {
     margin-top:10px;
     min-height:30px;
     font-size:14px;
+    word-wrap:break-word;
 }
 
 .message {
-	word-wrap : break-word;
+	word-wrap:break-word;
+	width:90%;
 }
 
 .chat .cartelera .form {

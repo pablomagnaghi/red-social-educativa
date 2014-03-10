@@ -147,7 +147,7 @@ class RedController {
 		def usuario = usuarioService.usuarioActual()
 		def curso = Curso.get(params.cursoId)
 			
-		if (Administrador.findByUsuarioAndActivo(usuario, true)) {
+		if (Administrador.findByUsuario(usuario)) {
 			redirect controller: "curso", action: "administrador", params: params
 			return
 		}	

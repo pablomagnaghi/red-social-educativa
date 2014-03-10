@@ -11,7 +11,7 @@ class AsignaturaController {
 	def asignaturaService
 
 	def index() {
-		params.max = 100//Utilidades.MAX_PARAMS
+		params.max = Utilidades.MAX_PARAMS
 		respond Asignatura.list(params)
 	}
 	
@@ -28,24 +28,22 @@ class AsignaturaController {
 			notFound()
 			return
 		}
-
 		if (asignaturaService.existe(asignaturaInstance)) {
 			flash.message = "Ya existe la asignatura ${asignaturaInstance.codigo}"
 			redirect action: "create"
 			return
 		}
-		
 		if (!asignaturaService.guardar(asignaturaInstance)) {
 			respond asignaturaInstance, view:'create'
 			return
 		}
-
-		flash.message = message(code: 'default.created.message', args: [message(code: 'asignaturaInstance.label', default: 'Asignatura'), asignaturaInstance.id])
+		flash.message = "Asignatura ${asignaturaInstance.codigo} creada"
 		redirect action:"index"
 	}
 
 	def edit(Asignatura asignaturaInstance) {
-		respond asignaturaInstance
+		def codigo = Asignatura.get(asignaturaInstance.id).codigo
+		respond asignaturaInstance, model: [codigo: codigo]
 	}
 
 	def update(Asignatura asignaturaInstance) {
@@ -53,13 +51,17 @@ class AsignaturaController {
 			notFound()
 			return
 		}
-
+		if (asignaturaService.existe(asignaturaInstance)) {
+			flash.message = "Ya existe la asignatura ${asignaturaInstance.codigo}"
+			asignaturaInstance.codigo = params.codigoAnterior
+			redirect action:'edit', params: params
+			return
+		}
 		if (!asignaturaService.guardar(asignaturaInstance)) {
 			respond asignaturaInstance, view:'edit'
 			return
 		}
-
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'Asignatura.label', default: 'Asignatura'), asignaturaInstance.id])
+		flash.message = "Asignatura ${asignaturaInstance.codigo} actualizada"
 		redirect action:"index"
 	}
 
@@ -68,15 +70,13 @@ class AsignaturaController {
 			notFound()
 			return
 		}
-
 		asignaturaService.eliminar(asignaturaInstance)
-
-		flash.message = message(code: 'default.deleted.message', args: [message(code: 'Asignatura.label', default: 'Asignatura'), asignaturaInstance.id])
+		flash.message = "Asignatura ${asignaturaInstance.codigo} eliminada"
 		redirect action:"index", method:"GET"
 	}
 
 	protected void notFound() {
-		flash.message = message(code: 'default.not.found.message', args: [message(code: 'AsignaturaInstance.label', default: 'Asignatura'), params.id])
+		flash.message = "No se encuentra esa asignatura"
 		redirect action: "index", method: "GET"
 	}
 }

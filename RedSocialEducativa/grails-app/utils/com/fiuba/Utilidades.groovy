@@ -28,7 +28,9 @@ class Utilidades {
 	final static FECHA_PRIMER_CUATRIMESTRE = 10000 * (ANIO) + 100 * 3 + 30
 	final static FECHA_SEGUNDO_CUATRIMESTRE = 10000 * (ANIO) + 100 * 8 + 15
 	
-	final static MAX_PARAMS = 5
+	final static MAX_PARAMS = 200
+	final static MAX_TITULO = 64
+	final static MAX_SIZE = 1024
 	
 	final static RESPUESTA = "Respuesta a: "
 	

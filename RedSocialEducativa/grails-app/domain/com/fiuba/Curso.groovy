@@ -13,6 +13,7 @@ class Curso {
 
 	static constraints = {
 		nroRelativo min: (Short)1
+		nombre maxSize: Utilidades.MAX_TITULO
 		cuatDict inList:[Utilidades.CUAT_UNO, Utilidades.CUAT_DOS, Utilidades.CUAT_AMBOS]
 	}
 
