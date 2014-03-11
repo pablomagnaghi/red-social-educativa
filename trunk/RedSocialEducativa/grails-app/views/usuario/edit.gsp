@@ -21,6 +21,7 @@
     	<g:set var="varMediadorService" bean="mediadorService"/>
     	<g:set var="varAprendizService" bean="aprendizService"/>
     	<g:set var="usuario" value="${varUsuarioService.usuarioActual()}"/>
+    	<g:set var="administrador" value="${com.fiuba.Administrador.findByUsuario(usuario)}"/>
     	<g:set var="cursosMediador" value="${varMediadorService.obtenerCursos(usuario)}"/>
     	<g:set var="cursosAprendiz" value="${varAprendizService.obtenerCursos(usuario)}"/>
 
@@ -34,26 +35,16 @@
 			            <div class="span3"></div>
 					    <div class="box span6">
 					        <div class="box-header">     	
-					            <h2><i class="icon-edit"></i>Editar</h2>
+					            <h2><i class="icon-edit"></i>Mi perfil</h2>
 					            <div class="box-icon">
-					                <g:link action="create"><i class="icon-plus"></i></g:link>
+					                <g:link controller="red" action="revisarRol"><i class="icon-home"></i></g:link>
 					            </div>
 					        </div>
-					        <g:if test="${flash.message}">
-								<div class="message" role="status">${flash.message}</div>
-							</g:if>      
-							<g:hasErrors bean="${usuarioInstance}">
-								<ul class="errors" role="alert">
-									<g:eachError bean="${usuarioInstance}" var="error">
-										<li <g:if test="${error in org.springframework.validation.FieldError}">
-												data-field-id="${error.field}"</g:if>>
-											<g:message error="${error}"/></li>
-									</g:eachError>
-								</ul>
-							</g:hasErrors>
 					        <div class="box-content">
 					        	<g:form class="form-horizontal" action="update" method="PUT" id="${usuarioInstance.id}">
 					        		<g:hiddenField name="version" value="${usuarioInstance?.version}" />
+					        		<g:hiddenField name="username" value="${usuarioInstance.username}" />
+					        		<g:hiddenField name="password" value="${usuarioInstance.password}" />
 						            <fieldset>
 						            	<g:render template="form"/>		
 						            	<div class="form-actions">
