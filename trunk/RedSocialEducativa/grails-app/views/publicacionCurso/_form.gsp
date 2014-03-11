@@ -19,4 +19,4 @@
 
 <div><g:hiddenField name="responsable" value="${usuario}"/></div>
 <div><g:hiddenField name="dni" value="${usuario.username}"/></div>
-<div><g:hiddenField name="foro.id" value="${com.fiuba.ForoCurso.findByCuatrimestre(com.fiuba.Cuatrimestre.get(params.cuatrimestreId)).id}"/></div>
+<div><g:hiddenField name="foro.id" value="${com.foro.ForoCurso.findByCuatrimestre(com.fiuba.Cuatrimestre.get(params.cuatrimestreId)).id}"/></div>

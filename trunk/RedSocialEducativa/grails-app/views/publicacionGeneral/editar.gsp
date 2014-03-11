@@ -22,29 +22,21 @@
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
 					 <div class="row-fluid">
-					    <div class="box span12">
+					 	<div class="span2"></div>
+					    <div class="box span8">
 					        <div class="box-header">     	
 					            <h2><i class="icon-edit"></i>Editar</h2>
+					            <div class="box-icon">
+					                <g:link action="nueva"><i class="icon-plus"></i></g:link>
+					                <g:link controller="foroGeneral" action="general"><i class="icon-table"></i></g:link>
+					            </div>
 					        </div>
-							<g:if test="${flash.message}">
-								<div class="message" role="status">${flash.message}</div>
-							</g:if>
-							<g:hasErrors bean="${publicacionGeneralInstance}">
-								<ul class="errors" role="alert">
-									<g:eachError bean="${publicacionGeneralInstance}" var="error">
-										<li <g:if test="${error in org.springframework.validation.FieldError}">
-											data-field-id="${error.field}"</g:if>>
-											<g:message error="${error}"/></li>
-									</g:eachError>
-								</ul>
-							</g:hasErrors>
 							<div class="box-content">
 								<g:form class="form-horizontal" action="actualizar" method="PUT" id="${publicacionGeneralInstance.id}" 
 									params="['pubInicialId': params.pubInicialId]">
 									<g:hiddenField name="version" value="${publicacionGeneralInstance?.version}" />
 									<fieldset>
 										<g:render template="form"/>	
-										<g:hiddenField name="titulo" value="${publicacionGeneralInstance.titulo}"/>		
 										<div class="form-actions">
 											<button type="submit" class="btn btn-primary">Crear</button>
 										</div>		    
@@ -52,6 +44,7 @@
 								</g:form>
 							</div>
 						</div>
+						<div class="span2"></div>
 					</div>
  				</div>
             	<!-- end: Content -->

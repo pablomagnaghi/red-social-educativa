@@ -31,9 +31,6 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-					<g:if test="${flash.message}">
-						<div class="message" role="status">${flash.message}</div>
-					</g:if>
 	                <g:render template="temas" />		
  				</div>
             	<!-- end: Content -->
