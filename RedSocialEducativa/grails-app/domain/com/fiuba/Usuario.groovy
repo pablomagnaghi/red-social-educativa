@@ -13,8 +13,8 @@ class Usuario {
 	Integer legajo
 	Integer padron
 	String email
-	String fechaSolicitud = new Date().format(Utilidades.FORMATO_FECHA)
-	String fechaMembresia
+	Integer fechaSolicitud = Utilidades.FECHA
+	Integer fechaMembresia
 	
 	String codigoConfirmacion = UUID.randomUUID().toString()
 

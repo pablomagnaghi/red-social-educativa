@@ -10,34 +10,71 @@ class AdministradorController {
 
 	def administradorService
 	def usuarioService
+
 	
     def index() {
         params.max = Utilidades.MAX_PARAMS
         respond Administrador.list(params), model:[administradorInstanceCount: Administrador.count()]
     }
 
-    def delete(Administrador administradorInstance) {
+	// Solo para los que solicitaron membresía y después de una semana no activaron su cuenta vía email
+	def actualizarMembresias() {
+		Usuario.list().each {
+			if ((!it.fechaMembresia) && (it.fechaSolicitud > Utilidades.FECHA_PROXIMA_SEMANA)) {
+				usuarioService.eliminar(it)
+			}
+		}
+		flash.message = "Actualización exitosa"
+		redirect action:"index"
+	}
+	
+	def create() {
+		respond new Administrador(params)
+	}
 
-        if (administradorInstance == null) {
-            notFound()
-            return
-        }
-		
-		if (administradorInstance.usuario == usuarioService.usuarioActual()) {
-			administradorService.eliminar(administradorInstance)
-			redirect controller: "red", action: "principal", method:"GET"
+	def save(Administrador administradorInstance) {
+		if (administradorInstance == null) {
+			notFound()
 			return
 		}
-
-        administradorService.eliminar(administradorInstance)
-
-        flash.message = message(code: 'default.deleted.message', args: [message(code: 'Administrador.label', default: 'Administrador'), administradorInstance.id])
-		// TODO probar esto
-		redirect action: "index", method:"GET"
-    }
+		if (Mediador.findAllByUsuario(administradorInstance.usuario) || Aprendiz.findAllByUsuario(administradorInstance.usuario)) {
+			flash.message = "${administradorInstance.usuario} ya tiene rol aprendiz/mediador en la red, no puede ser administrador"
+			redirect action: "create"
+			return
+		}
+		if (!administradorService.guardar(administradorInstance)) {
+			flash.message = "Problemas al crear administrador"
+			respond administradorInstance, view:'create'
+			return
+		}
+		administradorService.notificar(administradorInstance)
+		flash.message = "Administrador ${administradorInstance.usuario} creado"
+		redirect action:"index"
+	}
+	
+	def cambiarEstado(Administrador administradorInstance) {
+		if (administradorInstance == null) {
+			notFound()
+			return
+		}
+		administradorInstance.activo = administradorInstance.activo ? false : true
+		if (!administradorService.guardar(administradorInstance)) {
+			flash.message = "Problemas al cambiar el estado"
+			redirect action:"index", method:"GET"
+			return
+		}
+		administradorService.notificar(administradorInstance)
+		if ((!administradorInstance.activo) && (administradorInstance.usuario == usuarioService.usuarioActual())) {
+			redirect controller:"red", action:"revisarRol",  method:"GET"
+			return
+		}
+		flash.message = "Administrador ${administradorInstance.usuario} actualizado"
+		redirect action:"index", method:"GET"
+		return
+	}
 
     protected void notFound() {
-        flash.message = message(code: 'default.not.found.message', args: [message(code: 'administradorInstance.label', default: 'Administrador'), params.id])
+        flash.message = "No se encuentra ese administrador"
 		redirect action: "index", method: "GET"
     }
 }

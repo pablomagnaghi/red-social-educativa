@@ -14,7 +14,7 @@ class RedService {
 	}
 	
 	private activacionCorrecta(Usuario usuario) {
-		usuario.fechaMembresia = new Date().format(Utilidades.FORMATO_FECHA)
+		usuario.fechaMembresia = Utilidades.FECHA
 		if (!usuario.save(flush: true)) {
 			return false
 		}

@@ -61,10 +61,11 @@ class MediadorController {
 			return
 		}
 		if (!mediadorService.guardar(mediadorInstance)) {
+			flash.message = "Problemas al crear mediador"
 			respond mediadorInstance, view:'create', params: ['cursoId': params.cursoId]
 			return
 		}
-		flash.message = "Mediador ${mediadorInstance.usuario}-${mediadorInstance.usuario.dni} creado"
+		flash.message = "Mediador ${mediadorInstance.usuario} creado"
 		redirect action:"index", params: ['cursoId': params.cursoId]
 	}
 	
@@ -85,7 +86,7 @@ class MediadorController {
 			redirect action: "editarJerarquia", params: ['cursoId': params.cursoId]
 			return
 		}
-		flash.message = "Mediador ${mediadorInstance.usuario}-${mediadorInstance.usuario.dni} actualizado"
+		flash.message = "Mediador ${mediadorInstance.usuario} actualizado"
 		redirect action:"index", params: ['cursoId': params.cursoId]
 	}
 	
@@ -102,12 +103,11 @@ class MediadorController {
 			return
 		}
 		mediadorService.notificar(mediadorInstance)
-
 		if ((!mediadorInstance.activo) && (mediadorInstance.usuario == usuarioService.usuarioActual())) {
 			redirect controller:"red", action:"revisarRol",  method:"GET"
 			return
 		}
-		flash.message = "Mediador ${mediadorInstance.usuario}-${mediadorInstance.usuario.dni} actualizado"
+		flash.message = "Mediador ${mediadorInstance.usuario} actualizado"
 		redirect action:"index", params: ['cursoId': params.cursoId], method:"GET"
 		return
 	}
