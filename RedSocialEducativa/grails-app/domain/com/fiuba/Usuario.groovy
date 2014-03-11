@@ -62,6 +62,6 @@ class Usuario {
 	}
 
 	String toString() {
-		"${nombres} ${apellido}"
+		"${dni} - ${nombres} ${apellido}"
 	}
 }

@@ -4,7 +4,7 @@
 	<ul>
 		<g:each in="${cursosAprendiz}" var="cursoAprendiz">
 		<li><g:link controller="curso" action="aprendiz" params="['cursoId': cursoAprendiz.id]">
-			<i class="icon-hdd"></i><span class="hidden-tablet"> ${com.fiuba.Asignatura.get(cursoAprendiz.asignatura.id)}-${cursoAprendiz}</span></g:link>
+			<i class="icon-hdd"></i><span class="hidden-tablet"> ${cursoAprendiz}</span></g:link>
 		</li>
 		</g:each>
 	</ul>

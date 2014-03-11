@@ -81,7 +81,7 @@ class CursoController {
 	// TODO: de aca para abajo listo
 	@Secured("hasRole('ROL_ADMIN')")
 	def index() {
-		params.max = 100//Utilidades.MAX_PARAMS
+		params.max = Utilidades.MAX_PARAMS
 		[cursoInstanceList: cursoService.obtenerCursosOrdenados()]
 	}
 	

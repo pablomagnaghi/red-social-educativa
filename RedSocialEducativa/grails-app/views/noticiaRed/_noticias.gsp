@@ -15,15 +15,13 @@
 		                    <span class="title">${it.titulo}</span>
 		                    <span class="time">
 		                    	<div>${it.fecha} - ${it.hora}</div>
-		                    	<div>${it.administrador.usuario}</div>	
+		                    	<div>${it.administrador.usuario.nombres} ${it.administrador.usuario.apellido}</div>
 		                    	<div> 		
 		                    		<g:if test="${it.visibilidad}">
-		                    			<g:link class="btn btn-success" action="cambiarVisibilidad" id="${it.id}">
-		                    			<i class="icon-plus-sign"></i></g:link>	
+		                    			<g:link class="btn btn-success" action="cambiarVisibilidad" id="${it.id}"><i class="icon-plus-sign"></i></g:link>	
 		                    		</g:if>
 		                    		<g:else>
-		                    			<g:link class="btn btn-inverse" action="cambiarVisibilidad" id="${it.id}">	                    		
-											<i class="icon-plus-sign"></i></g:link>	
+		                    			<g:link class="btn btn-inverse" action="cambiarVisibilidad" id="${it.id}"><i class="icon-plus-sign"></i></g:link>	
 									</g:else>	
 			                    	<g:link class="btn btn-info" action="edit" id="${it.id}">
 		                                <i class="icon-edit "></i> 
@@ -33,7 +31,7 @@
 		                                <i class="icon-trash "></i>                        
 									</g:link>
 								</div>
-		                    </span>
+							</span>	
 		                    <div class="message">${it.texto}</div>
 		                </li>
 				</g:each>                

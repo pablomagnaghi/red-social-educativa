@@ -16,7 +16,7 @@
 		                    <span class="title">${it.titulo}</span>		                    
 		                    <span class="time">
 		                    	<div>${it.fecha} - ${it.hora}</div>
-								<div>${it.administrador.usuario}</div>							
+								<div>${it.administrador.usuario.nombres} ${it.administrador.usuario.apellido}</div>						
 							</span>
 		                    <div class="message">${it.texto}</div>
 		                </li>
