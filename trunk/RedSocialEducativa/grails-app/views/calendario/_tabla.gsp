@@ -8,6 +8,15 @@
             </div>
         </div>
         <div class="box-content">
+        	<g:if test="${flash.message}">
+				<div class="box-content alerts">
+		    		<div class="alert alert-info">
+						<button class="close" data-dismiss="alert" type="button"></button>
+						<strong></strong> 
+						${flash.message}
+				    </div>
+				</div>    
+			</g:if>
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
                 <thead>
                     <tr>
@@ -20,9 +29,9 @@
                 <tbody>
                 	<g:each in="${calendarioInstanceList}" status="i" var="calendarioInstance">
 	                    <tr>
-    	                    <td>${fieldValue(bean: calendarioInstance, field: "anio")}</td>
-            	            <td class="center">${fieldValue(bean: calendarioInstance, field: "inicioPrimerCuatrimestre")}</td>
-            	            <td class="center">${fieldValue(bean: calendarioInstance, field: "inicioSegundoCuatrimestre")}</td>
+    	                    <td><g:formatNumber number="${calendarioInstance.anio}"/></td>
+            	            <td class="center"><g:formatNumber number="${calendarioInstance.inicioPrimerCuatrimestre}"/></td>
+            	            <td class="center"><g:formatNumber number="${calendarioInstance.inicioSegundoCuatrimestre}"/></td>
 	                         <td class="center">
 	                            <g:link class="btn btn-info" action="edit" resource="${calendarioInstance}" id="${calendarioInstance.id}">
 	                                <i class="icon-edit "></i> 
