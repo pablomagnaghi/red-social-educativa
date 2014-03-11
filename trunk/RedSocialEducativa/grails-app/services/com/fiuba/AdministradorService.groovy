@@ -5,6 +5,14 @@ import grails.transaction.Transactional
 
 @Transactional
 class AdministradorService {
+	
+	private enviarEmail(String email, String msj) {
+		sendMail {
+			to email
+			subject Utilidades.TITULO_RED
+			body msj
+		}
+	}
 
 	def guardar(Administrador administrador) {
 		if (administrador.save(flush: true)) {
@@ -13,15 +21,14 @@ class AdministradorService {
 		return null
 	}
 
-	def eliminar(Administrador administrador) {
-		println administrador.usuario
-		def miembro = Miembro.findByUsuario(administrador.usuario)
-		println "miembro eliminedo ${miembro}"
-		miembro.delete flush:true
-		administrador.delete flush:true
-		
-		// TODO esto es lo que va, cuando se haga la mensajeria
-		//Administrador.removeAll(usuario)
-		//Miembro.removeAll(usuario)
-	}	
+	def notificar(Administrador administrador) {
+		def email = administrador.usuario.email
+		if (!administrador.activo) {
+			def mensaje = "${administrador.usuario.nombres} ${administrador.usuario.apellido} ha dejado de ser administrador"
+			enviarEmail(email, mensaje)
+			return
+		}
+		def mensaje = "Miembro ${administrador.usuario.nombres} ${administrador.usuario.apellido} se ha converitdo en administrador"
+		enviarEmail(email, mensaje)
+	}
 }

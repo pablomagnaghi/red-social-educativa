@@ -52,4 +52,8 @@ class UsuarioService {
 		usuario.enabled = false
 		usuario.save flush:true
 	}
+	
+	def eliminar(Usuario usuario) {
+		usuario.delete flush: true
+	}
 }

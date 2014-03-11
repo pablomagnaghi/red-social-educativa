@@ -14,7 +14,7 @@ class UsuarioController {
 		params.max = 100//Utilidades.MAX_PARAMS
 		respond Usuario.list(params), model:[usuarioInstanceCount: Usuario.count()]
 	}
-
+/*
 	@Secured("hasRole('ROL_ADMIN')")
 	def create() {
 		respond new Usuario(params)
@@ -49,7 +49,7 @@ class UsuarioController {
 		flash.message = message(code: 'default.created.message', args: [message(code: 'administradorInstance.label', default: 'Administrador'), administrador.id])
 		redirect controller: 'administrador', action: 'index'
 	}
-	
+	*//*
 	// TODO VER 
 	@Secured("hasRole('ROL_ADMIN')")
 	def edit(Usuario usuarioInstance) {
@@ -72,7 +72,7 @@ class UsuarioController {
 		flash.message = message(code: 'default.updated.message', args: [message(code: 'Usuario.label', default: 'Usuario'), usuarioInstance.id])
 		redirect usuarioInstance
 	}
-	
+	*/
 	@Secured("hasRole('ROL_ADMIN')")
 	def delete(Usuario usuarioInstance) {
 
