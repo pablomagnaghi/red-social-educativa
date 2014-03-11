@@ -1,7 +1,13 @@
 <%@ page import="com.fiuba.Mediador" %>
+<%@ page import="com.fiuba.UsuarioService" %>
+<%@ page import="com.fiuba.MediadorService" %>
+<%@ page import="com.fiuba.AprendizService" %>
 <%
 	def usuarioService = grailsApplication.classLoader.loadClass('com.fiuba.UsuarioService').newInstance()
+	def mediadorService = grailsApplication.classLoader.loadClass('com.fiuba.MediadorService').newInstance()
+	def aprendizService = grailsApplication.classLoader.loadClass('com.fiuba.AprendizService').newInstance()
 %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,8 +18,12 @@
     <body>
     	<!-- Para el header y el panel lateral -->
     	<g:set var="varUsuarioService" bean="usuarioService"/>
+    	<g:set var="varMediadorService" bean="mediadorService"/>
+    	<g:set var="varAprendizService" bean="aprendizService"/>
     	<g:set var="usuario" value="${varUsuarioService.usuarioActual()}"/>
     	<g:set var="administrador" value="${com.fiuba.Administrador.findByUsuario(usuario)}"/>
+    	<g:set var="cursosMediador" value="${varMediadorService.obtenerCursos(usuario)}"/>
+    	<g:set var="cursosAprendiz" value="${varAprendizService.obtenerCursos(usuario)}"/>
  	
     	<div class="container-fluid-full">
 			<div class="row-fluid">   

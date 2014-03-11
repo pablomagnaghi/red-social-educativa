@@ -8,8 +8,7 @@ class CursoService {
 	def cuatrimestreService
 	
 	def obtenerCursosOrdenados() {
-		def c = Curso.createCriteria()
-		def cursos = c.list {
+		def cursos = Curso.createCriteria().list {
 			and {
 				order('asignatura', 'asc')
 				order('nroRelativo', 'asc')
