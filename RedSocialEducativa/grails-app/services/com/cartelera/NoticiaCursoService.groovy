@@ -1,4 +1,4 @@
-package com.fiuba
+package com.cartelera
 
 import grails.transaction.Transactional
 

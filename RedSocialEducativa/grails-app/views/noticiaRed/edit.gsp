@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.NoticiaRed" %>
+<%@ page import="com.cartelera.NoticiaRed" %>
 <%
 	def usuarioService = grailsApplication.classLoader.loadClass('com.fiuba.UsuarioService').newInstance()
 %>
@@ -27,28 +27,15 @@
 					        <div class="box-header">     	
 					            <h2><i class="icon-edit"></i>Editar</h2>
 					            <div class="box-icon">
-					            	<g:link class="list" controller="login" action="auth"><i class="icon-home"></i></g:link>
+					   
 					                <g:link action="create"><i class="icon-plus"></i></g:link>
+					                <g:link class="list" action="index"><i class="icon-table"></i></g:link>
 					            </div>
 					        </div>
-					        <g:if test="${flash.message}">
-								<div class="message" role="status">${flash.message}</div>
-							</g:if>      
-							<g:hasErrors bean="${noticiaRedInstance}">
-								<ul class="errors" role="alert">
-									<g:eachError bean="${noticiaRedInstance}" var="error">
-										<li <g:if test="${error in org.springframework.validation.FieldError}">
-												data-field-id="${error.field}"</g:if>>
-											<g:message error="${error}"/></li>
-									</g:eachError>
-								</ul>
-							</g:hasErrors>
 					        <div class="box-content">
 					        	<g:form class="form-horizontal" action="update" method="PUT" id="${noticiaRedInstance.id}">
 					        		<g:hiddenField name="version" value="${noticiaRedInstance?.version}" />
 					        		<g:hiddenField name="administrador.id" value="${administrador.id}"/>
-					        		<g:hiddenField name="titulo" value="${noticiaRedInstance?.titulo}"/>
-						            <g:hiddenField name="visibilidad" value="${noticiaRedInstance?.visibilidad}"/>
 						            <fieldset>
 						            	<g:render template="form"/>			
 						            	<div class="form-actions">

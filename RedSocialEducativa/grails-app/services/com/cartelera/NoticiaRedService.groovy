@@ -1,4 +1,4 @@
-package com.fiuba
+package com.cartelera
 
 import grails.transaction.Transactional
 
@@ -13,11 +13,9 @@ class NoticiaRedService {
 	}
 	
 	def guardar(NoticiaRed noticia) {
-
 		if (noticia.save(flush: true)) {
 			return noticia
 		}
-
 		return null
 	}
 

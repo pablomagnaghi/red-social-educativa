@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.NoticiaRed" %>
+<%@ page import="com.cartelera.NoticiaRed" %>
 <%
 	def usuarioService = grailsApplication.classLoader.loadClass('com.fiuba.UsuarioService').newInstance()
 %>
@@ -21,9 +21,6 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-					<g:if test="${flash.message}">
-						<div class="message" role="status">${flash.message}</div>
-					</g:if>
 	                <g:render template="noticias" />		
  				</div>
             	<!-- end: Content -->

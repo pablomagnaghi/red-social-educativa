@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.NoticiaCurso" %>
+<%@ page import="com.cartelera.NoticiaCurso" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>
@@ -30,9 +30,6 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-					<g:if test="${flash.message}">
-						<div class="message" role="status">${flash.message}</div>
-					</g:if>
 					<h2>Params: ${params}</h2>
 					<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
 					<h2>Curso Id: ${params.cursoId}</h2>

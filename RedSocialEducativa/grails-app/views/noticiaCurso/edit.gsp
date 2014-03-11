@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.NoticiaCurso" %>
+<%@ page import="com.cartelera.NoticiaCurso" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>
@@ -42,27 +42,12 @@
 							<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
 							<h2>Curso Id: ${params.cursoId}</h2>
 							<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
-					        <g:if test="${flash.message}">
-								<div class="message" role="status">${flash.message}</div>
-							</g:if>    
-						 
-							<g:hasErrors bean="${noticiaCursoInstance}">
-								<ul class="errors" role="alert">
-									<g:eachError bean="${noticiaCursoInstance}" var="error">
-										<li <g:if test="${error in org.springframework.validation.FieldError}">
-												data-field-id="${error.field}"</g:if>>
-											<g:message error="${error}"/></li>
-									</g:eachError>
-								</ul>
-							</g:hasErrors>
 					        <div class="box-content">
 					        	<g:form class="form-horizontal" action="update" method="PUT" id="${noticiaCursoInstance.id}"
 					        		params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 					        		<g:hiddenField name="version" value="${noticiaCursoInstance?.version}" />
 					        		<g:hiddenField name="cuatrimestre.id" value="${noticiaCursoInstance.cuatrimestre.id}"/>
 					        		<g:hiddenField name="mediador.id" value="${noticiaCursoInstance.mediador.id}"/>
-					        		<g:hiddenField name="titulo" value="${noticiaCursoInstance?.titulo}"/>
-						            <g:hiddenField name="visibilidad" value="${noticiaCursoInstance?.visibilidad}"/>
 						            <fieldset>
 						            	<g:render template="form"/>			
 						            	<div class="form-actions">

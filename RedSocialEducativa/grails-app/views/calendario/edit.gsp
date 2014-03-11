@@ -28,6 +28,7 @@
 					            <h2><i class="icon-edit"></i>Editar</h2>
 					            <div class="box-icon">
 					                <g:link action="create"><i class="icon-plus"></i></g:link>
+					                <g:link class="list" action="index"><i class="icon-table"></i></g:link>
 					            </div>
 					        </div>
 					        <div class="box-content">

@@ -1,4 +1,4 @@
-package com.fiuba
+package com.cartelera
 
 import grails.test.mixin.TestFor
 import spock.lang.Specification

@@ -9,6 +9,15 @@
             		<g:if test="${noticiasRed.size() > 1}">${noticiasRed.size()} noticias</g:if>
             	</span> 	
             </div>
+            <g:if test="${flash.message}">
+				<div class="box-content alerts">
+		    		<div class="alert alert-info">
+						<button class="close" data-dismiss="alert" type="button"></button>
+						<strong></strong> 
+						${flash.message}
+				    </div>
+				</div>    
+			</g:if>
             <ul class="talk">
                 <g:each in="${noticiasRed}">
                 		<li>

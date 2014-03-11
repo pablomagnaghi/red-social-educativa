@@ -1,5 +1,6 @@
 package com.fiuba
 
+import com.cartelera.*
 import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured
 
@@ -18,7 +19,7 @@ class RedController {
 		if (Administrador.findByUsuarioAndActivo(usuarioService.usuarioActual(), true)) {
 			redirect action: "administrador"
 			return
-		}
+		}		
 		redirect action: "miembro"
 	}
 	

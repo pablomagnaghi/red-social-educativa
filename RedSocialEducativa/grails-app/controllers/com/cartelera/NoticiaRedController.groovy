@@ -1,5 +1,6 @@
-package com.fiuba
+package com.cartelera
 
+import com.fiuba.*
 import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured
 
@@ -20,18 +21,15 @@ class NoticiaRedController {
 	}
 
 	def save(NoticiaRed noticiaRedInstance) {
-
 		if (noticiaRedInstance == null) {
 			notFound()
 			return
 		}
-		
 		if (!noticiaRedService.guardar(noticiaRedInstance)) {
 			respond noticiaRedInstance, view:'create'
 			return
 		}
-
-		flash.message = message(code: 'default.created.message', args: [message(code: 'noticiaRedInstance.label', default: 'NoticiaRed'), noticiaRedInstance.id])
+		flash.message = "Noticia ${noticiaRedInstance.titulo} creada"
 		redirect action: "index"
 	}
 
@@ -51,43 +49,37 @@ class NoticiaRedController {
 			return
 		}
 
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'NoticiaRed.label', default: 'NoticiaRed'), noticiaRedInstance.id])
+		flash.message = "Noticia ${noticiaRedInstance.titulo} actualizada"
 		redirect action: "index"
 	}
 
 	def cambiarVisibilidad(NoticiaRed noticiaRedInstance) {
-		
 		if (noticiaRedInstance == null) {
 			notFound()
 			return
 		}
-		
 		noticiaRedInstance.visibilidad = noticiaRedInstance.visibilidad ? false : true
-
 		if (!noticiaRedService.guardar(noticiaRedInstance)) {
 			flash.message = "Problemas al cambiar la visibilidad"
 			redirect action: "index"
 			return
 		}
-		
+		flash.message = "Visibilidad actualizada"
 		redirect action: "index"
 	}
 	
 	def delete(NoticiaRed noticiaRedInstance) {
-
 		if (noticiaRedInstance == null) {
 			notFound()
 			return
 		}
-
 		noticiaRedService.eliminar(noticiaRedInstance)
-
-		flash.message = message(code: 'default.deleted.message', args: [message(code: 'NoticiaRed.label', default: 'NoticiaRed'), noticiaRedInstance.id])
+		flash.message = "Noticia ${noticiaRedInstance.titulo} eliminada"
 		redirect action: "index", method:"GET"
 	}
 
 	protected void notFound() {
-		flash.message = message(code: 'default.not.found.message', args: [message(code: 'noticiaRedInstance.label', default: 'NoticiaRed'), params.id])
+		flash.message = "No se encuentra esa noticia"
 		redirect action: "index", method: "GET"
 	}
 }

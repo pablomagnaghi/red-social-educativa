@@ -4,16 +4,27 @@
         <div class="cartelera">
             <div class="actions">
             	<span class="titulo">Cartelera</span>    
-            	<span class="cant">${noticiasCurso.size()} noticias</span> 	
+            	<span class="cant">
+            		<g:if test="${noticiasCurso.size() == 1}">1 noticia</g:if>
+            		<g:if test="${noticiasCurso.size() > 1}">${noticiasCurso.size()} noticias</g:if>
+            	</span>	
             </div>
+            <g:if test="${flash.message}">
+				<div class="box-content alerts">
+		    		<div class="alert alert-info">
+						<button class="close" data-dismiss="alert" type="button"></button>
+						<strong></strong> 
+						${flash.message}
+				    </div>
+				</div>    
+			</g:if>
             <ul class="talk">
                 <g:each in="${noticiasCurso}">
                 		<li>
 		                    <span class="title">${it.titulo}</span>
-		                    <span class="name"> publicada por ${it.mediador.usuario}</span>
 		                    <span class="time">
 		                    	<div>${it.fecha} - ${it.hora}</div>
-		                    	<div>${it.mediador.usuario}</div>	
+		                    	<div>${it.mediador.usuario.nombres} ${it.mediador.usuario.apellido}</div>
 		                    	<div> 		
 		                    		<g:if test="${it.visibilidad}">
 		                    			<g:link class="btn btn-success" action="cambiarVisibilidad" id="${it.id}"
