@@ -29,7 +29,7 @@
 					            <div class="box-icon">
 					   
 					                <g:link action="create"><i class="icon-plus"></i></g:link>
-					                <g:link class="list" action="index"><i class="icon-table"></i></g:link>
+					                <g:link action="index"><i class="icon-table"></i></g:link>
 					            </div>
 					        </div>
 					        <div class="box-content">
