@@ -11,13 +11,20 @@ class UsuarioController {
 	
 	@Secured("hasRole('ROL_ADMIN')")
 	def index() {
-		params.max = 100//Utilidades.MAX_PARAMS
-		respond Usuario.list(params), model:[usuarioInstanceCount: Usuario.count()]
+		params.max = Utilidades.MAX_PARAMS
+		respond Usuario.list(params)
 	}
 	
-	@Secured("hasRole('ROL_MIEMBRO')")
-	def perfil(Usuario usuarioInstance) {
-		respond usuarioInstance, params: ['cursoId': params.cursoId]
+	// Solo para los que solicitaron membresía y después de una semana no activaron su cuenta vía email
+	@Secured("hasRole('ROL_ADMIN')")
+	def actualizarMembresias() {
+		Usuario.list().each {
+			if ((!it.fechaMembresia) && (it.fechaSolicitud > Utilidades.FECHA_PROXIMA_SEMANA)) {
+				usuarioService.eliminar(it)
+			}
+		}
+		flash.message = "Actualización exitosa"
+		redirect action:"index"
 	}
 	
 	@Secured("hasRole('ROL_MIEMBRO')")
@@ -26,7 +33,7 @@ class UsuarioController {
 			notFound()
 			return
 		}
-		usuarioInstance.enabled = usuarioInstance.enabled ? false : true
+		usuarioInstance.enabled = false 
 		if (!usuarioService.guardar(usuarioInstance)) {
 			flash.message = "Problemas al cambiar el estado"
 			redirect controller:"red", action:"revisarRol",  method:"GET"
@@ -51,7 +58,7 @@ class UsuarioController {
 		usuarioInstance.enabled = usuarioInstance.enabled ? false : true
 		if (!usuarioService.guardar(usuarioInstance)) {
 			flash.message = "Problemas al cambiar el estado"
-			redirect action:"index", params: ['cursoId': params.cursoId], method:"GET"
+			redirect action:"index", method:"GET"
 			return
 		}
 		usuarioService.notificar(usuarioInstance)
@@ -60,35 +67,29 @@ class UsuarioController {
 			return
 		}
 		flash.message = "usuario ${usuarioInstance} actualizado"
-		redirect action:"index", params: ['cursoId': params.cursoId], method:"GET"
+		redirect action:"index", method:"GET"
 		return
 	}
 	
-/*
-	// TODO VER 
-	@Secured("hasRole('ROL_ADMIN')")
+	@Secured("hasRole('ROL_MIEMBRO')")
 	def edit(Usuario usuarioInstance) {
 		respond usuarioInstance
 	}
 
-	// TODO VER
-	@Secured("hasRole('ROL_ADMIN')")
+	@Secured("hasRole('ROL_MIEMBRO')")
 	def update(Usuario usuarioInstance) {
 		if (usuarioInstance == null) {
 			notFound()
 			return
 		}
-
 		if (!usuarioService.actualizar(usuarioInstance)) {
+			flash.message = "Revise el perfil"
 			respond usuarioInstance, view:'edit'
 			return
 		}
-
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'Usuario.label', default: 'Usuario'), usuarioInstance.id])
-		redirect usuarioInstance
+		redirect controller:"red", action:"revisarRol"
 	}
-	*/
-
+	
 	protected void notFound() {
 		flash.message = "No se encuentra ese usuario"
 		redirect action: "index", method: "GET"

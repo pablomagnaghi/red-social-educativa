@@ -29,7 +29,7 @@ class UsuarioService {
 			enviarEmail(email, mensaje)
 			return
 		}
-		def mensaje = "Usuario ${usuario.nombres} ${usuario.apellido} se ha converitdo en miembro"
+		def mensaje = "Usuario ${usuario.nombres} ${usuario.apellido} ha vuelta a ser miembro"
 		enviarEmail(email, mensaje)
 	}
 	
@@ -64,11 +64,6 @@ class UsuarioService {
 			return usuario
 		}
 		return null
-	}
-	
-	def deshabilitar(Usuario usuario) {
-		usuario.enabled = false
-		usuario.save flush:true
 	}
 	
 	def eliminar(Usuario usuario) {

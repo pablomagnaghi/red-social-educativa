@@ -1,3 +1,8 @@
+<div class="box-content buttons">
+	<p class="btn-group">
+		<g:link action="actualizarMembresias"><button class="btn btn-large btn-primary">Actualizar membresías</button></g:link>	  	
+	</p>
+</div>
 <div class="row-fluid">
     <div class="box span12">
         <div class="box-header" data-original-title="">

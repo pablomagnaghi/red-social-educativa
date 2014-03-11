@@ -11,23 +11,11 @@ class AdministradorController {
 	def administradorService
 	def usuarioService
 
-	
     def index() {
         params.max = Utilidades.MAX_PARAMS
         respond Administrador.list(params), model:[administradorInstanceCount: Administrador.count()]
     }
 
-	// Solo para los que solicitaron membresía y después de una semana no activaron su cuenta vía email
-	def actualizarMembresias() {
-		Usuario.list().each {
-			if ((!it.fechaMembresia) && (it.fechaSolicitud > Utilidades.FECHA_PROXIMA_SEMANA)) {
-				usuarioService.eliminar(it)
-			}
-		}
-		flash.message = "Actualización exitosa"
-		redirect action:"index"
-	}
-	
 	def create() {
 		respond new Administrador(params)
 	}

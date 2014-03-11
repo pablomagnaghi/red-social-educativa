@@ -18,6 +18,7 @@
 				</div>    
 			</g:if>
             <g:form class="form-horizontal" controller="red" action="revisarDatosUsuario">
+            	<g:hiddenField name="enabled" value="${false}"/>
 	            <fieldset>
 	            	<!-- DNI -->
 	            	<g:if test="${!hasErrors(bean: usuarioInstance, field: 'dni', 'error')}">
@@ -188,7 +189,6 @@
 					<div class="form-actions">
 						<button type="submit" class="btn btn-primary">Enviar datos</button>
                 	</div>	
-					<div><g:hiddenField name="enabled" value="${false}"/></div>
 	            </fieldset>
             </g:form>
         </div>
