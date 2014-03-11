@@ -1,13 +1,13 @@
-package com.fiuba
+package com.cartelera
 
 
 
 import grails.test.mixin.*
 import spock.lang.*
 
-@TestFor(NoticiaCursoController)
-@Mock(NoticiaCurso)
-class NoticiaCursoControllerSpec extends Specification {
+@TestFor(NoticiaRedController)
+@Mock(NoticiaRed)
+class NoticiaRedControllerSpec extends Specification {
 
     def populateValidParams(params) {
         assert params != null
@@ -21,8 +21,8 @@ class NoticiaCursoControllerSpec extends Specification {
             controller.index()
 
         then:"The model is correct"
-            !model.noticiaCursoInstanceList
-            model.noticiaCursoInstanceCount == 0
+            !model.noticiaRedInstanceList
+            model.noticiaRedInstanceCount == 0
     }
 
     void "Test the create action returns the correct model"() {
@@ -30,31 +30,31 @@ class NoticiaCursoControllerSpec extends Specification {
             controller.create()
 
         then:"The model is correctly created"
-            model.noticiaCursoInstance!= null
+            model.noticiaRedInstance!= null
     }
 
     void "Test the save action correctly persists an instance"() {
 
         when:"The save action is executed with an invalid instance"
-            def noticiaCurso = new NoticiaCurso()
-            noticiaCurso.validate()
-            controller.save(noticiaCurso)
+            def noticiaRed = new NoticiaRed()
+            noticiaRed.validate()
+            controller.save(noticiaRed)
 
         then:"The create view is rendered again with the correct model"
-            model.noticiaCursoInstance!= null
+            model.noticiaRedInstance!= null
             view == 'create'
 
         when:"The save action is executed with a valid instance"
             response.reset()
             populateValidParams(params)
-            noticiaCurso = new NoticiaCurso(params)
+            noticiaRed = new NoticiaRed(params)
 
-            controller.save(noticiaCurso)
+            controller.save(noticiaRed)
 
         then:"A redirect is issued to the show action"
-            response.redirectedUrl == '/noticiaCurso/show/1'
+            response.redirectedUrl == '/noticiaRed/show/1'
             controller.flash.message != null
-            NoticiaCurso.count() == 1
+            NoticiaRed.count() == 1
     }
 
     void "Test that the show action returns the correct model"() {
@@ -66,11 +66,11 @@ class NoticiaCursoControllerSpec extends Specification {
 
         when:"A domain instance is passed to the show action"
             populateValidParams(params)
-            def noticiaCurso = new NoticiaCurso(params)
-            controller.show(noticiaCurso)
+            def noticiaRed = new NoticiaRed(params)
+            controller.show(noticiaRed)
 
         then:"A model is populated containing the domain instance"
-            model.noticiaCursoInstance == noticiaCurso
+            model.noticiaRedInstance == noticiaRed
     }
 
     void "Test that the edit action returns the correct model"() {
@@ -82,11 +82,11 @@ class NoticiaCursoControllerSpec extends Specification {
 
         when:"A domain instance is passed to the edit action"
             populateValidParams(params)
-            def noticiaCurso = new NoticiaCurso(params)
-            controller.edit(noticiaCurso)
+            def noticiaRed = new NoticiaRed(params)
+            controller.edit(noticiaRed)
 
         then:"A model is populated containing the domain instance"
-            model.noticiaCursoInstance == noticiaCurso
+            model.noticiaRedInstance == noticiaRed
     }
 
     void "Test the update action performs an update on a valid domain instance"() {
@@ -94,28 +94,28 @@ class NoticiaCursoControllerSpec extends Specification {
             controller.update(null)
 
         then:"A 404 error is returned"
-            response.redirectedUrl == '/noticiaCurso/index'
+            response.redirectedUrl == '/noticiaRed/index'
             flash.message != null
 
 
         when:"An invalid domain instance is passed to the update action"
             response.reset()
-            def noticiaCurso = new NoticiaCurso()
-            noticiaCurso.validate()
-            controller.update(noticiaCurso)
+            def noticiaRed = new NoticiaRed()
+            noticiaRed.validate()
+            controller.update(noticiaRed)
 
         then:"The edit view is rendered again with the invalid instance"
             view == 'edit'
-            model.noticiaCursoInstance == noticiaCurso
+            model.noticiaRedInstance == noticiaRed
 
         when:"A valid domain instance is passed to the update action"
             response.reset()
             populateValidParams(params)
-            noticiaCurso = new NoticiaCurso(params).save(flush: true)
-            controller.update(noticiaCurso)
+            noticiaRed = new NoticiaRed(params).save(flush: true)
+            controller.update(noticiaRed)
 
         then:"A redirect is issues to the show action"
-            response.redirectedUrl == "/noticiaCurso/show/$noticiaCurso.id"
+            response.redirectedUrl == "/noticiaRed/show/$noticiaRed.id"
             flash.message != null
     }
 
@@ -124,23 +124,23 @@ class NoticiaCursoControllerSpec extends Specification {
             controller.delete(null)
 
         then:"A 404 is returned"
-            response.redirectedUrl == '/noticiaCurso/index'
+            response.redirectedUrl == '/noticiaRed/index'
             flash.message != null
 
         when:"A domain instance is created"
             response.reset()
             populateValidParams(params)
-            def noticiaCurso = new NoticiaCurso(params).save(flush: true)
+            def noticiaRed = new NoticiaRed(params).save(flush: true)
 
         then:"It exists"
-            NoticiaCurso.count() == 1
+            NoticiaRed.count() == 1
 
         when:"The domain instance is passed to the delete action"
-            controller.delete(noticiaCurso)
+            controller.delete(noticiaRed)
 
         then:"The instance is deleted"
-            NoticiaCurso.count() == 0
-            response.redirectedUrl == '/noticiaCurso/index'
+            NoticiaRed.count() == 0
+            response.redirectedUrl == '/noticiaRed/index'
             flash.message != null
     }
 }

@@ -1,5 +1,7 @@
 package com.fiuba
 
+import com.cartelera.*
+
 class Mediador extends UsuarioRol {
 
 	Boolean activo = true

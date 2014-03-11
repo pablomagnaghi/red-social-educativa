@@ -1,4 +1,6 @@
-package com.fiuba
+package com.cartelera
+
+import com.fiuba.*
 
 class NoticiaCurso extends Noticia {
 

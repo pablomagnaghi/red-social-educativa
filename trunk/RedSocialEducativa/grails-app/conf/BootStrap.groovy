@@ -2,6 +2,7 @@
 import java.util.Date;
 
 import com.fiuba.*
+import com.cartelera.*
 import com.mensajeria.Hilo
 import com.mensajeria.Mensaje
 

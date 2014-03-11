@@ -27,7 +27,7 @@
 					        <div class="box-header">
 					            <h2><i class="icon-plus"></i>Crear</h2>
 					            <div class="box-icon">
-					                <g:link action="index"><i class="icon-home"></i></g:link>
+					                <g:link action="index"><i class="icon-table"></i></g:link>
 					            </div>
 					        </div>
 					        <div class="box-content">
