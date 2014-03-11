@@ -4,15 +4,22 @@
             <h2><i class="icon-table"></i><span class="break"></span>Usuarios</h2>
         </div>
         <div class="box-content">
+        	<g:if test="${flash.message}">
+				<div class="box-content alerts">
+		    		<div class="alert alert-info">
+						<button class="close" data-dismiss="alert" type="button"></button>
+						<strong></strong> 
+						${flash.message}
+				    </div>
+				</div>    
+			</g:if>
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
-            	<p>ARREGLAR MENSAJERIA. No se borran porque falta arreglar la cascada en mensajeria</p>
                 <thead>
                     <tr>
+                    	<th>Nombre de usuario</th>
                         <th>DNI</th>
                         <th>Apellido</th>
                         <th>Nombres</th>
-                        <th>Legajo</th>
-                        <th>Padron</th>
                         <th>Email</th>
                         <th>Fecha solicitud</th>
                         <th>Fecha membresia</th>
@@ -23,30 +30,15 @@
                 <tbody>
                 	<g:each in="${usuarioInstanceList}" var="usuarioInstance">
 	                    <tr>
-    	                    <td>${fieldValue(bean: usuarioInstance, field: "username")}</td>				
-							<td>${fieldValue(bean: usuarioInstance, field: "apellido")}</td>				
-							<td>${fieldValue(bean: usuarioInstance, field: "nombres")}</td>				
-							<td>
-								<g:if test="${fieldValue(bean: usuarioInstance, field: "legajo")}">
-									${fieldValue(bean: usuarioInstance, field: "legajo")}
-								</g:if>	
-								<g:else>
-									No tiene
-								</g:else>
-							</td>		
-							<td>
-								<g:if test="${fieldValue(bean: usuarioInstance, field: "padron")}">
-									${fieldValue(bean: usuarioInstance, field: "padron")}
-								</g:if>		
-								<g:else>
-									No tiene
-								</g:else>	
-							</td>
-							<td>${fieldValue(bean: usuarioInstance, field: "email")}</td>	
-							<td>${fieldValue(bean: usuarioInstance, field: "fechaSolicitud")}</td>	
+	                    	<td>${fieldValue(bean: usuarioInstance, field: "username")}</td>	
+    	                    <td class="center">${fieldValue(bean: usuarioInstance, field: "dni")}</td>				
+							<td class="center">${fieldValue(bean: usuarioInstance, field: "apellido")}</td>				
+							<td class="center">${fieldValue(bean: usuarioInstance, field: "nombres")}</td>				
+							<td class="center">${fieldValue(bean: usuarioInstance, field: "email")}</td>	
+							<td class="center"><g:formatNumber number="${usuarioInstance.fechaSolicitud}"/></td>	
 							<td>
 								<g:if test="${fieldValue(bean: usuarioInstance, field: "fechaMembresia")}">
-									${fieldValue(bean: usuarioInstance, field: "fechaMembresia")}
+									<g:formatNumber number="${usuarioInstance.fechaMembresia}"/>
 								</g:if>	
 								<g:else>
 									No tiene
@@ -61,10 +53,15 @@
                             	</g:else>		
                         	</td>
 	                        <td class="center">
-	                            <g:link class="btn btn-danger" action="delete" method="DELETE" id="${usuarioInstance.id}" 
-	                            	onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >	                          
-	                                <i class="icon-trash "></i>                        
-								</g:link>
+	                        	<g:link class="btn btn-success" action="show" id="${usuarioInstance.id}"><i class="icon-search"></i> </g:link>
+	                       		<g:if test="${usuarioInstance.enabled}">
+                            		<g:link class="btn btn-danger" action="cambiarEstado" id="${usuarioInstance.id}" 
+                            			onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+                            			<i class="icon-off"></i></g:link>
+                            	</g:if>
+                            	<g:else>
+	                            	 <g:link class="btn btn-success" action="cambiarEstado" id="${usuarioInstance.id}"><i class="icon-ok"></i></g:link>
+                            	</g:else>
 	                        </td>
 	                    </tr>
 					</g:each>   

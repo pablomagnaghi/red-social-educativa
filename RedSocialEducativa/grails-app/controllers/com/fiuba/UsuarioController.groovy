@@ -14,42 +14,57 @@ class UsuarioController {
 		params.max = 100//Utilidades.MAX_PARAMS
 		respond Usuario.list(params), model:[usuarioInstanceCount: Usuario.count()]
 	}
-/*
-	@Secured("hasRole('ROL_ADMIN')")
-	def create() {
-		respond new Usuario(params)
+	
+	@Secured("hasRole('ROL_MIEMBRO')")
+	def perfil(Usuario usuarioInstance) {
+		respond usuarioInstance, params: ['cursoId': params.cursoId]
 	}
-
-	@Secured("hasRole('ROL_ADMIN')")
-	def save(Usuario usuarioInstance) {
+	
+	@Secured("hasRole('ROL_MIEMBRO')")
+	def salir(Usuario usuarioInstance) {
 		if (usuarioInstance == null) {
 			notFound()
 			return
 		}
-
-		if (!usuarioInstance.validate()) {
-			respond usuarioInstance, view:'create'
+		usuarioInstance.enabled = usuarioInstance.enabled ? false : true
+		if (!usuarioService.guardar(usuarioInstance)) {
+			flash.message = "Problemas al cambiar el estado"
+			redirect controller:"red", action:"revisarRol",  method:"GET"
 			return
 		}
-
-		if (!redService.activarUsuarioAdm(usuarioInstance)) {
-			flash.message = "Problemas con la activacion del usuario"
-			redirect controller: 'administrador', action: 'index'
-			return
-		}
-		
-		def administrador = new Administrador(usuario: usuarioInstance, rol: Rol.findByAuthority(com.fiuba.Utilidades.ROL_ADMIN))
-		
-		if (!administradorService.guardar(administrador)) {
-			flash.message = "Problemas con la creacion del administrador"
-			redirect controller: 'administrador', action: 'index'
-			return
-		}
-
-		flash.message = message(code: 'default.created.message', args: [message(code: 'administradorInstance.label', default: 'Administrador'), administrador.id])
-		redirect controller: 'administrador', action: 'index'
+		usuarioService.notificar(usuarioInstance)
+		redirect controller:"logout", method:"GET"
+		return
 	}
-	*//*
+	
+	@Secured("hasRole('ROL_ADMIN')")
+	def show(Usuario usuarioInstance) {
+		respond usuarioInstance, params: ['cursoId': params.cursoId]
+	}
+	
+	@Secured("hasAnyRole('ROL_ADMIN')")
+	def cambiarEstado(Usuario usuarioInstance) {
+		if (usuarioInstance == null) {
+			notFound()
+			return
+		}
+		usuarioInstance.enabled = usuarioInstance.enabled ? false : true
+		if (!usuarioService.guardar(usuarioInstance)) {
+			flash.message = "Problemas al cambiar el estado"
+			redirect action:"index", params: ['cursoId': params.cursoId], method:"GET"
+			return
+		}
+		usuarioService.notificar(usuarioInstance)
+		if ((!usuarioInstance.enabled) && (usuarioInstance == usuarioService.usuarioActual())) {
+			redirect controller:"red", action:"revisarRol",  method:"GET"
+			return
+		}
+		flash.message = "usuario ${usuarioInstance} actualizado"
+		redirect action:"index", params: ['cursoId': params.cursoId], method:"GET"
+		return
+	}
+	
+/*
 	// TODO VER 
 	@Secured("hasRole('ROL_ADMIN')")
 	def edit(Usuario usuarioInstance) {
@@ -73,43 +88,9 @@ class UsuarioController {
 		redirect usuarioInstance
 	}
 	*/
-	@Secured("hasRole('ROL_ADMIN')")
-	def delete(Usuario usuarioInstance) {
 
-		if (usuarioInstance == null) {
-			notFound()
-			return
-		}
-		
-		if (usuarioInstance == usuarioService.usuarioActual()) {
-			usuarioService.eliminar(usuarioInstance)
-			redirect controller: "red", action: "principal", method:"GET"
-			return
-		}
-		
-		usuarioService.eliminar(usuarioInstance)
-
-		flash.message = message(code: 'default.deleted.message', args: [message(code: 'usuario.label', default: 'Usuario'), usuarioInstance.id])
-		redirect action:"index", method:"GET"
-	}
-/*
-	@Secured("hasRole('ROL_ADMIN')")
-	def muestraMenuAdm(Usuario usuarioInstance) {
-		respond usuarioInstance
-	}
-	
-	@Secured("hasRole('ROL_MEDIADOR')")
-	def muestraMenuMed(Usuario usuarioInstance) {
-		respond usuarioInstance
-	}
-	
-	@Secured("hasRole('ROL_APRENDIZ')")
-	def muestraMenuAprendiz(Usuario usuarioInstance) {
-		respond usuarioInstance
-	}
-	*/
 	protected void notFound() {
-		flash.message = message(code: 'default.not.found.message', args: [message(code: 'usuarioInstance.label', default: 'Usuario'), params.id])
+		flash.message = "No se encuentra ese usuario"
 		redirect action: "index", method: "GET"
 	}
 }

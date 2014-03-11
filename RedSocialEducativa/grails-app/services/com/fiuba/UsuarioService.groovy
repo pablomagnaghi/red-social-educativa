@@ -10,14 +10,32 @@ class UsuarioService {
 
 	def springSecurityService
 	
+	private enviarEmail(String email, String msj) {
+		sendMail {
+			to email
+			subject Utilidades.TITULO_RED
+			body msj
+		}
+	}
+	
 	def usuarioActual() {
 		return Usuario.get(springSecurityService.principal.id)
+	}
+
+	def notificar(Usuario usuario) {
+		def email = usuario.email
+		if (!usuario.enabled) {
+			def mensaje = "${usuario.nombres} ${usuario.apellido} ha dejado de ser miembro"
+			enviarEmail(email, mensaje)
+			return
+		}
+		def mensaje = "Usuario ${usuario.nombres} ${usuario.apellido} se ha converitdo en miembro"
+		enviarEmail(email, mensaje)
 	}
 	
 	def obtenerCandidatos() {
 		def ArrayList<Usuario> usuarios = new ArrayList<Usuario>()
 		def ArrayList<Miembro> miembros = Miembro.list()
-
 		miembros.each {
 			if (!Administrador.findByUsuario(it.usuario)) {
 				usuarios.add(it.usuario)

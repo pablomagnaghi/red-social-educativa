@@ -65,6 +65,7 @@ class MediadorController {
 			respond mediadorInstance, view:'create', params: ['cursoId': params.cursoId]
 			return
 		}
+		mediadorService.notificar(mediadorInstance)
 		flash.message = "Mediador ${mediadorInstance.usuario} creado"
 		redirect action:"index", params: ['cursoId': params.cursoId]
 	}

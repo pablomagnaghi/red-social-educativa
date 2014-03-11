@@ -69,7 +69,11 @@
                         <ul class="dropdown-menu">
                             <li class="dropdown-menu-title">
                             </li>
-                            <li><a href="#"><i class="icon-user"></i> Perfil</a>
+                            <li><g:link controller="usuario" action="perfil" id="${usuario.id}"><i class="icon-user"></i> Perfil</g:link>
+                            </li>
+                            <li><g:link controller="usuario" action="salir" id="${usuario.id}"
+                            	onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+                            	<i class="icon-user"></i> Dejar membresia</g:link>
                             </li>
                             <li><g:link controller='logout'><i class="icon-off"></i> Salir</g:link>
                             </li>
