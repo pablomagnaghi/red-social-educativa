@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.PublicacionCurso" %>
+<%@ page import="com.foro.PublicacionCurso" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>

@@ -1,6 +1,7 @@
 package com.fiuba
 
 import com.cartelera.*
+import com.foro.*
 
 class Cuatrimestre {
 

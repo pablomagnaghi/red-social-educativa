@@ -61,10 +61,10 @@
 									<textarea class="diss-form" name="contenido" placeholder="Escribe un comentario"></textarea>
 									</div>	
 								</div>	
-								<div><g:hiddenField name="titulo" value="${com.fiuba.PublicacionGeneral.get(params.pubInicialId).titulo}"/></div>
+								<div><g:hiddenField name="titulo" value="${com.foro.PublicacionGeneral.get(params.pubInicialId).titulo}"/></div>
 								<div><g:hiddenField name="responsable" value="${usuario}"/></div>
 								<div><g:hiddenField name="dni" value="${usuario.username}"/></div>
-								<div><g:hiddenField name="foro.id" value="${com.fiuba.ForoGeneral.first().id}"/></div>	
+								<div><g:hiddenField name="foro.id" value="${com.foro.ForoGeneral.first().id}"/></div>	
 							</fieldset>
 							<fieldset class="buttons">
 								<button type="submit" class="btn btn-primary">Publicar</button>

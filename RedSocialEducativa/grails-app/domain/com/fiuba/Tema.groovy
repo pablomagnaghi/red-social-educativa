@@ -1,5 +1,7 @@
 package com.fiuba
 
+import com.foro.*
+
 class Tema {
 
 	String titulo

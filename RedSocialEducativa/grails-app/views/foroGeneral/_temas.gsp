@@ -2,7 +2,7 @@
     <div class="box span12">
         <div class="box-header" data-original-title="">
             <h2><i class="icon-table"></i>
-                <span class="break"></span>${com.fiuba.ForoGeneral.first()}</h2>
+                <span class="break"></span>${com.foro.ForoGeneral.first()}</h2>
             <div class="box-icon">
                 <g:link controller="publicacionGeneral" action="nueva">
                 	<i class="icon-plus"></i></g:link>
