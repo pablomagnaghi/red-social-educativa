@@ -27,30 +27,16 @@
 					        <div class="box-header">
 					            <h2><i class="icon-plus"></i>Crear</h2>
 					            <div class="box-icon">
-					                <a href="#" class="btn-setting"><i class="icon-wrench"></i></a>
-					                <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
-					                <a href="#" class="btn-close"><i class="icon-remove"></i></a>
+					                <g:link action="index"><i class="icon-home"></i></g:link>
 					            </div>
 					        </div>
-					        <g:if test="${flash.message}">
-								<div class="message" role="status">${flash.message}</div>
-							</g:if>      
-							<g:hasErrors bean="${calendarioInstance}">
-								<ul class="errors" role="alert">
-									<g:eachError bean="${calendarioInstance}" var="error">
-										<li <g:if test="${error in org.springframework.validation.FieldError}">
-												data-field-id="${error.field}"</g:if>>
-											<g:message error="${error}"/></li>
-									</g:eachError>
-								</ul>
-							</g:hasErrors>
 					        <div class="box-content">
 					        	<g:form class="form-horizontal" action="save">
+					        		<g:hiddenField name="inicioPrimerCuatrimestre" value="${com.fiuba.Utilidades.FECHA_PRIMER_CUATRIMESTRE}"/>
+									<g:hiddenField name="inicioSegundoCuatrimestre" value="${com.fiuba.Utilidades.FECHA_SEGUNDO_CUATRIMESTRE}"/>
+									<g:hiddenField name="anio" value="${com.fiuba.Utilidades.ANIO}"/>
 						            <fieldset>				            	
 										<g:render template="form"></g:render>	  
-										<div><g:hiddenField name="inicioPrimerCuatrimestre" value="${com.fiuba.Utilidades.FECHA_PRIMER_CUATRIMESTRE}"/></div>
-										<div><g:hiddenField name="inicioSegundoCuatrimestre" value="${com.fiuba.Utilidades.FECHA_SEGUNDO_CUATRIMESTRE}"/></div>  
-										<div><g:hiddenField name="anio" value="${com.fiuba.Utilidades.ANIO}"/></div>
 										<div class="form-actions">
 											<button type="submit" class="btn btn-primary">Crear</button>
 										</div>	
