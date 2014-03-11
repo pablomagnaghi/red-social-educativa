@@ -11,6 +11,13 @@
 				<dd><g:link controller="aprendiz" action="aprendicesCurso" params="['cursoId': params.cursoId]">Aprendices</g:link></dd>
 				<dd><g:link controller="cuatrimestre" action="consolidar" params="['cursoId': params.cursoId]">Consolidar cuatrimestre ${cuatrimestres.first()}</g:link></dd>				
 				<dd><g:link controller="cuatrimestre" action="indexHistoriales" params="['cursoId': params.cursoId]">Historial de cuatrimestres</g:link></dd>		
+				<g:if test="${mediador.jerarquia = "Profesor"}">
+					<dd><g:link controller="mediador" action="index" params="['cursoId': params.cursoId]">Administracion mediadores</g:link></dd>
+				</g:if>
+				
+				<dd><g:link controller="mediador" action="cambiarEstado" params="['cursoId': params.cursoId]" 
+					onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"> DEJAR DE PARTICIPAR </g:link></dd>
+				
 			<g:if test="${cuatrimestre?.id}">
 				<dt>Cuatrimestrales</dt>
 					<dd><g:link controller="aprendiz" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]">Aprendices</g:link></dd>

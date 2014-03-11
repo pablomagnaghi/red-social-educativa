@@ -1,7 +1,6 @@
 <%@ page import="com.fiuba.Mediador" %>
 <%
 	def usuarioService = grailsApplication.classLoader.loadClass('com.fiuba.UsuarioService').newInstance()
-	def cursoService = grailsApplication.classLoader.loadClass('com.fiuba.CursoService').newInstance()
 %>
 <!DOCTYPE html>
 <html>
@@ -13,10 +12,8 @@
     <body>
     	<!-- Para el header y el panel lateral -->
     	<g:set var="varUsuarioService" bean="usuarioService"/>
-    	<g:set var="varCursoService" bean="cursoService"/>
     	<g:set var="usuario" value="${varUsuarioService.usuarioActual()}"/>
     	<g:set var="administrador" value="${com.fiuba.Administrador.findByUsuario(usuario)}"/>
-    
  	
     	<div class="container-fluid-full">
 			<div class="row-fluid">   
@@ -27,26 +24,35 @@
 		            <div class="row-fluid">
 		            	<div class="span2"></div>
 					    <div class="box span8">
-					        <div class="box-header">
-					            <h2><i class="icon-plus"></i>Crear</h2>
+					        <div class="box-header">     	
+					            <h2><i class="icon-edit"></i>Editar</h2>
 					            <div class="box-icon">
-					                 <g:link action="index"><i class="icon-table"></i></g:link>
+					                <g:link action="create"><i class="icon-plus"></i></g:link>
+					                <g:link action="index"><i class="icon-table"></i></g:link>
 					            </div>
 					        </div>
 					        <div class="box-content">
-					        	<g:form class="form-horizontal" action="save">
-					        		<g:hiddenField name="rol.id" value="${com.fiuba.Rol.findByAuthority(com.fiuba.Utilidades.ROL_MEDIADOR).id}"/>				      
+					        	<g:form class="form-horizontal" action="actualizarJerarquia" method="PUT" id="${mediadorInstance.id}" >
+					        		<g:hiddenField name="version" value="${mediadorInstance?.version}" />
+					        		<g:hiddenField name="rol.id" value="${mediadorInstance.rol.id}"/>
+					        		<g:hiddenField name="usaurio.id" value="${mediadorInstance.usuario.id}" />
+					        		<g:hiddenField name="curso.id" value="${mediadorInstance.usuario.id}" />
 						            <fieldset>
-						            	<g:render template="form"/>			
+						            	<div class="control-group">
+											<label class="control-label" >Jerarquia</label>			
+											<div class="controls">
+												<g:select name="jerarquia" from="${['1-Profesor', '2-JTP', '3-AP', '4-AS', '5-Colaborador']}" />
+											</div>	
+										</div>			
 						            	<div class="form-actions">
-											<button type="submit" class="btn btn-primary">Crear</button>
+											<button type="submit" class="btn btn-primary">Actualizar</button>
 										</div>		    
 						            </fieldset>
 					            </g:form>
 					        </div>
 					    </div>
-					    <!--/span-->
 					    <div class="span2"></div>
+					    <!--/span-->
 					</div>
 					<!--/row-->    		
  				</div>

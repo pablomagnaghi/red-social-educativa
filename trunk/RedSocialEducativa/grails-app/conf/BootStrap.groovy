@@ -148,14 +148,14 @@ class BootStrap {
 		mensajeService.nuevoMensaje(mensajeAgusToLuisDos)
 	
 		// Mediadores	
-		def mediadorAgus = new Mediador(usuario: usuarioAgus, rol: rolMediador, jerarquia: "JTP");
-		def mediadorUno = new Mediador(usuario: usuarioUno, rol: rolMediador, jerarquia: "JTP");
-		def mediadorUnoP = new Mediador(usuario: usuarioUno, rol: rolMediador, jerarquia: "AP");
-		def mediadorDos = new Mediador(usuario: usuarioDos, rol: rolMediador, jerarquia: "JTP");
-		def mediadorTres = new Mediador(usuario: usuarioTres, rol: rolMediador, jerarquia: "JTP");
-		def mediadorCuatro = new Mediador(usuario: usuarioCuatro, rol: rolMediador, jerarquia: "JTP");
-		def mediadorCinco = new Mediador(usuario: usuarioCinco, rol: rolMediador, jerarquia: "JTP");
-		def mediadorSeis = new Mediador(usuario: usuarioSeis, rol: rolMediador, jerarquia: "JTP");
+		def mediadorAgus = new Mediador(usuario: usuarioAgus, rol: rolMediador, jerarquia: "2-JTP");
+		def mediadorUno = new Mediador(usuario: usuarioUno, rol: rolMediador, jerarquia: "1-Profesor");
+		def mediadorUnoP = new Mediador(usuario: usuarioUno, rol: rolMediador, jerarquia: "3-AP");
+		def mediadorDos = new Mediador(usuario: usuarioDos, rol: rolMediador, jerarquia: "1-Profesor");
+		def mediadorTres = new Mediador(usuario: usuarioTres, rol: rolMediador, jerarquia: "2-JTP");
+		def mediadorCuatro = new Mediador(usuario: usuarioCuatro, rol: rolMediador, jerarquia: "2-JTP");
+		def mediadorCinco = new Mediador(usuario: usuarioCinco, rol: rolMediador, jerarquia: "2-JTP");
+		def mediadorSeis = new Mediador(usuario: usuarioSeis, rol: rolMediador, jerarquia: "2-JTP");
 		
 		// Aprendices
 		def aprendizAgus = new Aprendiz(usuario: usuarioAgus, rol: rolAprendiz, participa: true, msjEnviados: "0",

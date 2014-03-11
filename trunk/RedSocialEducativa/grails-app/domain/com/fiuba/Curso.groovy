@@ -18,6 +18,6 @@ class Curso {
 	}
 
 	String toString() {
-		"${nroRelativo} - ${nombre}"
+		"${asignatura.codigo} - ${nroRelativo} - ${nombre}"
 	}
 }

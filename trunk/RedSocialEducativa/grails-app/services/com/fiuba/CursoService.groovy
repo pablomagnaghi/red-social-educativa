@@ -11,7 +11,7 @@ class CursoService {
 		def c = Curso.createCriteria()
 		def cursos = c.list {
 			and {
-				order('asignatura', 'desc')
+				order('asignatura', 'asc')
 				order('nroRelativo', 'asc')
 			}
 		}
