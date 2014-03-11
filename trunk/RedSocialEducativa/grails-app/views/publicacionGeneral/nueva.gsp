@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.PublicacionGeneral" %>
+<%@ page import="com.foro.PublicacionGeneral" %>
 <%
 	def usuarioService = grailsApplication.classLoader.loadClass('com.fiuba.UsuarioService').newInstance()
 %>

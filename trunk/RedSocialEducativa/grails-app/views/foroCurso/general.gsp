@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.ForoCurso" %>
+<%@ page import="com.foro.ForoCurso" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>
@@ -33,7 +33,7 @@
 					<g:if test="${flash.message}">
 						<div class="message" role="status">${flash.message}</div>
 					</g:if>
-					<h2>Foro Curso: ${com.fiuba.ForoCurso.findByCuatrimestre(com.fiuba.Cuatrimestre.get(params.cuatrimestreId))}</h2>
+					<h2>Foro Curso: ${com.foro.ForoCurso.findByCuatrimestre(com.fiuba.Cuatrimestre.get(params.cuatrimestreId))}</h2>
 					<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
 					<h2>Cuatrimestre: ${com.fiuba.Cuatrimestre.get(params.cuatrimestreId)}</h2>
 					<h2>Mediador: ${mediador}</h2>

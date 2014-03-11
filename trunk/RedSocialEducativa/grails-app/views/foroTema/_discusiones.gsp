@@ -67,7 +67,7 @@
 									<textarea class="diss-form" name="contenido" placeholder="Escribe un comentario"></textarea>
 									</div>	
 								</div>	
-								<div><g:hiddenField name="titulo" value="${com.fiuba.PublicacionTema.get(params.pubInicialId).titulo}"/></div>
+								<div><g:hiddenField name="titulo" value="${com.foro.PublicacionTema.get(params.pubInicialId).titulo}"/></div>
 								<div><g:hiddenField name="responsable" value="${usuario}"/></div>
 								<div><g:hiddenField name="dni" value="${usuario.username}"/></div>
 								<div><g:hiddenField name="foro.id" value="${foro.id}"/></div>	

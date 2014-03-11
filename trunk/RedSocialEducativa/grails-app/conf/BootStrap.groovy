@@ -3,6 +3,7 @@ import java.util.Date;
 
 import com.fiuba.*
 import com.cartelera.*
+import com.foro.*
 import com.mensajeria.Hilo
 import com.mensajeria.Mensaje
 
