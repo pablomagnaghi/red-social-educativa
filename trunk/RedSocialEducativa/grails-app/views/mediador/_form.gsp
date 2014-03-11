@@ -18,12 +18,17 @@
 </g:hasErrors>
 
 <!-- CURSO -->
-<div class="control-group">
-	<label class="control-label" >Curso</label>			
-	<div class="controls">
-		<g:select id="curso" name="curso.id" from="${varCursoService.obtenerCursosOrdenados()}" optionKey="id" class="many-to-one"/>
-	</div>	
-</div>		
+<g:if test="${!params.cursoId}">
+	<div class="control-group">
+		<label class="control-label" >Curso</label>			
+		<div class="controls">
+			<g:select id="curso" name="curso.id" from="${varCursoService.obtenerCursosOrdenados()}" optionKey="id" class="many-to-one"/>
+		</div>	
+	</div>		
+</g:if>
+<g:else>
+	<g:hiddenField name="curso.id" value="${params.cursoId}"/>
+</g:else>
 <!-- JERARQUIA -->
 <div class="control-group">
 	<label class="control-label" >Jerarquia</label>			

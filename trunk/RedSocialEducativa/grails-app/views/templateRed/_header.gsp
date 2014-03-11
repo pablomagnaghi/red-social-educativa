@@ -63,7 +63,7 @@
                         <a class="btn account dropdown-toggle" data-toggle="dropdown" href="#">
                             <div class="user">
                                 <span class="hello">BIENVENIDO <sec:username/></span>
-                                <span class="name">${usuario}</span>
+                                <span class="name">${usuario.nombres} ${usuario.apellido}</span>
                             </div>
                         </a>
                         <ul class="dropdown-menu">

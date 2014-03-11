@@ -26,18 +26,25 @@ class MediadorController {
 	}
 
 	// TODO: listo de aca para abajo
-	@Secured("hasRole('ROL_ADMIN')")
+	@Secured("hasAnyRole('ROL_ADMIN', 'ROL_MEDIADOR')")
 	def index(Integer max) {
 		params.max = Utilidades.MAX_PARAMS
-		[mediadorInstanceList: mediadorService.obtenerMediadoresOrdenados()]
+		println "params: ${params}"
+		def mediadorInstanceList
+		if (params.cursoId) {
+			mediadorInstanceList = mediadorService.obtenerMediadoresDeCursoOrdenados(params.cursoId.toLong())
+		} else {
+			mediadorInstanceList = mediadorService.obtenerMediadoresOrdenados()
+		}
+		[mediadorInstanceList: mediadorInstanceList, params: ['cursoId': params.cursoId]]
 	}
 
-	@Secured("hasRole('ROL_ADMIN')")
+	@Secured("hasAnyRole('ROL_ADMIN', 'ROL_MEDIADOR')")
 	def create() {
-		respond new Mediador(params)
+		respond new Mediador(params), params: ['cursoId': params.cursoId]
 	}
 
-	@Secured("hasRole('ROL_ADMIN')")
+	@Secured("hasAnyRole('ROL_ADMIN', 'ROL_MEDIADOR')")
 	def save(Mediador mediadorInstance) {
 		if (mediadorInstance == null) {
 			notFound()
@@ -45,28 +52,28 @@ class MediadorController {
 		}
 		if (mediadorService.existe(mediadorInstance)) {
 			flash.message = "${mediadorInstance.usuario} ya es mediador en el curso ${mediadorInstance.curso}"
-			redirect action: "create"
+			redirect action: "create", params: ['cursoId': params.cursoId]
 			return
 		}
 		if (aprendizService.obtenerPorCurso(mediadorInstance.usuario.id, mediadorInstance.curso.id)) {
 			flash.message = "El miembro ${mediadorInstance.usuario} ya es aprendiz en el curso ${mediadorInstance.curso}. No puede ser mediador"
-			redirect action: "create"
+			redirect action: "create", params: ['cursoId': params.cursoId]
 			return
 		}
 		if (!mediadorService.guardar(mediadorInstance)) {
-			respond mediadorInstance, view:'create'
+			respond mediadorInstance, view:'create', params: ['cursoId': params.cursoId]
 			return
 		}
 		flash.message = "Mediador ${mediadorInstance.usuario}-${mediadorInstance.usuario.dni} creado"
-		redirect action:"index"
+		redirect action:"index", params: ['cursoId': params.cursoId]
 	}
 	
-	@Secured("hasRole('ROL_ADMIN')")
+	@Secured("hasAnyRole('ROL_ADMIN', 'ROL_MEDIADOR')")
 	def editarJerarquia(Mediador mediadorInstance) {
-		respond mediadorInstance
+		respond mediadorInstance, params: ['cursoId': params.cursoId]
 	}
 	
-	@Secured("hasRole('ROL_ADMIN')")
+	@Secured("hasAnyRole('ROL_ADMIN', 'ROL_MEDIADOR')")
 	def actualizarJerarquia(Mediador mediadorInstance) {
 		if (mediadorInstance == null) {
 			notFound()
@@ -75,14 +82,14 @@ class MediadorController {
 		
 		if (!mediadorService.guardar(mediadorInstance)) {
 			flash.message = "Problemas al actualizar la jerarquia"
-			redirect action: "editarJerarquia"
+			redirect action: "editarJerarquia", params: ['cursoId': params.cursoId]
 			return
 		}
 		flash.message = "Mediador ${mediadorInstance.usuario}-${mediadorInstance.usuario.dni} actualizado"
-		redirect action:"index"
+		redirect action:"index", params: ['cursoId': params.cursoId]
 	}
 	
-	@Secured("hasRole('ROL_ADMIN')")
+	@Secured("hasAnyRole('ROL_ADMIN', 'ROL_MEDIADOR')")
 	def cambiarEstado(Mediador mediadorInstance) {
 		if (mediadorInstance == null) {
 			notFound()
@@ -91,23 +98,22 @@ class MediadorController {
 		mediadorInstance.activo = mediadorInstance.activo ? false : true
 		if (!mediadorService.guardar(mediadorInstance)) {
 			flash.message = "Problemas al cambiar el estado"
-			redirect action:"index", method:"GET"
+			redirect action:"index", params: ['cursoId': params.cursoId], method:"GET"
 			return
 		}
 		mediadorService.notificar(mediadorInstance)
-		// TODO veeerrrrrrrrrrr
-		if (!params.cursoId) {
-			flash.message = "Mediador ${mediadorInstance.usuario}-${mediadorInstance.usuario.dni} actualizado"
-			redirect action:"index", method:"GET"
+
+		if ((!mediadorInstance.activo) && (mediadorInstance.usuario == usuarioService.usuarioActual())) {
+			redirect controller:"red", action:"revisarRol",  method:"GET"
 			return
-		} 
-		flash.message = "Ha dejado de participar en el curso ${mediadorInstance.curso}"
-		redirect controller:"red", action:"revisarRolEnCurso", method:"GET"
-		
+		}
+		flash.message = "Mediador ${mediadorInstance.usuario}-${mediadorInstance.usuario.dni} actualizado"
+		redirect action:"index", params: ['cursoId': params.cursoId], method:"GET"
+		return
 	}
 
 	protected void notFound() {
 		flash.message = "No se encuentra ese mediador"
-		redirect action: "index", method: "GET"
+		redirect action: "index", params: ['cursoId': params.cursoId], method: "GET"
 	}
 }

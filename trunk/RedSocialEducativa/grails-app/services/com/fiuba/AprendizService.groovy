@@ -7,11 +7,13 @@ class AprendizService {
 
 	def obtenerCursos(Usuario usuario) {
 
-		def ArrayList<Curso> cursosAprendiz = new ArrayList<Curso>()
-		def ArrayList<Aprendiz> aprendices = Aprendiz.findAllByUsuarioAndParticipa(usuario, true)
-
-		aprendices.each {
-			cursosAprendiz.add(it.cuatrimestre.curso)
+		def cursosAprendiz = Aprendiz.createCriteria().list {
+			eq('usuario.id', usuario.id)
+			eq('participa', true)
+			cuatrimestre {	
+				order('anio', 'desc')
+				order('numero', 'desc')
+			}
 		}
 		return cursosAprendiz
 	}

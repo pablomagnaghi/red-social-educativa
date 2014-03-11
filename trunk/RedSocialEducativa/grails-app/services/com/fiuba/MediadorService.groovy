@@ -13,9 +13,18 @@ class MediadorService {
 		}
 	}
 	
+	def obtenerMediadoresDeCursoOrdenados(Long cursoId) {
+		def mediadores = Mediador.createCriteria().list {
+			eq('curso.id', cursoId)
+			and {
+				order('curso', 'asc')
+				order('jerarquia', 'asc')
+			}
+		}
+	}
+	
 	def obtenerMediadoresOrdenados() {
-		def c = Mediador.createCriteria()
-		def mediador = c.list {
+		def mediadores = Mediador.createCriteria().list {
 			and {
 				order('curso', 'asc')
 				order('jerarquia', 'asc')
@@ -24,10 +33,13 @@ class MediadorService {
 	}
 	
 	def obtenerCursos(Usuario usuario) {
-		def ArrayList<Curso> cursosMediador = new ArrayList<Curso>()
-		def ArrayList<Mediador> mediadores = Mediador.findAllByUsuarioAndActivo(usuario, true)
-		mediadores.each {
-			cursosMediador.add(it.curso)
+		def cursosMediador = Mediador.createCriteria().list {
+			eq('usuario.id', usuario.id)
+			eq('activo', true)
+			curso {
+				order('asignatura', 'asc')
+				order('nroRelativo', 'asc')
+			}
 		}
 		return cursosMediador
 	}
