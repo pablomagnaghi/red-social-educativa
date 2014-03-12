@@ -30,34 +30,14 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-	            
 	            	<!-- comienzo: BREADCRUM -->
-		            <p class="breadcrumb">
-					  	<g:link controller="curso" action="mediador" controller="curso" params="['cursoId': params.cursoId]">
-					  		${com.fiuba.Curso.get(params.cursoId)}</g:link>
-					</p>
-					
 					<div class="box-content buttons">
 						<p class="btn-group">
-							<button class="btn">Left</button>
-				  			<button class="btn">Middle</button>
-				        	<button class="btn">Right</button>
-						</p>
-				   		<p>
-				   			<button class="btn btn-small"><i class="icon-star"></i> Icon button</button>
-				 			<button class="btn btn-small btn-primary">Small button</button>
-							<button class="btn btn-small btn-danger">Small button</button>
-							<button class="btn btn-small btn-warning">Small button</button>
-				 			<button class="btn btn-small btn-success">Small button</button>
-							<button class="btn btn-small btn-info">Small button</button>
-							<button class="btn btn-small btn-inverse">Small button</button>
+							<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
+								<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
 						</p>
 				    </div>
 					<!-- Fin: BREADCRUM -->            
-	            
-					<g:if test="${flash.message}">
-						<div class="message" role="status">${flash.message}</div>
-					</g:if>
 	                <g:render template="tabla" />		
  				</div>
             	<!-- end: Content -->

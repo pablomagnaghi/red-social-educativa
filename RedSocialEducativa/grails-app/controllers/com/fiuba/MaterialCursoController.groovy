@@ -8,18 +8,13 @@ class MaterialCursoController {
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	def usuarioService
 	def materialCursoService
-/*
+
 	@Secured('isFullyAuthenticated()')
-	def curso(MaterialCurso material) {
-
-		[material: material, params: ['cursoId': params.cursoId]]
-	}*/
-
-	@Secured("hasRole('ROL_MEDIADOR')")
 	def index() {
-		params.max = 100//Utilidades.MAX_PARAMS
-
-		[materialCursoInstanceList: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)), params: ['cursoId': params.cursoId]]
+		params.max = Utilidades.MAX_PARAMS
+		def curso = Curso.get(params.cursoId)
+		def usuario = usuarioService.usuarioActual()
+		[materialCursoInstanceList: MaterialCurso.findAllByCurso(curso), mediador: Mediador.findByUsuarioAndCurso(usuario, curso), params: ['cursoId': params.cursoId]]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -29,9 +24,7 @@ class MaterialCursoController {
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def create() {
-
 		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-
 		respond new MaterialCurso(params), model: [mediador: mediador], params: ['cursoId': params.cursoId]
 	}
 
@@ -41,20 +34,17 @@ class MaterialCursoController {
 			notFound()
 			return
 		}
-
 		if (materialCursoService.existe(materialCursoInstance, params.cursoId.toLong())) {
 			flash.message = "Ya existe el material ${materialCursoInstance.titulo} en el curso ${Curso.get(params.cursoId)}"
 			redirect action: "create", params:['cursoId': params.cursoId]
 			return
 		}
-
 		if (!materialCursoService.guardar(materialCursoInstance)) {
 			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 			render view:'create', model: [materialCursoInstance: materialCursoInstance, mediador: mediador], params:['cursoId': params.cursoId]
 			return
 		}
-
-		flash.message = message(code: 'default.created.message', args: [message(code: 'materialCursoInstance.label', default: 'MaterialCurso'), materialCursoInstance.id])
+		flash.message = "Material ${materialCursoInstance} creado"
 		redirect action: "index", params:['cursoId': params.cursoId]
 	}
 
@@ -65,37 +55,31 @@ class MaterialCursoController {
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def update(MaterialCurso materialCursoInstance) {
-
 		if (materialCursoInstance == null) {
 			notFound()
 			return
 		}
-
 		if (!materialCursoService.guardar(materialCursoInstance)) {
 			render view:'edit', model: [materialCursoInstance: materialCursoInstance], params:['cursoId': params.cursoId]
 			return
 		}
-
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'MaterialCurso.label', default: 'MaterialCurso'), materialCursoInstance.id])
+		flash.message = "Material ${materialCursoInstance} actualizado"
 		redirect action: "index", params:['cursoId': params.cursoId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def delete(MaterialCurso materialCursoInstance) {
-
 		if (materialCursoInstance == null) {
 			notFound()
 			return
 		}
-
 		materialCursoService.eliminar(materialCursoInstance)
-
-		flash.message = message(code: 'default.deleted.message', args: [message(code: 'MaterialCurso.label', default: 'MaterialCurso'), materialCursoInstance.id])
+		flash.message = "Material ${materialCursoInstance} eliminado"
 		redirect action:"index", params:['cursoId': params.cursoId], method:"GET"
 	}
 
 	protected void notFound() {
-		flash.message = message(code: 'default.not.found.message', args: [message(code: 'materialCursoInstance.label', default: 'MaterialCurso'), params.id])
+		flash.message = "No se encuentra ese material"
 		redirect action: "index", params:['cursoId': params.cursoId], method: "GET"
 	}
 }
