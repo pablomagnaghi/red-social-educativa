@@ -34,7 +34,7 @@ class PublicacionGeneralController {
 				params: ['pubInicialId': params.pubInicialId]
 			return
 		}
-		flash.message = "Publicación ${publicacionGeneralInstance} creada"
+		flash.message = "Tema ${publicacionGeneralInstance} creado"
 		redirect controller: "foroGeneral", action: "general"
 	}
 
@@ -49,6 +49,7 @@ class PublicacionGeneralController {
 		}
 		publicacionGeneralService.eliminar(publicacion)
 		if (esTema) {
+			flash.message = "Tema ${publicacion} eliminado"
 			redirect controller: "foroGeneral", action:"general"
 			return
 		}

@@ -6,15 +6,13 @@
    				<div class="author">
 					<img src="${resource(dir: 'img', file: 'avatar2.jpg')}">
 	            </div>
-                <div class="title"><h3>Tema ${tema.titulo} <small>creado por ${tema.responsable}</h3></div>
-                <div class="date">${tema.fecha} - ${tema.hora}</div>
-                <div class="nombre">${tema.responsable}</div>
+                <div class="name"><h3>Tema ${tema.titulo}</h3></div>
+                <div class="date">${tema.fecha} - ${tema.hora}<br>${tema.responsable}</div>
                 <div class="opciones">
-                	<span>${tema.responsable}</span>
                 	<span><g:link controller="publicacionTema" action="nueva"
-		                	params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">
+		                	params="['cursoId': params.cursoId, 'temaId': params.temaId]">
                 			<i class="icon-plus"></i></g:link></span>
-                	<g:if test="${mediador || (aprendiz?.usuario?.username == tema.dni)}">
+                	<g:if test="${mediador}">
 						<span><g:link controller="publicacionTema" action="editar" id="${tema.id}" 
 							params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">      	
 							<i class="icon-edit"></i></g:link></span>
@@ -32,10 +30,8 @@
 	                        <div class="author">
 	                            <img src="${resource(dir: 'img', file: 'avatar3.jpg')}" alt="avatar">
 	                        </div>
-	                        <div class="name"><h3>${it.responsable}</h3></div>
-	                        <div class="nombre">${it.responsable}</div>
-	                        <div class="date">${it.fecha} - ${it.hora}</div>
-							<g:if test="${mediador || (aprendiz?.usuario?.username == it.dni)}">
+	                        <div class="date">${it.fecha} - ${it.hora}<br>${it.responsable}</div>
+							<g:if test="${mediador}">
 		                        <div class="opciones">
 		                        	<span><g:link controller="publicacionTema" action="editar" id="${it.id}" 
 		                        		params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">                	
@@ -47,10 +43,7 @@
 		                        	</span>
 		                        </div>	                        
 							</g:if>
-	                        <div class="message">
-								${it.contenido}
-	                        </div>
-	
+	                        <div class="message">${it.contenido}</div>
 	                    </li>
 	                </ul>
 	      		</g:each>	          
@@ -67,10 +60,10 @@
 									<textarea class="diss-form" name="contenido" placeholder="Escribe un comentario"></textarea>
 									</div>	
 								</div>	
-								<div><g:hiddenField name="titulo" value="${com.foro.PublicacionTema.get(params.pubInicialId).titulo}"/></div>
-								<div><g:hiddenField name="responsable" value="${usuario}"/></div>
-								<div><g:hiddenField name="dni" value="${usuario.username}"/></div>
-								<div><g:hiddenField name="foro.id" value="${foro.id}"/></div>	
+								<g:hiddenField name="titulo" value="${com.foro.PublicacionTema.get(params.pubInicialId).titulo}"/>
+								<g:hiddenField name="responsable" value="${usuario.nombres} ${usuario.apellido}"/>
+								<g:hiddenField name="dni" value="${usuario.dni}"/>
+								<g:hiddenField name="foro.id" value="${foro.id}"/>	
 							</fieldset>
 							<fieldset class="buttons">
 								<button type="submit" class="btn btn-primary">Publicar</button>

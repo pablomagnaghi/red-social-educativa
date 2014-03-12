@@ -1,9 +1,3 @@
-<g:if test="${flash.message}">
-	<div class="box-content alerts">
-		<div class="alert alert-info"><button class="close" data-dismiss="alert" type="button"></button><strong></strong> ${flash.message}</div>
-	</div>    
-</g:if>
-
 <!--FOROS-->
 <div class="row-fluid">
     <div class="span12 discussions">
@@ -32,7 +26,6 @@
 	                        <div class="author">
 	                            <img src="${resource(dir: 'img', file: 'avatar3.jpg')}" alt="avatar">
 	                        </div>
-	                        <div class="name"><h3>${it.responsable}</h3></div>
 	                        <div class="date">${it.fecha} - ${it.hora}<br>${it.responsable}</div>
 							<g:if test="${administrador}">
 		                        <div class="opciones">
@@ -46,10 +39,7 @@
 		                        	</span>
 		                        </div>
 							</g:if>
-	                        <div class="message" style="width: 99%">
-								${it.contenido}
-	                        </div>
-	
+	                        <div class="message" style="width: 99%">${it.contenido}</div>
 	                    </li>
 	                </ul>
 	      		</g:each>	          
@@ -67,7 +57,7 @@
 									</div>	
 								</div>	
 								<g:hiddenField name="titulo" value="${com.foro.PublicacionGeneral.get(params.pubInicialId).titulo}"/>
-								<g:hiddenField name="responsable" value="${usuario}"/>
+								<g:hiddenField name="responsable" value="${usuario.nombres} ${usuario.apellido}"/>
 								<g:hiddenField name="dni" value="${usuario.dni}"/>
 								<g:hiddenField name="foro.id" value="${com.foro.ForoGeneral.first().id}"/>	
 							</fieldset>

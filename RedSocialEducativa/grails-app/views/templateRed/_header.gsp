@@ -41,14 +41,14 @@
                                     </span>
                                     <span class="header">
                                         <span class="from">
-                                            Łukasz Holeczek
+                                            EMISOR
                                         </span>
                                         <span class="time">
-                                            6 min
+                                            FECHA
                                         </span>
                                     </span>
                                     <span class="message">
-                                        Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
+                                        MENSAJE
                                     </span>
                                 </g:link>
                             </li>
@@ -73,7 +73,7 @@
                             </li>
                             <li><g:link controller="usuario" action="salir" id="${usuario.id}"
                             	onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
-                            	<i class=" icon-signout"></i> Dejar membresia</g:link>
+                            	<i class=" icon-signout"></i> Perder membresía</g:link>
                             </li>
                             <li><g:link controller='logout'><i class="icon-off"></i> Salir</g:link>
                             </li>

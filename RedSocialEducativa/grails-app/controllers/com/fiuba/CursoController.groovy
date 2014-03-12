@@ -1,5 +1,6 @@
 package com.fiuba
 
+import com.cartelera.*
 import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured
 

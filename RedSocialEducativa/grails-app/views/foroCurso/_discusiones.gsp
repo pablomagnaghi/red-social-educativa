@@ -6,15 +6,13 @@
    				<div class="author">
 					<img src="${resource(dir: 'img', file: 'avatar2.jpg')}">
 	            </div>
-                <div class="title"><h3>Tema ${tema.titulo} <small>creado por ${tema.responsable}</h3></div>
-                <div class="date">${tema.fecha} - ${tema.hora}</div>
-                <div class="nombre">${tema.responsable}</div>
+                <div class="name"><h3>Tema ${tema.titulo}</h3></div>
+                <div class="date">${tema.fecha} - ${tema.hora}<br>${tema.responsable}</div>
                 <div class="opciones">
-                	<span>${tema.responsable}</span>
                 	<span><g:link controller="publicacionCurso" action="nueva"
-		                	params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+		                	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
                 			<i class="icon-plus"></i></g:link></span>
-                	<g:if test="${mediador || ((aprendiz?.cursando) && (aprendiz?.usuario?.username == tema.dni))}">
+                	<g:if test="${mediador}">
 						<span><g:link controller="publicacionCurso" action="editar" id="${tema.id}" 
 							params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">      	
 							<i class="icon-edit"></i></g:link></span>
@@ -23,19 +21,15 @@
 							<i class="icon-remove"></i></g:link></span>
 					</g:if>
 				</div>
-				<div class="message">
-                   ${tema.contenido}
-                </div>
+				<div class="message">${tema.contenido}</div>
 				<g:each in="${respuestas}">	
 	                <ul>
 	                    <li>
 	                        <div class="author">
 	                            <img src="${resource(dir: 'img', file: 'avatar3.jpg')}" alt="avatar">
 	                        </div>
-	                        <div class="name"><h3>${it.responsable}</h3></div>
-	                        <div class="nombre">${it.responsable}</div>
-	                        <div class="date">${it.fecha} - ${it.hora}</div>
-							<g:if test="${mediador || ((aprendiz?.cursando) && (aprendiz?.usuario?.username == it.dni))}">
+	                        <div class="date">${it.fecha} - ${it.hora}<br>${it.responsable}</div>
+							<g:if test="${mediador}">
 		                        <div class="opciones">
 		                        	<span><g:link controller="publicacionCurso" action="editar" id="${it.id}" 
 		                        		params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">                	
@@ -47,10 +41,7 @@
 		                        	</span>
 		                        </div>	                        
 							</g:if>
-	                        <div class="message">
-								${it.contenido}
-	                        </div>
-	
+	                        <div class="message">${it.contenido}</div>
 	                    </li>
 	                </ul>
 	      		</g:each>	          
@@ -64,13 +55,13 @@
 							<fieldset class="form">
 								<div class="control-group">	
 									<div class="controls">
-									<textarea class="diss-form" name="contenido" placeholder="Escribe un comentario"></textarea>
+									<textarea class="diss-form" name="contenido" placeholder="Escribe un comentario menor a 1024 caracteres"></textarea>
 									</div>	
 								</div>	
-								<div><g:hiddenField name="titulo" value="${com.foro.PublicacionCurso.get(params.pubInicialId).titulo}"/></div>
-								<div><g:hiddenField name="responsable" value="${usuario}"/></div>
-								<div><g:hiddenField name="dni" value="${usuario.username}"/></div>
-								<div><g:hiddenField name="foro.id" value="${foro.id}"/></div>	
+								<g:hiddenField name="titulo" value="${com.foro.PublicacionCurso.get(params.pubInicialId).titulo}"/>
+								<g:hiddenField name="responsable" value="${usuario.nombres} ${usuario.apellido}"/>
+								<g:hiddenField name="dni" value="${usuario.dni}"/>
+								<g:hiddenField name="foro.id" value="${foro.id}"/>
 							</fieldset>
 							<fieldset class="buttons">
 								<button type="submit" class="btn btn-primary">Publicar</button>

@@ -31,22 +31,15 @@
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
 					<div class="row-fluid">
-					    <div class="box span12">
+						<div class="span2"></div>
+					    <div class="box span8">
 					        <div class="box-header">     	
-					            <h2><i class="icon-edit"></i>Crear</h2>
+					            <h2><i class="icon-edit"></i>Crear tema</h2>
+					            <div class="box-icon">
+					                <g:link controller="foroCurso" action="general" 
+					                	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-comments-alt"></i></g:link>
+					            </div>
 					        </div>
-							<g:if test="${flash.message}">
-								<div class="message" role="status">${flash.message}</div>
-							</g:if>
-							<g:hasErrors bean="${publicacionCursoInstance}">
-								<ul class="errors" role="alert">
-									<g:eachError bean="${publicacionCursoInstance}" var="error">
-										<li <g:if test="${error in org.springframework.validation.FieldError}">
-											data-field-id="${error.field}"</g:if>>
-											<g:message error="${error}"/></li>
-									</g:eachError>
-								</ul>
-							</g:hasErrors>
 							<div class="box-content">
 								<g:form class="form-horizontal" action="guardar" params="['pubInicialId': params.pubInicialId, 
 									'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
@@ -59,6 +52,7 @@
 								</g:form>
 							</div>
 						</div>
+						<div class="span2"></div>
 					</div>		
  				</div>
             	<!-- end: Content -->
