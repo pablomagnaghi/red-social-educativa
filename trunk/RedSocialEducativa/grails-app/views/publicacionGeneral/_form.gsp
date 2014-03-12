@@ -10,13 +10,10 @@
 </g:hasErrors>
 
 <g:hiddenField name="responsable" value="${usuario.nombres} ${usuario.apellido}"/>
-<g:hiddenField name="dni" value="${usuario.username}"/>
+<g:hiddenField name="dni" value="${usuario.dni}"/>
 <g:hiddenField name="foro.id" value="${com.foro.ForoGeneral.first().id}"/>
 
-<g:if test="${params.pubInicialId}">
-	<g:hiddenField name="titulo" value="${com.foro.PublicacionGeneral.get(params.pubInicialId).titulo}"/>
-</g:if>
-<g:else>
+<g:if test="${!params.pubInicialId || com.foro.PublicacionGeneral.get(params.pubInicialId)?.id == publicacionGeneralInstance.id}">
 	<!-- TITULO -->
 	<g:if test="${!hasErrors(bean: publicacionGeneralInstance, field: 'titulo', 'error')}">
 		<div class="control-group">
@@ -33,6 +30,9 @@
 			</div>	
 		</div>	 
 	</g:else>	
+</g:if>
+<g:else>
+	<g:hiddenField name="titulo" value="${com.foro.PublicacionGeneral.get(params.pubInicialId).titulo}"/>	
 </g:else>
 
 <!-- CONTENIDO -->

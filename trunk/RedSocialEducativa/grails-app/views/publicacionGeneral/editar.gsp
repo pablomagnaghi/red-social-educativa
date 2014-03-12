@@ -28,7 +28,7 @@
 					            <h2><i class="icon-edit"></i>Editar</h2>
 					            <div class="box-icon">
 					                <g:link action="nueva"><i class="icon-plus"></i></g:link>
-					                <g:link controller="foroGeneral" action="general"><i class="icon-table"></i></g:link>
+					                <g:link controller="foroGeneral" action="general"><i class="icon-comments-alt"></i></g:link>
 					            </div>
 					        </div>
 							<div class="box-content">

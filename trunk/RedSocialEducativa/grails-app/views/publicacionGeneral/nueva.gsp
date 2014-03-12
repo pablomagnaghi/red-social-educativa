@@ -25,7 +25,10 @@
 	            		<div class="span2"></div>
 					    <div class="box span8">
 					        <div class="box-header">     	
-					            <h2><i class="icon-edit"></i>Crear</h2>
+					            <h2><i class="icon-edit"></i>Crear tema</h2>
+					            <div class="box-icon">
+					                <g:link controller="foroGeneral" action="general"><i class="icon-comments-alt"></i></g:link>
+					            </div>
 					        </div>
 							<div class="box-content">
 								<g:form class="form-horizontal" action="guardar" params="['pubInicialId': params.pubInicialId]">
