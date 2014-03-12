@@ -24,7 +24,8 @@
         	           		<td class="center">
         	           			<g:if test="${temaInstance.contenidos}">
 		        	            	<g:each in="${temaInstance.contenidos}" var="c">
-										<p>${c?.encodeAsHTML()}
+										<p><g:link controller="contenido" action="index" params="['cursoId': params.cursoId, 'temaId': temaInstance.id]" >
+											${c?.encodeAsHTML()}</g:link>
 											<g:link style="float: right;" class="btn btn-danger" controller="contenido" action="delete" method="DELETE" id="${c.id}" 
 												params="['cursoId': params.cursoId, 'temaId': temaInstance.id]" 
 												onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >
