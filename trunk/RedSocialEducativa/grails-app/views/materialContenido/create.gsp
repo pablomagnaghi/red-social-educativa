@@ -32,51 +32,37 @@
 	            <div id="content" class="span10">
 		            <div class="row-fluid">
 		            	<div class="span2"></div>
-					    <div class="box span8">
-					        <div class="box-header">
-					            <h2><i class="icon-plus"></i>Crear</h2>
-					            <div class="box-icon">
-					                <a href="#" class="btn-setting"><i class="icon-wrench"></i></a>
-					                <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
-					                <a href="#" class="btn-close"><i class="icon-remove"></i></a>
-					            </div>
-					        </div>
-							<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
-							<h2>Curso Id: ${params.cursoId}</h2>
-							<h2>Tema: ${params.temaId}</h2>
-							<h2>Contenido: ${params.contenidoId}</h2>
-					        <g:if test="${flash.message}">
-								<div class="message" role="status">${flash.message}</div>
-							</g:if>    
-							<g:hasErrors bean="${materialContenidoInstance}">
-								<ul class="errors" role="alert">
-									<g:eachError bean="${materialContenidoInstance}" var="error">
-										<li <g:if test="${error in org.springframework.validation.FieldError}">
-												data-field-id="${error.field}"</g:if>>
-											<g:message error="${error}"/></li>
-									</g:eachError>
-								</ul>
-							</g:hasErrors>
-					        <div class="box-content">
-					        	<g:form class="form-horizontal" action="save" params="['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': params.contenidoId]" >
-					        		<g:hiddenField name="contenido.id" value="${params.contenidoId}"/>
-						            <g:hiddenField name="responsable" value="${mediador.usuario}-${mediador?.jerarquia}"/>
-						            <fieldset>		
-										<div class="control-group">
-											<label class="control-label" >Titulo</label>			
-											<div class="controls">
-												<g:textField name="titulo" value="${materialContenidoInstance?.titulo}"/>
-											</div>	
-										</div>
-						            	<g:render template="form"/>			
-						            	<div class="form-actions">
-											<button type="submit" class="btn btn-primary">Crear</button>
-										</div>		    
-						            </fieldset>
-					            </g:form> 
-					        </div>  
+		            	<div class="span8">
+		            		<!-- comienzo: BREADCRUM -->
+							<div class="box-content buttons">
+								<p class="btn-group">
+									<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
+										<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+									<g:link controller="tema" action="index" params="['cursoId': params.cursoId]">
+										<button class="btn">Temas del curso</button></g:link>		
+								</p>
+						    </div>
+							<!-- Fin: BREADCRUM -->
+						    <div class="box">
+						        <div class="box-header">
+						            <h2><i class="icon-plus"></i>Crear</h2>
+						       		<div class="box-icon">
+							        	<g:link controller="contenido" action="index" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
+						                	<i class="icon-table"></i></g:link>
+							    	</div>
+						        </div>	  
+						        <div class="box-content">
+						        	<g:form class="form-horizontal" action="save" params="['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': params.contenidoId]" >				        
+							            <fieldset>		
+							            	<g:render template="form"/>			
+							            	<div class="form-actions">
+												<button type="submit" class="btn btn-primary">Crear</button>
+											</div>		    
+							            </fieldset>
+						            </g:form> 
+						        </div>  
+						    </div>
 					    </div>
-					    <!--/span-->
 					    <div class="span2"></div>
 					</div>
 					<!--/row-->    		
@@ -89,18 +75,3 @@
         <div class="clearfix"></div>					
 	</body>
 </html>
-
-<!-- <li><a class="home" href="${createLink(uri: '/')}">
-					<g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="mediador" controller="curso" params="['cursoId': params.cursoId]">
-					<g:message code="Pagina principal de mediador"/></g:link></li>			
-				<li><g:link class="create" action="menuMediador" controller="curso" params="['cursoId': params.cursoId]">
-					<g:message code="Tareas mediador" /></g:link></li>		
-				<li><g:link controller="tema" action="index" id="${params.temaId}" params="['cursoId': params.cursoId]">
-					<g:message code="Lista de temas del curso ${com.fiuba.Curso.get(cursoId)}" args="[entityName]" /></g:link></li>
-				<li><g:link controller="tema" action="edit" id="${params.temaId}" params="['cursoId': params.cursoId]">
-					<g:message code="Tema: ${com.fiuba.Tema.get(params.temaId)}" args="[entityName]" /></g:link></li>
-				<li><g:link controller="contenido" action="show" id="${params.contenidoId}" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
-					<g:message code="Contenido: ${com.fiuba.Contenido.get(params.contenidoId)}" args="[entityName]" /></g:link></li>		
-				<li><g:link class="create" action="create" params="['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': params.contenidoId]">
-					<g:message code="default.new.label" args="[entityName]" /></g:link></li> -->

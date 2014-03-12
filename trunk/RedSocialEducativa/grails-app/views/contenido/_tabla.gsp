@@ -2,7 +2,7 @@
     <div class="box span12">
         <div class="box-header" data-original-title="">
             <h2><i class="icon-table"></i>
-                <span class="break"></span>Contenidos del tema</h2>
+                <span class="break"></span>Contenidos del tema ${com.fiuba.Tema.get(params.temaId)}</h2>
             <div class="box-icon">
                 <g:link action="create" params="['cursoId': params.cursoId, 'temaId': params.temaId]"><i class="icon-plus"></i></g:link>
             </div>
@@ -52,9 +52,8 @@
 								</g:else>	
             	          	</td>
 	                        <td class="center">	                        
-	                            <g:link class="btn btn-info" controller="materialContenido" action="create" 
-	                            	params="['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': contenidoInstance.id]">
-	                          	  <i class="icon-plus">&nbsp;&nbsp;MC</i></g:link>
+	                            <g:link class="btn btn-success" controller="materialContenido" action="create" 
+	                            	params="['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': contenidoInstance.id]">Agregar material</g:link>
 	                            <g:link class="btn btn-danger" action="delete" method="DELETE" id="${contenidoInstance.id}" 
 	                            	params="['cursoId': params.cursoId, 'temaId': params.temaId]"
 	                            	onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >
