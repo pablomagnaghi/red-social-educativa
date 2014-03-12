@@ -46,7 +46,7 @@ class MaterialContenidoController {
 			return
 		}
 		flash.message = "Material ${materialContenidoInstance.titulo} del tema ${materialContenidoInstance.contenido} creado"
-		redirect controller:"tema", action:"index", params:['cursoId': params.cursoId]
+		redirect controller:"contenido", action:"index", params:['cursoId': params.cursoId, 'temaId': params.temaId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -68,8 +68,7 @@ class MaterialContenidoController {
 			return
 		}
 		flash.message = "Material ${materialContenidoInstance.titulo} del tema ${materialContenidoInstance.contenido} actualizado"
-		redirect action:"show", params:['id': materialContenidoInstance.id, 'cursoId': params.cursoId, 'temaId': params.temaId, 
-			'contenidoId': params.contenidoId]
+		redirect controller:"contenido", action:"index", params:['cursoId': params.cursoId, 'temaId': params.temaId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -80,11 +79,11 @@ class MaterialContenidoController {
 		}
 		materialContenidoService.eliminar(materialContenidoInstance)
 		flash.message = "Material ${materialContenidoInstance.titulo} del tema ${materialContenidoInstance.contenido} eliminado"
-		redirect controller:"tema", action:"index", params:['cursoId': params.cursoId], method:"GET"
+		redirect controller:"contenido", action:"index", params:['cursoId': params.cursoId, 'temaId': params.temaId], method:"GET"
 	}
 
 	protected void notFound() {
 		flash.message = "No se encuentra ese material"
-		redirect controller:"tema", action:"index", params:['cursoId': params.cursoId], method: "GET"
+		redirect controller:"contenido", action:"index", params:['cursoId': params.cursoId, 'temaId': params.temaId], method: "GET"
 	}
 }
