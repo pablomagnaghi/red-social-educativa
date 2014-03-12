@@ -61,4 +61,4 @@
 </g:else>
 			
 <g:hiddenField name="curso.id" value="${params.cursoId}"/>
-<g:hiddenField name="responsable" value="${mediador.usuario.nombres} ${mediador.usuario.apellido}-${mediador?.jerarquia}"/>
+<g:hiddenField name="responsable" value="${mediador.usuario.nombres} ${mediador.usuario.apellido}-${mediador.jerarquia}"/>

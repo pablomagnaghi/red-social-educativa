@@ -30,21 +30,21 @@
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
 	            	<div class="span2"></div>
-					    <div class="span8"> 
-						    <!-- comienzo: BREADCRUM -->
-							<div class="box-content buttons">
-								<p class="btn-group">
-									<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
-										<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
-								</p>
-						    </div>
-						    <!-- Fin: BREADCRUM -->  
-						    <div class="box">
-	                			<g:render template="material" />
-							</div>	
-					    </div>
-					    <!--/span-->
-					    <div class="span2"></div>
+					<div class="span8"> 
+						<!-- comienzo: BREADCRUM -->
+						<div class="box-content buttons">
+							<p class="btn-group">
+								<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
+									<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+							</p>
+						</div>
+						<!-- Fin: BREADCRUM -->  
+						<div class="box">
+	           				<g:render template="material" />
+						</div>	
+					</div>
+					<!--/span-->
+					<div class="span2"></div>
  				</div>
             	<!-- end: Content -->
         	</div>
