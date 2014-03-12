@@ -24,8 +24,8 @@ class PublicacionCursoController {
 		if (params.pubInicialId) {
 			if (!publicacionCursoService.guardarRespuesta(publicacionCursoInstance, params.pubInicialId.toLong(), 
 				usuarioService.usuarioActual(), params.cursoId.toLong())) {
-				render view:'nueva', model: [publicacionCursoInstance: publicacionCursoInstance, usuario: usuarioService.usuarioActual()],
-					params: ['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+				redirect controller: "foroCurso", action: "publicaciones", params: ['id': params.pubInicialId, 'pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 
+					'cuatrimestreId': params.cuatrimestreId]
 				return
 			}
 			redirect controller: "foroCurso", action: "publicaciones", params: ['id': params.pubInicialId, 'cursoId': 

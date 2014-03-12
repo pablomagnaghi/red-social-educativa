@@ -23,14 +23,9 @@ class PublicacionTemaController {
 			return
 		}
 		if (params.pubInicialId) {
-			if (!publicacionTemaService.guardarRespuesta(publicacionTemaInstance, params.pubInicialId.toLong(), 
-				usuarioService.usuarioActual(), params.cursoId.toLong())) {
-					render view:'nueva', model: [publicacionTemaInstance: publicacionTemaInstance, usuario: usuarioService.usuarioActual()],
-						params: ['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]
-				return
-			}
-			redirect controller: "foroTema", action: "publicaciones", params: ['id': params.pubInicialId, 'cursoId': params.cursoId, 
-				'temaId': params.temaId]
+			publicacionTemaService.guardarRespuesta(publicacionTemaInstance, params.pubInicialId.toLong(), 
+				usuarioService.usuarioActual(), params.cursoId.toLong()) 
+			redirect controller: "foroTema", action: "publicaciones", params: ['id': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]
 			return
 		}
 		if	(!publicacionTemaService.guardar(publicacionTemaInstance, usuarioService.usuarioActual(), params.cursoId.toLong())) {

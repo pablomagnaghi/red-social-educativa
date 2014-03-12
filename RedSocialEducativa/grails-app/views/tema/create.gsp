@@ -32,15 +32,15 @@
 	            <div id="content" class="span10">
 		            <div class="row-fluid">
 		            	<div class="span2"></div>
-		            	<!-- comienzo: BREADCRUM -->
-						<div class="box-content buttons">
-							<p class="btn-group">
-								<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
-									<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
-							</p>
-						</div>
-						<!-- Fin: BREADCRUM --> 
 		            	<div class="span8">
+		            		<!-- comienzo: BREADCRUM -->
+							<div class="box-content buttons">
+								<p class="btn-group">
+									<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
+										<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+								</p>
+							</div>
+							<!-- Fin: BREADCRUM --> 
 						    <div class="box">
 						        <div class="box-header">
 						            <h2><i class="icon-plus"></i>Crear</h2>
@@ -52,12 +52,35 @@
 						        	<g:form class="form-horizontal" action="save" params="['cursoId': params.cursoId]">
 						        		<g:hiddenField name="curso.id"  value="${params.cursoId}"/>
 							            <fieldset>		
-											<div class="control-group">
-												<label class="control-label" >Titulo</label>			
-												<div class="controls">
-													<g:textField name="titulo" value="${temaInstance?.titulo}"/>
-												</div>	
-											</div>		
+											<g:if test="${flash.message}">
+												<div class="box-content alerts">
+													<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button">
+														</button><strong></strong>${flash.message}</div>
+												</div>
+											</g:if>
+											<g:hasErrors bean="${temaInstance}">
+												<div class="box-content alerts">
+													<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button">
+														</button><strong>Revise el formulario</strong></div>
+												</div>
+											</g:hasErrors>
+											
+											<!-- TITULO -->
+											<g:if test="${!hasErrors(bean: temaInstance, field: 'titulo', 'error')}">
+												<div class="control-group">
+													<label class="control-label" >Titulo</label>			
+													<div class="controls"><g:textField name="titulo" value="${temaInstance?.titulo}" style='width: 62%' maxlength="64"/></div>	
+												</div>		
+											</g:if>
+											<g:else>
+												<div class="control-group error">
+													<label class="control-label" >Titulo</label>			
+													<div class="controls">
+														<g:textField name="titulo" value="${temaInstance?.titulo}" style='width: 62%' maxlength="64"/>
+														<span class="help-inline"><g:renderErrors bean="${temaInstance}" as="list" field="titulo"/></span>
+													</div>	
+												</div>	 
+											</g:else>
 							            	<div class="form-actions">
 												<button type="submit" class="btn btn-primary">Crear</button>
 											</div>		    

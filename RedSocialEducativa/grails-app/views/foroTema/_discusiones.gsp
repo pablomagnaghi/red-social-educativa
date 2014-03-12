@@ -52,12 +52,11 @@
 						<div class="author">
 							<img src="img/avatar.jpg" alt="avatar" />
 						</div>
-						<g:form controller="publicacionTema" action="guardar" 
-							params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">   
+						<g:form controller="publicacionTema" action="guardar" params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">   
 							<fieldset class="form">
 								<div class="control-group">	
 									<div class="controls">
-									<textarea class="diss-form" name="contenido" placeholder="Escribe un comentario"></textarea>
+									<textarea class="diss-form" name="contenido" placeholder="Escribe un comentario menor a 1024 caracteres"></textarea>
 									</div>	
 								</div>	
 								<g:hiddenField name="titulo" value="${com.foro.PublicacionTema.get(params.pubInicialId).titulo}"/>

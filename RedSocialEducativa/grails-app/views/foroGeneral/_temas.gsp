@@ -39,14 +39,14 @@
 							<td class="center">
 								<span><g:link class="btn btn-success" action="publicaciones" id="${it.id}">	                        	
 		                        	<i class="icon-external-link"></i></g:link>
-		                       </span>
-		                       <g:if test="${administrador}">
-		                           <span><g:link class="btn btn-danger" controller="publicacionGeneral" action="eliminar" id="${it.id}" 
+		                       	</span>
+		                       	<g:if test="${administrador}">
+		                           	<span><g:link class="btn btn-danger" controller="publicacionGeneral" action="eliminar" id="${it.id}" 
 		                           		params="['pubInicialId': params.pubInicialId]" 
 		                            	onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >	                          
 		                                <i class="icon-trash "></i></g:link>     
-		                           </span>     
-	                           </g:if>
+		                           	</span>     
+	                           	</g:if>
 	                        </td>
 						</tr>
 					</g:each>

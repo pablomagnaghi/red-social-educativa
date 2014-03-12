@@ -22,10 +22,7 @@ class PublicacionGeneralController {
 			return
 		}
 		if (params.pubInicialId) {
-			if (!publicacionGeneralService.guardarRespuesta(publicacionGeneralInstance, params.pubInicialId.toLong(), usuarioService.usuarioActual())) {	
-				redirect controller: "foroGeneral", action: "publicaciones", params: ['id': params.pubInicialId,'pubInicialId': params.pubInicialId]
-				return
-			}
+			publicacionGeneralService.guardarRespuesta(publicacionGeneralInstance, params.pubInicialId.toLong(), usuarioService.usuarioActual())	
 			redirect controller: "foroGeneral", action: "publicaciones", params:['id': params.pubInicialId]
 			return
 		}

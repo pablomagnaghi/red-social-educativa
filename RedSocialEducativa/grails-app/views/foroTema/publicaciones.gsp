@@ -31,11 +31,18 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-					<g:if test="${flash.message}">
-						<div class="message" role="status">${flash.message}</div>
-					</g:if>
-					<h2>Mediador = ${mediador}</h2>
-					<h2>Aprendiz = ${aprendiz}</h2>
+	           		<!-- comienzo: BREADCRUM -->
+					<div class="box-content buttons">
+						<p class="btn-group">
+							<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
+								<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+							<g:link controller="tema" action="index" params="['cursoId': params.cursoId]">
+								<button class="btn">Temas del curso</button></g:link>	
+							<g:link controller="foroTema" action="general" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
+								<button class="btn">Temas del foro ${foro}</button></g:link>		
+						</p>
+					</div>
+					<!-- Fin: BREADCRUM -->
 	                <g:render template="discusiones" />		
  				</div>
             	<!-- end: Content -->
@@ -46,15 +53,3 @@
         <div class="clearfix"></div>					
 	</body>
 </html>
-
-<!-- BREADCRUMBS -->
-<!-- <li><g:link class="create" action="general" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
-						<g:message code="Volver a foro Tema" /></g:link></li>	
-				<li><g:link class="create" controller="publicacionTema" action="nueva" 
-						params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">
-						<g:message code="Publicar respuesta" /></g:link></li>
-				<g:if test="${mediador}">
-					<li><g:link class="create" controller="publicacionTema" action="eliminar" id="${params.pubInicialId}" 
-						params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">
-						<g:message code="Eliminar tema" /></g:link></li>
-				</g:if>	 -->
