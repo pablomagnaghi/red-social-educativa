@@ -23,26 +23,35 @@
 	            <div id="content" class="span10">
 					 <div class="row-fluid">
 					 	<div class="span2"></div>
-					    <div class="box span8">
-					        <div class="box-header">     	
-					            <h2><i class="icon-edit"></i>Editar</h2>
-					            <div class="box-icon">
-					                <g:link action="nueva"><i class="icon-plus"></i></g:link>
-					                <g:link controller="foroGeneral" action="general"><i class="icon-comments-alt"></i></g:link>
-					            </div>
-					        </div>
-							<div class="box-content">
-								<g:form class="form-horizontal" action="actualizar" method="PUT" id="${publicacionGeneralInstance.id}" 
-									params="['pubInicialId': params.pubInicialId]">
-									<g:hiddenField name="version" value="${publicacionGeneralInstance?.version}" />
-									<fieldset>
-										<g:render template="form"/>	
-										<div class="form-actions">
-											<button type="submit" class="btn btn-primary">Actualizar</button>
-										</div>		    
-									</fieldset>
-								</g:form>
+					    <div class="span8">
+					    	<!-- comienzo: BREADCRUM -->
+							<div class="box-content buttons">
+								<p class="btn-group">	
+									<g:link controller="foroGeneral" action="general"><button class="btn">Temas del foro ${com.foro.ForoGeneral.first()}</button></g:link>	
+								</p>
 							</div>
+							<!-- Fin: BREADCRUM --> 
+							<div class="box">	
+						        <div class="box-header">     	
+						            <h2><i class="icon-edit"></i>Editar</h2>
+						            <div class="box-icon">
+						                <g:link action="nueva"><i class="icon-plus"></i></g:link>
+						                <g:link controller="foroGeneral" action="publicaciones" id="${params.pubInicialId}"><i class="icon-comments-alt"></i></g:link>
+						            </div>
+						        </div>
+								<div class="box-content">
+									<g:form class="form-horizontal" action="actualizar" method="PUT" id="${publicacionGeneralInstance.id}" 
+										params="['pubInicialId': params.pubInicialId]">
+										<g:hiddenField name="version" value="${publicacionGeneralInstance?.version}" />
+										<fieldset>
+											<g:render template="form"/>	
+											<div class="form-actions">
+												<button type="submit" class="btn btn-primary">Actualizar</button>
+											</div>		    
+										</fieldset>
+									</g:form>
+								</div>
+							</div>	
 						</div>
 						<div class="span2"></div>
 					</div>
