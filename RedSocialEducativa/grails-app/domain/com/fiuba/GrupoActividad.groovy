@@ -1,5 +1,7 @@
 package com.fiuba
 
+import com.material.*
+
 class GrupoActividad {
 
 	Integer numero

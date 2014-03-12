@@ -1,5 +1,7 @@
 package com.fiuba
 
+import com.material.*
+
 class Actividad {
 
 	String titulo

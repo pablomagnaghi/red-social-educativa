@@ -37,7 +37,7 @@
 						<div class="box span12">
 							<div class="box-header">
 								<h2><i class="icon-font"></i><span class="break"></span>
-									Bienvenido mediador ${usuario} al curso ${com.fiuba.Curso.get(params.cursoId)} 
+									Bienvenido mediador ${usuario.nombres} ${usuario.apellido} al curso ${com.fiuba.Curso.get(params.cursoId)} 
 									de la asignatura ${com.fiuba.Curso.get(params.cursoId).asignatura}</h2>
 								<div class="box-icon">
 									<a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
@@ -53,28 +53,20 @@
 										<h2>Dicta cuatrimestre: ${dictaCuatrimestre}</h2>
 										<h2>cuat id: ${cuatrimestre?.id}</h2>
 								</div>  
-								
-								
 								<div class="row-fluid">            	 
-									<div class="span9">
-										<g:render template="noticias"></g:render>
-									</div>
-									<div class="span3">
+									<div class="span12">
 										<g:render template="tareasMediador"/>
+									</div>
+								</div>		
+								<div class="row-fluid">            	 
+									<div class="span12">
+										<g:render template="noticias"></g:render>
 									</div>
 								</div>
 							</div>
 						</div><!--/span-->
 					</div>	
 					<div class="row-fluid">
-						<g:render template="materiales"></g:render>      
-						<g:render template="temas"/>
-					</div>	
-					<div class="row-fluid">
-						<g:render template="subNivel"></g:render>
-					</div>	
-					<div class="row-fluid">
-						<g:render template="opcion2"></g:render>
 					</div>	
 				</div>			
 			</div><!--/fluid-row-->	

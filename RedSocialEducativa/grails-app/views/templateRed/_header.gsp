@@ -26,13 +26,18 @@
                             </g:if>	
                         </a>                 
                         <ul class="dropdown-menu messages">
-                        	<g:if test="${cantMensajes == 1}">
-	                            <li>
-	                                <span class="dropdown-menu-title">Usted tiene ${cantMensajes} mensaje nuevo</span>                  
-	                            </li>
+                        	<g:if test="${cantMensaje}">
+	                        	<g:if test="${cantMensajes == 1}">
+		                            <li>
+		                                <span class="dropdown-menu-title">Usted tiene ${cantMensajes} mensaje nuevo</span>                  
+		                            </li>
+	                            </g:if>
+	                            <g:else test="${cantMensajes > 1}">
+	                            	<span class="dropdown-menu-title">Usted tiene ${cantMensajes} mensajes nuevos</span>      
+	                            </g:else>
                             </g:if>
-                            <g:else test="${cantMensajes > 1}">
-                            	<span class="dropdown-menu-title">Usted tiene ${cantMensajes} mensajes nuevos</span>      
+                            <g:else>
+                            	<span class="dropdown-menu-title">Usted no tiene mensajes nuevos</span>     
                             </g:else>
                             <li>
                                 <g:link controller="mensajeria" action="index">

@@ -4,9 +4,7 @@
             <h2><i class="icon-table"></i>
                 <span class="break"></span>Material del curso</h2>
             <g:if test="${mediador}">
-	            <div class="box-icon">
-	                <g:link action="create" params="['cursoId': params.cursoId]"><i class="icon-plus"></i></g:link>
-	            </div>
+	            <div class="box-icon"><g:link action="create" params="['cursoId': params.cursoId]"><i class="icon-plus"></i></g:link></div>
             </g:if>
         </div>
         <div class="box-content">

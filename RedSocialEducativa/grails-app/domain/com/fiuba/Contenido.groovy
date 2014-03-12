@@ -1,5 +1,7 @@
 package com.fiuba
 
+import com.material.*
+
 class Contenido {
 
 	String titulo

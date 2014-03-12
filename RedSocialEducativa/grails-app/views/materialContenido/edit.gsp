@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.MaterialContenido" %>
+<%@ page import="com.material.MaterialContenido" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>
