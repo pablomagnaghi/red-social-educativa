@@ -28,48 +28,19 @@
                 <tbody>
                 	<g:each in="${temaInstanceList}" var="temaInstance">
 	                    <tr>
-    	                    <td><h3>${fieldValue(bean: temaInstance, field: "titulo")}</h3></td>
-        	           		<!--<td class="center">
-        	           			<g:if test="${temaInstance.contenidos}">
-		        	            	<g:each in="${temaInstance.contenidos}" var="c">
-										<p><g:link controller="contenido" action="index" params="['cursoId': params.cursoId, 'temaId': temaInstance.id]" >
-											${c?.encodeAsHTML()}</g:link>
-											<g:link style="float: right;" class="btn btn-danger" controller="contenido" action="delete" method="DELETE" id="${c.id}" 
-												params="['cursoId': params.cursoId, 'temaId': temaInstance.id]" 
-												onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >
-												<i class="icon-trash "></i></g:link>
-											<g:link style="float: right;" class="btn btn-info" controller="materialContenido" action="create" 
-												params="['cursoId': params.cursoId, 'temaId': temaInstance.id, 'contenidoId': c.id]">
-												 <i class="icon-plus">&nbsp;&nbsp;MC</i></g:link></p>	
-										<g:each in="${c.materiales}" var="m">
-											<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;${m?.encodeAsHTML()}								
-												<g:link style="float: right;" class="btn btn-danger" controller="materialContenido" action="delete" method="DELETE" id="${m.id}"
-													params="['cursoId': params.cursoId, 'temaId': temaInstance.id, 'contenidoId': c.id]"
-													onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
-													<i class="icon-trash "></i></g:link>
-												<g:link style="float: right;" class="btn btn-info" controller="materialContenido" action="edit" id="${m.id}"
-													params="['cursoId': params.cursoId, 'temaId': temaInstance.id, 'contenidoId': c.id]"><i class="icon-edit "></i></g:link>
-												<g:link style="float: right;" class="btn btn-success" controller="materialContenido" action="show" id="${m.id}"
-													params="['cursoId': params.cursoId, 'temaId': temaInstance.id, 'contenidoId': c.id]"><i class="icon-search"></i></g:link>
-												<g:link style="float: right;" controller="materialContenido" action="show" id="${m.id}"
-													params="['cursoId': params.cursoId, 'temaId': temaInstance.id, 'contenidoId': c.id]">Descargar(fix)</g:link></p>	
-										</g:each>
-									</g:each>	
-								</g:if>
-								<g:else>
-									<p>No posee</p> 
-								</g:else>
-							</td>--> 	               
+    	                    <td><h3>${fieldValue(bean: temaInstance, field: "titulo")}</h3></td>         
             	          	<td class="center">
             	          		<g:if test="${temaInstance.materiales}">
 	        	                	<g:each in="${temaInstance.materiales}" var="m">
 										<p>${m?.encodeAsHTML()}
-											<g:link style="float: right;" class="btn btn-danger" controller="materialTema" action="delete" method="DELETE" id="${m.id}" 
-												params="['cursoId': params.cursoId, 'temaId': temaInstance.id]" 
-												onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >
-												<i class="icon-trash "></i></g:link>
-											<g:link style="float: right;" class="btn btn-info" controller="materialTema" action="edit" id="${m.id}"
-												params="['cursoId': params.cursoId, 'temaId': temaInstance.id]"><i class="icon-edit "></i></g:link> 	
+											<g:if test="${mediador}">
+												<g:link style="float: right;" class="btn btn-danger" controller="materialTema" action="delete" method="DELETE" id="${m.id}" 
+													params="['cursoId': params.cursoId, 'temaId': temaInstance.id]" 
+													onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >
+													<i class="icon-trash "></i></g:link>
+												<g:link style="float: right;" class="btn btn-info" controller="materialTema" action="edit" id="${m.id}"
+													params="['cursoId': params.cursoId, 'temaId': temaInstance.id]"><i class="icon-edit "></i></g:link> 	
+											</g:if>
 											<g:link style="float: right;" class="btn btn-success" controller="materialTema" action="show" id="${m.id}" 
 												params="['cursoId': params.cursoId, 'temaId': temaInstance.id]"><i class="icon-search"></i></g:link></p>
 									</g:each>  
@@ -83,11 +54,13 @@
 	                        		params="['cursoId': params.cursoId, 'temaId': temaInstance.id]">Foro</g:link>
 	                            <g:link class="btn btn-success" controller="contenido" action="index" 
 	                            	params="['cursoId': params.cursoId, 'temaId': temaInstance.id]">Contenidos</g:link>
-	                            <g:link class="btn btn-info" controller="materialTema" action="create" params="['cursoId': params.cursoId, 'temaId': temaInstance.id]">
-	                          	  Agregar material</g:link>
-	                            <g:link class="btn btn-danger" action="delete" method="DELETE" id="${temaInstance.id}" params="['cursoId': params.cursoId]"
-	                            	onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >
-	                            	<i class="icon-trash "></i></g:link>
+	                            <g:if test="${mediador}">
+		                            <g:link class="btn btn-info" controller="materialTema" action="create" params="['cursoId': params.cursoId, 'temaId': temaInstance.id]">
+		                          	  Agregar material</g:link>
+		                            <g:link class="btn btn-danger" action="delete" method="DELETE" id="${temaInstance.id}" params="['cursoId': params.cursoId]"
+		                            	onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >
+		                            	<i class="icon-trash "></i></g:link>
+	                            </g:if>	
 	                        </td>
 	                    </tr>
 					</g:each>   

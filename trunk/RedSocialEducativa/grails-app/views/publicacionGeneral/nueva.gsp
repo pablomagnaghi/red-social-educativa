@@ -34,24 +34,30 @@
 	            <div id="content" class="span10">
 	            	<div class="row-fluid">
 	            		<div class="span2"></div>
-					    <div class="box span8">
-					        <div class="box-header">     	
-					            <h2><i class="icon-edit"></i>Crear tema</h2>
-					            <div class="box-icon">
-					                <g:link controller="foroGeneral" action="general"><i class="icon-comments-alt"></i></g:link>
-					            </div>
-					        </div>
-							<div class="box-content">
-								<g:form class="form-horizontal" action="guardar" params="['pubInicialId': params.pubInicialId]">
-									<fieldset>
-										<g:render template="form"/>			
-										<div class="form-actions">
-											<button type="submit" class="btn btn-primary">Crear</button>
-										</div>		    
-									</fieldset>
-								</g:form>
+	            		<div class="span8">
+	            			<!-- comienzo: BREADCRUM -->
+							<div class="box-content buttons">
+								<p class="btn-group">	
+									<g:link controller="foroGeneral" action="general"><button class="btn">Temas del foro ${com.foro.ForoGeneral.first()}</button></g:link>	
+								</p>
 							</div>
-						</div>
+							<!-- Fin: BREADCRUM --> 
+						    <div class="box">
+						        <div class="box-header">     	
+						            <h2><i class="icon-edit"></i>Crear tema</h2>	  
+						        </div>
+								<div class="box-content">
+									<g:form class="form-horizontal" action="guardar" params="['pubInicialId': params.pubInicialId]">
+										<fieldset>
+											<g:render template="form"/>			
+											<div class="form-actions">
+												<button type="submit" class="btn btn-primary">Crear</button>
+											</div>		    
+										</fieldset>
+									</g:form>
+								</div>
+							</div>
+						</div>	
 						<div class="span2"></div>
 					</div>		
  				</div>

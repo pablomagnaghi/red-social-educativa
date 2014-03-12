@@ -31,6 +31,14 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
+	            	<!-- comienzo: BREADCRUM -->
+					<div class="box-content buttons">
+						<p class="btn-group">
+							<g:link controller="foroGeneral" action="general">
+								<button class="btn">Temas del foro ${com.foro.ForoGeneral.first()}</button></g:link>		
+						</p>
+					</div>
+					<!-- Fin: BREADCRUM -->
 	                <g:render template="discusiones" />		
  				</div>
             	<!-- end: Content -->
