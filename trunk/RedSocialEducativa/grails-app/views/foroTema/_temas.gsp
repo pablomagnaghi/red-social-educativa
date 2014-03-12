@@ -42,16 +42,15 @@
 							</td>
 							<td class="center">
 								<span><g:link class="btn btn-success" action="publicaciones" id="${it.id}" 
-									params="['cursoId': params.cursoId, 'temaId': params.temaId]">	                        	
-		                        	<i class="icon-external-link"></i></g:link> 	
-		                       </span>
-		                       <g:if test="${mediador}">
-		                           <span><g:link class="btn btn-danger" controller="publicacionTema" action="eliminar" id="${it.id}" 
+									params="['cursoId': params.cursoId, 'temaId': params.temaId]">Acceder</g:link> 	
+		                       	</span>
+		                       	<g:if test="${mediador}">
+		                           	<span><g:link class="btn btn-danger" controller="publicacionTema" action="eliminar" id="${it.id}" 
 		                         	  	params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]"
 		                            	onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >	                          
 		                                <i class="icon-trash "></i></g:link>     
-		                           </span>     
-	                           </g:if>
+		                           	</span>     
+	                           	</g:if>
 	                        </td>
 						</tr>
 					</g:each>

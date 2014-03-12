@@ -9,30 +9,19 @@ class TemaController {
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def temaService
-/*
-	@Secured('isFullyAuthenticated()')
-	def curso(Tema tema) {
+	def usuarioService
 
-		[contenidos: Contenido.findAllByTema(tema), materiales: MaterialTema.findAllByTema(tema), 
-			params: ['cursoId': params.cursoId, 'temaId': params.id]]
-	}
-*/
-	@Secured("hasRole('ROL_MEDIADOR')")
+	@Secured('isFullyAuthenticated()')
 	def index() {
 		params.max = Utilidades.MAX_PARAMS
 		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-		[temaInstanceList: Tema.findAllByCurso(Curso.get(params.cursoId),[max: params.max, offset: params.offset]),
-			temaInstanceCount: Tema.findAllByCurso(Curso.get(params.cursoId)).size(), params: ['cursoId': params.cursoId]]
+		[temaInstanceList: Tema.findAllByCurso(Curso.get(params.cursoId),[max: params.max, offset: params.offset]), mediador: mediador, params: ['cursoId': params.cursoId]]
 	}
-/*
-	@Secured("hasRole('ROL_MEDIADOR')")
-	def show(Tema temaInstance) {
-		respond temaInstance, params: ['cursoId': params.cursoId]
-	}
-	*/
+
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def create() {
-		respond new Tema(params), params: ['cursoId': params.cursoId]
+		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
+		respond new Tema(params), model: [mediador: mediador], params: ['cursoId': params.cursoId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -41,45 +30,34 @@ class TemaController {
 			notFound()
 			return
 		}
-
 		if (temaService.existe(temaInstance, params.cursoId.toLong())) {
 			flash.message = "Ya existe el tema ${temaInstance.titulo} en el curso ${Curso.get(params.cursoId)}"
 			redirect action: "create", params:['cursoId': params.cursoId]
 			return
 		}
-
 		temaInstance.foro = new ForoTema(nombre: "Foro del tema ${temaInstance} del curso ${Curso.get(params.cursoId)}")
-		
 		if (!temaService.guardar(temaInstance)) {
-			render view: "create", model: [temaInstance: temaInstance], params:['cursoId': params.cursoId]
+			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
+			render view: "create", model: [temaInstance: temaInstance, mediador: mediador], params:['cursoId': params.cursoId]
 			return
 		}
-
-		flash.message = message(code: 'default.created.message', args: [message(code: 'temaInstance.label', default: 'Tema'), temaInstance.id])
+		flash.message = "Tema ${temaInstance} creado"
 		redirect action: "index", params:['cursoId': params.cursoId]
 	}
-/*
-	@Secured("hasRole('ROL_MEDIADOR')")
-	def edit(Tema temaInstance) {
-		respond temaInstance, params:['cursoId': params.cursoId]
-	}
-*/
+
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def delete(Tema temaInstance) {
-
 		if (temaInstance == null) {
 			notFound()
 			return
 		}
-
 		temaService.eliminar(temaInstance)
-
-		flash.message = message(code: 'default.deleted.message', args: [message(code: 'Tema.label', default: 'Tema'), temaInstance.id])
+		flash.message = "Tema ${temaInstance} eliminado"
 		redirect action:"index", params:['cursoId': params.cursoId], method:"GET"
 	}
 
 	protected void notFound() {
-		flash.message = message(code: 'default.not.found.message', args: [message(code: 'temaInstance.label', default: 'Tema'), params.id])
+		flash.message = "No se encuentra ese tema"
 		redirect action: "index", params:['cursoId': params.cursoId], method: "GET"
 	}
 }

@@ -48,8 +48,7 @@
 						<div class="author">
 							<img src="img/avatar.jpg" alt="avatar" />
 						</div>
-						<g:form controller="publicacionGeneral" action="guardar" 
-							params="['pubInicialId': params.pubInicialId]">
+						<g:form controller="publicacionGeneral" action="guardar" params="['pubInicialId': params.pubInicialId]">
 							<fieldset class="form">
 								<div class="control-group">	
 									<div class="controls">

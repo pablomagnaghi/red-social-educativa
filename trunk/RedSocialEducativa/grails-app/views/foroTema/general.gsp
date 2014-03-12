@@ -31,9 +31,16 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-					<h2>Bienvenido al Foro: ${foro}</h2>
-					<p>Foro del tema ${tema} del Curso: ${com.fiuba.Curso.get(params.cursoId)}</p>
-
+	           		<!-- comienzo: BREADCRUM -->
+					<div class="box-content buttons">
+						<p class="btn-group">
+							<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
+								<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+							<g:link controller="tema" action="index" params="['cursoId': params.cursoId]">
+								<button class="btn">Temas del curso</button></g:link>	
+						</p>
+					</div>
+					<!-- Fin: BREADCRUM --> 
 	                <g:render template="temas" />		
  				</div>
             	<!-- end: Content -->
@@ -44,8 +51,3 @@
         <div class="clearfix"></div>					
 	</body>
 </html>
-
-<!-- <li><g:link class="create" controller="tema" action="curso" id="${params.temaId}" params="['cursoId': params.cursoId]">
-					<g:message code="Tema ${tema}" /></g:link></li>	
-				<li><g:link class="create" controller="publicacionTema" action="nueva" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
-					<g:message code="Nueva publicacion" /></g:link></li> -->

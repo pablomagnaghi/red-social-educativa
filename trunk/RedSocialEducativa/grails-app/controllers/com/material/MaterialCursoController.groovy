@@ -17,7 +17,7 @@ class MaterialCursoController {
 		[materialCursoInstanceList: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)), mediador: mediador, params: ['cursoId': params.cursoId]]
 	}
 
-	@Secured("hasRole('ROL_MEDIADOR')")
+	@Secured('isFullyAuthenticated()')
 	def show(MaterialCurso materialCursoInstance) {
 		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 		[materialCursoInstance: materialCursoInstance, mediador: mediador, params: ['cursoId': params.cursoId]]

@@ -44,14 +44,14 @@
 								<span><g:link class="btn btn-success" action="publicaciones" id="${it.id}" 
 									params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">	                        	
 		                        	<i class="icon-external-link"></i></g:link> 	
-		                       </span>
-		                       <g:if test="${mediador}">
-		                           <span><g:link class="btn btn-danger" controller="publicacionCurso" action="eliminar" id="${it.id}" 
+		                       	</span>
+		                       	<g:if test="${mediador}">
+		                           	<span><g:link class="btn btn-danger" controller="publicacionCurso" action="eliminar" id="${it.id}" 
 		                         	  	params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"
 		                            	onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >	                          
 		                                <i class="icon-trash "></i></g:link>     
-		                           </span>     
-	                           </g:if>
+		                           	</span>     
+	                           	</g:if>
 	                        </td>
 						</tr>
 					</g:each>
