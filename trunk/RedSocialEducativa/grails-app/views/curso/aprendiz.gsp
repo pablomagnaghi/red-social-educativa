@@ -55,9 +55,19 @@
 								</div>         
 								<div class="row-fluid">            	 
 									<div class="span9">
+										<g:if test="${aprendiz.cursando}">	
 										<g:render template="noticias"></g:render>
+										</g:if>
 									</div>
 									<div class="span3">
+										<div>
+											<g:link controller="materialCurso" action="index" params="['cursoId': params.cursoId]">
+												<g:message code="Material del curso" /></g:link>
+										</div>
+										<div>
+											<g:link controller="tema" action="index" params="['cursoId': params.cursoId]">
+												<g:message code="Temas del curso" /></g:link>
+										</div>
 										<g:if test="${aprendiz.cursando}">	
 											<div>
 												<g:link controller="actividad" action="actividadesCurso" 
