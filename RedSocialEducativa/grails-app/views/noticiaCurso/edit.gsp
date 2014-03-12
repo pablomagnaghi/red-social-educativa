@@ -31,11 +31,14 @@
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
 		            <div class="row-fluid">
-					    <div class="box span4">
+		            	<div class="span2"></div>	
+					    <div class="box span8">
 					        <div class="box-header">     	
 					            <h2><i class="icon-edit"></i>Editar</h2>
 					            <div class="box-icon">
-					                <g:link action="create" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-plus"></i></g:link>
+					           		<g:link action="create" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-plus"></i></g:link>
+					                <g:link action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-table"></i></g:link>
+					                
 					            </div>
 					        </div>
 							<h2>Params: ${params}</h2>
@@ -57,6 +60,7 @@
 					            </g:form>
 					        </div>
 					    </div>
+					    <div class="span2"></div>	
 					    <!--/span-->
 					</div>
 					<!--/row-->    		

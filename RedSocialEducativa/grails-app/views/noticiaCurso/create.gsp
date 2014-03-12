@@ -30,11 +30,13 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">    
-					<div class="box span4">
+	            	<div class="span2"></div>	
+					<div class="box span8">
 						<div class="box-header">
 							<h2><i class="icon-plus"></i>Crear</h2>
 							<div class="box-icon">
-								<div class="box-icon"><g:link action="index"><i class="icon-table"></i></g:link></div>
+								<div class="box-icon"><g:link action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+									<i class="icon-table"></i></g:link></div>
 							</div>
 						</div>       
 						<h2>mediadorID: ${mediadorId}</h2>
@@ -54,6 +56,7 @@
 							</g:form>
 						</div>	
 					</div>
+					<div class="span2"></div>	
 					<!--/span-->
 				</div>
 				<!-- end: Content -->
