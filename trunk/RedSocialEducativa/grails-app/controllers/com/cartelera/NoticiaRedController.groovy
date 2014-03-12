@@ -13,7 +13,7 @@ class NoticiaRedController {
 
 	def index() {
 		params.max = 100//Utilidades.MAX_PARAMS
-		model:[noticiasRed: noticiaRedService.obtenerNoticiasOrdenadas()]
+		[noticiasRed: noticiaRedService.obtenerNoticiasOrdenadas()]
 	}
 
 	def create() {

@@ -22,6 +22,14 @@ class ContenidoController {
 		respond contenidoInstance, params: ['cursoId': params.cursoId, 'temaId': params.temaId]
 	}
 	*/
+	
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def index() {
+		params.max = Utilidades.MAX_PARAMS
+
+		[contenidoInstanceList: Contenido.findAllByTema(Tema.get(params.temaId)), params: ['cursoId': params.cursoId, 'temaId': params.temaId]]
+	}
+	
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def create() {
 		respond new Contenido(params), params: ['cursoId': params.cursoId, 'temaId': params.temaId]
