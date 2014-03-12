@@ -1,4 +1,6 @@
-package com.fiuba
+package com.material
+
+import com.fiuba.*
 
 class MaterialTema extends Material {
 	

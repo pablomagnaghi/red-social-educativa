@@ -1,5 +1,6 @@
-package com.fiuba
+package com.material
 
+import com.fiuba.*
 import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured
 
@@ -12,14 +13,14 @@ class MaterialCursoController {
 	@Secured('isFullyAuthenticated()')
 	def index() {
 		params.max = Utilidades.MAX_PARAMS
-		def curso = Curso.get(params.cursoId)
-		def usuario = usuarioService.usuarioActual()
-		[materialCursoInstanceList: MaterialCurso.findAllByCurso(curso), mediador: Mediador.findByUsuarioAndCurso(usuario, curso), params: ['cursoId': params.cursoId]]
+		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
+		[materialCursoInstanceList: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)), mediador: mediador, params: ['cursoId': params.cursoId]]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def show(MaterialCurso materialCursoInstance) {
-		respond materialCursoInstance, params: ['cursoId': params.cursoId]
+		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
+		[materialCursoInstance: materialCursoInstance, mediador: mediador, params: ['cursoId': params.cursoId]]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -50,7 +51,8 @@ class MaterialCursoController {
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def edit(MaterialCurso materialCursoInstance) {
-		respond materialCursoInstance, model:[usuario: usuarioService.usuarioActual()],  params:['cursoId': params.cursoId]
+		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
+		respond materialCursoInstance, model:[mediador: mediador],  params:['cursoId': params.cursoId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -60,7 +62,8 @@ class MaterialCursoController {
 			return
 		}
 		if (!materialCursoService.guardar(materialCursoInstance)) {
-			render view:'edit', model: [materialCursoInstance: materialCursoInstance], params:['cursoId': params.cursoId]
+			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
+			render view:'edit', model: [materialCursoInstance: materialCursoInstance, mediador: mediador], params:['cursoId': params.cursoId]
 			return
 		}
 		flash.message = "Material ${materialCursoInstance} actualizado"

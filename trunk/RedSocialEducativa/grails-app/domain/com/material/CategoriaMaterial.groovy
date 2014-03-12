@@ -1,4 +1,4 @@
-package com.fiuba
+package com.material
 
 class CategoriaMaterial {
 

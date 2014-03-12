@@ -1,9 +1,11 @@
-package com.fiuba
+package com.material
+
+import com.fiuba.*
 
 class Material {
 
 	String titulo
-	String autor = Utilidades.AUTOR_ANONIMO
+	String autor
 	String descripcion 
 	String fecha = new Date().format(Utilidades.FORMATO_FECHA)
 	String responsable

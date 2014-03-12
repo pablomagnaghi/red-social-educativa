@@ -38,7 +38,17 @@
 					<h2>Params: ${params}</h2>
 					<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
 					<h2>Curso Id: ${params.cursoId}</h2>
-					<h2>Tema Id: ${params.temaId}</h2>
+					<h2>Tema Id: ${params.temaId} ${com.fiuba.Tema.get(params.temaId)}</h2>
+					<!-- comienzo: BREADCRUM -->
+					<div class="box-content buttons">
+						<p class="btn-group">
+							<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
+								<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+							<g:link controller="tema" action="index" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
+								<button class="btn">${com.fiuba.Tema.get(params.temaId)}</button></g:link>	
+						</p>
+				    </div>
+					<!-- Fin: BREADCRUM -->   
 	                <g:render template="tabla" />		
  				</div>
             	<!-- end: Content -->

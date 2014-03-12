@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.MaterialCurso" %>
+<%@ page import="com.material.MaterialCurso" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>
@@ -29,7 +29,22 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-	                <g:render template="material" />		
+	            	<div class="span2"></div>
+					    <div class="span8"> 
+						    <!-- comienzo: BREADCRUM -->
+							<div class="box-content buttons">
+								<p class="btn-group">
+									<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
+										<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+								</p>
+						    </div>
+						    <!-- Fin: BREADCRUM -->  
+						    <div class="box">
+	                			<g:render template="material" />
+							</div>	
+					    </div>
+					    <!--/span-->
+					    <div class="span2"></div>
  				</div>
             	<!-- end: Content -->
         	</div>
