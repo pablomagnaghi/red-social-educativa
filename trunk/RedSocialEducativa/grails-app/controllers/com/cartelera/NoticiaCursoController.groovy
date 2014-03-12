@@ -1,7 +1,6 @@
 package com.cartelera
 
 import com.fiuba.*
-
 import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured
 
@@ -14,8 +13,7 @@ class NoticiaCursoController {
 	def noticiaCursoService
 
 	def index() {
-		params.max = 100//Utilidades.MAX_PARAMS
-		println "params: ${params}"
+		params.max = Utilidades.MAX_PARAMS
 		[noticiasCurso: noticiaCursoService.obtenerNoticiasOrdenadas(params.cuatrimestreId.toLong()),
 			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 	}
@@ -26,7 +24,6 @@ class NoticiaCursoController {
 
 	def create() {
 		def mediadorId = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId)).id
-		
 		respond new NoticiaCurso(params), model: [mediadorId: mediadorId], 
 			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 	}
@@ -36,15 +33,13 @@ class NoticiaCursoController {
 			notFound()
 			return
 		}
-		
 		if (!noticiaCursoService.guardar(noticiaCursoInstance)) {
 			def mediadorId = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId)).id
 			render view:'create', model: [noticiaCursoInstance: noticiaCursoInstance, mediadorId: mediadorId], 
 				params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 			return
 		}
-
-		flash.message = message(code: 'default.created.message', args: [message(code: 'noticiaCursoInstance.label', default: 'NoticiaCurso'), noticiaCursoInstance.id])
+		flash.message = "Noticia ${noticiaCursoInstance.titulo} creada"
 		redirect action: "index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 	}
 	
@@ -53,54 +48,45 @@ class NoticiaCursoController {
 	}
 
 	def update(NoticiaCurso noticiaCursoInstance) {
-
 		if (noticiaCursoInstance == null) {
 			notFound()
 			return
 		}
-
 		if (!noticiaCursoService.guardar(noticiaCursoInstance)) {
 			respond noticiaCursoInstance, view:'edit', params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 			return
 		}
-
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'NoticiaCurso.label', default: 'NoticiaCurso'), noticiaCursoInstance.id])
+		flash.message = "Noticia ${noticiaCursoInstance.titulo} actualizada"
 		redirect action:"index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 	}
 	
 	def cambiarVisibilidad(NoticiaCurso noticiaCursoInstance) {
-		
 		if (noticiaCursoInstance == null) {
 			notFound()
 			return
 		}
-		
 		noticiaCursoInstance.visibilidad = noticiaCursoInstance.visibilidad ? false : true
-
 		if (!noticiaCursoService.guardar(noticiaCursoInstance)) {
 			flash.message = "Problemas al cambiar la visibilidad"
 			redirect action:"index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 			return
 		}
-		
+		flash.message = "Visibilidad actualizada"
 		redirect action:"index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 	}
 
 	def delete(NoticiaCurso noticiaCursoInstance) {
-
 		if (noticiaCursoInstance == null) {
 			notFound()
 			return
 		}
-
 		noticiaCursoService.eliminar(noticiaCursoInstance)
-
-		flash.message = message(code: 'default.deleted.message', args: [message(code: 'NoticiaCurso.label', default: 'NoticiaCurso'), noticiaCursoInstance.id])
+		flash.message = "Noticia ${noticiaCursoInstance.titulo} eliminada"
 		redirect action:"index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId], method:"GET"
 	}
 
 	protected void notFound() {
-		flash.message = message(code: 'default.not.found.message', args: [message(code: 'noticiaCursoInstance.label', default: 'NoticiaCurso'), params.id])
+		flash.message = "No se encuentra esa noticia"
 		redirect action: "index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId], method: "GET"
 	}
 }
