@@ -38,7 +38,7 @@
 									<fieldset>
 										<g:render template="form"/>	
 										<div class="form-actions">
-											<button type="submit" class="btn btn-primary">Crear</button>
+											<button type="submit" class="btn btn-primary">Actualizar</button>
 										</div>		    
 									</fieldset>
 								</g:form>

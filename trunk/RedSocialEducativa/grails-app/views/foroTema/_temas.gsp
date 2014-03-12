@@ -9,6 +9,11 @@
             </div>
         </div>
         <div class="box-content">
+        	<g:if test="${flash.message}">
+				<div class="box-content alerts">
+					<div class="alert alert-info"><button class="close" data-dismiss="alert" type="button"></button><strong></strong> ${flash.message}</div>
+				</div>    
+			</g:if>      
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
                 <thead>
                     <tr>
@@ -40,7 +45,7 @@
 									params="['cursoId': params.cursoId, 'temaId': params.temaId]">	                        	
 		                        	<i class="icon-external-link"></i></g:link> 	
 		                       </span>
-		                       <g:if test="${mediador || ((aprendiz?.cursando) && (aprendiz?.usuario?.username == it.dni))}">
+		                       <g:if test="${mediador}">
 		                           <span><g:link class="btn btn-danger" controller="publicacionTema" action="eliminar" id="${it.id}" 
 		                         	  	params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]"
 		                            	onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >	                          

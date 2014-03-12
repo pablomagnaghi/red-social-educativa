@@ -32,39 +32,31 @@
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
 					<div class="row-fluid">
-					    <div class="box span12">
+						<div class="span2"></div>
+					    <div class="box span8">
 					        <div class="box-header">     	
 					            <h2><i class="icon-edit"></i>Editar</h2>
+					            <div class="box-icon">
+					            	<g:link action="nueva" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
+					                	<i class="icon-plus"></i></g:link>
+					               	<g:link controller="foroTema" action="general" 
+					                	params="['cursoId': params.cursoId, 'temaId': params.temaId]"><i class="icon-comments-alt"></i></g:link>
+					        	</div> 	
 					        </div>
-							<g:if test="${flash.message}">
-								<div class="message" role="status">${flash.message}</div>
-							</g:if>
-							<g:hasErrors bean="${publicacionTemaInstance}">
-								<ul class="errors" role="alert">
-									<g:eachError bean="${publicacionTemaInstance}" var="error">
-										<li <g:if test="${error in org.springframework.validation.FieldError}">
-											data-field-id="${error.field}"</g:if>>
-											<g:message error="${error}"/></li>
-									</g:eachError>
-								</ul>
-							</g:hasErrors>
 							<div class="box-content">
 								<g:form class="form-horizontal" action="actualizar" method="PUT" id="${publicacionTemaInstance.id}" 
 									params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'temaId': params.temaId]">
 									<g:hiddenField name="version" value="${publicacionTemaInstance?.version}" />
-									<g:hiddenField name="foro.id" value="${com.fiuba.ForoTema.findByTema(com.fiuba.Tema.get(params.temaId)).id}"/>
-									<g:hiddenField name="dni" value="${usuario.username}" />
-									<g:hiddenField name="responsable" value="${usuario}"/>
-	
 									<fieldset>
 										<g:render template="form"/>	
 										<div class="form-actions">
-											<button type="submit" class="btn btn-primary">Crear</button>
+											<button type="submit" class="btn btn-primary">Actualizar</button>
 										</div>		    
 									</fieldset>				
 								</g:form>
 							</div>
 						</div>
+						<div class="span2"></div>
 					</div>
  				</div>
             	<!-- end: Content -->

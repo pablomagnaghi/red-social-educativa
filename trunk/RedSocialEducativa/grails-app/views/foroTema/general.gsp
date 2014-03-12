@@ -31,9 +31,6 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-					<g:if test="${flash.message}">
-						<div class="message" role="status">${flash.message}</div>
-					</g:if>
 					<h2>Bienvenido al Foro: ${foro}</h2>
 					<p>Foro del tema ${tema} del Curso: ${com.fiuba.Curso.get(params.cursoId)}</p>
 
