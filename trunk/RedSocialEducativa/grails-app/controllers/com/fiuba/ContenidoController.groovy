@@ -26,7 +26,7 @@ class ContenidoController {
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def index() {
 		params.max = Utilidades.MAX_PARAMS
-
+		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 		[contenidoInstanceList: Contenido.findAllByTema(Tema.get(params.temaId)), params: ['cursoId': params.cursoId, 'temaId': params.temaId]]
 	}
 	

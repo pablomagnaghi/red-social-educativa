@@ -20,7 +20,7 @@ class TemaController {
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def index() {
 		params.max = Utilidades.MAX_PARAMS
-
+		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 		[temaInstanceList: Tema.findAllByCurso(Curso.get(params.cursoId),[max: params.max, offset: params.offset]),
 			temaInstanceCount: Tema.findAllByCurso(Curso.get(params.cursoId)).size(), params: ['cursoId': params.cursoId]]
 	}
