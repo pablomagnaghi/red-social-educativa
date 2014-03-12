@@ -45,7 +45,7 @@
 						        <div class="box-header">     	
 						            <h2><i class="icon-edit"></i>Editar</h2>
 						            <div class="box-icon">
-						                <g:link action="create" params="['cursoId': params.cursoId]"><i class="icon-plus"></i></g:link>
+						                <g:link action="create" params="['cursoId': params.cursoId, 'temaId': params.temaId]"><i class="icon-plus"></i></g:link>
 						                <g:link controller="tema" action="index" params="['cursoId': params.cursoId]"><i class="icon-table"></i></g:link>
 						            </div>
 						        </div>
@@ -76,4 +76,3 @@
         <div class="clearfix"></div>			
 	</body>
 </html>
-
