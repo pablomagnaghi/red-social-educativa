@@ -1,3 +1,9 @@
+<g:if test="${flash.message}">
+	<div class="box-content alerts">
+		<div class="alert alert-info"><button class="close" data-dismiss="alert" type="button"></button><strong></strong> ${flash.message}</div>
+	</div>    
+</g:if>
+
 <!--FOROS-->
 <div class="row-fluid">
     <div class="span12 discussions">
@@ -9,8 +15,7 @@
                 <div class="name"><h3>Tema ${tema.titulo}</h3></div>
                 <div class="date">${tema.fecha} - ${tema.hora}<br>${tema.responsable}</div>
                 <div class="opciones">
-                	<span><g:link controller="publicacionGeneral" action="nueva">
-                		<i class="icon-plus"></i></g:link></span>
+                	<span><g:link controller="publicacionGeneral" action="nueva"><i class="icon-plus"></i></g:link></span>
                 	<g:if test="${administrador}">
 						<span><g:link controller="publicacionGeneral" action="editar" 
 							id="${params.pubInicialId}" params="['pubInicialId': params.pubInicialId]">	                        	
@@ -58,13 +63,13 @@
 							<fieldset class="form">
 								<div class="control-group">	
 									<div class="controls">
-									<textarea class="diss-form" name="contenido" placeholder="Escribe un comentario"></textarea>
+										<textarea class="diss-form" name="contenido" placeholder="Escribe un comentario menor a 1024 caracteres"></textarea>
 									</div>	
 								</div>	
-								<div><g:hiddenField name="titulo" value="${com.foro.PublicacionGeneral.get(params.pubInicialId).titulo}"/></div>
-								<div><g:hiddenField name="responsable" value="${usuario}"/></div>
-								<div><g:hiddenField name="dni" value="${usuario.username}"/></div>
-								<div><g:hiddenField name="foro.id" value="${com.foro.ForoGeneral.first().id}"/></div>	
+								<g:hiddenField name="titulo" value="${com.foro.PublicacionGeneral.get(params.pubInicialId).titulo}"/>
+								<g:hiddenField name="responsable" value="${usuario}"/>
+								<g:hiddenField name="dni" value="${usuario.dni}"/>
+								<g:hiddenField name="foro.id" value="${com.foro.ForoGeneral.first().id}"/>	
 							</fieldset>
 							<fieldset class="buttons">
 								<button type="submit" class="btn btn-primary">Publicar</button>
