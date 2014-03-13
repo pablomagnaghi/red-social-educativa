@@ -11,14 +11,13 @@ class Material {
 	String responsable
 	
 	CategoriaMaterial categoria
-	
-	static hasOne = [archivo: Archivo]
+	Long idArchivo
 
     static constraints = {
 		titulo maxSize: Utilidades.MAX_TITULO
 		autor nullable: true
 		descripcion nullable: true, maxSize: Utilidades.MAX_SIZE
-		archivo nullable: true
+		idArchivo nullable: true
     }
 	
 	static mapping = {

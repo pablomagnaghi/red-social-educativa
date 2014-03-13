@@ -7,29 +7,22 @@ import grails.transaction.Transactional
 class MaterialCursoService {
 	
 	def existe(MaterialCurso material, Long cursoId) {
-		
-		def materialExistente = MaterialCurso.findByCursoAndTitulo(Curso.get(cursoId), material.titulo)
-	
+		def materialExistente = MaterialCurso.findByCursoAndTituloAndIdNotEqual(Curso.get(cursoId), material.titulo, material?.id)
 		return materialExistente
 	}
 	
-	def guardar(MaterialCurso material, Archivo archivo) {
-		def archivoInstance = new Archivo()
-		archivoInstance.filename = archivo.originalFilename
-		archivoInstance.filedata = archivo.getBytes()
-		println "tamaño: ${archivoInstance.filedata.size()}"
-		archivoInstance.save flush:true
-		
-		material.archivo = archivoInstance
-
-		
-		
-		
-		if (material.save(flush: true)) {
-			return material
+	def guardar(MaterialCurso material, Archivo archivoInstance) {
+		if (archivoInstance) {
+			if (!archivoInstance.save(flush:true)) {
+				return null
+			}
+			material.idArchivo = archivoInstance.id
 		}
 		
-		return null
+		if (!material.save(flush: true)) {
+			return null
+		}
+		return material
 	}
 			
 	def eliminar(MaterialCurso material) {

@@ -9,38 +9,23 @@ class MaterialCursoController {
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	def usuarioService
 	def materialCursoService
-/*
-	@Secured("hasRole('ROL_MEDIADOR')")
-	def upload() {
-		def file = request.getFile('file')
-		if(file.empty) {
-			flash.message = "El archivo esta vacío"
-		} else {
-			def documentInstance = new Archivo()
-			documentInstance.filename = file.originalFilename
-			documentInstance.filedata = file.getBytes()
-			//println "tamaño: ${documentInstance.filedata.size()}"
-			documentInstance.save flush.true
-		}
-		redirect action:'index'
-	}
 
 	@Secured('isFullyAuthenticated()')
-	def download(long id) {
-		Archivo documentInstance = Archivo.get(id)
-		if (documentInstance == null) {
-			flash.message = "Documento no encontrado"
-			redirect (action:'list')
+	def descargar(Long id) {
+		Archivo archivoInstance = Archivo.get(id)
+		if (archivoInstance == null) {
+			flash.message = "Archivo no encontrado"
+			redirect action: "index", params:['cursoId': params.cursoId]
 		} else {
 			response.setContentType("APPLICATION/OCTET-STREAM")
-			response.setHeader("Content-Disposition", "Attachment;Filename=\"${documentInstance.filename}\"")
+			response.setHeader("Content-Disposition", "Attachment;Filename=\"${archivoInstance.filename}\"")
 			def outputStream = response.getOutputStream()
-			outputStream << documentInstance.filedata
+			outputStream << archivoInstance.filedata
 			outputStream.flush()
 			outputStream.close()
 		}
 	}
-	*/
+	
 	@Secured('isFullyAuthenticated()')
 	def index() {
 		params.max = Utilidades.MAX_PARAMS
@@ -71,16 +56,19 @@ class MaterialCursoController {
 			redirect action: "create", params:['cursoId': params.cursoId]
 			return
 		}
-		println "${params.archivo}"
 		
-		def archivo = request.getFile('archivo')
-		if(archivo.empty) {
+		def file = request.getFile('archivo')
+		if(file.empty) {
 			flash.message = "El archivo esta vacío"
 			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 			render view:'create', model: [mediador: mediador], params:['cursoId': params.cursoId]
 			return
 		} 
-		if (!materialCursoService.guardar(materialCursoInstance, archivo)) {
+		def archivoInstance = new Archivo()
+		archivoInstance.filename = file.originalFilename
+		archivoInstance.filedata = file.getBytes()
+
+		if (!materialCursoService.guardar(materialCursoInstance, archivoInstance)) {
 			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 			render view:'create', model: [materialCursoInstance: materialCursoInstance, mediador: mediador], params:['cursoId': params.cursoId]
 			return
@@ -92,7 +80,7 @@ class MaterialCursoController {
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def edit(MaterialCurso materialCursoInstance) {
 		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-		respond materialCursoInstance, model:[mediador: mediador],  params:['cursoId': params.cursoId]
+		respond materialCursoInstance, model: [mediador: mediador],  params:['cursoId': params.cursoId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -101,7 +89,12 @@ class MaterialCursoController {
 			notFound()
 			return
 		}
-		if (!materialCursoService.guardar(materialCursoInstance)) {
+		if (materialCursoService.existe(materialCursoInstance, params.cursoId.toLong())) {
+			flash.message = "Ya existe el material ${materialCursoInstance.titulo} en el curso ${Curso.get(params.cursoId)}"
+			redirect action: "edit", params:['cursoId': params.cursoId]
+			return
+		}
+		if (!materialCursoService.guardar(materialCursoInstance, null)) {
 			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 			render view:'edit', model: [materialCursoInstance: materialCursoInstance, mediador: mediador], params:['cursoId': params.cursoId]
 			return

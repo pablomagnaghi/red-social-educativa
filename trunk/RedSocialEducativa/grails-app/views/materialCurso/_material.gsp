@@ -2,6 +2,7 @@
 	<h2><i class="icon-table"></i><span class="break"></span>Material ${materialCursoInstance}</h2>
 	<div class="box-icon">
 		<g:if test="${mediador}"> 
+			<g:link action="descargar" id="${materialCursoInstance.idArchivo}" params="['cursoId': params.cursoId]"><i class="icon-download-alt"></i></g:link>
 			<g:link action="create" params="['cursoId': params.cursoId]"><i class="icon-plus"></i></g:link>
 			<g:link action="edit" id="${materialCursoInstance.id}" params="['cursoId': params.cursoId]"><i class="icon-edit"></i></g:link>
 			<g:link action="delete" method="DELETE" id="${materialCursoInstance.id}" params="['cursoId': params.cursoId]"

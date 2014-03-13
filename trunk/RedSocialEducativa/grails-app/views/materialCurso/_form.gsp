@@ -1,6 +1,6 @@
 <g:if test="${flash.message}">
 	<div class="box-content alerts">
-		<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button"></button><strong></strong>${flash.message}</div>
+		<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button"></button><strong>${flash.message}</strong></div>
 	</div>
 </g:if>
 <g:hasErrors bean="${materialCursoInstance}">
@@ -60,13 +60,5 @@
 	</div>	 
 </g:else>
 
-<!-- ARCHIVO -->
- <div class="control-group">
-	<label class="control-label">Archivo</label>
-	<div class="controls">
-		<input class="input-file uniform_on" type="file" name="archivo" />
-	</div>
-</div>
-
 <g:hiddenField name="curso.id" value="${params.cursoId}"/>
-<g:hiddenField name="responsable" value="${mediador.usuario.nombres} ${mediador.usuario.apellido}-${mediador.jerarquia}"/>
+<g:hiddenField name="responsable" value="${mediador?.usuario?.nombres} ${mediador?.usuario?.apellido}-${mediador?.jerarquia}"/>
