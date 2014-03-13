@@ -1,5 +1,7 @@
 package com.fiuba
 
+import com.material.Archivo;
+
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 

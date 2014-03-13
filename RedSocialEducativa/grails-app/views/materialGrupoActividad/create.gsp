@@ -32,53 +32,42 @@
 	            <div id="content" class="span10">
 		            <div class="row-fluid">
 		            	<div class="span2"></div>
-					    <div class="box span8">
-					        <div class="box-header">
-					            <h2><i class="icon-plus"></i>Crear</h2>
-					            <div class="box-icon">
-					                <a href="#" class="btn-setting"><i class="icon-wrench"></i></a>
-					                <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
-					                <a href="#" class="btn-close"><i class="icon-remove"></i></a>
-					            </div>
-					        </div>
-					      	<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
-							<h2>Curso Id: ${params.cursoId}</h2>
-							<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
-							<h2>Actividad Id: ${params.actividadId}</h2>
-							<h2>Grupo actividad Id: ${params.grupoActividadId}</h2>
-					        <g:if test="${flash.message}">
-								<div class="message" role="status">${flash.message}</div>
-							</g:if>    
-							<g:hasErrors bean="${materialGrupoActividad}">
-								<ul class="errors" role="alert">
-									<g:eachError bean="${materialGrupoActividad}" var="error">
-										<li <g:if test="${error in org.springframework.validation.FieldError}">
-												data-field-id="${error.field}"</g:if>>
-											<g:message error="${error}"/></li>
-									</g:eachError>
-								</ul>
-							</g:hasErrors>
-					        <div class="box-content">
-					        	<g:form class="form-horizontal" action="save" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
-					        		'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]" >	   
-					        		<g:hiddenField name="grupo.id" value="${params.grupoActividadId}"/>     		
-						            <g:hiddenField name="responsable" value="${aprendiz.usuario.padron}-${aprendiz.usuario}"/>
-						            <fieldset>		
-										<div class="control-group">
-											<label class="control-label" >Titulo</label>			
-											<div class="controls">
-												<g:textField name="titulo" value="${materialGrupoActividad?.titulo}"/>
-											</div>	
-										</div>
-						            	<g:render template="form"/>			
-						            	<div class="form-actions">
-											<button type="submit" class="btn btn-primary">Crear</button>
-										</div>		    
-						            </fieldset>  
-					            </g:form> 
-					        </div>  
+		            	<div class="span8">
+		            		<!-- comienzo: BREADCRUM -->
+							<div class="box-content buttons">
+								<p class="btn-group">
+									<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
+										<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+								</p>
+						    </div>
+							<!-- Fin: BREADCRUM -->  
+						    <div class="box">
+						        <div class="box-header">
+						            <h2><i class="icon-plus"></i>Crear</h2>
+						            <div class="box-icon">
+						                <a href="#" class="btn-setting"><i class="icon-wrench"></i></a>
+						                <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
+						                <a href="#" class="btn-close"><i class="icon-remove"></i></a>
+						            </div>
+						        </div>
+						      	<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+								<h2>Curso Id: ${params.cursoId}</h2>
+								<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
+								<h2>Actividad Id: ${params.actividadId}</h2>
+								<h2>Grupo actividad Id: ${params.grupoActividadId}</h2>
+						        <div class="box-content">
+						        	<g:form class="form-horizontal" action="save" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
+						        		'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]" >	   
+							            <fieldset>		
+							            	<g:render template="form"/>			
+							            	<div class="form-actions">
+												<button type="submit" class="btn btn-primary">Crear</button>
+											</div>		    
+							            </fieldset>  
+						            </g:form> 
+						        </div>  
+						    </div>
 					    </div>
-					    <!--/span-->
 					    <div class="span2"></div>
 					</div>
 					<!--/row-->    		
