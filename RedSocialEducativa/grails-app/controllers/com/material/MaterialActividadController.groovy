@@ -10,35 +10,25 @@ class MaterialActividadController {
 
 	def usuarioService
 	def materialActividadService
-/*
-	@Secured("hasRole('ROL_APRENDIZ')")
-	def aprendiz() {
-		params.max = Utilidades.MAX_PARAMS
-		def actividad = Actividad.get(params.actividadId)
-
-		[materiales: MaterialActividad.findAllByActividad(actividad, [max: params.max, offset: params.offset]),
-			materialesCant: MaterialActividad.findAllByActividad(actividad).size(), 
-			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
-	}*/
 
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def materialAprendiz() {
-		params.max = 100//Utilidades.MAX_PARAMS
-		[materiales: MaterialActividad.findAllByActividad(Actividad.get(params.actividadId)),
+		params.max = Utilidades.MAX_PARAMS
+		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
+		[materiales: MaterialActividad.findAllByActividad(Actividad.get(params.actividadId)), mediador: mediador,
 			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def show(MaterialActividad materialActividadInstance) {
-		respond materialActividadInstance, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
-			'actividadId': params.actividadId]
+		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
+		respond materialActividadInstance, model: [mediador: mediador, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
+			'actividadId': params.actividadId]]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def create() {
-
 		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-
 		respond new MaterialActividad(params), model:[mediador: mediador], params: ['cursoId': params.cursoId, 
 			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 	}
@@ -49,65 +39,57 @@ class MaterialActividadController {
 			notFound()
 			return
 		}
-
-		println materialActividadService.existe(materialActividadInstance, params.actividadId.toLong())
-		
 		if (materialActividadService.existe(materialActividadInstance, params.actividadId.toLong())) {
 			flash.message = "Ya existe el material ${materialActividadInstance.titulo} en la actividad ${Actividad.get(params.actividadId)}"
 			redirect action: "create", params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 			return
 		}
-
 		if (!materialActividadService.guardar(materialActividadInstance)) {
 			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 			render view:'create', model: [materialActividadInstance: materialActividadInstance, mediador: mediador],
 			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 			return
 		}
-
-		flash.message = message(code: 'default.created.message', args: [message(code: 'materialActividadInstance.label', default: 'MaterialActividad'), materialActividadInstance.id])
+		flash.message = "Material ${materialActividadInstance} creado"
 		redirect controller:"actividad", action:"index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
-
 	}
+	
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def edit(MaterialActividad materialActividadInstance) {
-		respond materialActividadInstance, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
+		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
+		respond materialActividadInstance, model: [mediador:mediador, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
+			'actividadId': params.actividadId]]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def update(MaterialActividad materialActividadInstance) {
-
 		if (materialActividadInstance == null) {
 			notFound()
 			return
 		}
-
 		if (!materialActividadService.guardar(materialActividadInstance)) {
-			render view:'edit', model: [materialActividadInstance: materialActividadInstance],
+			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
+			render view:'edit', model: [materialActividadInstance: materialActividadInstance, mediador: mediador],
 			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 			return
 		}
-
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'MaterialActividad.label', default: 'MaterialActividad'), materialActividadInstance.id])
+		flash.message = "Material ${materialActividadInstance} actualizado"
 		redirect controller:"actividad", action:"index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def delete(MaterialActividad materialActividadInstance) {
-
 		if (materialActividadInstance == null) {
 			notFound()
 			return
 		}
-
 		materialActividadService.eliminar(materialActividadInstance)
-
-		flash.message = message(code: 'default.deleted.message', args: [message(code: 'MaterialActividad.label', default: 'MaterialActividad'), materialActividadInstance.id])
+		flash.message = "Material ${materialActividadInstance} eliminado"
 		redirect controller:"actividad", action:"index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId], method:"GET"
 	}
 
 	protected void notFound() {
-		flash.message = message(code: 'default.not.found.message', args: [message(code: 'materialActividadInstance.label', default: 'MaterialActividad'), params.id])
+		flash.message = "No se encuentra ese material"
 		redirect controller: "actividad", action:"index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId], method: "GET"
 	}
 }
