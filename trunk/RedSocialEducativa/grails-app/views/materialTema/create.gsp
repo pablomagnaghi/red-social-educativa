@@ -47,16 +47,25 @@
 						            <div class="box-icon">
 					               		<g:link controller="tema" action="index" params="['cursoId': params.cursoId]"><i class="icon-table"></i></g:link>
 					            	</div>
-					        	</div>
+					        	</div>  
 						        <div class="box-content">
-						        	<g:form class="form-horizontal" action="save" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
+						        	<g:uploadForm class="form-horizontal" action="save" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
+						        		<g:hiddenField name="tema.id" value="${params.temaId}"/>
+										<g:hiddenField name="responsable" value="${mediador.usuario.nombres} ${mediador.usuario.apellido}-${mediador.jerarquia}"/>
 							            <fieldset>		
-							            	<g:render template="form"/>			
+							            	<g:render template="form"/>	
+							            	<!-- ARCHIVO -->
+											<div class="control-group">
+												<label class="control-label">Archivo (32MB máx)</label>
+												<div class="controls">
+													<input type="file" name="archivo"/>
+												</div>
+											</div>			
 							            	<div class="form-actions">
 												<button type="submit" class="btn btn-primary">Crear</button>
 											</div>		    
 							            </fieldset>
-						            </g:form>
+						            </g:uploadForm>
 						        </div>
 						    </div>    
 					    </div>

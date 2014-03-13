@@ -53,6 +53,7 @@
 						        	<g:form class="form-horizontal" action="update" method="PUT" id="${materialTemaInstance.id}" 
 						        		params="['cursoId': params.cursoId, 'temaId': params.temaId]">
 						        		<g:hiddenField name="version" value="${materialTemaInstance?.version}" />
+						        		<g:hiddenField name="idArchivo" value="${materialTemaInstance.idArchivo}"/>
 							            <fieldset>
 							            	<g:render template="form"/>			
 							            	<div class="form-actions">

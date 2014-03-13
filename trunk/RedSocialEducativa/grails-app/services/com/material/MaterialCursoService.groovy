@@ -18,7 +18,6 @@ class MaterialCursoService {
 			}
 			material.idArchivo = archivoInstance.id
 		}
-		
 		if (!material.save(flush: true)) {
 			return null
 		}
@@ -26,6 +25,10 @@ class MaterialCursoService {
 	}
 			
 	def eliminar(MaterialCurso material) {
+		def archivo = Archivo.get(material.idArchivo)
+		if (archivo) {
+			archivo.delete flush:true
+		}
 		material.delete flush:true
 	}
 }

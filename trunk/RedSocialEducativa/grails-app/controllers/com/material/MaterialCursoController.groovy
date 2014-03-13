@@ -56,6 +56,11 @@ class MaterialCursoController {
 			redirect action: "create", params:['cursoId': params.cursoId]
 			return
 		}
+		if (!materialCursoInstance.validate()) {
+			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
+			render view:'create', model: [materialCursoInstance: materialCursoInstance, mediador: mediador], params:['cursoId': params.cursoId]
+			return
+		}
 		
 		def file = request.getFile('archivo')
 		if(file.empty) {
@@ -63,16 +68,15 @@ class MaterialCursoController {
 			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 			render view:'create', model: [mediador: mediador], params:['cursoId': params.cursoId]
 			return
-		} 
+		}
 		def archivoInstance = new Archivo()
 		archivoInstance.filename = file.originalFilename
 		archivoInstance.filedata = file.getBytes()
-
 		if (!materialCursoService.guardar(materialCursoInstance, archivoInstance)) {
-			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-			render view:'create', model: [materialCursoInstance: materialCursoInstance, mediador: mediador], params:['cursoId': params.cursoId]
-			return
+			flash.message = "Problemas al guardar el archivor ${archivoInstance.filename} en el material ${materialInstance}"
+			redirect action: "create", params:['cursoId': params.cursoId]
 		}
+		
 		flash.message = "Material ${materialCursoInstance} creado"
 		redirect action: "index", params:['cursoId': params.cursoId]
 	}
