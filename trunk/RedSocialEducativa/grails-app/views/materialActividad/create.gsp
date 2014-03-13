@@ -32,49 +32,35 @@
 	            <div id="content" class="span10">
 		            <div class="row-fluid">
 		            	<div class="span2"></div>
-					    <div class="box span8">
-					        <div class="box-header">
-					            <h2><i class="icon-plus"></i>Crear</h2>
-					            <div class="box-icon">
-					                <a href="#" class="btn-setting"><i class="icon-wrench"></i></a>
-					                <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
-					                <a href="#" class="btn-close"><i class="icon-remove"></i></a>
-					            </div>
-					        </div>
-					        <h3>curso: ${params.cursoId}</h3>
-							<h3>cuatri: ${params.cuatrimestreId}</h3>
-							<h3>act: ${params.actividadId}</h3>
-					        <g:if test="${flash.message}">
-								<div class="message" role="status">${flash.message}</div>
-							</g:if>    
-							<g:hasErrors bean="${materialActividad}">
-								<ul class="errors" role="alert">
-									<g:eachError bean="${materialActividad}" var="error">
-										<li <g:if test="${error in org.springframework.validation.FieldError}">
-												data-field-id="${error.field}"</g:if>>
-											<g:message error="${error}"/></li>
-									</g:eachError>
-								</ul>
-							</g:hasErrors>
-					        <div class="box-content">
-					        	<g:form class="form-horizontal" action="save" 
-					        		params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]" >	
-					        		<g:hiddenField name="actividad.id" value="${params.actividadId}"/>			        		
-						            <g:hiddenField name="responsable" value="${mediador.usuario}-${mediador?.jerarquia}"/>
-						            <fieldset>		
-										<div class="control-group">
-											<label class="control-label" >Titulo</label>			
-											<div class="controls">
-												<g:textField name="titulo" value="${materialActividad?.titulo}"/>
-											</div>	
-										</div>
-						            	<g:render template="form"/>			
-						            	<div class="form-actions">
-											<button type="submit" class="btn btn-primary">Crear</button>
-										</div>		    
-						            </fieldset>  
-					            </g:form> 
-					        </div>  
+					    <div class="span8">
+					    	<!-- comienzo: BREADCRUM -->
+							<div class="box-content buttons">
+								<p class="btn-group">
+									<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
+										<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+								</p>
+						    </div>
+							<!-- Fin: BREADCRUM -->  
+					    	<div class="box">
+						        <div class="box-header">
+						            <h2><i class="icon-plus"></i>Crear material para la actividad ${com.fiuba.Actividad.get(params.actividadId)}</h2>
+						            <div class="box-icon">
+						                <g:link controller="actividad" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+						                	<i class="icon-table"></i></g:link>
+						            </div>
+						        </div>
+						        <div class="box-content">
+						        	<g:form class="form-horizontal" action="save" 
+						        		params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]" >	
+							            <fieldset>		
+							            	<g:render template="form"/>			
+							            	<div class="form-actions">
+												<button type="submit" class="btn btn-primary">Crear</button>
+											</div>		    
+							            </fieldset>  
+						            </g:form> 
+						        </div>  
+							</div>        
 					    </div>
 					    <!--/span-->
 					    <div class="span2"></div>

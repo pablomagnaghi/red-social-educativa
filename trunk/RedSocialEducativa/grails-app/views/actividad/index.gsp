@@ -29,12 +29,14 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-					<h3>curso: ${params.cursoId}</h3>
-					<h3>cuatri: ${params.cuatrimestreId}</h3>
-					<h3>act: ${params.actividadId}</h3>
-					<g:if test="${flash.message}">
-						<div class="message" role="status">${flash.message}</div>
-					</g:if>
+	            	<!-- comienzo: BREADCRUM -->
+					<div class="box-content buttons">
+						<p class="btn-group">
+							<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
+								<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+						</p>
+				    </div>
+					<!-- Fin: BREADCRUM --> 
 	                <g:render template="tabla" />		
  				</div>
             	<!-- end: Content -->
