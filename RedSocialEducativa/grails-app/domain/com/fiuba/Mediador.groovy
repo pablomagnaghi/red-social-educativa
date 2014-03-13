@@ -14,4 +14,8 @@ class Mediador extends UsuarioRol {
 	static constraints = {
 		jerarquia inList:["1-Profesor", "2-JTP", "3-AP", "4-AS", "5-Colaborador"]
 	}
+	
+	String toString() {
+		"${usuario.nombres} ${usuario.apellido} - ${jerarquia}"
+	}
 }

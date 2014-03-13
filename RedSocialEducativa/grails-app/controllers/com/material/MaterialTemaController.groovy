@@ -11,6 +11,23 @@ class MaterialTemaController {
 	def usuarioService
 	def materialTemaService
 
+	
+	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
+	def descargar(Long id) {
+		Archivo archivoInstance = Archivo.get(id)
+		if (archivoInstance == null) {
+			flash.message = "Archivo no encontrado"
+			redirect controller:"tema", action: "index", params:['cursoId': params.cursoId]
+		} else {
+			response.setContentType("APPLICATION/OCTET-STREAM")
+			response.setHeader("Content-Disposition", "Attachment;Filename=\"${archivoInstance.filename}\"")
+			def outputStream = response.getOutputStream()
+			outputStream << archivoInstance.filedata
+			outputStream.flush()
+			outputStream.close()
+		}
+	}
+	
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def show(MaterialTema materialTemaInstance) {
 		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
@@ -34,7 +51,17 @@ class MaterialTemaController {
 			redirect action: "create", params: ['cursoId': params.cursoId, 'temaId': params.temaId]
 			return
 		}
-		if (!materialTemaService.guardar(materialTemaInstance)) {
+		def file = request.getFile('archivo')
+		if(file.empty) {
+			flash.message = "El archivo esta vacío"
+			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
+			render view:'create', model: [mediador: mediador], params:['cursoId': params.cursoId, 'temaId': params.temaId]
+			return
+		}
+		def archivoInstance = new Archivo()
+		archivoInstance.filename = file.originalFilename
+		archivoInstance.filedata = file.getBytes()
+		if (!materialTemaService.guardar(materialTemaInstance, archivoInstance)) {
 			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 			render view:'create', model: [materialTemaInstance: materialTemaInstance, mediador: mediador], params: ['cursoId': params.cursoId, 
 				'temaId': params.temaId]
@@ -56,7 +83,12 @@ class MaterialTemaController {
 			notFound()
 			return
 		}
-		if (!materialTemaService.guardar(materialTemaInstance)) {
+		if (materialTemaService.existe(materialTemaInstance, params.temaId.toLong())) {
+			flash.message = "Ya existe el material ${materialTemaInstance.titulo} en el curso ${Curso.get(params.cursoId)}"
+			redirect action: "edit", params:['cursoId': params.cursoId, 'temaId': params.temaId]
+			return
+		}
+		if (!materialTemaService.guardar(materialTemaInstance, null)) {
 			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 			render view:'edit', model: [materialTemaInstance: materialTemaInstance, mediador: mediador], params: ['cursoId': params.cursoId, 'temaId': params.temaId]
 			return

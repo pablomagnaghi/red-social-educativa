@@ -6,6 +6,7 @@
 <g:hasErrors bean="${materialCursoInstance}">
 	<div class="box-content alerts">
 		<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button"></button><strong>Revise el formulario</strong></div>
+		
 	</div>
 </g:hasErrors>
 
@@ -61,4 +62,4 @@
 </g:else>
 
 <g:hiddenField name="curso.id" value="${params.cursoId}"/>
-<g:hiddenField name="responsable" value="${mediador?.usuario?.nombres} ${mediador?.usuario?.apellido}-${mediador?.jerarquia}"/>
+<g:hiddenField name="responsable" value="${com.fiuba.Mediador.findByUsuarioAndCurso(usuario, com.fiuba.Curso.get(params.cursoId))}"/>

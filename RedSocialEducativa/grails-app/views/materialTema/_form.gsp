@@ -1,6 +1,6 @@
 <g:if test="${flash.message}">
 	<div class="box-content alerts">
-		<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button"></button><strong></strong>${flash.message}</div>
+		<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button"></button><strong>${flash.message}</strong></div>
 	</div>
 </g:if>
 <g:hasErrors bean="${materialTemaInstance}">
@@ -61,4 +61,4 @@
 </g:else>
 			
 <g:hiddenField name="tema.id" value="${params.temaId}"/>
-<g:hiddenField name="responsable" value="${mediador.usuario.nombres} ${mediador.usuario.apellido}-${mediador.jerarquia}"/>
+<g:hiddenField name="responsable" value="${mediador}"/>
