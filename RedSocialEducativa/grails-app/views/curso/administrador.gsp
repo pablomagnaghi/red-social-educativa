@@ -41,29 +41,27 @@
 									<g:render template="tituloGeneral"></g:render>
 								</div>         
 								<div class="row-fluid">            	 
-									<div class="span9">		
+									<div class="span12">		
 										SOLO VE MATERIAL GENERAL Y TEMAS CON FOROS DE TEMAS
 											<h2>Curso id: ${params.cursoId}</h2>
 											<h2>Dicta cuatrimestre: ${dictaCuatrimestre}</h2>
 											<h2>cuat id: ${cuatrimestre?.id}</h2>
 											<h2>Noticia curso: ${noticiasCurso}</h2>   
-									</div>
-									<div class="span3">	
+											
+											
+											<div>
+												<g:link controller="materialCurso" action="index" params="['cursoId': params.cursoId]">
+													<g:message code="Material del curso" /></g:link>
+											</div>
+											<div>
+												<g:link controller="tema" action="index" params="['cursoId': params.cursoId]">
+													<g:message code="Temas del curso" /></g:link>
+											</div>
 									</div>
 								</div>
 							</div>
 						</div><!--/span-->
 					</div>
-					<div class="row-fluid">
-						<g:render template="opcion2"/>      
-					</div>	
-					<div class="row-fluid">
-						<g:render template="subNivel"/>      
-					</div>		
-					<div class="row-fluid">
-						<g:render template="materiales"/>      
-						<g:render template="temas"/>
-					</div>	
 				</div>			
 			</div><!--/fluid-row-->	
 		</div>

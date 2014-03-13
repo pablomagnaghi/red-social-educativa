@@ -20,7 +20,7 @@ class PublicacionTemaService {
 			return
 		}
 		
-		if (aprendizService.obtenerPorCurso(usuario, cursoId)) {
+		if (aprendizService.obtenerPorCurso(usuario.id, cursoId)) {
 			publicacion.responsable = publicacion.responsable + " " + Utilidades.APRENDIZ
 			return
 		}

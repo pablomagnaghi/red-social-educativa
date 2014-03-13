@@ -54,7 +54,15 @@
 										<h2>"CURSANDO: ${cursando}"</h2>
 								</div>         
 								<div class="row-fluid">            	 
-									<div class="span9">
+									<div class="span12">
+										<div>
+											<g:link controller="materialCurso" action="index" params="['cursoId': params.cursoId]">
+												<g:message code="Material del curso" /></g:link>
+										</div>
+										<div>
+											<g:link controller="tema" action="index" params="['cursoId': params.cursoId]">
+												<g:message code="Temas del curso" /></g:link>
+										</div>
 										<g:if test="${cuatrimestre?.id}">
 											<g:if test="${solicitoParticipacion}">
 											<div>
@@ -66,8 +74,6 @@
 												<g:message code="Solicitar partipacion en el curso" args="[entityName]" /></g:link>  
 											</g:else>
 										</g:if>
-									</div>
-									<div class="span3">							
 									</div>
 								</div>
 							</div>

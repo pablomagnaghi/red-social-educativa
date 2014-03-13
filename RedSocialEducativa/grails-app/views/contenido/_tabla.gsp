@@ -49,8 +49,9 @@
 											<g:link style="float: right;" class="btn btn-success" controller="materialContenido" action="show" id="${m.id}"
 												params="['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': contenidoInstance.id]">
 												<i class="icon-search"></i></g:link>
-											<g:link style="float: right;" controller="materialContenido" action="show" id="${m.id}"
-												params="['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': contenidoInstance.id]">Descargar(fix)</g:link></p>	
+											<g:link style="float: right;" class="btn btn-success" controller="materialContenido" action="descargar" id="${m.idArchivo}" 
+												params="['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': contenidoInstance.id]">
+												<i class="icon-download-alt"></i></g:link></p>
 									</g:each>
 								</g:if>
 								<g:else>

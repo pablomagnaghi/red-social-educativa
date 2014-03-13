@@ -380,18 +380,18 @@ class BootStrap {
 		temaUnoCursoDos.addToMateriales(materialTemaCuatro)
 		
 		// Material curso
-		def materialUno = new MaterialCurso(titulo: "material 1 curso 1", descripcion: "opcional", autor: "anonimo",
-			responsable: "${mediadorUno.usuario}-${mediadorUno.jerarquia}", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
-		def materialDos = new MaterialCurso(titulo: "material 2 curso 1", descripcion: "opcional", autor: "anonimo",
-			responsable: "${mediadorUno.usuario}-${mediadorUno.jerarquia}", categoria: CategoriaMaterial.findByNombre("Presentacion"))
-		def materialTres = new MaterialCurso(titulo: "material 3 curso 1", descripcion: "opcional", autor: "anonimo",
-			responsable: "${mediadorUno.usuario}-${mediadorUno.jerarquia}", categoria: CategoriaMaterial.findByNombre("Enlace"))
-		def materialCuatro = new MaterialCurso(titulo: "material 4 curso 1", descripcion: "opcional", autor: "anonimo",
-			responsable: "${mediadorUno.usuario}-${mediadorUno.jerarquia}", categoria: CategoriaMaterial.findByNombre("Glosario"))
-		def materialCinco = new MaterialCurso(titulo: "material 5 curso 1", descripcion: "opcional", autor: "anonimo",
-			responsable: "${mediadorUno.usuario}-${mediadorUno.jerarquia}", categoria: CategoriaMaterial.findByNombre("Trabajo"))
-		def materialSeis = new MaterialCurso(titulo: "material 6 curso 1", descripcion: "opcional", autor: "anonimo",
-			responsable: "${mediadorUno.usuario}-${mediadorUno.jerarquia}", categoria: CategoriaMaterial.findByNombre("Cuestionario"))
+		def materialUno = new MaterialCurso(titulo: "material 1 curso 1", descripcion: "opcional", autor: "autor 1",
+			responsable: "${mediadorUno}", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
+		def materialDos = new MaterialCurso(titulo: "material 2 curso 1", descripcion: "opcional", autor: "autor 2",
+			responsable: "${mediadorUno}", categoria: CategoriaMaterial.findByNombre("Presentacion"))
+		def materialTres = new MaterialCurso(titulo: "material 3 curso 1", descripcion: "opcional", autor: "autor 3",
+			responsable: "${mediadorUno}", categoria: CategoriaMaterial.findByNombre("Enlace"))
+		def materialCuatro = new MaterialCurso(titulo: "material 4 curso 1", descripcion: "opcional", autor: "autor 4",
+			responsable: "${mediadorUno}", categoria: CategoriaMaterial.findByNombre("Glosario"))
+		def materialCinco = new MaterialCurso(titulo: "material 5 curso 1", descripcion: "opcional", autor: "autor 5",
+			responsable: "${mediadorUno}", categoria: CategoriaMaterial.findByNombre("Trabajo"))
+		def materialSeis = new MaterialCurso(titulo: "material 6 curso 1", descripcion: "opcional", autor: "autor 6",
+			responsable: "${mediadorUno}", categoria: CategoriaMaterial.findByNombre("Cuestionario"))
 		
 		// Grupos actividad: agrego grupoActividadAprendiz a los grupo actividad
 		def grupoActividadUno = new GrupoActividad(numero: "1", nombre: "grupo 1")
