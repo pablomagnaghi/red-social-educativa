@@ -38,7 +38,11 @@
 	            	    		<g:each in="${it.grupo.materiales}" var="m">
 									<p><g:link controller="materialGrupoActividad" action="show" id="${m.id}"
 										params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId, 
-										'grupoActividadId': it.grupo.id]">${m?.encodeAsHTML()}</g:link></p>
+										'grupoActividadId': it.grupo.id]">${m?.encodeAsHTML()}</g:link>
+										<g:link controller="materialGrupoActividad" action="edit" id="${m.id}" 
+											params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId,
+											'grupoActividadId': it.grupo.id]">editar material</g:link>
+										</p>
 								</g:each>		
 	            	    	</td>
 	            	    	

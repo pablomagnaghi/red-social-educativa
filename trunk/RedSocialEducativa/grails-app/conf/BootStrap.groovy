@@ -1,6 +1,4 @@
-
 import java.util.Date;
-
 import com.cartelera.*
 import com.fiuba.*
 import com.foro.*
@@ -261,27 +259,26 @@ class BootStrap {
 		// Foros
 		
 		// Foros de un tema		
-		def foroTemaUnoCursoUno = new ForoTema(nombre: "ForoGeneralTemaUnoCursoUno")
-		def foroTemaDosCursoUno = new ForoTema(nombre: "ForoGeneralTemaDosCursoUno")
-		def foroTemaUnoCursoDos = new ForoTema(nombre: "ForoGeneralTemaUnoCursoDos")
-		
-		// Foros generales de curso		
-		def foroCursoUno = new ForoCurso(nombre: "ForoGeneralCursoUno")
-		def foroCursoUnoP = new ForoCurso(nombre: "ForoGeneralCursoUnoP")
-		def foroCursoUnoPP = new ForoCurso(nombre: "ForoGeneralCursoUnoPP")
-		def foroCursoUnoPPP = new ForoCurso(nombre: "ForoGeneralCursoUnoPPP")
-		def foroCursoUnoPPPP = new ForoCurso(nombre: "ForoGeneralCursoUnoPPPP")
-		def foroCursoUnoPPPPP = new ForoCurso(nombre: "ForoGeneralCursoUnoPPPPP")
-		def foroCursoUnoPPPPPP = new ForoCurso(nombre: "ForoGeneralCursoUnoPPPPPP")
-		def foroCursoDos = new ForoCurso(nombre: "ForoGeneralCursoDos")
-		def foroCursoTres = new ForoCurso(nombre: "ForoGeneralCursoTres")
-		def foroCursoCuatro = new ForoCurso(nombre: "ForoGeneralCursoCuatro")
-		def foroCursoCuatroP = new ForoCurso(nombre: "ForoGeneralCursoCuatroP")
-		def foroCursoCuatroPP = new ForoCurso(nombre: "ForoGeneralCursoCuatroPP")
-		def foroCursoCuatroPPP = new ForoCurso(nombre: "ForoGeneralCursoCuatroPPP")
-		def foroCursoCuatroPPPP = new ForoCurso(nombre: "ForoGeneralCursoCuatroPPPP")
+		def foroTemaUnoCursoUno = new ForoTema(nombre: "Foro del tema TemaUnoCursoUno del curso ")
+		def foroTemaDosCursoUno = new ForoTema(nombre: "Foro del tema lTemaDosCursoUno del curso")
+		def foroTemaUnoCursoDos = new ForoTema(nombre: "Foro del tema TemaUnoCursoDos del curso")
 
-		def foroCursoCinco = new ForoCurso(nombre: "ForoGeneralCursoCinco")
+		// Foros generales de curso		
+		def foroCursoUno = new ForoCurso(nombre: "Foro general del curso cursoUno durante el cuatrimestre anio - numero")
+		def foroCursoUnoP = new ForoCurso(nombre: "Foro general del curso cursoUno durante el cuatrimestre anio - numero")
+		def foroCursoUnoPP = new ForoCurso(nombre: "Foro general del curso cursoUnoP durante el cuatrimestre anio - numero")
+		def foroCursoUnoPPP = new ForoCurso(nombre: "Foro general del curso cursoUnoPP durante el cuatrimestre anio - numero")
+		def foroCursoUnoPPPP = new ForoCurso(nombre: "Foro general del curso cursoUnoPPP durante el cuatrimestre anio - numero")
+		def foroCursoUnoPPPPP = new ForoCurso(nombre: "Foro general del curso cursoUnoPPPP durante el cuatrimestre anio - numero")
+		def foroCursoUnoPPPPPP = new ForoCurso(nombre: "Foro general del curso cursoUnoPPPPP durante el cuatrimestre anio - numero")
+		def foroCursoDos = new ForoCurso(nombre: "Foro general del curso cursoDos durante el cuatrimestre anio - numero")
+		def foroCursoTres = new ForoCurso(nombre: "Foro general del curso cursoTres durante el cuatrimestre anio - numero")
+		def foroCursoCuatro = new ForoCurso(nombre: "Foro general del curso cursoCuatro durante el cuatrimestre anio - numero")
+		def foroCursoCuatroP = new ForoCurso(nombre: "Foro general del curso cursoCuatroP durante el cuatrimestre anio - numero")
+		def foroCursoCuatroPP = new ForoCurso(nombre: "Foro general del curso cursoCuatroPP durante el cuatrimestre anio - numero")
+		def foroCursoCuatroPPP = new ForoCurso(nombre: "Foro general del curso cursoCuatroPPP durante el cuatrimestre anio - numero")
+		def foroCursoCuatroPPPP = new ForoCurso(nombre: "Foro general del curso cursoCuatroPPPP durante el cuatrimestre anio - numero")
+		def foroCursoCinco = new ForoCurso(nombre: "Foro general del curso cursoCinco durante el cuatrimestre anio - numero")
 		
 		// Publicaciones generales
 		def publicacionGeneralUno = new PublicacionGeneral(titulo: "PublicacionGeneralUno", contenido: "Contenido", 

@@ -28,7 +28,11 @@
 	            	   		<g:each in="${grupoActividadInstance.materiales}" var="m">
 								<p><g:link controller="materialGrupoActividad" action="show" id="${m.id}" 
 									params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId,
-									'grupoActividadId': grupoActividadInstance.id]">${m?.encodeAsHTML()}</g:link></p>
+									'grupoActividadId': grupoActividadInstance.id]">${m?.encodeAsHTML()}</g:link>
+									<g:link controller="materialGrupoActividad" action="edit" id="${m.id}" 
+									params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId,
+									'grupoActividadId': grupoActividadInstance.id]">editar material</g:link>
+								</p>
 							</g:each>
 	            	    </td>
 		                <td class="center">          

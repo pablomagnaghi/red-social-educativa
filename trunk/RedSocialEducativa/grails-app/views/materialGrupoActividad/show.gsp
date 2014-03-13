@@ -30,16 +30,28 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-					<g:if test="${flash.message}">
-						<div class="message" role="status">${flash.message}</div>
-					</g:if>
 						<h2>Params: ${params}</h2>
 						<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
 						<h2>Curso Id: ${params.cursoId}</h2>
 						<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
 						<h2>Actividad Id: ${params.actividadId}</h2>
 						<h2>Grupo actividad Id: ${params.grupoActividadId}</h2>
-	                <g:render template="material" />		
+	                <div class="span2"></div>
+					<div class="span8"> 
+						<!-- comienzo: BREADCRUM -->
+						<div class="box-content buttons">
+							<p class="btn-group">
+								<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
+									<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+							</p>
+						</div>
+						<!-- Fin: BREADCRUM -->  
+						<div class="box">
+	           				<g:render template="material" />
+						</div>	
+					</div>
+					<!--/span-->
+					<div class="span2"></div>	
  				</div>
             	<!-- end: Content -->
         	</div>

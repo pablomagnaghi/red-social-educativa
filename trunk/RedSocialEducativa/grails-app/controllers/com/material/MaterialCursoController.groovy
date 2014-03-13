@@ -9,7 +9,38 @@ class MaterialCursoController {
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	def usuarioService
 	def materialCursoService
+/*
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def upload() {
+		def file = request.getFile('file')
+		if(file.empty) {
+			flash.message = "El archivo esta vacío"
+		} else {
+			def documentInstance = new Archivo()
+			documentInstance.filename = file.originalFilename
+			documentInstance.filedata = file.getBytes()
+			//println "tamaño: ${documentInstance.filedata.size()}"
+			documentInstance.save flush.true
+		}
+		redirect action:'index'
+	}
 
+	@Secured('isFullyAuthenticated()')
+	def download(long id) {
+		Archivo documentInstance = Archivo.get(id)
+		if (documentInstance == null) {
+			flash.message = "Documento no encontrado"
+			redirect (action:'list')
+		} else {
+			response.setContentType("APPLICATION/OCTET-STREAM")
+			response.setHeader("Content-Disposition", "Attachment;Filename=\"${documentInstance.filename}\"")
+			def outputStream = response.getOutputStream()
+			outputStream << documentInstance.filedata
+			outputStream.flush()
+			outputStream.close()
+		}
+	}
+	*/
 	@Secured('isFullyAuthenticated()')
 	def index() {
 		params.max = Utilidades.MAX_PARAMS
