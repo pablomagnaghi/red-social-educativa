@@ -11,7 +11,8 @@ class Material {
 	String responsable
 	
 	CategoriaMaterial categoria
-	Archivo archivo
+	
+	static hasOne = [archivo: Archivo]
 
     static constraints = {
 		titulo maxSize: Utilidades.MAX_TITULO

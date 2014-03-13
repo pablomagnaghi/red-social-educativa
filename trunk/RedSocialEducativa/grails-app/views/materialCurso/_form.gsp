@@ -59,6 +59,14 @@
 		</div>	
 	</div>	 
 </g:else>
-			
+
+<!-- ARCHIVO -->
+ <div class="control-group">
+	<label class="control-label">Archivo</label>
+	<div class="controls">
+		<input class="input-file uniform_on" type="file" name="archivo" />
+	</div>
+</div>
+
 <g:hiddenField name="curso.id" value="${params.cursoId}"/>
 <g:hiddenField name="responsable" value="${mediador.usuario.nombres} ${mediador.usuario.apellido}-${mediador.jerarquia}"/>
