@@ -43,15 +43,17 @@
 							<!-- Fin: BREADCRUM -->  
 							<div class="box">
 						        <div class="box-header">     	
-						            <h2><i class="icon-edit"></i>Editar</h2>
+						            <h2><i class="icon-edit"></i>Editar mediador: ${mediador}</h2>
 						            <div class="box-icon">
 						                <g:link action="create" params="['cursoId': params.cursoId]"><i class="icon-plus"></i></g:link>
 						                <g:link action="index" params="['cursoId': params.cursoId]"><i class="icon-table"></i></g:link>
 						            </div>
 						        </div>
 						        <div class="box-content">
-						        	<g:form class="form-horizontal" action="update" method="PUT" id="${materialCursoInstance.id}" params="['cursoId': params.cursoId]">
+						        	<g:form class="form-horizontal" action="update" method="PUT" id="${materialCursoInstance.id}" 
+						        		params="['cursoId': params.cursoId]">
 						        		<g:hiddenField name="version" value="${materialCursoInstance?.version}" />
+						        		<g:hiddenField name="idArchivo" value="${materialCursoInstance.idArchivo}"/>
 							            <fieldset>
 							            	<g:render template="form"/>			
 							            	<div class="form-actions">

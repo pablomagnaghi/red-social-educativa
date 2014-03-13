@@ -7,8 +7,6 @@ class Archivo {
     byte[] filedata // long blob
     Date uploadDate = new Date()
 
-	static belongsTo = [material: Material]
-	
     static constraints = {
         filename blank:false
         filedata blank: false, maxSize:33554432 //32MB de tamaño
