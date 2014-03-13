@@ -10,12 +10,15 @@ class TemaController {
 
 	def temaService
 	def usuarioService
+	def aprendizService
 
 	@Secured('isFullyAuthenticated()')
 	def index() {
 		params.max = Utilidades.MAX_PARAMS
 		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-		[temaInstanceList: Tema.findAllByCurso(Curso.get(params.cursoId),[max: params.max, offset: params.offset]), mediador: mediador, params: ['cursoId': params.cursoId]]
+		def aprendiz = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
+		[temaInstanceList: Tema.findAllByCurso(Curso.get(params.cursoId),[max: params.max, offset: params.offset]), mediador: mediador, aprendiz: aprendiz,
+			params: ['cursoId': params.cursoId]]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")

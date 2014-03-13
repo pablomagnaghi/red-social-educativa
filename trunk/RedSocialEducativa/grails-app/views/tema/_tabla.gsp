@@ -41,8 +41,13 @@
 												<g:link style="float: right;" class="btn btn-info" controller="materialTema" action="edit" id="${m.id}"
 													params="['cursoId': params.cursoId, 'temaId': temaInstance.id]"><i class="icon-edit "></i></g:link> 	
 											</g:if>
-											<g:link style="float: right;" class="btn btn-success" controller="materialTema" action="show" id="${m.id}" 
-												params="['cursoId': params.cursoId, 'temaId': temaInstance.id]"><i class="icon-search"></i></g:link></p>
+											<g:if test="${mediador || aprendiz}">
+												<g:link style="float: right;" class="btn btn-success" controller="materialTema" action="show" id="${m.id}" 
+													params="['cursoId': params.cursoId, 'temaId': temaInstance.id]"><i class="icon-search"></i></g:link>
+												<g:link style="float: right;" class="btn btn-success" controller="materialTema" action="descargar" id="${m.idArchivo}" 
+													params="['cursoId': params.cursoId, 'temaId': params.temaId]"><i class="icon-download-alt"></i></g:link>
+											</g:if>
+										</p>
 									</g:each>  
 								</g:if>
 								<g:else>
@@ -52,8 +57,10 @@
 	                        <td class="center">	                        
 	                        	<g:link class="btn btn-success" controller="foroTema" action="general" 
 	                        		params="['cursoId': params.cursoId, 'temaId': temaInstance.id]">Foro</g:link>
-	                            <g:link class="btn btn-success" controller="contenido" action="index" 
-	                            	params="['cursoId': params.cursoId, 'temaId': temaInstance.id]">Contenidos</g:link>
+	                        	<g:if test="${mediador || aprendiz}">	
+		                            <g:link class="btn btn-success" controller="contenido" action="index" 
+		                            	params="['cursoId': params.cursoId, 'temaId': temaInstance.id]">Contenidos</g:link>
+	                            </g:if>	
 	                            <g:if test="${mediador}">
 		                            <g:link class="btn btn-info" controller="materialTema" action="create" params="['cursoId': params.cursoId, 'temaId': temaInstance.id]">
 		                          	  Agregar material</g:link>

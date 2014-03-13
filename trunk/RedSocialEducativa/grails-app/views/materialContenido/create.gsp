@@ -52,14 +52,22 @@
 							    	</div>
 						        </div>	  
 						        <div class="box-content">
-						        	<g:form class="form-horizontal" action="save" params="['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': params.contenidoId]" >				        
-							            <fieldset>		
-							            	<g:render template="form"/>			
+						        	<g:uploadForm class="form-horizontal" action="save" 
+						        		 params="['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': params.contenidoId]" >
+										<fieldset>		
+							            	<g:render template="form"/>	
+							            	<!-- ARCHIVO -->
+											<div class="control-group">
+												<label class="control-label">Archivo (32MB máx)</label>
+												<div class="controls">
+													<input type="file" name="archivo"/>
+												</div>
+											</div>			
 							            	<div class="form-actions">
 												<button type="submit" class="btn btn-primary">Crear</button>
 											</div>		    
 							            </fieldset>
-						            </g:form> 
+						            </g:uploadForm>
 						        </div>  
 						    </div>
 					    </div>

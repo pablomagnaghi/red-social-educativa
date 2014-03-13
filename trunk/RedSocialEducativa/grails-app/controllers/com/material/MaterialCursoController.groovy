@@ -41,8 +41,7 @@ class MaterialCursoController {
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def create() {
-		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-		respond new MaterialCurso(params), model: [mediador: mediador], params: ['cursoId': params.cursoId]
+		respond new MaterialCurso(params), params: ['cursoId': params.cursoId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -57,23 +56,20 @@ class MaterialCursoController {
 			return
 		}
 		if (!materialCursoInstance.validate()) {
-			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-			render view:'create', model: [materialCursoInstance: materialCursoInstance, mediador: mediador], params:['cursoId': params.cursoId]
+			render view:'create', model: [materialCursoInstance: materialCursoInstance], params:['cursoId': params.cursoId]
 			return
 		}
-		
 		def file = request.getFile('archivo')
 		if(file.empty) {
 			flash.message = "El archivo esta vacío"
-			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-			render view:'create', model: [mediador: mediador], params:['cursoId': params.cursoId]
+			render view:'create', params:['cursoId': params.cursoId]
 			return
 		}
 		def archivoInstance = new Archivo()
 		archivoInstance.filename = file.originalFilename
 		archivoInstance.filedata = file.getBytes()
 		if (!materialCursoService.guardar(materialCursoInstance, archivoInstance)) {
-			flash.message = "Problemas al guardar el archivor ${archivoInstance.filename} en el material ${materialInstance}"
+			flash.message = "Problemas al guardar el archivor ${archivoInstance.filename} en el material ${materialCursoInstance}"
 			redirect action: "create", params:['cursoId': params.cursoId]
 		}
 		
@@ -83,8 +79,8 @@ class MaterialCursoController {
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def edit(MaterialCurso materialCursoInstance) {
-		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-		respond materialCursoInstance, model: [mediador: mediador],  params:['cursoId': params.cursoId]
+		def titulo = materialCursoInstance.titulo
+		respond materialCursoInstance, model: [titulo: titulo],  params:['cursoId': params.cursoId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -95,12 +91,12 @@ class MaterialCursoController {
 		}
 		if (materialCursoService.existe(materialCursoInstance, params.cursoId.toLong())) {
 			flash.message = "Ya existe el material ${materialCursoInstance.titulo} en el curso ${Curso.get(params.cursoId)}"
-			redirect action: "edit", params:['cursoId': params.cursoId]
+			materialCursoInstance.titulo = params.tituloAnterior
+			redirect action: "edit", params: params
 			return
 		}
 		if (!materialCursoService.guardar(materialCursoInstance, null)) {
-			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-			render view:'edit', model: [materialCursoInstance: materialCursoInstance, mediador: mediador], params:['cursoId': params.cursoId]
+			render view:'edit', model: [materialCursoInstance: materialCursoInstance], params: params
 			return
 		}
 		flash.message = "Material ${materialCursoInstance} actualizado"

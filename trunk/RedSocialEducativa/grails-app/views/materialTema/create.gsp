@@ -50,9 +50,7 @@
 					        	</div>  
 						        <div class="box-content">
 						        	<g:uploadForm class="form-horizontal" action="save" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
-						        		<g:hiddenField name="tema.id" value="${params.temaId}"/>
-										<g:hiddenField name="responsable" value="${mediador.usuario.nombres} ${mediador.usuario.apellido}-${mediador.jerarquia}"/>
-							            <fieldset>		
+										<fieldset>		
 							            	<g:render template="form"/>	
 							            	<!-- ARCHIVO -->
 											<div class="control-group">

@@ -18,7 +18,6 @@ class MaterialTemaService {
 			}
 			material.idArchivo = archivoInstance.id
 		}
-		
 		if (!material.save(flush: true)) {
 			return null
 		}

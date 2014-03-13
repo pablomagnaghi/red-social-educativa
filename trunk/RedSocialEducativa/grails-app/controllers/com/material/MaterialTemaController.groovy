@@ -36,8 +36,7 @@ class MaterialTemaController {
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def create() {
-		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-		respond new MaterialTema(params), model: [mediador: mediador], params: ['cursoId': params.cursoId, 'temaId': params.temaId]
+		respond new MaterialTema(params), params: ['cursoId': params.cursoId, 'temaId': params.temaId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -51,20 +50,21 @@ class MaterialTemaController {
 			redirect action: "create", params: ['cursoId': params.cursoId, 'temaId': params.temaId]
 			return
 		}
+		if (!materialTemaInstance.validate()) {
+			render view:'create', model: [materialTemaInstance: materialTemaInstance], params: ['cursoId': params.cursoId, 'temaId': params.temaId]
+			return
+		}
 		def file = request.getFile('archivo')
 		if(file.empty) {
 			flash.message = "El archivo esta vacío"
-			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-			render view:'create', model: [mediador: mediador], params:['cursoId': params.cursoId, 'temaId': params.temaId]
+			render view:'create', params:['cursoId': params.cursoId, 'temaId': params.temaId]
 			return
 		}
 		def archivoInstance = new Archivo()
 		archivoInstance.filename = file.originalFilename
 		archivoInstance.filedata = file.getBytes()
 		if (!materialTemaService.guardar(materialTemaInstance, archivoInstance)) {
-			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-			render view:'create', model: [materialTemaInstance: materialTemaInstance, mediador: mediador], params: ['cursoId': params.cursoId, 
-				'temaId': params.temaId]
+			flash.message = "Problemas al guardar el archivor ${archivoInstance.filename} en el material ${materialTemaInstance}"
 			return
 		}
 		flash.message = "Material ${materialTemaInstance.titulo} del tema ${materialTemaInstance.tema} creado"
@@ -73,8 +73,8 @@ class MaterialTemaController {
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def edit(MaterialTema materialTemaInstance) {
-		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-		respond materialTemaInstance, model: [mediador: mediador], params: ['cursoId': params.cursoId, 'temaId': params.temaId]
+		def titulo = materialTemaInstance.titulo
+		respond materialTemaInstance, model: [titulo: titulo], params: ['cursoId': params.cursoId, 'temaId': params.temaId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -84,13 +84,13 @@ class MaterialTemaController {
 			return
 		}
 		if (materialTemaService.existe(materialTemaInstance, params.temaId.toLong())) {
-			flash.message = "Ya existe el material ${materialTemaInstance.titulo} en el curso ${Curso.get(params.cursoId)}"
-			redirect action: "edit", params:['cursoId': params.cursoId, 'temaId': params.temaId]
+			flash.message = "Ya existe el material ${materialTemaInstance.titulo} en el tema ${Tema.get(params.temaId)}"
+			materialTemaInstance.titulo = params.tituloAnterior
+			redirect action: "edit", params: params
 			return
 		}
 		if (!materialTemaService.guardar(materialTemaInstance, null)) {
-			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-			render view:'edit', model: [materialTemaInstance: materialTemaInstance, mediador: mediador], params: ['cursoId': params.cursoId, 'temaId': params.temaId]
+			render view:'edit', model: [materialTemaInstance: materialTemaInstance], params: ['cursoId': params.cursoId, 'temaId': params.temaId]
 			return
 		}
 		flash.message = "Material ${materialTemaInstance.titulo} del tema ${materialTemaInstance.tema} actualizado"
