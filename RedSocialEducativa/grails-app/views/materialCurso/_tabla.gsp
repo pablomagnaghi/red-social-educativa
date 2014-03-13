@@ -35,6 +35,7 @@
             	            <td class="center">${fieldValue(bean: materialCursoInstance, field: "responsable")}</td>
             	            <td class="center">${fieldValue(bean: materialCursoInstance, field: "fecha")}</td>
 	                        <td class="center">
+	                        	<g:link action="download" id="${documentInstance?.id}">${documentInstance?.filename} Descargar</g:link>
 	                        	<g:link class="btn btn-success" action="show" resource="${materialCursoInstance}" id="${materialCursoInstance.id}"
 	                            	params="['cursoId': params.cursoId]"><i class="icon-search "></i></g:link>
 	                            <g:if test="${mediador}">

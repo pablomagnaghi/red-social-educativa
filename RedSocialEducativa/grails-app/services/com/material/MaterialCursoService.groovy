@@ -13,7 +13,17 @@ class MaterialCursoService {
 		return materialExistente
 	}
 	
-	def guardar(MaterialCurso material) {
+	def guardar(MaterialCurso material, Archivo archivo) {
+		def archivoInstance = new Archivo()
+		archivoInstance.filename = archivo.originalFilename
+		archivoInstance.filedata = archivo.getBytes()
+		println "tamaño: ${archivoInstance.filedata.size()}"
+		archivoInstance.save flush:true
+		
+		material.archivo = archivoInstance
+
+		
+		
 		
 		if (material.save(flush: true)) {
 			return material

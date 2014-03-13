@@ -71,7 +71,16 @@ class MaterialCursoController {
 			redirect action: "create", params:['cursoId': params.cursoId]
 			return
 		}
-		if (!materialCursoService.guardar(materialCursoInstance)) {
+		println "${params.archivo}"
+		
+		def archivo = request.getFile('archivo')
+		if(archivo.empty) {
+			flash.message = "El archivo esta vacío"
+			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
+			render view:'create', model: [mediador: mediador], params:['cursoId': params.cursoId]
+			return
+		} 
+		if (!materialCursoService.guardar(materialCursoInstance, archivo)) {
 			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 			render view:'create', model: [materialCursoInstance: materialCursoInstance, mediador: mediador], params:['cursoId': params.cursoId]
 			return
