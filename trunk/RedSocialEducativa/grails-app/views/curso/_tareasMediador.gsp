@@ -22,7 +22,7 @@
 				<dt>Cuatrimestrales</dt>
 					<dd><g:link controller="aprendiz" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]">Aprendices</g:link></dd>
 					<dd><g:link controller="noticiaCurso" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]">Cartelera</g:link></dd>	
-					<dd><g:link controller="foroCurso" action="general" params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]">Foro de cursada</g:link></dd>	
+					<dd><g:link controller="foroCurso" action="general" params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]">Foro cursado</g:link></dd>	
 					<dd><g:link controller="aprendiz" action="estadisticas" params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]">Estadisticas</g:link></dd>	
 					<dd><g:link controller="actividad" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]">Actividades</g:link></dd>		
 			</g:if>                    	 

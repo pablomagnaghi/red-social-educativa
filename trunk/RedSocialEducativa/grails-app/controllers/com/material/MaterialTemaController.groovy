@@ -54,17 +54,19 @@ class MaterialTemaController {
 			render view:'create', model: [materialTemaInstance: materialTemaInstance], params: ['cursoId': params.cursoId, 'temaId': params.temaId]
 			return
 		}
-		def file = request.getFile('archivo')
+		def file = request.getFile('archivoSubido')
 		if(file.empty) {
 			flash.message = "El archivo esta vacío"
 			render view:'create', params:['cursoId': params.cursoId, 'temaId': params.temaId]
 			return
 		}
-		def archivoInstance = new Archivo()
+		def archivoInstance = new ArchivoTema()
 		archivoInstance.filename = file.originalFilename
 		archivoInstance.filedata = file.getBytes()
-		if (!materialTemaService.guardar(materialTemaInstance, archivoInstance)) {
+		materialTemaInstance.archivo = archivoInstance
+		if (!materialTemaService.guardar(materialTemaInstance)) {
 			flash.message = "Problemas al guardar el archivor ${archivoInstance.filename} en el material ${materialTemaInstance}"
+			redirect action: "create", params: ['cursoId': params.cursoId, 'temaId': params.temaId]
 			return
 		}
 		flash.message = "Material ${materialTemaInstance.titulo} del tema ${materialTemaInstance.tema} creado"
@@ -89,7 +91,7 @@ class MaterialTemaController {
 			redirect action: "edit", params: params
 			return
 		}
-		if (!materialTemaService.guardar(materialTemaInstance, null)) {
+		if (!materialTemaService.guardar(materialTemaInstance)) {
 			render view:'edit', model: [materialTemaInstance: materialTemaInstance], params: ['cursoId': params.cursoId, 'temaId': params.temaId]
 			return
 		}

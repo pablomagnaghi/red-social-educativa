@@ -4,6 +4,8 @@ import com.fiuba.*
 import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile
+
 class MaterialCursoController {
 
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -56,23 +58,25 @@ class MaterialCursoController {
 			return
 		}
 		if (!materialCursoInstance.validate()) {
+			println materialCursoInstance.errors
 			render view:'create', model: [materialCursoInstance: materialCursoInstance], params:['cursoId': params.cursoId]
 			return
 		}
-		def file = request.getFile('archivo')
+		def file = request.getFile('archivoSubido')
 		if(file.empty) {
 			flash.message = "El archivo esta vacío"
 			render view:'create', params:['cursoId': params.cursoId]
 			return
 		}
-		def archivoInstance = new Archivo()
+		def archivoInstance = new ArchivoCurso()
 		archivoInstance.filename = file.originalFilename
 		archivoInstance.filedata = file.getBytes()
-		if (!materialCursoService.guardar(materialCursoInstance, archivoInstance)) {
+		materialCursoInstance.archivo = archivoInstance
+		if (!materialCursoService.guardar(materialCursoInstance)) {
 			flash.message = "Problemas al guardar el archivor ${archivoInstance.filename} en el material ${materialCursoInstance}"
 			redirect action: "create", params:['cursoId': params.cursoId]
+			return
 		}
-		
 		flash.message = "Material ${materialCursoInstance} creado"
 		redirect action: "index", params:['cursoId': params.cursoId]
 	}
@@ -95,7 +99,7 @@ class MaterialCursoController {
 			redirect action: "edit", params: params
 			return
 		}
-		if (!materialCursoService.guardar(materialCursoInstance, null)) {
+		if (!materialCursoService.guardar(materialCursoInstance)) {
 			render view:'edit', model: [materialCursoInstance: materialCursoInstance], params: params
 			return
 		}

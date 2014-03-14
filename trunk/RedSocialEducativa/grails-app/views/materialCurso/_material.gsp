@@ -7,7 +7,7 @@
 			<g:link action="delete" method="DELETE" id="${materialCursoInstance.id}" params="['cursoId': params.cursoId]"
 				onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" ><i class="icon-trash "></i></g:link>
 			</g:if>
-		<g:link action="descargar" id="${materialCursoInstance.idArchivo}" params="['cursoId': params.cursoId]"><i class="icon-download-alt"></i></g:link>
+		<g:link action="descargar" id="${materialCursoInstance?.archivo?.id}" params="['cursoId': params.cursoId]"><i class="icon-download-alt"></i></g:link>
 		<g:link action="index" params="['cursoId': params.cursoId]"><i class="icon-table"></i></g:link>	
 	</div>
 </div>

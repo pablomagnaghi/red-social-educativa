@@ -9,8 +9,8 @@
 				'contenidoId': params.contenidoId]"
 				onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" ><i class="icon-trash "></i></g:link>
 			</g:if>
-		<g:link action="descargar" id="${materialContenidoInstance.idArchivo}" params="['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': params.contenidoId]">
-			<i class="icon-download-alt"></i></g:link>		
+		<g:link action="descargar" id="${materialContenidoInstance?.archivo?.id}" 
+			params="['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': params.contenidoId]"><i class="icon-download-alt"></i></g:link>		
 		<g:link controller="contenido" action="index" params="['cursoId': params.cursoId, 'temaId': params.temaId]"><i class="icon-table"></i></g:link>	
 	</div>
 </div>
