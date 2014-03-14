@@ -30,6 +30,13 @@ class RedController {
 
 	@Secured('permitAll')
 	def revisarDatosUsuario(Usuario usuario) {
+		def file = request.getFile('fotoSubida')
+		if(!file.empty) {
+			def fotoInstance = new Foto()
+			fotoInstance.filename = file.originalFilename
+			fotoInstance.filedata = file.getBytes()
+			usuario.foto = fotoInstance
+		}
 		if (!usuario.validate()) {
 			render view: "solicitarMembresia", model: [usuarioInstance: usuario, mensajeError: "Revise el formulario"]
 			return

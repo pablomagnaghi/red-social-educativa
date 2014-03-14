@@ -37,11 +37,12 @@
 					        <div class="box-header">     	
 					            <h2><i class="icon-edit"></i>Mi perfil</h2>
 					            <div class="box-icon">
+					            	<a href="#" class="btn-setting"><i class="icon-picture"></i></a>
 					                <g:link controller="red" action="revisarRol"><i class="icon-home"></i></g:link>
 					            </div>
 					        </div>
 					        <div class="box-content">
-					        	<g:form class="form-horizontal" action="update" method="PUT" id="${usuarioInstance.id}">
+					        	<g:uploadForm class="form-horizontal" action="update" method="PUT" id="${usuarioInstance.id}">
 					        		<g:hiddenField name="version" value="${usuarioInstance?.version}" />
 					        		<g:hiddenField name="username" value="${usuarioInstance.username}" />
 					        		<g:hiddenField name="password" value="${usuarioInstance.password}" />
@@ -51,7 +52,7 @@
 											<button type="submit" class="btn btn-primary">Actualizar</button>
 										</div>		    
 						            </fieldset>
-					            </g:form>
+					            </g:uploadForm>
 					        </div>
 					    </div>
 					    <div class="span3"></div>
@@ -63,6 +64,29 @@
         	</div>
         	<!--/fluid-row-->
         </div>
+        
+        
+        <div class="modal hide fade" id="myModal">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+				<h3>Obtener una nueva contraseña</h3>
+			</div>
+			<div class="modal-body">
+				<g:form class="form-horizontal" controller="red" action="revisarUsername">
+					<fieldset>					
+						<div class="control-group">
+							<label class="control-label" >Nombre de usuario</label>			
+							<div class="controls">
+								<g:textField name="username"/>
+							</div>	
+						</div>	
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary">Aceptar</button>
+						</div>		    
+					</fieldset>
+				</g:form>
+			</div>
+		</div>
         <!--CLAVE ESTE DIV, SI SE SACA, NO APARECE NADA -->
         <div class="clearfix"></div>					
 	</body>

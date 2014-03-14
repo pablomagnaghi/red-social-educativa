@@ -105,3 +105,10 @@
 		</div>
 	</div>
 </g:else>
+<!-- FOTO -->
+<div class="control-group">
+	<label class="control-label">Cambiar foto</label>
+	<div class="controls">
+		<input type="file" name="fotoSubida"/>
+	</div>
+</div>	
