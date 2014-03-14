@@ -93,6 +93,9 @@ class MaterialContenidoController {
 		}
 		def file = request.getFile('archivoSubido')
 		if(!file.empty) {
+			if (!materialContenidoInstance?.archivo) {
+				materialContenidoInstance.archivo = new ArchivoContenido()
+			}
 			materialContenidoInstance.archivo.filename = file.originalFilename
 			materialContenidoInstance.archivo.filedata = file.getBytes()
 		}

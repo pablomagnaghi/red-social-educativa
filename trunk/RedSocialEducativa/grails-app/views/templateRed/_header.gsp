@@ -42,11 +42,11 @@
                             <li>
                                 <g:link controller="mensajeria" action="index">
                                     <span class="avatar">
-                                        <img src="${resource(dir: 'img', file: 'avatar3.jpg')}" alt="Avatar" />
+                                        <img src="${resource(dir: 'img', file: 'usuario.png')}" alt="Avatar" />
                                     </span>
                                     <span class="header">
                                         <span class="from">
-                                            EMISOR
+                                            EMISOR (HACER)
                                         </span>
                                         <span class="time">
                                             FECHA
@@ -71,9 +71,8 @@
 					            	<img src="${createLink(controller: 'usuario', action: 'mostrarFoto', id: usuario.foto.id)}">
 					            </g:if>
 					            <g:else>
-					            	<img src="${resource(dir: 'img', file: 'avatar.jpg')}" alt="avatar">
-					            </g:else>
-					            
+					            	<img src="${resource(dir: 'img', file: 'usuario.png')}" alt="avatar">
+					            </g:else> 
 					        </div>
                             <div class="user">
                                 <span class="hello">BIENVENIDO <sec:username/></span>

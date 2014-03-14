@@ -20,7 +20,7 @@
 			</div>
 			<div class="tab-pane" id="objetivo">
 				<div class="box-content">
-					<img src="${resource(dir: 'img/fiuba', file: 'fiuba4.jpg')}"/>
+					<img src="${resource(dir: 'img/fiuba', file: 'fiuba2.jpg')}"/>
 					<p>Utilizando la Red Social los docentes y alumnos podrán flexibilizar el proceso de enseñanza y
 						aprendizaje, como herramienta de desarrollo colectivo de contenidos y de
 						propuestas de conceptualización y aplicación. Posibilitando la recuperación de espacios áulicos para el
