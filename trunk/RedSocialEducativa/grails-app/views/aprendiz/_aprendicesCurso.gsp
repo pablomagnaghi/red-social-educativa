@@ -4,6 +4,15 @@
             <h2><i class="icon-user"></i><span class="break"></span>Aprendices</h2>
         </div>
         <div class="box-content">
+        	<g:if test="${flash.message}">
+				<div class="box-content alerts">
+		    		<div class="alert alert-info">
+						<button class="close" data-dismiss="alert" type="button"></button>
+						<strong></strong> 
+						${flash.message}
+				    </div>
+				</div>    
+			</g:if>
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
                 <thead>
                     <tr>
@@ -39,7 +48,7 @@
 							</td>						
 							<td class="center">
 								<g:if test="${!aprendizInstance.participa && aprendizInstance.cuatrimestre == cuatrimestre}">
-									<g:link class="btn btn-success" controller="mediador" action="activarAprendiz" id="${aprendizInstance.id}" 
+									<g:link class="btn btn-success" action="cambiarEstado" id="${aprendizInstance.id}" 
 										params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]" value="${message(code: 'Activar')}" 
 										onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
 										<i class="icon-ok"></i></g:link>
@@ -48,11 +57,11 @@
 									<g:link class="btn btn-success" controller="evaluacionAprendiz" action="mostrarAprendiz"
 	                            		params="['cursoId': params.cursoId, 'aprendizId': aprendizInstance.id]"><i class="icon-search"></i> 
 	                          		</g:link>		
-									<g:link class="btn btn-danger" action="delete" id="${aprendizInstance.id}" 
+									<g:link class="btn btn-danger" action="cambiarEstado" id="${aprendizInstance.id}" 
 										params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]"
 										value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
 										onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
-										<i class="icon-trash"></i></g:link>
+										<i class="icon-off"></i></g:link>
 								</g:else>		
 							</td>
 	                    </tr>

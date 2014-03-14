@@ -10,26 +10,9 @@ class MediadorController {
 	def aprendizService
 	def usuarioService
 
-	@Secured("hasRole('ROL_MEDIADOR')")
-	def activarAprendiz() {
-		
-		if (!mediadorService.activarAprendiz(params.id.toLong())) {
-			flash.message = "Problemas con el aprendiz"
-			redirect controller: "curso", action: "menuMediador", params: params
-			return
-		}
-	
-		def aprendiz = Aprendiz.get(params.id)
-		
-		flash.message = "Autorización enviada para el aprendiz ${aprendiz.usuario.username} del curso ${aprendiz.cuatrimestre.curso}"
-		redirect controller: "aprendiz", action: "index", params: params
-	}
-
-	// TODO: listo de aca para abajo
 	@Secured("hasAnyRole('ROL_ADMIN', 'ROL_MEDIADOR')")
 	def index(Integer max) {
 		params.max = Utilidades.MAX_PARAMS
-		println "params: ${params}"
 		def mediadorInstanceList
 		if (params.cursoId) {
 			mediadorInstanceList = mediadorService.obtenerMediadoresDeCursoOrdenados(params.cursoId.toLong())
@@ -81,7 +64,6 @@ class MediadorController {
 			notFound()
 			return
 		}
-		
 		if (!mediadorService.guardar(mediadorInstance)) {
 			flash.message = "Problemas al actualizar la jerarquia"
 			redirect action: "editarJerarquia", params: ['cursoId': params.cursoId]
