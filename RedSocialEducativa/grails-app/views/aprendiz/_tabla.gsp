@@ -45,14 +45,14 @@
 							</td>						
 							<td class="center">
 								<g:if test="${aprendizInstance.participa}">
-								<g:link class="btn btn-success" controller="evaluacionAprendiz" action="mostrarAprendiz"
-	                            		params="['cursoId': params.cursoId, 'aprendizId': aprendizInstance.id]"><i class="icon-search"></i> 
-	                          		</g:link>		
 									<g:link class="btn btn-danger" action="cambiarEstado" id="${aprendizInstance.id}" 
 										params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"
 										value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
 										onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
 										<i class="icon-off"></i></g:link>
+									<g:link class="btn btn-success" controller="evaluacionAprendiz" action="mostrarAprendiz"
+	                            		params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'aprendizId': aprendizInstance.id]">
+	                            		<i class="icon-search"></i> </g:link>	
 								</g:if>
 								<g:else>		
 									<g:link class="btn btn-success" action="cambiarEstado" id="${aprendizInstance.id}" 

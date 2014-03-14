@@ -63,7 +63,8 @@
                             			<i class="icon-off"></i></g:link>
                             	</g:if>
                             	<g:else>
-	                            	 <g:link class="btn btn-success" action="cambiarEstado" id="${mediadorInstance.id}" params="['cursoId': params.cursoId]">
+	                            	 <g:link class="btn btn-success" action="cambiarEstado" id="${mediadorInstance.id}" params="['cursoId': params.cursoId]"
+	                            	 	onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
 	                            	 	<i class="icon-ok"></i></g:link>
                             	</g:else>
 	                        </td>

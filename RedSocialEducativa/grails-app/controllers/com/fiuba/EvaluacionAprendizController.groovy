@@ -19,9 +19,8 @@ class EvaluacionAprendizController {
 	
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def mostrarAprendiz() {
-		
 		[aprendiz: Aprendiz.get(params.aprendizId), evaluaciones: EvaluacionAprendiz.findAllByAprendiz(Aprendiz.get(params.aprendizId)),
-			params: ['cursoId': params.cursoId]]
+			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 	}
 	
 /*
