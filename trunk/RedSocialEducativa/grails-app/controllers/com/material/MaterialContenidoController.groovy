@@ -91,6 +91,11 @@ class MaterialContenidoController {
 			redirect action: "edit", params: params
 			return
 		}
+		def file = request.getFile('archivoSubido')
+		if(!file.empty) {
+			materialContenidoInstance.archivo.filename = file.originalFilename
+			materialContenidoInstance.archivo.filedata = file.getBytes()
+		}
 		if (!materialContenidoService.guardar(materialContenidoInstance)) {
 			render view:'edit', model: [materialContenidoInstance: materialContenidoInstance], params: ['cursoId': params.cursoId, 
 				'temaId': params.temaId, 'contenidoId': params.contenidoId]

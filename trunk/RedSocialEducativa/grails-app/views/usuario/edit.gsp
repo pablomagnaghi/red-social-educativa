@@ -35,7 +35,7 @@
 			            <div class="span3"></div>
 					    <div class="box span6">
 					        <div class="box-header">     	
-					            <h2><i class="icon-edit"></i>Mi perfil</h2>
+					            <h2><i class="icon-edit"></i>Mi perfil: ${usuario.nombres} ${usuario.apellido}</h2>
 					            <div class="box-icon">
 					            	<a href="#" class="btn-setting"><i class="icon-picture"></i></a>
 					                <g:link controller="red" action="revisarRol"><i class="icon-home"></i></g:link>

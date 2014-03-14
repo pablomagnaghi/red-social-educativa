@@ -86,6 +86,11 @@ class MaterialTemaController {
 			redirect action: "edit", params: params
 			return
 		}
+		def file = request.getFile('archivoSubido')
+		if(!file.empty) {
+			materialTemaInstance.archivo.filename = file.originalFilename
+			materialTemaInstance.archivo.filedata = file.getBytes()
+		}
 		if (!materialTemaService.guardar(materialTemaInstance)) {
 			render view:'edit', model: [materialTemaInstance: materialTemaInstance], params: ['cursoId': params.cursoId, 'temaId': params.temaId]
 			return

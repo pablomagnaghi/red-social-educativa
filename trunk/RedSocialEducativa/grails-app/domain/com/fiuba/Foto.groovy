@@ -11,6 +11,6 @@ class Foto {
 	
 	static constraints = {
 		filename blank:false
-		filedata blank: false, maxSize:33554432 //32MB de tamaño
+		filedata blank: false, maxSize:2097152 // 2MB
 	}
 }
