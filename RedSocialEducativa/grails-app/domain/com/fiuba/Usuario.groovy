@@ -24,6 +24,8 @@ class Usuario {
 	boolean passwordExpired
 
 	static hasMany = [carpetas: Carpeta]
+	
+	static hasOne = [foto: Foto]
 
 	static transients = ['springSecurityService']
 
@@ -37,6 +39,7 @@ class Usuario {
 		padron nullable: true, unique: true, matches:"[0-9]+"
 		email email: true, maxSize: 64
 		fechaMembresia nullable: true 
+		foto nullable: true
 	}
 
 	static mapping = {

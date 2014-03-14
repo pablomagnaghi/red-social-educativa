@@ -66,6 +66,15 @@
                     <!-- BIENVENIDA-->
                     <li class="dropdown">
                         <a class="btn account dropdown-toggle" data-toggle="dropdown" href="#">
+                        	<div class="avatar">
+                        		<g:if test="${usuario?.foto}">
+					            	<img src="${createLink(controller: 'usuario', action: 'mostrarFoto', id: usuario.foto.id)}">
+					            </g:if>
+					            <g:else>
+					            	<img src="${resource(dir: 'img', file: 'avatar.jpg')}" alt="avatar">
+					            </g:else>
+					            
+					        </div>
                             <div class="user">
                                 <span class="hello">BIENVENIDO <sec:username/></span>
                                 <span class="name">${usuario.nombres} ${usuario.apellido}</span>

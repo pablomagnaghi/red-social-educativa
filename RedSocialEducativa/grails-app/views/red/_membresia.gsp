@@ -17,7 +17,7 @@
 				    </div>
 				</div>    
 			</g:if>
-            <g:form class="form-horizontal" controller="red" action="revisarDatosUsuario">
+            <g:uploadForm class="form-horizontal" controller="red" action="revisarDatosUsuario">
             	<g:hiddenField name="enabled" value="${false}"/>
 	            <fieldset>
 	            	<!-- DNI -->
@@ -186,11 +186,18 @@
 	                    	<g:field type="password" name="passwordConfirmado" maxlength="16" />
 	                    </div>
 					</div> 
+					<!-- FOTO -->
+					<div class="control-group">
+						<label class="control-label">Foto</label>
+						<div class="controls">
+							<input type="file" name="fotoSubida"/>
+						</div>
+					</div>	
 					<div class="form-actions">
 						<button type="submit" class="btn btn-primary">Enviar datos</button>
                 	</div>	
 	            </fieldset>
-            </g:form>
+            </g:uploadForm>
         </div>
     </div>
     <!--/span-->

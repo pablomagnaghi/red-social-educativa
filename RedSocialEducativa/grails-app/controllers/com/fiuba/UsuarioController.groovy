@@ -9,6 +9,12 @@ class UsuarioController {
 	def redService
 	def administradorService
 	
+	@Secured('isFullyAuthenticated()')
+	def mostrarFoto(Long id) {
+		def foto = Foto.get(id)
+		response.outputStream << foto.filedata
+	}
+	
 	@Secured("hasRole('ROL_ADMIN')")
 	def index() {
 		params.max = Utilidades.MAX_PARAMS
@@ -63,11 +69,24 @@ class UsuarioController {
 		respond usuarioInstance
 	}
 
+	// TODO
 	@Secured("hasRole('ROL_MIEMBRO')")
 	def update(Usuario usuarioInstance) {
 		if (usuarioInstance == null) {
 			notFound()
 			return
+		}
+		def file = request.getFile('fotoSubida')
+		if(!file.empty) {
+			def fotoInstance = new Foto()
+			fotoInstance.filename = file.originalFilename
+			fotoInstance.filedata = file.getBytes()
+			if (usuarioInstance?.foto) {
+				println "BORRAR FOTO"
+				def foto = Foto.get(usuarioInstance.foto.id)
+				foto.delete flush: true
+			}
+			usuarioInstance.foto = fotoInstance
 		}
 		if (!usuarioService.actualizar(usuarioInstance)) {
 			flash.message = "Revise el perfil"
