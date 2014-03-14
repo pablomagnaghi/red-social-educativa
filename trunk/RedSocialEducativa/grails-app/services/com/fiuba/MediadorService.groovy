@@ -68,23 +68,4 @@ class MediadorService {
 		def mensaje = "Miembro ${mediador.usuario.nombres} ${mediador.usuario.apellido} se ha converitdo en mediador del curso ${mediador.curso}"
 		enviarEmail(email, mensaje)
 	}
-	/*
-	// TODO VER DESPUES
-	def activarAprendiz(Long aprendizId) {
-		def aprendiz = Aprendiz.get(aprendizId)
-		aprendiz.participa = true
-		aprendiz.cursando = true
-		def email = aprendiz.usuario.email
-		
-		if (aprendiz.save(flush: true)) {
-			aprendiz.save();
-			sendMail {
-				to email
-				subject Utilidades.TITULO_RED
-				body "Bienvenido aprendiz ${aprendiz.usuario.username} al curso ${aprendiz.cuatrimestre.curso} de la Red Social Educativa FIUBA 2014"
-			}
-			return true
-		}
-		return false
-	}*/
 }
