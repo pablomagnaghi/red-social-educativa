@@ -90,6 +90,13 @@
 											<g:link action="evaluacionesAprendiz" controller="evaluacion" params="['cursoId': params.cursoId]">
 											<g:message code="Mis evaluaciones en el curso" /></g:link>
 										</div>
+										<div>
+										<g:link controller="aprendiz" action="cambiarEstado" id="${aprendiz.id}" 
+											params="['cursoId': params.cursoId,  'cuatrimestreId': cuatrimestre?.id]" 
+											onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"> 
+											DEJAR DE PARTICIPAR </g:link></div>
+				
+										
 									</div>
 								</div>
 							</div>

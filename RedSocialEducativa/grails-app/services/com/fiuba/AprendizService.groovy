@@ -5,8 +5,15 @@ import grails.transaction.Transactional
 @Transactional
 class AprendizService {
 
+	private enviarEmail(String email, String msj) {
+		sendMail {
+			to email
+			subject Utilidades.TITULO_RED
+			body msj
+		}
+	}
+	
 	def obtenerCursos(Usuario usuario) {
-
 		def cursosAprendiz = Aprendiz.createCriteria().list {
 			eq('usuario.id', usuario.id)
 			eq('participa', true)
@@ -84,7 +91,15 @@ class AprendizService {
 		return null
 	}
 
-	def eliminar(Aprendiz aprendiz) {
-		aprendiz.delete flush:true
+	def notificar(Aprendiz aprendiz) {
+		def email = aprendiz.usuario.email
+		if (!aprendiz.participa) {
+			def mensaje = "Aprendiz ${aprendiz.usuario.nombres} ${aprendiz.usuario.apellido} ha dejado de participar en el curso ${aprendiz.cuatrimestre.curso}"
+			enviarEmail(email, mensaje)
+			return
+		}
+		def mensaje = "Miembro ${aprendiz.usuario.nombres} ${aprendiz.usuario.apellido} se ha converitdo en aprendiz del curso ${aprendiz.cuatrimestre.curso} "
+		mensaje += "en el cuatrimestre ${aprendiz.cuatrimestre}"
+		enviarEmail(email, mensaje)
 	}
 }

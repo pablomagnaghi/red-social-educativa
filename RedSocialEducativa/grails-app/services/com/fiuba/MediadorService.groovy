@@ -68,7 +68,7 @@ class MediadorService {
 		def mensaje = "Miembro ${mediador.usuario.nombres} ${mediador.usuario.apellido} se ha converitdo en mediador del curso ${mediador.curso}"
 		enviarEmail(email, mensaje)
 	}
-	
+	/*
 	// TODO VER DESPUES
 	def activarAprendiz(Long aprendizId) {
 		def aprendiz = Aprendiz.get(aprendizId)
@@ -86,5 +86,5 @@ class MediadorService {
 			return true
 		}
 		return false
-	}
+	}*/
 }

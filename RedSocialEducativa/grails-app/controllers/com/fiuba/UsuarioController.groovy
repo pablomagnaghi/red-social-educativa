@@ -26,7 +26,7 @@ class UsuarioController {
 		flash.message = "Actualización exitosa"
 		redirect action:"index"
 	}
-	
+	/*
 	@Secured("hasRole('ROL_MIEMBRO')")
 	def salir(Usuario usuarioInstance) {
 		if (usuarioInstance == null) {
@@ -43,13 +43,13 @@ class UsuarioController {
 		redirect controller:"logout", method:"GET"
 		return
 	}
-	
+	*/
 	@Secured("hasRole('ROL_ADMIN')")
 	def show(Usuario usuarioInstance) {
 		respond usuarioInstance, params: ['cursoId': params.cursoId]
 	}
 	
-	@Secured("hasAnyRole('ROL_ADMIN')")
+	@Secured('isFullyAuthenticated()')
 	def cambiarEstado(Usuario usuarioInstance) {
 		if (usuarioInstance == null) {
 			notFound()
@@ -58,12 +58,16 @@ class UsuarioController {
 		usuarioInstance.enabled = usuarioInstance.enabled ? false : true
 		if (!usuarioService.guardar(usuarioInstance)) {
 			flash.message = "Problemas al cambiar el estado"
+			if (usuarioInstance == usuarioService.usuarioActual()) {
+				redirect controller:"red", action:"revisarRol",  method:"GET"
+				return
+			}
 			redirect action:"index", method:"GET"
 			return
 		}
 		usuarioService.notificar(usuarioInstance)
 		if ((!usuarioInstance.enabled) && (usuarioInstance == usuarioService.usuarioActual())) {
-			redirect controller:"red", action:"revisarRol",  method:"GET"
+			redirect controller:"logout", method:"GET"
 			return
 		}
 		flash.message = "usuario ${usuarioInstance} actualizado"

@@ -24,8 +24,6 @@
         	                <td class="center">${it.evaluacion.fecha}</td>
             	            <td class="center">${it.nota}</td>
 	                        <td class="center">
-	                            <g:link class="btn btn-success" action="calificar" id="${it.id}" 
-									params="['cursoId': params.cursoId, 'evaluacionId': it.evaluacion.id, 'aprendizId': aprendiz.id]">Calificar</g:link>
 	                            <g:link class="btn btn-danger" action="delete" method="DELETE" id="${it.id}" 
 	                            	params="['cursoId': params.cursoId, 'evaluacionId': it.evaluacion.id]"
 	                            	onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >	                          

@@ -236,8 +236,6 @@ class BootStrap {
 		// Categoria actividad
 		def ArrayList<CategoriaActividad> categoriasActividad = new ArrayList<CategoriaActividad>()
 
-		def categoriaEncuesta = new CategoriaActividad(nombre: "Encuesta")
-		categoriasActividad.add(categoriaEncuesta)
 		def categoriaTP = new CategoriaActividad(nombre: "TP")
 		categoriasActividad.add(categoriaTP)
 		def categoriaCuestionarioAct = new CategoriaActividad(nombre: "Cuestionario")
@@ -400,7 +398,7 @@ class BootStrap {
 		
 		// Actividades 
 		def actividadUno = new Actividad(titulo: "actividad 1", objetivo: "objetivo", evaluable: true,
-			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("Encuesta"), 
+			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("Brainstorming"), 
 			fechaFinalizacion: (new Date()).format(Utilidades.FORMATO_FECHA))
 		actividadUno.addToGrupos(grupoActividadUno)
 		actividadUno.addToGrupos(grupoActividadDos)
@@ -534,12 +532,13 @@ class BootStrap {
 		asignaturaTres.addToCursos(cursoCinco)
 		asignaturas.add(asignaturaTres)
 		
+		println "Asignaturas agregadas a la bbdd"
 		for(int i = 0; i<asignaturas.size(); i++){
 			if (!asignaturas.get(i).save()) {
 				println asignaturas.get(i).errors
 			} else {
-				println "Asignaturas agregadas a la bbdd:"
-				println asignaturas.get(i).codigo
+				//println "Asignaturas agregadas a la bbdd:"
+				//println asignaturas.get(i).codigo
 			}
 		}
 		
@@ -569,12 +568,13 @@ class BootStrap {
 			mediador: mediadorUno, cuatrimestre: cuatrimestreUno)
 		noticiasCursoUno.add(noticiaCursoUnoPPP)
 		
+		println "Noticias curso uno agregados a la bbdd"
 		for(int i = 0; i<noticiasCursoUno.size(); i++){
 			if (!noticiasCursoUno.get(i).save()) {
 				println noticiasCursoUno.get(i).errors
 			} else {
-				println "Noticias curso uno agregados a la bbdd:"
-				println noticiasCursoUno.get(i)
+				//println "Noticias curso uno agregados a la bbdd:"
+				//println noticiasCursoUno.get(i)
 			}
 		}
 		
@@ -592,12 +592,13 @@ class BootStrap {
 		def admMessi = new Administrador(usuario: usuarioMessi, rol: rolAdmin)
 		administradores.add(admMessi)
 			
+		println "Administradores agregados a la bbdd"
 		for(int i = 0; i<administradores.size(); i++){
 			if (!administradores.get(i).save()) {
 				println administradores.get(i).errors
 			} else {
-				println "Administradores agregados a la bbdd:"
-				println administradores.get(i)
+				//println "Administradores agregados a la bbdd:"
+				//println administradores.get(i).usuario
 			}
 		}
 		
@@ -640,13 +641,14 @@ class BootStrap {
 		miembros.add(miembroTrece)
 		def miembroCatorce = new Miembro(usuario: usuarioCatorce, rol: rolMiembro)
 		miembros.add(miembroCatorce)
-			
+		
+		println "Miembros agregados a la bbdd"
 		for(int i = 0; i<miembros.size(); i++){
 			if (!	miembros.get(i).save()) {
 				println miembros.get(i).errors
 			} else {
-				println "Miembros agregados a la bbdd:"
-				println miembros.get(i)
+				//println "Miembros agregados a la bbdd:"
+				//println miembros.get(i).usuario
 			}
 		}	
 		
