@@ -4,10 +4,15 @@
         <ul>   
             <li>
    				<div class="author">
-					<img src="${resource(dir: 'img', file: 'avatar2.jpg')}">
+					<g:if test="${com.fiuba.Usuario.findByDni(tema.dni)?.foto}">
+						<img src="${createLink(controller: 'usuario', action: 'mostrarFoto', id: com.fiuba.Usuario.findByDni(tema.dni).foto.id)}">
+				 	</g:if>
+					<g:else>
+						<img src="${resource(dir: 'img', file: 'usuario.png')}" alt="avatar">
+					</g:else>
 	            </div>
                 <div class="name"><h3>Tema ${tema.titulo}</h3></div>
-                <div class="date">${tema.fecha} - ${tema.hora}<br>${tema.responsable}</div>
+                <div class="date">${tema.responsable}, ${tema.fecha} - ${tema.hora}</div>
                 <div class="opciones">
                 	<span><g:link controller="publicacionGeneral" action="nueva"><i class="icon-plus"></i></g:link></span>
                 	<g:if test="${administrador}">
@@ -24,9 +29,15 @@
 	                <ul>
 	                    <li>
 	                        <div class="author">
-	                            <img src="${resource(dir: 'img', file: 'avatar3.jpg')}" alt="avatar">
+	                        	<g:if test="${com.fiuba.Usuario.findByDni(it.dni)?.foto}">
+					            	<img src="${createLink(controller: 'usuario', action: 'mostrarFoto', id: com.fiuba.Usuario.findByDni(it.dni).foto.id)}">
+					            </g:if>
+					            <g:else>
+					            	<img src="${resource(dir: 'img', file: 'usuario.png')}" alt="avatar">
+					            </g:else>
 	                        </div>
-	                        <div class="date">${it.fecha} - ${it.hora}<br>${it.responsable}</div>
+	                        <div class="name"><h3>Re: ${tema.titulo}</h3></div>
+	                        <div class="date">${it.responsable}, ${it.fecha} - ${it.hora}</div>
 							<g:if test="${administrador}">
 		                        <div class="opciones">
 		                        	<span><g:link controller="publicacionGeneral" action="editar" 
@@ -46,7 +57,12 @@
 	      		<ul>
 					<li>
 						<div class="author">
-							<img src="img/avatar.jpg" alt="avatar" />
+							<g:if test="${usuario?.foto}">
+								<img src="${createLink(controller: 'usuario', action: 'mostrarFoto', id: usuario.foto.id)}">
+							</g:if>
+							<g:else>
+								<img src="${resource(dir: 'img', file: 'usuario.png')}" alt="avatar">
+							</g:else>
 						</div>
 						<g:form controller="publicacionGeneral" action="guardar" params="['pubInicialId': params.pubInicialId]">
 							<fieldset class="form">

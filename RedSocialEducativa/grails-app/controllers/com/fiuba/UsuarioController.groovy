@@ -77,6 +77,9 @@ class UsuarioController {
 		}
 		def file = request.getFile('fotoSubida')
 		if(!file.empty) {
+			if (!usuarioInstance?.foto) {
+				usuarioInstance.foto = new Foto()
+			}
 			usuarioInstance.foto.filename = file.originalFilename
 			usuarioInstance.foto.filedata = file.getBytes()
 		}

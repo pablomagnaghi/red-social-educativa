@@ -287,10 +287,10 @@ class BootStrap {
 			responsable: "Pablo Magnaghi ${Utilidades.ADMINISTRADOR}", dni: "33300432")
 		def respuestaDosPublicacionGeneralUno = new PublicacionGeneral(titulo: "PublicacionGeneralUno",
 			contenido: "Respuesta 2 para saber si funciona el foro principal de la red, agregamos mas palabras",
-			responsable: "Luis Paniagua ${Utilidades.ADMINISTRADOR}", dni: "33300432")
+			responsable: "Nom 1 ape 1 ${Utilidades.MIEMBRO}", dni: "00000001")
 		def respuestaTresPublicacionGeneralUno = new PublicacionGeneral(titulo: "PublicacionGeneralUno",
 			contenido: "Respuesta 3 para saber si funciona el foro principal de la red",
-			responsable: "Juan Perez ${Utilidades.MIEMBRO}", dni: "33300432")
+			responsable: "Nom 2 Ape 2 ${Utilidades.MIEMBRO}", dni: "00000002")
 
 		def publicacionGeneralDos = new PublicacionGeneral(titulo: "PublicacionGeneralDos", contenido: "Contenido", 
 			responsable: "Pablo Magnaghi ${Utilidades.ADMINISTRADOR}", dni: "33300432")
