@@ -44,7 +44,7 @@
 											<g:if test="${mediador || aprendiz}">
 												<g:link style="float: right;" class="btn btn-success" controller="materialTema" action="show" id="${m.id}" 
 													params="['cursoId': params.cursoId, 'temaId': temaInstance.id]"><i class="icon-search"></i></g:link>
-												<g:link style="float: right;" class="btn btn-success" controller="materialTema" action="descargar" id="${m.idArchivo}" 
+												<g:link style="float: right;" class="btn btn-success" controller="materialTema" action="descargar" id="${m?.archivo?.id}" 
 													params="['cursoId': params.cursoId, 'temaId': params.temaId]"><i class="icon-download-alt"></i></g:link>
 											</g:if>
 										</p>

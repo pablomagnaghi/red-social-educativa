@@ -59,16 +59,18 @@ class MaterialContenidoController {
 				'temaId': params.temaId, 'contenidoId': params.contenidoId]
 			return
 		}
-		def file = request.getFile('archivo')
+		def file = request.getFile('archivoSubido')
 		if(file.empty) {
 			flash.message = "El archivo esta vacío"
 			render view:'create', params:['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': params.contenidoId]
 			return
 		}
-		def archivoInstance = new Archivo()
+		def archivoInstance = new ArchivoContenido()
 		archivoInstance.filename = file.originalFilename
 		archivoInstance.filedata = file.getBytes()
-		if (!materialContenidoService.guardar(materialContenidoInstance, archivoInstance)) {
+		materialContenidoInstance.archivo = archivoInstance
+		if (!materialContenidoService.guardar(materialContenidoInstance)) {
+			redirect action: "create", params: ['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': params.contenidoId]
 			flash.message = "Problemas al guardar el archivor ${archivoInstance.filename} en el material ${materialConteidoInstance}"
 			return
 		}
@@ -94,7 +96,7 @@ class MaterialContenidoController {
 			redirect action: "edit", params: params
 			return
 		}
-		if (!materialContenidoService.guardar(materialContenidoInstance, null)) {
+		if (!materialContenidoService.guardar(materialContenidoInstance)) {
 			render view:'edit', model: [materialContenidoInstance: materialContenidoInstance], params: ['cursoId': params.cursoId, 
 				'temaId': params.temaId, 'contenidoId': params.contenidoId]
 			return

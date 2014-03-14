@@ -56,7 +56,7 @@
 											<div class="control-group">
 												<label class="control-label">Archivo (32MB máx)</label>
 												<div class="controls">
-													<input type="file" name="archivo"/>
+													<input type="file" name="archivoSubido"/>
 												</div>
 											</div>			
 							            	<div class="form-actions">

@@ -11,13 +11,11 @@ class Material {
 	String responsable
 	
 	CategoriaMaterial categoria
-	Long idArchivo
 
     static constraints = {
 		titulo maxSize: Utilidades.MAX_TITULO
 		autor nullable: true
 		descripcion nullable: true, maxSize: Utilidades.MAX_SIZE
-		idArchivo nullable: true
     }
 	
 	static mapping = {

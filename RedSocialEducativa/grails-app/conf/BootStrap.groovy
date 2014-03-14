@@ -352,13 +352,13 @@ class BootStrap {
 		
 		// Material de temas
 		def materialTemaUno = new MaterialTema(titulo: "material Tema 1", descripcion: "opcional", autor: "anonimo",
-			responsable: "${mediadorUno.usuario}-${mediadorUno.jerarquia}", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
+			responsable: "${mediadorUno}", categoria: CategoriaMaterial.findByNombre("RefBibliografica"))
 		def materialTemaDos = new MaterialTema(titulo: "material Tema 2", descripcion: "opcional", autor: "anonimo",
-			responsable: "${mediadorUno.usuario}-${mediadorUno.jerarquia}", categoria: CategoriaMaterial.findByNombre("Presentacion"))
+			responsable: "${mediadorUno}", categoria: CategoriaMaterial.findByNombre("Presentacion"))
 		def materialTemaTres = new MaterialTema(titulo: "material Tema 3", descripcion: "opcional", autor: "anonimo",
-			responsable: "${mediadorDos.usuario}-${mediadorDos.jerarquia}", categoria: CategoriaMaterial.findByNombre("Enlace"))
+			responsable: "${mediadorDos}", categoria: CategoriaMaterial.findByNombre("Enlace"))
 		def materialTemaCuatro = new MaterialTema(titulo: "material Tema 4", descripcion: "opcional", autor: "anonimo",
-			responsable: "${mediadorDos.usuario}-${mediadorDos.jerarquia}", categoria: CategoriaMaterial.findByNombre("Glosario"))
+			responsable: "${mediadorDos}", categoria: CategoriaMaterial.findByNombre("Glosario"))
 		
 		// Temas
 		
