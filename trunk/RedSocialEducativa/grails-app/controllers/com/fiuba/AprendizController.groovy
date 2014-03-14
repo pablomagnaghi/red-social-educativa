@@ -78,7 +78,11 @@ class AprendizController {
 		aprendizInstance.participa = aprendizInstance.participa ? false : true
 		if (!aprendizService.guardar(aprendizInstance)) {
 			flash.message = "Problemas al cambiar el estado"
-			redirect action:"index", params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId], method:"GET"
+			if (params.cuatrimestreId) {
+				redirect action:"index", params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId], method:"GET"
+				return
+			}
+			redirect action:"aprendicesCurso", params: ['cursoId': params.cursoId], method:"GET"
 			return
 		}
 		aprendizService.notificar(aprendizInstance)
@@ -87,27 +91,14 @@ class AprendizController {
 			return
 		}
 		flash.message = "Aprendiz ${aprendizInstance.usuario} actualizado"
-		redirect action:"index", params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId], method:"GET"
-		return
-	}
-	/*
-	@Secured("hasRole('ROL_APRENDIZ')")
-	def salir(Usuario usuarioInstance) {
-		if (usuarioInstance == null) {
-			notFound()
+		if (params.cuatrimestreId) {
+			redirect action:"index", params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId], method:"GET"
 			return
 		}
-		usuarioInstance.enabled = false
-		if (!usuarioService.guardar(usuarioInstance)) {
-			flash.message = "Problemas al cambiar el estado"
-			redirect controller:"red", action:"revisarRol",  method:"GET"
-			return
-		}
-		usuarioService.notificar(usuarioInstance)
-		redirect controller:"logout", method:"GET"
+		redirect action:"aprendicesCurso", params: ['cursoId': params.cursoId], method:"GET"
 		return
 	}
-	*/
+	
     protected void notFound() {
 		flash.message = "No se encuentra ese aprendiz"
 		redirect action: "index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId], method: "GET"

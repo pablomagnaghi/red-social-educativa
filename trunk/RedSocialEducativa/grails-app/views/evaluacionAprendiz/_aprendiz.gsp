@@ -4,7 +4,8 @@
             <h2><i class="icon-table"></i>
                 <span class="break"></span>${aprendiz.usuario.padron}-${aprendiz.usuario}</h2>
             <div class="box-icon">
-                <g:link action="create" params="['cursoId': params.cursoId]"><i class="icon-plus"></i></g:link>
+            	<!-- TODO -->
+                <!--<g:link action="create" params="['cursoId': params.cursoId]"><i class="icon-plus"></i></g:link>-->
             </div>
         </div>
         <div class="box-content">
