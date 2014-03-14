@@ -2,12 +2,21 @@
     <div class="box span12">
         <div class="box-header" data-original-title="">
             <h2><i class="icon-table"></i>
-                <span class="break"></span>Evaluacioens del curso</h2>
+                <span class="break"></span>Evaluaciones del curso</h2>
             <div class="box-icon">
                 <g:link action="create" params="['cursoId': params.cursoId]"><i class="icon-plus"></i></g:link>
             </div>
         </div>
         <div class="box-content">
+        	<g:if test="${flash.message}">
+				<div class="box-content alerts">
+		    		<div class="alert alert-info">
+						<button class="close" data-dismiss="alert" type="button"></button>
+						<strong></strong> 
+						${flash.message}
+				    </div>
+				</div>    
+			</g:if>
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
                 <thead>
                     <tr>
@@ -27,8 +36,14 @@
         	                <td class="center">${fieldValue(bean: evaluacionInstance, field: "fecha")}</td>
             	            <td class="center">${fieldValue(bean: evaluacionInstance, field: "horario")}</td>
             	            <td class="center">${fieldValue(bean: evaluacionInstance, field: "aula")}</td>
-            	            <td class="center">${fieldValue(bean: evaluacionInstance, field: "habilitada")}</td>
-            	             <td class="center">${fieldValue(bean: evaluacionInstance, field: "obligatoria")}</td>
+            	            <td class="center">
+            	            	<g:if test="${evaluacionInstance.habilitada}">Si</g:if>
+            	            	<g:else>No</g:else>
+            	            </td>
+            	            <td class="center">
+            	            	<g:if test="${evaluacionInstance.obligatoria}">Si</g:if>
+            	            	<g:else>No</g:else>
+            	            </td>
 	                        <td class="center">
 	                        	<g:link class="btn btn-success" controller="evaluacionAprendiz" action="mostrarEvaluacion"
 	                            	params="['cursoId': params.cursoId, 'evaluacionId': evaluacionInstance.id]"><i class="icon-search"></i> 
