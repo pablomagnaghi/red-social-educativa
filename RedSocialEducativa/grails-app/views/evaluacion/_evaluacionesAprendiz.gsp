@@ -2,7 +2,7 @@
     <div class="box span12">
         <div class="box-header" data-original-title="">
             <h2><i class="icon-table"></i>
-                <span class="break"></span>Evaluaciones de ${evaluacionesAprendiz.first().aprendiz.usuario.padron}-${evaluacionesAprendiz.first().aprendiz.usuario}</h2>
+                <span class="break"></span>Evaluaciones de ${evaluacionesAprendiz.first().aprendiz.usuario}</h2>
         </div>
         <div class="box-content">
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
@@ -18,7 +18,10 @@
 		         		<tr>
 	    	     			<td>${it.evaluacion.nombre}</td>
 	  						<td class="center">${it.evaluacion.fecha}</td>
-	           				<td class="center">${it.nota}</td>
+	           				<td class="center">
+	           					<g:if test="${it.nota}">${it.nota}</g:if>
+	           					<g:else>Nota pendiente</g:else>
+	           				</td>
 						</tr>
 					</g:each>   
                 </tbody>
@@ -28,12 +31,3 @@
     <!--/span-->
 </div>
 <!--/row-->
-
-
-
-
-
-
-
-
-

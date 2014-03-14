@@ -10,9 +10,9 @@ class EvaluacionAprendizController {
 	def evaluacionAprendizService
 	def aprendizService
 	
+	// VISTO
 	@Secured("hasRole('ROL_MEDIADOR')")
     def mostrarEvaluacion() {
-		
 		[evaluacion: Evaluacion.get(params.evaluacionId), evaluaciones: EvaluacionAprendiz.findAllByEvaluacion(Evaluacion.get(params.evaluacionId)), 
 			params: ['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId]]
     }

@@ -5,6 +5,15 @@
                 <span class="break"></span>Evaluaciones del curso</h2>
         </div>
         <div class="box-content">
+        	<g:if test="${flash.message}">
+				<div class="box-content alerts">
+		    		<div class="alert alert-info">
+						<button class="close" data-dismiss="alert" type="button"></button>
+						<strong></strong> 
+						${flash.message}
+				    </div>
+				</div>    
+			</g:if>
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
                 <thead>
                     <tr>
@@ -12,7 +21,8 @@
                         <th>Fecha</th>
                         <th>Horario</th>
                         <th>Aula</th>  
-						<th>Estado</th>         
+						<th>Estado</th>     
+						<th>Acciones</th>    
 					</tr>
 				</thead>
                 <tbody>
@@ -23,14 +33,17 @@
 	        	                <td class="center">${fieldValue(bean: evaluacionInstance, field: "fecha")}</td>
 	            	            <td class="center">${fieldValue(bean: evaluacionInstance, field: "horario")}</td>
 	            	            <td class="center">${fieldValue(bean: evaluacionInstance, field: "aula")}</td>
+	            	            <td class="center">
+	            	            	<g:if test="${com.fiuba.EvaluacionAprendiz.findByAprendizAndEvaluacion(aprendiz, evaluacionInstance)}">
+		                        		Inscripto  
+									</g:if>
+									<g:else>
+										No inscripto
+									</g:else>
+								</td>	
 		                        <td class="center">
 		                        	<g:if test="${com.fiuba.EvaluacionAprendiz.findByAprendizAndEvaluacion(aprendiz, evaluacionInstance)}">
-		                        		<g:if test="${com.fiuba.EvaluacionAprendiz.findByAprendizAndEvaluacion(aprendiz, evaluacionInstance)?.nota}">
-		                        			NOTA XX
-		                        		</g:if>
-		                        		<g:else>
-		                        			Inscripto
-		                        		</g:else>
+		                        		Desincribirme
 									</g:if>
 									<g:else>
 										<fieldset class="buttons">

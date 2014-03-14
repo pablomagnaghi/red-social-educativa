@@ -18,44 +18,33 @@ class EvaluacionController {
 			params: ['cursoId': params.cursoId]]
 	}
 	
+	// TODO: solo ver este metodo y la opcion desinscribirme
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def inscribirme(Evaluacion evaluacion) {
 		if (evaluacion == null) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'evaluacionInstance.label', default: 'Evaluacion'), params.id])
-			redirect action: "menuAprendiz", params:['id': params.id, 'cursoId': params.cursoId], method: "GET"
+			flash.message = "No se encuentra esa evaluación"
+			redirect action: "evaluacionesCurso", params:['cursoId': params.cursoId], method: "GET"
 			return
 		}
-		
 		def evaluacionesCurso = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
 		evaluacionService.inscribirAprendiz(evaluacion, evaluacionesCurso)
-
 		flash.message = "La inscripcion ha sido realizada exitosamente"
 		redirect action: "evaluacionesCurso", params:['cursoId': params.cursoId]
 	}
 	
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def evaluacionesAprendiz(Evaluacion evaluacion) {
-		
 		def evaluacionesCurso = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
-		
 		def evaluacionesAprendiz = evaluacionService.obtenerEvaluacionesPorAprendiz(evaluacionesCurso, params.cursoId.toLong())
-
 		[evaluacionesAprendiz: evaluacionesAprendiz, params: ['cursoId': params.cursoId]]
 	}
 	
 	@Secured("hasRole('ROL_MEDIADOR')")
     def index() {
-		
-		params.max = 100//Utilidades.MAX_PARAMS
-
+		params.max = Utilidades.MAX_PARAMS
 		[evaluacionInstanceList: Evaluacion.findAllByCurso(Curso.get(params.cursoId)), params: ['cursoId': params.cursoId]]
     }
-	/*
-	@Secured("hasRole('ROL_MEDIADOR')")
-    def show(Evaluacion evaluacionInstance) {
-		respond evaluacionInstance, params:['cursoId': params.cursoId]
-    }*/
-	
+
 	@Secured("hasRole('ROL_MEDIADOR')")
     def create() {
 		respond new Evaluacion(params), params:['cursoId': params.cursoId]
@@ -67,20 +56,16 @@ class EvaluacionController {
             notFound()
             return
         }
-
 		evaluacionInstance.fecha = params.fechaDate.format(Utilidades.FORMATO_FECHA)
 		evaluacionInstance.horario = params.fechaDate.getTimeString()
-
 		if (!evaluacionService.guardar(evaluacionInstance)) {
 			render view:'create', model: [evaluacionInstance: evaluacionInstance], params:['cursoId': params.cursoId]
 			return
 		}
-		
 		if (evaluacionInstance.obligatoria) {
 			evaluacionService.agregarAprendices(evaluacionInstance, params.cursoId.toLong())
 		}
-		
-		flash.message = message(code: 'default.created.message', args: [message(code: 'evaluacionInstance.label', default: 'Evaluacion'), evaluacionInstance.id])
+		flash.message = "Evaluacion ${evaluacionInstance} creada"
 		redirect action: "index", params:['cursoId': params.cursoId]
     }
 
@@ -95,33 +80,27 @@ class EvaluacionController {
             notFound()
             return
         }
-
         if (!evaluacionService.guardar(evaluacionInstance)) {
             render view:'edit', model: [evaluacionInstance: evaluacionInstance], params:['cursoId': params.cursoId]
             return
         }
-
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'Evaluacion.label', default: 'Evaluacion'), evaluacionInstance.id])
+        flash.message = "Evaluacion ${evaluacionInstance} actualizada"
 		redirect action:"index", params:['cursoId': params.cursoId]
     }
 
     @Secured("hasRole('ROL_MEDIADOR')")
     def delete(Evaluacion evaluacionInstance) {
-
         if (evaluacionInstance == null) {
             notFound()
             return
         }
-
 		evaluacionService.eliminar(evaluacionInstance)
-		
-        flash.message = message(code: 'default.deleted.message', args: [message(code: 'Evaluacion.label', default: 'Evaluacion'), evaluacionInstance.id]) 
+        flash.message = "Evaluacion ${evaluacionInstance} eliminada"
 		redirect action:"index", params:['cursoId': params.cursoId], method:"GET"
     }
 
     protected void notFound() {
-        flash.message = message(code: 'default.not.found.message', args: [message(code: 'evaluacionInstance.label', default: 'Evaluacion'), params.id])
+        flash.message = "No se encuentra esa evaluación"
         redirect action: "index", params:['cursoId': params.cursoId], method: "GET"
     }
 }
-
