@@ -54,11 +54,6 @@ class MaterialContenidoController {
 			redirect action: "create", params: ['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': params.contenidoId]
 			return
 		}
-		if (!materialContenidoInstance.validate()) {
-			render view:'create', model: [materialContenidoInstance: materialContenidoInstance], params: ['cursoId': params.cursoId, 
-				'temaId': params.temaId, 'contenidoId': params.contenidoId]
-			return
-		}
 		def file = request.getFile('archivoSubido')
 		if(file.empty) {
 			flash.message = "El archivo esta vacío"
@@ -70,8 +65,8 @@ class MaterialContenidoController {
 		archivoInstance.filedata = file.getBytes()
 		materialContenidoInstance.archivo = archivoInstance
 		if (!materialContenidoService.guardar(materialContenidoInstance)) {
-			redirect action: "create", params: ['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': params.contenidoId]
-			flash.message = "Problemas al guardar el archivor ${archivoInstance.filename} en el material ${materialConteidoInstance}"
+			render view:'create', model: [materialContenidoInstance: materialContenidoInstance], params: ['cursoId': params.cursoId,
+				'temaId': params.temaId, 'contenidoId': params.contenidoId]
 			return
 		}
 		flash.message = "Material ${materialContenidoInstance.titulo} del contenido ${materialContenidoInstance.contenido} creado"
