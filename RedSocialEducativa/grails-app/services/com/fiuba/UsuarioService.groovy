@@ -40,7 +40,7 @@ class UsuarioService {
 	def usuarioActual() {
 		return Usuario.get(springSecurityService.principal.id)
 	}
-
+	
 	def notificar(Usuario usuario) {
 		def email = usuario.email
 		if (!usuario.enabled) {

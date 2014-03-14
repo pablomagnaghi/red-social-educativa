@@ -93,6 +93,11 @@ class MaterialCursoController {
 			redirect action: "edit", params: params
 			return
 		}
+		def file = request.getFile('archivoSubido')
+		if(!file.empty) {
+			materialCursoInstance.archivo.filename = file.originalFilename
+			materialCursoInstance.archivo.filedata = file.getBytes()
+		}
 		if (!materialCursoService.guardar(materialCursoInstance)) {
 			render view:'edit', model: [materialCursoInstance: materialCursoInstance], params: params
 			return

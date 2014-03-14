@@ -54,7 +54,7 @@
 							            	<g:render template="form"/>	
 							            	<!-- ARCHIVO -->
 											<div class="control-group">
-												<label class="control-label">Archivo (32MB máx)</label>
+												<label class="control-label">Archivo (32MB)</label>
 												<div class="controls">
 													<input type="file" name="archivoSubido"/>
 												</div>

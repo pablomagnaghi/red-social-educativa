@@ -55,17 +55,23 @@
 						            </div>
 						        </div>
 						        <div class="box-content">
-						        	<g:form class="form-horizontal" action="update" method="PUT" id="${materialContenidoInstance.id}" 
+						        	<g:uploadForm class="form-horizontal" action="update" method="PUT" id="${materialContenidoInstance.id}" 
 						        		params="['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': params.contenidoId, 'tituloAnterior': titulo]">
 						        		<g:hiddenField name="version" value="${materialContenidoInstance?.version}" />
 						        		<g:hiddenField name="archivo.id" value="${materialContenidoInstance?.archivo?.id}"/>
 							            <fieldset>
-							            	<g:render template="form"/>			
+							            	<g:render template="form"/>		
+							            	<div class="control-group">
+												<label class="control-label">Cambiar archivo (32MB)</label>
+												<div class="controls">
+													<input type="file" name="archivoSubido"/>
+												</div>
+											</div>		
 							            	<div class="form-actions">
 												<button type="submit" class="btn btn-primary">Actualizar</button>
 											</div>		    
 							            </fieldset>
-						            </g:form>    
+						            </g:uploadForm>    
 					       	 	</div>
 							</div>
 						</div>	

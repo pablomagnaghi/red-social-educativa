@@ -69,7 +69,6 @@ class UsuarioController {
 		respond usuarioInstance
 	}
 
-	// TODO
 	@Secured("hasRole('ROL_MIEMBRO')")
 	def update(Usuario usuarioInstance) {
 		if (usuarioInstance == null) {
@@ -78,15 +77,8 @@ class UsuarioController {
 		}
 		def file = request.getFile('fotoSubida')
 		if(!file.empty) {
-			def fotoInstance = new Foto()
-			fotoInstance.filename = file.originalFilename
-			fotoInstance.filedata = file.getBytes()
-			if (usuarioInstance?.foto) {
-				println "BORRAR FOTO"
-				def foto = Foto.get(usuarioInstance.foto.id)
-				foto.delete flush: true
-			}
-			usuarioInstance.foto = fotoInstance
+			usuarioInstance.foto.filename = file.originalFilename
+			usuarioInstance.foto.filedata = file.getBytes()
 		}
 		if (!usuarioService.actualizar(usuarioInstance)) {
 			flash.message = "Revise el perfil"
