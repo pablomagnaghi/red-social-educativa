@@ -18,6 +18,25 @@ class UsuarioService {
 		}
 	}
 	
+	private inhabilitar(Usuario usuario) {
+		def administradores = Administrador.findAllByUsuario(usuario)
+		administradores.each {
+			it.activo = false
+			it.save flush: true
+		}
+		def mediadores = Mediador.findAllByUsuario(usuario)
+		mediadores.each {
+			it.activo = false
+			it.save flush: true
+		}
+		def aprendices = Aprendiz.findAllByUsuario(usuario)
+		aprendices.each {
+			it.participa = false
+			it.cursando = false
+			it.save flush: true
+		}
+	}
+	
 	def usuarioActual() {
 		return Usuario.get(springSecurityService.principal.id)
 	}
@@ -25,6 +44,7 @@ class UsuarioService {
 	def notificar(Usuario usuario) {
 		def email = usuario.email
 		if (!usuario.enabled) {
+			inhabilitar(usuario)
 			def mensaje = "${usuario.nombres} ${usuario.apellido} ha dejado de ser miembro"
 			enviarEmail(email, mensaje)
 			return
@@ -66,6 +86,7 @@ class UsuarioService {
 		return null
 	}
 	
+	// Para el refresh de membresias 
 	def eliminar(Usuario usuario) {
 		usuario.delete flush: true
 	}
