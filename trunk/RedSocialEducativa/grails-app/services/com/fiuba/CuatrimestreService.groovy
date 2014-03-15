@@ -7,7 +7,6 @@ class CuatrimestreService {
 
 	def consolidar(Cuatrimestre cuatrimestre) {
 		def ArrayList<Aprendiz> aprendices = Aprendiz.findAllByCuatrimestre(cuatrimestre)
-		
 		aprendices.each {
 			if (it.participa) {
 				it.cursando = false
@@ -19,7 +18,6 @@ class CuatrimestreService {
 	def obtenerAnio() {
 		def anio = Utilidades.ANIO
 		def calendario = Calendario.findByAnio(Utilidades.ANIO)
-		
 		if (Utilidades.FECHA < calendario.inicioPrimerCuatrimestre) {
 			anio--
 		}
@@ -29,11 +27,9 @@ class CuatrimestreService {
 	def obtenerNumero() {
 		def calendario = Calendario.findByAnio(Utilidades.ANIO)
 		def numero = 2
-				
 		if ((Utilidades.FECHA > calendario.inicioPrimerCuatrimestre) && ( Utilidades.FECHA < calendario.inicioSegundoCuatrimestre)) {
 			numero = 1
 		}
-		
 		return numero
 	}
 	
@@ -57,15 +53,6 @@ class CuatrimestreService {
 			}
 		}
 	}
-	
-/*//TODO probar si no se usa en otro lado
-	def existe(Cuatrimestre cuatrimeste, Long cursoId) {
-
-		def curso = Curso.get(cursoId)
-		def cuatrimestreExistente = Cuatrimestre.findByCursoAndAnioAndNumero(curso, cuatrimestre.anio, cuatrimestre.numero)
-
-		return cuatrimestreExistente
-	}*/
 
 	def guardar(Cuatrimestre cuatrimestre) {
 

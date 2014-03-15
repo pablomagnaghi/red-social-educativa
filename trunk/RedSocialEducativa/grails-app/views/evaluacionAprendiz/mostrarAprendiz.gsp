@@ -35,9 +35,6 @@
 						<p class="btn-group">
 							<g:link controller="curso" action="mediador" params="['cursoId': params.cursoId]">
 								<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
-							
-							
-								
 							<g:if test="${params.cuatrimestreId}">	
 								<g:link controller="aprendiz" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 									<button class="btn">Aprendices curso ${com.fiuba.Curso.get(params.cursoId)} cuatrimestre 
