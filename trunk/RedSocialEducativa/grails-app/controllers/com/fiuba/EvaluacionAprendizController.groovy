@@ -43,6 +43,9 @@ class EvaluacionAprendizController {
 			return
 		}
 		
+		
+		
+		
 		if (!evaluacionAprendizService.guardar(evaluacionAprendizInstance)) {
 			render view:'show', model: [evaluacionAprendizInstance: evaluacionAprendizInstance], params: ['cursoId': params.cursoId,
 				'evaluacionId': params.evaluacionId, 'aprendizId': params.aprendizId]
@@ -65,6 +68,7 @@ class EvaluacionAprendizController {
             notFound()
             return
         }
+		
 		if (evaluacionAprendizService.existe( evaluacionAprendizInstance.evaluacion, evaluacionAprendizInstance.aprendiz)) {
 			flash.message = "El aprendiz ${evaluacionAprendizInstance.aprendiz.usuario} ya esta anotado en la evaluacion ${ evaluacionAprendizInstance.evaluacion}"
 			

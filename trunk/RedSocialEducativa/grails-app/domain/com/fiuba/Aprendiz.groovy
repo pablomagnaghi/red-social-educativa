@@ -17,4 +17,9 @@ class Aprendiz extends UsuarioRol {
     static constraints = {
 		ultVisita nullable:true
     }
+	
+	String toString() {
+		"${usuario}"
+	}
 }
+

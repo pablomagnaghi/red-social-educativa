@@ -63,5 +63,6 @@ class UsuarioRol implements Serializable {
 		// TODO esto venia por defecto
 		// id composite: ['rol', 'usuario']
 		// version false
+		usuario lazy: false 
 	}
 }
