@@ -14,6 +14,6 @@
 <div class="control-group">
 	<label class="control-label" >Aprendiz</label>			
 	<div class="controls">
-		<g:select id="id" name="aprendiz.id" from="${aprendices}" optionKey="id" value="${evaluacionAprendizInstance?.aprendiz?.id}" class="many-to-one"/>
+		<g:select id="id" name="aprendiz.id" from="${aprendices}" optionKey="id" value="${evaluacionAprendizInstance?.aprendiz?.id}" class="many-to-one" style='width: 50%'/>
 	</div>	
 </div>

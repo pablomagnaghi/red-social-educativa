@@ -37,15 +37,11 @@ class EvaluacionAprendizController {
 	// TODO VER
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def guardarCalificacion(EvaluacionAprendiz evaluacionAprendizInstance) {
-
 		if (evaluacionAprendizInstance == null) {
 			notFound()
 			return
 		}
-		
-		
-		
-		
+
 		if (!evaluacionAprendizService.guardar(evaluacionAprendizInstance)) {
 			render view:'show', model: [evaluacionAprendizInstance: evaluacionAprendizInstance], params: ['cursoId': params.cursoId,
 				'evaluacionId': params.evaluacionId, 'aprendizId': params.aprendizId]
@@ -58,7 +54,7 @@ class EvaluacionAprendizController {
 			return
 		}		
 		
-		flash.message = "Aprendiz ${evaluacionAprendizInstance.aprendiz} agregado a la evaluacion ${evaluacionAprendizInstance.evaluacion} calificado"
+		flash.message = "Aprendiz ${evaluacionAprendizInstance.aprendiz} calificado con nota ${evaluacionAprendizInstance.nota}"
 		redirect action:"mostrarEvaluacion", params:['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId], method: "GET"
 	}
 
@@ -68,7 +64,6 @@ class EvaluacionAprendizController {
             notFound()
             return
         }
-		
 		if (evaluacionAprendizService.existe( evaluacionAprendizInstance.evaluacion, evaluacionAprendizInstance.aprendiz)) {
 			flash.message = "El aprendiz ${evaluacionAprendizInstance.aprendiz.usuario} ya esta anotado en la evaluacion ${ evaluacionAprendizInstance.evaluacion}"
 			
