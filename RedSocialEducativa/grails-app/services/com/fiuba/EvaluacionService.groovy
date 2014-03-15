@@ -5,6 +5,14 @@ import grails.transaction.Transactional
 @Transactional
 class EvaluacionService {
 
+	def obtenerFecha(Date fecha) {
+		Integer anio = fecha.getYear() + Utilidades.ANIO_INICIAL
+		Integer mes =  fecha.getMonth() + 1
+		Integer dia = fecha.getAt(Calendar.DAY_OF_MONTH)
+		Integer fechaNum = 10000 * (anio) + 100 * mes + dia
+		return fechaNum
+	}
+	
 	def agregarAprendices(Evaluacion evaluacion, Long cursoId) {
 		
 		def c = Aprendiz.createCriteria()

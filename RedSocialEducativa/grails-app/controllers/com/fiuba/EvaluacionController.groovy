@@ -56,8 +56,8 @@ class EvaluacionController {
             notFound()
             return
         }
-		evaluacionInstance.fecha = params.fechaDate.format(Utilidades.FORMATO_FECHA)
-		evaluacionInstance.horario = params.fechaDate.getTimeString()
+		evaluacionInstance.fecha = evaluacionService.obtenerFecha(params.fechaDate)//.format(Utilidades.FORMATO_FECHA)
+		//evaluacionInstance.horario = params.fechaDate.getTimeString()
 		if (!evaluacionService.guardar(evaluacionInstance)) {
 			render view:'create', model: [evaluacionInstance: evaluacionInstance], params:['cursoId': params.cursoId]
 			return
