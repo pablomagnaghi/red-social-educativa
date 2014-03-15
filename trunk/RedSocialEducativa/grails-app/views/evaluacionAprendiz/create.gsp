@@ -45,13 +45,12 @@
 							<!-- Fin: BREADCRUM -->  
 						    <div class="box">
 						        <div class="box-header">
-						            <h2><i class="icon-plus"></i>Agregar alumno a la evaluación ${com.fiuba.Evaluacion.get(params.evaluacionId)}</h2>
+						            <h2><i class="icon-plus"></i>Agregar aprendiz a la evaluación ${com.fiuba.Evaluacion.get(params.evaluacionId)}</h2>
 						           	<div class="box-icon">
 						           		<g:link action="mostrarEvaluacion" params="['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId]">
 						            		<i class="icon-table"></i></g:link>
 						            </div>
 						        </div>
-								
 						        <div class="box-content">
 						        	<g:form class="form-horizontal" action="save" params="['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId]">
 										<g:hiddenField name="evaluacion.id" value="${params.evaluacionId}"/>
