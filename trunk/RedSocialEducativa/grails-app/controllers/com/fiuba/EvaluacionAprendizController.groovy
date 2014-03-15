@@ -22,19 +22,19 @@ class EvaluacionAprendizController {
 			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 	}
 	
-	// TODO Ver a partir de aca
 	@Secured("hasRole('ROL_MEDIADOR')")
     def create() {
-        respond new EvaluacionAprendiz(params), model: [aprendices: aprendizService.obtenerTodosAprendicesDeCurso(params.cursoId.toLong()), 
-			params: ['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId]]
+        respond new EvaluacionAprendiz(params), params: ['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId]
 	}
 
+	// TODO VER
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def calificar(EvaluacionAprendiz evaluacionAprendizInstance) {
 		println "calificar params: ${params}"
 		respond evaluacionAprendizInstance, params: ['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId, 'aprendizId': params.aprendizId]
 	}
 	
+	// TODO VER
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def guardarCalificacion(EvaluacionAprendiz evaluacionAprendizInstance) {
 
@@ -54,51 +54,46 @@ class EvaluacionAprendizController {
 			redirect action:"mostrarAprendiz", params:['cursoId': params.cursoId, 'aprendizId': params.aprendizId], method: "GET"
 			return
 		}		
-		flash.message = message(code: 'default.deleted.message', args: [message(code: 'EvaluacionAprendiz.label', default: 'EvaluacionAprendiz'), evaluacionAprendizInstance.id])
+		
+		flash.message = "Aprendiz ${evaluacionAprendizInstance.aprendiz} agregado a la evaluacion ${evaluacionAprendizInstance.evaluacion} calificado"
 		redirect action:"mostrarEvaluacion", params:['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId], method: "GET"
 	}
-	
+
 	@Secured("hasRole('ROL_MEDIADOR')")
     def save(EvaluacionAprendiz evaluacionAprendizInstance) {
         if (evaluacionAprendizInstance == null) {
             notFound()
             return
         }
-		
-		if ( evaluacionAprendizService.existe( evaluacionAprendizInstance.evaluacion, evaluacionAprendizInstance.aprendiz)) {
-			flash.message = "El aprendiz ${ evaluacionAprendizInstance.aprendiz} ya esta anotado en la evaluacion ${ evaluacionAprendizInstance.evaluacion}"
-			redirect action: "create", params: ['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId]
+		if (evaluacionAprendizService.existe( evaluacionAprendizInstance.evaluacion, evaluacionAprendizInstance.aprendiz)) {
+			flash.message = "El aprendiz ${evaluacionAprendizInstance.aprendiz.usuario} ya esta anotado en la evaluacion ${ evaluacionAprendizInstance.evaluacion}"
+			
+			render view: "create", params: ['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId]
 			return
 		}
-		
-		if (! evaluacionAprendizService.guardar( evaluacionAprendizInstance)) {
+		if (!evaluacionAprendizService.guardar(evaluacionAprendizInstance)) {
 			render view:'create', model: [evaluacionAprendizInstance: evaluacionAprendizInstance, 
 				aprendices: aprendizService.obtenerTodosAprendicesDeCurso(params.cursoId.toLong())], params: ['cursoId': params.cursoId, 
 				'evaluacionId': params.evaluacionId]
 			return
 		}
-
-        flash.message = message(code: 'default.created.message', args: [message(code: 'evaluacionAprendizInstance.label', default: 'EvaluacionAprendiz'), evaluacionAprendizInstance.id])
-		redirect controller: "evaluacion", action:"show", params:['id': params.evaluacionId, 'cursoId': params.cursoId]
+        flash.message = "Aprendiz ${evaluacionAprendizInstance.aprendiz} agregado a la evaluacion ${evaluacionAprendizInstance.evaluacion}"
+		redirect action:"mostrarEvaluacion", params:['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId]
     }
 
 	@Secured("hasRole('ROL_MEDIADOR')")
     def delete(EvaluacionAprendiz evaluacionAprendizInstance) {
-
         if (evaluacionAprendizInstance == null) {
             notFound()
             return
         }
-
 		evaluacionAprendizService.eliminar(evaluacionAprendizInstance)
-		
-        flash.message = message(code: 'default.deleted.message', args: [message(code: 'EvaluacionAprendiz.label', default: 'EvaluacionAprendiz'), evaluacionAprendizInstance.id])
+        flash.message = "Aprendiz ${evaluacionAprendizInstance.aprendiz} eliminado de la evaluacion ${evaluacionAprendizInstance.evaluacion}"
 		redirect action:"mostrarEvaluacion", params:['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId], method: "GET"
-  
     }
 
     protected void notFound() {
-        flash.message = message(code: 'default.not.found.message', args: [message(code: 'evaluacionAprendizInstance.label', default: 'EvaluacionAprendiz'), params.id])
+        flash.message = "No se encuentra esa evaluación para un aprendiz"
         redirect controller: "evaluacion", action:"show", params:['id': params.evaluacionId, 'cursoId': params.cursoId], method: "GET"
     }
 }

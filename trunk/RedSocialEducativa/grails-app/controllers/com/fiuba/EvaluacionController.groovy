@@ -56,13 +56,20 @@ class EvaluacionController {
             notFound()
             return
         }
-		evaluacionInstance.fecha = evaluacionService.obtenerFecha(params.fechaDate)//.format(Utilidades.FORMATO_FECHA)
-		//evaluacionInstance.horario = params.fechaDate.getTimeString()
+		if (params.fechaDate) {
+			evaluacionInstance.fecha = evaluacionService.obtenerFecha(params.fechaDate)//.format(Utilidades.FORMATO_FECHA)
+			if (evaluacionInstance.fecha < Utilidades.FECHA) {
+				flash.message = "La fecha no puede ser menor a ${Utilidades.FECHA}"
+				render view:'create', model: [evaluacionInstance: evaluacionInstance], params:['cursoId': params.cursoId]
+				return
+			}
+		}
 		if (!evaluacionService.guardar(evaluacionInstance)) {
 			render view:'create', model: [evaluacionInstance: evaluacionInstance], params:['cursoId': params.cursoId]
 			return
 		}
-		if (evaluacionInstance.obligatoria) {
+		// Una vez que esta habilitada, solo se puede editar el aula, asi que anoto a todos los alumnos del cuatrimestre
+		if (evaluacionInstance.habilitada && evaluacionInstance.obligatoria) {
 			evaluacionService.agregarAprendices(evaluacionInstance, params.cursoId.toLong())
 		}
 		flash.message = "Evaluacion ${evaluacionInstance} creada"
@@ -80,10 +87,22 @@ class EvaluacionController {
             notFound()
             return
         }
+		if (params.fechaDate) {
+			evaluacionInstance.fecha = evaluacionService.obtenerFecha(params.fechaDate)//.format(Utilidades.FORMATO_FECHA)
+			if (evaluacionInstance.fecha < Utilidades.FECHA) {
+				flash.message = "La fecha no puede ser menor a ${Utilidades.FECHA}"
+				render view:'edit', model: [evaluacionInstance: evaluacionInstance], params:['cursoId': params.cursoId]
+				return
+			}
+		}
         if (!evaluacionService.guardar(evaluacionInstance)) {
             render view:'edit', model: [evaluacionInstance: evaluacionInstance], params:['cursoId': params.cursoId]
             return
         }
+		// Una vez que esta habilitada, solo se puede editar el aula, asi que anoto a todos los alumnos del cuatrimestre
+		if (evaluacionInstance.habilitada && evaluacionInstance.obligatoria) {
+			evaluacionService.agregarAprendices(evaluacionInstance, params.cursoId.toLong())
+		}
         flash.message = "Evaluacion ${evaluacionInstance} actualizada"
 		redirect action:"index", params:['cursoId': params.cursoId]
     }

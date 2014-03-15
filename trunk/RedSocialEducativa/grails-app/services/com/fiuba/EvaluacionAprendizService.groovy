@@ -6,16 +6,13 @@ import grails.transaction.Transactional
 class EvaluacionAprendizService {
 
 	def existe(Evaluacion Evaluacion, Aprendiz aprendiz) {
-
 		return EvaluacionAprendiz.findByEvaluacionAndAprendiz(Evaluacion, aprendiz)
 	}
 	
 	def guardar(EvaluacionAprendiz evaluacionAprendiz) {
-
 		if (evaluacionAprendiz.save(flush: true)) {
 			return evaluacionAprendiz
 		}
-
 		return null
 	}
 

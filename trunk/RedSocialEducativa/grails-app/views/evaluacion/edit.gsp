@@ -52,10 +52,19 @@
 						        <div class="box-content">
 						        	<g:form class="form-horizontal" action="update" method="PUT" id="${evaluacionInstance.id}" params="['cursoId': params.cursoId]">
 						        		<g:hiddenField name="version" value="${evaluacionInstance?.version}" />
-						        		<g:hiddenField name="nombre" value="${evaluacionInstance?.nombre}" />
-						        		<g:hiddenField name="obligatoria" value="${evaluacionInstance?.obligatoria}" />
 							            <fieldset>
-							            	<g:render template="form"/>			
+							            	<g:if test="${evaluacionInstance?.habilitada}">
+							            		<!-- AULA -->
+												<div class="control-group">
+													<label class="control-label" >Aula (opcional)</label>			
+													<div class="controls">
+														<g:textField name="aula" value="${evaluacionInstance?.aula}" maxlength="16" />
+													</div>	
+												</div>
+											</g:if>
+											<g:else>
+												<g:render template="form"/>	
+											</g:else>	
 							            	<div class="form-actions">
 												<button type="submit" class="btn btn-primary">Actualizar</button>
 											</div>		    

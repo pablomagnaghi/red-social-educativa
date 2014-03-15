@@ -4,10 +4,6 @@
             <h2><i class="icon-table"></i>
                 <span class="break"></span>Evaluaciones del aprendiz ${aprendiz.usuario.padron}-${aprendiz.usuario} 
                 	que curso el cuatrimestre ${aprendiz.cuatrimestre}</h2>
-            <div class="box-icon">
-            	<!-- TODO -->
-                <!--<g:link action="create" params="['cursoId': params.cursoId]"><i class="icon-plus"></i></g:link>-->
-            </div>
         </div>
         <div class="box-content">
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
