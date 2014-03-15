@@ -10,7 +10,6 @@ class EvaluacionAprendizController {
 	def evaluacionAprendizService
 	def aprendizService
 	
-	// VISTO
 	@Secured("hasRole('ROL_MEDIADOR')")
     def mostrarEvaluacion() {
 		[evaluacion: Evaluacion.get(params.evaluacionId), evaluaciones: EvaluacionAprendiz.findAllByEvaluacion(Evaluacion.get(params.evaluacionId)), 
@@ -23,12 +22,7 @@ class EvaluacionAprendizController {
 			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 	}
 	
-/*
-	@Secured("hasRole('ROL_MEDIADOR')")
-    def show(EvaluacionAprendiz evaluacionAprendizInstance) {
-        respond evaluacionAprendizInstance, params: ['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId]
-    }
-*/
+	// TODO Ver a partir de aca
 	@Secured("hasRole('ROL_MEDIADOR')")
     def create() {
         respond new EvaluacionAprendiz(params), model: [aprendices: aprendizService.obtenerTodosAprendicesDeCurso(params.cursoId.toLong()), 

@@ -40,7 +40,7 @@
 									<span class="label label-success">Activo</span>
 								</g:if>		
               					<g:else>
-              						<span class="label label-important">Esperando aceptacion</span>
+              						<span class="label label-warning">Esperando aceptacion</span>
 								</g:else>
 							</td>						
 							<td class="center">

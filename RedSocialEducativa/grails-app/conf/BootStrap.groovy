@@ -423,6 +423,10 @@ class BootStrap {
 			aula: "4", parcial: true, obligatoria: false, habilitada: true)
 		def evaluacionCinco = new Evaluacion(nombre: "evaluacion 5", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: "1900", 
 			aula: "5", parcial: true, obligatoria: false, habilitada: true)
+		def evaluacionSeis = new Evaluacion(nombre: "evaluacion 6", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: "1900",
+			aula: "5", parcial: true, obligatoria: false, habilitada: true)
+		def evaluacionSiete = new Evaluacion(nombre: "evaluacion 7", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: "1900",
+			aula: "5", parcial: true, obligatoria: false, habilitada: true)
 		
 		// Cuatrimestres
 		def cuatrimestreUno = new Cuatrimestre(anio: 2013, numero: 2, foro: foroCursoUno)
@@ -494,6 +498,8 @@ class BootStrap {
 		cursoUno.addToEvaluaciones(evaluacionTres)
 		cursoUno.addToEvaluaciones(evaluacionCuatro)
 		cursoUno.addToEvaluaciones(evaluacionCinco)
+		cursoUno.addToEvaluaciones(evaluacionSeis)
+		cursoUno.addToEvaluaciones(evaluacionSiete)
 
 		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", nombre: "Curso 2")
 		cursoDos.addToMediadores(mediadorUnoP)
@@ -706,7 +712,12 @@ class BootStrap {
 		evaluacionesAprendiz.add(evaluacionAprendizOcho)
 		def evaluacionAprendizNueve = new EvaluacionAprendiz(evaluacion: evaluacionCinco, aprendiz: aprendizDos)
 		evaluacionesAprendiz.add(evaluacionAprendizNueve)
-			
+		// Para probar notas por recursantes
+		def evaluacionAprendizDiez = new EvaluacionAprendiz(evaluacion: evaluacionSeis, aprendiz: aprendizDosPPP)
+		evaluacionesAprendiz.add(evaluacionAprendizDiez)
+		def evaluacionAprendizOnce = new EvaluacionAprendiz(evaluacion: evaluacionSiete, aprendiz: aprendizDosPPP)
+		evaluacionesAprendiz.add(evaluacionAprendizOnce)
+		
 		for(int i = 0; i<evaluacionesAprendiz.size(); i++){
 			if (!evaluacionesAprendiz.get(i).save()) {
 				println evaluacionesAprendiz.get(i).errors

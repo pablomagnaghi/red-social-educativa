@@ -16,11 +16,9 @@
                 <tbody>
                 	<g:each in="${cuatrimestreInstanceList}" var="cuatrimestreInstance">
 	                    <tr>
-    	                    <td>"${fieldValue(bean: cuatrimestreInstance, field: "anio")}"</td>
+    	                    <td><g:formatNumber number="${cuatrimestreInstance.anio}"/></td>
         	                <td class="center">${fieldValue(bean: cuatrimestreInstance, field: "numero")}</td>
 	                        <td class="center">
-	                        	<g:link class="btn btn-success" controller="foroCurso" action="general" 
-	                        		params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestreInstance.id]">Foro</g:link>
 	                            <g:link class="btn btn-success" action="historial" resource="${cuatrimestreInstance}" id="${cuatrimestreInstance.id}"
 	                            	params="['cursoId': params.cursoId]"><i class="icon-search "></i> 
 	                            </g:link>

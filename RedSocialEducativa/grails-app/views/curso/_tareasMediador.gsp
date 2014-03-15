@@ -9,7 +9,13 @@
 				<dd><g:link controller="tema" action="index" params="['cursoId': params.cursoId]">Temas</g:link></dd>
 				<dd><g:link controller="evaluacion" action="index" params="['cursoId': params.cursoId]">Evaluaciones</g:link></dd>		
 				<dd><g:link controller="aprendiz" action="aprendicesCurso" params="['cursoId': params.cursoId]">Aprendices</g:link></dd>
-				<dd><g:link controller="cuatrimestre" action="consolidar" params="['cursoId': params.cursoId]">Consolidar cuatrimestre ${cuatrimestres.first()}</g:link></dd>				
+				<dd><g:link controller="cuatrimestre" action="consolidar" params="['cursoId': params.cursoId]">
+					<g:if test="${cuatrimestres}">
+						Consolidar cuatrimestre ${cuatrimestres.first()}
+					</g:if>
+					<g:else>
+						Crear cuatrimestre
+					</g:else></g:link></dd>				
 				<dd><g:link controller="cuatrimestre" action="indexHistoriales" params="['cursoId': params.cursoId]">Historial de cuatrimestres</g:link></dd>		
 				<g:if test="${mediador.jerarquia == '1-Profesor'}">
 					<dd><g:link controller="mediador" action="index" params="['cursoId': params.cursoId]">Administracion mediadores</g:link></dd>

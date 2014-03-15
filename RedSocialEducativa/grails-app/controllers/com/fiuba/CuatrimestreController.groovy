@@ -14,11 +14,9 @@ class CuatrimestreController {
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def indexHistoriales(Integer max) {
 		params.max = Utilidades.MAX_PARAMS
-
 		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
-		
-		[cuatrimestreInstanceList: Cuatrimestre.findAllByCursoAndIdNotEqual(Curso.get(params.cursoId), cuatrimestre?.id,[max: params.max, offset: params.offset]),
-			cuatrimestreInstanceCount: Cuatrimestre.findAllByCursoAndIdNotEqual(Curso.get(params.cursoId), cuatrimestre?.id).size(), 
+		def cuatrimestres = cuatrimestreService.obtenerCuatrimestresOrdenados(params.cursoId.toLong())
+		[cuatrimestreInstanceList: Cuatrimestre.findAllByCursoAndIdNotEqual(Curso.get(params.cursoId), cuatrimestre?.id,[sort: "numero", order: "asc"]),
 			params: [cursoId: params.cursoId]]
 	}
 	
@@ -48,15 +46,19 @@ class CuatrimestreController {
 		def cuatrimestreInstance = new Cuatrimestre(anio: anio, numero: numero, foro: foro, curso: Curso.get(params.cursoId))
 		// Obtengo el ultimo cuatrimestre
 		def cuatrimestres = cuatrimestreService.obtenerCuatrimestresOrdenados(params.cursoId.toLong())
-		def cuatrimestreUltimo = cuatrimestres.first()
+		def cuatrimestreUltimo
+		if (cuatrimestres) {
+			cuatrimestreUltimo = cuatrimestres.first()
+		}
 		if (!cuatrimestreService.guardar(cuatrimestreInstance)) {
-			println cuatrimestreInstance.errors
 			flash.message = "Problemas al consolidar el cuatrimestre ${cuatrimestreInstance}"	
 			redirect controller: "curso", action: "mediador", params:['cursoId': params.cursoId]
 			return
 		}
 		// Se creo el nuevo cuatrimestre => Pasar a cursando false a todos los aprendices del cuatrimestre anterior
-		cuatrimestreService.consolidar(cuatrimestreUltimo)
+		if (cuatrimestreUltimo) {
+			cuatrimestreService.consolidar(cuatrimestreUltimo)
+		}
 		flash.message = "Cuatrimestre ${cuatrimestreInstance} creado"
 		redirect controller: "curso", action: "mediador", params:['cursoId': params.cursoId]
 	}
