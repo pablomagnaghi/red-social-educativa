@@ -3,8 +3,8 @@ package com.fiuba
 class Evaluacion {
 
 	String nombre
-	String fecha
-	String horario
+	Integer fecha
+	Integer horario
 	String aula 
 	boolean parcial //el tipo (parcial o integradora)
 	boolean obligatoria //si es obligatoria para todo el curso o por inscripcion 

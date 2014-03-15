@@ -413,15 +413,15 @@ class BootStrap {
 			fechaFinalizacion: (new Date()).format(Utilidades.FORMATO_FECHA))
 
 		// Evaluaciones	
-		def evaluacionUno = new Evaluacion(nombre: "evaluacion 1", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: (new Date()).getTimeString(), 
+		def evaluacionUno = new Evaluacion(nombre: "evaluacion 1", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: "1900", 
 			aula: "1", parcial: true, obligatoria: false, habilitada: true)
-		def evaluacionDos = new Evaluacion(nombre: "evaluacion 2", fecha: (new Date()).format(Utilidades.FORMATO_FECHA),horario: (new Date()).getTimeString(), 
+		def evaluacionDos = new Evaluacion(nombre: "evaluacion 2", fecha: (new Date()).format(Utilidades.FORMATO_FECHA),horario: "1930", 
 			aula: "2", parcial: true, obligatoria: false, habilitada: false)
-		def evaluacionTres = new Evaluacion(nombre: "evaluacion 3", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: (new Date()).getTimeString(), 
+		def evaluacionTres = new Evaluacion(nombre: "evaluacion 3", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: "2000", 
 			aula: "3", parcial: true, obligatoria: false, habilitada: false)
-		def evaluacionCuatro = new Evaluacion(nombre: "evaluacion 4", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: (new Date()).getTimeString(), 
+		def evaluacionCuatro = new Evaluacion(nombre: "evaluacion 4", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: "2030", 
 			aula: "4", parcial: true, obligatoria: false, habilitada: true)
-		def evaluacionCinco = new Evaluacion(nombre: "evaluacion 5", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: (new Date()).getTimeString(), 
+		def evaluacionCinco = new Evaluacion(nombre: "evaluacion 5", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: "1900", 
 			aula: "5", parcial: true, obligatoria: false, habilitada: true)
 		
 		// Cuatrimestres
