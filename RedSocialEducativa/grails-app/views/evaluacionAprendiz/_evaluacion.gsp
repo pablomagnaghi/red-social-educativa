@@ -2,12 +2,21 @@
     <div class="box span12">
         <div class="box-header" data-original-title="">
             <h2><i class="icon-table"></i>
-                <span class="break"></span>${evaluacion}</h2>
+                <span class="break"></span>Evaluacion ${evaluacion}</h2>
             <div class="box-icon">
-                <g:link action="create" params="['cursoId': params.cursoId]"><i class="icon-plus"></i></g:link>
+                <g:link action="create" params="['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId]"><i class="icon-plus"></i></g:link>
             </div>
         </div>
         <div class="box-content">
+        	<g:if test="${flash.message}">
+				<div class="box-content alerts">
+		    		<div class="alert alert-info">
+						<button class="close" data-dismiss="alert" type="button"></button>
+						<strong></strong> 
+						${flash.message}
+				    </div>
+				</div>    
+			</g:if>
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
                 <thead>
                     <tr>
@@ -42,6 +51,5 @@
     <!--/span-->
 </div>
 <!--/row-->				
-				
 				
 	

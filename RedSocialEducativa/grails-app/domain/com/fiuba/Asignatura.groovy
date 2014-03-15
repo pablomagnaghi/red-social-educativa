@@ -16,6 +16,6 @@ class Asignatura {
 	}
 
 	String toString() {
-		"${codigo} - ${nombre}"
+		"${codigo}"
 	}
 }

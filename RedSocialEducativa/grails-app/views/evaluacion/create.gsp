@@ -44,47 +44,12 @@
 						    <div class="box">
 						        <div class="box-header">
 						            <h2><i class="icon-plus"></i>Crear</h2>
-						            <div class="box-icon">
-						                <g:link action="index" params="['cursoId': params.cursoId]"><i class="icon-table"></i></g:link>
-						            </div>
+						            <div class="box-icon"><g:link action="index" params="['cursoId': params.cursoId]"><i class="icon-table"></i></g:link></div>
 						        </div>
 						        <div class="box-content">
 						        	<g:form class="form-horizontal" action="save" params="['cursoId': params.cursoId]">
 							            <fieldset>		
-							            	<g:if test="${flash.message}">
-												<div class="box-content alerts">
-													<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button"></button><strong>${flash.message}</strong></div>
-												</div>
-											</g:if>
-											<g:hasErrors bean="${evaluacionInstance}">
-												<div class="box-content alerts">
-													<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button"></button><strong>Revise el formulario</strong></div>
-													
-												</div>
-											</g:hasErrors>
-							            	<!-- NOMBRE -->
-											<g:if test="${!hasErrors(bean:evaluacionInstance, field: 'nombre', 'error')}">
-												<div class="control-group">
-													<label class="control-label" >Nombre</label>			
-													<div class="controls"><g:textField name="nombre" value="${evaluacionInstance?.nombre}" style='width: 62%' maxlength="64"/></div>	
-												</div>		
-											</g:if>
-											<g:else>
-												<div class="control-group error">
-													<label class="control-label" >Nombre</label>			
-													<div class="controls">
-														<g:textField name="nombre" value="${evaluacionInstance?.nombre}" style='width: 62%' maxlength="64"/>
-														<span class="help-inline"><g:renderErrors bean="${evaluacionInstance}" as="list" field="nombre"/></span>
-													</div>	
-												</div>	 
-											</g:else>
 							            	<g:render template="form"/>		
-							            	<div class="control-group">
-												<label class="control-label" >Obligatoria</label>			
-												<div class="controls">
-													<g:checkBox name="obligatoria" value="${evaluacionInstance?.obligatoria}" />
-												</div>	
-											</div>		
 							            	<div class="form-actions">
 												<button type="submit" class="btn btn-primary">Crear</button>
 											</div>		    

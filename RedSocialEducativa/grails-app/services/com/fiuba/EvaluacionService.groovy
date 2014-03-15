@@ -13,16 +13,14 @@ class EvaluacionService {
 		return fechaNum
 	}
 	
+	// Se agregan los que cursan el cuatrimestre actual.
+	// Esta hecho para el caso del primer parcial, que es obligatorio para todos los alumnos del cuatrimestre.
 	def agregarAprendices(Evaluacion evaluacion, Long cursoId) {
-		
-		def c = Aprendiz.createCriteria()
-		def aprendices = c.list {
+		def aprendices = Aprendiz.createCriteria().list {
 			cuatrimestre {
 				eq('curso.id', cursoId)
 			}
 		}
-		
-		// TODO si se tienen que agregar todos los que cursaron a lo largo de los N cuatrimestres, sacar el it.cursando
 		aprendices.each {
 			if (it.participa && it.cursando) {
 				inscribirAprendiz(evaluacion, it)
@@ -36,13 +34,10 @@ class EvaluacionService {
 	}
 
 	def obtenerEvaluacionesPorAprendiz(Aprendiz aprendiz, Long cursoId) {
-
 		if (!aprendiz) {
 			return null
 		}
-
-		def c = EvaluacionAprendiz.createCriteria()
-		def evaluacionesAprendiz = c {
+		def evaluacionesAprendiz = EvaluacionAprendiz.createCriteria().list {
 			evaluacion {
 				eq('curso.id', cursoId)
 			}
@@ -52,11 +47,9 @@ class EvaluacionService {
 	}
 
 	def guardar(Evaluacion evaluacion) {
-
 		if (evaluacion.save(flush: true)) {
 			return evaluacion
 		}
-
 		return null
 	}
 

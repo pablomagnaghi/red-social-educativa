@@ -33,9 +33,12 @@
                 	<g:each in="${evaluacionInstanceList}" var="evaluacionInstance">
 	                    <tr>
     	                    <td>${fieldValue(bean: evaluacionInstance, field: "nombre")}</td>
-        	                <td class="center">${fieldValue(bean: evaluacionInstance, field: "fecha")}</td>
-            	            <td class="center">${fieldValue(bean: evaluacionInstance, field: "horario")}</td>
-            	            <td class="center">${fieldValue(bean: evaluacionInstance, field: "aula")}</td>
+        	                <td class="center"><g:formatNumber number="${evaluacionInstance.fecha}"/></td>
+            	            <td class="center"><g:formatNumber number="${evaluacionInstance.horario}"/></td>
+            	            <td class="center">
+            	            	<g:if test="${evaluacionInstance.aula}">${evaluacionInstance.aula}</g:if>
+            	            	<g:else>No asignada</g:else>
+            	            </td>
             	            <td class="center">
             	            	<g:if test="${evaluacionInstance.habilitada}">Si</g:if>
             	            	<g:else>No</g:else>
