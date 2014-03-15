@@ -26,8 +26,7 @@ class AprendizService {
 	}
 
 	def obtenerPorCurso(Long usuarioId, Long cursoId) {
-		def c = Aprendiz.createCriteria()
-		def aprendiz = c.get {
+		def aprendiz = Aprendiz.createCriteria().get {
 			cuatrimestre {
 				eq('curso.id', cursoId)
 			}
@@ -39,8 +38,7 @@ class AprendizService {
 	
 	// Para evaluacionAprendiz
 	def obtenerTodosAprendicesDeCurso(Long cursoId) {
-		def c = Aprendiz.createCriteria()
-		def aprendices = c {
+		def aprendices = Aprendiz.createCriteria().list {
 			cuatrimestre {
 				eq('curso.id', cursoId)
 			}
@@ -51,8 +49,7 @@ class AprendizService {
 
 	// Para aprendiz
 	def obtenerAprendices(Long cursoId) {
-		def c = Aprendiz.createCriteria()
-		def aprendices = c {
+		def aprendices = Aprendiz.createCriteria().list {
 			cuatrimestre {
 				eq('curso.id', cursoId)
 			}
@@ -62,14 +59,10 @@ class AprendizService {
 
 	// Obtener el grupo en el que participa el aprendiz en esa actividad
 	def obtenerGrupoPorActividad(Usuario usuario, Long cuatrimestreId, Long actividadId) {
-
 		Long aprendizId = Aprendiz.findByUsuarioAndCuatrimestre(usuario, Cuatrimestre.get(cuatrimestreId))?.id
-
 		def grupoActividadAprendiz = null
-
 		if (aprendizId) {
-			def c = GrupoActividadAprendiz.createCriteria()
-			grupoActividadAprendiz = c.get {
+			grupoActividadAprendiz = GrupoActividadAprendiz.createCriteria().get {
 				grupo {
 					eq('actividad.id', actividadId)
 				}
