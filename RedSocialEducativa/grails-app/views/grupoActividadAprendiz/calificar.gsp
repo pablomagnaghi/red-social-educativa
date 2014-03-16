@@ -32,59 +32,57 @@
 	            <div id="content" class="span10">
 		            <div class="row-fluid">
 		            	<div class="span2"></div>
-					    <div class="box span8">
-					        <div class="box-header">
-					            <h2><i class="icon-plus"></i>Calificar</h2>
-					            <div class="box-icon">
-					                <a href="#" class="btn-setting"><i class="icon-wrench"></i></a>
-					                <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
-					                <a href="#" class="btn-close"><i class="icon-remove"></i></a>
-					            </div>
-					        </div>
-							<h2>Curso: ${com.cursado.Curso.get(params.cursoId)}</h2>
-							<h2>Curso Id: ${params.cursoId}</h2>
-							<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
-							<h2>Actividad Id: ${params.actividadId}</h2>
-							<h2>GRupo Actividad Id: ${params.grupoActividadId}</h2>
-							<h2>GRupo Actividad Id: ${grupoActividadAprendizInstance.grupo.id}</h2>
-							<h2>Aprendiz Id: ${grupoActividadAprendizInstance.aprendiz.id}</h2>
-							<h2>GRupo Actividad aprendiz Id: ${params.id}</h2>
-					        <g:if test="${flash.message}">
-								<div class="message" role="status">${flash.message}</div>
-							</g:if>    
-							<g:hasErrors bean="${grupoActividadAprendizInstance}">
-								<ul class="errors" role="alert">
-									<g:eachError bean="${grupoActividadAprendizInstance}" var="error">
-										<li <g:if test="${error in org.springframework.validation.FieldError}">
-												data-field-id="${error.field}"</g:if>>
-											<g:message error="${error}"/></li>
-									</g:eachError>
-								</ul>
-							</g:hasErrors>
-					        <div class="box-content">
-					        	<g:form class="form-horizontal" action="guardarCalificacion" id="${params.id}" 
-					        		params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
-					        		'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]">
-									<g:hiddenField name="version" value="${grupoActividadAprendizInstance?.version}" />
-									<g:hiddenField name="grupo.id" value="${grupoActividadAprendizInstance.grupo.id}"/>
-									<g:hiddenField name="aprendiz.id" value="${grupoActividadAprendizInstance.aprendiz.id}"/>
-						            <fieldset>		
-						            	
-						            	<div class="control-group">
-											<label class="control-label" >Nota</label>			
-											<div class="controls">
-												 <g:field name="nota" type="number" min="1" value="${grupoActividadAprendizInstance.nota}"/> 
-											</div>	
-										</div>
-						            	
-						            	<div class="form-actions">
-											<button type="submit" class="btn btn-primary">Crear</button>
-										</div>		    
-						            </fieldset>
-					            </g:form> 
-					        </div>
+		            	<div class="span8">
+		            		<!-- comienzo: BREADCRUM -->
+							<div class="box-content buttons">
+								<p class="btn-group">
+									<g:link controller="curso" action="mediador" params="['cursoId': params.cursoId]">
+										<button class="btn">${com.cursado.Curso.get(params.cursoId)}</button></g:link>
+									<g:link controller="actividad" action="index" params="['cursoId': params.cursoId]">
+										<button class="btn">Actividades del cuatrimestre ${com.cursado.Cuatrimestre.get(params.cuatrimestreId)}
+										</button></g:link>	
+								</p>
+							</div>
+							<!-- Fin: BREADCRUM -->  
+						    <div class="box">
+						        <div class="box-header">
+						            <h2><i class="icon-plus"></i>Recalificación del aprendiz ${grupoActividadAprendizInstance.aprendiz} 
+						            	del grupo ${grupoActividadAprendizInstance.grupo}</h2>
+										<div class="box-icon"><g:link controller="grupoActividad" action="gruposMediador" 
+											params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
+											'actividadId': params.actividadId]"><i class="icon-table"></i></g:link></div>
+						        </div>
+						        <g:if test="${flash.message}">
+									<div class="box-content alerts">
+										<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button">
+											</button><strong>${flash.message}</strong></div>
+									</div>
+								</g:if>
+						        <div class="box-content">
+						        	<g:form class="form-horizontal" action="guardarCalificacion" id="${params.id}" 
+						        		params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
+						        		'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]">
+										<g:hiddenField name="version" value="${grupoActividadAprendizInstance?.version}" />
+										<g:hiddenField name="grupo.id" value="${grupoActividadAprendizInstance.grupo.id}"/>
+										<g:hiddenField name="aprendiz.id" value="${grupoActividadAprendizInstance.aprendiz.id}"/>
+							            <fieldset>		
+							            	
+							            	<div class="control-group">
+												<label class="control-label" >Nota</label>			
+												<div class="controls">
+													<g:field name="nota" type="number decimal" value="${grupoActividadAprendizInstance.nota}" 
+														style="width: 5%; text-align: center"/>	 
+												</div>	
+											</div>
+							            	
+							            	<div class="form-actions">
+												<button type="submit" class="btn btn-primary">Recalificar</button>
+											</div>		    
+							            </fieldset>
+						            </g:form> 
+						        </div>
+						    </div>
 					    </div>
-					    <!--/span-->
 					    <div class="span2"></div>
 					</div>
 					<!--/row-->    		

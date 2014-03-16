@@ -13,4 +13,8 @@ class GrupoActividadAprendiz {
     static constraints = {
 		nota nullable: true, min: 0.00F, max: 10.0F, scale: 2
     }
+	
+	String toString() {
+		"${aprendiz}"
+	}
 }
