@@ -30,11 +30,14 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-					<h2>Foro Curso: ${com.foro.ForoCurso.findByCuatrimestre(com.fiuba.Cuatrimestre.get(params.cuatrimestreId))}</h2>
-					<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
-					<h2>Cuatrimestre: ${com.fiuba.Cuatrimestre.get(params.cuatrimestreId)}</h2>
-					<h2>Mediador: ${mediador}</h2>
-					<h2>Aprendiz: ${aprendiz}</h2>
+					<!-- comienzo: BREADCRUM -->
+					<div class="box-content buttons">
+						<p class="btn-group">
+							<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
+								<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+						</p>
+					</div>
+					<!-- Fin: BREADCRUM -->
 	                <g:render template="temas" />		
  				</div>
             	<!-- end: Content -->

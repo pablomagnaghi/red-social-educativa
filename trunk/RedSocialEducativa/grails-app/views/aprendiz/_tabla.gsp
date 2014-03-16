@@ -20,9 +20,9 @@
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
                 <thead>
                     <tr>
+                    	<th>Padron</th>     
                         <th>Apellido</th>
-                        <th>Nombres</th>
-                        <th>Padron</th>     
+                        <th>Nombres</th>   
                         <th>Email</th>               
                         <th>Estado</th>    
                         <th>Acciones</th>            
@@ -31,10 +31,10 @@
                 <tbody>
                 	<g:each in="${aprendizInstanceList}" var="aprendizInstance">
 	                    <tr>
-    	                    <td>${aprendizInstance.usuario.apellido}</td>
-    	                    <td>${aprendizInstance.usuario.nombres}</td>
-    	            		<td>${aprendizInstance.usuario.padron}</td>
-    	                    <td>${aprendizInstance.usuario.email}</td>
+	                    	<td>${aprendizInstance.usuario.padron}</td>
+    	                    <td class="center">${aprendizInstance.usuario.apellido}</td>
+    	                    <td class="center">${aprendizInstance.usuario.nombres}</td>
+    	                    <td class="center">${aprendizInstance.usuario.email}</td>
 							<td class="center">
 								<g:if test="${aprendizInstance.participa}">
 									<span class="label label-success">Activo</span>

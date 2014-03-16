@@ -8,7 +8,9 @@
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
                 <thead>
                     <tr>
-                        <th>Usuario</th>                    
+                        <th>Padron</th>      
+                        <th>Apellido</th>  
+                        <th>Nombres</th>                
                         <th>Msj Enviados</th>    
                         <th>Msj Leidos</th>  
                         <th>Pub Foros</th>  
@@ -19,7 +21,9 @@
                 <tbody>
                 	<g:each in="${aprendizInstanceList}" var="aprendizInstance">
 	                    <tr>
-    	                    <td>${fieldValue(bean: aprendizInstance, field: "usuario")}</td>			
+    	                    <td>${aprendizInstance.usuario.padron}</td>	
+    	                    <td class="center">${aprendizInstance.usuario.apellido}</td>	
+    	                    <td class="center">${aprendizInstance.usuario.nombres}</td>			
 							<td class="center">${fieldValue(bean: aprendizInstance, field: "msjEnviados")}</td>
 							<td class="center">${fieldValue(bean: aprendizInstance, field: "msjLeidos")}</td>		
 							<td class="center">${fieldValue(bean: aprendizInstance, field: "pubForos")}</td>	

@@ -22,7 +22,6 @@
                     <tr>
                         <th>Titulo</th>
                         <th>Categoria</th>
-                        <th>Objetivo</th>
                         <th>Fecha finalizacion</th>
                         <th>Grupal</th>
                         <th>Evaluable</th>  
@@ -37,11 +36,19 @@
 	                    <tr>
     	                    <td>${actividadInstance.titulo}</td>
         	                <td class="center">${actividadInstance.categoria}</td>
-        	                <td class="center">${actividadInstance.objetivo}</td>
-            	            <td class="center">${actividadInstance.fechaFinalizacion}</td>
-            	            <td class="center">${actividadInstance.grupal}</td>
-            	            <td class="center">${actividadInstance.evaluable}</td>
-            	            <td class="center">${actividadInstance.visibilidad}</td>
+            	            <td class="center"><g:formatNumber number="${actividadInstance.fechaFinalizacion}" /></td>
+            	            <td class="center">
+            	            	<g:if test="${actividadInstance.grupal}">Si</g:if>
+            	            	<g:else>No</g:else>
+            	            </td>
+            	            <td class="center">
+            	            	<g:if test="${actividadInstance.evaluable}">Si</g:if>
+            	            	<g:else>No</g:else>
+            	            </td>	
+            	            <td class="center">
+            	            	<g:if test="${actividadInstance.visibilidad}">Si</g:if>
+            	            	<g:else>No</g:else>
+            	            </td>	
             	            <td class="center">
             	           		<g:if test="${actividadInstance.materiales}">
 	        	                	<g:each in="${actividadInstance.materiales}" var="m">
@@ -88,8 +95,10 @@
 									params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadInstance?.id]">T</g:link>
 	                        	<g:link class="btn btn-success" action="show" id="${actividadInstance.id}"
 	                            	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-search "></i></g:link>
-	                            <g:link class="btn btn-info" action="edit" id="${actividadInstance.id}"
-	                            	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-edit "></i></g:link>
+		                 		<g:if test="${!actividadInstance.visibilidad}">	
+		                            <g:link class="btn btn-info" action="edit" id="${actividadInstance.id}"
+		                            	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-edit "></i></g:link>
+	                            </g:if>
 	                            <g:link class="btn btn-danger" action="delete" method="DELETE" id="${actividadInstance.id}" 
 	                            	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"
 	                            	onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >	                          

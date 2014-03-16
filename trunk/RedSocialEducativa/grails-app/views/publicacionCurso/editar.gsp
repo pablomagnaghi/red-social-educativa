@@ -32,29 +32,41 @@
 	            <div id="content" class="span10">
 					<div class="row-fluid">
 						<div class="span2"></div>
-					    <div class="box span8">
-					        <div class="box-header">     	
-					            <h2><i class="icon-edit"></i>Editar</h2>
-					            <div class="box-icon">
-					                <g:link action="nueva" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-					                	<i class="icon-plus"></i></g:link>
-					                <g:link controller="foroCurso" action="general" 
-					                	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-comments-alt"></i></g:link>
-					            </div>
-					        </div>
-							<div class="box-content">
-								<g:form class="form-horizontal" action="actualizar" method="PUT" id="${publicacionCursoInstance.id}" 
-									params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-									<g:hiddenField name="version" value="${publicacionCursoInstance?.version}" />
-									<fieldset>
-										<g:render template="form"/>	
-										<div class="form-actions">
-											<button type="submit" class="btn btn-primary">Actualizar</button>
-										</div>		    
-									</fieldset>				
-								</g:form>
+						<div class="span8">
+							<!-- comienzo: BREADCRUM -->
+							<div class="box-content buttons">
+								<p class="btn-group">
+									<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
+										<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+									<g:link controller="foroCurso" action="general" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+										<button class="btn">Temas del foro de cursado</button></g:link>	
+								</p>
 							</div>
-						</div>
+							<!-- Fin: BREADCRUM --> 
+						    <div class="box">
+						        <div class="box-header">     	
+						            <h2><i class="icon-edit"></i>Editar</h2>
+						            <div class="box-icon">
+						                <g:link action="nueva" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+						                	<i class="icon-plus"></i></g:link>
+						                <g:link controller="foroCurso" action="general" 
+						                	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-comments-alt"></i></g:link>
+						            </div>
+						        </div>
+								<div class="box-content">
+									<g:form class="form-horizontal" action="actualizar" method="PUT" id="${publicacionCursoInstance.id}" 
+										params="['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+										<g:hiddenField name="version" value="${publicacionCursoInstance?.version}" />
+										<fieldset>
+											<g:render template="form"/>	
+											<div class="form-actions">
+												<button type="submit" class="btn btn-primary">Actualizar</button>
+											</div>		    
+										</fieldset>				
+									</g:form>
+								</div>
+							</div>
+						</div>	
 						<div class="span2"></div>
 					</div>
  				</div>
@@ -66,12 +78,3 @@
         <div class="clearfix"></div>					
 	</body>
 </html>
-
-<!-- PARA EL BREADCRUMB --><!--  
-<li><g:link class="create" controller="foroCurso" action="general" 
-					params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-					<g:message code="Foro Curso" /></g:link></li>
-				<li><g:link class="list" controller="foroCurso" action="publicaciones" id="${params.pubInicialId}" 
-					params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-					<g:message code="Tema actual" /></g:link></li>
--->

@@ -69,7 +69,7 @@ class EvaluacionController {
             return
         }
 		if (params.fechaDate) {
-			evaluacionInstance.fecha = evaluacionService.obtenerFecha(params.fechaDate)//.format(Utilidades.FORMATO_FECHA)
+			evaluacionInstance.fecha = evaluacionService.obtenerFecha(params.fechaDate)
 			if (evaluacionInstance.fecha < Utilidades.FECHA) {
 				flash.message = "La fecha no puede ser menor a ${Utilidades.FECHA}"
 				render view:'create', model: [evaluacionInstance: evaluacionInstance], params:['cursoId': params.cursoId]

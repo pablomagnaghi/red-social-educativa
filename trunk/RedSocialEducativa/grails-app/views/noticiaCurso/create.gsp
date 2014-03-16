@@ -31,31 +31,37 @@
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">    
 	            	<div class="span2"></div>	
-					<div class="box span8">
-						<div class="box-header">
-							<h2><i class="icon-plus"></i>Crear</h2>
-							<div class="box-icon">
-								<div class="box-icon"><g:link action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-									<i class="icon-table"></i></g:link></div>
-							</div>
-						</div>       
-						<h2>mediadorID: ${mediadorId}</h2>
-						<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
-						<h2>Curso Id: ${params.cursoId}</h2>
-						<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
-						<div class="box-content">
-							<g:form class="form-horizontal" action="save" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-								<g:hiddenField name="cuatrimestre.id" value="${params.cuatrimestreId}"/>
-								<g:hiddenField name="mediador.id" value="${mediadorId}"/>
-								<fieldset>	
-									<g:render template="form"/>			
-									<div class="form-actions">
-										<button type="submit" class="btn btn-primary">Crear</button>
-									</div>		    
-								</fieldset>
-							</g:form>
-						</div>	
-					</div>
+	            	<div class="span8">
+	            		<!-- comienzo: BREADCRUM -->
+						<div class="box-content buttons">
+							<p class="btn-group">
+								<g:link controller="curso" action="mediador" params="['cursoId': params.cursoId]">
+									<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+							</p>
+						</div>
+						<!-- Fin: BREADCRUM -->
+						<div class="box">
+							<div class="box-header">
+								<h2><i class="icon-plus"></i>Crear</h2>
+								<div class="box-icon">
+									<div class="box-icon"><g:link action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+										<i class="icon-table"></i></g:link></div>
+								</div>
+							</div>       
+							<div class="box-content">
+								<g:form class="form-horizontal" action="save" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+									<g:hiddenField name="cuatrimestre.id" value="${params.cuatrimestreId}"/>
+									<g:hiddenField name="mediador.id" value="${mediadorId}"/>
+									<fieldset>	
+										<g:render template="form"/>			
+										<div class="form-actions">
+											<button type="submit" class="btn btn-primary">Crear</button>
+										</div>		    
+									</fieldset>
+								</g:form>
+							</div>	
+						</div>
+					</div>	
 					<div class="span2"></div>	
 					<!--/span-->
 				</div>

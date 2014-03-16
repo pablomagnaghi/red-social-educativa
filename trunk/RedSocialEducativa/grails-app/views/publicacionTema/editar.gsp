@@ -81,11 +81,3 @@
         <div class="clearfix"></div>					
 	</body>
 </html>
-
-<!--  PARA EL BREADCRUMB -->
-
-<!-- <li><g:link class="create" controller="foroTema" action="general" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
-					<g:message code="Foro Tema" /></g:link></li>
-				<li><g:link class="list" controller="foroTema" action="publicaciones" 
-					id="${params.pubInicialId}" params="['cursoId': params.cursoId, 'temaId': params.temaId]">
-					<g:message code="Tema actual" /></g:link></li> -->
