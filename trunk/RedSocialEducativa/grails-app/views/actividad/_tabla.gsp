@@ -96,6 +96,10 @@
 			          					<g:link class="btn btn-success" controller="temaActividad" action="create"  
 											params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadInstance?.id]">T</g:link>
 									</g:if>		
+									<g:if test="${aprendiz}">
+										<g:link class="btn btn-success" controller="grupoActividad" action="gruposAprendiz" id="${actividadInstance.id}"
+			                            	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadInstance.id]">Grupos</g:link>
+									</g:if>
 			                        <g:link class="btn btn-success" action="show" id="${actividadInstance.id}"
 			                            params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-search "></i></g:link>
 			                        <g:if test="${mediador}">   
