@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.GrupoActividad" %>
+<%@ page import="com.cursado.GrupoActividad" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>
@@ -6,7 +6,7 @@
 	def usuarioService = grailsApplication.classLoader.loadClass('com.fiuba.UsuarioService').newInstance()
 	def mediadorService = grailsApplication.classLoader.loadClass('com.fiuba.MediadorService').newInstance()
 	def aprendizService = grailsApplication.classLoader.loadClass('com.fiuba.AprendizService').newInstance()
-	def grupoActividadService = grailsApplication.classLoader.loadClass('com.fiuba.GrupoActividadService').newInstance()
+	def grupoActividadService = grailsApplication.classLoader.loadClass('com.cursado.GrupoActividadService').newInstance()
 %>
 
 <!DOCTYPE html>
@@ -35,7 +35,7 @@
 					<g:if test="${flash.message}">
 						<div class="message" role="status">${flash.message}</div>
 					</g:if>
-					<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+					<h2>Curso: ${com.cursado.Curso.get(params.cursoId)}</h2>
 					<h2>Curso Id: ${params.cursoId}</h2>
 					<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
 					<h2>Ac: ${params.actividadId}</h2>

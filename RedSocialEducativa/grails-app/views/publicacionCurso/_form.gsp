@@ -11,7 +11,7 @@
 
 <g:hiddenField name="responsable" value="${usuario.nombres} ${usuario.apellido}"/>
 <g:hiddenField name="dni" value="${usuario.dni}"/>
-<g:hiddenField name="foro.id" value="${com.foro.ForoCurso.findByCuatrimestre(com.fiuba.Cuatrimestre.get(params.cuatrimestreId)).id}"/>
+<g:hiddenField name="foro.id" value="${com.foro.ForoCurso.findByCuatrimestre(com.cursado.Cuatrimestre.get(params.cuatrimestreId)).id}"/>
 
 <g:if test="${!params.pubInicialId || com.foro.PublicacionCurso.get(params.pubInicialId)?.id == publicacionCursoInstance.id}">
 	<!-- TITULO -->

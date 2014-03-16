@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.GrupoActividad" %>
+<%@ page import="com.cursado.GrupoActividad" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>
@@ -39,7 +39,7 @@
 					            </div>
 					        </div>
 					        <h2>Params: ${params}</h2>
-							<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+							<h2>Curso: ${com.cursado.Curso.get(params.cursoId)}</h2>
 							<h2>Curso Id: ${params.cursoId}</h2>
 							<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
 							<h2>Actividad Id: ${params.actividadId}</h2>

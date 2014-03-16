@@ -37,7 +37,7 @@
 	            	            	<g:else>No asignada</g:else>
 	            	            </td>
 	            	            <td class="center">
-	            	            	<g:if test="${com.fiuba.EvaluacionAprendiz.findByAprendizAndEvaluacion(aprendiz, evaluacionInstance)}">
+	            	            	<g:if test="${com.cursado.EvaluacionAprendiz.findByAprendizAndEvaluacion(aprendiz, evaluacionInstance)}">
 	            	            		<span class="label label-success">Inscripto</span>
 									</g:if>
 									<g:else>
@@ -46,7 +46,7 @@
 								</td>	
 		                        <td class="center">
 		                        	<g:if test="${evaluacionInstance.fecha > (com.fiuba.Utilidades.FECHA + 1)}">
-			                        	<g:if test="${com.fiuba.EvaluacionAprendiz.findByAprendizAndEvaluacion(aprendiz, evaluacionInstance)}">
+			                        	<g:if test="${com.cursado.EvaluacionAprendiz.findByAprendizAndEvaluacion(aprendiz, evaluacionInstance)}">
 			                        		<g:if test="${evaluacionInstance.obligatoria}">
 			                        			<span class="label label-warning"><h5>Inscripción obligatoria</h5></span>
 			                        		</g:if>

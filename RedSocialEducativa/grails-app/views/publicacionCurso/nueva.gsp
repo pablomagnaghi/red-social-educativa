@@ -37,7 +37,7 @@
 							<div class="box-content buttons">
 								<p class="btn-group">
 									<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
-										<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+										<button class="btn">${com.cursado.Curso.get(params.cursoId)}</button></g:link>
 									<g:link controller="foroCurso" action="general" 
 						                params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 						                <button class="btn">Temas del foro de cursado</button></g:link>	

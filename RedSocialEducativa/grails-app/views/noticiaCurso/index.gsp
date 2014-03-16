@@ -34,7 +34,7 @@
 					<div class="box-content buttons">
 						<p class="btn-group">
 							<g:link controller="curso" action="mediador" params="['cursoId': params.cursoId]">
-								<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+								<button class="btn">${com.cursado.Curso.get(params.cursoId)}</button></g:link>
 						</p>
 					</div>
 					<!-- Fin: BREADCRUM -->

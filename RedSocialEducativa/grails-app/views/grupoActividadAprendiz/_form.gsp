@@ -1,7 +1,3 @@
-<%@ page import="com.fiuba.GrupoActividadAprendiz" %>
-
-
-
 <div class="fieldcontain ${hasErrors(bean: grupoActividadAprendizInstance, field: 'nota', 'error')} ">
 	<label for="nota">
 		<g:message code="grupoActividadAprendiz.nota.label" default="Nota" />

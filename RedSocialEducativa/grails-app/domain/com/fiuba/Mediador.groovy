@@ -1,6 +1,7 @@
 package com.fiuba
 
 import com.cartelera.*
+import com.cursado.*
 
 class Mediador extends UsuarioRol {
 

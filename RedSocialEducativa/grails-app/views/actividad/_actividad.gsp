@@ -1,5 +1,5 @@
 <div class="box-header" data-original-title="">
-	<h2><i class="icon-table"></i><span class="break"></span>Actividad ${actividadInstance} del cuatrimestre ${com.fiuba.Cuatrimestre.get(params.cuatrimestreId)}</h2>
+	<h2><i class="icon-table"></i><span class="break"></span>Actividad ${actividadInstance} del cuatrimestre ${com.cursado.Cuatrimestre.get(params.cuatrimestreId)}</h2>
 	<div class="box-icon">
 		<g:if test="${mediador}">
 			<g:link action="create" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">

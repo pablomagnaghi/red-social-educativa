@@ -22,7 +22,7 @@
 	<div class="control-group">
 		<label class="control-label" >Asignatura</label>			
 		<div class="controls">
-			<g:select id="asignatura" name="asignatura.id" from="${com.fiuba.Asignatura.list()}" 
+			<g:select id="asignatura" name="asignatura.id" from="${com.cursado.Asignatura.list()}" 
 				optionKey="id" value="${cursoInstance?.asignatura?.id}" class="many-to-one"/>
 		</div>	
 	</div>	
@@ -31,7 +31,7 @@
 	<div class="control-group error">
 		<label class="control-label" >Asignatura</label>			
 		<div class="controls">
-			<g:select id="asignatura" name="asignatura.id" from="${com.fiuba.Asignatura.list()}" 
+			<g:select id="asignatura" name="asignatura.id" from="${com.cursado.Asignatura.list()}" 
 				optionKey="id" required="" value="${cursoInstance?.asignatura?.id}" class="many-to-one"/>
 			<span class="help-inline">
 				<g:renderErrors bean="${cursoInstance}" as="list" field="asignatura"/>

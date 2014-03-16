@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.EvaluacionAprendiz" %>
+<%@ page import="com.cursado.EvaluacionAprendiz" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>
@@ -34,15 +34,15 @@
 					<div class="box-content buttons">
 						<p class="btn-group">
 							<g:link controller="curso" action="mediador" params="['cursoId': params.cursoId]">
-								<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+								<button class="btn">${com.cursado.Curso.get(params.cursoId)}</button></g:link>
 							<g:if test="${params.cuatrimestreId}">	
 								<g:link controller="aprendiz" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-									<button class="btn">Aprendices curso ${com.fiuba.Curso.get(params.cursoId)} cuatrimestre 
-										${com.fiuba.Cuatrimestre.get(params.cuatrimestreId)}</button></g:link>	
+									<button class="btn">Aprendices curso ${com.cursado.Curso.get(params.cursoId)} cuatrimestre 
+										${com.cursado.Cuatrimestre.get(params.cuatrimestreId)}</button></g:link>	
 							</g:if>
 							<g:else>
 								<g:link controller="aprendiz" action="aprendicesCurso" params="['cursoId': params.cursoId]">
-									<button class="btn">Aprendices curso ${com.fiuba.Curso.get(params.cursoId)}</button></g:link>	
+									<button class="btn">Aprendices curso ${com.cursado.Curso.get(params.cursoId)}</button></g:link>	
 							</g:else>		
 						</p>
 				    </div>

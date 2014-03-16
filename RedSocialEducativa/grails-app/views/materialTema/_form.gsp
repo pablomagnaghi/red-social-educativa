@@ -61,4 +61,4 @@
 </g:else>
 			
 <g:hiddenField name="tema.id" value="${params.temaId}"/>
-<g:hiddenField name="responsable" value="${com.fiuba.Mediador.findByUsuarioAndCurso(usuario, com.fiuba.Curso.get(params.cursoId))}"/>
+<g:hiddenField name="responsable" value="${com.fiuba.Mediador.findByUsuarioAndCurso(usuario, com.cursado.Curso.get(params.cursoId))}"/>

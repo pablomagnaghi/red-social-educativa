@@ -1,5 +1,6 @@
 package com.material
 
+import com.cursado.*
 import com.fiuba.*
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional

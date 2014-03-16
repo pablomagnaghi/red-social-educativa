@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.Curso" %>
+<%@ page import="com.cursado.Curso" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>
@@ -36,8 +36,8 @@
 						<div class="box span12">
 							<div class="box-header">
 								<h2><i class="icon-font"></i><span class="break"></span>
-									Bienvenido aprendiz ${usuario} al curso ${com.fiuba.Curso.get(params.cursoId)} 
-									de la asignatura ${com.fiuba.Curso.get(params.cursoId).asignatura}</h2>
+									Bienvenido aprendiz ${usuario} al curso ${com.cursado.Curso.get(params.cursoId)} 
+									de la asignatura ${com.cursado.Curso.get(params.cursoId).asignatura}</h2>
 								<div class="box-icon">
 									<a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
 								</div>

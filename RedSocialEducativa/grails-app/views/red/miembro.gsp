@@ -35,20 +35,6 @@
         	</div>
         	<!--/fluid-row-->
         </div>
-        <!--Ver despues si se usa para mostrar los contenidos minimos o alguna otra funcionalidad-->
-		<div class="modal hide fade" id="myModal">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">×</button>
-				<h3>Settings</h3>
-			</div>
-			<div class="modal-body">
-				<p>Here settings can be configured...OCULTO</p>
-			</div>
-			<div class="modal-footer">
-				<a href="#" class="btn" data-dismiss="modal">Close</a>
-				<a href="#" class="btn btn-primary">Save changes</a>
-			</div>
-		</div>
         <!--CLAVE ESTE DIV, SI SE SACA, NO APARECE NADA -->
         <div class="clearfix"></div>					
 	</body>

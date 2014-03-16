@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.GrupoActividad" %>
+<%@ page import="com.cursado.GrupoActividad" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>
@@ -6,7 +6,7 @@
 	def usuarioService = grailsApplication.classLoader.loadClass('com.fiuba.UsuarioService').newInstance()
 	def mediadorService = grailsApplication.classLoader.loadClass('com.fiuba.MediadorService').newInstance()
 	def aprendizService = grailsApplication.classLoader.loadClass('com.fiuba.AprendizService').newInstance()
-	def grupoActividadService = grailsApplication.classLoader.loadClass('com.fiuba.GrupoActividadService').newInstance()
+	def grupoActividadService = grailsApplication.classLoader.loadClass('com.cursado.GrupoActividadService').newInstance()
 %>
 
 <!DOCTYPE html>
@@ -36,9 +36,9 @@
 					<div class="box-content buttons">
 						<p class="btn-group">
 							<g:link controller="curso" action="mediador" params="['cursoId': params.cursoId]">
-								<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+								<button class="btn">${com.cursado.Curso.get(params.cursoId)}</button></g:link>
 							<g:link controller="actividad" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-								<button class="btn">Actividades del cuatrimestre ${com.fiuba.Cuatrimestre.get(params.cuatrimestreId)}</button></g:link>	
+								<button class="btn">Actividades del cuatrimestre ${com.cursado.Cuatrimestre.get(params.cuatrimestreId)}</button></g:link>	
 						</p>
 				    </div>
 					<!-- Fin: BREADCRUM -->
