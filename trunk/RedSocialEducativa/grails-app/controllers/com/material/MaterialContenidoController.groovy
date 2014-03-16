@@ -32,7 +32,7 @@ class MaterialContenidoController {
 		}
 	}
 	
-	@Secured("hasRole('ROL_MEDIADOR')")
+	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
 	def show(MaterialContenido materialContenidoInstance) {
 		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 		respond materialContenidoInstance, model: [mediador: mediador], params: ['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': params.contenidoId]

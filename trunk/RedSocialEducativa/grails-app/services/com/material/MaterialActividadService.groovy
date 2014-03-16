@@ -7,18 +7,14 @@ import grails.transaction.Transactional
 class MaterialActividadService {
 
 	def existe(MaterialActividad material, Long actividadId) {
-		
-		def materialExistente = MaterialActividad.findByActividadAndTitulo(Actividad.get(actividadId), material.titulo)
-	
+		def materialExistente = MaterialActividad.findByActividadAndTituloAndIdNotEqual(Actividad.get(actividadId), material.titulo, material?.id)
 		return materialExistente
 	}
 	
 	def guardar(MaterialActividad material) {
-
 		if (material.save(flush: true)) {
 			return material
 		}
-
 		return null
 	}
 
