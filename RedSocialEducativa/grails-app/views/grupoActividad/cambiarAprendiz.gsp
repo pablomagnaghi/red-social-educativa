@@ -64,13 +64,13 @@
 							        		params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]">
 								            <fieldset>		
 												<div class="control-group">
-													<label class="control-label" >Elegir aprendiz a cambiar de grupo</label>			
+													<label class="control-label" >Aprendiz</label>			
 													<div class="controls">
-														<g:select name="grupoActividadAprendizId" from="${aprendices}" optionKey="id"/>
+														<g:select name="grupoActividadAprendizId" from="${aprendices}" optionKey="id" style='width: 50%'/>
 													</div>	
 												</div>
 												<div class="control-group">
-													<label class="control-label" >Numero del nuevo grupo del aprendiz</label>			
+													<label class="control-label" >Numero de grupo</label>			
 													<div class="controls">
 														<g:field name="numero" type="number" value="${aprendices.first().grupo}"/>
 													</div>	
