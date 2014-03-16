@@ -1,12 +1,15 @@
 <div class="box-header" data-original-title="">
 	<h2><i class="icon-table"></i><span class="break"></span>Actividad ${actividadInstance} del cuatrimestre ${com.fiuba.Cuatrimestre.get(params.cuatrimestreId)}</h2>
 	<div class="box-icon">
-		<g:link action="create" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-			<i class="icon-plus"></i></g:link>
-		<g:link action="edit" id="${actividadInstance.id}" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-			<i class="icon-edit"></i></g:link>
-		<g:link action="delete" method="DELETE" id="${actividadInstance.id}" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"
-			onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" ><i class="icon-trash "></i></g:link>
+		<g:if test="${mediador}">
+			<g:link action="create" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+				<i class="icon-plus"></i></g:link>
+			<g:link action="edit" id="${actividadInstance.id}" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+				<i class="icon-edit"></i></g:link>
+			<g:link action="delete" method="DELETE" id="${actividadInstance.id}" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"
+				onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" ><i class="icon-trash "></i></g:link>
+		</g:if>
+		<g:link action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-table"></i></g:link>		
 	</div>
 </div>
 <div class="box-content">
@@ -34,7 +37,7 @@
 		<dt>Materiales:</dt>
            	<g:each in="${actividadInstance.materiales}"><dd>${it}</dd></g:each>
     	<dt>Temas asociados:</dt>
-			<g:each in="${actividadInstance.temas}"><dd>${it}</dd></g:each>	
+			<g:each in="${actividadInstance.temas.tema}"><dd>${it}</dd></g:each>	
 	</dl>
 </div>
 

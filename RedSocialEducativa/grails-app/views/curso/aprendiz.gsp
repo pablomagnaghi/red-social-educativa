@@ -52,6 +52,7 @@
 										<h2>"PARTICIPA: ${aprendiz.participa}"</h2>	
 										<h2>"APRENDIZ CURSNADO": ${aprendiz.cursando}</h2>
 										<h2>"CURSANDO: ${cursando}"</h2>
+										<h2>APRENDIZ: ${aprendiz}-${aprendiz.id}</h2>
 								</div>         
 								<div class="row-fluid">            	 
 									<div class="span9">
@@ -70,7 +71,8 @@
 										</div>
 										<g:if test="${aprendiz.cursando}">	
 											<div>
-												<g:link controller="actividad" action="actividadesCurso" 
+
+												<g:link controller="actividad" action="index"
 													params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]">
 													<g:message code="Actividades del cuatrimestre" /></g:link>
 											</div>	

@@ -12,13 +12,14 @@ class TemaController {
 	def usuarioService
 	def aprendizService
 
+	// Los parametros cuatrimestre y actividad se agrega para redireccionamiento a actividades segun el caso
 	@Secured('isFullyAuthenticated()')
 	def index() {
 		params.max = Utilidades.MAX_PARAMS
 		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 		def aprendiz = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
 		[temaInstanceList: Tema.findAllByCurso(Curso.get(params.cursoId),[max: params.max, offset: params.offset]), mediador: mediador, aprendiz: aprendiz,
-			params: ['cursoId': params.cursoId]]
+			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")

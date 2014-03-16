@@ -33,7 +33,7 @@
 		            <div class="row-fluid">
 		            	<div class="span2"></div>
 		            	<div class="span8">
-		            		 <!-- comienzo: BREADCRUM -->
+		            		<!-- comienzo: BREADCRUM -->
 							<div class="box-content buttons">
 								<p class="btn-group">
 									<g:link controller="curso" action="mediador" params="['cursoId': params.cursoId]">
