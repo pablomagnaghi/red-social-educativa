@@ -11,18 +11,8 @@ class ActividadController {
 	def actividadService
 	def aprendizService
 	def cuatrimestreService
-	/*
-	@Secured("hasRole('ROL_APRENDIZ')")
-	def aprendiz() {
 
-		def actividad = Actividad.get(params.id)
-		def grupoActividadAprendiz = aprendizService.obtenerGrupoPorActividad(usuarioService.usuarioActual(), params.cuatrimestreId.toLong(), 
-			params.id.toLong())
-
-		[actividad: actividad, grupoActividadAprendiz: grupoActividadAprendiz, params: ['cursoId': params.cursoId, 
-			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.id]]
-	}*/
-
+	// TODO ver este metodo solamente, el resto OK
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def actividadesCurso() {
 		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
@@ -33,8 +23,7 @@ class ActividadController {
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def index() {
-		params.max = 100//Utilidades.MAX_PARAMS
-
+		params.max = Utilidades.MAX_PARAMS
 		[actividadInstanceList: Actividad.findAllByCuatrimestre(Cuatrimestre.get(params.cuatrimestreId)),
 			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 	}
@@ -55,33 +44,35 @@ class ActividadController {
 			notFound()
 			return
 		}
-		
 		if (actividadService.existe(actividadInstance, params.cuatrimestreId.toLong())) {
 			flash.message = "Ya existe la actividad ${actividadInstance.titulo} en el cuatrimestre ${Cuatrimestre.get(params.cuatrimestreId)}"
 			redirect action: "create", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 			return
 		}
-
-		actividadInstance.fechaFinalizacion = params.fechaFinalizacionDate.format(Utilidades.FORMATO_FECHA)
-		
+		if (params.fechaFinalizacionDate) {
+			actividadInstance.fechaFinalizacion = actividadService.obtenerFecha(params.fechaFinalizacionDate)
+			if (actividadInstance.fechaFinalizacion < Utilidades.FECHA) {
+				flash.message = "La fecha no puede ser menor a ${Utilidades.FECHA}"
+				render view:'create', model: [actividadInstance: actividadInstance], params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+				return
+			}
+		}
 		if (!actividadService.guardar(actividadInstance)) {
-			render view:'create', model: [actividadInstance: actividadInstance], 
-				params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+			render view:'create', model: [actividadInstance: actividadInstance], params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 			return
 		}
-		
-		if (!actividadInstance.grupal) {
-			println "asignar al curso"
+		// Una vez que esta habilitada, no se puede editar mas
+		if (actividadInstance.visibilidad && !actividadInstance.grupal) {
 			actividadService.asignarAlCurso(actividadInstance, params.cursoId.toLong())
 		}
-
-		flash.message = message(code: 'default.created.message', args: [message(code: 'actividadInstance.label', default: 'Actividad'), actividadInstance.id])
+		flash.message = "Actividad ${actividadInstance} creada"
 		redirect action: "index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 	}
 	
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def edit(Actividad actividadInstance) {
-		respond actividadInstance, params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+		def titulo = actividadInstance.titulo
+		respond actividadInstance, model: [titulo: titulo], params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -90,35 +81,45 @@ class ActividadController {
 			notFound()
 			return
 		}
-	
-		actividadInstance.fechaFinalizacion = params.fechaFinalizacionDate.format(Utilidades.FORMATO_FECHA)
-		
-		if (!actividadService.guardar(actividadInstance)) {
-			render view:'edit', model: [actividadInstance: actividadInstance],
-				params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+		if (actividadService.existe(actividadInstance, params.cuatrimestreId.toLong())) {
+			flash.message = "Ya existe la actividad ${actividadInstance.titulo} en el cuatrimestre ${Cuatrimestre.get(params.cuatrimestreId)}"
+			actividadInstance.titulo = params.tituloAnterior
+			redirect action: "edit", params: params
 			return
 		}
-		
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'Actividad.label', default: 'Actividad'), actividadInstance.id])
-		respond actividadInstance, view:"show", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+		if (params.fechaFinalizacionDate) {
+			actividadInstance.fechaFinalizacion = actividadService.obtenerFecha(params.fechaFinalizacionDate)
+			if (actividadInstance.fechaFinalizacion < Utilidades.FECHA) {
+				flash.message = "La fecha no puede ser menor a ${Utilidades.FECHA}"
+				render view: "edit", model: [actividadInstance: actividadInstance], params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+				return
+			}
+		}
+		if (!actividadService.guardar(actividadInstance)) {
+			render view:'edit', model: [actividadInstance: actividadInstance], params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+			return
+		}
+		// Una vez que esta habilitada, no se puede editar mas
+		if (actividadInstance.visibilidad && !actividadInstance.grupal) {
+			actividadService.asignarAlCurso(actividadInstance, params.cursoId.toLong())
+		}
+		flash.message = "Actividad ${actividadInstance} actualizada"
+		redirect action: "index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def delete(Actividad actividadInstance) {
-
 		if (actividadInstance == null) {
 			notFound()
 			return
 		}
-
 		actividadService.eliminar(actividadInstance)
-
-		flash.message = message(code: 'default.deleted.message', args: [message(code: 'Actividad.label', default: 'Actividad'), actividadInstance.id])
+		flash.message = "Actividad ${actividadInstance} eliminada"
 		redirect action:"index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId], method:"GET"
 	}
 
 	protected void notFound() {
-		flash.message = message(code: 'default.not.found.message', args: [message(code: 'actividadInstance.label', default: 'Actividad'), params.id])
+		flash.message = "No se encuentra esa actividad"
 		redirect action: "index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId], method: "GET"
 	}
 }

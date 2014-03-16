@@ -32,34 +32,40 @@
 	            <div id="content" class="span10">
 		            <div class="row-fluid">
 		            	<div class="span2"></div>	
-					    <div class="box span8">
-					        <div class="box-header">     	
-					            <h2><i class="icon-edit"></i>Editar</h2>
-					            <div class="box-icon">
-					           		<g:link action="create" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-plus"></i></g:link>
-					                <g:link action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-table"></i></g:link>
-					                
-					            </div>
-					        </div>
-							<h2>Params: ${params}</h2>
-							<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
-							<h2>Curso Id: ${params.cursoId}</h2>
-							<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
-					        <div class="box-content">
-					        	<g:form class="form-horizontal" action="update" method="PUT" id="${noticiaCursoInstance.id}"
-					        		params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-					        		<g:hiddenField name="version" value="${noticiaCursoInstance?.version}" />
-					        		<g:hiddenField name="cuatrimestre.id" value="${noticiaCursoInstance.cuatrimestre.id}"/>
-					        		<g:hiddenField name="mediador.id" value="${noticiaCursoInstance.mediador.id}"/>
-						            <fieldset>
-						            	<g:render template="form"/>			
-						            	<div class="form-actions">
-											<button type="submit" class="btn btn-primary">Actualizar</button>
-										</div>		    
-						            </fieldset>
-					            </g:form>
-					        </div>
-					    </div>
+		            	<div class="span8">
+		            		<!-- comienzo: BREADCRUM -->
+							<div class="box-content buttons">
+								<p class="btn-group">
+									<g:link controller="curso" action="mediador" params="['cursoId': params.cursoId]">
+										<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+								</p>
+							</div>
+							<!-- Fin: BREADCRUM -->
+						    <div class="box">
+						        <div class="box-header">     	
+						            <h2><i class="icon-edit"></i>Editar</h2>
+						            <div class="box-icon">
+						           		<g:link action="create" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-plus"></i></g:link>
+						                <g:link action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-table"></i></g:link>
+						                
+						            </div>
+						        </div>
+						        <div class="box-content">
+						        	<g:form class="form-horizontal" action="update" method="PUT" id="${noticiaCursoInstance.id}"
+						        		params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+						        		<g:hiddenField name="version" value="${noticiaCursoInstance?.version}" />
+						        		<g:hiddenField name="cuatrimestre.id" value="${noticiaCursoInstance.cuatrimestre.id}"/>
+						        		<g:hiddenField name="mediador.id" value="${noticiaCursoInstance.mediador.id}"/>
+							            <fieldset>
+							            	<g:render template="form"/>			
+							            	<div class="form-actions">
+												<button type="submit" class="btn btn-primary">Actualizar</button>
+											</div>		    
+							            </fieldset>
+						            </g:form>
+						        </div>
+						    </div>
+						</div> 
 					    <div class="span2"></div>	
 					    <!--/span-->
 					</div>

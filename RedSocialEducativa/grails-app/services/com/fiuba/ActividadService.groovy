@@ -1,50 +1,47 @@
 package com.fiuba
 
+import java.util.Date;
+
 import grails.transaction.Transactional
 
 @Transactional
 class ActividadService {
 
+	def obtenerFecha(Date fecha) {
+		Integer anio = fecha.getYear() + Utilidades.ANIO_INICIAL
+		Integer mes =  fecha.getMonth() + 1
+		Integer dia = fecha.getAt(Calendar.DAY_OF_MONTH)
+		Integer fechaNum = 10000 * (anio) + 100 * mes + dia
+		return fechaNum
+	}
+	
 	def asignarAlCurso(Actividad actividad, Long cursoId) {
-		
-		def c = Aprendiz.createCriteria()
-		def aprendices = c.list {
+		def aprendices = Aprendiz.createCriteria().list {
 			cuatrimestre {
 				eq('curso.id', cursoId)
 			}
 		}
-		
 		Integer numGrupo = 0
-		
 		aprendices.each {
 			if (it.participa && it.cursando) {
 				numGrupo++	
 				def grupo = new GrupoActividad(numero: numGrupo, nombre: "grupo ${numGrupo}", actividad: actividad)
-				if (!grupo.save(flush:true)) {
-					println grupo.errors
-					
-				}
+				grupo.save flush:true
 				def grupoActividadAprendiz = new GrupoActividadAprendiz(aprendiz: it, grupo: grupo)
-				if (!grupoActividadAprendiz.save(flush:true)) {
-					println grupoActividadAprendiz.errors
-				}
+				grupoActividadAprendiz.save flush:true
 			}
 		}
 	}
 	
 	def existe(Actividad actividad, Long cuatrimestreId) {
-		
-		def actividadExistente = Actividad.findByCuatrimestreAndTitulo(Cuatrimestre.get(cuatrimestreId), actividad.titulo)
-	
+		def actividadExistente = Actividad.findByCuatrimestreAndTituloAndIdNotEqual(Cuatrimestre.get(cuatrimestreId), actividad.titulo, actividad?.id)
 		return actividadExistente
 	}
 	
     def guardar(Actividad actividad) {
-		
 		if (actividad.save(flush: true)) {
 			return actividad
 		}
-		
 		return null
 	}
 			

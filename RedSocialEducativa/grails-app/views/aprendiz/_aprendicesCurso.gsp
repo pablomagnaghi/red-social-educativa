@@ -16,9 +16,9 @@
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
                 <thead>
                     <tr>
+                    	<th>Padron</th>  
                         <th>Apellido</th>
                         <th>Nombres</th>
-                        <th>Padron</th>     
                         <th>Cuatrimestre de cursada</th>
                         <th>Email</th>       
                         <th>Estado</th>    
@@ -28,11 +28,11 @@
                 <tbody>
                 	<g:each in="${aprendices}" var="aprendizInstance">
 	                    <tr>
-    	                    <td>${aprendizInstance.usuario.apellido}</td>
-    	                    <td>${aprendizInstance.usuario.nombres}</td>
-    	            		<td>${aprendizInstance.usuario.padron}</td>
-    	            		<td>${aprendizInstance.cuatrimestre}</td>
-    	                    <td>${aprendizInstance.usuario.email}</td>
+	                    	<td>${aprendizInstance.usuario.padron}</td>
+    	                    <td class="center">${aprendizInstance.usuario.apellido}</td>
+    	                    <td class="center">${aprendizInstance.usuario.nombres}</td>
+    	            		<td class="center">${aprendizInstance.cuatrimestre}</td>
+    	                    <td class="center">${aprendizInstance.usuario.email}</td>
 							<td class="center">
 								<g:if test="${aprendizInstance.participa}">
 								 	<span class="label label-success">Activo</span>									

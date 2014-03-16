@@ -9,7 +9,7 @@ class Actividad {
 	boolean evaluable
 	boolean grupal
 	boolean visibilidad
-	String fechaFinalizacion
+	Integer fechaFinalizacion
 	
 	CategoriaActividad categoria
 
@@ -18,6 +18,8 @@ class Actividad {
 	static hasMany = [grupos: GrupoActividad, materiales: MaterialActividad, temas: TemaActividad]
 	
 	static constraints = {
+		titulo maxSize: Utilidades.MAX_TITULO
+		objetivo maxSize: Utilidades.MAX_SIZE
 	}
 	
 	static mapping = {
