@@ -1,5 +1,6 @@
 package com.cartelera
 
+import com.cursado.*
 import com.fiuba.*
 
 class NoticiaCurso extends Noticia {

@@ -2,7 +2,7 @@
     <div class="box span12">
         <div class="box-header" data-original-title="">
             <h2><i class="icon-table"></i>
-                <span class="break"></span>Contenidos del tema ${com.fiuba.Tema.get(params.temaId)}</h2>
+                <span class="break"></span>Contenidos del tema ${com.cursado.Tema.get(params.temaId)}</h2>
             <g:if test="${mediador}">    
 	            <div class="box-icon">
 	                <g:link action="create" params="['cursoId': params.cursoId, 'temaId': params.temaId]"><i class="icon-plus"></i></g:link>

@@ -3,7 +3,7 @@
 	<div class="box chat span12">
         <div class="cartelera">
             <div class="actions">
-            	<span class="titulo">Cartelera del cuatrimestre ${com.fiuba.Cuatrimestre.get(params.cuatrimestreId)}</span>    
+            	<span class="titulo">Cartelera del cuatrimestre ${com.cursado.Cuatrimestre.get(params.cuatrimestreId)}</span>    
             	<span class="cant">
             		<g:if test="${noticiasCurso.size() == 1}">1 noticia</g:if>
             		<g:if test="${noticiasCurso.size() > 1}">${noticiasCurso.size()} noticias</g:if>

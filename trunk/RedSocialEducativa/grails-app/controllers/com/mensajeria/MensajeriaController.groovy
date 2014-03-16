@@ -3,8 +3,8 @@ package com.mensajeria
 import org.springframework.security.access.annotation.Secured
 
 
-import com.fiuba.Curso;
-import com.fiuba.GrupoActividad;
+import com.cursado.Curso;
+import com.cursado.GrupoActividad;
 import com.fiuba.Mediador
 import com.fiuba.Usuario
 import com.fiuba.Aprendiz

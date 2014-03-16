@@ -2,7 +2,7 @@
     <div class="box span12">
         <div class="box-header" data-original-title="">
             <h2><i class="icon-table"></i>
-                <span class="break"></span>Actividades del cuatrimestre ${com.fiuba.Cuatrimestre.get(params.cuatrimestreId)}</h2>
+                <span class="break"></span>Actividades del cuatrimestre ${com.cursado.Cuatrimestre.get(params.cuatrimestreId)}</h2>
             <g:if test="${mediador}">    
 	            <div class="box-icon">
 	                <g:link action="create" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-plus"></i></g:link>

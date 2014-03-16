@@ -1,13 +1,11 @@
-<%@ page import="com.fiuba.Tema" %>
+<%@ page import="com.cursado.Tema" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>
-<%@ page import="com.fiuba.TemaService" %>
 <%
 	def usuarioService = grailsApplication.classLoader.loadClass('com.fiuba.UsuarioService').newInstance()
 	def mediadorService = grailsApplication.classLoader.loadClass('com.fiuba.MediadorService').newInstance()
 	def aprendizService = grailsApplication.classLoader.loadClass('com.fiuba.AprendizService').newInstance()
-	def temaService = grailsApplication.classLoader.loadClass('com.fiuba.TemaService').newInstance()
 %>
 
 <!DOCTYPE html>
@@ -36,10 +34,10 @@
 					<div class="box-content buttons">
 						<p class="btn-group">
 							<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
-								<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+								<button class="btn">${com.cursado.Curso.get(params.cursoId)}</button></g:link>
 							<g:if test="${params.cuatrimestreId && params.actividadId}">
 								<g:link controller="actividad" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
-									<button class="btn">Actividad ${com.fiuba.Actividad.get(params.actividadId)}</button></g:link>
+									<button class="btn">Actividad ${com.cursado.Actividad.get(params.actividadId)}</button></g:link>
 							</g:if>
 						</p>
 				    </div>

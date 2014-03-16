@@ -1,5 +1,6 @@
 package com.fiuba
 
+import com.cursado.*
 import grails.transaction.Transactional
 
 @Transactional

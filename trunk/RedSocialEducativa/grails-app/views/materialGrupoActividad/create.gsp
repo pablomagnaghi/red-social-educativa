@@ -37,7 +37,7 @@
 							<div class="box-content buttons">
 								<p class="btn-group">
 									<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
-										<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+										<button class="btn">${com.cursado.Curso.get(params.cursoId)}</button></g:link>
 								</p>
 						    </div>
 							<!-- Fin: BREADCRUM -->  
@@ -50,7 +50,7 @@
 						                <a href="#" class="btn-close"><i class="icon-remove"></i></a>
 						            </div>
 						        </div>
-						      	<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
+						      	<h2>Curso: ${com.cursado.Curso.get(params.cursoId)}</h2>
 								<h2>Curso Id: ${params.cursoId}</h2>
 								<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
 								<h2>Actividad Id: ${params.actividadId}</h2>

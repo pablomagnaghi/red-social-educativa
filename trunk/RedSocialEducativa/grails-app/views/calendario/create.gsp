@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.Calendario" %>
+<%@ page import="com.cursado.Calendario" %>
 <%
 	def usuarioService = grailsApplication.classLoader.loadClass('com.fiuba.UsuarioService').newInstance()
 %>

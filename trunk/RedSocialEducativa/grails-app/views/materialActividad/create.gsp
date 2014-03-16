@@ -37,13 +37,13 @@
 							<div class="box-content buttons">
 								<p class="btn-group">
 									<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
-										<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+										<button class="btn">${com.cursado.Curso.get(params.cursoId)}</button></g:link>
 								</p>
 						    </div>
 							<!-- Fin: BREADCRUM -->  
 					    	<div class="box">
 						        <div class="box-header">
-						            <h2><i class="icon-plus"></i>Crear material para la actividad ${com.fiuba.Actividad.get(params.actividadId)}</h2>
+						            <h2><i class="icon-plus"></i>Crear material para la actividad ${com.cursado.Actividad.get(params.actividadId)}</h2>
 						            <div class="box-icon">
 						                <g:link controller="actividad" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
 						                	<i class="icon-table"></i></g:link>

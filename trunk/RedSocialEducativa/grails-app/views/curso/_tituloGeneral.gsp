@@ -1,6 +1,6 @@
 <div>
 	<g:if test="${!dictaCuatrimestre}">
-		<h3>Este curso se dicta durante solo durante el cuatrimestre ${com.fiuba.Curso.get(params.cursoId).cuatDict}</h3>
+		<h3>Este curso se dicta durante solo durante el cuatrimestre ${com.cursado.Curso.get(params.cursoId).cuatDict}</h3>
 	</g:if>	
 	<g:else>
 		<g:if test="${!cuatrimestre?.id}">

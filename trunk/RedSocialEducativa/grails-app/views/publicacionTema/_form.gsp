@@ -11,7 +11,7 @@
 
 <g:hiddenField name="responsable" value="${usuario.nombres} ${usuario.apellido}"/>
 <g:hiddenField name="dni" value="${usuario.dni}"/>
-<g:hiddenField name="foro.id" value="${com.foro.ForoTema.findByTema(com.fiuba.Tema.get(params.temaId)).id}"/>
+<g:hiddenField name="foro.id" value="${com.foro.ForoTema.findByTema(com.cursado.Tema.get(params.temaId)).id}"/>
 
 <g:if test="${!params.pubInicialId || com.foro.PublicacionTema.get(params.pubInicialId)?.id == publicacionTemaInstance.id}">
 	<!-- TITULO -->

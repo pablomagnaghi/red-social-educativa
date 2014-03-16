@@ -1,5 +1,6 @@
 package com.foro
 
+import com.cursado.*
 import com.fiuba.*
 import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured

@@ -1,5 +1,6 @@
 package com.foro
 
+import com.cursado.*
 import com.fiuba.*
 import grails.transaction.Transactional
 

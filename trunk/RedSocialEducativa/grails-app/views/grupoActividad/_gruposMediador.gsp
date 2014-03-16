@@ -8,8 +8,6 @@
 	                	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]">
 						<g:message code="Cambiar aprendiz de grupo"/></g:link>
             	</div>
-                
-                
         </div>
         <div class="box-content">
         	<g:if test="${flash.message}">
@@ -30,7 +28,7 @@
                         <th>Apellido</th>
                         <th>Nombres</th>
 						<th>Materiales</th> 
-						<g:if test="${com.fiuba.Actividad.get(params.actividadId).evaluable}">
+						<g:if test="${com.cursado.Actividad.get(params.actividadId).evaluable}">
 							<th>Nota</th>
 						</g:if>
 						<g:else>
@@ -56,7 +54,7 @@
 								</g:each>
 	            	    	</td>
 	            	    	
-	            	    	<g:if test="${com.fiuba.Actividad.get(params.actividadId).evaluable}">
+	            	    	<g:if test="${com.cursado.Actividad.get(params.actividadId).evaluable}">
 		            	    	<td class="center">${it.nota}</td>
 	            	    	</g:if>
 	            	    	<g:else>
@@ -66,7 +64,7 @@
 	            	    	
 		                	<td class="center">
 		                		
-		                		<g:if test="${com.fiuba.Actividad.get(params.actividadId).evaluable}">
+		                		<g:if test="${com.cursado.Actividad.get(params.actividadId).evaluable}">
 									<g:link class="btn btn-success" controller="grupoActividadAprendiz" action="calificar" id="${it.id}"								
 										params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId, 
 										'grupoActividadId': it.grupo.id]">Calificar</g:link>

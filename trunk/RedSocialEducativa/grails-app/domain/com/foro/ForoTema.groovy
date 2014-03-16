@@ -1,6 +1,6 @@
 package com.foro
 
-import com.fiuba.*
+import com.cursado.*
 
 class ForoTema extends Foro {
 	

@@ -27,7 +27,7 @@
                         <th>Apellido</th>
                         <th>Nombres</th>
 						<th>Materiales</th> 
-						<g:if test="${com.fiuba.Actividad.get(params.actividadId).evaluable}">
+						<g:if test="${com.cursado.Actividad.get(params.actividadId).evaluable}">
 							<th>Nota</th>
 						</g:if>
 						<g:else>
@@ -56,7 +56,7 @@
 										</p>
 								</g:each>		
 	            	    	</td>
-	            	    	<g:if test="${com.fiuba.Actividad.get(params.actividadId).evaluable}">
+	            	    	<g:if test="${com.cursado.Actividad.get(params.actividadId).evaluable}">
 		            	    	<td class="center">${it.nota}</td>
 	            	    	</g:if>
 	            	    	<g:else>

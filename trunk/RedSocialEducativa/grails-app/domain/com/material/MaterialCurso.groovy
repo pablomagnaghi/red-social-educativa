@@ -1,6 +1,6 @@
 package com.material
 
-import com.fiuba.*
+import com.cursado.*
 
 class MaterialCurso extends Material {
 

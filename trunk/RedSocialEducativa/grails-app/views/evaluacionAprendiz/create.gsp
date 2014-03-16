@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.EvaluacionAprendiz" %>
+<%@ page import="com.cursado.EvaluacionAprendiz" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>
@@ -37,7 +37,7 @@
 							<div class="box-content buttons">
 								<p class="btn-group">
 									<g:link controller="curso" action="mediador" params="['cursoId': params.cursoId]">
-										<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+										<button class="btn">${com.cursado.Curso.get(params.cursoId)}</button></g:link>
 									<g:link controller="evaluacion" action="index" params="['cursoId': params.cursoId]">
 										<button class="btn">Evaluaciones del curso</button></g:link>	
 								</p>
@@ -45,7 +45,7 @@
 							<!-- Fin: BREADCRUM -->  
 						    <div class="box">
 						        <div class="box-header">
-						            <h2><i class="icon-plus"></i>Agregar aprendiz a la evaluación ${com.fiuba.Evaluacion.get(params.evaluacionId)}</h2>
+						            <h2><i class="icon-plus"></i>Agregar aprendiz a la evaluación ${com.cursado.Evaluacion.get(params.evaluacionId)}</h2>
 						           	<div class="box-icon">
 						           		<g:link action="mostrarEvaluacion" params="['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId]">
 						            		<i class="icon-table"></i></g:link>

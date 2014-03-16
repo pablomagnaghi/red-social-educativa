@@ -1,5 +1,7 @@
 package com.fiuba
 
+import com.cursado.*
+
 class Aprendiz extends UsuarioRol {
 
 	Boolean participa 

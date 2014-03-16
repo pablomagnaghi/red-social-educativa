@@ -1,5 +1,6 @@
 import java.util.Date;
 import com.cartelera.*
+import com.cursado.*
 import com.fiuba.*
 import com.foro.*
 import com.material.*
@@ -258,7 +259,7 @@ class BootStrap {
 		
 		// Foros de un tema		
 		def foroTemaUnoCursoUno = new ForoTema(nombre: "Foro del tema TemaUnoCursoUno del curso ")
-		def foroTemaDosCursoUno = new ForoTema(nombre: "Foro del tema lTemaDosCursoUno del curso")
+		def foroTemaDosCursoUno = new ForoTema(nombre: "Foro del tema TemaDosCursoUno del curso")
 		def foroTemaUnoCursoDos = new ForoTema(nombre: "Foro del tema TemaUnoCursoDos del curso")
 
 		// Foros generales de curso		
