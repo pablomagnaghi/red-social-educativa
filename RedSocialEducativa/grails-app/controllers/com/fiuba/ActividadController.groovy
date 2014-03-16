@@ -13,14 +13,14 @@ class ActividadController {
 	def cuatrimestreService
 
 	// TODO ver este metodo solamente, el resto OK
-	@Secured("hasRole('ROL_APRENDIZ')")
+/*	@Secured("hasRole('ROL_APRENDIZ')")
 	def actividadesCurso() {
 		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
 		
 		[actividades: Actividad.findAllByCuatrimestre(cuatrimestre), 
 			params: ['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre.id]]
 	}
-
+*/
 	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
 	def index() {
 		params.max = Utilidades.MAX_PARAMS

@@ -30,13 +30,16 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-					<g:if test="${flash.message}">
-						<div class="message" role="status">${flash.message}</div>
-					</g:if>
-					<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
-					<h2>Curso Id: ${params.cursoId}</h2>
-					<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
-					<h2>Ac: ${params.actividadId}</h2>
+	            	<!-- comienzo: BREADCRUM -->
+					<div class="box-content buttons">
+						<p class="btn-group">
+							<g:link controller="curso" action="mediador" params="['cursoId': params.cursoId]">
+								<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+							<g:link controller="actividad" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+								<button class="btn">Actividades del cuatrimestre ${com.fiuba.Cuatrimestre.get(params.cuatrimestreId)}</button></g:link>	
+						</p>
+				    </div>
+					<!-- Fin: BREADCRUM -->
 	                <g:render template="gruposMediador" />		
  				</div>
             	<!-- end: Content -->

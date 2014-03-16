@@ -33,7 +33,16 @@
 		<dt>Objetivo:</dt>       	
 			<dd><div class="message" style="width:100%"> ${fieldValue(bean: actividadInstance, field: "objetivo")}</div></dd>
 		<dt>Grupos:</dt>
-			<g:each in="${actividadInstance.grupos}"><dd>${it}</dd></g:each>
+			<g:each in="${actividadInstance.grupos}" var="grupo">
+				<dd>${grupo}
+					<ul>
+					<g:each in="${grupo.aprendices}">
+						<dd>${it.aprendiz}</dd>
+					</g:each>
+					</ul>
+				</dd>
+				
+			</g:each>
 		<dt>Materiales:</dt>
            	<g:each in="${actividadInstance.materiales}"><dd>${it}</dd></g:each>
     	<dt>Temas asociados:</dt>
