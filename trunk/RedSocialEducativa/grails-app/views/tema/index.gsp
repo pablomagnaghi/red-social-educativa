@@ -37,6 +37,10 @@
 						<p class="btn-group">
 							<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
 								<button class="btn">${com.fiuba.Curso.get(params.cursoId)}</button></g:link>
+							<g:if test="${params.cuatrimestreId && params.actividadId}">
+								<g:link controller="actividad" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+									<button class="btn">Actividad ${com.fiuba.Actividad.get(params.actividadId)}</button></g:link>
+							</g:if>
 						</p>
 				    </div>
 					<!-- Fin: BREADCRUM -->    
@@ -50,9 +54,3 @@
         <div class="clearfix"></div>					
 	</body>
 </html>
-
-<!-- BREADCRUM-->
-<!-- 
-<li><g:link class="create" action="create" params="['cursoId': params.cursoId]">
-<g:message code="default.new.label" args="[entityName]" /></g:link></li>
--->
