@@ -32,6 +32,11 @@ class EvaluacionService {
 		def evaluacionAprendiz = new EvaluacionAprendiz(evaluacion: evaluacion, aprendiz: aprendiz)
 		evaluacionAprendiz.save flush:true
 	}
+	
+	def desinscribirAprendiz(Evaluacion evaluacion, Aprendiz aprendiz) {
+		def evaluacionAprendiz = EvaluacionAprendiz.findByEvaluacionAndAprendiz(evaluacion, aprendiz)
+		evaluacionAprendiz.delete flush:true
+	}
 
 	def obtenerEvaluacionesPorAprendiz(Aprendiz aprendiz, Long cursoId) {
 		if (!aprendiz) {

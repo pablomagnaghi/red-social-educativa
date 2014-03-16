@@ -27,34 +27,25 @@ class EvaluacionAprendizController {
         respond new EvaluacionAprendiz(params), params: ['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId]
 	}
 
-	// TODO VER
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def calificar(EvaluacionAprendiz evaluacionAprendizInstance) {
-		println "calificar params: ${params}"
 		respond evaluacionAprendizInstance, params: ['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId, 'aprendizId': params.aprendizId]
 	}
 	
-	// TODO VER
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def guardarCalificacion(EvaluacionAprendiz evaluacionAprendizInstance) {
 		if (evaluacionAprendizInstance == null) {
 			notFound()
 			return
 		}
-
-		if (!evaluacionAprendizService.guardar(evaluacionAprendizInstance)) {
-			render view:'show', model: [evaluacionAprendizInstance: evaluacionAprendizInstance], params: ['cursoId': params.cursoId,
-				'evaluacionId': params.evaluacionId, 'aprendizId': params.aprendizId]
+		if (!evaluacionAprendizInstance.validate()) {
+			flash.message = "Problemas al calificar al aprendiz ${evaluacionAprendizInstance.aprendiz}. La nota debe ser un número entre 0 y 10"
+			redirect action: "mostrarEvaluacion", params:['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId], method: "GET"
 			return
 		}
-
-		if (params.aprendizId) {
-			println "DESVIOOOO"
-			redirect action:"mostrarAprendiz", params:['cursoId': params.cursoId, 'aprendizId': params.aprendizId], method: "GET"
-			return
-		}		
-		
-		flash.message = "Aprendiz ${evaluacionAprendizInstance.aprendiz} calificado con nota ${evaluacionAprendizInstance.nota}"
+		evaluacionAprendizInstance.calificado = true
+		evaluacionAprendizService.guardar(evaluacionAprendizInstance)
+		flash.message = "Aprendiz ${evaluacionAprendizInstance.aprendiz} ha sido calificado"
 		redirect action:"mostrarEvaluacion", params:['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId], method: "GET"
 	}
 
@@ -66,7 +57,6 @@ class EvaluacionAprendizController {
         }
 		if (evaluacionAprendizService.existe( evaluacionAprendizInstance.evaluacion, evaluacionAprendizInstance.aprendiz)) {
 			flash.message = "El aprendiz ${evaluacionAprendizInstance.aprendiz.usuario} ya esta anotado en la evaluacion ${ evaluacionAprendizInstance.evaluacion}"
-			
 			render view: "create", params: ['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId]
 			return
 		}

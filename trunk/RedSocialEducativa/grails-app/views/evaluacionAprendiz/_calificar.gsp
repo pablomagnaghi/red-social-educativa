@@ -23,7 +23,7 @@
 			<div class="control-group">
 				<label class="control-label" >Nota</label>			
 				<div class="controls">
-					<g:field name="nota" type="number" min="0" max="10" value="${evaluacionAprendizInstance.nota}" style="width: 10%"/>			
+					<g:field name="nota" type="number decimal" value="${evaluacionAprendizInstance.nota}"  style="width: 5%; text-align: center"/>	
 				</div>	
 			</div>
 			<div class="form-actions">

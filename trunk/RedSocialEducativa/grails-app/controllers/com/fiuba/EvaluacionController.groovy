@@ -18,7 +18,6 @@ class EvaluacionController {
 			params: ['cursoId': params.cursoId]]
 	}
 	
-	// TODO: solo ver este metodo y la opcion desinscribirme
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def inscribirme(Evaluacion evaluacion) {
 		if (evaluacion == null) {
@@ -29,6 +28,19 @@ class EvaluacionController {
 		def evaluacionesCurso = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
 		evaluacionService.inscribirAprendiz(evaluacion, evaluacionesCurso)
 		flash.message = "La inscripcion ha sido realizada exitosamente"
+		redirect action: "evaluacionesCurso", params:['cursoId': params.cursoId]
+	}
+	
+	@Secured("hasRole('ROL_APRENDIZ')")
+	def desinscribirme(Evaluacion evaluacion) {
+		if (evaluacion == null) {
+			flash.message = "No se encuentra esa evaluación"
+			redirect action: "evaluacionesCurso", params:['cursoId': params.cursoId], method: "GET"
+			return
+		}
+		def evaluacionesCurso = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
+		evaluacionService.desinscribirAprendiz(evaluacion, evaluacionesCurso)
+		flash.message = "La desinscripcion ha sido realizada exitosamente"
 		redirect action: "evaluacionesCurso", params:['cursoId': params.cursoId]
 	}
 	

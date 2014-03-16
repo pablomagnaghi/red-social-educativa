@@ -34,21 +34,24 @@
         	                <td class="center">${it.aprendiz.usuario.apellido}</td>
         	                <td class="center">${it.aprendiz.usuario.nombres}</td>
             	            <td class="center">
-            	            	<g:if test="${it.nota}">${it.nota}</g:if>
+            	            	<g:if test="${it.calificado}">
+            	            		<g:if test="${!it.nota}">0.00</g:if>
+            	            		<g:else>${it.nota}</g:else>		
+            	            	</g:if>
             	            	<g:else>
 	            	           		<g:form class="form-horizontal" action="guardarCalificacion" id="${it.id}" 
 										params="['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId, 'aprendizId': params.aprendizId]"> 
 										<g:hiddenField name="evaluacion.id" value="${it.evaluacion.id}"/>
 										<g:hiddenField name="aprendiz.id" value="${it.aprendiz.id}"/>
 										<fieldset>		
-											<g:field name="nota" type="number" min="0" max="10" value="${it.nota}" style="width: 10%"/>							
+											<g:field name="nota" type="number decimal" value="${it.nota}"  style="width: 5%; text-align: center"/>							
 											<button class="btn btn-success" type="submit" class="btn btn-primary">Calificar</button>	    
 										</fieldset>
 								 	</g:form> 
 							 	</g:else>
             	            </td>
 	                        <td class="center">
-	                        	<g:if test="${it.nota}">
+	                        	<g:if test="${it.calificado}">
 		                            <g:link class="btn-setting" class="btn btn-success" action="calificar" id="${it.id}" 
 										params="['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId]">Recalificar</g:link>
 	                            </g:if>
