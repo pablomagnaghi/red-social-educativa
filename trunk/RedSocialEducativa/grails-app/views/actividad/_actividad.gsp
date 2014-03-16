@@ -34,7 +34,7 @@
 			<dd><div class="message" style="width:100%"> ${fieldValue(bean: actividadInstance, field: "objetivo")}</div></dd>
 		<dt>Grupos:</dt>
 			<g:each in="${actividadInstance.grupos}" var="grupo">
-				<dd>${grupo}
+				<dd>${grupo} - ${grupo.nombre}
 					<ul>
 					<g:each in="${grupo.aprendices}">
 						<dd>${it.aprendiz}</dd>
@@ -49,5 +49,3 @@
 			<g:each in="${actividadInstance.temas.tema}"><dd>${it}</dd></g:each>	
 	</dl>
 </div>
-
-

@@ -2,11 +2,11 @@
     <div class="box span12">
         <div class="box-header" data-original-title="">
             <h2><i class="icon-table"></i>
-                <span class="break"></span>Grupos de la actividad</h2>
+                <span class="break"></span>Grupos de la actividad ${com.cursado.Actividad.get(params.actividadId)}</h2>
                 <div class="box-icon">
                 	<g:link class="create" action="cambiarAprendiz" 
 	                	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]">
-						<g:message code="Cambiar aprendiz de grupo"/></g:link>
+						<i class="icon-refresh"></i></g:link>
             	</div>
         </div>
         <div class="box-content">
@@ -22,8 +22,7 @@
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
                 <thead>
                     <tr>
-                    	<th>Numero de grupo</th>  
-						<th>Nombre de grupo</th>  
+                    	<th>Grupo</th>  
                         <th>Padron</th>
                         <th>Apellido</th>
                         <th>Nombres</th>
@@ -40,8 +39,7 @@
                 <tbody>
                 	<g:each in="${grupoActividadAprendices}">
 		           		<tr>
-		           			<td>${it.grupo.numero}</td>
-	            	    	<td class="center">${it.grupo.nombre}-id:${it.id}</td>
+		           			<td>${it.grupo.numero} - ${it.grupo.nombre}-id:${it.id}</td>
 	    	             	<td class="center">${it.aprendiz.usuario.padron}-id:${it.aprendiz.id}</td>
 	        	         	<td class="center">${it.aprendiz.usuario.apellido}</td>
 	            			<td class="center">${it.aprendiz.usuario.nombres}</td>
@@ -55,19 +53,35 @@
 	            	    	</td>
 	            	    	
 	            	    	<g:if test="${com.cursado.Actividad.get(params.actividadId).evaluable}">
-		            	    	<td class="center">${it.nota}</td>
+		            	    	<td class="center">
+			            	    	<g:if test="${it.calificado}">
+	            	            		<g:if test="${!it.nota}">0.00</g:if>
+	            	            		<g:else>${it.nota}</g:else>		
+	            	            	</g:if>
+	            	            	<g:else>
+		            	           		<g:form class="form-horizontal" controller="grupoActividadAprendiz" action="guardarCalificacion" id="${it.id}" 
+											params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
+											'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]">			
+											<g:hiddenField name="grupo.id" value="${it.grupo.id}"/>
+											<g:hiddenField name="aprendiz.id" value="${it.aprendiz.id}"/>
+											<fieldset>		
+												<g:field name="nota" type="number decimal" value="${it.nota}" style="width: 10%; text-align: center"/>							
+												<button class="btn btn-success" type="submit" class="btn btn-primary">Calificar</button>	    
+											</fieldset>
+									 	</g:form> 
+									 </g:else>	
+								</td>	 
 	            	    	</g:if>
 	            	    	<g:else>
 		            	    	<td class="center">${it.cumplio}</td>
 	            	    	</g:else>
-	            	    	
-	            	    	
-		                	<td class="center">
-		                		
+		                	<td class="center">	                		
 		                		<g:if test="${com.cursado.Actividad.get(params.actividadId).evaluable}">
-									<g:link class="btn btn-success" controller="grupoActividadAprendiz" action="calificar" id="${it.id}"								
-										params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId, 
-										'grupoActividadId': it.grupo.id]">Calificar</g:link>
+		                			<g:if test="${it.calificado}">
+										<g:link class="btn btn-success" controller="grupoActividadAprendiz" action="calificar" id="${it.id}"								
+											params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId, 
+											'grupoActividadId': it.grupo.id]">Recalificar</g:link>
+									</g:if>	
 								</g:if>
 								<g:link class="btn btn-danger" controller="grupoActividadAprendiz" action="delete" id="${it.id}"  
 									params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]"

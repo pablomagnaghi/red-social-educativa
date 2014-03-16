@@ -17,54 +17,39 @@ class GrupoActividadAprendizController {
 	
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def guardarCalificacion(GrupoActividadAprendiz grupoActividadAprendizInstance) {
-
 		if (grupoActividadAprendizInstance == null) {
 			notFound()
 			return
 		}
-
-		if (!grupoActividadAprendizService.guardar(grupoActividadAprendizInstance)) {
-			render view:'show', model: [grupoActividadAprendizInstanceInstance: grupoActividadAprendizInstanceInstance], 
-				params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId,
-				'grupoActividadId': params.grupoActividadId]
+		if (!grupoActividadAprendizInstance.validate()) {
+			flash.message = "Problemas al calificar al aprendiz ${grupoActividadAprendizInstance.aprendiz}. La nota debe ser un número entre 0 y 10"
+			redirect controller: "grupoActividad", action: "gruposMediador", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
+				'actividadId': params.actividadId], method:"GET"
 			return
 		}
-		
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'GrupoActividadAprendiz.label', default: 'GrupoActividadAprendiz'), grupoActividadAprendizInstance.id])
+		grupoActividadAprendizInstance.calificado = true
+		grupoActividadAprendizService.guardar(grupoActividadAprendizInstance)
+		flash.message = "Aprendiz ${grupoActividadAprendizInstance.aprendiz} ha sido calificado"
 		redirect controller: "grupoActividad", action: "gruposMediador", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
 			'actividadId': params.actividadId], method:"GET"
-		/*
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'GrupoActividadAprendiz.label', default: 'GrupoActividadAprendiz'), grupoActividadAprendizInstance.id])
-        redirect action: "show", params: [id: params.id, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId,
-			'grupoActividadId': params.grupoActividadId], method: "GET"*/
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
-    def show(GrupoActividadAprendiz grupoActividadAprendizInstance) {	
-        respond grupoActividadAprendizInstance, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
-			'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]
-    }
-	
-	
-	@Secured("hasRole('ROL_MEDIADOR')")
 	def delete(GrupoActividadAprendiz grupoActividadAprendizInstance) {
-
 		if (grupoActividadAprendizInstance == null) {
 			notFound()
 			redirect controller: "grupoActividad", action: "gruposMediador", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
 				'actividadId': params.actividadId], method:"GET"
 			return
 		}
-		
 		grupoActividadAprendizService.eliminar(grupoActividadAprendizInstance)
-		
-		flash.message = message(code: 'default.deleted.message', args: [message(code: 'GrupoActividad.label', default: 'GrupoActividad'), grupoActividadAprendizInstance.id])
+		flash.message = "Aprendiz ${grupoActividadAprendizInstance.aprendiz} eliminado del grupo ${grupoActividadAprendizInstance.grupo}"
 		redirect controller: "grupoActividad", action:"gruposMediador", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
 			'actividadId': params.actividadId], method:"GET"
 	}
 
     protected void notFound() {
-        flash.message = message(code: 'default.not.found.message', args: [message(code: 'grupoActividadAprendizInstance.label', default: 'GrupoActividadAprendiz'), params.id])
+        flash.message = "No se encuentra ese grupo para un aprendiz"
 		redirect controller: "grupoActividad", action: "show", params: ['id': params.grupoActividadId, 'cursoId': params.cursoId, 
 			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId], method: "GET"
     }

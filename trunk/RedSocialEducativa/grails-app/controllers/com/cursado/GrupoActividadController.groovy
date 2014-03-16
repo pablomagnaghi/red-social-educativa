@@ -25,6 +25,7 @@ class GrupoActividadController {
 		respond grupoActividadInstance, params: ['cursoId' :params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 	}
 	
+	// TODO ok
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def gruposMediador() {
 		params.max = Utilidades.MAX_PARAMS
@@ -51,34 +52,31 @@ class GrupoActividadController {
 			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 	}
 	
+	// TODO ok
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def cambiarAprendiz() {
 		[aprendices: grupoActividadService.obtenerAprendicesPorActividad(params.actividadId.toLong()), params: ['cursoId' :params.cursoId, 
 			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
 	}
 	
+	// TODO ok
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def realizarCambio() {
 		Integer grupoActividadAprendizId = params.grupoActividadAprendizId.toInteger()
 		Integer numeroGrupo = params.numero.size() ? params.numero.toInteger(): 0
-		
 		def grupoActividadAprendiz = GrupoActividadAprendiz.get(grupoActividadAprendizId)
-		
 		if (grupoActividadAprendiz.grupo.numero == numeroGrupo) {
 			flash.message = "El aprendiz ya pertenece al grupo ${numeroGrupo}"
 			redirect action: "cambiarAprendiz", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
 				'actividadId': params.actividadId]
 			return
 		}
-		
 		def actividad = Actividad.get(params.actividadId)
-		
 		if (!grupoActividadService.realizarCambio(grupoActividadAprendiz, grupoActividadService.obtenerGrupoPorNumero(actividad, numeroGrupo))) {
 			flash.message = "El numero de grupo no es válido. Los posibles numeros son ${grupoActividadService.obtenerGrupos(actividad)}"
 			redirect action: "cambiarAprendiz", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 			return
 		}
-		
 		flash.message = "El aprendiz ahora pertenece al grupo ${numeroGrupo}"
 		redirect action: "gruposMediador", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 	}
@@ -138,41 +136,36 @@ class GrupoActividadController {
 	
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def editarNombre(GrupoActividad grupoActividadInstance) {
-
 		if (grupoActividadInstance == null) {
 			notFound()
 			redirect action: "gruposAprendiz", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId], method: "GET"
 			return
 		}
-		
 		if (!grupoActividadService.guardar(grupoActividadInstance)) {
 			render view:'editar', model: [grupoActividadInstance: grupoActividadInstance], params:['id': params.id, 'cursoId': params.cursoId, 
 				'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 			return
 		}
-
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'GrupoActividad.label', default: 'GrupoActividad'), grupoActividadInstance.id])
+		flash.message = "Nombre del grupo ${grupoActividadInstance} actualizado"
 		redirect action: "gruposAprendiz", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 	}
 
+	// TODO ok
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def eliminar(GrupoActividad grupoActividadInstance) {
-
 		if (grupoActividadInstance == null) {
 			notFound()
-			redirect action: "menuMed", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
+			redirect action: "gruposMediador", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
 				'actividadId': params.actividadId], method:"GET"
 			return
 		}
-		
 		grupoActividadService.eliminar(grupoActividadInstance)
-		
-		flash.message = message(code: 'default.deleted.message', args: [message(code: 'GrupoActividad.label', default: 'GrupoActividad'), grupoActividadInstance.id])
+		flash.message = "Grupo ${grupoActividadInstance} eliminado"
 		redirect action:"gruposMediador", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
 			'actividadId': params.actividadId], method:"GET"
 	}
 
 	protected void notFound() {
-		flash.message = message(code: 'default.not.found.message', args: [message(code: 'grupoActividadInstance.label', default: 'GrupoActividad'), params.id])
+		flash.message = "No se encuentra ese grupo"
 	}
 }

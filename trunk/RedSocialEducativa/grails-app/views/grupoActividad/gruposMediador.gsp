@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.GrupoActividad" %>
+<%@ page import="com.cursado.GrupoActividad" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>
