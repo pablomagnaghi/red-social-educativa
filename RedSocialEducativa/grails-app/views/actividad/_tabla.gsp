@@ -88,17 +88,19 @@
 									</g:else>	
 	            	            </td>
 		                        <td class="center">
-		                        	<g:if test="${mediador}">
-			                        	<g:link class="btn btn-success" controller="grupoActividad" action="gruposMediador" id="${actividadInstance.id}"
-			                            	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadInstance.id]">Grupos</g:link>
+		                        	<g:if test="${mediador}">          
 			                        	<g:link class="btn btn-success" controller="materialActividad" action="create"  
 											params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadInstance?.id]">M</g:link>
 			          					<g:link class="btn btn-success" controller="temaActividad" action="create"  
 											params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadInstance?.id]">T</g:link>
+										<g:link class="btn btn-success" controller="grupoActividad" action="gruposMediador" id="${actividadInstance.id}"
+			                            	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadInstance.id]">
+			                            	<i class="icon-group"></i></g:link>	
 									</g:if>		
 									<g:if test="${aprendiz}">
 										<g:link class="btn btn-success" controller="grupoActividad" action="gruposAprendiz" id="${actividadInstance.id}"
-			                            	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadInstance.id]">Grupos</g:link>
+			                            	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadInstance.id]">
+			                            	<i class="icon-group"></i></g:link>
 									</g:if>
 			                        <g:link class="btn btn-success" action="show" id="${actividadInstance.id}"
 			                            params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-search "></i></g:link>
