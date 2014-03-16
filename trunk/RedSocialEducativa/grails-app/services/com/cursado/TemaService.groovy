@@ -6,18 +6,14 @@ import grails.transaction.Transactional
 class TemaService {
 
     def existe(Tema tema, Long cursoId) {
-		
 		def temaExistente = Tema.findByCursoAndTitulo(Curso.get(cursoId), tema.titulo)
-	
 		return temaExistente
 	}
 	
 	def guardar(Tema tema) {
-	
 		if (tema.save(flush: true)) {
 			return tema
 		}
-		
 		return null
 	}
 			

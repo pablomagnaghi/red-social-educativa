@@ -39,8 +39,8 @@
                 <tbody>
                 	<g:each in="${grupoActividadAprendices}">
 		           		<tr>
-		           			<td>${it.grupo.numero} - ${it.grupo.nombre}-id:${it.id}</td>
-	    	             	<td class="center">${it.aprendiz.usuario.padron}-id:${it.aprendiz.id}</td>
+		           			<td>${it.grupo.numero} - ${it.grupo.nombre}</td>
+	    	             	<td class="center">${it.aprendiz.usuario.padron}</td>
 	        	         	<td class="center">${it.aprendiz.usuario.apellido}</td>
 	            			<td class="center">${it.aprendiz.usuario.nombres}</td>
 	            	    	<td class="center">
@@ -73,7 +73,15 @@
 								</td>	 
 	            	    	</g:if>
 	            	    	<g:else>
-		            	    	<td class="center">${it.cumplio}</td>
+		            	    	<td class="center">
+		            	    		<g:if test="${it.cumplio}">
+		            	    			<span class="label label-success">Cumplio</span>
+		            	    		</g:if>
+		            	    		<g:else>
+			            	    		<span class="label label-important">No cumplio</span>
+		            	    		</g:else>
+		            	    		
+		            	    	</td>
 	            	    	</g:else>
 		                	<td class="center">	                		
 		                		<g:if test="${com.cursado.Actividad.get(params.actividadId).evaluable}">
@@ -83,6 +91,18 @@
 											'grupoActividadId': it.grupo.id]">Recalificar</g:link>
 									</g:if>	
 								</g:if>
+								<g:else>
+									<g:if test="${it.cumplio}">
+										<g:link class="btn btn-danger" controller="grupoActividadAprendiz" action="cambiarEstado" id="${it.id}"								
+											params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId, 
+											'grupoActividadId': it.grupo.id]"><i class="icon-off"></i></g:link>
+									</g:if>
+									<g:else>
+										<g:link class="btn btn-success" controller="grupoActividadAprendiz" action="cambiarEstado" id="${it.id}"								
+											params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId, 
+											'grupoActividadId': it.grupo.id]"><i class="icon-ok"></i></g:link>
+									</g:else>		
+								</g:else>
 								<g:link class="btn btn-danger" controller="grupoActividadAprendiz" action="delete" id="${it.id}"  
 									params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]"
 									value="${message(code: 'default.button.delete.label', default: 'Delete')}" 

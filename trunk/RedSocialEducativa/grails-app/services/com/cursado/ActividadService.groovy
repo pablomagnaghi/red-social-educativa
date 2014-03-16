@@ -1,5 +1,6 @@
 package com.cursado
 
+import com.fiuba.*
 import java.util.Date;
 
 import grails.transaction.Transactional
