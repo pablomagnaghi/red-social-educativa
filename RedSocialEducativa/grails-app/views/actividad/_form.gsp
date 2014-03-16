@@ -28,7 +28,7 @@
 <!-- CATEGORIA -->
 <div class="control-group">
 	<label class="control-label">Categoria</label>			
-	<div class="controls"><g:select id="categoria" name="categoria.id" from="${com.fiuba.CategoriaActividad.list()}" optionKey="id"
+	<div class="controls"><g:select id="categoria" name="categoria.id" from="${com.cursado.CategoriaActividad.list()}" optionKey="id"
 		value="${actividadInstance?.categoria?.id}" class="many-to-one"/></div>	
 </div>		
 <!-- FECHA FINALIZACION -->
