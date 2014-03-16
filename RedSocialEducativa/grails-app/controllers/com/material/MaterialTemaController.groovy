@@ -11,7 +11,6 @@ class MaterialTemaController {
 	def usuarioService
 	def materialTemaService
 
-	
 	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
 	def descargar(Long id) {
 		Archivo archivoInstance = Archivo.get(id)
@@ -28,7 +27,7 @@ class MaterialTemaController {
 		}
 	}
 	
-	@Secured("hasRole('ROL_MEDIADOR')")
+	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
 	def show(MaterialTema materialTemaInstance) {
 		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 		respond materialTemaInstance, model: [mediador: mediador], params: ['cursoId': params.cursoId, 'temaId': params.temaId]

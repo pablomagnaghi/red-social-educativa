@@ -50,16 +50,23 @@
 						            </div>
 						        </div>
 						        <div class="box-content">
-						        	<g:form class="form-horizontal" action="save" 
+						        	<g:uploadForm class="form-horizontal" action="save" 
 						        		params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]" >	
-							            <fieldset>		
-							            	<g:render template="form"/>			
+										<fieldset>		
+							            	<g:render template="form"/>	
+							            	<!-- ARCHIVO -->
+											<div class="control-group">
+												<label class="control-label">Archivo (32MB)</label>
+												<div class="controls">
+													<input type="file" name="archivoSubido"/>
+												</div>
+											</div>			
 							            	<div class="form-actions">
 												<button type="submit" class="btn btn-primary">Crear</button>
 											</div>		    
-							            </fieldset>  
-						            </g:form> 
-						        </div>  
+							            </fieldset>
+						            </g:uploadForm>
+						        </div>
 							</div>        
 					    </div>
 					    <!--/span-->

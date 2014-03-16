@@ -11,15 +11,31 @@ class MaterialActividadController {
 	def usuarioService
 	def materialActividadService
 
+	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
+	def descargar(Long id) {
+		Archivo archivoInstance = Archivo.get(id)
+		if (archivoInstance == null) {
+			flash.message = "Archivo no encontrado"
+			redirect controller:"actividad", action: "index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
+		} else {
+			response.setContentType("APPLICATION/OCTET-STREAM")
+			response.setHeader("Content-Disposition", "Attachment;Filename=\"${archivoInstance.filename}\"")
+			def outputStream = response.getOutputStream()
+			outputStream << archivoInstance.filedata
+			outputStream.flush()
+			outputStream.close()
+		}
+	}
+	/*
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def materialAprendiz() {
 		params.max = Utilidades.MAX_PARAMS
 		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 		[materiales: MaterialActividad.findAllByActividad(Actividad.get(params.actividadId)), mediador: mediador,
 			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
-	}
+	}*/
 
-	@Secured("hasRole('ROL_MEDIADOR')")
+	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
 	def show(MaterialActividad materialActividadInstance) {
 		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 		respond materialActividadInstance, model: [mediador: mediador, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
@@ -28,9 +44,7 @@ class MaterialActividadController {
 
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def create() {
-		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-		respond new MaterialActividad(params), model:[mediador: mediador], params: ['cursoId': params.cursoId, 
-			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
+		respond new MaterialActividad(params), params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -44,10 +58,19 @@ class MaterialActividadController {
 			redirect action: "create", params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 			return
 		}
+		def file = request.getFile('archivoSubido')
+		if(file.empty) {
+			flash.message = "El archivo esta vacío"
+			render view:'create', params:['cursoId': params.cursoId, 'temaId': params.temaId]
+			return
+		}
+		def archivoInstance = new ArchivoActividad()
+		archivoInstance.filename = file.originalFilename
+		archivoInstance.filedata = file.getBytes()
+		materialActividadInstance.archivo = archivoInstance
 		if (!materialActividadService.guardar(materialActividadInstance)) {
-			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-			render view:'create', model: [materialActividadInstance: materialActividadInstance, mediador: mediador],
-			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
+			render view:'create', model: [materialActividadInstance: materialActividadInstance], params: ['cursoId': params.cursoId, 
+				'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 			return
 		}
 		flash.message = "Material ${materialActividadInstance} creado"
@@ -56,8 +79,9 @@ class MaterialActividadController {
 	
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def edit(MaterialActividad materialActividadInstance) {
-		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-		respond materialActividadInstance, model: [mediador:mediador, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
+		//def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
+		def titulo = materialActividadInstance.titulo
+		respond materialActividadInstance, model: [titulo: titulo, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
 			'actividadId': params.actividadId]]
 	}
 
@@ -67,10 +91,23 @@ class MaterialActividadController {
 			notFound()
 			return
 		}
+		if (materialActividadService.existe(materialActividadInstance, params.actividadId.toLong())) {
+			flash.message = "Ya existe el material ${materialActividadInstance.titulo} en la actividad ${Actividad.get(params.actividadId)}"
+			materialActividadInstance.titulo = params.tituloAnterior
+			redirect action: "edit", params: params
+			return
+		}
+		def file = request.getFile('archivoSubido')
+		if(!file.empty) {
+			if (!materialActividadInstance?.archivo) {
+				materialActividadInstance.archivo = new ArchivoActividad()
+			}
+			materialActividadInstance.archivo.filename = file.originalFilename
+			materialActividadInstance.archivo.filedata = file.getBytes()
+		}
 		if (!materialActividadService.guardar(materialActividadInstance)) {
-			def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-			render view:'edit', model: [materialActividadInstance: materialActividadInstance, mediador: mediador],
-			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
+			render view:'edit', model: [materialActividadInstance: materialActividadInstance], params: ['cursoId': params.cursoId, 
+				'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 			return
 		}
 		flash.message = "Material ${materialActividadInstance} actualizado"

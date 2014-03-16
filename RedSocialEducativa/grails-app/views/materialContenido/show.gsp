@@ -22,7 +22,7 @@
     	<g:set var="varAprendizService" bean="aprendizService"/>
     	<g:set var="usuario" value="${varUsuarioService.usuarioActual()}"/>
     	<g:set var="cursosMediador" value="${varMediadorService.obtenerCursos(usuario)}"/>
-    	<g:set var="cursosAprendiz" value="${varAprendizService.obtenerCursos(usuario)}"/>>
+    	<g:set var="cursosAprendiz" value="${varAprendizService.obtenerCursos(usuario)}"/>
  	
     	<div class="container-fluid-full">
 			<div class="row-fluid">   

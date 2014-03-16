@@ -10,7 +10,9 @@
 				params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]"
 				onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" ><i class="icon-trash "></i></g:link>
 			</g:if>
-		<g:link action="index" params="['cursoId': params.cursoId]"><i class="icon-table"></i></g:link>	
+		<g:link action="descargar" id="${materialActividadInstance?.archivo?.id}" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+			<i class="icon-download-alt"></i></g:link>		
+		<g:link controller="actividad" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-table"></i></g:link>	
 	</div>
 </div>
 <div class="box-content">

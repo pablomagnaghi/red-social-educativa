@@ -57,7 +57,11 @@
 												</g:if>	
 												<g:link style="float: right;" class="btn btn-success" controller="materialActividad" action="show" id="${m.id}" 
 													params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadInstance.id]">
-													<i class="icon-search"></i></g:link></p>
+													<i class="icon-search"></i></g:link>
+												<g:link style="float: right;" class="btn btn-success" controller="materialActividad" action="descargar" id="${m?.archivo?.id}" 
+													params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadInstance.id]">
+													<i class="icon-download-alt"></i></g:link></p>
+													
 										</g:each>  
 									</g:if>
 									<g:else>
