@@ -11,6 +11,7 @@ class GrupoActividadController {
 	def usuarioService
 	def grupoActividadService
 	
+	// TODO VER
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def gruposAprendiz() {
 		params.max = Utilidades.MAX_PARAMS
@@ -25,14 +26,13 @@ class GrupoActividadController {
 		respond grupoActividadInstance, params: ['cursoId' :params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 	}
 	
-	// TODO ok
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def gruposMediador() {
 		params.max = Utilidades.MAX_PARAMS
 		[grupoActividadAprendices: grupoActividadService.obtenerAprendicesPorActividad(params.actividadId.toLong()),
 			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
 	}
-
+	// TODO VER
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def crearGrupo() {
 
@@ -52,14 +52,12 @@ class GrupoActividadController {
 			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 	}
 	
-	// TODO ok
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def cambiarAprendiz() {
 		[aprendices: grupoActividadService.obtenerAprendicesPorActividad(params.actividadId.toLong()), params: ['cursoId' :params.cursoId, 
 			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
 	}
 	
-	// TODO ok
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def realizarCambio() {
 		Integer grupoActividadAprendizId = params.grupoActividadAprendizId.toInteger()
@@ -86,7 +84,7 @@ class GrupoActividadController {
 		respond grupoActividadInstance, params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
 			'actividadId': params.actividadId]
 	}
-
+	// TODO VER
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def guardar(GrupoActividad grupoActividadInstance) {
 		if (grupoActividadInstance == null) {
@@ -106,7 +104,7 @@ class GrupoActividadController {
 		redirect action: "gruposAprendiz", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
 			'actividadId': params.actividadId]
 	}
-	
+	// TODO VER
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def agregarme(GrupoActividad grupoActividadInstance) {		
 		if (grupoActividadInstance == null) {
@@ -138,19 +136,17 @@ class GrupoActividadController {
 	def editarNombre(GrupoActividad grupoActividadInstance) {
 		if (grupoActividadInstance == null) {
 			notFound()
-			redirect action: "gruposAprendiz", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId], method: "GET"
+			redirect action: "grupoAprendiz", params: params, method: "GET"
 			return
 		}
 		if (!grupoActividadService.guardar(grupoActividadInstance)) {
-			render view:'editar', model: [grupoActividadInstance: grupoActividadInstance], params:['id': params.id, 'cursoId': params.cursoId, 
-				'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
+			render view:'editar', model: [grupoActividadInstance: grupoActividadInstance], params: params
 			return
 		}
 		flash.message = "Nombre del grupo ${grupoActividadInstance} actualizado"
-		redirect action: "gruposAprendiz", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
+		redirect action: "grupoAprendiz", params: params
 	}
 
-	// TODO ok
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def eliminar(GrupoActividad grupoActividadInstance) {
 		if (grupoActividadInstance == null) {
