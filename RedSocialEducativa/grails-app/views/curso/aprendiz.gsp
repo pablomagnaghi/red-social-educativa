@@ -29,9 +29,6 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-	            	<g:if test="${flash.message}">
-						<div class="message" role="status">${flash.message}</div>
-					</g:if>
 					<div class="row-fluid">
 						<div class="box span12">
 							<div class="box-header">
@@ -48,7 +45,16 @@
 								</div>         
 								<div class="row-fluid">            	 
 									<div class="span12">
-										<g:render template="tituloGeneral"></g:render>
+										<g:render template="tituloMenuAprendiz"></g:render>
+										<g:if test="${flash.message}">
+											<div class="box-content alerts">
+												<div class="alert alert-error">
+													<button class="close" data-dismiss="alert" type="button"></button>
+													<strong></strong> 
+													${flash.message}
+												</div>
+											</div>    
+										</g:if>
 										<g:if test="${aprendiz.cursando}">	
 											<g:render template="noticias"></g:render>
 										</g:if>

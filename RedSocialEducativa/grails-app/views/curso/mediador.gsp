@@ -29,37 +29,32 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-
-					<g:if test="${flash.message}">
-						<div class="message" role="status">${flash.message}</div>
-					</g:if>
 					<div class="row-fluid">
 						<div class="box span12">
 							<div class="box-header">
-								<h2><i class="icon-font"></i><span class="break"></span>
+								<h2><i class="icon-th-large"></i><span class="break"></span>
 									Bienvenido mediador ${usuario.nombres} ${usuario.apellido} al curso ${com.cursado.Curso.get(params.cursoId)} 
 									de la asignatura ${com.cursado.Curso.get(params.cursoId).asignatura}</h2>
 								<div class="box-icon">
-									<a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
+									<g:link controller="red" action="cursos"><i class="icon-edit"></i></g:link>
 								</div>
 							</div>
-							<div class="box-content">
-							
-								<g:render template="menuMediador"></g:render>
-							
+							<div class="box-content">						
 								<div class="page-header">
-									<g:render template="tituloMenuMediador"></g:render>
-										<h2>Curso id: ${params.cursoId}</h2>
-										<h2>Dicta cuatrimestre: ${dictaCuatrimestre}</h2>
-										<h2>cuat id: ${cuatrimestre?.id}</h2>
-								</div>  
+									<g:render template="menuMediador"></g:render>
+								</div>  	
 								<div class="row-fluid">            	 
 									<div class="span12">
-										<g:render template="tareasMediador"/>
-									</div>
-								</div>		
-								<div class="row-fluid">            	 
-									<div class="span12">
+										<g:render template="tituloMenuMediador"></g:render>
+										<g:if test="${flash.message}">
+											<div class="box-content alerts">
+												<div class="alert alert-error">
+													<button class="close" data-dismiss="alert" type="button"></button>
+													<strong></strong> 
+													${flash.message}
+												</div>
+											</div>    
+										</g:if>
 										<g:render template="noticias"></g:render>
 									</div>
 								</div>
