@@ -37,7 +37,6 @@ class CursoController {
 			params: ['cursoId': params.cursoId]]
 	}
 
-	// ver
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def aprendiz() {
 		def aprendiz = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
