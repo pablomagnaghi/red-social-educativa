@@ -3,7 +3,13 @@
 </g:if>	
 <g:else>
 	<g:if test="${!cuatrimestre?.id}">
-		<h3>Todavia no ha sido creado el cuatrimestre actual. Revisar Consolidar cuatrimestre (poner esto con alerta)</h3>
+	
+		<div class="box-content alerts">
+			<div class="alert alert-error">
+				<button class="close" data-dismiss="alert" type="button"></button>
+					Todavia no ha sido creado el cuatrimestre actual. Revisar <strong>consolidar cuatrimestre</strong> 								
+			</div>
+		</div>    
 	</g:if>	
 	<g:else>
 		<h3>Cuatrimestre ${cuatrimestre}</h3>
