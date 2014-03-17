@@ -16,8 +16,8 @@ class ActividadController {
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def actividadesAprendiz() {
 		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuarioService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
-		def actividadesAprendiz = actividadService.obtenerActividadesPorAprendiz(aprendiz, params.cursoId.toLong())
-		[actividadesAprendiz: actividadesAprendiz, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
+		def actividadesAprendiz = actividadService.obtenerActividadesPorAprendiz(aprendiz, params.cuatrimestreId.toLong())
+			[actividadesAprendiz: actividadesAprendiz, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 	}
 
 	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
