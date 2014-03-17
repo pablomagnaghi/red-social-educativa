@@ -22,7 +22,7 @@ class GrupoActividadService {
 			}
 			eq('aprendiz.id', aprendiz.id)
 		}
-		return null
+		return grupoActividadAprendiz
 	}
 	
     def guardar(GrupoActividad grupo) {

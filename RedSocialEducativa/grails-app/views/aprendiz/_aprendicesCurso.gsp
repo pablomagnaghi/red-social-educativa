@@ -67,9 +67,10 @@
 											onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
 										<i class="icon-ok"></i></g:link>
 									</g:else>
-									<g:link class="btn btn-success" controller="evaluacionAprendiz" action="mostrarAprendiz"
-	                            		params="['cursoId': params.cursoId, 'aprendizId': aprendizInstance.id]"><i class="icon-search"></i> 
-	                          		</g:link>	
+									<g:link class="btn btn-success" controller="grupoActividadAprendiz" action="mostrarAprendiz"
+	                            		params="['cursoId': params.cursoId, 'aprendizId': aprendizInstance.id]">A</g:link>	
+	                          		<g:link class="btn btn-success" controller="evaluacionAprendiz" action="mostrarAprendiz"
+	                            		params="['cursoId': params.cursoId, 'aprendizId': aprendizInstance.id]">E </g:link>	
 								</g:else>		
 							</td>
 	                    </tr>

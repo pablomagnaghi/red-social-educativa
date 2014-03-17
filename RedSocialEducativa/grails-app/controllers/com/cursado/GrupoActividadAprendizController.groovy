@@ -1,5 +1,6 @@
 package com.cursado
 
+import com.fiuba.*
 import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured
 
@@ -8,6 +9,12 @@ class GrupoActividadAprendizController {
     // static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def grupoActividadAprendizService 
+	
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def mostrarAprendiz() {
+		[aprendiz: Aprendiz.get(params.aprendizId), gruposActividadAprendiz: GrupoActividadAprendiz.findAllByAprendiz(Aprendiz.get(params.aprendizId)),
+			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
+	}
 	
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def calificar(GrupoActividadAprendiz grupoActividadAprendizInstance) {

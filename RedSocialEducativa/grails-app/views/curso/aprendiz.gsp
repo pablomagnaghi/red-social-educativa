@@ -77,6 +77,12 @@
 													<g:message code="Actividades del cuatrimestre" /></g:link>
 											</div>	
 											<div>
+
+												<g:link controller="actividad" action="actividadesAprendiz"
+													params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]">
+													<g:message code="Mis actividades" /></g:link>
+											</div>	
+											<div>
 												<g:link controller="foroCurso" action="general" params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]">
 													<g:message code="Foro del curso"/></g:link>
 											</div>
