@@ -48,13 +48,11 @@ class CursoController {
 			params: ['cursoId': params.cursoId],]
 	}
 
-	// ver
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def mediador() {
 		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 		def cuatrimestres = cuatrimestreService.obtenerCuatrimestresOrdenados(params.cursoId.toLong())
 		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
-
 		[asignatura: Curso.get(params.cursoId).asignatura, mediador: mediador, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), 
 			cuatrimestres: cuatrimestres, cuatrimestre: cuatrimestre, 
 			noticiasCurso: NoticiaCurso.findAllByCuatrimestre(cuatrimestre), 
