@@ -53,7 +53,7 @@
 									</div>
 									<g:if test="${flash.message}">
 										<div class="box-content alerts">
-											<div class="alert alert-error">
+											<div class="alert alert-info">
 												<button class="close" data-dismiss="alert" type="button"></button>
 												<strong></strong> 
 												${flash.message}
