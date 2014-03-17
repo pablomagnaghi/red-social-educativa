@@ -34,14 +34,14 @@
 			<dd><div class="message" style="width:100%"> ${fieldValue(bean: actividadInstance, field: "objetivo")}</div></dd>
 		<dt>Grupos:</dt>
 			<g:each in="${actividadInstance.grupos}" var="grupo">
-				<dd>${grupo} - ${grupo.nombre}
+				<dd>Grupo: ${grupo}</dd>
+				<dd>Nombre: ${grupo.nombre}</dd>
+				<dd>Integrantes:</dd>
 					<ul>
 					<g:each in="${grupo.aprendices}">
-						<dd>${it.aprendiz}</dd>
+						<dd>${it.aprendiz.usuario.padron} - ${it.aprendiz.usuario.nombres} ${it.aprendiz.usuario.apellido} </dd>
 					</g:each>
 					</ul>
-				</dd>
-				
 			</g:each>
 		<dt>Materiales:</dt>
            	<g:each in="${actividadInstance.materiales}"><dd>${it}</dd></g:each>

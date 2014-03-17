@@ -23,15 +23,15 @@ class GrupoActividadAprendizController {
 		}
 		if (!grupoActividadAprendizInstance.validate()) {
 			flash.message = "Problemas al calificar al aprendiz ${grupoActividadAprendizInstance.aprendiz}. La nota debe ser un número entre 0 y 10"
-			redirect controller: "grupoActividad", action: "gruposMediador", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
-				'actividadId': params.actividadId], method:"GET"
+			redirect controller: "grupoActividad", action: "grupoMediador", params:['id': grupoActividadAprendizInstance.grupo.id, 'cursoId': params.cursoId, 
+				'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId], method:"GET"
 			return
 		}
 		grupoActividadAprendizInstance.calificado = true
 		grupoActividadAprendizService.guardar(grupoActividadAprendizInstance)
 		flash.message = "Aprendiz ${grupoActividadAprendizInstance.aprendiz} ha sido calificado"
-		redirect controller: "grupoActividad", action: "gruposMediador", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
-			'actividadId': params.actividadId], method:"GET"
+		redirect controller: "grupoActividad", action: "grupoMediador", params:['id': grupoActividadAprendizInstance.grupo.id, 'cursoId': params.cursoId, 
+			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId], method:"GET"
 	}
 	
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -43,13 +43,13 @@ class GrupoActividadAprendizController {
 		grupoActividadAprendizInstance.cumplio = grupoActividadAprendizInstance.cumplio ? false : true
 		if (!grupoActividadAprendizService.guardar(grupoActividadAprendizInstance)) {
 			flash.message = "Problemas al calificar al aprendiz ${grupoActividadAprendizInstance.aprendiz}"
-			redirect controller: "grupoActividad", action: "gruposMediador", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
-				'actividadId': params.actividadId], method:"GET"
+			redirect controller: "grupoActividad", action: "grupoMediador", params:['id': grupoActividadAprendizInstance.grupo.id, 'cursoId': params.cursoId, 
+				'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId], method:"GET"
 			return
 		}
 		flash.message = "Aprendiz ${grupoActividadAprendizInstance.aprendiz} ha sido calificado"
-		redirect controller: "grupoActividad", action: "gruposMediador", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
-			'actividadId': params.actividadId], method:"GET"
+		redirect controller: "grupoActividad", action: "grupoMediador", params:['id': grupoActividadAprendizInstance.grupo.id, 'cursoId': params.cursoId, 
+			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId], method:"GET"
 	}
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -62,13 +62,13 @@ class GrupoActividadAprendizController {
 		}
 		grupoActividadAprendizService.eliminar(grupoActividadAprendizInstance)
 		flash.message = "Aprendiz ${grupoActividadAprendizInstance.aprendiz} eliminado del grupo ${grupoActividadAprendizInstance.grupo}"
-		redirect controller: "grupoActividad", action:"gruposMediador", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
-			'actividadId': params.actividadId], method:"GET"
+		redirect controller: "grupoActividad", action:"grupoMediador", params:['id': grupoActividadAprendizInstance.grupo.id, 
+			'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId], method:"GET"
 	}
 
     protected void notFound() {
         flash.message = "No se encuentra ese grupo para un aprendiz"
-		redirect controller: "grupoActividad", action: "show", params: ['id': params.grupoActividadId, 'cursoId': params.cursoId, 
+		redirect controller: "grupoActividad", action: "gruposMediador", params: ['cursoId': params.cursoId, 
 			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId], method: "GET"
     }
 }

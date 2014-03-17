@@ -19,7 +19,7 @@ class MaterialContenidoController {
 
 	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
 	def descargar(Long id) {
-		Archivo archivoInstance = Archivo.get(id)
+		ArchivoContenido archivoInstance = ArchivoContenido.get(id)
 		if (archivoInstance == null) {
 			flash.message = "Archivo no encontrado"
 			redirect controller:"contenido", action: "index", params:['cursoId': params.cursoId, 'temaId': params.temaId]

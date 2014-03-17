@@ -15,7 +15,7 @@ class MaterialCursoController {
 
 	@Secured('isFullyAuthenticated()')
 	def descargar(Long id) {
-		Archivo archivoInstance = Archivo.get(id)
+		ArchivoCurso archivoInstance = ArchivoCurso.get(id)
 		if (archivoInstance == null) {
 			flash.message = "Archivo no encontrado"
 			redirect action: "index", params:['cursoId': params.cursoId]

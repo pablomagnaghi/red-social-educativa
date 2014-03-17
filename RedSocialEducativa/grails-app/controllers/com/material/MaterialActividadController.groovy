@@ -14,7 +14,7 @@ class MaterialActividadController {
 
 	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
 	def descargar(Long id) {
-		Archivo archivoInstance = Archivo.get(id)
+		ArchivoActividad archivoInstance = ArchivoActividad.get(id)
 		if (archivoInstance == null) {
 			flash.message = "Archivo no encontrado"
 			redirect controller:"actividad", action: "index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
@@ -27,14 +27,6 @@ class MaterialActividadController {
 			outputStream.close()
 		}
 	}
-	/*
-	@Secured("hasRole('ROL_APRENDIZ')")
-	def materialAprendiz() {
-		params.max = Utilidades.MAX_PARAMS
-		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-		[materiales: MaterialActividad.findAllByActividad(Actividad.get(params.actividadId)), mediador: mediador,
-			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
-	}*/
 
 	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
 	def show(MaterialActividad materialActividadInstance) {

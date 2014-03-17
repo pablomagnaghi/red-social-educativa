@@ -61,4 +61,5 @@
 </g:else>
 			
 <g:hiddenField name="grupo.id" value="${params.grupoActividadId}"/>     	
-<g:hiddenField name="responsable" value="${aprendiz.usuario.padron}-${aprendiz.usuario.nombres} ${aprendiz.usuario.apellido}"/>
+<g:hiddenField name="responsable" value="${com.fiuba.Aprendiz.findByUsuarioAndCuatrimestre(usuario, com.cursado.Cuatrimestre.get(params.cuatrimestreId))}"/>
+

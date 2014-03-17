@@ -112,10 +112,8 @@
 			                        <g:link class="btn btn-success" action="show" id="${actividadInstance.id}"
 			                            params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-search "></i></g:link>
 			                        <g:if test="${mediador}">   
-				                 		<g:if test="${!actividadInstance.visibilidad}">	
-				                            <g:link class="btn btn-info" action="edit" id="${actividadInstance.id}"
-				                            	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-edit "></i></g:link>
-			                            </g:if>
+				              			<g:link class="btn btn-info" action="edit" id="${actividadInstance.id}"
+				          					params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-edit "></i></g:link>
 			                            <g:link class="btn btn-danger" action="delete" method="DELETE" id="${actividadInstance.id}" 
 			                            	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"
 			                            	onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >	                          

@@ -7,8 +7,7 @@ import grails.transaction.Transactional
 class GrupoActividadService {
 
 	def obtenerAprendicesPorActividad(Long actividadId) {
-		def c = GrupoActividadAprendiz.createCriteria()
-		def aprendices = c.list() {
+		def aprendices = GrupoActividadAprendiz.createCriteria().list() {
 			grupo {
 				eq('actividad.id', actividadId)
 			}
@@ -23,19 +22,9 @@ class GrupoActividadService {
 			}
 			eq('aprendiz.id', aprendiz.id)
 		}
-		return grupoActividadAprendiz
+		return null
 	}
 	
-	//TODO ver
-	/*
-	def aprendizParticipa(GrupoActividad grupo, Aprendiz aprendiz) {
-		def aprendizParticipa = GrupoActividadAprendiz.createCriteria().get {
-			eq('grupo.id', grupo.id)
-			eq('aprendiz.id', aprendiz.id)
-		}
-		return aprendizParticipa
-	}*/
-
     def guardar(GrupoActividad grupo) {
 		if (grupo.save(flush:true)) {
 			return grupo

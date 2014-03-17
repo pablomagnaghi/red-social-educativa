@@ -56,10 +56,26 @@
 						        		params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'tituloAnterior': titulo]" >
 						        		<g:hiddenField name="version" value="${actividadInstance?.version}" />
 							            <fieldset>
-							            	<g:render template="form"/>			
+									 		<g:if test="${actividadInstance?.visibilidad}">
+									 			<g:if test="${flash.message}">
+													<div class="box-content alerts">
+														<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button"></button><strong>${flash.message}</strong></div>
+													</div>
+												</g:if>
+							            		<!-- FECHA FINALIZACION -->										
+												<div class="control-group">
+													<label class="control-label" >Fecha finalizacion</label>			
+													<div class="controls">
+														<g:datePicker name="fechaFinalizacionDate" precision="day" value="${new Date()}"  />
+													</div>	
+												</div>
+											</g:if>
+											<g:else>
+												<g:render template="form"/>	
+											</g:else>	
 							            	<div class="form-actions">
 												<button type="submit" class="btn btn-primary">Actualizar</button>
-											</div>		    
+											</div>	    
 							            </fieldset>
 						            </g:form>
 						        </div>
