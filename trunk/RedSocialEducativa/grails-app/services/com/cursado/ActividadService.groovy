@@ -1,6 +1,7 @@
 package com.cursado
 
 import com.fiuba.*
+
 import java.util.Date;
 
 import grails.transaction.Transactional
@@ -8,6 +9,21 @@ import grails.transaction.Transactional
 @Transactional
 class ActividadService {
 
+	def obtenerActividadesPorAprendiz(Aprendiz aprendiz, Long cuatrimestreId) {
+		if (!aprendiz) {
+			return null
+		}
+		def actividadesAprendiz = GrupoActividadAprendiz.createCriteria().list {
+			grupo {
+				actividad {
+					eq('cuatrimestre.id', cuatrimestreId)
+				}
+			}
+			eq('aprendiz.id', aprendiz.id)
+		}
+		return actividadesAprendiz
+	}
+	
 	def obtenerFecha(Date fecha) {
 		Integer anio = fecha.getYear() + Utilidades.ANIO_INICIAL
 		Integer mes =  fecha.getMonth() + 1

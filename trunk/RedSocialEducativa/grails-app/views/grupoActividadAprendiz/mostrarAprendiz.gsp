@@ -1,4 +1,4 @@
-<%@ page import="com.fiuba.Aprendiz" %>
+<%@ page import="com.cursado.GrupoActividadAprendiz" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>
@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta name="layout" content="red">
-        <g:set var="entityName" value="${message(code: 'aprendiz.label', default: 'Aprendiz')}" />
+        <g:set var="entityName" value="${message(code: 'evaluacionAprendiz.label', default: 'EvaluacionAprendiz')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -23,21 +23,31 @@
     	<g:set var="usuario" value="${varUsuarioService.usuarioActual()}"/>
     	<g:set var="cursosMediador" value="${varMediadorService.obtenerCursos(usuario)}"/>
     	<g:set var="cursosAprendiz" value="${varAprendizService.obtenerCursos(usuario)}"/>
+ 	
     	<div class="container-fluid-full">
-			<div class="row-fluid">
+			<div class="row-fluid">   
 	            <g:render template="/templateRed/panel" />
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-	   				<!-- comienzo: BREADCRUM -->
+	            	<!-- comienzo: BREADCRUM -->
 					<div class="box-content buttons">
 						<p class="btn-group">
 							<g:link controller="curso" action="mediador" params="['cursoId': params.cursoId]">
 								<button class="btn">${com.cursado.Curso.get(params.cursoId)}</button></g:link>
+							<g:if test="${params.cuatrimestreId}">	
+								<g:link controller="aprendiz" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+									<button class="btn">Aprendices curso ${com.cursado.Curso.get(params.cursoId)} cuatrimestre 
+										${com.cursado.Cuatrimestre.get(params.cuatrimestreId)}</button></g:link>	
+							</g:if>
+							<g:else>
+								<g:link controller="aprendiz" action="aprendicesCurso" params="['cursoId': params.cursoId]">
+									<button class="btn">Aprendices curso ${com.cursado.Curso.get(params.cursoId)}</button></g:link>	
+							</g:else>		
 						</p>
 				    </div>
 					<!-- Fin: BREADCRUM --> 
-	                <g:render template="aprendicesCurso" />		
+	                <g:render template="aprendiz" />		
  				</div>
             	<!-- end: Content -->
         	</div>

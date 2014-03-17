@@ -59,6 +59,8 @@ class NoticiaRedController {
 			return
 		}
 		noticiaRedInstance.visibilidad = noticiaRedInstance.visibilidad ? false : true
+		noticiaRedInstance.fecha = new Date().format(Utilidades.FORMATO_FECHA)
+		noticiaRedInstance.hora = new Date().getTimeString()
 		if (!noticiaRedService.guardar(noticiaRedInstance)) {
 			flash.message = "Problemas al cambiar la visibilidad"
 			redirect action: "index"

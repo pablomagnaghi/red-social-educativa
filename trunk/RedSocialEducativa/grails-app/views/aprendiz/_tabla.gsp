@@ -50,9 +50,12 @@
 										value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
 										onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
 										<i class="icon-off"></i></g:link>
-									<g:link class="btn btn-success" controller="evaluacionAprendiz" action="mostrarAprendiz"
+									<g:link class="btn btn-success" controller="grupoActividadAprendiz" action="mostrarAprendiz"
 	                            		params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'aprendizId': aprendizInstance.id]">
-	                            		<i class="icon-search"></i> </g:link>	
+	                            		A</g:link>
+	                            	<g:link class="btn btn-success" controller="evaluacionAprendiz" action="mostrarAprendiz"
+	                            		params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'aprendizId': aprendizInstance.id]">
+	                            		E</g:link>	
 								</g:if>
 								<g:else>		
 									<g:link class="btn btn-success" action="cambiarEstado" id="${aprendizInstance.id}" 

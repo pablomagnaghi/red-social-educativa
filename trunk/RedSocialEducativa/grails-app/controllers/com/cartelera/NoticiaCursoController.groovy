@@ -66,6 +66,8 @@ class NoticiaCursoController {
 			return
 		}
 		noticiaCursoInstance.visibilidad = noticiaCursoInstance.visibilidad ? false : true
+		noticiaCursoInstance.fecha = new Date().format(Utilidades.FORMATO_FECHA)
+		noticiaCursoInstance.hora = new Date().getTimeString()
 		if (!noticiaCursoService.guardar(noticiaCursoInstance)) {
 			flash.message = "Problemas al cambiar la visibilidad"
 			redirect action:"index", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
