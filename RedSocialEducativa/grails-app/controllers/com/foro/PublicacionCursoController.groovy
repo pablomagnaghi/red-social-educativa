@@ -1,5 +1,6 @@
 package com.foro
 
+import com.cursado.*
 import com.fiuba.*
 import static org.springframework.http.HttpStatus.*
 import org.springframework.security.access.annotation.Secured
@@ -10,6 +11,7 @@ class PublicacionCursoController {
 	//static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	def usuarioService
 	def publicacionCursoService
+	def aprendizService
 
 	def nueva() {
 		respond new PublicacionCurso(params), model: [usuario: usuarioService.usuarioActual(), 
@@ -28,6 +30,11 @@ class PublicacionCursoController {
 					'cuatrimestreId': params.cuatrimestreId]
 				return
 			}
+			// Para estadisticas de aprendiz en cursado (es una respuesta)
+			def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuarioService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
+			if (aprendiz) {
+				aprendizService.publica(aprendiz)
+			}
 			redirect controller: "foroCurso", action: "publicaciones", params: ['id': params.pubInicialId, 'cursoId': 
 				params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 			return
@@ -36,6 +43,11 @@ class PublicacionCursoController {
 			render view:'nueva', model: [publicacionCursoInstance: publicacionCursoInstance, usuario: usuarioService.usuarioActual()],
 					params: ['pubInicialId': params.pubInicialId, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
 			return
+		}
+		// Para estadisticas de aprendiz en cursado
+		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuarioService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
+		if (aprendiz) {
+			aprendizService.publica(aprendiz)
 		}
 		flash.message = "Tema ${publicacionCursoInstance} creado"
 		redirect controller: "foroCurso", action: "general", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]
