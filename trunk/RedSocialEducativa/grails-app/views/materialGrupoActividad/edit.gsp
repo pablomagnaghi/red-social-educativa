@@ -38,6 +38,8 @@
 								<p class="btn-group">
 									<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
 										<button class="btn">${com.cursado.Curso.get(params.cursoId)}</button></g:link>
+									<g:link controller="actividad" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+										<button class="btn">Actividades del cuatrimestre ${com.cursado.Cuatrimestre.get(params.cuatrimestreId)}</button></g:link>
 								</p>
 						    </div>
 							<!-- Fin: BREADCRUM -->  
@@ -45,27 +47,32 @@
 						        <div class="box-header">     	
 						            <h2><i class="icon-edit"></i>Editar</h2>
 						            <div class="box-icon">
-						                <g:link action="create" params="['cursoId': params.cursoId]"><i class="icon-plus"></i></g:link>
+						                <g:link action="create" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
+						                	'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]"><i class="icon-plus"></i></g:link>
+						                <g:link controller="grupoActividad" action="grupoAprendiz" id="${params.grupoActividadId}"
+											params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId, ]">
+											<i class="icon-group"></i></g:link>	 	
 						            </div>
 						        </div>
-						        <h2>Params: ${params}</h2>
-								<h2>Curso: ${com.cursado.Curso.get(params.cursoId)}</h2>
-								<h2>Curso Id: ${params.cursoId}</h2>
-								<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
-								<h2>Actividad Id: ${params.actividadId}</h2>
-								<h2>Grupo actividad Id: ${params.grupoActividadId}</h2>
 						        <div class="box-content">
-						        	<g:form class="form-horizontal" action="update" method="PUT"  id="${materialGrupoActividadInstance.id}" 
-										params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId, 
-										'grupoActividadId': params.grupoActividadId]" >
+						            <g:uploadForm class="form-horizontal" action="update" method="PUT" id="${materialGrupoActividadInstance.id}" 
+						        		params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId, 
+										'grupoActividadId': params.grupoActividadId, 'tituloAnterior': titulo]"> 
 						        		<g:hiddenField name="version" value="${materialGrupoActividadInstance?.version}" />
+						        		<g:hiddenField name="archivo.id" value="${materialGrupoActividadInstance?.archivo?.id}"/>
 							            <fieldset>
-							            	<g:render template="form"/>			
+							            	<g:render template="form"/>		
+							            	<div class="control-group">
+												<label class="control-label">Cambiar archivo (32MB)</label>
+												<div class="controls">
+													<input type="file" name="archivoSubido"/>
+												</div>
+											</div>		
 							            	<div class="form-actions">
 												<button type="submit" class="btn btn-primary">Actualizar</button>
 											</div>		    
 							            </fieldset>
-						            </g:form>    
+						            </g:uploadForm>    
 	
 						        </div>
 							</div>

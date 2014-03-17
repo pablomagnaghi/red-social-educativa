@@ -21,24 +21,24 @@
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
                 <thead>
                     <tr>
-                    	<th>Numero de grupo</th>  
-						<th>Nombre de grupo</th>  
-                        <th>Padron</th>
-                        <th>Apellido</th>
-                        <th>Nombres</th> 
+                    	<th>Grupo</th>  
+                    	<th>Nombre</th>
+                        <th>Integrantes</th>
 						<th>Acciones</th>         
 					</tr>
 				</thead>
                 <tbody>
-                	<g:each in="${grupoActividadAprendices}">
+                	<g:each in="${gruposActividad}">
 		           		<tr>
-		           			<td>${it.grupo.numero}</td>
-	            	    	<td class="center">${it.grupo.nombre}-id:${it.grupo.id}</td>
-	    	             	<td class="center">${it.aprendiz.usuario.padron}-id:${it.aprendiz.id}</td>
-	        	         	<td class="center">${it.aprendiz.usuario.apellido}</td>
-	            			<td class="center">${it.aprendiz.usuario.nombres}</td>
+		           			<td>${it.numero}</td>
+		           			<td class="center">${it.nombre}</td>
+		                	<td class="center">
+								<g:each in="${it.aprendices}" var="a">
+									<p>${a.aprendiz.usuario.padron} - ${a.aprendiz.usuario.nombres} ${a.aprendiz.usuario.apellido} <small style="float: right;">${a.aprendiz.usuario.email}</small></p>
+								</g:each>
+	            			</td>
 		                	<td class="center">          
-								<g:link class="btn btn-success" action="agregarme" id="${it.grupo.id}"
+								<g:link class="btn btn-success" action="agregarme" id="${it.id}"
 									params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]">
 									Agregarme
 								</g:link>

@@ -13,15 +13,6 @@ class ActividadController {
 	def aprendizService
 	def cuatrimestreService
 
-	// TODO ver este metodo solamente, el resto OK
-/*	@Secured("hasRole('ROL_APRENDIZ')")
-	def actividadesCurso() {
-		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
-		
-		[actividades: Actividad.findAllByCuatrimestre(cuatrimestre), 
-			params: ['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre.id]]
-	}
-*/
 	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
 	def index() {
 		params.max = Utilidades.MAX_PARAMS
@@ -31,7 +22,7 @@ class ActividadController {
 			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
 	}
 	
-	@Secured("hasRole('ROL_MEDIADOR')")
+	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
 	def show(Actividad actividadInstance) {
 		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
 		respond actividadInstance, model: [mediador: mediador], params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]

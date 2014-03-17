@@ -38,6 +38,8 @@
 								<p class="btn-group">
 									<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
 										<button class="btn">${com.cursado.Curso.get(params.cursoId)}</button></g:link>
+									<g:link controller="actividad" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+										<button class="btn">Actividades del cuatrimestre ${com.cursado.Cuatrimestre.get(params.cuatrimestreId)}</button></g:link>
 								</p>
 						    </div>
 							<!-- Fin: BREADCRUM -->  
@@ -45,26 +47,29 @@
 						        <div class="box-header">
 						            <h2><i class="icon-plus"></i>Crear</h2>
 						            <div class="box-icon">
-						                <a href="#" class="btn-setting"><i class="icon-wrench"></i></a>
-						                <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
-						                <a href="#" class="btn-close"><i class="icon-remove"></i></a>
+						               	<g:link controller="grupoActividad" action="grupoAprendiz" id="${params.grupoActividadId}"
+											params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]">
+											<i class="icon-group"></i></g:link>	   
 						            </div>
 						        </div>
-						      	<h2>Curso: ${com.cursado.Curso.get(params.cursoId)}</h2>
-								<h2>Curso Id: ${params.cursoId}</h2>
-								<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
-								<h2>Actividad Id: ${params.actividadId}</h2>
-								<h2>Grupo actividad Id: ${params.grupoActividadId}</h2>
 						        <div class="box-content">
-						        	<g:form class="form-horizontal" action="save" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
-						        		'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]" >	   
-							            <fieldset>		
-							            	<g:render template="form"/>			
+						            <g:uploadForm class="form-horizontal" action="save" 
+						        		params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
+						        		'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]" >	 
+										<fieldset>		
+							            	<g:render template="form"/>	
+							            	<!-- ARCHIVO -->
+											<div class="control-group">
+												<label class="control-label">Archivo (32MB)</label>
+												<div class="controls">
+													<input type="file" name="archivoSubido"/>
+												</div>
+											</div>			
 							            	<div class="form-actions">
 												<button type="submit" class="btn btn-primary">Crear</button>
 											</div>		    
-							            </fieldset>  
-						            </g:form> 
+							            </fieldset>
+						            </g:uploadForm>
 						        </div>  
 						    </div>
 					    </div>

@@ -41,6 +41,9 @@
 									<g:link controller="actividad" action="index" params="['cursoId': params.cursoId]">
 										<button class="btn">Actividades del cuatrimestre ${com.cursado.Cuatrimestre.get(params.cuatrimestreId)}
 										</button></g:link>	
+									<g:link controller="grupoActividad" action="gruposMediador" 
+			                			params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]">
+			                			<button class="btn">Grupos de la actividad ${com.cursado.Actividad.get(params.actividadId)}</button></g:link>
 								</p>
 							</div>
 							<!-- Fin: BREADCRUM -->  
@@ -48,9 +51,10 @@
 						        <div class="box-header">
 						            <h2><i class="icon-plus"></i>Recalificación del aprendiz ${grupoActividadAprendizInstance.aprendiz} 
 						            	del grupo ${grupoActividadAprendizInstance.grupo}</h2>
-										<div class="box-icon"><g:link controller="grupoActividad" action="gruposMediador" 
+										<div class="box-icon"><g:link controller="grupoActividad" action="grupoMediador" 
+											id="${grupoActividadAprendizInstance.grupo.id}"
 											params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
-											'actividadId': params.actividadId]"><i class="icon-table"></i></g:link></div>
+											'actividadId': params.actividadId]"><i class="icon-group"></i></g:link></div>
 						        </div>
 						        <g:if test="${flash.message}">
 									<div class="box-content alerts">

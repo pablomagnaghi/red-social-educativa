@@ -13,24 +13,34 @@ class MaterialGrupoActividadController {
 	def materialGrupoActividadService
 	def grupoActividadService
 	
-	@Secured("hasRole('ROL_MEDIADOR')")
-	def materialAprendiz (MaterialGrupoActividad materialGrupoActividadInstance) {
-		respond materialGrupoActividadInstance, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
-			'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]
+	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
+	def descargar(Long id) {
+		ArchivoGrupoActividad archivoInstance = ArchivoGrupoActividad.get(id)
+		if (archivoInstance == null) {
+			flash.message = "Archivo no encontrado"
+			redirect controller:"actividad", action: "index", params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
+				'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]
+		} else {
+			response.setContentType("APPLICATION/OCTET-STREAM")
+			response.setHeader("Content-Disposition", "Attachment;Filename=\"${archivoInstance.filename}\"")
+			def outputStream = response.getOutputStream()
+			outputStream << archivoInstance.filedata
+			outputStream.flush()
+			outputStream.close()
+		}
 	}
 	
-	@Secured("hasRole('ROL_APRENDIZ')")
+	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
 	def show(MaterialGrupoActividad materialGrupoActividadInstance) {
-		respond materialGrupoActividadInstance, params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
+		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuarioService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
+		respond materialGrupoActividadInstance, model: [aprendiz: aprendiz], params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId,
 			'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]
 	}
 
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def create() {
-		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuarioService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
-		def grupoActividadAprendiz = grupoActividadService.aprendizParticipa(GrupoActividad.get(params.grupoActividadId), aprendiz)
-		respond new MaterialGrupoActividad(params), model:[aprendiz: grupoActividadAprendiz.aprendiz], params:['cursoId': params.cursoId, 
-			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]
+		respond new MaterialGrupoActividad(params), params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
+			'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]
 	}
 	
 	@Secured("hasRole('ROL_APRENDIZ')")
@@ -45,24 +55,30 @@ class MaterialGrupoActividadController {
 				'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]
 			return
 		}
+		def file = request.getFile('archivoSubido')
+		if(file.empty) {
+			flash.message = "El archivo esta vacío"
+			render view:'create', params:['cursoId': params.cursoId, 'temaId': params.temaId, 'contenidoId': params.contenidoId]
+			return
+		}
+		def archivoInstance = new ArchivoGrupoActividad()
+		archivoInstance.filename = file.originalFilename
+		archivoInstance.filedata = file.getBytes()
+		materialGrupoActividadInstance.archivo = archivoInstance
 		if (!materialGrupoActividadService.guardar(materialGrupoActividadInstance)) {
-			def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuarioService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
-			def grupoActividadAprendiz = grupoActividadService.aprendizParticipa(GrupoActividad.get(params.grupoActividadId), aprendiz)
-			render view:'create', model: [materialGrupoActividadInstance: materialGrupoActividadInstance, aprendiz: grupoActividadAprendiz.aprendiz],
-				params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId, 
-					'grupoActividadId': params.grupoActividadId]
+			render view:'create', model: [materialGrupoActividadInstance: materialGrupoActividadInstance], params: ['cursoId': params.cursoId, 
+				'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]
 			return
 		}
 		flash.message = "Material ${materialGrupoActividadInstance} creado"
-		redirect controller:"grupoActividad", action:"gruposAprendiz", params:['id': params.grupoActividadId,  'cursoId': params.cursoId, 
-			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
+		redirect controller: "grupoActividad", action:"grupoAprendiz", params:['id': params.grupoActividadId, 
+			'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]	
 	}
 
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def edit(MaterialGrupoActividad materialGrupoActividadInstance) {
-		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuarioService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
-		def grupoActividadAprendiz = grupoActividadService.aprendizParticipa(GrupoActividad.get(params.grupoActividadId), aprendiz)
-		respond materialGrupoActividadInstance,  model:[aprendiz: grupoActividadAprendiz.aprendiz], params: ['cursoId': params.cursoId, 
+		def titulo = materialGrupoActividadInstance.titulo
+		respond materialGrupoActividadInstance,  model:[titulo: titulo], params: ['cursoId': params.cursoId, 
 			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]
 	}
 
@@ -72,17 +88,28 @@ class MaterialGrupoActividadController {
 			notFound()
 			return
 		}
+		if (materialGrupoActividadService.existe(materialGrupoActividadInstance, params.grupoActividadId.toLong())) {
+			flash.message = "Ya existe el material ${materialGrupoActividadInstance.titulo} en el grupo ${GrupoActividad.get(params.grupoActividadId)}"
+			materialGrupoActividadInstance.titulo = params.tituloAnterior
+			redirect action: "edit", params: params
+			return
+		}
+		def file = request.getFile('archivoSubido')
+		if(!file.empty) {
+			if (!materialGrupoActividadInstance?.archivo) {
+				materialGrupoActividadInstance.archivo = new ArchivoGrupoActividad()
+			}
+			materialGrupoActividadInstance.archivo.filename = file.originalFilename
+			materialGrupoActividadInstance.archivo.filedata = file.getBytes()
+		}
 		if (!materialGrupoActividadService.guardar(materialGrupoActividadInstance)) {
-			def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuarioService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
-			def grupoActividadAprendiz = grupoActividadService.aprendizParticipa(GrupoActividad.get(params.grupoActividadId), aprendiz)
-			render view:'edit', model: [materialGrupoActividadInstance: materialGrupoActividadInstance, aprendiz: grupoActividadAprendiz.aprendiz],
-				params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId,
-					'grupoActividadId': params.grupoActividadId]
+			render view:'edit', model: [materialGrupoActividadInstance: materialGrupoActividadInstance], params: ['cursoId': params.cursoId, 
+				'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]
 			return
 		}
 		flash.message = "Material ${materialGrupoActividadInstance} actualizado"
-		redirect action:"show", params:['id': materialGrupoActividadInstance.id, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
-			'actividadId': params.actividadId, 'grupoActividadId': params.grupoActividadId]
+		redirect controller: "grupoActividad", action:"grupoAprendiz", params:['id': params.grupoActividadId, 
+			'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]	
 	}
 
 	@Secured("hasRole('ROL_APRENDIZ')")
@@ -93,13 +120,13 @@ class MaterialGrupoActividadController {
 		}
 		materialGrupoActividadService.eliminar(materialGrupoActividadInstance)
 		flash.message = "Material ${materialGrupoActividadInstance} eliminado"
-		redirect controller:"grupoActividad", action:"gruposAprendiz", params:['cursoId': params.cursoId, 
-			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId], method:"GET"
+		redirect controller: "grupoActividad", action:"grupoAprendiz", params:['id': params.grupoActividadId, 
+			'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId], method: "GET"
 	}
 
 	protected void notFound() {
 		flash.message = "No se encuentra ese material"
-		redirect controller: "grupoActividad", action:"mostrar", params:['id': params.grupoActividadId, 
+		redirect controller: "grupoActividad", action:"grupoAprendiz", params:['id': params.grupoActividadId, 
 			'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId], method: "GET"
 	}
 }

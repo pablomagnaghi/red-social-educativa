@@ -19,8 +19,11 @@
 	    	     			<td>${it.evaluacion.nombre}</td>
 	  						<td class="center">${it.evaluacion.fecha}</td>
 	           				<td class="center">
-	           					<g:if test="${it.nota}">${it.nota}</g:if>
-	           					<g:else>Nota pendiente</g:else>
+	           					<g:if test="${it.calificado}">
+	            	            	<g:if test="${it.nota}">${it.nota}</g:if>
+	            	            	<g:else>0.00</g:else>
+	            	            </g:if>	
+            	            	<g:else>Resultado pendiente</g:else>
 	           				</td>
 						</tr>
 					</g:each>   

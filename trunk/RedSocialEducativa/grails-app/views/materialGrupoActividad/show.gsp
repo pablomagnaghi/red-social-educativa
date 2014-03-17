@@ -30,12 +30,6 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-						<h2>Params: ${params}</h2>
-						<h2>Curso: ${com.fiuba.Curso.get(params.cursoId)}</h2>
-						<h2>Curso Id: ${params.cursoId}</h2>
-						<h2>Cuatrimestre Id: ${params.cuatrimestreId}</h2>
-						<h2>Actividad Id: ${params.actividadId}</h2>
-						<h2>Grupo actividad Id: ${params.grupoActividadId}</h2>
 	                <div class="span2"></div>
 					<div class="span8"> 
 						<!-- comienzo: BREADCRUM -->
@@ -43,6 +37,8 @@
 							<p class="btn-group">
 								<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
 									<button class="btn">${com.cursado.Curso.get(params.cursoId)}</button></g:link>
+								<g:link controller="actividad" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]">
+									<button class="btn">Actividades del cuatrimestre ${com.cursado.Cuatrimestre.get(params.cuatrimestreId)}</button></g:link>
 							</p>
 						</div>
 						<!-- Fin: BREADCRUM -->  

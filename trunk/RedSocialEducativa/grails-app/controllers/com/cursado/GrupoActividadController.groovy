@@ -11,12 +11,11 @@ class GrupoActividadController {
 	def usuarioService
 	def grupoActividadService
 	
-	// TODO VER
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def gruposAprendiz() {
 		params.max = Utilidades.MAX_PARAMS
 		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuarioService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
-		[grupoActividadAprendices: grupoActividadService.obtenerAprendicesPorActividad(params.actividadId.toLong()), aprendiz: aprendiz,
+		[gruposActividad: GrupoActividad.findAllByActividad(Actividad.get(params.actividadId)), aprendiz: aprendiz,
 			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
 	}
 	
@@ -29,25 +28,27 @@ class GrupoActividadController {
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def gruposMediador() {
 		params.max = Utilidades.MAX_PARAMS
-		[grupoActividadAprendices: grupoActividadService.obtenerAprendicesPorActividad(params.actividadId.toLong()),
+		[gruposActividad: GrupoActividad.findAllByActividad(Actividad.get(params.actividadId)),
 			params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]]
 	}
-	// TODO VER
+
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def grupoMediador(GrupoActividad grupoActividadInstance) {
+		def medidaor = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
+		respond grupoActividadInstance, params: ['cursoId' :params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
+	}
+	
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def crearGrupo() {
-
 		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuarioService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
 		def grupoActividadAprendiz = grupoActividadService.obtenerGrupoAprendiz(aprendiz, params.actividadId.toLong())
 		def actividad = Actividad.get(params.actividadId)
-		
 		if (grupoActividadAprendiz) {
 			flash.message = "Usted ya pertenece al grupo ${grupoActividadAprendiz.grupo} en la actividad ${actividad}"
 			redirect action: "gruposAprendiz", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 			return
 		}
-		
 		def numGrupo = GrupoActividad.findAllByActividad(actividad).size() + 1
-		
 		respond new GrupoActividad(params), model:[numGrupo: numGrupo], params:['cursoId': params.cursoId,
 			'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 	}
@@ -84,7 +85,7 @@ class GrupoActividadController {
 		respond grupoActividadInstance, params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
 			'actividadId': params.actividadId]
 	}
-	// TODO VER
+
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def guardar(GrupoActividad grupoActividadInstance) {
 		if (grupoActividadInstance == null) {
@@ -93,18 +94,16 @@ class GrupoActividadController {
 				'actividadId': params.actividadId], method:"GET"
 			return
 		}
-		
 		if (!grupoActividadService.agregarAprendiz(grupoActividadInstance, usuarioService.usuarioActual(), params.cuatrimestreId.toLong())) {
-			render view:'crear', model: [grupoActividadInstance: grupoActividadInstance, numGrupo: params.numGrupo],
+			render view:'crearGrupo', model: [grupoActividadInstance: grupoActividadInstance, numGrupo: params.numGrupo],
 				params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 			return
 		}
-		
-		flash.message = message(code: 'default.created.message', args: [message(code: 'grupoActividadInstance.label', default: 'GrupoActividad'), grupoActividadInstance.id])
-		redirect action: "gruposAprendiz", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
+		flash.message = "Bienvenido al grupo ${grupoActividadInstance}"
+		redirect action: "grupoAprendiz", params:['id': grupoActividadInstance.id, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
 			'actividadId': params.actividadId]
 	}
-	// TODO VER
+
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def agregarme(GrupoActividad grupoActividadInstance) {		
 		if (grupoActividadInstance == null) {
@@ -112,24 +111,21 @@ class GrupoActividadController {
 			redirect action:"gruposAprendiz", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId], method:"GET"
 			return
 		}
-		
 		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuarioService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
 		def grupoActividadAprendiz = grupoActividadService.obtenerGrupoAprendiz(aprendiz, params.actividadId.toLong())
 		def actividad = Actividad.get(params.actividadId)
-		
 		if (grupoActividadAprendiz) {
 			flash.message = "Usted ya pertenece al grupo ${grupoActividadAprendiz.grupo} en la actividad ${actividad}"
 			redirect action: "gruposAprendiz", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 			return
 		}
-		
-		if (grupoActividadService.agregarAprendiz(grupoActividadInstance, usuarioService.usuarioActual(), params.cuatrimestreId.toLong())) {
-			render view:'mostrarGrupo', model: [grupoActividadInstance: grupoActividadInstance], params:['id': params.id, 'cursoId': params.cursoId, 
-				'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
+		if (!grupoActividadService.agregarAprendiz(grupoActividadInstance, usuarioService.usuarioActual(), params.cuatrimestreId.toLong())) {
+			flash.message = "Problemas al agregarse al grupo ${grupoActividadInstance} en la actividad ${actividad}"
+			redirect action: "gruposAprendiz", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
 		}
-
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'GrupoActividad.label', default: 'GrupoActividad'), grupoActividadInstance.id])
-		redirect action: "gruposAprendiz", params:['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': params.actividadId]
+		flash.message = "Bienvenido al grupo ${grupoActividadInstance}"
+		redirect action: "grupoAprendiz", params:['id': grupoActividadInstance.id, 'cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 
+			'actividadId': params.actividadId]
 	}
 	
 	@Secured("hasRole('ROL_APRENDIZ')")
