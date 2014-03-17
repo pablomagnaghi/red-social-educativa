@@ -60,8 +60,7 @@
 													<i class="icon-search"></i></g:link>
 												<g:link style="float: right;" class="btn btn-success" controller="materialActividad" action="descargar" id="${m?.archivo?.id}" 
 													params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadInstance.id]">
-													<i class="icon-download-alt"></i></g:link></p>
-													
+													<i class="icon-download-alt"></i></g:link></p>		
 										</g:each>  
 									</g:if>
 									<g:else>
@@ -98,9 +97,17 @@
 			                            	<i class="icon-group"></i></g:link>	
 									</g:if>		
 									<g:if test="${aprendiz}">
-										<g:link class="btn btn-success" controller="grupoActividad" action="gruposAprendiz" id="${actividadInstance.id}"
-			                            	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadInstance.id]">
-			                            	<i class="icon-group"></i></g:link>
+										<g:set var="varGrupoActividadAprendiz" value="${varGrupoActividadService.obtenerGrupoAprendiz(aprendiz, actividadInstance.id)}"/>
+										<g:if test="${varGrupoActividadAprendiz}">
+											<g:link class="btn btn-success" controller="grupoActividad" action="grupoAprendiz" id="${varGrupoActividadAprendiz.grupo.id}"
+				                            	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadInstance.id]">
+				                            	<i class="icon-group"></i></g:link>
+			                            </g:if>
+			                            <g:else>
+			                            	<g:link class="btn btn-success" controller="grupoActividad" action="gruposAprendiz" 
+				                            	params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId, 'actividadId': actividadInstance.id]">
+				                            	<i class="icon-group"></i></g:link>
+			                            </g:else>	
 									</g:if>
 			                        <g:link class="btn btn-success" action="show" id="${actividadInstance.id}"
 			                            params="['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]"><i class="icon-search "></i></g:link>

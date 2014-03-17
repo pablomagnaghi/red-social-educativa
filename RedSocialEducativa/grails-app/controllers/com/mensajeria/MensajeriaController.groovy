@@ -30,7 +30,7 @@ class MensajeriaController {
 		Integer offset = params.offset?.toInteger() ?: 0
 		def usuario = this.usuarioActual()
 		if (!usuario){
-			redirect (controller:"red", action:"principal")
+			redirect (controller:"red", action:"revisarRol")
 		}
 		def etiquetasCarpetas = getCarpetas(usuario)
 		def conversacion = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, "Escritorio"), [max: params.max, offset: offset])
@@ -43,7 +43,7 @@ class MensajeriaController {
 	def nuevaCarpeta() {
 		def usuario = this.usuarioActual()
 		if (!usuario){
-			redirect (controller:"red", action:"principal")
+			redirect (controller:"red", action:"revisarRol")
 		}
 		def nuevaCarpeta = new Carpeta(nombre : params.nombre, usuario: usuario)
 		if(!nuevaCarpeta.save()){
@@ -61,7 +61,7 @@ class MensajeriaController {
 		}
 		def usuario = this.usuarioActual()
 		if (!usuario){
-			redirect (controller:"red", action:"principal")
+			redirect (controller:"red", action:"revisarRol")
 		}
 		def conversacion = []
 		def conversacionCount = 0
@@ -79,7 +79,7 @@ class MensajeriaController {
 	def cambiarConversacion(){
 		def usuario = this.usuarioActual()
 		if (!usuario){
-			redirect (controller:"red", action:"principal")
+			redirect (controller:"red", action:"revisarRol")
 		}
 		def idConversacion = params.conversacion
 		def nombreFormateado = params.carpeta
@@ -93,7 +93,7 @@ class MensajeriaController {
 	def eliminarConversacion(){
 		def usuario = this.usuarioActual()
 		if (!usuario){
-			redirect (controller:"red", action:"principal")
+			redirect (controller:"red", action:"revisarRol")
 		}
 		def carpeta = Carpeta.findByNombreAndUsuario("Eliminados", usuario)
 		def conversacion = Conversacion.findById(params.conversacion)
@@ -115,7 +115,7 @@ class MensajeriaController {
 	def redactarMensaje(){
 		def usuario = this.usuarioActual()
 		if (!usuario){
-			redirect (controller:"red", action:"principal")
+			redirect (controller:"red", action:"revisarRol")
 		}
 		def mediadores = Mediador.findAllByUsuario(usuario)
 		def aprendices = Aprendiz.findAllByUsuario(usuario)
@@ -155,7 +155,7 @@ class MensajeriaController {
 	def responder(){
 		def usuario = this.usuarioActual()
 		if (!usuario){
-			redirect (controller:"red", action:"principal")
+			redirect (controller:"red", action:"revisarRol")
 		}
 		def mediadores = Mediador.findAllByUsuario(usuario)
 		def aprendices = Aprendiz.findAllByUsuario(usuario)
@@ -211,7 +211,7 @@ class MensajeriaController {
 	private def generarDestinatariosRespuestaATodos(Mensaje m){
 		def usuario = this.usuarioActual()
 		if (!usuario){
-			redirect (controller:"red", action:"principal")
+			redirect (controller:"red", action:"revisarRol")
 		}
 		def para = ""
 		def receptores = m.para.split(",");
@@ -256,7 +256,7 @@ class MensajeriaController {
 		
 		def usuario = this.usuarioActual()
 		if (!usuario){
-			redirect (controller:"red", action:"principal")
+			redirect (controller:"red", action:"revisarRol")
 		}
 		def asunto = params.asunto
 		def texto = params.mensaje
@@ -336,7 +336,7 @@ class MensajeriaController {
 	def agregarMensajeABorradores(){
 		def usuario = this.usuarioActual()
 		if (!usuario){
-			redirect (controller:"red", action:"principal")
+			redirect (controller:"red", action:"revisarRol")
 		}
 		def mensaje = new Mensaje(para: params.para, asunto: params.asunto, cuerpo: params.cuerpo, emisor: usuario)
 		mensajeService.agregarMensajeABorradores(mensaje)
@@ -368,7 +368,7 @@ class MensajeriaController {
 	def conversacion(){
 		def usuario = this.usuarioActual()
 		if (!usuario){
-			redirect (controller:"red", action:"principal")
+			redirect (controller:"red", action:"revisarRol")
 		}
 		def conversacion = Conversacion.findById(params.id)
 		def carpeta = conversacion.padre
@@ -429,7 +429,7 @@ class MensajeriaController {
 		
 		def usuario = this.usuarioActual()
 		if (!usuario){
-			redirect (controller:"red", action:"principal")
+			redirect (controller:"red", action:"revisarRol")
 		}
 		def de = null	
 		def para = null
