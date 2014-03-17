@@ -22,10 +22,6 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-
-					<g:if test="${flash.message}">
-						<div class="message" role="status">${flash.message}</div>
-					</g:if>
 					<div class="row-fluid">
 						<div class="box span12">
 							<div class="box-header">
@@ -55,6 +51,15 @@
 											<h3>Este curso se dicta solo durante el cuatrimestre ${com.cursado.Curso.get(params.cursoId).cuatDict}</h3>
 										</g:else>
 									</div>
+									<g:if test="${flash.message}">
+										<div class="box-content alerts">
+											<div class="alert alert-error">
+												<button class="close" data-dismiss="alert" type="button"></button>
+												<strong></strong> 
+												${flash.message}
+											</div>
+										</div>    
+									</g:if>
 								</div>
 							</div>
 						</div><!--/span-->
