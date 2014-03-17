@@ -29,34 +29,31 @@
 					<div class="row-fluid">
 						<div class="box span12">
 							<div class="box-header">
-								<h2><i class="icon-font"></i><span class="break"></span>
+								<h2><i class="icon-th-large"></i><span class="break"></span>
 									Bienvenido administrador ${usuario} al curso ${com.cursado.Curso.get(params.cursoId)} de 
 									la asignatura ${com.cursado.Curso.get(params.cursoId).asignatura}</h2>
 								<div class="box-icon">
-									<a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
+									<g:link controller="red" action="cursos"><i class="icon-edit"></i></g:link>
 								</div>
 							</div>
 							<div class="box-content">
 								<div class="page-header">
-									<g:render template="tituloGeneral"></g:render>
+									<div class="btn-group">
+										<p><g:link controller="materialCurso" action="index" params="['cursoId': params.cursoId]">
+											<button class="btn btn-large dropdown-toggle btn-primary" >Material del curso</button></g:link>
+											<g:link controller="tema" action="index" params="['cursoId': params.cursoId]">
+											<button class="btn btn-large dropdown-toggle btn-primary" >Temas del curso</button></g:link>		
+										</p>
+									</div>
 								</div>         
 								<div class="row-fluid">            	 
-									<div class="span12">		
-										SOLO VE MATERIAL GENERAL Y TEMAS CON FOROS DE TEMAS
-											<h2>Curso id: ${params.cursoId}</h2>
-											<h2>Dicta cuatrimestre: ${dictaCuatrimestre}</h2>
-											<h2>cuat id: ${cuatrimestre?.id}</h2>
-											<h2>Noticia curso: ${noticiasCurso}</h2>   
-											
-											
-											<div>
-												<g:link controller="materialCurso" action="index" params="['cursoId': params.cursoId]">
-													<g:message code="Material del curso" /></g:link>
-											</div>
-											<div>
-												<g:link controller="tema" action="index" params="['cursoId': params.cursoId]">
-													<g:message code="Temas del curso" /></g:link>
-											</div>
+									<div class="span12">												
+										<g:if test="${com.cursado.Curso.get(params.cursoId).cuatDict == com.fiuba.Utilidades.CUAT_AMBOS}">
+											<h3>Este curso se dicta durante todo el año</h3>
+										</g:if>
+										<g:else>
+											<h3>Este curso se dicta solo durante el cuatrimestre ${com.cursado.Curso.get(params.cursoId).cuatDict}</h3>
+										</g:else>
 									</div>
 								</div>
 							</div>

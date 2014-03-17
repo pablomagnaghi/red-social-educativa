@@ -8,6 +8,6 @@
 		</g:if>	
 		<g:else>
 			<h3>Cuatrimestre ${cuatrimestre}</h3>
-	</g:else>
+		</g:else>
 	</g:else>
 </div>
