@@ -20,22 +20,17 @@ class CursoController {
 
 	@Secured("hasRole('ROL_ADMIN')")
 	def administrador() {
-		[dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), 
-			cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong()), 
-			materiales: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)), 
-			temas: Tema.findAllByCurso(Curso.get(params.cursoId)),
-			params: ['cursoId': params.cursoId]]
+		[materiales: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)), temas: Tema.findAllByCurso(Curso.get(params.cursoId)), params: ['cursoId': params.cursoId]]
 	}
 
+	//ver
 	@Secured("hasRole('ROL_MIEMBRO')")
 	def miembro() {
 		// Verifico si el miembro ya pidio la participacion en el curso durante este cuatrimestre
 		// Se necesita para decidir si se muestra o no la opcion de solicitar participacion en el curso en la vista
 		def usuario = usuarioService.usuarioActual()
 		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
-		
 		def aprendiz = Aprendiz.findByUsuarioAndCuatrimestreAndParticipa(usuario, cuatrimestre, false)
-		
 		[solicitoParticipacion: aprendiz, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()),
 			cuatrimestre: cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong()), 
 			materiales: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)),
@@ -69,19 +64,18 @@ class CursoController {
 			params: ['cursoId': params.cursoId]]
 	}
 	
+	// ver
 	@Secured("hasRole('ROL_MIEMBRO')")
 	def solicitarParticipacionEnElCurso() {
-
 		if (!cursoService.agregarAprendiz(usuarioService.usuarioActual(), params.cursoId.toLong())) {
 			flash.message = "Problemas con la solitud de participacion"
 			redirect action: "miembro", params:['cursoId': params.cursoId]
 			return
 		}
-
 		flash.message = "Solicitud aceptada. A la brevedad se le enviara un mail de confirmacion"
 		redirect action: "miembro", params:['cursoId': params.cursoId]
 	}
-	// TODO: de aca para abajo listo
+
 	@Secured("hasRole('ROL_ADMIN')")
 	def index() {
 		params.max = Utilidades.MAX_PARAMS
