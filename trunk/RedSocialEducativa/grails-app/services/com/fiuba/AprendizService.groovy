@@ -13,6 +13,21 @@ class AprendizService {
 		}
 	}
 	
+	def publica(Aprendiz aprendiz) {
+		aprendiz.pubForos++
+		aprendiz.save flush: true
+	}
+	
+	def ultimaVisita(Aprendiz aprendiz) {
+		aprendiz.ultVisita = new Date().format(Utilidades.FORMATO_FECHA)
+		aprendiz.save flush: true
+	}
+	
+	def descarga(Aprendiz aprendiz) {
+		aprendiz.descMaterial++
+		aprendiz.save flush: true
+	}
+	
 	def obtenerCursos(Usuario usuario) {
 		def cursosAprendiz = Aprendiz.createCriteria().list {
 			eq('usuario.id', usuario.id)

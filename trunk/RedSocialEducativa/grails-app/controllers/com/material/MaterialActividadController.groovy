@@ -11,6 +11,7 @@ class MaterialActividadController {
 
 	def usuarioService
 	def materialActividadService
+	def aprendizService
 
 	@Secured("hasAnyRole('ROL_MEDIADOR', 'ROL_APRENDIZ')")
 	def descargar(Long id) {
@@ -25,6 +26,12 @@ class MaterialActividadController {
 			outputStream << archivoInstance.filedata
 			outputStream.flush()
 			outputStream.close()
+			// Para estadisticas de aprendiz en cursado
+			def aprendiz = Aprendiz.findByUsuarioAndCuatrimestre(usuarioService.usuarioActual(), Cuatrimestre.get(params.cuatrimestreId))
+			if (aprendiz) {
+				println "descarga"
+				aprendizService.descarga(aprendiz)
+			}
 		}
 	}
 

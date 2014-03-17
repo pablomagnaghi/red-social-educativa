@@ -41,6 +41,11 @@ class CursoController {
 	def aprendiz() {
 		def aprendiz = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
 		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
+		def aprendizCuatrimestre = Aprendiz.findByUsuarioAndCuatrimestre(usuarioService.usuarioActual(), cuatrimestre)
+		// Para estadisticas de aprendiz en cursado
+		if (aprendizCuatrimestre) {
+			aprendizService.ultimaVisita(aprendizCuatrimestre)
+		}
 		[aprendiz: aprendiz, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), cuatrimestre: cuatrimestre, 
 			noticiasCurso: NoticiaCurso.findAllByCuatrimestre(cuatrimestre),
 			materiales: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)),
