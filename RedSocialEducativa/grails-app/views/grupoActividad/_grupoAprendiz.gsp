@@ -27,7 +27,9 @@
                         <th>Numero de grupo</th>  
 						<th>Nombre de grupo</th>  
 						<th>Integrantes</th>
-						<th>Materiales</th>       
+						<th>Materiales</th>     
+						<g:if test="${com.cursado.Actividad.get(params.actividadId).evaluable}"><th>Nota</th></g:if>
+						<g:else><th>Cumplio</th></g:else>	
 					</tr>
 				</thead>
                 <tbody>
@@ -59,7 +61,21 @@
 										'grupoActividadId': grupoActividadInstance.id]">
 										<i class="icon-download-alt"></i></g:link></p>
 							</g:each>
-	            	    </td>        	    
+	            	    </td>      
+	            	    <g:if test="${com.cursado.Actividad.get(params.actividadId).evaluable}">
+		            	    <td class="center">
+		            	    	<g:each in="${grupoActividadInstance.aprendices}">
+									<p>${it.id} Nota ${it.nota}</p>
+								</g:each>
+		            	   	</td>
+	            	    </g:if>
+	            	    <g:else>
+		            	   	<td class="center">
+			            	   	<g:each in="${grupoActividadInstance.aprendices}">
+									<p>${it.id} Nota${it.cumplio}</p>
+								</g:each>	
+		            	   	</td>
+	            	    </g:else>      
 				 	</tr>
                 </tbody>
             </table>
