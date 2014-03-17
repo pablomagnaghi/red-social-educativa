@@ -36,12 +36,10 @@ class CuatrimestreService {
 	
 	// Revisa en que periodo del año estamos, para determinar que cuatrimestre tendria que existir en el curso
 	def obtenerCuatrimestreActual(Long cursoId) {
-		
 		def anio = obtenerAnio()
 		def numero = obtenerNumero()
 		def curso = Curso.get(cursoId)
 		def cuatrimestre = Cuatrimestre.findByCursoAndAnioAndNumero(curso, anio, numero)
-
 		return cuatrimestre
 	}
 	
@@ -56,11 +54,9 @@ class CuatrimestreService {
 	}
 
 	def guardar(Cuatrimestre cuatrimestre) {
-
 		if (cuatrimestre.save(flush:true)) {
 			return cuatrimestre
 		}
-
 		return null
 	}
 
