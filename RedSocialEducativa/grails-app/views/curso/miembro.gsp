@@ -35,43 +35,45 @@
 					<div class="row-fluid">
 						<div class="box span12">
 							<div class="box-header">
-								<h2><i class="icon-font"></i><span class="break"></span>
+								<h2><i class="icon-th-large"></i></i><span class="break"></span>
 									Bienvenido miembro ${usuario} al curso ${com.cursado.Curso.get(params.cursoId)} de 
 									la asignatura ${com.cursado.Curso.get(params.cursoId).asignatura}</h2>
 								<div class="box-icon">
-									<a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
+									<g:link controller="red" action="cursos"><i class="icon-edit"></i></g:link>
 								</div>
 							</div>
 							<div class="box-content">
 								<div class="page-header">
-									<g:render template="tituloGeneral"></g:render>
-										<h2>Curso id: ${params.cursoId}</h2>
-										<h2>Dicta cuatrimestre: ${dictaCuatrimestre}</h2>
-										<h2>cuat id: ${cuatrimestre?.id}</h2>
-										<h2>Noticia curso: ${noticiasCurso}</h2>
-										<h2>"PARTICIPA: ${aprendiz?.participa}"</h2>	
-										<h2>"APRENDIZ CURSNADO": ${aprendiz?.cursando}</h2>
-										<h2>"CURSANDO: ${cursando}"</h2>
-								</div>         
-								<div class="row-fluid">            	 
-									<div class="span12">
-										<div>
-											<g:link controller="materialCurso" action="index" params="['cursoId': params.cursoId]">
-												<g:message code="Material del curso" /></g:link>
-										</div>
-										<div>
+									<div class="btn-group">
+										<p><g:link controller="materialCurso" action="index" params="['cursoId': params.cursoId]">
+												<button class="btn btn-large dropdown-toggle btn-primary" >Material del curso</button></g:link>
 											<g:link controller="tema" action="index" params="['cursoId': params.cursoId]">
-												<g:message code="Temas del curso" /></g:link>
-										</div>
-										<g:if test="${cuatrimestre?.id}">
-											<g:if test="${solicitoParticipacion}">
-											<div>
-												<p>Su solicitud de particion en el curso ya ha sido recibida.</p>			      
-											</div>
+												<button class="btn btn-large dropdown-toggle btn-primary" >Temas del curso</button></g:link>	
+										</p>
+									</div>         
+								</div>
+								<div class="row-fluid">            	 
+									<div class="span12">												
+										<g:if test="${com.cursado.Curso.get(params.cursoId).cuatDict == com.fiuba.Utilidades.CUAT_AMBOS}">
+											<h3>Este curso se dicta durante todo el año</h3>
+										</g:if>
+										<g:else>
+											<h3>Este curso se dicta solo durante el cuatrimestre ${com.cursado.Curso.get(params.cursoId).cuatDict}</h3>
+										</g:else>
+										<g:if test="${dictaCuatrimestre}">
+											<g:if test="${cuatrimestre?.id}">
+												<g:if test="${solicitoParticipacion}">	
+													<span class="label label-success">Su solicitud de particion en el curso ya ha sido recibida</span>	      
+												</g:if>
+												<g:else>
+													<p class="btn-group">
+														<g:link action="solicitarParticipacionEnElCurso" params="['cursoId': params.cursoId]">
+															<button class="btn btn-success" >Participar en el curso</button></g:link>
+														</p>
+												</g:else>
 											</g:if>
 											<g:else>
-												<g:link class="list" action="solicitarParticipacionEnElCurso" params="['cursoId': params.cursoId]">
-												<g:message code="Solicitar partipacion en el curso" args="[entityName]" /></g:link>  
+												<h3>Las opciones del cuatrimestre de cursada se visualizaran en breve</h3>
 											</g:else>
 										</g:if>
 									</div>

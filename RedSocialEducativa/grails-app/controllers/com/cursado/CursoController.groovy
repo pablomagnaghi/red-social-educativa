@@ -23,7 +23,6 @@ class CursoController {
 		[materiales: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)), temas: Tema.findAllByCurso(Curso.get(params.cursoId)), params: ['cursoId': params.cursoId]]
 	}
 
-	//ver
 	@Secured("hasRole('ROL_MIEMBRO')")
 	def miembro() {
 		// Verifico si el miembro ya pidio la participacion en el curso durante este cuatrimestre
@@ -38,11 +37,11 @@ class CursoController {
 			params: ['cursoId': params.cursoId]]
 	}
 
+	// ver
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def aprendiz() {
 		def aprendiz = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
 		def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(params.cursoId.toLong())
-		
 		[aprendiz: aprendiz, dictaCuatrimestre: cursoService.seDicta(params.cursoId.toLong()), cuatrimestre: cuatrimestre, 
 			noticiasCurso: NoticiaCurso.findAllByCuatrimestre(cuatrimestre),
 			materiales: MaterialCurso.findAllByCurso(Curso.get(params.cursoId)),
@@ -50,6 +49,7 @@ class CursoController {
 			params: ['cursoId': params.cursoId],]
 	}
 
+	// ver
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def mediador() {
 		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
@@ -64,7 +64,6 @@ class CursoController {
 			params: ['cursoId': params.cursoId]]
 	}
 	
-	// ver
 	@Secured("hasRole('ROL_MIEMBRO')")
 	def solicitarParticipacionEnElCurso() {
 		if (!cursoService.agregarAprendiz(usuarioService.usuarioActual(), params.cursoId.toLong())) {

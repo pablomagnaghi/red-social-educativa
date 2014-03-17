@@ -35,7 +35,7 @@
 					<div class="row-fluid">
 						<div class="box span12">
 							<div class="box-header">
-								<h2><i class="icon-font"></i><span class="break"></span>
+								<h2><i class="icon-th-large"></i><span class="break"></span>
 									Bienvenido aprendiz ${usuario} al curso ${com.cursado.Curso.get(params.cursoId)} 
 									de la asignatura ${com.cursado.Curso.get(params.cursoId).asignatura}</h2>
 								<div class="box-icon">
