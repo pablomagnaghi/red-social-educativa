@@ -26,13 +26,15 @@ class GrupoActividadService {
 		return grupoActividadAprendiz
 	}
 	
+	//TODO ver
+	/*
 	def aprendizParticipa(GrupoActividad grupo, Aprendiz aprendiz) {
 		def aprendizParticipa = GrupoActividadAprendiz.createCriteria().get {
 			eq('grupo.id', grupo.id)
 			eq('aprendiz.id', aprendiz.id)
 		}
 		return aprendizParticipa
-	}
+	}*/
 
     def guardar(GrupoActividad grupo) {
 		if (grupo.save(flush:true)) {
