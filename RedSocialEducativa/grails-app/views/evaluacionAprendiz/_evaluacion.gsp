@@ -5,6 +5,7 @@
                 <span class="break"></span>Evaluacion ${evaluacion}</h2>
             <div class="box-icon">
                 <g:link action="create" params="['cursoId': params.cursoId, 'evaluacionId': params.evaluacionId]"><i class="icon-plus"></i></g:link>
+                <g:link action="renderPDF" id="${evaluacion?.id}"><i class="icon-file-alt"></i></g:link>
             </div>
         </div>
         <div class="box-content">
