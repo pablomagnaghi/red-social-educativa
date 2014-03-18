@@ -9,4 +9,9 @@ class Conversacion {
 
     static constraints = {
     }
+	
+	public Date lastMessageDate(){
+		Mensaje m = this.mensajes.last()
+		return m.fecha
+	}
 }

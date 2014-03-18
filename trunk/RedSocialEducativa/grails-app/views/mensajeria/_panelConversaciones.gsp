@@ -1,18 +1,18 @@
 <div class="span9" id="contenidoMensajes">
-	<ul class="messagesList">
+	<ul class="messagesList" carpetaSeleccionada="${carpetaSeleccionada }">
 	<g:if test="${conversaciones!= null }">
 		<g:if test="${!conversaciones.empty }">
 			<g:each in="${conversaciones}" var="conversacion">
 				<g:set var="mensaje" value="${conversacion.mensajes.last()}" />
 				<g:if test="${mensaje.leido == false}">
-					<li conversationId="${conversacion.id}" class="unread draggable">
+					<li conversationId="${conversacion.id}" mensajeId="${mensaje.id}" class="unread draggable">
 				</g:if>
 				<g:else>
-					<li conversationId="${conversacion.id}" class="draggable">
+					<li conversationId="${conversacion.id}" mensajeId="${mensaje.id}" class="draggable">
 				</g:else>
 				<span style="display: inline-flex;">
 					<input type="checkbox" id="${conversacion.id}"
-						class="checkbox style-2 checkBoxConv">
+						class="checkbox style-2 checkBoxConv" style="margin-bottom: 10px;">
 				</span>
 				<span class="from showConv">
 					
@@ -23,7 +23,7 @@
 					${mensaje.asunto} - ${mensaje.getCuerpoResumido()}...
 				</span>
 				<span class="date showConv">
-					22.30
+					${mensaje.getFechaYHora() }
 				</span>
 				</li>
 			</g:each>

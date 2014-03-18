@@ -200,7 +200,7 @@
 					<ul>
 						<g:each in="${cursosTotales}" var="curso">
 							<li style="display: none"><span class="badge badge-success"><i
-									class="icon-minus-sign"></i> ${curso.materia} - ${curso.nombre }</span> <g:each
+									class="icon-minus-sign"></i> ${curso.asignatura} - ${curso.nombre }</span> <g:each
 									in="${datosMediadores.get(curso.id +"-mediadoresC")}"
 									var="mediador">
 									<ul>

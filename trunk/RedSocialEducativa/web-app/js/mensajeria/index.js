@@ -85,21 +85,38 @@ function when_ready(){
 	});
 	$(".showConv").click(function(){
 		id = $(this).closest('li').attr('conversationid')
-		mostrarConversacion(id)
+		mensajeId = $(this).closest('li').attr('mensajeId')
+		carpeta = $(this).closest('ul').attr('carpetaSeleccionada')
+		mostrarConversacion(id, mensajeId, carpeta)
 		actualizar("conversacion", id)
 	})
 	redactar_ready()
 }
 
-function mostrarConversacion(id){
+function actualizarCarpetas(carpeta){
+	$.ajax({
+		url: 'mostrarCarpetas',
+		type: 'POST',
+		data: {
+			carpetaSeleccionada : carpeta
+		},
+		success: function(reply){
+			$("#carpetasUsuario").html(reply);
+		}
+	})
+}
+
+function mostrarConversacion(id, mensajeId, carpeta){
 	$.ajax({
 		url: 'conversacion',
 		type: 'POST',
 		data: {
-			id: id
+			id: id,
+			mensajeId : mensajeId
 		},
 		success: function(reply){
 			$("#contenidoMensajes").html(reply);
+			actualizarCarpetas(carpeta)
 		}
 	})
 }

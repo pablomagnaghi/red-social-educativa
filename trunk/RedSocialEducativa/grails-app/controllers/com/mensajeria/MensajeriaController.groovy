@@ -34,10 +34,21 @@ class MensajeriaController {
 		}
 		def etiquetasCarpetas = getCarpetas(usuario)
 		def conversacion = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, "Escritorio"), [max: params.max, offset: offset])
+		conversacion.sort{it.lastMessageDate()}
+		conversacion = conversacion.reverse(true)
 		def conversacionCount = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, "Escritorio")).size()
 		
 		[etiquetasCarpetas: etiquetasCarpetas, conversaciones : conversacion, 
 		conversacionCount: conversacionCount, carpetaSeleccionada: "Escritorio", offset: offset]
+	}
+	
+	def mostrarCarpetas(){
+		def usuario = this.usuarioActual()
+		if (!usuario){
+			redirect (controller:"red", action:"revisarRol")
+		}
+		def etiquetasCarpetas = getCarpetas(usuario)
+		render(template: 'panelCarpetas', model: [etiquetasCarpetas: etiquetasCarpetas, carpetaSeleccionada: params.carpetaSeleccionada])
 	}
 
 	def nuevaCarpeta() {
@@ -71,9 +82,15 @@ class MensajeriaController {
 			return	
 		} else {
 			conversacion = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, nombreCarpeta), [max: params.max, offset: offset])
+			conversacion.sort{it.lastMessageDate()}
+			conversacion = conversacion.reverse(true)
 			conversacionCount = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, nombreCarpeta)).size()
 		}
-		render(view:"index",model:[conversaciones: conversacion, conversacionCount: conversacionCount, etiquetasCarpetas:  getCarpetas(usuario), carpetaSeleccionada : nombreCarpeta, nombreCarpeta : nombreCarpeta, offset: offset])
+		render(view:"index",model:[conversaciones: conversacion, 
+			conversacionCount: conversacionCount, 
+			etiquetasCarpetas:  getCarpetas(usuario), 
+			carpetaSeleccionada : nombreCarpeta, 
+			nombreCarpeta : nombreCarpeta, offset: offset])
 	}
 
 	def cambiarConversacion(){
@@ -198,10 +215,8 @@ class MensajeriaController {
 			asunto = "RE: " + mensaje.asunto
 			para = generarDestinatariosRespuestaATodos(mensaje)
 		}
-		println para
 		render(template:"redactarRespuesta", model: [para : para, asunto : asunto, usuarios: usuarios, cursosAprendiz : cursosAprendiz, datosCursosAprendiz : datosCursosAprendiz,
 			cursosMediador : cursosMediador, datosCursosMediador : datosCursosMediador, datosMediadores : datosMediadores, cursosTotales: datosCursos])
-		
 	}
 	
 	private def generarDestinatariosRespuesta(Mensaje m){
@@ -317,6 +332,7 @@ class MensajeriaController {
 	}
 	
 	def responderMensaje(){
+		println params
 		def mensajeOriginal = Mensaje.findById(params.respuestaId)
 		def para = params.respuestaPara
 		def asunto = params.respuestaAsunto
@@ -371,6 +387,10 @@ class MensajeriaController {
 			redirect (controller:"red", action:"revisarRol")
 		}
 		def conversacion = Conversacion.findById(params.id)
+		def ultimoMensaje = Mensaje.findById(params.mensajeId)
+		if (ultimoMensaje.leido != true){
+			mensajeService.marcarMensajeLeido(ultimoMensaje)
+		}
 		def carpeta = conversacion.padre
 		def responder = true
 		if (carpeta.nombre.equals("Eliminados")){

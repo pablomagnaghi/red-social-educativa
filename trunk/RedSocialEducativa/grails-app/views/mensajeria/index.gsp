@@ -53,9 +53,10 @@
 							model="['conversacionCount' : conversacionCount, 'nombreCarpeta':nombreCarpeta, 'offset':offset]"></g:render>
 					</g:else>
 				
-				
-					<g:render template="panelCarpetas"
-						model="['etiquetasCarpetas' : etiquetasCarpetas, 'seleccionada' : seleccionada]"></g:render>
+					<div id="carpetasUsuario">
+						<g:render template="panelCarpetas"
+							model="['etiquetasCarpetas' : etiquetasCarpetas, 'seleccionada' : seleccionada]"></g:render>
+					</div>
 					<g:if test="${carpetaSeleccionada == "Enviados" }">
 						<g:render template="panelConversaciones"
 							model="['mensajes' : mensajes]"></g:render>

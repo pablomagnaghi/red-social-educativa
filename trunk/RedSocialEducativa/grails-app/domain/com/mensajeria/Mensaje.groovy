@@ -1,6 +1,8 @@
 package com.mensajeria
 
 import com.fiuba.Usuario
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
 class Mensaje {
 	
@@ -9,6 +11,7 @@ class Mensaje {
 	String asunto
 	String cuerpo
 	String para
+	String paraId
 	Date fecha
 	Boolean leido = false
 	
@@ -16,7 +19,8 @@ class Mensaje {
 
     static constraints = {
 		conversacion nullable:true
-		receptor nullable: true 
+		receptor nullable: true
+		paraId nullable: true 
     }
 	static findMessagesByCarpeta(Usuario usuario, String nombreCarpeta){
 		def msg = Mensaje.findAll("from Mensaje as m, Conversacion as conv, Carpeta as carp \
@@ -39,6 +43,12 @@ class Mensaje {
 			length = 20
 		}
 		return this.cuerpo.substring(0, length)
+	}
+	
+	public String getFechaYHora(){
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy - HH:mm");
+		String fechaFormateada = df.format(this.fecha);
+		return fechaFormateada
 	}
 	
 }

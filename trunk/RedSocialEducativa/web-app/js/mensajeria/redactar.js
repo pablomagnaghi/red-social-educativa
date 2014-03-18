@@ -1,4 +1,5 @@
 var sendArr = [];
+var paraBorrado = false
 
 function split( val ) {
 	return val.split( /,\s*/ );
@@ -137,8 +138,6 @@ function agregarMediador(id){
 
 function submitMail(){
 	$("#cuerpo").val($("#divCuerpo").html())
-	console.log($("#cuerpo").html())
-	
 	var para = $.trim($("#e6").val()).length;
 	var asunto = $.trim($("#asunto").val()).length;
 	var cuerpo = $.trim($("#cuerpo").val()).length;
@@ -288,11 +287,40 @@ function agregarCampoAPara(value){
 	$(".select2-choices").each(function(){
 		$(this).prepend("<li class='select2-search-choice generado'>" +
 				"<div>"+htmlEncode(value)+"</div>    " +
-				"<a tabindex='-1' class='select2-search-choice-close removeLink' href='#'  onclick='return false;' ></a></li>")
+				"<a tabindex='-1' class='select2-search-choice-close removeLink' href='#' id='removePara' onclick='return false;' ></a></li>")
 	});
+	paraBorrado = false
+	$("#removePara").click(function(){
+		paraBorrado = true
+	})
 }
 
 function htmlEncode(value){
 	return $('<div/>').text(value).html();
+}
+
+function submitRespuesta(mensajeId){
+	$("#text_"+mensajeId).val($("#cuerpo_" + mensajeId).html())
+	var paraLong = $.trim($("#form_reply_"+mensajeId+" input[id=e6]").val()).length;
+	var cuerpoLong = $.trim($("#text_"+mensajeId).val()).length;
+	var data = $("#form_reply_"+mensajeId+" input[id=e6]").val()
+	if (data != ""){
+		data += ","
+	}
+	$("#form_reply_"+mensajeId+" input[id=e6]").val(data)
+	if (paraBorrado == false){
+		data += $("#ids_" + mensajeId).val()
+	}
+	if (paraLong > 0 || cuerpoLong > 0 || sendArr.length > 0){
+		var item = sendArr.pop()
+		while (item != null){
+			data += item
+			item = sendArr.pop()
+		}
+		sendArr = [];
+		return false;
+	} else {
+		return false;
+	}
 }
 
