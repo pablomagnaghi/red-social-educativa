@@ -299,8 +299,14 @@ function htmlEncode(value){
 	return $('<div/>').text(value).html();
 }
 
+function replaceBr(str){
+	var regex = /<br\s*[\/]?>/gi;
+	return str.replace(regex, "\r\n");
+}
+
 function submitRespuesta(mensajeId){
-	$("#text_"+mensajeId).val($("#cuerpo_" + mensajeId).html())
+	var texto = replaceBr($("#cuerpo_" + mensajeId).html()) 
+	$("#text_"+mensajeId).val(texto)
 	var paraLong = $.trim($("#form_reply_"+mensajeId+" input[id=e6]").val()).length;
 	var cuerpoLong = $.trim($("#text_"+mensajeId).val()).length;
 	var data = $("#form_reply_"+mensajeId+" input[id=e6]").val()
