@@ -8,8 +8,16 @@ class EvaluacionAprendizController {
 
     // static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+	def pdfRenderingService
 	def evaluacionAprendizService
 	def aprendizService
+	
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def renderPDF(){
+		def evaluacion = Evaluacion.get(params.id)
+		def args = [template:"pdf", model:[evaluacion: evaluacion, evaluaciones:  EvaluacionAprendiz.findAllByEvaluacion(evaluacion)]]
+		pdfRenderingService.render(args+[controller:this],response)
+	}
 	
 	@Secured("hasRole('ROL_MEDIADOR')")
     def mostrarEvaluacion() {
