@@ -268,23 +268,33 @@ class MensajeriaController {
 	}
 	
 	def enviarMensajes(){
-		
 		def usuario = this.usuarioActual()
 		if (!usuario){
 			redirect (controller:"red", action:"revisarRol")
 		}
 		def asunto = params.asunto
 		def texto = params.mensaje
+		Hilo hilo = new Hilo()
+		hilo.save(flush: true)
+		def usuariosMap = this.getDestinatariosMail(params.para)
+		def para = usuariosMap.keySet() as String[]
+		def usuarios = usuariosMap.get(para[0])
+		usuarios.each {
+			def receptor = it
+			mensajeService.sendMessage(para, asunto, texto, usuario, receptor, hilo)
+		}
+		redirect(action: 'index')
+	}
+	
+	private def getDestinatariosMail(String paraParams){
 		Pattern usuarioPattern = Pattern.compile("^(\\d+)")
 		Pattern mediadorPattern = Pattern.compile("Mediador-(\\d+)")
 		Pattern cursoPattern = Pattern.compile("^Curso-(\\d+)")
-		// TODO
 		Pattern grupoPattern = Pattern.compile("Grupo-(\\d+)_Curso-(\\d+)")
-		Hilo hilo = new Hilo()
-		hilo.save(flush: true)
-		def paraArray = params.para.split(",")
-		def para = "" 
+		def paraArray = paraParams.split(",")
+		String para = ""
 		def usuarios = []
+		def usuariosMap = [:] 
 		paraArray.each {
 			Matcher m = usuarioPattern.matcher(it.toString());
 			if (m.find()){
@@ -303,7 +313,7 @@ class MensajeriaController {
 						def curso = Curso.findById(m.group(1))
 						def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(curso.id)
 						cuatrimestre.aprendices.each{
-							def receptor = it.usuario 
+							def receptor = it.usuario
 							usuarios.add(receptor)
 						}
 						para += "Curso " + curso.id + ", "
@@ -324,29 +334,27 @@ class MensajeriaController {
 				}
 			}
 		}
-		usuarios.each {
-			def receptor = it
-			mensajeService.sendMessage(para, asunto, texto, usuario, receptor, hilo)
-		}
-		redirect(action: 'index')
+		usuariosMap.put(para, usuarios)
+		return usuariosMap
 	}
 	
 	def responderMensaje(){
-		println params
-		def mensajeOriginal = Mensaje.findById(params.respuestaId)
-		def para = params.respuestaPara
-		def asunto = params.respuestaAsunto
-		def texto = params.respuestaCuerpo
-		def matcher = /\s*([^\s]*)\s*([^<]*)<([^>]*)>,?/
-		para.eachMatch(matcher) {
-			def nombres = it[1]
-			def apellido = it[2]
-			def email = it[3]
-			def receptor = Usuario.findByNombresAndApellidoAndEmail(nombres, apellido, email)
-			mensajeService.reply(para, asunto, texto, mensajeOriginal.receptor, receptor, mensajeOriginal.hilo)
+		def usuario = this.usuarioActual()
+		if (!usuario){
+			redirect (controller:"red", action:"revisarRol")
+		}
+		def mensajeOriginal = Mensaje.findById(params.mensajeId)
+		def asunto = "Re: " + mensajeOriginal.asunto
+		def texto = params.mensaje
+		def usuariosMap = this.getDestinatariosMail(params.para)
+		def para = usuariosMap.keySet() as String[]
+		def usuarios = usuariosMap.get(para[0])
+		usuarios.each {
+			def receptor = it
+			mensajeService.reply(para[0], asunto, texto, usuario, receptor, mensajeOriginal.hilo)
 		}
 		flash.message = "Mensaje Enviado"
-		render(action:'index')
+		redirect(action:'index')
 	}
 	
 	def agregarMensajeABorradores(){
@@ -397,6 +405,14 @@ class MensajeriaController {
 			responder = false
 		}
 		def mensajes = conversacion.mensajes
+		
+		Hilo hilo = ultimoMensaje.hilo
+		def mensajesPropiosConversacion = Mensaje.findAllByEmisorAndHilo(usuario, hilo)
+
+		mensajesPropiosConversacion.each { mensajes << it}
+		mensajes.sort{
+			b, a -> a.fecha <=> b.fecha
+		}
 		def mediadores = Mediador.findAllByUsuario(usuario)
 		def aprendices = Aprendiz.findAllByUsuario(usuario)
 		def cursosAprendiz = []
@@ -429,6 +445,7 @@ class MensajeriaController {
 		}
 		def usuarios = Usuario.findByEnabled(true)
 		render (template:"conversacion", model: [mensajes : mensajes, 
+			currentUser : usuario,
 			conversacionId : params.id, carpeta : conversacion.padre, 
 			responder: responder,
 			cursosAprendiz : cursosAprendiz, datosCursosAprendiz : datosCursosAprendiz,

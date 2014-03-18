@@ -4,34 +4,35 @@
 	</div>
 	<ul class="talk">
 		<g:each in="${mensajes}" var="mensaje">
-			<li>
+			<li style="border-bottom: 1px solid #D6D9E0;margin-bottom: 10px; padding-bottom: 10px;">
 				<!-- <img alt="avatar" src="img/avatar.jpg" class="avatar"> --> 
-				<div class="btn-group text-left" style="float:right">
-					<button class="btn btn-primary btn-sm replythis" onclick="redactarRespuesta('${mensaje.id}', 'respuesta', 
-						'${mensaje.emisor.nombres} ${mensaje.emisor.apellido} &lt;${mensaje.emisor.email}&gt;', null)">
-						<i class="fa fa-reply"></i> Responder
-					</button>
-					<button data-toggle="dropdown" class="btn btn-primary btn-sm dropdown-toggle">
-						<i class="fa fa-angle-down"></i>
-					</button>
-					<ul class="dropdown-menu pull-right">
-						<li>
-							<a class="replythis" href="javascript:void(0);" onclick="redactarRespuesta('${mensaje.id}', 'respuestaTodos', 
-							'${mensaje.emisor.nombres} ${mensaje.emisor.apellido} &lt;${mensaje.emisor.email}&gt;, ${mensaje.para }', 
-							'${mensaje.receptor.nombres} ${mensaje.receptor.apellido}')">
-							<i class="fa fa-reply"></i> Responder a todos</a>
-						</li>
-						<li>
-							<a class="replythis" href="javascript:void(0);" onclick="redactarRespuesta('${mensaje.id}', 'reenviar', '${mensaje.cuerpo }', null)">
-							<i class="fa fa-mail-forward"></i> Reenviar</a>
-						</li>
-						<li>
-							<a href="javascript:void(0);">
-							<i class="fa fa-print"></i> Exportar</a>
-						</li>
-					</ul>
-				</div>
-				
+				<g:if test="${mensaje.emisor != currentUser}">
+					<div class="btn-group text-left" style="float:right">
+						<button class="btn btn-primary btn-sm replythis" onclick="redactarRespuesta('${mensaje.id}', 'respuesta', 
+							'${mensaje.emisor.nombres} ${mensaje.emisor.apellido} &lt;${mensaje.emisor.email}&gt;', null)">
+							<i class="fa fa-reply"></i> Responder
+						</button>
+						<button data-toggle="dropdown" class="btn btn-primary btn-sm dropdown-toggle">
+							<i class="fa fa-angle-down"></i>
+						</button>
+						<ul class="dropdown-menu pull-right">
+							<li>
+								<a class="replythis" href="javascript:void(0);" onclick="redactarRespuesta('${mensaje.id}', 'respuestaTodos', 
+								'${mensaje.emisor.nombres} ${mensaje.emisor.apellido} &lt;${mensaje.emisor.email}&gt;, ${mensaje.para }', 
+								'${mensaje.receptor.nombres} ${mensaje.receptor.apellido}')">
+								<i class="fa fa-reply"></i> Responder a todos</a>
+							</li>
+							<li>
+								<a class="replythis" href="javascript:void(0);" onclick="redactarRespuesta('${mensaje.id}', 'reenviar', '${mensaje.cuerpo }', null)">
+								<i class="fa fa-mail-forward"></i> Reenviar</a>
+							</li>
+							<li>
+								<a href="javascript:void(0);">
+								<i class="fa fa-print"></i> Exportar</a>
+							</li>
+						</ul>
+					</div>
+				</g:if>
 			<span class="name">
 					${mensaje.emisor.nombres } ${mensaje.emisor.apellido }
 			</span> <span class="time">
@@ -42,6 +43,7 @@
 				<div class="message">
 					${mensaje.cuerpo }
 				</div>
+				<g:if test="${mensaje.emisor != currentUser}">
 				<form action="responderMensaje" onsubmit="return submitRespuesta('${mensaje.id}');" method="post" class="replyForm"
 					style="display: none; margin-top: 9px;" id="form_reply_${mensaje.id }"
 					enctype="multipart/form-data">
@@ -88,6 +90,7 @@
 					</table>
 					</fieldset>
 				</form>
+				</g:if>
 			</li>
 		</g:each>
 	</ul>
