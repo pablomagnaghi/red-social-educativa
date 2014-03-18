@@ -13,6 +13,10 @@ class MensajeTagLib {
 			out << "(" + attrs.cantMensajes + ")"
 		}
 	}
+	
+	def htmlMessage = { attrs, body ->
+		out << g.message(message: attrs.args).decodeHTML()
+	}
 
 	def showConversation = { attrs, body ->
 		if (attrs.data != null){

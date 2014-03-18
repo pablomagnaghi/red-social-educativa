@@ -41,7 +41,7 @@
 						${mensaje.asunto }
 					</h5></span>
 				<div class="message">
-					${mensaje.cuerpo }
+					<msg:htmlMessage args="${mensaje.cuerpo.replaceAll('\r\n','<br/>')}" />
 				</div>
 				<g:if test="${mensaje.emisor != currentUser}">
 				<form action="responderMensaje" onsubmit="return submitRespuesta('${mensaje.id}');" method="post" class="replyForm"
