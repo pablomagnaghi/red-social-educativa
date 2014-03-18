@@ -318,7 +318,9 @@ function submitRespuesta(mensajeId){
 			item = sendArr.pop()
 		}
 		sendArr = [];
-		return false;
+		console.log(data)
+		$("#form_reply_"+mensajeId+" input[id=e6]").val(data)
+		return true;
 	} else {
 		return false;
 	}

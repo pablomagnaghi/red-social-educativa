@@ -66,7 +66,6 @@ class MensajeService {
 			cuerpo: texto, fecha : new Date())
 		mensaje.hilo = hilo;
 		mensaje.para = para
-		
 		def carpetasUsuario = Carpeta.findAllByUsuario(receptor)
 		def conversacion = Conversacion.find("from Conversacion as c \
 					where c.hilo = :hilo and c.padre in :carpetas", [hilo: hilo, carpetas:carpetasUsuario ])
