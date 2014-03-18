@@ -42,12 +42,15 @@
 				<div class="message">
 					${mensaje.cuerpo }
 				</div>
-				<form action="" method="post" class="replyForm"
-					style="display: none; margin-top: 9px;" id="form_reply_${mensaje.id }">
+				<form action="responderMensaje" onsubmit="return submitRespuesta('${mensaje.id}');" method="post" class="replyForm"
+					style="display: none; margin-top: 9px;" id="form_reply_${mensaje.id }"
+					enctype="multipart/form-data">
+					<fieldset>
 					<table class="table" style="background-color: #FFFFFF;">
 						<tbody>
 							<tr>
 								<td class="span">
+								<input type='hidden' name='mensajeId' value='${mensaje.id }'/>
 								<span style="float: left">Para </span>
 									<span class="span" style="width: 680px;">
 										<g:img file="Treeview.gif" id="img_clickeable"
@@ -60,17 +63,17 @@
 											<input type='hidden' id="e6" class="para_${mensaje.id }" name="para"
 												style="margin-bottom: 11px;" />
 										</g:else>
-
+										<input type='hidden' id="ids_${mensaje.id }" value="${mensaje.paraId }"/>
 									</span>
 								</td>
 							</tr>
 							<tr>
 								<td>
-										<textarea rows="3" id="textarea2" class="cleditor"
-										id="cuerpo_${mensaje.id }" name="mensaje"
+										<textarea rows="3" class="cleditor"
+										id="text_${mensaje.id }" name="mensaje"
 										style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 73px; display: none; width: 500px;"></textarea>
 									<div contenteditable="true" style="height: 140px;"
-										class="note-editable cuerpo_${mensaje.id }" id="divCuerpo"></div>
+										class="note-editable" id="cuerpo_${mensaje.id }"></div>
 								</td>
 							</tr>
 							<tr>
@@ -83,6 +86,7 @@
 							</tr>
 						</tbody>
 					</table>
+					</fieldset>
 				</form>
 			</li>
 		</g:each>
@@ -210,7 +214,7 @@
 					<ul>
 						<g:each in="${cursosTotales}" var="curso">
 							<li style="display: none"><span class="badge badge-success"><i
-									class="icon-minus-sign"></i> ${curso.materia} - ${curso.nombre }</span> <g:each
+									class="icon-minus-sign"></i> ${curso.asignatura} - ${curso.nombre }</span> <g:each
 									in="${datosMediadores.get(curso.id +"-mediadoresC")}"
 									var="mediador">
 									<ul>

@@ -8,8 +8,8 @@
     text-align: right;
 }
 
-.msgNoLeido {
-	background-color: #6CCC99
+.unread span {
+	font-weight: bold !important;
 }
 
 .li_clickeable, #li_nueva_carpeta {

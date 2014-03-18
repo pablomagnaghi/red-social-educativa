@@ -10,8 +10,8 @@ class MensajeService {
 		def hilo = new Hilo()
     	hilo.save()
 		mensaje.hilo = hilo;
-		mensaje.para = mensaje.receptor.nombres +" "+ 
-		mensaje.receptor.apellido + "<"+mensaje.receptor.email+">,"
+		mensaje.para = mensaje.receptor.nombres +" "+mensaje.receptor.apellido + "<"+mensaje.receptor.email+">,"
+		mensaje.paraId = mensaje.emisor.id + ', '
 		def carpeta = Carpeta.findByNombreAndUsuario("Escritorio", mensaje.receptor)
 		def nuevaConversacion = new Conversacion(padre: carpeta, hilo: hilo)
 		nuevaConversacion.addToMensajes(mensaje)
@@ -49,6 +49,7 @@ class MensajeService {
 			cuerpo: texto, fecha : new Date())
 		mensaje.hilo = hilo;
 		mensaje.para = para
+		mensaje.paraId = emisor.id + ', '
 		def carpeta = Carpeta.findByNombreAndUsuario("Escritorio", receptor)
 		def nuevaConversacion = new Conversacion(padre: carpeta, hilo: hilo)
 		nuevaConversacion.addToMensajes(mensaje)
@@ -84,5 +85,10 @@ class MensajeService {
 		if (nueva == true){
 			conversacion.save()
 		}
+	}
+	
+	def marcarMensajeLeido(Mensaje m){
+		m.setLeido(Boolean.TRUE)
+		m.save()
 	}
 }
