@@ -10,18 +10,25 @@ class Mensaje {
 	Usuario receptor
 	String asunto
 	String cuerpo
-	String para
-	String paraId
+	HashMap<String, String> para = new HashMap<String, String>()
 	Date fecha
 	Boolean leido = false
+	Hilo hilo
 	
-	static belongsTo = [hilo : Hilo, conversacion : Conversacion]
+	static belongsTo = [Hilo, Conversacion]
+	
+	static hasMany = [conversaciones : Conversacion]
 
+	static mapping = {
+		cuerpo type: "text"
+		sort fecha: "asc"
+	}
+	
     static constraints = {
-		conversacion nullable:true
+		conversaciones nullable:true
 		receptor nullable: true
-		paraId nullable: true 
     }
+	
 	static findMessagesByCarpeta(Usuario usuario, String nombreCarpeta){
 		def msg = Mensaje.findAll("from Mensaje as m, Conversacion as conv, Carpeta as carp \
 			where m.receptor = :usuario and m.hilo = conv.hilo \
