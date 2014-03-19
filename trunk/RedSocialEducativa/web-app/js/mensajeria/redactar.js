@@ -319,7 +319,8 @@ function submitRespuesta(mensajeId){
 			item = sendArr.pop()
 		}
 		sendArr = [];
-		console.log(data)
+		var regex = /\[|\]/gi;
+		data = data.replace(regex, "");
 		$("#form_reply_"+mensajeId+" input[id=e6]").val(data)
 		return true;
 	} else {

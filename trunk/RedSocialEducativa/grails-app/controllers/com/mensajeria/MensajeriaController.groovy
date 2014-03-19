@@ -326,7 +326,7 @@ class MensajeriaController {
 		def asunto = params.asunto
 		def texto = params.mensaje
 		HashMap<String, String> paraMap = new HashMap<String, String>()
-		def usuarios = this.getDestinatariosMail(params.para, paraMap)
+		def usuarios = this.getDestinatariosMail(params.para, paraMap, null)
 		usuarios.each {
 			def receptor = it
 			mensajeService.sendMessage(paraMap, asunto, texto, usuario, receptor)
@@ -334,26 +334,37 @@ class MensajeriaController {
 		redirect(action: 'index')
 	}
 	
-	private def getDestinatariosMail(String paraParams, HashMap<String, String> paraMap){
+	private def getDestinatariosMail(String paraParams, HashMap<String, String> paraMap, HashMap<String, String> mapaOriginal){
 		Pattern usuarioPattern = Pattern.compile("^(\\d+)")
 		Pattern mediadorPattern = Pattern.compile("Mediador-(\\d+)")
 		Pattern cursoPattern = Pattern.compile("^Curso-(\\d+)")
 		Pattern grupoPattern = Pattern.compile("Grupo-(\\d+)_Curso-(\\d+)")
 		
-		def paraArray = paraParams.split(",")
 		def usuarios = []
+		def paraArray = []
+		def nuevoArray = []
+		paraArray = paraParams.split(",")
+		if (mapaOriginal != null){
+			paraArray.each {
+				String rec = mapaOriginal.get(it.toString().trim())
+				if(rec != null){
+					nuevoArray.add(rec)
+				}
+			}
+		}
+		//TODO mergear los dos arreglos
 		paraArray.each {
 			Matcher m = usuarioPattern.matcher(it.toString());
 			if (m.find()){
 				def receptor = Usuario.findById(m.group(1))
 				usuarios.add(receptor)
-				paraMap.put(it.toString(), receptor.nombres + " " + receptor.apellido + "<"+receptor.email+">")
+				paraMap.put(receptor.nombres + " " + receptor.apellido + "<"+receptor.email+">", it.toString())
 			} else {
 				m = mediadorPattern.matcher(it.toString());
 				if (m.find()){
 					def receptor = Mediador.findById(m.group(1)).usuario
 					usuarios.add(receptor)
-					paraMap.put(it.toString(), receptor.nombres + " " + receptor.apellido + "<"+receptor.email+">")
+					paraMap.put(receptor.nombres + " " + receptor.apellido + "<"+receptor.email+">", it.toString())
 				} else {
 					m = cursoPattern.matcher(it.toString());
 					if (m.find()){
@@ -363,7 +374,7 @@ class MensajeriaController {
 							def receptor = it.usuario
 							usuarios.add(receptor)
 						}
-						paraMap.put(it.toString(), "Curso " + curso.id)
+						paraMap.put("Curso " + curso.id, it.toString())
 					} else {
 						// TODO
 						m = grupoPattern.matcher(it.toString());
@@ -374,7 +385,7 @@ class MensajeriaController {
 								def receptor = it.aprendiz.usuario
 								usuarios.add(receptor)
 							}
-							paraMap.put(it.toString(), "Grupo " + grupo.id+",Curso: " + curso.id)
+							paraMap.put("Grupo " + grupo.id+",Curso: " + curso.id, it.toString())
 						}
 					}
 				}
@@ -397,7 +408,8 @@ class MensajeriaController {
 		def asunto = "Re: " + mensajeOriginal.asunto
 		def texto = params.mensaje
 		HashMap<String, String> paraMap = new HashMap<String, String>()
-		def usuarios = this.getDestinatariosMail(params.para, paraMap)
+		def usuarios = this.getDestinatariosMail(params.para, paraMap, mensajeOriginal.para)
+		println usuarios
 		usuarios.each {
 			def receptor = it
 			mensajeService.reply(mensajeOriginal, paraMap, asunto, texto, usuario, receptor)

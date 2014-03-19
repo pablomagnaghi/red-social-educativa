@@ -105,7 +105,7 @@ class MensajeService {
 		//Ubico el mensaje en la carpeta del receptor
 		def carpetasUsuario = Carpeta.findAllByUsuario(receptor)
 		def conversacion = Conversacion.find("from Conversacion as c \
-					where c.hilo = :hilo and c.padre in :carpetas", [hilo: hilo, carpetas:carpetasUsuario ])
+					where c.hilo = :hilo and c.padre in :carpetas", [hilo: mensajeOriginal.hilo, carpetas:carpetasUsuario ])
 		if (conversacion == null){
 			def carpeta = Carpeta.findByNombreAndUsuario("Escritorio", receptor)
 			this.guardarMensajeEnConversacion(carpeta, mensaje)
