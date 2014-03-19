@@ -8,6 +8,8 @@
 			<i class="icon-table"></i> Temas del curso</g:link></li>
 		<li><g:link controller="evaluacion" action="evaluacionesCurso" params="['cursoId': params.cursoId]">
 			<i class="icon-table"></i> Evaluaciones del curso</g:link></li>
+		<li><g:link controller="encuesta" action="encuestasCurso" params="['cursoId': params.cursoId]">
+			<i class="icon-table"></i> Encuestas del curso</g:link></li>	
 	</ul>
 </div>
 <g:if test="${aprendiz.cursando}">	

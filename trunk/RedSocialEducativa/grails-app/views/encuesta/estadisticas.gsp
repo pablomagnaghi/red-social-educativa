@@ -40,7 +40,7 @@
 						</div>
 						<!-- Fin: BREADCRUM -->  
 						<div class="box">
-	           				<g:render template="encuesta" />
+	           				<g:render template="estadisticas" />
 						</div>	
 					</div>
 					<!--/span-->

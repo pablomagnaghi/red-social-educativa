@@ -12,17 +12,48 @@ class EncuestaController {
 	def encuestaService
 	def usuarioService
 	
+	@Secured("hasRole('ROL_APRENDIZ')")
+	def encuestasCurso() {
+		params.max = Utilidades.MAX_PARAMS
+		[encuestaInstanceList: Encuesta.findAllByCurso(Curso.get(params.cursoId)), params: ['cursoId': params.cursoId]]
+	}
+	
+	@Secured("hasRole('ROL_APRENDIZ')")
+	def encuestaCurso(Encuesta encuestaInstance) {
+		respond encuestaInstance, params:['cursoId': params.cursoId]
+	}
+	
+	// TODO falta el metodo para guardar respuestas de la encuesta contestada por el aprendiz
+	
 	@Secured("hasRole('ROL_MEDIADOR')")
-    def index(Integer max) {
+	def estadisticas(Encuesta encuestaInstance) {
+		respond encuestaInstance, params:['cursoId': params.cursoId]
+	}
+	
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def habilitar(Encuesta encuestaInstance) {
+		if (encuestaInstance == null) {
+			notFound()
+			return
+		}
+		encuestaInstance.habilitada = true
+		if (!encuestaService.guardar(encuestaInstance)) {
+			flash.message = "Problemas al habilitar la encuesta ${encuestaInstance}"
+			redirect action: "index", params:['cursoId': params.cursoId]
+		}
+		flash.message = "Encuesta ${encuestaInstance} creada"
+		redirect action: "index", params:['cursoId': params.cursoId]
+	}
+	
+	@Secured("hasRole('ROL_MEDIADOR')")
+    def index() {
         params.max = Utilidades.MAX_PARAMS
-		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-        [encuestaInstanceList: Encuesta.findAllByCurso(Curso.get(params.cursoId)), mediador: mediador, params: ['cursoId': params.cursoId]]
+        [encuestaInstanceList: Encuesta.findAllByCurso(Curso.get(params.cursoId)), params: ['cursoId': params.cursoId]]
     }
 
 	@Secured("hasRole('ROL_MEDIADOR')")
     def show(Encuesta encuestaInstance) {
-		def mediador = Mediador.findByUsuarioAndCurso(usuarioService.usuarioActual(), Curso.get(params.cursoId))
-        respond encuestaInstance, model: [mediador: mediador], params:['cursoId': params.cursoId]
+        respond encuestaInstance, params:['cursoId': params.cursoId]
     }
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -91,21 +122,3 @@ class EncuestaController {
 		redirect action: "index", params:['cursoId': params.cursoId], method: "GET"
     }
 }
-
-/*
-@Secured("hasRole('ROL_APRENDIZ')")
-def evaluacionesCurso() {
-	[evaluaciones: Evaluacion.findAllByCurso(Curso.get(params.cursoId)),
-		aprendiz: aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong()),
-		params: ['cursoId': params.cursoId]]
-}
-
-@Secured("hasRole('ROL_APRENDIZ')")
-def evaluacionesAprendiz(Evaluacion evaluacion) {
-	def evaluacionesCurso = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
-	def evaluacionesAprendiz = evaluacionService.obtenerEvaluacionesPorAprendiz(evaluacionesCurso, params.cursoId.toLong())
-	[evaluacionesAprendiz: evaluacionesAprendiz, params: ['cursoId': params.cursoId]]
-}
-
-
-*/
