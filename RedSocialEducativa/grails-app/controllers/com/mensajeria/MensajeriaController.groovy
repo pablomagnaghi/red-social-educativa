@@ -342,18 +342,19 @@ class MensajeriaController {
 		
 		def usuarios = []
 		def paraArray = []
-		def nuevoArray = []
 		paraArray = paraParams.split(",")
+		def finalArray = []
 		if (mapaOriginal != null){
 			paraArray.each {
 				String rec = mapaOriginal.get(it.toString().trim())
 				if(rec != null){
-					nuevoArray.add(rec)
+					finalArray.add(rec)
+				} else {
+					finalArray.add(it.toString().trim())
 				}
 			}
 		}
-		//TODO mergear los dos arreglos
-		paraArray.each {
+		finalArray.each {
 			Matcher m = usuarioPattern.matcher(it.toString());
 			if (m.find()){
 				def receptor = Usuario.findById(m.group(1))
