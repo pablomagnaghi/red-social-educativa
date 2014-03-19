@@ -7,8 +7,13 @@ class Pregunta {
 	String pregunta
 
     static constraints = {
-		pregunta maxSize: Utilidades.MAX_TITULO
+		pregunta maxSize: 256
     }
+	
+	static mapping = {
+		tablePerHierarchy false
+		pregunta type: 'text'
+	}
 	
 	String toString() {
 		"${pregunta}"

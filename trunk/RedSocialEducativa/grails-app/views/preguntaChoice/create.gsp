@@ -45,18 +45,19 @@
 						        <div class="box-header">
 						            <h2><i class="icon-plus"></i>Crear</h2>
 						            <div class="box-icon">
-					               		<g:link controller="encuesta" action="index" params="['cursoId': params.cursoId]"><i class="icon-table"></i></g:link>
+					               		<g:link controller="encuesta" action="show" id="${params.encuestaId}" 
+					               			params="['cursoId': params.cursoId]"><i class="icon-question-sign"></i></g:link>
 					            	</div>
 					        	</div>  
 						        <div class="box-content">
-						        	<g:uploadForm class="form-horizontal" action="save" params="['cursoId': params.cursoId, 'encuestaId': params.encuestaId]">
+						        	<g:form class="form-horizontal" action="save" params="['cursoId': params.cursoId, 'encuestaId': params.encuestaId]">
 										<fieldset>		
 							            	<g:render template="form"/>		
 							            	<div class="form-actions">
 												<button type="submit" class="btn btn-primary">Crear</button>
 											</div>		    
 							            </fieldset>
-						            </g:uploadForm>
+						            </g:form>
 						        </div>
 						    </div>    
 					    </div>

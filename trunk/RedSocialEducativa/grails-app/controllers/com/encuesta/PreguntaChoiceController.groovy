@@ -7,21 +7,9 @@ import org.springframework.security.access.annotation.Secured
 
 class PreguntaChoiceController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    //static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def preguntaChoiceService
-
-	@Secured("hasRole('ROL_MEDIADOR')")
-	def index(Integer max) {
-		params.max = Utilidades.MAX_PARAMS
-		[preguntaChoiceInstanceList: PreguntaChoice.findAllByEncuesta(Encuesta.get(params.encuestaId)), params: ['cursoId': params.cursoId,	
-			'encuestaId': params.encuestaId]]
-	}
-
-	@Secured("hasRole('ROL_MEDIADOR')")
-    def show(PreguntaChoice preguntaChoiceInstance) {
-        respond preguntaChoiceInstance, params:['cursoId': params.cursoId, 'encuestaId': params.encuestaId]
-    }
 
 	@Secured("hasRole('ROL_MEDIADOR')")
     def create() {
@@ -35,7 +23,7 @@ class PreguntaChoiceController {
             return
         }
 		if (preguntaChoiceService.existe(preguntaChoiceInstance, params.encuestaId.toLong())) {
-			flash.message = "Ya existe la pregunta choice ${preguntaChoiceInstance}"
+			flash.message = "Ya existe esa pregunta choice"
 			redirect action: "create", params:['cursoId': params.cursoId, 'encuestaId': params.encuestaId]
 			return
 		}
@@ -43,8 +31,8 @@ class PreguntaChoiceController {
 			render view:'create', model: [preguntaChoiceInstance: preguntaChoiceInstance], params:['cursoId': params.cursoId, 'encuestaId': params.encuestaId]
 			return
 		}
-		flash.message = "Pregunta choice ${preguntaChoiceInstance} creada"
-		redirect action: "index", params:['cursoId': params.cursoId, 'encuestaId': params.encuestaId]
+		flash.message = "Pregunta choice creada"
+		redirect controller: "encuesta", action: "show", params:['id': params.encuestaId, 'cursoId': params.cursoId]
     }
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -60,7 +48,7 @@ class PreguntaChoiceController {
             return
         }
 		if (preguntaChoiceService.existe(preguntaChoiceInstance, params.encuestaId.toLong())) {
-			flash.message = "Ya existe la pregunta choice ${preguntaChoiceInstance}"
+			flash.message = "Ya existe esa pregunta choice"
 			preguntaChoiceInstance.pregunta = params.preguntaAntigua
 			redirect action: "edit", params: params
 			return
@@ -69,8 +57,8 @@ class PreguntaChoiceController {
 			render view:'edit', model: [preguntaChoiceInstance: preguntaChoiceInstance], params:['cursoId': params.cursoId, 'encuestaId': params.encuestaId]
 			return
 		}
-		flash.message = "Pregunta choice ${preguntaChoiceInstance} actualizada"
-		redirect action: "index", params:['cursoId': params.cursoId, 'encuestaId': params.encuestaId]
+		flash.message = "Pregunta choice actualizada"
+		redirect controller: "encuesta", action: "show", params:['id': params.encuestaId, 'cursoId': params.cursoId]
     }
 
 	@Secured("hasRole('ROL_MEDIADOR')")
@@ -80,13 +68,13 @@ class PreguntaChoiceController {
 			return
 		}
 		preguntaChoiceService.eliminar(preguntaChoiceInstance)
-		flash.message = "Pregunta choice ${preguntaChoiceInstance} eliminada"
-		redirect action:"index", params:['cursoId': params.cursoId, 'encuestaId': params.encuestaId], method:"GET"
+		flash.message = "Pregunta choice eliminada"
+		redirect controller: "encuesta", action: "show", params:['id': params.encuestaId, 'cursoId': params.cursoId], method:"GET"
 	}
 	
 	protected void notFound() {
 		flash.message = "No se encuentra esa pregunta choice"
-		redirect action: "index", params:['cursoId': params.cursoId, 'encuestaId': params.encuestaId], method: "GET"
+		redirect controller: "encuesta", action: "show", params:['id': params.encuestaId, 'cursoId': params.cursoId], method: "GET"
 	}
 }
 
