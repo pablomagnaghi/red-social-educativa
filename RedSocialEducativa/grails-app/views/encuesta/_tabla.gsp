@@ -33,12 +33,6 @@
         	                	<g:if test="${encuestaInstance.habilitada}">Habilitada</g:if>
         	                	<g:else>Inhabilitada</g:else>
 	                        <td class="center">
-	                        	<g:link class="btn btn-success" action="descargar" id="${encuestaInstance?.id}" params="['cursoId': params.cursoId]">
-	                        		AGREGAR CHOICE</g:link>
-	                        	<g:link class="btn btn-success" action="descargar" id="${encuestaInstance?.id}" params="['cursoId': params.cursoId]">
-	                        		AGREGAR DESARROLLAR</g:link>
-	                        	<g:link class="btn btn-success" action="descargar" id="${encuestaInstance?.id}" params="['cursoId': params.cursoId]">
-	                        		AGREGAR PUNTAJER</g:link>
 	                        	<g:link class="btn btn-success" action="show" id="${encuestaInstance.id}"params="['cursoId': params.cursoId]">
 	                        		<i class="icon-search "></i></g:link>
 	                            <g:if test="${mediador}">

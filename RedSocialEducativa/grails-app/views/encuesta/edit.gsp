@@ -51,7 +51,7 @@
 						        </div>
 						        <div class="box-content">
 						        	<g:form class="form-horizontal" action="update" method="PUT" id="${encuestaInstance.id}" 
-						        		params="['cursoId': params.cursoId, 'nombreAnterior': nombre]">
+						        		params="['cursoId': params.cursoId, 'nombreAntiguo': nombre]">
 						        		<g:hiddenField name="version" value="${encuestaInstance?.version}" />
 							            <fieldset>
 							            	<g:render template="form"/>		

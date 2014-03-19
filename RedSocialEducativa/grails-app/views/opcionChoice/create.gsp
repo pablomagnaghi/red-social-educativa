@@ -1,4 +1,4 @@
-<%@ page import="com.encuesta.PreguntaDesarrollo" %>
+<%@ page import="com.encuesta.OpcionChoice" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>
@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta name="layout" content="red">
-        <g:set var="entityName" value="${message(code: 'preguntaDesarrollo.label', default: 'PreguntaDesarrollo')}" />
+        <g:set var="entityName" value="${message(code: 'opcionChoice.label', default: 'OpcionChoice')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -50,7 +50,8 @@
 					            	</div>
 					        	</div>  
 						        <div class="box-content">
-						        	<g:form class="form-horizontal" action="save" params="['cursoId': params.cursoId, 'encuestaId': params.encuestaId]">
+						        	<g:form class="form-horizontal" action="save" params="['cursoId': params.cursoId, 'encuestaId': params.encuestaId,
+						        		'preguntaId': params.preguntaId]">
 										<fieldset>		
 							            	<g:render template="form"/>		
 							            	<div class="form-actions">

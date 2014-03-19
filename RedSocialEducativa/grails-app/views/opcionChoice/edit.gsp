@@ -1,4 +1,4 @@
-<%@ page import="com.encuesta.PreguntaDesarrollo" %>
+<%@ page import="com.encuesta.OpcionChoice" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>
@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta name="layout" content="red">
-        <g:set var="entityName" value="${message(code: 'preguntaDesarrollo.label', default: 'PreguntaDesarrollo')}" />
+        <g:set var="entityName" value="${message(code: 'opcionChoice.label', default: 'OpcionChoice')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -32,8 +32,8 @@
 	            <div id="content" class="span10">
 		            <div class="row-fluid">
 		            	<div class="span2"></div>
-					    <div class="span8"> 
-						    <!-- comienzo: BREADCRUM -->
+					    <div class="span8">
+					    	<!-- comienzo: BREADCRUM -->
 							<div class="box-content buttons">
 								<p class="btn-group">
 									<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
@@ -41,28 +41,32 @@
 								</p>
 						    </div>
 							<!-- Fin: BREADCRUM -->  
-							<div class="box"> 
-						        <div class="box-header">
-						            <h2><i class="icon-plus"></i>Crear</h2>
+							<div class="box">
+						        <div class="box-header">     	
+						            <h2><i class="icon-edit"></i>Editar</h2>
 						            <div class="box-icon">
-					               		<g:link controller="encuesta" action="show" id="${params.encuestaId}" 
-					               			params="['cursoId': params.cursoId]"><i class="icon-question-sign"></i></g:link>
-					            	</div>
-					        	</div>  
+						                <g:link action="create" params="['cursoId': params.cursoId, 'encuestaId': params.encuestaId, 'preguntaId': params.preguntaId]">
+						                	<i class="icon-plus"></i></g:link>
+						                <g:link controller="encuesta" action="show" id="${params.encuestaId}" 
+						                	params="['cursoId': params.cursoId]"><i class="icon-question-sign"></i></g:link>
+						            </div>
+						        </div>
 						        <div class="box-content">
-						        	<g:form class="form-horizontal" action="save" params="['cursoId': params.cursoId, 'encuestaId': params.encuestaId]">
-										<fieldset>		
-							            	<g:render template="form"/>		
+						        	<g:form class="form-horizontal" action="update" method="PUT" id="${opcionChoiceInstance.id}" 
+						        		params="['cursoId': params.cursoId, 'encuestaId': params.encuestaId, 'preguntaId': params.preguntaId,'opcionAntigua': opcion]">
+						        		<g:hiddenField name="version" value="${opcionChoiceInstance?.version}" />
+							            <fieldset>
+							            	<g:render template="form"/>				
 							            	<div class="form-actions">
-												<button type="submit" class="btn btn-primary">Crear</button>
+												<button type="submit" class="btn btn-primary">Actualizar</button>
 											</div>		    
 							            </fieldset>
-						            </g:form>
+						            </g:form>    
 						        </div>
-						    </div>    
-					    </div>
-					    <!--/span-->
+							</div>
+						</div>	
 					    <div class="span2"></div>
+					    <!--/span-->
 					</div>
 					<!--/row-->    		
  				</div>
@@ -71,6 +75,6 @@
         	<!--/fluid-row-->
         </div>
         <!--CLAVE ESTE DIV, SI SE SACA, NO APARECE NADA -->
-        <div class="clearfix"></div>					
+        <div class="clearfix"></div>			
 	</body>
 </html>

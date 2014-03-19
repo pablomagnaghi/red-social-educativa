@@ -7,7 +7,7 @@ import org.springframework.security.access.annotation.Secured
 
 class EncuestaController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    //static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def encuestaService
 	def usuarioService
@@ -62,7 +62,7 @@ class EncuestaController {
             return
         }
 		if (encuestaService.existe(encuestaInstance, params.cursoId.toLong())) {
-			flash.message = "Ya existe la encuesta ${encuestaInstance}"
+			flash.message = "Ya existe la encuesta ${encuestaInstance.nombre}"
 			encuestaInstance.nombre = params.nombreAntiguo
 			redirect action: "edit", params: params
 			return
@@ -83,7 +83,7 @@ class EncuestaController {
         }
 		encuestaService.eliminar(encuestaInstance)
 		flash.message = "Encuesta ${encuestaInstance} eliminada"
-		redirect action:"index", params:['cursoId': params.cursoId], method:"GET"
+		redirect action:"index", params:['cursoId': params.cursoId], method:"DELETE"
     }
 	
     protected void notFound() {

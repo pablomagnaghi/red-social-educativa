@@ -45,21 +45,23 @@
 						        <div class="box-header">     	
 						            <h2><i class="icon-edit"></i>Editar</h2>
 						            <div class="box-icon">
-						                <g:link action="create" params="['cursoId': params.cursoId, 'temaId': params.temaId]"><i class="icon-plus"></i></g:link>
-						                <g:link controller="tema" action="index" params="['cursoId': params.cursoId]"><i class="icon-table"></i></g:link>
+						                <g:link action="create" params="['cursoId': params.cursoId, 'encuestaId': params.encuestaId]">
+						                	<i class="icon-plus"></i></g:link>
+						                <g:link controller="encuesta" action="show" id="${params.encuestaId}" 
+						                	params="['cursoId': params.cursoId]"><i class="icon-question-sign"></i></g:link>
 						            </div>
 						        </div>
 						        <div class="box-content">
-						        	<g:uploadForm class="form-horizontal" action="update" method="PUT" id="${materialTemaInstance.id}" 
-						        		params="['cursoId': params.cursoId, 'encuestaId': params.encuestaId, 'preguntarAntigua': pregunta]">
-						        		<g:hiddenField name="version" value="${materialTemaInstance?.version}" />
+						        	<g:form class="form-horizontal" action="update" method="PUT" id="${preguntaChoiceInstance.id}" 
+						        		params="['cursoId': params.cursoId, 'encuestaId': params.encuestaId, 'preguntaAntigua': pregunta]">
+						        		<g:hiddenField name="version" value="${preguntaChoiceInstance?.version}" />
 							            <fieldset>
 							            	<g:render template="form"/>				
 							            	<div class="form-actions">
 												<button type="submit" class="btn btn-primary">Actualizar</button>
 											</div>		    
 							            </fieldset>
-						            </g:uploadForm>    
+						            </g:form>    
 						        </div>
 							</div>
 						</div>	
