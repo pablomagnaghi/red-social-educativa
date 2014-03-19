@@ -8,6 +8,7 @@ class Conversacion {
 	static hasMany = [mensajes : Mensaje]
 
     static constraints = {
+		mensajes nullable:true
     }
 	
 	public Date lastMessageDate(){

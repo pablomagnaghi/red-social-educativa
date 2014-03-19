@@ -4,6 +4,10 @@
 	</div>
 	<ul class="talk">
 		<g:each in="${mensajes}" var="mensaje">
+			<%
+				def usuariosReplyAll = mensaje.para.values()
+				def keyReplyAll = mensaje.para.keySet()
+			 %>
 			<li style="border-bottom: 1px solid #D6D9E0;margin-bottom: 10px; padding-bottom: 10px;">
 				<!-- <img alt="avatar" src="img/avatar.jpg" class="avatar"> --> 
 				<g:if test="${mensaje.emisor != currentUser}">
@@ -18,7 +22,7 @@
 						<ul class="dropdown-menu pull-right">
 							<li>
 								<a class="replythis" href="javascript:void(0);" onclick="redactarRespuesta('${mensaje.id}', 'respuestaTodos', 
-								'${mensaje.emisor.nombres} ${mensaje.emisor.apellido} &lt;${mensaje.emisor.email}&gt;, ${mensaje.para }', 
+								'${mensaje.emisor.nombres} ${mensaje.emisor.apellido} &lt;${mensaje.emisor.email}&gt;, ${usuariosReplyAll }, 
 								'${mensaje.receptor.nombres} ${mensaje.receptor.apellido}')">
 								<i class="fa fa-reply"></i> Responder a todos</a>
 							</li>
@@ -65,7 +69,7 @@
 											<input type='hidden' id="e6" class="para_${mensaje.id }" name="para"
 												style="margin-bottom: 11px;" />
 										</g:else>
-										<input type='hidden' id="ids_${mensaje.id }" value="${mensaje.paraId }"/>
+										<input type='hidden' id="ids_${mensaje.id }" value="${keyReplyAll }"/>
 									</span>
 								</td>
 							</tr>
@@ -239,5 +243,3 @@ ${usuariosFormateados }
 	style="display: none; height: 16px; width: 16px;">
 	<g:img file="spinner.gif" />
 </div>
-
-

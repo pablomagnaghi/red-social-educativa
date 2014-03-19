@@ -42,6 +42,10 @@ class MensajeriaController {
 		conversacionCount: conversacionCount, carpetaSeleccionada: "Escritorio", offset: offset]
 	}
 	
+	/**
+	 * Muestra el panel de carpetas
+	 * @return
+	 */
 	def mostrarCarpetas(){
 		def usuario = this.usuarioActual()
 		if (!usuario){
@@ -51,6 +55,11 @@ class MensajeriaController {
 		render(template: 'panelCarpetas', model: [etiquetasCarpetas: etiquetasCarpetas, carpetaSeleccionada: params.carpetaSeleccionada])
 	}
 
+	
+	/**
+	 * Muestra el div de nueva carpeta
+	 * @return
+	 */
 	def nuevaCarpeta() {
 		def usuario = this.usuarioActual()
 		if (!usuario){
@@ -64,6 +73,11 @@ class MensajeriaController {
 		redirect(action:"mostrarMensajes", params:[nombreCarpeta: params.nombre])
 	}
 
+	/**
+	 * Cambiar de carpeta y mostrar los mensajes
+	 * @param nombreCarpeta
+	 * @return
+	 */
 	def mostrarMensajes(String nombreCarpeta){
 		params.max = Utilidades.MAX_PARAMS
 		Integer offset = params.offset?.toInteger() ?: 0
@@ -93,6 +107,11 @@ class MensajeriaController {
 			nombreCarpeta : nombreCarpeta, offset: offset])
 	}
 
+	
+	/**
+	 * Poner conversacion en una nueva carpeta
+	 * @return
+	 */
 	def cambiarConversacion(){
 		def usuario = this.usuarioActual()
 		if (!usuario){
@@ -107,6 +126,11 @@ class MensajeriaController {
 		redirect(action:"mostrarMensajes", params:[nombreCarpeta: nombreFormateado])
 	}
 	
+	
+	/**
+	 * Enviar carpeta a Eliminados
+	 * @return
+	 */
 	def eliminarConversacion(){
 		def usuario = this.usuarioActual()
 		if (!usuario){
@@ -119,92 +143,111 @@ class MensajeriaController {
 		redirect(action:"mostrarMensajes", params:[nombreCarpeta: "Eliminados"])
 	}
 
+	
+	/**
+	 * Obtener carpetas para mostrar con sus nuevos mensajes
+	 * @param usuario
+	 * @return
+	 */
 	private getCarpetas(Usuario usuario){
 		def carpetas = Carpeta.findAllByUsuario(usuario, [sort:"id", order:"asc"]);
 		def etiquetasCarpetas = [:];
 		carpetas.each {
-			def cantMsg = Mensaje.getNewMessages(usuario, it.nombre	)
-			etiquetasCarpetas.put(it.nombre, cantMsg)
+			def conversaciones = Conversacion.findAllByPadre(it)
+			def cant = 0
+			conversaciones.each{
+				def mensajes = []
+				mensajes =  it.mensajes.findAll{it.leido == false}
+				cant += mensajes.size()
+			}
+			etiquetasCarpetas.put(it.nombre, cant)
 		}
 		return etiquetasCarpetas
 	}
 	
+	/**
+	 * Cargar lo datos para completar el redactar (arbol)
+	 * @param usuario
+	 * @param cursosAprendiz
+	 * @param datosCursosAprendiz
+	 * @param cursosMediador
+	 * @param datosCursosMediador
+	 * @param datosCursos
+	 * @param datosMediadores
+	 * @param usuarios
+	 * @return
+	 */
+	private cargarInputsRedactar(Usuario usuario, cursosAprendiz, datosCursosAprendiz, cursosMediador, datosCursosMediador, datosCursos, datosMediadores, usuarios){
+		def mediadores = Mediador.findAllByUsuario(usuario)
+		def aprendices = Aprendiz.findAllByUsuario(usuario)
+		mediadores.each {
+			def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(it.curso.id)
+			def mediadoresCurso = it.curso.mediadores
+			cursosMediador.add(it.curso)
+			datosCursosMediador.put(it.curso.id + "-cuatrimestreM", cuatrimestre)
+			datosCursosMediador.put(it.curso.id	 + "-mediadoresM", mediadoresCurso)
+		}
+		aprendices.each {
+			if (it.participa){
+				def cuatrimestre = it.cuatrimestre
+				def mediadoresCurso = it.cuatrimestre.curso.mediadores
+				cursosAprendiz.add(it.cuatrimestre.curso)
+				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-cuatrimestreA", cuatrimestre)
+				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-mediadoresA", mediadoresCurso)
+			}
+		}
+		if (!cursosMediador.empty){
+			datosCursos = Curso.findAll()
+			datosCursos.each{
+				datosMediadores.put(it.id + "-mediadoresC", it.mediadores)
+			}
+		}
+		usuarios = Usuario.findByEnabled(true)
+	}
+	
+	
+	/**
+	 * Enviar Mensaje
+	 * @return
+	 */
 	def redactarMensaje(){
 		def usuario = this.usuarioActual()
 		if (!usuario){
 			redirect (controller:"red", action:"revisarRol")
 		}
-		def mediadores = Mediador.findAllByUsuario(usuario)
-		def aprendices = Aprendiz.findAllByUsuario(usuario)
+		
 		def cursosAprendiz = []
 		def datosCursosAprendiz = [:]
 		def cursosMediador = []
 		def datosCursosMediador = [:]
 		def datosCursos = []
 		def datosMediadores = [:]
-		mediadores.each {
-			def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(it.curso.id)
-			def mediadoresCurso = it.curso.mediadores
-			cursosMediador.add(it.curso)
-			datosCursosMediador.put(it.curso.id + "-cuatrimestreM", cuatrimestre)
-			datosCursosMediador.put(it.curso.id	 + "-mediadoresM", mediadoresCurso)
-		}
-		aprendices.each {
-			if (it.participa){
-				def cuatrimestre = it.cuatrimestre
-				def mediadoresCurso = it.cuatrimestre.curso.mediadores
-				cursosAprendiz.add(it.cuatrimestre.curso)
-				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-cuatrimestreA", cuatrimestre)
-				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-mediadoresA", mediadoresCurso)
-			}
-		}
-		if (!cursosMediador.empty){
-			datosCursos = Curso.findAll()
-			datosCursos.each{
-				datosMediadores.put(it.id + "-mediadoresC", it.mediadores)
-			}
-		}
-		def usuarios = Usuario.findByEnabled(true)
+		def usuarios = []
+		this.cargarInputsRedactar(usuario, cursosAprendiz, datosCursosAprendiz, cursosMediador, datosCursosMediador, datosCursos, datosMediadores, usuarios)
+		
 		render(template:"redactar", model: [usuarios: usuarios, cursosAprendiz : cursosAprendiz, datosCursosAprendiz : datosCursosAprendiz, 
 			cursosMediador : cursosMediador, datosCursosMediador : datosCursosMediador, datosMediadores : datosMediadores, cursosTotales: datosCursos])
 	}
 
+	/**
+	 * Vista de respuesta de mensajes
+	 * @return
+	 */
 	def responder(){
 		def usuario = this.usuarioActual()
 		if (!usuario){
 			redirect (controller:"red", action:"revisarRol")
 		}
-		def mediadores = Mediador.findAllByUsuario(usuario)
-		def aprendices = Aprendiz.findAllByUsuario(usuario)
 		def cursosAprendiz = []
 		def datosCursosAprendiz = [:]
 		def cursosMediador = []
 		def datosCursosMediador = [:]
 		def datosCursos = []
 		def datosMediadores = [:]
-		mediadores.each {
-			def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(it.curso.id)
-			def mediadoresCurso = it.curso.mediadores
-			cursosMediador.add(it.curso)
-			datosCursosMediador.put(it.curso.id + "-cuatrimestreM", cuatrimestre)
-			datosCursosMediador.put(it.curso.id	 + "-mediadoresM", mediadoresCurso)
-		}
-		aprendices.each {
-			if (it.participa){
-				def cuatrimestre = it.cuatrimestre
-				def mediadoresCurso = it.cuatrimestre.curso.mediadores
-				cursosAprendiz.add(it.cuatrimestre.curso)
-				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-cuatrimestreA", cuatrimestre)
-				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-mediadoresA", mediadoresCurso)
-			}
-		}
-		if (!cursosMediador.empty){
-			datosCursos = Curso.findAll()
-			datosCursos.each{
-				datosMediadores.put(it.id + "-mediadoresC", it.mediadores)
-			}
-		}
-		def usuarios = Usuario.findByEnabled(true)
+		def usuarios = []
+		this.cargarInputsRedactar(usuario, cursosAprendiz, datosCursosAprendiz, cursosMediador, datosCursosMediador, datosCursos, datosMediadores, usuarios)
+
+				
 		def mensaje = Mensaje.findById(params.id)
 		def asunto = "FW: " + mensaje.asunto
 		def para = ""
@@ -240,7 +283,11 @@ class MensajeriaController {
 		para += this.generarDestinatariosRespuesta(m)
 		return para
 	}
-		
+	
+	/**
+	 * Obtener usuarios para los autocompletar
+	 * @return
+	 */
 	def traerUsuariosFormateados(){
 		def query = {
 			or {
@@ -267,6 +314,10 @@ class MensajeriaController {
 		render (listaUsuarios as JSON)
 	}
 	
+	/**
+	 * Enviar mensaje luego del redactar
+	 * @return
+	 */
 	def enviarMensajes(){
 		def usuario = this.usuarioActual()
 		if (!usuario){
@@ -274,39 +325,35 @@ class MensajeriaController {
 		}
 		def asunto = params.asunto
 		def texto = params.mensaje
-		Hilo hilo = new Hilo()
-		hilo.save(flush: true)
-		def usuariosMap = this.getDestinatariosMail(params.para)
-		def para = usuariosMap.keySet() as String[]
-		def usuarios = usuariosMap.get(para[0])
+		HashMap<String, String> paraMap = new HashMap<String, String>()
+		def usuarios = this.getDestinatariosMail(params.para, paraMap)
 		usuarios.each {
 			def receptor = it
-			mensajeService.sendMessage(para, asunto, texto, usuario, receptor, hilo)
+			mensajeService.sendMessage(paraMap, asunto, texto, usuario, receptor)
 		}
 		redirect(action: 'index')
 	}
 	
-	private def getDestinatariosMail(String paraParams){
+	private def getDestinatariosMail(String paraParams, HashMap<String, String> paraMap){
 		Pattern usuarioPattern = Pattern.compile("^(\\d+)")
 		Pattern mediadorPattern = Pattern.compile("Mediador-(\\d+)")
 		Pattern cursoPattern = Pattern.compile("^Curso-(\\d+)")
 		Pattern grupoPattern = Pattern.compile("Grupo-(\\d+)_Curso-(\\d+)")
+		
 		def paraArray = paraParams.split(",")
-		String para = ""
 		def usuarios = []
-		def usuariosMap = [:] 
 		paraArray.each {
 			Matcher m = usuarioPattern.matcher(it.toString());
 			if (m.find()){
 				def receptor = Usuario.findById(m.group(1))
 				usuarios.add(receptor)
-				para += (receptor.nombres + " " + receptor.apellido + "<"+receptor.email+">")
+				paraMap.put(it.toString(), receptor.nombres + " " + receptor.apellido + "<"+receptor.email+">")
 			} else {
 				m = mediadorPattern.matcher(it.toString());
 				if (m.find()){
-					def receptor = Mediador.findById(m.group(1))
+					def receptor = Mediador.findById(m.group(1)).usuario
 					usuarios.add(receptor)
-					para += (receptor.nombres + " " + receptor.apellido + "<"+receptor.email+">")
+					paraMap.put(it.toString(), receptor.nombres + " " + receptor.apellido + "<"+receptor.email+">")
 				} else {
 					m = cursoPattern.matcher(it.toString());
 					if (m.find()){
@@ -316,7 +363,7 @@ class MensajeriaController {
 							def receptor = it.usuario
 							usuarios.add(receptor)
 						}
-						para += "Curso " + curso.id + ", "
+						paraMap.put(it.toString(), "Curso " + curso.id)
 					} else {
 						// TODO
 						m = grupoPattern.matcher(it.toString());
@@ -324,20 +371,23 @@ class MensajeriaController {
 							def grupo = GrupoActividad.findById(m.group(1))
 							def curso = Curso.findById(m.group(2))
 							grupo.aprendices.each{
-								println (it.aprendiz.usuario.id)
 								def receptor = it.aprendiz.usuario
 								usuarios.add(receptor)
 							}
-							para += "Grupo " + grupo.id+",Curso: " + curso.id +", "
+							paraMap.put(it.toString(), "Grupo " + grupo.id+",Curso: " + curso.id)
 						}
 					}
 				}
 			}
 		}
-		usuariosMap.put(para, usuarios)
-		return usuariosMap
+		return usuarios
 	}
 	
+	
+	/**
+	 * Metodo que recibe la respuesta de los mensajes
+	 * @return
+	 */
 	def responderMensaje(){
 		def usuario = this.usuarioActual()
 		if (!usuario){
@@ -346,12 +396,11 @@ class MensajeriaController {
 		def mensajeOriginal = Mensaje.findById(params.mensajeId)
 		def asunto = "Re: " + mensajeOriginal.asunto
 		def texto = params.mensaje
-		def usuariosMap = this.getDestinatariosMail(params.para)
-		def para = usuariosMap.keySet() as String[]
-		def usuarios = usuariosMap.get(para[0])
+		HashMap<String, String> paraMap = new HashMap<String, String>()
+		def usuarios = this.getDestinatariosMail(params.para, paraMap)
 		usuarios.each {
 			def receptor = it
-			mensajeService.reply(para[0], asunto, texto, usuario, receptor, mensajeOriginal.hilo)
+			mensajeService.reply(mensajeOriginal, paraMap, asunto, texto, usuario, receptor)
 		}
 		flash.message = "Mensaje Enviado"
 		redirect(action:'index')
@@ -388,17 +437,23 @@ class MensajeriaController {
 		render (template:"redactar", model: [para: mensaje.para, asunto: mensaje.asunto, cuerpo: mensaje.cuerpo])
 	}
 
-	
+
+	/**
+	 * Muestra los mensajes de una conversacion	
+	 * @return
+	 */
 	def conversacion(){
 		def usuario = this.usuarioActual()
 		if (!usuario){
 			redirect (controller:"red", action:"revisarRol")
 		}
 		def conversacion = Conversacion.findById(params.id)
-		def ultimoMensaje = Mensaje.findById(params.mensajeId)
-		if (ultimoMensaje.leido != true){
-			mensajeService.marcarMensajeLeido(ultimoMensaje)
+		
+		def mensajesConv = conversacion.mensajes.findAll{it.leido == false}
+		mensajesConv.each{
+			mensajeService.marcarMensajeLeido(it)
 		}
+		
 		def carpeta = conversacion.padre
 		def responder = true
 		if (carpeta.nombre.equals("Eliminados")){
@@ -406,13 +461,6 @@ class MensajeriaController {
 		}
 		def mensajes = conversacion.mensajes
 		
-		Hilo hilo = ultimoMensaje.hilo
-		def mensajesPropiosConversacion = Mensaje.findAllByEmisorAndHilo(usuario, hilo)
-
-		mensajesPropiosConversacion.each { mensajes << it}
-		mensajes.sort{
-			b, a -> a.fecha <=> b.fecha
-		}
 		def mediadores = Mediador.findAllByUsuario(usuario)
 		def aprendices = Aprendiz.findAllByUsuario(usuario)
 		def cursosAprendiz = []
@@ -421,29 +469,9 @@ class MensajeriaController {
 		def datosCursosMediador = [:]
 		def datosCursos = []
 		def datosMediadores = [:]
-		mediadores.each {
-			def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(it.curso.id)
-			def mediadoresCurso = it.curso.mediadores
-			cursosMediador.add(it.curso)
-			datosCursosMediador.put(it.curso.id + "-cuatrimestreM", cuatrimestre)
-			datosCursosMediador.put(it.curso.id	 + "-mediadoresM", mediadoresCurso)
-		}
-		aprendices.each {
-			if (it.participa){
-				def cuatrimestre = it.cuatrimestre
-				def mediadoresCurso = it.cuatrimestre.curso.mediadores
-				cursosAprendiz.add(it.cuatrimestre.curso)
-				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-cuatrimestreM", cuatrimestre)
-				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-mediadoresA", mediadoresCurso)
-			}
-		}
-		if (!cursosMediador.empty){
-			datosCursos = Curso.findAll()
-			datosCursos.each{
-				datosMediadores.put(it.id + "-mediadoresC", it.mediadores)
-			}
-		}
-		def usuarios = Usuario.findByEnabled(true)
+		def usuarios = []
+		this.cargarInputsRedactar(usuario, cursosAprendiz, datosCursosAprendiz, cursosMediador, datosCursosMediador, datosCursos, datosMediadores, usuarios)
+		
 		render (template:"conversacion", model: [mensajes : mensajes, 
 			currentUser : usuario,
 			conversacionId : params.id, carpeta : conversacion.padre, 
