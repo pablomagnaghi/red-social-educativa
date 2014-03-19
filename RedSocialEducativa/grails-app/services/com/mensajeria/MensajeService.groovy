@@ -17,6 +17,12 @@ class MensajeService {
 		mensaje.hilo = hilo;
 		mensaje.para.put(mensaje.receptor.nombres +" "+mensaje.receptor.apellido + "<"+mensaje.receptor.email+">", mensaje.emisor.id)
 
+		if(!mensaje.save(flush: true)){
+			mensaje.errors.each {
+				println it
+			}
+		}
+		
 		//Carpeta del receptor guardada
 		def carpeta = Carpeta.findByNombreAndUsuario("Escritorio", mensaje.receptor)
 		this.guardarMensajeEnConversacion(carpeta, mensaje)
@@ -66,6 +72,12 @@ class MensajeService {
 		hilo.save()
 		mensaje.hilo = hilo;
 		mensaje.para = para
+		
+		if(!mensaje.save(flush: true)){
+			mensaje.errors.each {
+				println it
+			}
+		}
 		
 		def carpeta = Carpeta.findByNombreAndUsuario("Escritorio", receptor)
 		this.guardarMensajeEnConversacion(carpeta, mensaje)
