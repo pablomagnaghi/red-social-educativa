@@ -137,7 +137,7 @@ function agregarMediador(id){
 }
 
 function submitMail(){
-	$("#cuerpo").val(replaceBr($("#cuerpo_" + mensajeId).html()))
+	$("#cuerpo").val(replaceBr($("#divCuerpo").html()))
 	var para = $.trim($("#e6").val()).length;
 	var asunto = $.trim($("#asunto").val()).length;
 	var cuerpo = $.trim($("#cuerpo").val()).length;

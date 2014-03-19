@@ -148,12 +148,13 @@
 								test="${datosCursosAprendiz.get(cursoAprendiz.id +"-cuatrimestreA") != null}">
 								<li style="display: none"><span class="badge badge-success"><i
 										class="icon-minus-sign"></i> Actividades</span> <g:each
-										in="${datosCursosMediador.get(cursoMediador.id +"-cuatrimestreA").actividades}"
+										in="${datosCursosAprendiz.get(cursoAprendiz.id +"-cuatrimestreA").actividades}"
 										var="actividad">
 										<ul>
 											<li style="display: none"><span
 												class="badge badge-success"><i
-													class="icon-minus-sign"></i> ${actividad.titulo}</span> <g:each
+													class="icon-minus-sign"></i> ${actividad.titulo}</span> 
+												<g:each
 													in="${actividad.grupos}" var="grupo">
 													<ul>
 														<li style="display: none">
@@ -162,11 +163,14 @@
 															onchange="agregarGrupo('checkBoxGM', '${grupo.id }', '${grupo.nombre }', '${cursoAprendiz.nombre}','${cursoAprendiz.id}')">
 														</li>
 													</ul>
-												</g:each></li>
+												</g:each>
+											</li>
 										</ul>
-									</g:each></li>
+									</g:each>
+								</li>
 							</g:if>
-						</ul></li>
+						</ul>
+					</li>
 				</g:each>
 			</ul></li>
 		<li><span><i class="icon-calendar"></i> Cursos Mediador</span>
