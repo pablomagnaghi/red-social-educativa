@@ -1,4 +1,4 @@
-<%@ page import="com.encuesta.Encuesta" %>
+<%@ page import="com.encuesta.PreguntaChoice" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>
@@ -7,11 +7,12 @@
 	def mediadorService = grailsApplication.classLoader.loadClass('com.fiuba.MediadorService').newInstance()
 	def aprendizService = grailsApplication.classLoader.loadClass('com.fiuba.AprendizService').newInstance()
 %>
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta name="layout" content="red">
-        <g:set var="entityName" value="${message(code: 'encuesta.label', default: 'Encuesta')}" />
+        <g:set var="entityName" value="${message(code: 'preguntaChoice.label', default: 'PreguntaChoice')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -29,22 +30,40 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-	            	<div class="span2"></div>
-					<div class="span8"> 
-						<!-- comienzo: BREADCRUM -->
-						<div class="box-content buttons">
-							<p class="btn-group">
-								<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
-									<button class="btn">${com.cursado.Curso.get(params.cursoId)}</button></g:link>
-							</p>
-						</div>
-						<!-- Fin: BREADCRUM -->  
-						<div class="box">
-	           				<g:render template="encuesta" />
-						</div>	
+		            <div class="row-fluid">
+		            	<div class="span2"></div>
+					    <div class="span8"> 
+						    <!-- comienzo: BREADCRUM -->
+							<div class="box-content buttons">
+								<p class="btn-group">
+									<g:link controller="red" action="revisarRolEnCurso" params="['cursoId': params.cursoId]">
+										<button class="btn">${com.cursado.Curso.get(params.cursoId)}</button></g:link>
+								</p>
+						    </div>
+							<!-- Fin: BREADCRUM -->  
+							<div class="box"> 
+						        <div class="box-header">
+						            <h2><i class="icon-plus"></i>Crear</h2>
+						            <div class="box-icon">
+					               		<g:link controller="encuesta" action="index" params="['cursoId': params.cursoId]"><i class="icon-table"></i></g:link>
+					            	</div>
+					        	</div>  
+						        <div class="box-content">
+						        	<g:uploadForm class="form-horizontal" action="save" params="['cursoId': params.cursoId, 'encuestaId': params.encuestaId]">
+										<fieldset>		
+							            	<g:render template="form"/>		
+							            	<div class="form-actions">
+												<button type="submit" class="btn btn-primary">Crear</button>
+											</div>		    
+							            </fieldset>
+						            </g:uploadForm>
+						        </div>
+						    </div>    
+					    </div>
+					    <!--/span-->
+					    <div class="span2"></div>
 					</div>
-					<!--/span-->
-					<div class="span2"></div>
+					<!--/row-->    		
  				</div>
             	<!-- end: Content -->
         	</div>

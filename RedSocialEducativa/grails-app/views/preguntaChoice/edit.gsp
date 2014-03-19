@@ -1,4 +1,4 @@
-<%@ page import="com.encuesta.Encuesta" %>
+<%@ page import="com.encuesta.PreguntaChoice" %>
 <%@ page import="com.fiuba.UsuarioService" %>
 <%@ page import="com.fiuba.MediadorService" %>
 <%@ page import="com.fiuba.AprendizService" %>
@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta name="layout" content="red">
-        <g:set var="entityName" value="${message(code: 'encuesta.label', default: 'Encuesta')}" />
+        <g:set var="entityName" value="${message(code: 'preguntaChoice.label', default: 'PreguntaChoice')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -43,26 +43,26 @@
 							<!-- Fin: BREADCRUM -->  
 							<div class="box">
 						        <div class="box-header">     	
-						            <h2><i class="icon-edit"></i>Editar ${nombre}</h2>
+						            <h2><i class="icon-edit"></i>Editar</h2>
 						            <div class="box-icon">
-						                <g:link action="create" params="['cursoId': params.cursoId]"><i class="icon-plus"></i></g:link>
-						                <g:link action="index" params="['cursoId': params.cursoId]"><i class="icon-table"></i></g:link>
+						                <g:link action="create" params="['cursoId': params.cursoId, 'temaId': params.temaId]"><i class="icon-plus"></i></g:link>
+						                <g:link controller="tema" action="index" params="['cursoId': params.cursoId]"><i class="icon-table"></i></g:link>
 						            </div>
 						        </div>
 						        <div class="box-content">
-						        	<g:form class="form-horizontal" action="update" method="PUT" id="${encuestaInstance.id}" 
-						        		params="['cursoId': params.cursoId, 'nombreAnterior': nombre]">
-						        		<g:hiddenField name="version" value="${encuestaInstance?.version}" />
+						        	<g:uploadForm class="form-horizontal" action="update" method="PUT" id="${materialTemaInstance.id}" 
+						        		params="['cursoId': params.cursoId, 'encuestaId': params.encuestaId, 'preguntarAntigua': pregunta]">
+						        		<g:hiddenField name="version" value="${materialTemaInstance?.version}" />
 							            <fieldset>
-							            	<g:render template="form"/>		
+							            	<g:render template="form"/>				
 							            	<div class="form-actions">
 												<button type="submit" class="btn btn-primary">Actualizar</button>
 											</div>		    
 							            </fieldset>
-						            </g:form>
+						            </g:uploadForm>    
 						        </div>
-					        </div>
-						</div>
+							</div>
+						</div>	
 					    <div class="span2"></div>
 					    <!--/span-->
 					</div>
@@ -73,7 +73,6 @@
         	<!--/fluid-row-->
         </div>
         <!--CLAVE ESTE DIV, SI SE SACA, NO APARECE NADA -->
-        <div class="clearfix"></div>					
+        <div class="clearfix"></div>			
 	</body>
 </html>
-

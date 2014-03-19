@@ -6,6 +6,7 @@ import com.fiuba.*
 class Encuesta {
 	
 	String nombre
+	boolean habilitada = false
 	
 	static belongsTo = [curso: Curso]
 	
@@ -14,4 +15,8 @@ class Encuesta {
     static constraints = {
 		nombre maxSize: Utilidades.MAX_TITULO
     }
+	
+	String toString() {
+		"${nombre}"
+	}
 }

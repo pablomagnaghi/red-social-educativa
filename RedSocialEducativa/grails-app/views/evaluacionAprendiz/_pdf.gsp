@@ -5,28 +5,39 @@
 	<meta name="layout" content="main"/>
 	<style>
 		@page {
-		    size: 6in 4in;  /* width height */
+		    size: 8.5in 11in;  /* width height */
 		    margin: 0.25in;
 		}
 		body{
 			font-family: "Times New Roman",Georgia,Serif;
 		}
 		.name{
-			font-size: 20pt;
+			font-size: 12pt;
 		}
 		.birthdate{
-			font-size: 15pt;
+			font-size: 10pt;
 		}
-		
+		table,th,td {
+			border:1px solid black;
+			border-collapse:collapse;
+		}
+		th,td {
+			padding:5px;
+		}
+		th {
+			text-align:left;
+		}
 	</style>
+
 </head>
 <body>
 	<div class="body">
-		<h1>Evaluacion ${evaluacion}</h1>
+		<h1>Evaluacion: ${evaluacion.nombre}</h1>
 		<h2>Curso: ${evaluacion.curso}</h2>
 		<h2>Fecha: ${evaluacion.fecha}</h2>
+		<h2>Listado de alumnos inscriptos:</h2>
 		<g:if test="${evaluaciones}">
-			<table>
+			<table style="width:100%">
 				<thead>
 					<tr>
 						<th>Padron</th>

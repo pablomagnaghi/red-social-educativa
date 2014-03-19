@@ -5,9 +5,9 @@ package com.encuesta
 import grails.test.mixin.*
 import spock.lang.*
 
-@TestFor(PreguntaController)
-@Mock(Pregunta)
-class PreguntaControllerSpec extends Specification {
+@TestFor(PreguntaDesarrolloController)
+@Mock(PreguntaDesarrollo)
+class PreguntaDesarrolloControllerSpec extends Specification {
 
     def populateValidParams(params) {
         assert params != null
@@ -21,8 +21,8 @@ class PreguntaControllerSpec extends Specification {
             controller.index()
 
         then:"The model is correct"
-            !model.preguntaInstanceList
-            model.preguntaInstanceCount == 0
+            !model.preguntaDesarrolloInstanceList
+            model.preguntaDesarrolloInstanceCount == 0
     }
 
     void "Test the create action returns the correct model"() {
@@ -30,31 +30,31 @@ class PreguntaControllerSpec extends Specification {
             controller.create()
 
         then:"The model is correctly created"
-            model.preguntaInstance!= null
+            model.preguntaDesarrolloInstance!= null
     }
 
     void "Test the save action correctly persists an instance"() {
 
         when:"The save action is executed with an invalid instance"
-            def pregunta = new Pregunta()
-            pregunta.validate()
-            controller.save(pregunta)
+            def preguntaDesarrollo = new PreguntaDesarrollo()
+            preguntaDesarrollo.validate()
+            controller.save(preguntaDesarrollo)
 
         then:"The create view is rendered again with the correct model"
-            model.preguntaInstance!= null
+            model.preguntaDesarrolloInstance!= null
             view == 'create'
 
         when:"The save action is executed with a valid instance"
             response.reset()
             populateValidParams(params)
-            pregunta = new Pregunta(params)
+            preguntaDesarrollo = new PreguntaDesarrollo(params)
 
-            controller.save(pregunta)
+            controller.save(preguntaDesarrollo)
 
         then:"A redirect is issued to the show action"
-            response.redirectedUrl == '/pregunta/show/1'
+            response.redirectedUrl == '/preguntaDesarrollo/show/1'
             controller.flash.message != null
-            Pregunta.count() == 1
+            PreguntaDesarrollo.count() == 1
     }
 
     void "Test that the show action returns the correct model"() {
@@ -66,11 +66,11 @@ class PreguntaControllerSpec extends Specification {
 
         when:"A domain instance is passed to the show action"
             populateValidParams(params)
-            def pregunta = new Pregunta(params)
-            controller.show(pregunta)
+            def preguntaDesarrollo = new PreguntaDesarrollo(params)
+            controller.show(preguntaDesarrollo)
 
         then:"A model is populated containing the domain instance"
-            model.preguntaInstance == pregunta
+            model.preguntaDesarrolloInstance == preguntaDesarrollo
     }
 
     void "Test that the edit action returns the correct model"() {
@@ -82,11 +82,11 @@ class PreguntaControllerSpec extends Specification {
 
         when:"A domain instance is passed to the edit action"
             populateValidParams(params)
-            def pregunta = new Pregunta(params)
-            controller.edit(pregunta)
+            def preguntaDesarrollo = new PreguntaDesarrollo(params)
+            controller.edit(preguntaDesarrollo)
 
         then:"A model is populated containing the domain instance"
-            model.preguntaInstance == pregunta
+            model.preguntaDesarrolloInstance == preguntaDesarrollo
     }
 
     void "Test the update action performs an update on a valid domain instance"() {
@@ -94,28 +94,28 @@ class PreguntaControllerSpec extends Specification {
             controller.update(null)
 
         then:"A 404 error is returned"
-            response.redirectedUrl == '/pregunta/index'
+            response.redirectedUrl == '/preguntaDesarrollo/index'
             flash.message != null
 
 
         when:"An invalid domain instance is passed to the update action"
             response.reset()
-            def pregunta = new Pregunta()
-            pregunta.validate()
-            controller.update(pregunta)
+            def preguntaDesarrollo = new PreguntaDesarrollo()
+            preguntaDesarrollo.validate()
+            controller.update(preguntaDesarrollo)
 
         then:"The edit view is rendered again with the invalid instance"
             view == 'edit'
-            model.preguntaInstance == pregunta
+            model.preguntaDesarrolloInstance == preguntaDesarrollo
 
         when:"A valid domain instance is passed to the update action"
             response.reset()
             populateValidParams(params)
-            pregunta = new Pregunta(params).save(flush: true)
-            controller.update(pregunta)
+            preguntaDesarrollo = new PreguntaDesarrollo(params).save(flush: true)
+            controller.update(preguntaDesarrollo)
 
         then:"A redirect is issues to the show action"
-            response.redirectedUrl == "/pregunta/show/$pregunta.id"
+            response.redirectedUrl == "/preguntaDesarrollo/show/$preguntaDesarrollo.id"
             flash.message != null
     }
 
@@ -124,23 +124,23 @@ class PreguntaControllerSpec extends Specification {
             controller.delete(null)
 
         then:"A 404 is returned"
-            response.redirectedUrl == '/pregunta/index'
+            response.redirectedUrl == '/preguntaDesarrollo/index'
             flash.message != null
 
         when:"A domain instance is created"
             response.reset()
             populateValidParams(params)
-            def pregunta = new Pregunta(params).save(flush: true)
+            def preguntaDesarrollo = new PreguntaDesarrollo(params).save(flush: true)
 
         then:"It exists"
-            Pregunta.count() == 1
+            PreguntaDesarrollo.count() == 1
 
         when:"The domain instance is passed to the delete action"
-            controller.delete(pregunta)
+            controller.delete(preguntaDesarrollo)
 
         then:"The instance is deleted"
-            Pregunta.count() == 0
-            response.redirectedUrl == '/pregunta/index'
+            PreguntaDesarrollo.count() == 0
+            response.redirectedUrl == '/preguntaDesarrollo/index'
             flash.message != null
     }
 }

@@ -27,44 +27,46 @@
 				</thead>
                 <tbody>
                 	<g:each in="${evaluaciones}" var="evaluacionInstance">
-                		<g:if test="${evaluacionInstance.habilitada}">	
-		                    <tr>
-	    	                    <td>${fieldValue(bean: evaluacionInstance, field: "nombre")}</td>
-	        	                <td class="center"><g:formatNumber number="${evaluacionInstance.fecha}"/></td>
-	        	                <td class="center"><g:formatNumber number="${evaluacionInstance.horario}"/></td>
-	            	            <td class="center">
-	            	            	<g:if test="${fieldValue(bean: evaluacionInstance, field: "aula")}">${fieldValue(bean: evaluacionInstance, field: "aula")}</g:if>
-	            	            	<g:else>No asignada</g:else>
-	            	            </td>
-	            	            <td class="center">
-	            	            	<g:if test="${com.cursado.EvaluacionAprendiz.findByAprendizAndEvaluacion(aprendiz, evaluacionInstance)}">
-	            	            		<span class="label label-success">Inscripto</span>
-									</g:if>
-									<g:else>
-										<span class="label label-important">No inscripto</span>
-									</g:else>
-								</td>	
-		                        <td class="center">
-		                        	<g:if test="${evaluacionInstance.fecha > (com.fiuba.Utilidades.FECHA + 1)}">
-			                        	<g:if test="${com.cursado.EvaluacionAprendiz.findByAprendizAndEvaluacion(aprendiz, evaluacionInstance)}">
-			                        		<g:if test="${evaluacionInstance.obligatoria}">
-			                        			<span class="label label-warning"><h5>Inscripción obligatoria</h5></span>
-			                        		</g:if>
-			                        		<g:else>
-			                        		<g:link class="btn btn-danger" action="desinscribirme" id="${evaluacionInstance.id}" params="['cursoId': params.cursoId]">
-												Desinscribirme</g:link>
-											</g:else>	
+                		<g:if test="${evaluacionInstance.fecha > (com.fiuba.Utilidades.FECHA - 7)}">
+	                		<g:if test="${evaluacionInstance.habilitada}">	
+			                    <tr>
+		    	                    <td>${fieldValue(bean: evaluacionInstance, field: "nombre")}</td>
+		        	                <td class="center"><g:formatNumber number="${evaluacionInstance.fecha}"/></td>
+		        	                <td class="center"><g:formatNumber number="${evaluacionInstance.horario}"/></td>
+		            	            <td class="center">
+		            	            	<g:if test="${fieldValue(bean: evaluacionInstance, field: "aula")}">${fieldValue(bean: evaluacionInstance, field: "aula")}</g:if>
+		            	            	<g:else>No asignada</g:else>
+		            	            </td>
+		            	            <td class="center">
+		            	            	<g:if test="${com.cursado.EvaluacionAprendiz.findByAprendizAndEvaluacion(aprendiz, evaluacionInstance)}">
+		            	            		<span class="label label-success">Inscripto</span>
 										</g:if>
 										<g:else>
-											<fieldset class="buttons">
-												<g:link class="btn btn-success" action="inscribirme" id="${evaluacionInstance.id}" params="['cursoId': params.cursoId]">
-													Inscribirme</g:link>
-											</fieldset>
+											<span class="label label-important">No inscripto</span>
 										</g:else>
-									</g:if>
-									<g:else><span class="label label-warning"><h5>Período de inscripción vencido</h5></span></g:else>
-		                        </td>
-		                    </tr>
+									</td>	
+			                        <td class="center">
+			                        	<g:if test="${evaluacionInstance.fecha > (com.fiuba.Utilidades.FECHA + 1)}">
+				                        	<g:if test="${com.cursado.EvaluacionAprendiz.findByAprendizAndEvaluacion(aprendiz, evaluacionInstance)}">
+				                        		<g:if test="${evaluacionInstance.obligatoria}">
+				                        			<span class="label label-warning"><h5>Inscripción obligatoria</h5></span>
+				                        		</g:if>
+				                        		<g:else>
+				                        		<g:link class="btn btn-danger" action="desinscribirme" id="${evaluacionInstance.id}" params="['cursoId': params.cursoId]">
+													Desinscribirme</g:link>
+												</g:else>	
+											</g:if>
+											<g:else>
+												<fieldset class="buttons">
+													<g:link class="btn btn-success" action="inscribirme" id="${evaluacionInstance.id}" params="['cursoId': params.cursoId]">
+														Inscribirme</g:link>
+												</fieldset>
+											</g:else>
+										</g:if>
+										<g:else><span class="label label-warning"><h5>Período de inscripción vencido</h5></span></g:else>
+			                        </td>
+			                    </tr>
+		                    </g:if>
 	                    </g:if>
 					</g:each>   
                 </tbody>

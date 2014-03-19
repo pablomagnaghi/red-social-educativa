@@ -8,6 +8,8 @@
 			<i class="icon-table"></i> Temas del curso</g:link></li>
 		<li><g:link controller="evaluacion" action="index" params="['cursoId': params.cursoId]">
 			<i class="icon-table"></i> Evaluaciones del curso</g:link></li>
+		<li><g:link controller="encuesta" action="index" params="['cursoId': params.cursoId]">
+			<i class="icon-table"></i> Encuestas del curso</g:link></li>	
 		<li><g:link controller="aprendiz" action="aprendicesCurso" params="['cursoId': params.cursoId]">
 			<i class="icon-user"></i> Aprendices del curso</g:link>
 		<li><g:link controller="cuatrimestre" action="consolidar" params="['cursoId': params.cursoId]">
