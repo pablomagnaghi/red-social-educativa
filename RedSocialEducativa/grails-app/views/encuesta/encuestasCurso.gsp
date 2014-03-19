@@ -7,6 +7,7 @@
 	def mediadorService = grailsApplication.classLoader.loadClass('com.fiuba.MediadorService').newInstance()
 	def aprendizService = grailsApplication.classLoader.loadClass('com.fiuba.AprendizService').newInstance()
 %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,7 +16,7 @@
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
-    	<!-- Para el header y el panel lateral -->
+		<!-- Para el header y el panel lateral -->
     	<g:set var="varUsuarioService" bean="usuarioService"/>
     	<g:set var="varMediadorService" bean="mediadorService"/>
     	<g:set var="varAprendizService" bean="aprendizService"/>
@@ -29,22 +30,15 @@
 	            <!-- start: Content -->
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
-	            	<div class="span2"></div>
-					<div class="span8"> 
-						<!-- comienzo: BREADCRUM -->
-						<div class="box-content buttons">
-							<p class="btn-group">
-								<g:link controller="curso" action="mediador" params="['cursoId': params.cursoId]">
-									<button class="btn">${com.cursado.Curso.get(params.cursoId)}</button></g:link>
-							</p>
-						</div>
-						<!-- Fin: BREADCRUM -->  
-						<div class="box">
-	           				<g:render template="encuesta" />
-						</div>	
-					</div>
-					<!--/span-->
-					<div class="span2"></div>
+	            	<!-- comienzo: BREADCRUM -->
+					<div class="box-content buttons">
+						<p class="btn-group">
+							<g:link controller="curso" action="aprendiz" params="['cursoId': params.cursoId]">
+								<button class="btn">${com.cursado.Curso.get(params.cursoId)}</button></g:link>
+						</p>
+				    </div>
+					<!-- Fin: BREADCRUM -->            
+	                <g:render template="encuestasCurso" />		
  				</div>
             	<!-- end: Content -->
         	</div>
