@@ -1,104 +1,91 @@
 package com.encuesta
 
-
-
+import com.cursado.*
+import com.fiuba.*
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
+import org.springframework.security.access.annotation.Secured
 
-@Transactional(readOnly = true)
 class PreguntaPuntajeController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond PreguntaPuntaje.list(params), model:[preguntaPuntajeInstanceCount: PreguntaPuntaje.count()]
-    }
+	def preguntaPuntajeService
 
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def index(Integer max) {
+		params.max = Utilidades.MAX_PARAMS
+		[preguntaPuntajeInstanceList: PreguntaPuntaje.findAllByEncuesta(Encuesta.get(params.encuestaId)), params: ['cursoId': params.cursoId,	
+			'encuestaId': params.encuestaId]]
+	}
+
+	@Secured("hasRole('ROL_MEDIADOR')")
     def show(PreguntaPuntaje preguntaPuntajeInstance) {
-        respond preguntaPuntajeInstance
+        respond preguntaPuntajeInstance, params:['cursoId': params.cursoId, 'encuestaId': params.encuestaId]
     }
 
+	@Secured("hasRole('ROL_MEDIADOR')")
     def create() {
-        respond new PreguntaPuntaje(params)
+        respond new PreguntaPuntaje(params), params:['cursoId': params.cursoId, 'encuestaId': params.encuestaId]
     }
-
-    @Transactional
+	
+	@Secured("hasRole('ROL_MEDIADOR')")
     def save(PreguntaPuntaje preguntaPuntajeInstance) {
         if (preguntaPuntajeInstance == null) {
             notFound()
             return
         }
-
-        if (preguntaPuntajeInstance.hasErrors()) {
-            respond preguntaPuntajeInstance.errors, view:'create'
-            return
-        }
-
-        preguntaPuntajeInstance.save flush:true
-
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'preguntaPuntajeInstance.label', default: 'PreguntaPuntaje'), preguntaPuntajeInstance.id])
-                redirect preguntaPuntajeInstance
-            }
-            '*' { respond preguntaPuntajeInstance, [status: CREATED] }
-        }
+		if (preguntaPuntajeService.existe(preguntaPuntajeInstance, params.encuestaId.toLong())) {
+			flash.message = "Ya existe la pregunta de puntaje ${preguntaPuntajeInstance}"
+			redirect action: "create", params:['cursoId': params.cursoId, 'encuestaId': params.encuestaId]
+			return
+		}
+		if (!preguntaPuntajeService.guardar(preguntaPuntajeInstance)) {
+			render view:'create', model: [preguntaPuntajeInstance: preguntaPuntajeInstance], params:['cursoId': params.cursoId, 'encuestaId': params.encuestaId]
+			return
+		}
+		flash.message = "Pregunta de puntaje ${preguntaPuntajeInstance} creada"
+		redirect action: "index", params:['cursoId': params.cursoId, 'encuestaId': params.encuestaId]
     }
 
+	@Secured("hasRole('ROL_MEDIADOR')")
     def edit(PreguntaPuntaje preguntaPuntajeInstance) {
-        respond preguntaPuntajeInstance
+		def pregunta = preguntaPuntajeInstance.pregunta
+		respond preguntaPuntajeInstance, model: [pregunta: pregunta], params:['cursoId': params.cursoId, 'encuestaId': params.encuestaId]
     }
 
-    @Transactional
+	@Secured("hasRole('ROL_MEDIADOR')")
     def update(PreguntaPuntaje preguntaPuntajeInstance) {
         if (preguntaPuntajeInstance == null) {
             notFound()
             return
         }
-
-        if (preguntaPuntajeInstance.hasErrors()) {
-            respond preguntaPuntajeInstance.errors, view:'edit'
-            return
-        }
-
-        preguntaPuntajeInstance.save flush:true
-
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'PreguntaPuntaje.label', default: 'PreguntaPuntaje'), preguntaPuntajeInstance.id])
-                redirect preguntaPuntajeInstance
-            }
-            '*'{ respond preguntaPuntajeInstance, [status: OK] }
-        }
+		if (preguntaPuntajeService.existe(preguntaPuntajeInstance, params.encuestaId.toLong())) {
+			flash.message = "Ya existe la pregunta de puntaje ${preguntaPuntajeInstance}"
+			preguntaPuntajeInstance.pregunta = params.preguntaAntigua
+			redirect action: "edit", params: params
+			return
+		}
+		if (!preguntaPuntajeService.guardar(preguntaPuntajeInstance)) {
+			render view:'edit', model: [preguntaPuntajeInstance: preguntaPuntajeInstance], params:['cursoId': params.cursoId, 'encuestaId': params.encuestaId]
+			return
+		}
+		flash.message = "Pregunta de puntaje ${preguntaPuntajeInstance} actualizada"
+		redirect action: "index", params:['cursoId': params.cursoId, 'encuestaId': params.encuestaId]
     }
 
-    @Transactional
-    def delete(PreguntaPuntaje preguntaPuntajeInstance) {
-
-        if (preguntaPuntajeInstance == null) {
-            notFound()
-            return
-        }
-
-        preguntaPuntajeInstance.delete flush:true
-
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'PreguntaPuntaje.label', default: 'PreguntaPuntaje'), preguntaPuntajeInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
-
-    protected void notFound() {
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'preguntaPuntajeInstance.label', default: 'PreguntaPuntaje'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def delete(PreguntaPuntaje preguntaPuntajeInstance) {
+		if (preguntaPuntajeInstance == null) {
+			notFound()
+			return
+		}
+		preguntaPuntajeService.eliminar(preguntaPuntajeInstance)
+		flash.message = "Pregunta de puntaje ${preguntaPuntajeInstance} eliminada"
+		redirect action:"index", params:['cursoId': params.cursoId, 'encuestaId': params.encuestaId], method:"GET"
+	}
+	
+	protected void notFound() {
+		flash.message = "No se encuentra esa pregunta de puntaje"
+		redirect action: "index", params:['cursoId': params.cursoId, 'encuestaId': params.encuestaId], method: "GET"
+	}
 }

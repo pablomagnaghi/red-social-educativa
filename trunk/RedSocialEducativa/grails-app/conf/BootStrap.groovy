@@ -428,9 +428,9 @@ class BootStrap {
 			fechaFinalizacion: (new Date()).format(Utilidades.FORMATO_FECHA))
 
 		// Evaluaciones	
-		def evaluacionUno = new Evaluacion(nombre: "evaluacion 1", fecha: "20140325", horario: "1900", 
+		def evaluacionUno = new Evaluacion(nombre: "evaluacion 1", fecha: "20140225", horario: "1900", 
 			aula: "1", parcial: true, obligatoria: false, habilitada: true)
-		def evaluacionDos = new Evaluacion(nombre: "evaluacion 2", fecha: "20140326",horario: "1930", 
+		def evaluacionDos = new Evaluacion(nombre: "evaluacion 2", fecha: "20140315", horario: "1930", 
 			aula: "2", parcial: true, obligatoria: false, habilitada: true)
 		def evaluacionTres = new Evaluacion(nombre: "evaluacion 3", fecha: "20140327", horario: "2000", 
 			aula: "3", parcial: true, obligatoria: false, habilitada: false)
@@ -440,9 +440,9 @@ class BootStrap {
 			aula: "5", parcial: true, obligatoria: false, habilitada: true)
 		def evaluacionSeis = new Evaluacion(nombre: "evaluacion 6", fecha: "20140330", horario: "1800",
 			aula: "6", parcial: true, obligatoria: false, habilitada: true)
-		def evaluacionSiete = new Evaluacion(nombre: "evaluacion 7", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: "1700",
+		def evaluacionSiete = new Evaluacion(nombre: "evaluacion 7", fecha: "20140325", horario: "1700",
 			aula: "7", parcial: true, obligatoria: false, habilitada: true)
-		def evaluacionOcho = new Evaluacion(nombre: "evaluacion 8", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: "1630",
+		def evaluacionOcho = new Evaluacion(nombre: "evaluacion 8", fecha: "20140326", horario: "1630",
 			aula: "8", parcial: true, obligatoria: false, habilitada: true)
 		def evaluacionNueve = new Evaluacion(nombre: "evaluacion 9", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: "1930",
 			aula: "9", parcial: true, obligatoria: false, habilitada: true)

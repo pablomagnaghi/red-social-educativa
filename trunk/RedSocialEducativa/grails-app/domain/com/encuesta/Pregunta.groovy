@@ -9,4 +9,8 @@ class Pregunta {
     static constraints = {
 		pregunta maxSize: Utilidades.MAX_TITULO
     }
+	
+	String toString() {
+		"${pregunta}"
+	}
 }
