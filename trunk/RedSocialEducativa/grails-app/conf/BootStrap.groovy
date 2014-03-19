@@ -394,40 +394,58 @@ class BootStrap {
 		
 		// Grupos actividad: agrego grupoActividadAprendiz a los grupo actividad
 		def grupoActividadUno = new GrupoActividad(numero: "1", nombre: "grupo 1")
-		def grupoActividadDos = new GrupoActividad(numero: "2", nombre: "grupo 2")
-		def grupoActividadTres = new GrupoActividad(numero: "1", nombre: "grupo 3")
+		def grupoActividadUnoP = new GrupoActividad(numero: "2", nombre: "grupo 2")
+		def grupoActividadDos = new GrupoActividad(numero: "1", nombre: "grupo 1")
+		def grupoActividadTres = new GrupoActividad(numero: "1", nombre: "grupo 1")
+		def grupoActividadTresP = new GrupoActividad(numero: "2", nombre: "grupo 2")
+		def grupoActividadCuatro = new GrupoActividad(numero: "1", nombre: "grupo 1")
 		
 		// Actividades 
 		def actividadUno = new Actividad(titulo: "actividad 1", objetivo: "objetivo", evaluable: true,
 			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("Brainstorming"), 
 			fechaFinalizacion: (new Date()).format(Utilidades.FORMATO_FECHA))
 		actividadUno.addToGrupos(grupoActividadUno)
-		actividadUno.addToGrupos(grupoActividadDos)
+		actividadUno.addToGrupos(grupoActividadUnoP)
 		
 		def actividadDos = new Actividad(titulo: "actividad 2", objetivo: "objetivo", evaluable: true,
 			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("TP"), 
-			fechaFinalizacion: (new Date()).format(Utilidades.FORMATO_FECHA))	
-		actividadDos.addToGrupos(grupoActividadTres)
+			fechaFinalizacion: 20140315)	
+		actividadDos.addToGrupos(grupoActividadDos)
 		
-		def actividadTres = new Actividad(titulo: "actividad 3", objetivo: "objetivo", evaluable: true,
+		def actividadTres = new Actividad(titulo: "actividad 3", objetivo: "objetivo", evaluable: false,
 			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("Cuestionario"), 
+			fechaFinalizacion: (new Date()).format(Utilidades.FORMATO_FECHA))
+		actividadTres.addToGrupos(grupoActividadTres)
+		actividadTres.addToGrupos(grupoActividadTresP)
+		
+		def actividadCuatro = new Actividad(titulo: "actividad 4", objetivo: "objetivo", evaluable: false,
+			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("Cuestionario"),
+			fechaFinalizacion: (new Date()).format(Utilidades.FORMATO_FECHA))
+		actividadCuatro.addToGrupos(grupoActividadCuatro)
+		
+		def actividadCinco = new Actividad(titulo: "actividad 5", objetivo: "objetivo", evaluable: false,
+			grupal: true, visibilidad: true, categoria: CategoriaActividad.findByNombre("Cuestionario"),
 			fechaFinalizacion: (new Date()).format(Utilidades.FORMATO_FECHA))
 
 		// Evaluaciones	
-		def evaluacionUno = new Evaluacion(nombre: "evaluacion 1", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: "1900", 
+		def evaluacionUno = new Evaluacion(nombre: "evaluacion 1", fecha: "20140325", horario: "1900", 
 			aula: "1", parcial: true, obligatoria: false, habilitada: true)
-		def evaluacionDos = new Evaluacion(nombre: "evaluacion 2", fecha: (new Date()).format(Utilidades.FORMATO_FECHA),horario: "1930", 
-			aula: "2", parcial: true, obligatoria: false, habilitada: false)
-		def evaluacionTres = new Evaluacion(nombre: "evaluacion 3", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: "2000", 
+		def evaluacionDos = new Evaluacion(nombre: "evaluacion 2", fecha: "20140326",horario: "1930", 
+			aula: "2", parcial: true, obligatoria: false, habilitada: true)
+		def evaluacionTres = new Evaluacion(nombre: "evaluacion 3", fecha: "20140327", horario: "2000", 
 			aula: "3", parcial: true, obligatoria: false, habilitada: false)
-		def evaluacionCuatro = new Evaluacion(nombre: "evaluacion 4", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: "2030", 
+		def evaluacionCuatro = new Evaluacion(nombre: "evaluacion 4", fecha: "20140328", horario: "2030", 
 			aula: "4", parcial: true, obligatoria: false, habilitada: true)
-		def evaluacionCinco = new Evaluacion(nombre: "evaluacion 5", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: "1900", 
+		def evaluacionCinco = new Evaluacion(nombre: "evaluacion 5", fecha: "20140329", horario: "1900", 
 			aula: "5", parcial: true, obligatoria: false, habilitada: true)
-		def evaluacionSeis = new Evaluacion(nombre: "evaluacion 6", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: "1900",
-			aula: "5", parcial: true, obligatoria: false, habilitada: true)
-		def evaluacionSiete = new Evaluacion(nombre: "evaluacion 7", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: "1900",
-			aula: "5", parcial: true, obligatoria: false, habilitada: true)
+		def evaluacionSeis = new Evaluacion(nombre: "evaluacion 6", fecha: "20140330", horario: "1800",
+			aula: "6", parcial: true, obligatoria: false, habilitada: true)
+		def evaluacionSiete = new Evaluacion(nombre: "evaluacion 7", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: "1700",
+			aula: "7", parcial: true, obligatoria: false, habilitada: true)
+		def evaluacionOcho = new Evaluacion(nombre: "evaluacion 8", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: "1630",
+			aula: "8", parcial: true, obligatoria: false, habilitada: true)
+		def evaluacionNueve = new Evaluacion(nombre: "evaluacion 9", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: "1930",
+			aula: "9", parcial: true, obligatoria: false, habilitada: true)
 		
 		// Cuatrimestres
 		def cuatrimestreUno = new Cuatrimestre(anio: 2013, numero: 2, foro: foroCursoUno)
@@ -445,6 +463,8 @@ class BootStrap {
 		cuatrimestreUno.addToActividades(actividadUno)
 		cuatrimestreUno.addToActividades(actividadDos)
 		cuatrimestreUno.addToActividades(actividadTres)
+		cuatrimestreUno.addToActividades(actividadCuatro)
+		cuatrimestreUno.addToActividades(actividadCinco)
 
 		def cuatrimestreUnoP = new Cuatrimestre(anio: 2013, numero: 1, foro: foroCursoUnoP)
 		def cuatrimestreUnoPP = new Cuatrimestre(anio: 2012, numero: 2, foro: foroCursoUnoPP)
@@ -501,6 +521,8 @@ class BootStrap {
 		cursoUno.addToEvaluaciones(evaluacionCinco)
 		cursoUno.addToEvaluaciones(evaluacionSeis)
 		cursoUno.addToEvaluaciones(evaluacionSiete)
+		cursoUno.addToEvaluaciones(evaluacionOcho)
+		cursoUno.addToEvaluaciones(evaluacionNueve)
 
 		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", nombre: "Curso 2")
 		cursoDos.addToMediadores(mediadorUnoP)
@@ -669,18 +691,42 @@ class BootStrap {
 		grupos.add(grupoActividadAprendizDos)
 		def grupoActividadAprendizTres = new GrupoActividadAprendiz(grupo: grupoActividadUno, aprendiz: aprendizCuatro)
 		grupos.add(grupoActividadAprendizTres)
-		def grupoActividadAprendizCuatro = new GrupoActividadAprendiz(grupo: grupoActividadDos, aprendiz: aprendizCinco)
+		def grupoActividadAprendizCuatro = new GrupoActividadAprendiz(grupo: grupoActividadUnoP, aprendiz: aprendizCinco)
 		grupos.add(grupoActividadAprendizCuatro)
-		def grupoActividadAprendizCinco = new GrupoActividadAprendiz(grupo: grupoActividadDos, aprendiz: aprendizSeis)
+		def grupoActividadAprendizCinco = new GrupoActividadAprendiz(grupo: grupoActividadUnoP, aprendiz: aprendizSeis)
 		grupos.add(grupoActividadAprendizCinco)
-		def grupoActividadAprendizSeis = new GrupoActividadAprendiz(grupo: grupoActividadDos, aprendiz: aprendizSiete)
+		def grupoActividadAprendizSeis = new GrupoActividadAprendiz(grupo: grupoActividadUnoP, aprendiz: aprendizSiete)
 		grupos.add(grupoActividadAprendizSeis)
-		def grupoActividadAprendizSiete = new GrupoActividadAprendiz(grupo: grupoActividadTres, aprendiz: aprendizDos)
+		def grupoActividadAprendizSiete = new GrupoActividadAprendiz(grupo: grupoActividadDos, aprendiz: aprendizDos)
 		grupos.add(grupoActividadAprendizSiete)
-		def grupoActividadAprendizOcho = new GrupoActividadAprendiz(grupo: grupoActividadTres, aprendiz: aprendizTres)
+		def grupoActividadAprendizOcho = new GrupoActividadAprendiz(grupo: grupoActividadDos, aprendiz: aprendizTres)
 		grupos.add(grupoActividadAprendizOcho)
-		def grupoActividadAprendizNueve = new GrupoActividadAprendiz(grupo: grupoActividadTres, aprendiz: aprendizCuatro)
+		def grupoActividadAprendizNueve = new GrupoActividadAprendiz(grupo: grupoActividadDos, aprendiz: aprendizCuatro)
 		grupos.add(grupoActividadAprendizNueve)
+		def grupoActividadAprendizDiez = new GrupoActividadAprendiz(grupo: grupoActividadTres, aprendiz: aprendizDos)
+		grupos.add(grupoActividadAprendizDiez)
+		def grupoActividadAprendizOnce = new GrupoActividadAprendiz(grupo: grupoActividadTres, aprendiz: aprendizTres)
+		grupos.add(grupoActividadAprendizOnce)
+		def grupoActividadAprendizDoce = new GrupoActividadAprendiz(grupo: grupoActividadTres, aprendiz: aprendizCuatro)
+		grupos.add(grupoActividadAprendizDoce)
+		def grupoActividadAprendizTrece = new GrupoActividadAprendiz(grupo: grupoActividadTres, aprendiz: aprendizCinco)
+		grupos.add(grupoActividadAprendizTrece)
+		def grupoActividadAprendizCatorce = new GrupoActividadAprendiz(grupo: grupoActividadTresP, aprendiz: aprendizSeis)
+		grupos.add(grupoActividadAprendizCatorce)
+		def grupoActividadAprendizQuince = new GrupoActividadAprendiz(grupo: grupoActividadTresP, aprendiz: aprendizSiete)
+		grupos.add(grupoActividadAprendizQuince)
+		def grupoActividadAprendizDieciseis = new GrupoActividadAprendiz(grupo: grupoActividadCuatro, aprendiz: aprendizDos)
+		grupos.add(grupoActividadAprendizDieciseis)
+		def grupoActividadAprendizDiecisiete = new GrupoActividadAprendiz(grupo: grupoActividadCuatro, aprendiz: aprendizTres)
+		grupos.add(grupoActividadAprendizDiecisiete)
+		def grupoActividadAprendizDieciocho = new GrupoActividadAprendiz(grupo: grupoActividadCuatro, aprendiz: aprendizCuatro)
+		grupos.add(grupoActividadAprendizDieciocho)
+		def grupoActividadAprendizDiecinueve = new GrupoActividadAprendiz(grupo: grupoActividadCuatro, aprendiz: aprendizCinco)
+		grupos.add(grupoActividadAprendizDiecinueve)
+		def grupoActividadAprendizVeinte = new GrupoActividadAprendiz(grupo: grupoActividadCuatro, aprendiz: aprendizSeis)
+		grupos.add(grupoActividadAprendizVeinte)
+		def grupoActividadAprendizVeintiUno = new GrupoActividadAprendiz(grupo: grupoActividadCuatro, aprendiz: aprendizSiete)
+		grupos.add(grupoActividadAprendizVeintiUno)
 			
 		for(int i = 0; i<grupos.size(); i++){
 			if (!grupos.get(i).save()) {
@@ -714,10 +760,12 @@ class BootStrap {
 		def evaluacionAprendizNueve = new EvaluacionAprendiz(evaluacion: evaluacionCinco, aprendiz: aprendizDos)
 		evaluacionesAprendiz.add(evaluacionAprendizNueve)
 		// Para probar notas por recursantes
-		def evaluacionAprendizDiez = new EvaluacionAprendiz(evaluacion: evaluacionSeis, aprendiz: aprendizDosPPP)
-		evaluacionesAprendiz.add(evaluacionAprendizDiez)
 		def evaluacionAprendizOnce = new EvaluacionAprendiz(evaluacion: evaluacionSiete, aprendiz: aprendizDosPPP)
 		evaluacionesAprendiz.add(evaluacionAprendizOnce)
+		def evaluacionAprendizDoce = new EvaluacionAprendiz(evaluacion: evaluacionOcho, aprendiz: aprendizDosPPP)
+		evaluacionesAprendiz.add(evaluacionAprendizDoce)
+		def evaluacionAprendizTrece = new EvaluacionAprendiz(evaluacion: evaluacionNueve, aprendiz: aprendizDosPPP)
+		evaluacionesAprendiz.add(evaluacionAprendizTrece)
 		
 		for(int i = 0; i<evaluacionesAprendiz.size(); i++){
 			if (!evaluacionesAprendiz.get(i).save()) {

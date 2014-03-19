@@ -25,6 +25,7 @@ class Actividad {
 	
 	static mapping = {
 		tablePerHierarchy false
+		objetivo type: 'text'
 	}
 	
 	String toString() {

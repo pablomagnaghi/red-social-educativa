@@ -17,6 +17,10 @@ class Asignatura {
 		contenidosMinimos nullable:true, maxSize: Utilidades.MAX_SIZE
 	}
 
+	static mapping = {
+		contenidosMinimos type: 'text'
+	}
+	
 	String toString() {
 		"${codigo}"
 	}

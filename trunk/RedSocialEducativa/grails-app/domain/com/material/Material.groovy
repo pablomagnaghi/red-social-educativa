@@ -20,6 +20,7 @@ class Material {
 	
 	static mapping = {
 		tablePerHierarchy false
+		descripcion type: 'text'
 	}
 	
 	String toString() {

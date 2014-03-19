@@ -59,8 +59,12 @@
 	            	    	</g:if>
 	            	    	<g:else>
 		            	    	<td class="center">
-		            	    		<g:if test="${it.nota}">${it.nota}</g:if>
-	            	            	<g:else>0.00</g:else>
+	            	            	<g:if test="${it.cumplio}">
+		            	    			<span class="label label-success">Cumplio</span>
+		            	    		</g:if>
+		            	    		<g:else>
+			            	    		<span class="label label-important">No cumplio</span>
+		            	    		</g:else>
 		            	    	</td>
 	            	    	</g:else>
 		                	<td class="center">	                		
