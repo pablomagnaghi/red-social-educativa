@@ -11,7 +11,7 @@ import com.fiuba.Aprendiz
 import com.mensajeria.Conversacion
 import com.fiuba.RedController;
 import com.fiuba.Utilidades;
-
+import com.mensajeria.Mensaje;
 import grails.converters.JSON
 
 import java.util.regex.Matcher
@@ -27,18 +27,27 @@ class MensajeriaController {
 	def pdfRenderingService
 	
 	def index() {
-		params.max = Utilidades.MAX_PARAMS
+		params.max = Utilidades.MAX_PAGE_MAIL
 		Integer offset = params.offset?.toInteger() ?: 0
 		def usuario = this.usuarioActual()
 		if (!usuario){
 			redirect (controller:"red", action:"revisarRol")
 		}
 		def etiquetasCarpetas = getCarpetas(usuario)
-		def conversacion = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, "Escritorio"), [max: params.max, offset: offset])
-		conversacion.sort{it.lastMessageDate()}
-		conversacion = conversacion.reverse(true)
-		def conversacionCount = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, "Escritorio")).size()
-		
+		def conversacion = null
+		def conversacionCount = null
+		def conversaciones = this.findConversaciones(usuario, 'Escritorio')
+		if (conversaciones.size() > 0){
+			def limiteSuperior = offset+(params.max-1)
+			if(limiteSuperior > conversaciones.size()){
+				limiteSuperior = conversaciones.size()-1
+			}
+			
+			conversacion=  conversaciones[offset..limiteSuperior]
+			conversacion.sort{it.lastMessageDate()}
+			conversacion = conversacion.reverse(true)
+			conversacionCount = conversaciones.size()
+		}
 		[etiquetasCarpetas: etiquetasCarpetas, conversaciones : conversacion, 
 		conversacionCount: conversacionCount, carpetaSeleccionada: "Escritorio", offset: offset]
 	}
@@ -80,7 +89,7 @@ class MensajeriaController {
 	 * @return
 	 */
 	def mostrarMensajes(String nombreCarpeta){
-		params.max = Utilidades.MAX_PARAMS
+		params.max = Utilidades.MAX_PAGE_MAIL
 		Integer offset = params.offset?.toInteger() ?: 0
 		if (!nombreCarpeta){
 			nombreCarpeta = params.nombreCarpeta
@@ -96,10 +105,17 @@ class MensajeriaController {
 			render(view:"index",model:[mensajes: mensajes, mensajesCount : mensajes.size(), etiquetasCarpetas:  getCarpetas(usuario), carpetaSeleccionada : nombreCarpeta, offset: offset])
 			return	
 		} else {
-			conversacion = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, nombreCarpeta), [max: params.max, offset: offset])
-			conversacion.sort{it.lastMessageDate()}
-			conversacion = conversacion.reverse(true)
-			conversacionCount = Conversacion.findAllByPadre(Carpeta.findByUsuarioAndNombre(usuario, nombreCarpeta)).size()
+			def conversaciones = this.findConversaciones(usuario, nombreCarpeta)
+			if (conversaciones.size() > 0){
+				def limiteSuperior = offset+(params.max-1)
+				if(limiteSuperior > conversaciones.size()){
+					limiteSuperior = conversaciones.size()-1
+				}
+				conversacion =  conversaciones[offset..limiteSuperior]
+				conversacion.sort{it.lastMessageDate()}
+				conversacion = conversacion.reverse(true)
+				conversacionCount = conversaciones.size()
+			}
 		}
 		render(view:"index",model:[conversaciones: conversacion, 
 			conversacionCount: conversacionCount, 
@@ -158,7 +174,7 @@ class MensajeriaController {
 			def cant = 0
 			conversaciones.each{
 				def mensajes = []
-				mensajes =  it.mensajes.findAll{it.leido == false}
+				mensajes =  it.mensajes.findAll{it.leido == false && it.emisor != usuario}
 				cant += mensajes.size()
 			}
 			etiquetasCarpetas.put(it.nombre, cant)
@@ -505,7 +521,7 @@ class MensajeriaController {
 
 	def buscar_mensajes(){
 		
-		params.max = Utilidades.MAX_PARAMS
+		params.max = Utilidades.MAX_PAGE_MAIL
 		Integer offset = params.offset?.toInteger() ?: 0
 		
 		def usuario = this.usuarioActual()
@@ -562,6 +578,26 @@ class MensajeriaController {
 			return Usuario.get(springSecurityService.principal.id)
 		else
 			return null
+	}
+	
+	/**
+	 * Buscar las conversaciones correspondientes al Usuario y al nombre de la carpeta
+	 * @param usuario
+	 * @param string
+	 * @return
+	 */
+	private def findConversaciones(Usuario usuario, String nombreCarpeta){
+		def mensajes = Mensaje.findAllByReceptor(usuario)
+		def conversaciones = []
+		mensajes.each {
+			def conversacionesMensajes = it.conversaciones.findAll {
+				it.padre.usuario == usuario && it.padre.nombre.equals(nombreCarpeta)
+			}
+			conversacionesMensajes.each {
+				conversaciones.add(it)
+			}
+		}
+		return conversaciones
 	}
 	
 	static class MensajeComparator implements Comparator<Mensaje> {

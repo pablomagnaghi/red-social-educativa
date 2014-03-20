@@ -29,6 +29,7 @@ class Utilidades {
 	final static FECHA_SEGUNDO_CUATRIMESTRE = 10000 * (ANIO) + 100 * 8 + 15
 	
 	final static MAX_PARAMS = 200
+	final static MAX_PAGE_MAIL = 8 
 	final static MAX_TITULO = 64
 	final static MAX_SIZE = 1024
 	
