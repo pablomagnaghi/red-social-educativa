@@ -41,7 +41,7 @@ function redactar_ready(){
 			agregarTipo(id, texto)
 		})
 	});
-	$("#e6").select2({
+	$("#e6, .autocomplete").select2({
 		multiple: true,
 		allowClear: true,
 		minimumInputLength : 2,
@@ -260,8 +260,6 @@ function agregarMediador(chckboxId, mediadorId, mediadorNombres, mediadorApellid
 
 function redactarRespuesta(idMensaje, tipoRespuesta, argumento, excepcion){
 	redactar_ready()
-	console.log(argumento)
-	console.log(excepcion)
 	if (tipoRespuesta == 'respuesta' || tipoRespuesta == 'respuestaTodos'){
 		var paraArray = split( argumento );
 		$.each(paraArray, function(index, value){
@@ -269,7 +267,7 @@ function redactarRespuesta(idMensaje, tipoRespuesta, argumento, excepcion){
 			value = value.replace(regex, "");
 			if (value != ""){
 				if (excepcion == null || (!(value.indexOf(excepcion) >= 0))){
-					agregarCampoAPara(value)
+					agregarCampoAPara(idMensaje, value)
 				}
 			}
 		})
@@ -285,8 +283,10 @@ function redactarRespuesta(idMensaje, tipoRespuesta, argumento, excepcion){
 	})
 }
 
-function agregarCampoAPara(value){
-	$(".select2-choices").each(function(){
+function agregarCampoAPara(idMensaje, value){
+	console.log(idMensaje)
+	$("form#form_reply_"+idMensaje+" ul.select2-choices").each(function(){
+		console.log($(this))
 		$(this).prepend("<li class='select2-search-choice generado'>" +
 				"<div>"+htmlEncode(value)+"</div>    " +
 				"<a tabindex='-1' class='select2-search-choice-close removeLink' href='#' id='removePara' onclick='return false;' ></a></li>")
@@ -309,13 +309,13 @@ function replaceBr(str){
 function submitRespuesta(mensajeId){
 	var texto = replaceBr($("#cuerpo_" + mensajeId).html()) 
 	$("#text_"+mensajeId).val(texto)
-	var paraLong = $.trim($("#form_reply_"+mensajeId+" input[id=e6]").val()).length;
+	var paraLong = $.trim($("#form_reply_"+mensajeId+" input[name=para]").val()).length;
 	var cuerpoLong = $.trim($("#text_"+mensajeId).val()).length;
-	var data = $("#form_reply_"+mensajeId+" input[id=e6]").val()
+	var data = $("#form_reply_"+mensajeId+" input[name=para]").val()
 	if (data != ""){
 		data += ","
 	}
-	$("#form_reply_"+mensajeId+" input[id=e6]").val(data)
+	$("#form_reply_"+mensajeId+" input[name=para]").val(data)
 	if (paraBorrado == false){
 		data += $("#ids_" + mensajeId).val()
 	}
@@ -328,7 +328,7 @@ function submitRespuesta(mensajeId){
 		sendArr = [];
 		var regex = /\[|\]/gi;
 		data = data.replace(regex, "");
-		$("#form_reply_"+mensajeId+" input[id=e6]").val(data)
+		$("#form_reply_"+mensajeId+" input[name=para]").val(data)
 		return true;
 	} else {
 		return false;

@@ -475,7 +475,9 @@ class MensajeriaController {
 		
 		def mensajesConv = conversacion.mensajes.findAll{it.leido == false}
 		mensajesConv.each{
-			mensajeService.marcarMensajeLeido(it)
+			if (it.receptor == usuario){
+				mensajeService.marcarMensajeLeido(it)
+			}
 		}
 		
 		def carpeta = conversacion.padre
@@ -597,13 +599,15 @@ class MensajeriaController {
 	 */
 	private def findConversaciones(Usuario usuario, String nombreCarpeta){
 		def mensajes = Mensaje.findAllByReceptor(usuario)
-		def conversaciones = []
+		ArrayList<Conversacion> conversaciones = new ArrayList<String>()
 		mensajes.each {
 			def conversacionesMensajes = it.conversaciones.findAll {
 				it.padre.usuario == usuario && it.padre.nombre.equals(nombreCarpeta)
 			}
 			conversacionesMensajes.each {
-				conversaciones.add(it)
+				if (!conversaciones.contains(it)){
+					conversaciones.add(it)
+				}
 			}
 		}
 		Collections.sort(conversaciones, new ConversacionesSort())

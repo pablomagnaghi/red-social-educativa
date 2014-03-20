@@ -117,7 +117,6 @@ function mostrarConversacion(id, mensajeId, carpeta){
 		success: function(reply){
 			$("#contenidoMensajes").html(reply);
 			actualizarCarpetas(carpeta)
-			
 		}
 	})
 }

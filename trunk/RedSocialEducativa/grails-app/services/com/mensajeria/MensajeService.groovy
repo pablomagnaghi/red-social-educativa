@@ -73,12 +73,6 @@ class MensajeService {
 		mensaje.hilo = hilo;
 		mensaje.para = para
 		
-		if(!mensaje.save(flush: true)){
-			mensaje.errors.each {
-				println it
-			}
-		}
-		
 		def carpeta = Carpeta.findByNombreAndUsuario("Escritorio", receptor)
 		this.guardarMensajeEnConversacion(carpeta, mensaje)
 		
@@ -103,18 +97,13 @@ class MensajeService {
 		mensaje.para = para
 		
 		//Ubico el mensaje en la carpeta del receptor
-		def carpetasUsuario = Carpeta.findAllByUsuario(receptor)
-		def conversacion = Conversacion.find("from Conversacion as c \
-					where c.hilo = :hilo and c.padre in :carpetas", [hilo: mensajeOriginal.hilo, carpetas:carpetasUsuario ])
-		if (conversacion == null){
-			def carpeta = Carpeta.findByNombreAndUsuario("Escritorio", receptor)
-			this.guardarMensajeEnConversacion(carpeta, mensaje)
-		} else {
-			conversacion.addToMensajes(mensaje)
-			if(!conversacion.save()){
-				conversacion.errors.each {
+		Conversacion conversacion = mensajeOriginal.conversaciones.find {
+			it.padre.usuario != emisor
+		}
+		conversacion.addToMensajes(mensaje)
+		if(!conversacion.save()){
+			conversacion.errors.each {
 					println it
-				}
 			}
 		}
 		
