@@ -83,7 +83,6 @@
 		<dt>Preguntas de puntajate: </dt>	
 			<g:each in="${encuestaInstance.preguntasPuntaje}" var="puntaje">
 				<dd>${cant} - ${puntaje}</dd>
-				<dd>Puntaje: </dd>
 				<g:set var="cant" value="${cant + 1}" />
 				<br>
 				<g:if test="${!encuestaInstance.habilitada}">
