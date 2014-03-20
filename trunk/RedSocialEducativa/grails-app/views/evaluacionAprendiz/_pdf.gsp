@@ -43,6 +43,7 @@
 						<th>Padron</th>
 						<th>Apellido</th>
 						<th>Nombre</th>
+						<th>Cuatrimestre de cursado</th>
 						<th>Nota</th>
 					</tr>
 				</thead>
@@ -52,6 +53,7 @@
 							<td>${it.aprendiz.usuario.padron}</td>
 							<td>${it.aprendiz.usuario.apellido}</td>
 							<td>${it.aprendiz.usuario.nombres}</td>
+							<td>${it.aprendiz.cuatrimestre}</td>
 	           				<td>
 	            	  			<g:if test="${it.calificado}">
 	            					<g:if test="${!it.nota}">0.00</g:if>

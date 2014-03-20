@@ -10,7 +10,7 @@ class Encuesta {
 	
 	static belongsTo = [curso: Curso]
 	
-	static hasMany = [preguntasChoice: PreguntaChoice, preguntasDesarrollo: PreguntaDesarrollo, preguntasPuntaje: PreguntaPuntaje]
+	static hasMany = [aprendices: EncuestaAprendiz, preguntasChoice: PreguntaChoice, preguntasDesarrollo: PreguntaDesarrollo, preguntasPuntaje: PreguntaPuntaje]
 
     static constraints = {
 		nombre maxSize: Utilidades.MAX_TITULO
