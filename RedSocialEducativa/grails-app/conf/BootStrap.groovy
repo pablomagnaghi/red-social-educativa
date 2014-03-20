@@ -1,3 +1,5 @@
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.Date;
 import com.cartelera.*
 import com.cursado.*
@@ -102,51 +104,51 @@ class BootStrap {
 
 		// Mensajes
 		def mensajePabloToLuis = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
-		cuerpo: "Vamos por el campeonato", fecha : new Date())
+		cuerpo: "Vamos por el campeonato", fecha : deStringToDate("01-03-2014"))
 		mensajeService.nuevoMensaje(mensajePabloToLuis)
 		def mensajePabloToLuisDoss = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
-		cuerpo: "Vamos por el campeonato", fecha : new Date())
+		cuerpo: "Vamos por el campeonato", fecha : deStringToDate("02-03-2014"))
 		mensajeService.nuevoMensaje(mensajePabloToLuisDoss)
 		def mensajePabloToLuisTres = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
-		cuerpo: "Vamos por el campeonato", fecha : new Date())
+		cuerpo: "Vamos por el campeonato", fecha : deStringToDate("03-03-2014"))
 		mensajeService.nuevoMensaje(mensajePabloToLuisTres)
 		def mensajePabloToLuisCuatro = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
-		cuerpo: "Vamos por el campeonato", fecha : new Date())
+		cuerpo: "Vamos por el campeonato", fecha :deStringToDate("04-03-2014"))
 		mensajeService.nuevoMensaje(mensajePabloToLuisCuatro)
 		def mensajePabloToLuisCinco = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
-		cuerpo: "Vamos por el campeonato", fecha : new Date())
+		cuerpo: "Vamos por el campeonato", fecha : deStringToDate("05-03-2014"))
 		mensajeService.nuevoMensaje(mensajePabloToLuisCinco)
 		def mensajePabloToLuisSeis = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
-		cuerpo: "Vamos por el campeonato", fecha : new Date())
+		cuerpo: "Vamos por el campeonato", fecha : deStringToDate("06-03-2014"))
 		mensajeService.nuevoMensaje(mensajePabloToLuisSeis)
 		def mensajePabloToLuisSiete = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
-		cuerpo: "Vamos por el campeonato", fecha : new Date())
+		cuerpo: "Vamos por el campeonato", fecha : deStringToDate("07-03-2014"))
 		mensajeService.nuevoMensaje(mensajePabloToLuisSiete)
 		def mensajePabloToLuisOcho = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
-		cuerpo: "Vamos por el campeonato", fecha : new Date())
+		cuerpo: "Vamos por el campeonato", fecha : deStringToDate("08-03-2014"))
 		mensajeService.nuevoMensaje(mensajePabloToLuisOcho)
 		def mensajePabloToLuisNueve = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
-		cuerpo: "Vamos por el campeonato", fecha : new Date())
+		cuerpo: "Vamos por el campeonato", fecha : deStringToDate("09-03-2014"))
 		mensajeService.nuevoMensaje(mensajePabloToLuisNueve)
 		
 		def mensajeAgusToLuisDiez = new Mensaje(emisor: usuarioAgus, receptor: usuarioLuis, asunto: "Mensaje de Agus a Luis 1",
-		cuerpo: "Buenas noches!", fecha : new Date())
+		cuerpo: "Buenas noches!", fecha : deStringToDate("10-03-2014"))
 		mensajeService.nuevoMensaje(mensajeAgusToLuisDiez)
 		
 		def mensajePabloToLuisDos = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de Pablo a Luis 2",
-		cuerpo: "Vamos por el campeonato mundial", fecha : new Date())
+		cuerpo: "Vamos por el campeonato mundial", fecha : deStringToDate("11-03-2014"))
 		mensajeService.nuevoMensaje(mensajePabloToLuisDos)
 		def mensajeLuisToPablo = new Mensaje(emisor: usuarioLuis, receptor: usuarioPablo, asunto: "Contestación de Luis a Pablo",
-		cuerpo: "Sin dudas vamos por eso", fecha : new Date())
+		cuerpo: "Sin dudas vamos por eso", fecha : deStringToDate("12-03-2014"))
 		mensajeService.nuevoMensaje(mensajeLuisToPablo)
 		def mensajeLuisToAgus = new Mensaje(emisor: usuarioLuis, receptor: usuarioAgus, asunto: "Respuesta a Agus",
-		cuerpo: "Buen dia!!", fecha : new Date())
+		cuerpo: "Buen dia!!", fecha : deStringToDate("13-03-2014"))
 		mensajeService.nuevoMensaje(mensajeLuisToAgus)
 		def mensajePabloToAgus = new Mensaje(emisor: usuarioPablo, receptor: usuarioAgus, asunto: "Mensaje de Pablo a Agus ",
-		cuerpo: "Volver al futuro 2", fecha : new Date())
+		cuerpo: "Volver al futuro 2", fecha : deStringToDate("14-03-2014"))
 		mensajeService.nuevoMensaje(mensajePabloToAgus)
 		def mensajeAgusToLuisDos = new Mensaje(emisor: usuarioAgus, receptor: usuarioLuis, asunto: "Mensaje de Agus a Luis 2",
-		cuerpo: "Hola como estas?", fecha : new Date())
+		cuerpo: "Hola como estas?", fecha : deStringToDate("15-03-2014"))
 		mensajeService.nuevoMensaje(mensajeAgusToLuisDos)
 	
 		// Mediadores	
@@ -804,6 +806,19 @@ class BootStrap {
 		}
     }
 	
+	
+	public static synchronized Date deStringToDate(String fecha) {
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd-MM-yyyy");
+		Date fechaEnviar = null;
+		try {
+			fechaEnviar = formatoDelTexto.parse(fecha);
+			return fechaEnviar;
+		} catch (ParseException ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
+
     def destroy = {
     }
 }

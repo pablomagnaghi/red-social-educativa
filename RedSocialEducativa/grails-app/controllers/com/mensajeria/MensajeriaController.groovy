@@ -597,7 +597,17 @@ class MensajeriaController {
 				conversaciones.add(it)
 			}
 		}
+		Collections.sort(conversaciones, new ConversacionesSort())
 		return conversaciones
+	}
+	
+	
+	static class ConversacionesSort implements Comparator<Conversacion> {
+
+		@Override
+		public int compare(Conversacion o1, Conversacion o2) {
+			return o2.lastMessageDate().compareTo(o1.lastMessageDate())
+		}
 	}
 	
 	static class MensajeComparator implements Comparator<Mensaje> {
