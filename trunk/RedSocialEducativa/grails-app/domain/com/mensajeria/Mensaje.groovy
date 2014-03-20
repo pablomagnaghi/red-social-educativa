@@ -53,7 +53,7 @@ class Mensaje {
 	}
 	
 	public String getFechaYHora(){
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy - HH:mm");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
 		String fechaFormateada = df.format(this.fecha);
 		return fechaFormateada
 	}
