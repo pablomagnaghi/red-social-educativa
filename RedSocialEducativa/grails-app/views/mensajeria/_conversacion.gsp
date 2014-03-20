@@ -70,11 +70,11 @@
 										<g:img file="Treeview.gif" id="img_clickeable"
 											style="cursor: pointer;width: 21px;float: right;margin-right: 65px; margin-top: 6px;" />
 										<g:if test="${para != null }">
-											<input type='hidden' id="e6" class="para_${mensaje.id }" name="para" value="${para }"
+											<input type='hidden' class="para_${mensaje.id } autocomplete " name="para" value="${para }"
 												style="margin-bottom: 11px;" />
 										</g:if>
 										<g:else>
-											<input type='hidden' id="e6" class="para_${mensaje.id }" name="para"
+											<input type='hidden' class="para_${mensaje.id } autocomplete" name="para"
 												style="margin-bottom: 11px;" />
 										</g:else>
 										<input type='hidden' id="ids_${mensaje.id }" value="${keyReplyAll }"/>

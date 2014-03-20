@@ -4,7 +4,7 @@
 		<g:if test="${!conversaciones.empty }">
 			<g:each in="${conversaciones}" var="conversacion">
 				<g:set var="mensaje" value="${conversacion.mensajes.last()}" />
-				<g:if test="${mensaje.leido == false}">
+				<g:if test="${mensaje.leido == false && mensaje.emisor != varUsuarioService.usuarioActual()}">
 					<li conversationId="${conversacion.id}" mensajeId="${mensaje.id}" class="unread draggable">
 				</g:if>
 				<g:else>
@@ -49,7 +49,7 @@
 					${mensaje.asunto} - ${mensaje.getCuerpoResumido()}...
 				</span>
 				<span class="date">
-					22.30
+					${mensaje.getFechaYHora() }
 				</span>
 			</li>
 			</g:each>
