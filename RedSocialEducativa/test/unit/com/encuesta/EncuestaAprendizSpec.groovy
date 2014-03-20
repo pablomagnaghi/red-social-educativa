@@ -6,8 +6,8 @@ import spock.lang.Specification
 /**
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
  */
-@TestFor(RespuestaChoice)
-class RespuestaChoiceSpec extends Specification {
+@TestFor(EncuestaAprendiz)
+class EncuestaAprendizSpec extends Specification {
 
     def setup() {
     }

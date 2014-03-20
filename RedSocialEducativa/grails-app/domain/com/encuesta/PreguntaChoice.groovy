@@ -6,7 +6,7 @@ class PreguntaChoice extends Pregunta {
 
 	static belongsTo = [encuesta: Encuesta]
 	
-	static hasMany = [respuestas: RespuestaChoice, opciones: OpcionChoice]
+	static hasMany = [opciones: OpcionChoice]
 	
     static constraints = {
 
