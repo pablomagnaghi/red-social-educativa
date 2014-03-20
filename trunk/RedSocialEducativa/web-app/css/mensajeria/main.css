@@ -47,6 +47,10 @@
 	border-color: #357EBD !important
 }
 
+.ui-state-focus {
+	color: #357EBD !important;
+}
+
 .ui-state-active a{
 	color: #0099FF !important
 }

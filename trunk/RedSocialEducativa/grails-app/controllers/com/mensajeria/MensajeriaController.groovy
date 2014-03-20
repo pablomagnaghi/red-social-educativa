@@ -42,10 +42,7 @@ class MensajeriaController {
 			if(limiteSuperior > conversaciones.size()){
 				limiteSuperior = conversaciones.size()-1
 			}
-			
 			conversacion=  conversaciones[offset..limiteSuperior]
-			conversacion.sort{it.lastMessageDate()}
-			conversacion = conversacion.reverse(true)
 			conversacionCount = conversaciones.size()
 		}
 		[etiquetasCarpetas: etiquetasCarpetas, conversaciones : conversacion, 
@@ -112,8 +109,6 @@ class MensajeriaController {
 					limiteSuperior = conversaciones.size()-1
 				}
 				conversacion =  conversaciones[offset..limiteSuperior]
-				conversacion.sort{it.lastMessageDate()}
-				conversacion = conversacion.reverse(true)
 				conversacionCount = conversaciones.size()
 			}
 		}
@@ -535,7 +530,7 @@ class MensajeriaController {
 		def deBusqueda = null
 		def paraBusqueda = null
 		if (!params.de.trim().empty){
-			def matcher = (params.de =~ regex)
+			def matcher = (params.de.trim() =~ regex)
 			if (matcher.matches()){
 				def nombres = matcher[0][1]
 				def apellido = matcher[0][2]
@@ -544,7 +539,7 @@ class MensajeriaController {
 				deBusqueda = params.de.trim()
 			}
 		} else 	if (!params.para.trim().empty){
-			def matcher = (params.para =~ regex)
+			def matcher = (params.para.trim() =~ regex)
 			if (matcher.matches()){
 				def nombres = matcher[0][1]
 				def apellido = matcher[0][2]
@@ -553,19 +548,33 @@ class MensajeriaController {
 				paraBusqueda = params.para.trim()
 			}
 		}
+		
 		def conversacionCount = 0
-		if (de == null && para != null){
-			mensajes = Mensaje.findAllByEmisorAndReceptor(usuario, para, [max: params.max, offset: offset])
-			conversacionCount = Mensaje.findAllByEmisorAndReceptor(usuario, para).size()
-		} else if (para == null && de != null){
-			mensajes = Mensaje.findAllByEmisorAndReceptor(de, usuario, [max: params.max, offset: offset])
-			conversacionCount = Mensaje.findAllByEmisorAndReceptor(de, usuario).size()
-		} 
 		def conversaciones = []
-		mensajes.each {
-			def conversacion = conversacionService.findConversacionByMessage(it, usuario)
-			conversaciones.add(conversacion)
-		}
+		if (de == null && para != null){
+			def resultadoBusqueda = this.findConversacionesConParametros(usuario, para, usuario)
+			if (resultadoBusqueda.size() > 0){
+				def limiteSuperior = offset+(params.max-1)
+				if(limiteSuperior > resultadoBusqueda.size()){
+					limiteSuperior = resultadoBusqueda.size()-1
+				}
+				
+				conversaciones=  resultadoBusqueda[offset..limiteSuperior]
+				conversacionCount = resultadoBusqueda.size()
+			}
+		} else if (para == null && de != null){
+			def resultadoBusqueda = this.findConversacionesConParametros(de, usuario, usuario)
+			if (resultadoBusqueda.size() > 0){
+				def limiteSuperior = offset+(params.max-1)
+				if(limiteSuperior > resultadoBusqueda.size()){
+					limiteSuperior = resultadoBusqueda.size()-1
+				}
+				
+				conversaciones =  resultadoBusqueda[offset..limiteSuperior]
+				conversacionCount = resultadoBusqueda.size()
+			}
+		} 
+		
 		render(view: "index", model: [deBusqueda: deBusqueda, paraBusqueda: paraBusqueda,
 									etiquetasCarpetas : getCarpetas(usuario), 
 									carpetaSeleccionada: params.nombreCarpeta, 
@@ -601,6 +610,26 @@ class MensajeriaController {
 		return conversaciones
 	}
 	
+	/**
+	 * Buscar las conversaciones segun los criterios de busquedas
+	 * @param usuario
+	 * @param string
+	 * @return
+	 */
+	private def findConversacionesConParametros(Usuario de, Usuario para, Usuario usuario){
+		def mensajes = Mensaje.findAllByEmisorAndReceptor(de, para)
+		def conversaciones = []
+		mensajes.each {
+			def conversacionesMensajes = it.conversaciones.findAll {
+				it.padre.usuario == usuario
+			}
+			conversacionesMensajes.each {
+				conversaciones.add(it)
+			}
+		}
+		Collections.sort(conversaciones, new ConversacionesSort())
+		return conversaciones
+	}
 	
 	static class ConversacionesSort implements Comparator<Conversacion> {
 
