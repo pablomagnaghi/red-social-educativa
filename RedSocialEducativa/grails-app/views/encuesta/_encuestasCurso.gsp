@@ -27,7 +27,7 @@
 	                    	<tr>
     	                   		<td>${fieldValue(bean: encuestaInstance, field: "nombre")}</td>              
 		                        <td class="center">
-		                        	<g:link class="btn btn-success" action="encuestaCurso" id="${encuestaInstance.id}"params="['cursoId': params.cursoId]">
+		                        	<g:link class="btn btn-success" action="encuestaCurso" id="${encuestaInstance.id}" params="['cursoId': params.cursoId]">
 		                        		Responder</g:link>
 	                        	</td>
 	                    	</tr>

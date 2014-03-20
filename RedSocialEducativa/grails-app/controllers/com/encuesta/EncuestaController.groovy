@@ -24,6 +24,44 @@ class EncuestaController {
 	}
 	
 	// TODO falta el metodo para guardar respuestas de la encuesta contestada por el aprendiz
+	@Secured("hasRole('ROL_APRENDIZ')")
+	def responder(Encuesta encuestaInstance) {
+		if (encuestaInstance == null) {
+			notFound()
+			return
+		}
+		println "PARAMETROS"
+		
+		
+		encuestaInstance.preguntasChoice.each {
+			println it
+		}
+		
+		encuestaInstance.preguntasDesarrollo.each {
+			println it
+		}
+		
+		encuestaInstance.preguntasPuntaje.each {
+			println it
+		}
+		
+		println params
+		/*
+		// REVISAR SI RESPONDIO LA ENCUESTA
+		if (encuestaService.existe(encuestaInstance, params.cursoId.toLong())) {
+			flash.message = "Ya existe la encuesta ${encuestaInstance}"
+			redirect action: "create", params: ['cursoId': params.cursoId]
+			return
+		}
+		if (!encuestaService.guardar(encuestaInstance)) {
+			render view:'create', model: [encuestaInstance: encuestaInstance], params:['cursoId': params.cursoId]
+			return
+		}*/
+		flash.message = "Encuesta ${encuestaInstance} creada"
+		redirect action: "encuestasCurso", params:['cursoId': params.cursoId]
+	}
+	
+	
 	
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def estadisticas(Encuesta encuestaInstance) {
