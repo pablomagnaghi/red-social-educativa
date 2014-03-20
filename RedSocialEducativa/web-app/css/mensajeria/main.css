@@ -46,6 +46,10 @@
 	background-color: #CCCCCC !important;
 	border-color: #357EBD !important
 }
+
+.ui-state-active a{
+	color: #0099FF !important
+}
     
 .ui-menu .ui-menu-item a{
     background:#FFFFFF;
