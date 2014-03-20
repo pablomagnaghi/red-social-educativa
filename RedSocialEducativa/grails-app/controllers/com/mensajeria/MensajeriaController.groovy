@@ -24,7 +24,8 @@ class MensajeriaController {
 	def mensajeService
 	def cuatrimestreService
 	def conversacionService
-
+	def pdfRenderingService
+	
 	def index() {
 		params.max = Utilidades.MAX_PARAMS
 		Integer offset = params.offset?.toInteger() ?: 0
@@ -406,11 +407,10 @@ class MensajeriaController {
 			redirect (controller:"red", action:"revisarRol")
 		}
 		def mensajeOriginal = Mensaje.findById(params.mensajeId)
-		def asunto = "Re: " + mensajeOriginal.asunto
+		def asunto = params.asunto + mensajeOriginal.asunto
 		def texto = params.mensaje
 		HashMap<String, String> paraMap = new HashMap<String, String>()
 		def usuarios = this.getDestinatariosMail(params.para, paraMap, mensajeOriginal.para)
-		println usuarios
 		usuarios.each {
 			def receptor = it
 			mensajeService.reply(mensajeOriginal, paraMap, asunto, texto, usuario, receptor)
@@ -472,7 +472,9 @@ class MensajeriaController {
 		if (carpeta.nombre.equals("Eliminados")){
 			responder = false
 		}
-		def mensajes = conversacion.mensajes
+		ArrayList<Mensaje> mensajes = new ArrayList<Mensaje>()
+		mensajes = conversacion.mensajes
+		Collections.sort(mensajes, new MensajeComparator())
 		
 		def mediadores = Mediador.findAllByUsuario(usuario)
 		def aprendices = Aprendiz.findAllByUsuario(usuario)
@@ -494,10 +496,11 @@ class MensajeriaController {
 			datosMediadores : datosMediadores, cursosTotales: datosCursos])
 	}
 
-	def conversacionAPdf= {
-		def conversacion = Conversacion.findById(params.pdfId)
+	def renderPDF(){
+		def conversacion = Conversacion.findById(params.id)
 		def mensajes = conversacion.mensajes
-		render(template: "mensajesPdf", model: [mensajes: mensajes])
+		def args = [template: "renderPDF", model: [mensajes: mensajes]]
+		pdfRenderingService.render(args+[controller:this],response)
 	}
 
 	def buscar_mensajes(){
@@ -559,5 +562,13 @@ class MensajeriaController {
 			return Usuario.get(springSecurityService.principal.id)
 		else
 			return null
+	}
+	
+	static class MensajeComparator implements Comparator<Mensaje> {
+
+		@Override
+		public int compare(Mensaje o1, Mensaje o2) {
+			return o1.fecha.compareTo(o2.fecha)
+		}
 	}
 }

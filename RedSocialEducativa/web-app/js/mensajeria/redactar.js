@@ -260,16 +260,23 @@ function agregarMediador(chckboxId, mediadorId, mediadorNombres, mediadorApellid
 
 function redactarRespuesta(idMensaje, tipoRespuesta, argumento, excepcion){
 	redactar_ready()
+	console.log(argumento)
+	console.log(excepcion)
 	if (tipoRespuesta == 'respuesta' || tipoRespuesta == 'respuestaTodos'){
 		var paraArray = split( argumento );
 		$.each(paraArray, function(index, value){
+			var regex = /\[|\]/gi;
+			value = value.replace(regex, "");
 			if (value != ""){
 				if (excepcion == null || (!(value.indexOf(excepcion) >= 0))){
 					agregarCampoAPara(value)
 				}
 			}
 		})
+		$("#asunto_"+idMensaje).val('Re: ')
 	} else {
+		$("#asunto_"+idMensaje).val('FW: ')
+		$("#ids_" + idMensaje).val("")
 		$("#cuerpo_" + idMensaje).html(argumento)
 	}
 	$('#form_reply_' + idMensaje).show()

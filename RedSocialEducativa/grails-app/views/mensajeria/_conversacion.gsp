@@ -9,7 +9,6 @@
 				def keyReplyAll = mensaje.para.keySet()
 			 %>
 			<li style="border-bottom: 1px solid #D6D9E0;margin-bottom: 10px; padding-bottom: 10px;">
-				<!-- <img alt="avatar" src="img/avatar.jpg" class="avatar"> --> 
 				<g:if test="${mensaje.emisor != currentUser}">
 					<div class="btn-group text-left" style="float:right">
 						<button class="btn btn-primary btn-sm replythis" onclick="redactarRespuesta('${mensaje.id}', 'respuesta', 
@@ -21,8 +20,7 @@
 						</button>
 						<ul class="dropdown-menu pull-right">
 							<li>
-								<a class="replythis" href="javascript:void(0);" onclick="redactarRespuesta('${mensaje.id}', 'respuestaTodos', 
-								'${mensaje.emisor.nombres} ${mensaje.emisor.apellido} &lt;${mensaje.emisor.email}&gt;, ${usuariosReplyAll }, 
+								<a class="replythis" onclick="redactarRespuesta('${mensaje.id}', 'respuestaTodos', '${keyReplyAll}', 
 								'${mensaje.receptor.nombres} ${mensaje.receptor.apellido}')">
 								<i class="fa fa-reply"></i> Responder a todos</a>
 							</li>
@@ -31,15 +29,25 @@
 								<i class="fa fa-mail-forward"></i> Reenviar</a>
 							</li>
 							<li>
-								<a href="javascript:void(0);">
-								<i class="fa fa-print"></i> Exportar</a>
+								<g:link action="renderPDF" id="${conversacionId}">
+								<i class="fa fa-print"></i>
+								Exportar
+								</g:link>
 							</li>
 						</ul>
 					</div>
 				</g:if>
 			<span class="name">
 					${mensaje.emisor.nombres } ${mensaje.emisor.apellido }
-			</span> <span class="time">
+			</span><br/>
+			<span class="time">
+				Para:
+				 <g:each in="${keyReplyAll }" var='destinatario'>
+				 	${destinatario }
+				 	<br/>
+				 </g:each>
+			</span>
+			<span class="time">
 					${mensaje.fecha }
 			</span> <span class="asunto"><h5>
 						${mensaje.asunto }
@@ -70,6 +78,7 @@
 												style="margin-bottom: 11px;" />
 										</g:else>
 										<input type='hidden' id="ids_${mensaje.id }" value="${keyReplyAll }"/>
+										<input type='hidden' id='asunto_${mensaje.id }' name='asunto' value=''>
 									</span>
 								</td>
 							</tr>
