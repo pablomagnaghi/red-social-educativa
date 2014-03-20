@@ -3,7 +3,7 @@
 	<g:if test="${conversaciones!= null }">
 		<g:if test="${!conversaciones.empty }">
 			<g:each in="${conversaciones}" var="conversacion">
-				<g:set var="mensaje" value="${conversacion.mensajes.last()}" />
+				<g:set var="mensaje" value="${conversacion.getLastMessage(varUsuarioService.usuarioActual())}" />
 				<g:if test="${mensaje.leido == false && mensaje.emisor != varUsuarioService.usuarioActual()}">
 					<li conversationId="${conversacion.id}" mensajeId="${mensaje.id}" class="unread draggable">
 				</g:if>
