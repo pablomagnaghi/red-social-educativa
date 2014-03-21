@@ -3,6 +3,7 @@ import java.text.SimpleDateFormat
 import java.util.Date;
 import com.cartelera.*
 import com.cursado.*
+import com.encuesta.*
 import com.fiuba.*
 import com.foro.*
 import com.material.*
@@ -106,7 +107,6 @@ class BootStrap {
 		def mensajePabloToLuis = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
 		cuerpo: "Vamos por el campeonato", fecha : deStringToDate("01-03-2014"))
 		mensajeService.nuevoMensaje(mensajePabloToLuis)
-	
 		
 		def mensajeAgusToLuisDiez = new Mensaje(emisor: usuarioAgus, receptor: usuarioLuis, asunto: "Mensaje de Agus a Luis 1",
 		cuerpo: "Buenas noches!", fecha : deStringToDate("10-03-2014"))
@@ -473,6 +473,49 @@ class BootStrap {
 		def cuatrimestreCinco = new Cuatrimestre(anio: 2012, numero: 2, foro: foroCursoCinco)
 		cuatrimestreCinco.addToAprendices(aprendizUnoPP)
 		
+		// TODO
+		// Encuestas
+		def opcionChoiceUno = new OpcionChoice(opcion: "nunca")
+		def opcionChoiceUnoP = new OpcionChoice(opcion: "a veces")
+		def opcionChoiceUnoPP = new OpcionChoice(opcion: "siempre")
+		def opcionChoiceDos = new OpcionChoice(opcion: "malo")
+		def opcionChoiceDosP = new OpcionChoice(opcion: "regular")
+		def opcionChoiceDosPP = new OpcionChoice(opcion: "bueno")
+		def opcionChoiceDosPPP = new OpcionChoice(opcion: "muy bueno")
+		def opcionChoiceTres = new OpcionChoice(opcion: "si")
+		def opcionChoiceTresP = new OpcionChoice(opcion: "no")
+		
+		def preguntaChoiceUno = new PreguntaChoice(pregunta: "¿Usaste el material del curso?")
+		preguntaChoiceUno.addToOpciones(opcionChoiceUno)
+		preguntaChoiceUno.addToOpciones(opcionChoiceUnoP)
+		preguntaChoiceUno.addToOpciones(opcionChoiceUnoPP)
+		
+		def preguntaChoiceDos = new PreguntaChoice(pregunta: "¿Como calificas el curso?")
+		preguntaChoiceDos.addToOpciones(opcionChoiceDos)
+		preguntaChoiceDos.addToOpciones(opcionChoiceDosP)
+		preguntaChoiceDos.addToOpciones(opcionChoiceDosPP)
+		preguntaChoiceDos.addToOpciones(opcionChoiceDosPPP)
+		
+		def preguntaChoiceTres = new PreguntaChoice(pregunta: "¿Volverias a elegir este curso?")
+		preguntaChoiceTres.addToOpciones(opcionChoiceTres)
+		preguntaChoiceTres.addToOpciones(opcionChoiceTresP)
+		
+		def preguntaDesarrolloUno = new PreguntaDesarrollo(pregunta: "¿Cual es tu opinión sobre el curso?")
+		def preguntaDesarrolloDos = new PreguntaDesarrollo(pregunta: "¿Que aspectos mejorarias?")
+		
+		def preguntaPuntajeUno = new PreguntaPuntaje(pregunta: "Nivel de dificultad de las evaluaciones")
+		def preguntaPuntajeDos = new PreguntaPuntaje(pregunta: "Nivel de dificultad de las actividades")
+		
+		def encuestaUno = new Encuesta(nombre: "Opinion sobre el curso en general")
+		encuestaUno.addToPreguntasChoice(preguntaChoiceUno)
+		encuestaUno.addToPreguntasChoice(preguntaChoiceDos)
+		encuestaUno.addToPreguntasChoice(preguntaChoiceTres)
+		encuestaUno.addToPreguntasDesarrollo(preguntaDesarrolloUno)
+		encuestaUno.addToPreguntasDesarrollo(preguntaDesarrolloDos)
+		encuestaUno.addToPreguntasPuntaje(preguntaPuntajeUno)
+		encuestaUno.addToPreguntasPuntaje(preguntaPuntajeDos)
+		
+		
 		// Cursos		
 		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2", nombre: "Curso 1")
 		cursoUno.addToMediadores(mediadorAgus)
@@ -502,6 +545,8 @@ class BootStrap {
 		cursoUno.addToEvaluaciones(evaluacionSiete)
 		cursoUno.addToEvaluaciones(evaluacionOcho)
 		cursoUno.addToEvaluaciones(evaluacionNueve)
+		
+		cursoUno.addToEncuestas(encuestaUno)
 
 		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", nombre: "Curso 2")
 		cursoDos.addToMediadores(mediadorUnoP)
@@ -660,7 +705,6 @@ class BootStrap {
 			}
 		}	
 		
-		// TODO
 		// Grupos actividad aprendiz (tabla intermedia para la relacion N N entre grupo actividad y aprendiz)	
 		def ArrayList<GrupoActividadAprendiz> grupos = new ArrayList<GrupoActividadAprendiz>()
 			
@@ -717,7 +761,6 @@ class BootStrap {
 		}
 		
 		// Evaluacion aprendiz (tabla intermedia para la relacion N N entre evaluacion y aprendiz)
-		// TODO
 		def ArrayList<EvaluacionAprendiz> evaluacionesAprendiz = new ArrayList<EvaluacionAprendiz>()
 		
 		def evaluacionAprendizUno = new EvaluacionAprendiz(evaluacion: evaluacionUno, aprendiz: aprendizDos)
@@ -782,7 +825,6 @@ class BootStrap {
 			println red.titulo
 		}
     }
-	
 	
 	public static synchronized Date deStringToDate(String fecha) {
 		SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd-MM-yyyy");

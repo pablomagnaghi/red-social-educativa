@@ -26,7 +26,7 @@
 		<button class="btn btn-large dropdown-toggle btn-primary" data-toggle="dropdown"><span class="caret"></span></button>
 		<ul class="dropdown-menu">
 			<li><g:link controller="noticiaCurso" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]">
-				<i class="icon-dashboard"></i> Cartelera</g:link></li>
+				<i class="icon-desktop"></i> Cartelera</g:link></li>
 			<li><g:link controller="actividad" action="index" params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]">
 				<i class="icon-table"></i> Actividades del cuatrimestre</g:link></li>
 			<li><g:link controller="foroCurso" action="general" params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]">

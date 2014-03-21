@@ -7,7 +7,7 @@
 <div class="box-content">
 	<g:if test="${flash.message}">
 		<div class="box-content alerts">
-			<div class="alert alert-info"><button class="close" data-dismiss="alert" type="button"></button><strong>${flash.message}</strong></div>
+			<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button"></button><strong>${flash.message}</strong></div>
 		</div>
 	</g:if>	
 	<g:form class="form-horizontal" action="responder" id="${encuestaInstance.id}" params="['cursoId': params.cursoId]">
@@ -17,11 +17,11 @@
 				<dt>Preguntas choice: </dt>
 					<g:set var="cant" value="${1}" />
 					<g:each in="${encuestaInstance.preguntasChoice}" var="choice">
-						<dd><div class="message" style="width:100%">${cant} - ${choice}</div></dd>
+						<div class="message" style="width:100%">${cant} - ${choice}</div>
 						<g:if test="${choice.opciones}">
 							<ul>
 								<g:radioGroup name="${choice}" values="${choice.opciones}" value="1" labels="${choice.opciones}">
-									<p><label class="radio">${it.radio} ${it.label}</label>	</p>
+									<p><label class="radio">${it.radio} ${it.label}</label></p>
 								</g:radioGroup>
 							</ul>
 						</g:if>	

@@ -10,7 +10,11 @@ class EncuestaController {
     //static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def encuestaService
+	def preguntaChoiceService
+	def preguntaDesarrolloService
+	def preguntaPuntajeService
 	def usuarioService
+	def aprendizService
 	
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def encuestasCurso() {
@@ -30,38 +34,54 @@ class EncuestaController {
 			notFound()
 			return
 		}
-		println "PARAMETROS"
-		
-		
-		encuestaInstance.preguntasChoice.each {
-			println it
+		def respuestas = [:]
+		def cantRespuestas = 0
+		// Se filtran los parametros de mas, los nulos y los que exceden el tamaño maximo
+		for (p in params) {
+			String respuesta = p.value
+			if (!(p.key == "id" || p.key == "cursoId" || p.key == "action" || p.key == "controller" ||  p.key == "format" || (respuesta.size() > Utilidades.MAX_SIZE))) {
+				respuestas["${p.key}"] = "${p.value}"
+				if (p.value) {
+					cantRespuestas++
+				}
+			}
 		}
-		
-		encuestaInstance.preguntasDesarrollo.each {
-			println it
-		}
-		
-		encuestaInstance.preguntasPuntaje.each {
-			println it
-		}
-		
-		println params
-		/*
-		// REVISAR SI RESPONDIO LA ENCUESTA
-		if (encuestaService.existe(encuestaInstance, params.cursoId.toLong())) {
-			flash.message = "Ya existe la encuesta ${encuestaInstance}"
-			redirect action: "create", params: ['cursoId': params.cursoId]
+		if (encuestaService.cantidadPreguntas(encuestaInstance) != cantRespuestas) {
+			flash.message = "Revise la encuesta. No contesto todas las preguntas o se excedio en el desarrollo [1024 caracteres}"
+			redirect action: "encuestaCurso", params:['id': encuestaInstance.id, 'cursoId': params.cursoId]
 			return
 		}
-		if (!encuestaService.guardar(encuestaInstance)) {
-			render view:'create', model: [encuestaInstance: encuestaInstance], params:['cursoId': params.cursoId]
-			return
-		}*/
-		flash.message = "Encuesta ${encuestaInstance} creada"
+		
+		// TODO HASTA ACA LISTO
+		for (r in respuestas) {
+			println "pregunta: ${r.key}, respuesta: ${r.value}"
+		}
+		
+		for (r in respuestas) {
+			def preguntaChoice = PreguntaChoice.findByEncuestaAndPregunta(encuestaInstance, r.key)
+			if (preguntaChoice) {
+				println "${r.key} es una pregunta choice"
+				preguntaChoiceService.agregarRespuesta(preguntaChoice, r.value)
+			} else {
+				def preguntaDesarrollo = PreguntaDesarrollo.findByEncuestaAndPregunta(encuestaInstance, r.key)
+				if (preguntaDesarrollo) {
+					println "${r.key} es una pregunta desarrollo"
+					preguntaDesarrolloService.agregarRespuesta(preguntaDesarrollo, r.value)
+				} else {
+					def preguntaPuntaje = PreguntaPuntaje.findByEncuestaAndPregunta(encuestaInstance, r.key)
+					if (preguntaPuntaje) {
+						String puntaje = "${r.value}"
+						println "${r.key} es una pregunta puntaje ${r.value}"
+						preguntaPuntajeService.agregarRespuesta(preguntaPuntaje, puntaje)
+					}
+				}
+			}
+		}
+		def aprendiz = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
+		encuestaService.crearAgregarAprendiz(encuestaInstance, aprendiz)
+		flash.message = "Encuesta ${encuestaInstance} respondida"
 		redirect action: "encuestasCurso", params:['cursoId': params.cursoId]
 	}
-	
-	
 	
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def estadisticas(Encuesta encuestaInstance) {

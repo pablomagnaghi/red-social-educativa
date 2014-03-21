@@ -5,6 +5,7 @@ import com.fiuba.*
 class OpcionChoice {
 
 	String opcion
+	Integer cantRespuestas = 0
 	
 	static belongsTo = [pregunta: PreguntaChoice]
 	
