@@ -70,19 +70,15 @@ class MensajeService {
 	 * @param hilo
 	 * @return
 	 */
-	def sendMessage(HashMap<String, String> para, String asunto, String texto, Usuario emisor, Usuario receptor){
+	def sendMessage(Conversacion conversacionEmisor, HashMap<String, String> para, String asunto, String texto, Usuario emisor, Usuario receptor){
 		def mensaje = new Mensaje(para: para, emisor: emisor, receptor: receptor, asunto: asunto,
 			cuerpo: texto, fecha : new Date())
-		def hilo = new Hilo()
-		hilo.save()
-		mensaje.hilo = hilo;
+		mensaje.hilo = conversacionEmisor.hilo;
 		mensaje.para = para
 		
 		def carpeta = Carpeta.findByNombreAndUsuario("Escritorio", receptor)
 		this.guardarMensajeEnConversacion(carpeta, mensaje)
-		
-		def carpetaEmisor = Carpeta.findByNombreAndUsuario("Escritorio", emisor)
-		this.guardarMensajeEnConversacion(carpetaEmisor, mensaje)
+		conversacionEmisor.addToMensajes(mensaje)
 		
 		this.marcarMensajeEnviadoEnAprendiz(emisor)
 	}
@@ -102,7 +98,6 @@ class MensajeService {
 			cuerpo: texto, fecha : new Date())
 		mensaje.hilo = mensajeOriginal.hilo;
 		mensaje.para = para
-		
 		//Ubico el mensaje en la carpeta del receptor
 		Conversacion conversacion = mensajeOriginal.conversaciones.find {
 			it.padre.usuario != emisor
@@ -133,6 +128,22 @@ class MensajeService {
 		nuevaConversacion.addToMensajes(mensaje)
 		if(!nuevaConversacion.save()){
 			nuevaConversacion.errors.each {
+				println it
+			}
+		}
+	}
+	
+	def guardarConversacion(Conversacion conversacion){
+		if(!conversacion.save()){
+			conversacion.errors.each {
+				println it
+			}
+		}
+	}
+	
+	def guardarHilo(Hilo hilo){
+		if(!hilo.save(flush:true)){
+			hilo.errors.each {
 				println it
 			}
 		}

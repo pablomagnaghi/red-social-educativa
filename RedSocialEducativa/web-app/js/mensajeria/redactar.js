@@ -258,7 +258,7 @@ function agregarMediador(chckboxId, mediadorId, mediadorNombres, mediadorApellid
 	}
 }
 
-function redactarRespuesta(idMensaje, tipoRespuesta, argumento, excepcion){
+function redactarRespuesta(idMensaje, tipoRespuesta, argumento, excepcion, idRespuesta){
 	redactar_ready()
 	if (tipoRespuesta == 'respuesta' || tipoRespuesta == 'respuestaTodos'){
 		var paraArray = split( argumento );
@@ -271,6 +271,11 @@ function redactarRespuesta(idMensaje, tipoRespuesta, argumento, excepcion){
 				}
 			}
 		})
+		if (tipoRespuesta == 'respuesta'){
+			$("#ids_" + idMensaje).val(idRespuesta + ',')
+		} else {
+			$("#ids_" + idMensaje).val(argumento)
+		}
 		$("#asunto_"+idMensaje).val('Re: ')
 	} else {
 		$("#asunto_"+idMensaje).val('FW: ')
@@ -284,9 +289,7 @@ function redactarRespuesta(idMensaje, tipoRespuesta, argumento, excepcion){
 }
 
 function agregarCampoAPara(idMensaje, value){
-	console.log(idMensaje)
 	$("form#form_reply_"+idMensaje+" ul.select2-choices").each(function(){
-		console.log($(this))
 		$(this).prepend("<li class='select2-search-choice generado'>" +
 				"<div>"+htmlEncode(value)+"</div>    " +
 				"<a tabindex='-1' class='select2-search-choice-close removeLink' href='#' id='removePara' onclick='return false;' ></a></li>")

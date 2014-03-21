@@ -18,7 +18,7 @@
 				<g:if test="${mensaje.emisor != currentUser}">
 					<div class="btn-group text-left" style="float:right">
 						<button class="btn btn-primary btn-sm replythis" onclick="redactarRespuesta('${mensaje.id}', 'respuesta', 
-							'${mensaje.emisor.nombres} ${mensaje.emisor.apellido} &lt;${mensaje.emisor.email}&gt;', null)">
+							'${mensaje.emisor.nombres} ${mensaje.emisor.apellido} &lt;${mensaje.emisor.email}&gt;', null, '${mensaje.emisor.id }')">
 							<i class="fa fa-reply"></i> Responder
 						</button>
 						<button data-toggle="dropdown" class="btn btn-primary btn-sm dropdown-toggle">
@@ -27,11 +27,11 @@
 						<ul class="dropdown-menu pull-right">
 							<li>
 								<a class="replythis" onclick="redactarRespuesta('${mensaje.id}', 'respuestaTodos', '${keyReplyAll}', 
-								'${mensaje.receptor.nombres} ${mensaje.receptor.apellido}')">
+								'${mensaje.receptor.nombres} ${mensaje.receptor.apellido}', null)">
 								<i class="fa fa-reply"></i> Responder a todos</a>
 							</li>
 							<li>
-								<a class="replythis" href="javascript:void(0);" onclick="redactarRespuesta('${mensaje.id}', 'reenviar', '${mensaje.cuerpo }', null)">
+								<a class="replythis" href="javascript:void(0);" onclick="redactarRespuesta('${mensaje.id}', 'reenviar', '${mensaje.cuerpo }', null, null)">
 								<i class="fa fa-mail-forward"></i> Reenviar</a>
 							</li>
 						</ul>
@@ -77,7 +77,7 @@
 											<input type='hidden' class="para_${mensaje.id } autocomplete" name="para"
 												style="margin-bottom: 11px;" />
 										</g:else>
-										<input type='hidden' id="ids_${mensaje.id }" value="${keyReplyAll }"/>
+										<input type='hidden' id="ids_${mensaje.id }"/>
 										<input type='hidden' id='asunto_${mensaje.id }' name='asunto' value=''>
 									</span>
 								</td>
