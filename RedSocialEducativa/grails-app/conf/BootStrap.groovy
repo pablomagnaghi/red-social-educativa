@@ -85,7 +85,7 @@ class BootStrap {
 			email: "pablomagnaghi@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioOnce)
 		def usuarioDoce = new Usuario(username: "00000012", password: "00000012", dni: "00000012", apellido: "ApeDoce", nombres: "NomDoce", padron: "00012", 
-			email: "pablomagnaghi@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pany100@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioDoce)
 		def usuarioTrece = new Usuario(username: "00000013", password: "00000013", dni: "00000013", apellido: "ApeTrece", nombres: "NomTrece", padron: "00013", 
 			email: "pablomagnaghi@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
@@ -103,31 +103,6 @@ class BootStrap {
 			}
 		}
 
-		// Mensajes
-		def mensajePabloToLuis = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
-		cuerpo: "Vamos por el campeonato", fecha : deStringToDate("01-03-2014"))
-		mensajeService.nuevoMensaje(mensajePabloToLuis)
-		
-		def mensajeAgusToLuisDiez = new Mensaje(emisor: usuarioAgus, receptor: usuarioLuis, asunto: "Mensaje de Agus a Luis 1",
-		cuerpo: "Buenas noches!", fecha : deStringToDate("10-03-2014"))
-		mensajeService.nuevoMensaje(mensajeAgusToLuisDiez)
-		
-		def mensajePabloToLuisDos = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de Pablo a Luis 2",
-		cuerpo: "Vamos por el campeonato mundial", fecha : deStringToDate("11-03-2014"))
-		mensajeService.nuevoMensaje(mensajePabloToLuisDos)
-		def mensajeLuisToPablo = new Mensaje(emisor: usuarioLuis, receptor: usuarioPablo, asunto: "Contestación de Luis a Pablo",
-		cuerpo: "Sin dudas vamos por eso", fecha : deStringToDate("12-03-2014"))
-		mensajeService.nuevoMensaje(mensajeLuisToPablo)
-		def mensajeLuisToAgus = new Mensaje(emisor: usuarioLuis, receptor: usuarioAgus, asunto: "Respuesta a Agus",
-		cuerpo: "Buen dia!!", fecha : deStringToDate("13-03-2014"))
-		mensajeService.nuevoMensaje(mensajeLuisToAgus)
-		def mensajePabloToAgus = new Mensaje(emisor: usuarioPablo, receptor: usuarioAgus, asunto: "Mensaje de Pablo a Agus ",
-		cuerpo: "Volver al futuro 2", fecha : deStringToDate("14-03-2014"))
-		mensajeService.nuevoMensaje(mensajePabloToAgus)
-		def mensajeAgusToLuisDos = new Mensaje(emisor: usuarioAgus, receptor: usuarioLuis, asunto: "Mensaje de Agus a Luis 2",
-		cuerpo: "Hola como estas?", fecha : deStringToDate("15-03-2014"))
-		mensajeService.nuevoMensaje(mensajeAgusToLuisDos)
-	
 		// Mediadores	
 		def mediadorAgus = new Mediador(usuario: usuarioAgus, rol: rolMediador, jerarquia: "2-JTP");
 		def mediadorUno = new Mediador(usuario: usuarioUno, rol: rolMediador, jerarquia: "1-Profesor");
@@ -814,6 +789,31 @@ class BootStrap {
 				println calendarios.get(i)
 			}
 		}
+		
+		// Mensajes
+		def mensajePabloToLuis = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de prueba",
+		cuerpo: "Vamos por el campeonato", fecha : deStringToDate("01-03-2014"))
+		mensajeService.nuevoMensaje(mensajePabloToLuis)
+		
+		def mensajeAgusToLuisDiez = new Mensaje(emisor: usuarioAgus, receptor: usuarioLuis, asunto: "Mensaje de Agus a Luis 1",
+		cuerpo: "Buenas noches!", fecha : deStringToDate("10-03-2014"))
+		mensajeService.nuevoMensaje(mensajeAgusToLuisDiez)
+		
+		def mensajePabloToLuisDos = new Mensaje(emisor: usuarioPablo, receptor: usuarioLuis, asunto: "Mensaje de Pablo a Luis 2",
+		cuerpo: "Vamos por el campeonato mundial", fecha : deStringToDate("11-03-2014"))
+		mensajeService.nuevoMensaje(mensajePabloToLuisDos)
+		def mensajeLuisToPablo = new Mensaje(emisor: usuarioLuis, receptor: usuarioPablo, asunto: "Contestación de Luis a Pablo",
+		cuerpo: "Sin dudas vamos por eso", fecha : deStringToDate("12-03-2014"))
+		mensajeService.nuevoMensaje(mensajeLuisToPablo)
+		def mensajeLuisToAgus = new Mensaje(emisor: usuarioLuis, receptor: usuarioAgus, asunto: "Respuesta a Agus",
+		cuerpo: "Buen dia!!", fecha : deStringToDate("13-03-2014"))
+		mensajeService.nuevoMensaje(mensajeLuisToAgus)
+		def mensajePabloToAgus = new Mensaje(emisor: usuarioPablo, receptor: usuarioAgus, asunto: "Mensaje de Pablo a Agus ",
+		cuerpo: "Volver al futuro 2", fecha : deStringToDate("14-03-2014"))
+		mensajeService.nuevoMensaje(mensajePabloToAgus)
+		def mensajeAgusToLuisDos = new Mensaje(emisor: usuarioAgus, receptor: usuarioLuis, asunto: "Mensaje de Agus a Luis 2",
+		cuerpo: "Hola como estas?", fecha : deStringToDate("15-03-2014"))
+		mensajeService.nuevoMensaje(mensajeAgusToLuisDos)
 		
 		// Red
 		def red = Red.instance

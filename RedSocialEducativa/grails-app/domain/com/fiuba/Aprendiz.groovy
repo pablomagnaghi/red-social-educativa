@@ -6,8 +6,8 @@ import com.encuesta.*
 class Aprendiz extends UsuarioRol {
 
 	Boolean participa 
-	Integer	msjEnviados 
-	Integer msjLeidos 
+	Integer	msjEnviados = 0
+	Integer msjLeidos = 0 
 	Integer pubForos 
 	Integer descMaterial 
 	String ultVisita 
