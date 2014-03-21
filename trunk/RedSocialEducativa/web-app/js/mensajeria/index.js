@@ -117,6 +117,17 @@ function mostrarConversacion(id, mensajeId, carpeta){
 		success: function(reply){
 			$("#contenidoMensajes").html(reply);
 			actualizarCarpetas(carpeta)
+			actualizarHeader()
+		}
+	})
+}
+
+function actualizarHeader(){
+	$.ajax({
+		url: 'actualizarHeader',
+		type: 'POST',
+		success: function(reply){
+			$("#headerTemplate").html(reply);
 		}
 	})
 }

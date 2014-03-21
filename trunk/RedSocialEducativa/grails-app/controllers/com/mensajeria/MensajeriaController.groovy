@@ -584,6 +584,16 @@ class MensajeriaController {
 									conversacionCount: conversacionCount, offset : offset])
 	}	
 	
+	public actualizarHeader(){
+		def usuario = this.usuarioActual()
+		if (!usuario){
+			redirect (controller:"red", action:"revisarRol")
+		}
+		def cantMensajes = Mensaje.findAllByReceptorAndLeido(usuario, Boolean.FALSE).size()
+		render (template:"/templateRed/header", model: [cantMensajes: cantMensajes,
+			usuario : usuario])
+	}
+	
 	private usuarioActual() {
 		if (springSecurityService.principal.enabled)
 			return Usuario.get(springSecurityService.principal.id)
@@ -650,4 +660,5 @@ class MensajeriaController {
 			return o1.fecha.compareTo(o2.fecha)
 		}
 	}
+	
 }
