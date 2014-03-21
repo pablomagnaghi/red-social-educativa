@@ -365,6 +365,8 @@ class MensajeriaController {
 					finalArray.add(it.toString().trim())
 				}
 			}
+		} else {
+			finalArray = paraArray
 		}
 		finalArray.each {
 			Matcher m = usuarioPattern.matcher(it.toString());
@@ -476,7 +478,7 @@ class MensajeriaController {
 		def mensajesConv = conversacion.mensajes.findAll{it.leido == false}
 		mensajesConv.each{
 			if (it.receptor == usuario){
-				mensajeService.marcarMensajeLeido(it)
+				mensajeService.marcarMensajeLeido(it, usuario)
 			}
 		}
 		

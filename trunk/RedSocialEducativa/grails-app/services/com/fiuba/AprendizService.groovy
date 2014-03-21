@@ -13,6 +13,18 @@ class AprendizService {
 		}
 	}
 	
+	def sumarEnviado(Aprendiz aprendiz) {
+		aprendiz.msjEnviados = aprendiz.msjEnviados + 1
+		println aprendiz.msjEnviados
+		aprendiz.save flush: true
+	}
+
+	def sumarLeido(Aprendiz aprendiz) {
+		aprendiz.msjLeidos = aprendiz.msjLeidos + 1
+		println aprendiz.msjLeidos
+		aprendiz.save flush: true
+	}
+	
 	def publica(Aprendiz aprendiz) {
 		aprendiz.pubForos++
 		aprendiz.save flush: true

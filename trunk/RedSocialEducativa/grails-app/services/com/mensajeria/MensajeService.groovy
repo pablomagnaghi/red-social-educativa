@@ -1,10 +1,13 @@
 package com.mensajeria
 
+import com.fiuba.Aprendiz
 import com.fiuba.Usuario
 import grails.transaction.Transactional
 
 @Transactional
 class MensajeService {
+	
+	def aprendizService
 	
 	/**
 	 * Nuevo mensaje para usar solo en el bootstrap
@@ -30,6 +33,8 @@ class MensajeService {
 		//Carpeta del emisor guardada
 		def carpetaEmisor = Carpeta.findByNombreAndUsuario("Escritorio", mensaje.emisor)
 		this.guardarMensajeEnConversacion(carpetaEmisor, mensaje)
+		
+		this.marcarMensajeEnviadoEnAprendiz(mensaje.emisor)
     }
 	
 	//TODO PROBAR esto
@@ -78,6 +83,8 @@ class MensajeService {
 		
 		def carpetaEmisor = Carpeta.findByNombreAndUsuario("Escritorio", emisor)
 		this.guardarMensajeEnConversacion(carpetaEmisor, mensaje)
+		
+		this.marcarMensajeEnviadoEnAprendiz(emisor)
 	}
 	
 	/**
@@ -117,6 +124,8 @@ class MensajeService {
 				println it
 			}
 		}
+		
+		this.marcarMensajeEnviadoEnAprendiz(emisor)
 	}
 	
 	private def guardarMensajeEnConversacion(Carpeta carpeta, Mensaje mensaje){
@@ -129,8 +138,19 @@ class MensajeService {
 		}
 	}
 	
-	def marcarMensajeLeido(Mensaje m){
+	def marcarMensajeLeido(Mensaje m, Usuario usuario){
 		m.setLeido(Boolean.TRUE)
 		m.save()
+		def aprendiz = Aprendiz.findAllByUsuarioAndCursando(usuario, true)
+		if (!aprendiz.empty){
+			aprendizService.sumarLeido(aprendiz.get(0))
+		}
+	}
+	
+	private def marcarMensajeEnviadoEnAprendiz(Usuario usuario){
+		def aprendiz = Aprendiz.findAllByUsuarioAndCursando(usuario, true)
+		if (!aprendiz.empty){
+			aprendizService.sumarEnviado(aprendiz.get(0))
+		}
 	}
 }
