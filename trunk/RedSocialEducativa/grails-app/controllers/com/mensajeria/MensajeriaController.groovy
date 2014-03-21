@@ -2,7 +2,6 @@ package com.mensajeria
 
 import org.springframework.security.access.annotation.Secured
 
-
 import com.cursado.Curso;
 import com.cursado.GrupoActividad;
 import com.fiuba.Mediador
@@ -12,8 +11,10 @@ import com.mensajeria.Conversacion
 import com.fiuba.RedController;
 import com.fiuba.Utilidades;
 import com.mensajeria.Mensaje;
+
 import grails.converters.JSON
 
+import java.util.HashMap;
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -339,10 +340,19 @@ class MensajeriaController {
 		def texto = params.mensaje
 		HashMap<String, String> paraMap = new HashMap<String, String>()
 		def usuarios = this.getDestinatariosMail(params.para, paraMap, null)
+		def carpetaEmisor = Carpeta.findByNombreAndUsuario("Escritorio", usuario)
+		Hilo hilo = new Hilo()
+		mensajeService.guardarHilo(hilo)
+		def nuevaConversacion = new Conversacion(padre: carpetaEmisor, hilo: hilo)
+		
 		usuarios.each {
 			def receptor = it
-			mensajeService.sendMessage(paraMap, asunto, texto, usuario, receptor)
+			mensajeService.sendMessage(nuevaConversacion, paraMap, asunto, texto, usuario, receptor)
 		}
+		println "Envio"
+		println nuevaConversacion.mensajes
+		println "REC"
+		mensajeService.guardarConversacion(nuevaConversacion)
 		redirect(action: 'index')
 	}
 	
@@ -423,11 +433,13 @@ class MensajeriaController {
 		def asunto = params.asunto + mensajeOriginal.asunto
 		def texto = params.mensaje
 		HashMap<String, String> paraMap = new HashMap<String, String>()
+		println params.para
 		def usuarios = this.getDestinatariosMail(params.para, paraMap, mensajeOriginal.para)
 		usuarios.each {
 			def receptor = it
 			mensajeService.reply(mensajeOriginal, paraMap, asunto, texto, usuario, receptor)
 		}
+		println "HOOO"
 		flash.message = "Mensaje Enviado"
 		redirect(action:'index')
 	}
@@ -489,6 +501,7 @@ class MensajeriaController {
 		}
 		ArrayList<Mensaje> mensajes = new ArrayList<Mensaje>()
 		mensajes = conversacion.mensajes
+		mensajes = this.borrarRepetidos(mensajes)
 		Collections.sort(mensajes, new MensajeComparator())
 		
 		def mediadores = Mediador.findAllByUsuario(usuario)
@@ -596,6 +609,15 @@ class MensajeriaController {
 			usuario : usuario])
 	}
 	
+	private ArrayList<Mensaje> borrarRepetidos(ArrayList<Mensaje> mensajes){
+		HashMap<String, Mensaje> mapaMensajes = new HashMap<String, Mensaje>()
+		for (Mensaje m : mensajes){
+			String key = m.getFechaYHora() + "-" + m.cuerpo
+			mapaMensajes.put(key, m)
+		}
+		return mapaMensajes.values().toArray()
+	}
+	
 	private usuarioActual() {
 		if (springSecurityService.principal.enabled)
 			return Usuario.get(springSecurityService.principal.id)
@@ -611,19 +633,18 @@ class MensajeriaController {
 	 */
 	private def findConversaciones(Usuario usuario, String nombreCarpeta){
 		def mensajes = Mensaje.findAllByReceptor(usuario)
-		ArrayList<Conversacion> conversaciones = new ArrayList<String>()
+		HashSet<Conversacion> conversaciones = new HashSet<Conversacion>()
 		mensajes.each {
 			def conversacionesMensajes = it.conversaciones.findAll {
 				it.padre.usuario == usuario && it.padre.nombre.equals(nombreCarpeta)
 			}
 			conversacionesMensajes.each {
-				if (!conversaciones.contains(it)){
-					conversaciones.add(it)
-				}
+				conversaciones.add(it)
 			}
 		}
-		Collections.sort(conversaciones, new ConversacionesSort())
-		return conversaciones
+		ArrayList<Conversacion> conversacionesArray = conversaciones.toArray()
+		Collections.sort(conversacionesArray, new ConversacionesSort())
+		return conversacionesArray
 	}
 	
 	/**
