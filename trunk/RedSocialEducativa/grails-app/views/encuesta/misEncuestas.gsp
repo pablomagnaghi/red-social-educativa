@@ -19,10 +19,6 @@
     	<g:set var="varUsuarioService" bean="usuarioService"/>
     	<g:set var="varMediadorService" bean="mediadorService"/>
     	<g:set var="varAprendizService" bean="aprendizService"/>
-    	<g:set var="varPreguntaChoiceService" bean="preguntaChoiceService"/>
-    	<g:set var="varPreguntaDesarrolloService" bean="preguntaDesarrolloService"/>
-    	<g:set var="varPreguntaPuntajeService" bean="preguntaPuntajeService"/>
-
     	<g:set var="usuario" value="${varUsuarioService.usuarioActual()}"/>
     	<g:set var="cursosMediador" value="${varMediadorService.obtenerCursos(usuario)}"/>
     	<g:set var="cursosAprendiz" value="${varAprendizService.obtenerCursos(usuario)}"/>
@@ -39,12 +35,12 @@
 						<div class="box-content buttons">
 							<p class="btn-group">
 								<g:link controller="curso" action="aprendiz" params="['cursoId': params.cursoId]">
-									<button class="btn">${com.cursado.Curso.get(params.cursoId)}</button></g:link>
+									<button class="btn">${com.cursado.Curso.get(params.cursoId)}</button></g:link>	
 							</p>
 						</div>
 						<!-- Fin: BREADCRUM -->  
 						<div class="box">
-	           				<g:render template="encuestaCurso" />
+	           				<g:render template="misEncuestas" />
 						</div>	
 					</div>
 					<!--/span-->

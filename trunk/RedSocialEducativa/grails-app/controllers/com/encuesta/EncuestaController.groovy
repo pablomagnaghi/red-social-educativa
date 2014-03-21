@@ -17,9 +17,37 @@ class EncuestaController {
 	def aprendizService
 	
 	@Secured("hasRole('ROL_APRENDIZ')")
+	def misEncuestas() {
+		params.max = Utilidades.MAX_PARAMS
+		def aprendiz = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
+		[aprendiz: aprendiz, encuestasAprendiz: EncuestaAprendiz.findAllByAprendiz(aprendiz), params: ['cursoId': params.cursoId]]
+	}
+	
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def aprendicesEncuesta() {
+		params.max = Utilidades.MAX_PARAMS
+		[encuesta: Encuesta.get(params.encuestaId), encuestasAprendiz: EncuestaAprendiz.findAllByEncuesta(Encuesta.get(params.encuestaId)),
+			params: ['cursoId': params.cursoId, 'encuestaId': params.encuestaId]]
+	}
+	
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def encuestasAprendiz() {
+		params.max = Utilidades.MAX_PARAMS
+		[aprendiz: Aprendiz.get(params.aprendizId), encuestasAprendiz: EncuestaAprendiz.findAllByAprendiz(Aprendiz.get(params.aprendizId)), 
+			params: ['cursoId': params.cursoId, 'cuatrimestreId': params.cuatrimestreId]]
+	}
+	
+	@Secured("hasRole('ROL_MEDIADOR')")
+	def respuestasDesarrollo() {
+		params.max = Utilidades.MAX_PARAMS
+		[respuestas: PreguntaDesarrollo.get(params.id).respuestas, params: ['cursoId': params.cursoId, 'encuestaId': params.encuestaId]]
+	}
+	
+	@Secured("hasRole('ROL_APRENDIZ')")
 	def encuestasCurso() {
 		params.max = Utilidades.MAX_PARAMS
-		[encuestaInstanceList: Encuesta.findAllByCurso(Curso.get(params.cursoId)), params: ['cursoId': params.cursoId]]
+		def aprendiz = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
+		[encuestaInstanceList: Encuesta.findAllByCurso(Curso.get(params.cursoId)), aprendiz: aprendiz, params: ['cursoId': params.cursoId]]
 	}
 	
 	@Secured("hasRole('ROL_APRENDIZ')")
@@ -27,7 +55,6 @@ class EncuestaController {
 		respond encuestaInstance, params:['cursoId': params.cursoId]
 	}
 	
-	// TODO falta el metodo para guardar respuestas de la encuesta contestada por el aprendiz
 	@Secured("hasRole('ROL_APRENDIZ')")
 	def responder(Encuesta encuestaInstance) {
 		if (encuestaInstance == null) {
@@ -51,35 +78,28 @@ class EncuestaController {
 			redirect action: "encuestaCurso", params:['id': encuestaInstance.id, 'cursoId': params.cursoId]
 			return
 		}
-		
-		// TODO HASTA ACA LISTO
-		for (r in respuestas) {
-			println "pregunta: ${r.key}, respuesta: ${r.value}"
-		}
-		
 		for (r in respuestas) {
 			def preguntaChoice = PreguntaChoice.findByEncuestaAndPregunta(encuestaInstance, r.key)
 			if (preguntaChoice) {
-				println "${r.key} es una pregunta choice"
 				preguntaChoiceService.agregarRespuesta(preguntaChoice, r.value)
 			} else {
 				def preguntaDesarrollo = PreguntaDesarrollo.findByEncuestaAndPregunta(encuestaInstance, r.key)
 				if (preguntaDesarrollo) {
-					println "${r.key} es una pregunta desarrollo"
 					preguntaDesarrolloService.agregarRespuesta(preguntaDesarrollo, r.value)
 				} else {
 					def preguntaPuntaje = PreguntaPuntaje.findByEncuestaAndPregunta(encuestaInstance, r.key)
 					if (preguntaPuntaje) {
-						String puntaje = "${r.value}"
-						println "${r.key} es una pregunta puntaje ${r.value}"
-						preguntaPuntajeService.agregarRespuesta(preguntaPuntaje, puntaje)
+						String puntaje = r.value
+						def respuestaPuntaje = new RespuestaPuntaje(puntaje: puntaje.toShort())
+						preguntaPuntaje.addToRespuestas(respuestaPuntaje)
+						preguntaPuntajeService.guardar(preguntaPuntaje)
 					}
 				}
 			}
 		}
 		def aprendiz = aprendizService.obtenerPorCurso(usuarioService.usuarioActual().id, params.cursoId.toLong())
 		encuestaService.crearAgregarAprendiz(encuestaInstance, aprendiz)
-		flash.message = "Encuesta ${encuestaInstance} respondida"
+		flash.message = "Encuesta respondida"
 		redirect action: "encuestasCurso", params:['cursoId': params.cursoId]
 	}
 	

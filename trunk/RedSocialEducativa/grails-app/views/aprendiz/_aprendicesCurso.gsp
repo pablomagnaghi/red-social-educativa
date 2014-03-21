@@ -70,7 +70,9 @@
 									<g:link class="btn btn-success" controller="grupoActividadAprendiz" action="mostrarAprendiz"
 	                            		params="['cursoId': params.cursoId, 'aprendizId': aprendizInstance.id]">A</g:link>	
 	                          		<g:link class="btn btn-success" controller="evaluacionAprendiz" action="mostrarAprendiz"
-	                            		params="['cursoId': params.cursoId, 'aprendizId': aprendizInstance.id]">E </g:link>	
+	                            		params="['cursoId': params.cursoId, 'aprendizId': aprendizInstance.id]">E</g:link>	
+	                            	<g:link class="btn btn-success" controller="encuesta" action="encuestasAprendiz"
+	                            		params="['cursoId': params.cursoId, 'aprendizId': aprendizInstance.id]">Encuestas</g:link>	
 								</g:else>		
 							</td>
 	                    </tr>

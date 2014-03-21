@@ -18,6 +18,7 @@
                 <thead>
                     <tr>
                         <th>Nombre</th>
+                        <th>Estado</th>
 						<th>Acciones</th>            
 					</tr>
 				</thead>
@@ -26,9 +27,19 @@
                 		<g:if test="${encuestaInstance.habilitada}">
 	                    	<tr>
     	                   		<td>${fieldValue(bean: encuestaInstance, field: "nombre")}</td>              
+    	                   		<td class="center">
+		                        	<g:if test="${com.encuesta.EncuestaAprendiz.findByAprendizAndEncuesta(aprendiz, encuestaInstance)}">
+		                        		<span class="label label-success">Contestada</span>
+		                        	</g:if>
+		                        	<g:else>
+		                        		<span class="label label-important">Sin contestar</span>
+		                        	</g:else>
+	                        	</td>
 		                        <td class="center">
-		                        	<g:link class="btn btn-success" action="encuestaCurso" id="${encuestaInstance.id}" params="['cursoId': params.cursoId]">
-		                        		Responder</g:link>
+		                        	<g:if test="${!com.encuesta.EncuestaAprendiz.findByAprendizAndEncuesta(aprendiz, encuestaInstance)}">
+		                        		<g:link class="btn btn-success" action="encuestaCurso" id="${encuestaInstance.id}" params="['cursoId': params.cursoId]">
+		                        			Responder</g:link>
+		                        	</g:if>
 	                        	</td>
 	                    	</tr>
 	                    </g:if>	
