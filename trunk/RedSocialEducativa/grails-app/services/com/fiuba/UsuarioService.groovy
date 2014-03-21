@@ -1,5 +1,6 @@
 package com.fiuba
 
+import com.cursado.Curso
 import com.mensajeria.Carpeta;
 
 import org.springframework.security.access.annotation.Secured
@@ -77,6 +78,20 @@ class UsuarioService {
 			return usuario
 		}
 		return null
+	}
+	
+	def crearCarpetaCurso(Aprendiz aprendiz, String cursoId){
+		Curso curso = Curso.findById(cursoId)
+		def nombreCurso = curso.nombre
+		def codigoMateria = curso.asignatura.codigo
+		def nombreCarpeta = nombreCurso + " - " + codigoMateria
+		Usuario usuario = aprendiz.usuario
+		def nuevaCarpeta = new Carpeta(nombre : nombreCarpeta, usuario: usuario)
+		if(!nuevaCarpeta.save(flush: true)){
+			nuevaCarpeta.save(flush: true).errors.each {
+				println it
+			}
+		}
 	}
 	
 	def actualizar(Usuario usuario) {
