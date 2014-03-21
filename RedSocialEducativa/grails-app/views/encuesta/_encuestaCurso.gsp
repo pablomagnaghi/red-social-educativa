@@ -38,7 +38,7 @@
 				<dt>Preguntas de puntajate: </dt>	
 					<g:each in="${encuestaInstance.preguntasPuntaje}" var="puntaje" status="i">
 						<div class="message" style="width:100%">${cant} - ${puntaje}</div>		
-						<g:select name="${puntaje}" from="${[1,2,3,4,5,6,7,8,9,10]}" style='width: 10%;'/>
+						<g:select name="${puntaje}" from="[1,2,3,4,5,6,7,8,9,10]" style='width: 10%;'/>
 						<g:set var="cant" value="${cant + 1}" />
 						<hr>
 					</g:each>

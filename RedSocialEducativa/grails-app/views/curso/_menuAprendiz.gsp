@@ -28,12 +28,14 @@
 	<button class="btn btn-large btn-primary">Mi perfil</button>
 	<button class="btn btn-large dropdown-toggle btn-primary" data-toggle="dropdown"><span class="caret"></span></button>
 	<ul class="dropdown-menu">
-		<li><g:link action="evaluacionesAprendiz" controller="evaluacion" params="['cursoId': params.cursoId]">
+		<li><g:link controller="evaluacion" action="evaluacionesAprendiz" params="['cursoId': params.cursoId]">
 			<i class="icon-user"></i> Mis evaluaciones</g:link></li>
 		<g:if test="${aprendiz.cursando}">		
 			<li><g:link controller="actividad" action="actividadesAprendiz" params="['cursoId': params.cursoId, 'cuatrimestreId': cuatrimestre?.id]">
 				<i class="icon-user"></i> Mis actividades</g:link></li>
 		</g:if>
+		<li><g:link controller="encuesta" action="misEncuestas" params="['cursoId': params.cursoId]">
+			<i class="icon-user"></i> Mis encuestas</g:link></li>
 		<li class="divider"></li>
 		<li><g:link controller="aprendiz" action="cambiarEstado" id="${aprendiz.id}" 
 			params="['cursoId': params.cursoId,  'cuatrimestreId': cuatrimestre?.id]" 

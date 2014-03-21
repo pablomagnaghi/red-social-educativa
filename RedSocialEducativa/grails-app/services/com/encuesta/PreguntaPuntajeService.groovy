@@ -5,11 +5,15 @@ import grails.transaction.Transactional
 @Transactional
 class PreguntaPuntajeService {
 
-	def agregarRespuesta(PreguntaDesarrollo pregunta, String puntaje) {
-		def respuestaPuntaje = new RespuestaPuntaje(puntaje: puntaje.toShort())
-		pregunta.addToRespuestas(respuestaPuntaje)
-		pregunta.save flush:true
-	}
+	def obtenerCantidadRespuestas(PreguntaPuntaje puntaje, Short i) {
+		Integer cant = 0
+		puntaje.respuestas.each {
+			if (it.puntaje == i) {
+				cant++
+			}
+		}
+		return cant
+	}	
 	
     def existe(PreguntaPuntaje pregunta, Long encuestaId) {	
 		if (PreguntaChoice.findByEncuestaAndPregunta(Encuesta.get(encuestaId), pregunta.pregunta)) {
