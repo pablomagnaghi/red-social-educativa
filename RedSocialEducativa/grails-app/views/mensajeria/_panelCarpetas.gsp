@@ -1,5 +1,5 @@
 <div class="span" style="width: 200px; margin-left: 0px; margin-right: 14px;">
-	<g:remoteLink action="redactarMensaje"
+	<g:remoteLink action="redactarMensaje" params="['carpetaSeleccionada': carpetaSeleccionada]"
 		update="[success:'contenidoMensajes']"
 		onSuccess="when_ready();actualizar('redactar', null)"
 		id="compose-mail" class="btn btn-primary btn-block">

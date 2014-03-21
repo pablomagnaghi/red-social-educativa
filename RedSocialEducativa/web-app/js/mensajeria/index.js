@@ -112,7 +112,8 @@ function mostrarConversacion(id, mensajeId, carpeta){
 		type: 'POST',
 		data: {
 			id: id,
-			mensajeId : mensajeId
+			mensajeId : mensajeId,
+			carpetaSeleccionada : carpeta
 		},
 		success: function(reply){
 			$("#contenidoMensajes").html(reply);
