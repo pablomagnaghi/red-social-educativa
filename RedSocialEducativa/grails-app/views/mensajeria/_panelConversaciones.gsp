@@ -12,7 +12,7 @@
 				</g:else>
 				<span style="display: inline-flex;">
 					<input type="checkbox" id="${conversacion.id}"
-						class="checkbox style-2 checkBoxConv" style="margin-bottom: 10px;">
+					class="checkbox style-2 checkBoxConv" style="margin-bottom: 10px;">
 				</span>
 				<span class="from showConv">
 					
@@ -41,7 +41,7 @@
 					<input type="checkbox" id="${mensaje.id}"
 						class="checkbox style-2">
 				</span> 
-				<span class="from showConv">
+				<span class="from">
 					${mensaje.emisor.nombres}
 					${mensaje.emisor.apellido}
 				</span>
