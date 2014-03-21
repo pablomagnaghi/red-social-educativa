@@ -1,6 +1,12 @@
 <div class="conversation">
-	<div class="actions">
+	<div class="actions span">
 		<h6>Conversacion</h6>
+	</div>
+	<div class="span">
+		<g:link action="renderPDF" id="${conversacionId}">
+			<i class="fa fa-print"></i>
+			Exportar
+		</g:link>
 	</div>
 	<ul class="talk">
 		<g:each in="${mensajes}" var="mensaje">
@@ -27,12 +33,6 @@
 							<li>
 								<a class="replythis" href="javascript:void(0);" onclick="redactarRespuesta('${mensaje.id}', 'reenviar', '${mensaje.cuerpo }', null)">
 								<i class="fa fa-mail-forward"></i> Reenviar</a>
-							</li>
-							<li>
-								<g:link action="renderPDF" id="${conversacionId}">
-								<i class="fa fa-print"></i>
-								Exportar
-								</g:link>
 							</li>
 						</ul>
 					</div>
