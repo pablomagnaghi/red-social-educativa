@@ -349,9 +349,6 @@ class MensajeriaController {
 			def receptor = it
 			mensajeService.sendMessage(nuevaConversacion, paraMap, asunto, texto, usuario, receptor)
 		}
-		println "Envio"
-		println nuevaConversacion.mensajes
-		println "REC"
 		mensajeService.guardarConversacion(nuevaConversacion)
 		redirect(action: 'index')
 	}
@@ -481,6 +478,7 @@ class MensajeriaController {
 	 * @return
 	 */
 	def conversacion(){
+		println params
 		def usuario = this.usuarioActual()
 		if (!usuario){
 			redirect (controller:"red", action:"revisarRol")
