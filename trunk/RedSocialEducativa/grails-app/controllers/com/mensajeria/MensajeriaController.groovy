@@ -11,7 +11,7 @@ import com.mensajeria.Conversacion
 import com.fiuba.RedController;
 import com.fiuba.Utilidades;
 import com.mensajeria.Mensaje;
-
+import com.cursado.Asignatura;
 import grails.converters.JSON
 
 import java.util.HashMap;
@@ -191,7 +191,7 @@ class MensajeriaController {
 	 * @return
 	 */
 	private cargarInputsRedactar(Usuario usuario, cursosAprendiz, datosCursosAprendiz, cursosMediador, datosCursosMediador, datosCursos, datosMediadores, usuarios){
-		def mediadores = Mediador.findAllByUsuario(usuario)
+		def mediadores = Mediador.findAllByUsuarioAndActivo(usuario, true)
 		def aprendices = Aprendiz.findAllByUsuario(usuario)
 		mediadores.each {
 			def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(it.curso.id)
@@ -212,12 +212,66 @@ class MensajeriaController {
 		if (!cursosMediador.empty){
 			datosCursos = Curso.findAll()
 			datosCursos.each{
-				datosMediadores.put(it.id + "-mediadoresC", it.mediadores)
+				def listaMediadoresActivos = []
+				it.mediadores.each {
+					if (it.activo){
+						listaMediadoresActivos.add(it)
+					}
+				}
+				datosMediadores.put(it.id + "-mediadoresC", listaMediadoresActivos)
 			}
 		}
 		usuarios = Usuario.findByEnabled(true)
 	}
 	
+	private cargarInputsRedactarFiltrados(String nombreCarpeta, Usuario usuario, cursosAprendiz, datosCursosAprendiz, cursosMediador, datosCursosMediador, datosCursos, datosMediadores, usuarios){
+		Curso curso = this.obtenerCursoPorNombreCarpeta(nombreCarpeta)
+		def mediadores = Mediador.findAllByUsuarioAndActivoAndCurso(usuario, true, curso)
+		def cuatrimestreActual = cuatrimestreService.obtenerCuatrimestreActual(curso.id)
+		def aprendices = Aprendiz.findAllByUsuarioAndCuatrimestre(usuario, cuatrimestreActual)
+		mediadores.each {
+			def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(it.curso.id)
+			def mediadoresCurso = it.curso.mediadores
+			cursosMediador.add(it.curso)
+			datosCursosMediador.put(it.curso.id + "-cuatrimestreM", cuatrimestre)
+			datosCursosMediador.put(it.curso.id	 + "-mediadoresM", mediadoresCurso)
+		}
+		aprendices.each {
+			if (it.participa){
+				def cuatrimestre = it.cuatrimestre
+				def mediadoresCurso = it.cuatrimestre.curso.mediadores
+				cursosAprendiz.add(it.cuatrimestre.curso)
+				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-cuatrimestreA", cuatrimestre)
+				datosCursosAprendiz.put(it.cuatrimestre.curso.id + "-mediadoresA", mediadoresCurso)
+			}
+		}
+		if (!cursosMediador.empty){
+			datosCursos = Curso.findAll()
+			datosCursos.each{
+				def listaMediadoresActivos = []
+				it.mediadores.each {
+					if (it.activo){
+						listaMediadoresActivos.add(it)
+					}
+				}
+				datosMediadores.put(it.id + "-mediadoresC", listaMediadoresActivos)
+			}
+		}
+		usuarios = Usuario.findByEnabled(true)
+	}
+	
+	private Curso obtenerCursoPorNombreCarpeta(String nombreCarpeta){
+		Pattern cursoPattern = Pattern.compile("([^\\s]+)\\s-\\s(.*)\\s*", Pattern.CASE_INSENSITIVE | Pattern.DOTALL)
+		Matcher m = cursoPattern.matcher(nombreCarpeta);
+		Curso cursoActual = null
+		if (m.find()){
+			String nombreMateria = m.group(1).trim();
+			String nombreCurso = m.group(2).trim();
+			cursoActual = Curso.findByAsignaturaAndNombre(Asignatura.findByCodigo(nombreMateria), nombreCurso); 
+		}
+		return cursoActual;
+	}
+
 	
 	/**
 	 * Enviar Mensaje
@@ -236,8 +290,11 @@ class MensajeriaController {
 		def datosCursos = []
 		def datosMediadores = [:]
 		def usuarios = []
-		this.cargarInputsRedactar(usuario, cursosAprendiz, datosCursosAprendiz, cursosMediador, datosCursosMediador, datosCursos, datosMediadores, usuarios)
-		
+		if (!this.isCarpetaDeCurso(params.carpetaSeleccionada)){
+			this.cargarInputsRedactar(usuario, cursosAprendiz, datosCursosAprendiz, cursosMediador, datosCursosMediador, datosCursos, datosMediadores, usuarios)
+		} else {
+			this.cargarInputsRedactarFiltrados(params.carpetaSeleccionada, usuario, cursosAprendiz, datosCursosAprendiz, cursosMediador, datosCursosMediador, datosCursos, datosMediadores, usuarios)
+		}
 		render(template:"redactar", model: [usuarios: usuarios, cursosAprendiz : cursosAprendiz, datosCursosAprendiz : datosCursosAprendiz, 
 			cursosMediador : cursosMediador, datosCursosMediador : datosCursosMediador, datosMediadores : datosMediadores, cursosTotales: datosCursos])
 	}
@@ -478,7 +535,6 @@ class MensajeriaController {
 	 * @return
 	 */
 	def conversacion(){
-		println params
 		def usuario = this.usuarioActual()
 		if (!usuario){
 			redirect (controller:"red", action:"revisarRol")
@@ -511,7 +567,11 @@ class MensajeriaController {
 		def datosCursos = []
 		def datosMediadores = [:]
 		def usuarios = []
-		this.cargarInputsRedactar(usuario, cursosAprendiz, datosCursosAprendiz, cursosMediador, datosCursosMediador, datosCursos, datosMediadores, usuarios)
+		if (!isCarpetaDeCurso(params.carpetaSeleccionada)){
+			this.cargarInputsRedactar(usuario, cursosAprendiz, datosCursosAprendiz, cursosMediador, datosCursosMediador, datosCursos, datosMediadores, usuarios)
+		} else {
+			this.cargarInputsRedactarFiltrados(params.carpetaSeleccionada, usuario, cursosAprendiz, datosCursosAprendiz, cursosMediador, datosCursosMediador, datosCursos, datosMediadores, usuarios)
+		}
 		
 		render (template:"conversacion", model: [mensajes : mensajes, 
 			currentUser : usuario,
@@ -621,6 +681,12 @@ class MensajeriaController {
 			return Usuario.get(springSecurityService.principal.id)
 		else
 			return null
+	}
+	
+	private Boolean isCarpetaDeCurso(String carpetaSeleccionada){
+		Pattern cursoPattern = Pattern.compile("([^\\s]+)\\s-\\s(.*)\\s*", Pattern.CASE_INSENSITIVE | Pattern.DOTALL)
+		Matcher m =  cursoPattern.matcher(carpetaSeleccionada)
+		return m.matches()
 	}
 	
 	/**

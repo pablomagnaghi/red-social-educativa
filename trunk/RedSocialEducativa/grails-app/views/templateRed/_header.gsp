@@ -58,7 +58,12 @@
 	                            <li>
 	                                <g:link controller="mensajeria" action="index">
 	                                    <span class="avatar">
-	                                        <img src="${resource(dir: 'img', file: 'usuario.png')}" alt="Avatar" />
+				                             <g:if test="${ultimoMensaje.emisor?.foto}">
+								            	<img src="${createLink(controller: 'usuario', action: 'mostrarFoto', id: ultimoMensaje.emisor.foto.id)}">
+								            </g:if>
+								            <g:else>
+								            	<img src="${resource(dir: 'img', file: 'usuario.png')}" alt="avatar">
+								            </g:else> 
 	                                    </span>
 	                                    <span class="header">
 	                                        <span class="from">
