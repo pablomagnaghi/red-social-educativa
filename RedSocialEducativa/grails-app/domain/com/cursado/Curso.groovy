@@ -1,5 +1,6 @@
 package com.cursado
 
+import com.encuesta.*
 import com.fiuba.*
 import com.material.*
 
@@ -11,7 +12,7 @@ class Curso {
 
 	static belongsTo = [asignatura: Asignatura]
 
-	static hasMany = [cuatrimestres: Cuatrimestre, evaluaciones: Evaluacion, materiales: MaterialCurso,
+	static hasMany = [cuatrimestres: Cuatrimestre, encuestas: Encuesta, evaluaciones: Evaluacion, materiales: MaterialCurso,
 		mediadores: Mediador, temas: Tema]
 
 	static constraints = {

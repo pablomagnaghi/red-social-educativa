@@ -23,7 +23,7 @@ class PreguntaChoiceController {
             return
         }
 		if (preguntaChoiceService.existe(preguntaChoiceInstance, params.encuestaId.toLong())) {
-			flash.message = "Ya existe esa pregunta choice"
+			flash.message = "Ya existe la pregunta en la encuesta"
 			redirect action: "create", params:['cursoId': params.cursoId, 'encuestaId': params.encuestaId]
 			return
 		}
@@ -48,7 +48,7 @@ class PreguntaChoiceController {
             return
         }
 		if (preguntaChoiceService.existe(preguntaChoiceInstance, params.encuestaId.toLong())) {
-			flash.message = "Ya existe esa pregunta choice"
+			flash.message = "Ya existe la pregunta en la encuesta"
 			preguntaChoiceInstance.pregunta = params.preguntaAntigua
 			redirect action: "edit", params: params
 			return

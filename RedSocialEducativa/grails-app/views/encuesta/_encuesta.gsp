@@ -34,7 +34,7 @@
 				<g:if test="${choice.opciones}">
 					<ul>
 						<g:each in="${choice.opciones}" var ="op">	
-							<p>${op}
+							<p>- ${op}
 								<g:if test="${!encuestaInstance.habilitada}">
 									<g:link style="float: right;" class="btn btn-danger" controller="opcionChoice" action="delete" method="DELETE" id="${op.id}"
 										params="['cursoId': params.cursoId, 'encuestaId': encuestaInstance.id, 'preguntaId': choice.id]"

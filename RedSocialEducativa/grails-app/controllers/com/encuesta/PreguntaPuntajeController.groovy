@@ -23,7 +23,7 @@ class PreguntaPuntajeController {
             return
         }
 		if (preguntaPuntajeService.existe(preguntaPuntajeInstance, params.encuestaId.toLong())) {
-			flash.message = "Ya existe la pregunta de puntaje"
+			flash.message = "Ya existe la pregunta en la encuesta"
 			redirect action: "create", params:['cursoId': params.cursoId, 'encuestaId': params.encuestaId]
 			return
 		}
@@ -48,7 +48,7 @@ class PreguntaPuntajeController {
             return
         }
 		if (preguntaPuntajeService.existe(preguntaPuntajeInstance, params.encuestaId.toLong())) {
-			flash.message = "Ya existe la pregunta de puntaje"
+			flash.message = "Ya existe la pregunta en la encuesta"
 			preguntaPuntajeInstance.pregunta = params.preguntaAntigua
 			redirect action: "edit", params: params
 			return
