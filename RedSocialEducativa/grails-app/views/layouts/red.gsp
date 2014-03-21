@@ -76,7 +76,9 @@
 	    	<g:set var="usuario" value="${varUsuarioService.usuarioActual()}"/>
 	    	<g:set var="cantMensajes" value="${com.mensajeria.Mensaje.findAllByReceptorAndLeido(usuario, Boolean.FALSE).size()}"/>
     	</sec:ifLoggedIn>
-		<g:render template="/templateRed/header"/>
+    	<div id="headerTemplate">
+			<g:render template="/templateRed/header"/>
+    	</div>
 		<g:layoutBody/>
 		<r:layoutResources />
 		<g:render template="/templateRed/footer"/>
