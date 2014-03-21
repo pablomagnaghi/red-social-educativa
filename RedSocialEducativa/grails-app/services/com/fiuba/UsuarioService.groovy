@@ -84,12 +84,15 @@ class UsuarioService {
 		Curso curso = Curso.findById(cursoId)
 		def nombreCurso = curso.nombre
 		def codigoMateria = curso.asignatura.codigo
-		def nombreCarpeta = nombreCurso + " - " + codigoMateria
+		def nombreCarpeta = codigoMateria + " - " + nombreCurso
 		Usuario usuario = aprendiz.usuario
-		def nuevaCarpeta = new Carpeta(nombre : nombreCarpeta, usuario: usuario)
-		if(!nuevaCarpeta.save(flush: true)){
-			nuevaCarpeta.save(flush: true).errors.each {
-				println it
+		def carpeta = Carpeta.findAllByUsuarioAndNombre(usuario, nombreCarpeta)
+		if (carpeta.empty){
+			def nuevaCarpeta = new Carpeta(nombre : nombreCarpeta, usuario: usuario)
+			if(!nuevaCarpeta.save(flush: true)){
+				nuevaCarpeta.save(flush: true).errors.each {
+					println it
+				}
 			}
 		}
 	}

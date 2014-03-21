@@ -1,4 +1,19 @@
 <div class="navbar">
+	<g:if test="${usuario != null }">
+	<g:set var="mensajes" value="${
+		com.mensajeria.Mensaje.withCriteria {
+			eq('receptor.id', usuario.id)
+			and {
+				order('leido', 'asc')
+				order('fecha', 'desc')
+			}
+		}
+	}"/>
+	<g:if test="${mensajes != null && mensajes.size()>0}">
+		<g:set var="ultimoMensaje" value="${mensajes.first() }"/>
+	</g:if>
+
+	</g:if>
     <div class="navbar-inner">
         <div class="container-fluid">
 			<sec:ifLoggedIn>
@@ -39,24 +54,23 @@
                             <g:else>
                             	<span class="dropdown-menu-title">Usted no tiene mensajes nuevos</span>     
                             </g:else>
-                            <li>
-                                <g:link controller="mensajeria" action="index">
-                                    <span class="avatar">
-                                        <img src="${resource(dir: 'img', file: 'usuario.png')}" alt="Avatar" />
-                                    </span>
-                                    <span class="header">
-                                        <span class="from">
-                                            EMISOR (HACER)
-                                        </span>
-                                        <span class="time">
-                                            FECHA
-                                        </span>
-                                    </span>
-                                    <span class="message">
-                                        MENSAJE
-                                    </span>
-                                </g:link>
+                            <g:if test="${ultimoMensaje != null }">
+	                            <li>
+	                                <g:link controller="mensajeria" action="index">
+	                                    <span class="avatar">
+	                                        <img src="${resource(dir: 'img', file: 'usuario.png')}" alt="Avatar" />
+	                                    </span>
+	                                    <span class="header">
+	                                        <span class="from">
+	                                            ${ultimoMensaje.emisor }
+	                                        </span>
+	                                    </span>
+	                                     <div class="time">
+	                                            ${ultimoMensaje.getFechaYHora() }
+	                                    </div>
+	                                </g:link>
                             </li>
+                            </g:if>
                             <li>
                                 <g:link controller="mensajeria" action="index">Ver todos mis mensajes</g:link>
                             </li>
