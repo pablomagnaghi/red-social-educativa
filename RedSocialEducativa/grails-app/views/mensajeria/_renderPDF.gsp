@@ -7,7 +7,15 @@
 			<li style="border-bottom: 1px solid #D6D9E0;margin-bottom: 10px; padding-bottom: 10px;">
 				<span class="name">
 						${mensaje.emisor.nombres } ${mensaje.emisor.apellido }
-				</span> <span class="time">
+				</span> 
+				<span class="time">
+				Para:
+					<g:each in="${keyReplyAll }" var='destinatario'>
+						${destinatario }
+						<br/>
+					</g:each>
+				</span>
+				<span class="time">
 						${mensaje.fecha }
 				</span> <span class="asunto"><h5>
 							${mensaje.asunto }
