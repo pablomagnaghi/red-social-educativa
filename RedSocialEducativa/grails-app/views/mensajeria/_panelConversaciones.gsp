@@ -34,7 +34,7 @@
 		</g:else>
 	</g:if>
 	<g:else>
-		<g:if test="${!mensajes.empty}">
+		<g:if test="${mensajes != null && !mensajes.empty}">
 			<g:each in="${mensajes}" var="mensaje">
 			<li onclick="mostrarMensaje('${mensaje.id}')">
 				<span style="display: inline-flex;">

@@ -13,6 +13,7 @@ class AprendizController {
 	def mediadorService
 	def cuatrimestreService
 	
+	
 	@Secured("hasRole('ROL_MEDIADOR')")
 	def aprendicesCurso() {
 		params.max = Utilidades.MAX_PARAMS	
@@ -87,6 +88,9 @@ class AprendizController {
 			return
 		}
 		aprendizService.notificar(aprendizInstance)
+		if (params.activar == 'true'){
+			usuarioService.crearCarpetaCurso(aprendizInstance, params.cursoId)
+		}
 		if ((!aprendizInstance.participa) && (aprendizInstance.usuario == usuarioService.usuarioActual())) {
 			redirect controller:"red", action:"revisarRol",  method:"GET"
 			return

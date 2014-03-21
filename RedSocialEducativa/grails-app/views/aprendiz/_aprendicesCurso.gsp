@@ -49,7 +49,7 @@
 							<td class="center">
 								<g:if test="${!aprendizInstance.participa && aprendizInstance.cuatrimestre == cuatrimestre}">
 									<g:link class="btn btn-success" action="cambiarEstado" id="${aprendizInstance.id}" 
-										params="['cursoId': params.cursoId]" value="${message(code: 'Activar')}" 
+										params="['cursoId': params.cursoId, 'activar': true]" value="${message(code: 'Activar')}" 
 										onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
 										<i class="icon-ok"></i></g:link>
 								</g:if>
@@ -63,7 +63,7 @@
 									</g:if>
 									<g:else>
 										<g:link class="btn btn-success" action="cambiarEstado" id="${aprendizInstance.id}" 
-											params="['cursoId': params.cursoId]" value="${message(code: 'Activar')}" 
+											params="['cursoId': params.cursoId, 'activar': true]" value="${message(code: 'Activar')}" 
 											onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
 										<i class="icon-ok"></i></g:link>
 									</g:else>
