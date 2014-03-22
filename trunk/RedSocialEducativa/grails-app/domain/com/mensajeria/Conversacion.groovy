@@ -25,7 +25,7 @@ class Conversacion {
 			it.receptor == receptor
 		}
 		Collections.sort(lista, new MensajeComparator())
-		Mensaje last = lista.get(0)
+		Mensaje last = lista.get(lista.size() - 1)
 		return last
 	}
 }

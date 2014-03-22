@@ -144,7 +144,7 @@ function submitMail(){
 	var data = $("#e6").val()
 	data += ","
 	$("#e6").val(data)
-	if (para > 0 || asunto > 0 || cuerpo > 0){
+	if (para > 0 && asunto > 0 && cuerpo > 0){
 		var item = sendArr.pop()
 		while (item != null){
 			var val = $("#e6").val()
@@ -154,6 +154,7 @@ function submitMail(){
 		}
 		return true;
 	} else {
+		alert("Completar los 3 campos antes de enviar mensaje")
 		return false;
 	}
 }
@@ -241,7 +242,9 @@ function removeGrupoLi(idGrupo, idCurso){
 }
 
 function removeLastLi(className){
-	$("."+className+" li:last").prev("li").remove()
+	var lastLi = $("."+className+" li:last").prev("li")
+	var aTag = lastLi.find('a')
+	aTag.trigger('click')
 }
 
 function agregarMediador(chckboxId, mediadorId, mediadorNombres, mediadorApellido, mediadorEmail){
@@ -262,19 +265,26 @@ function redactarRespuesta(idMensaje, tipoRespuesta, argumento, excepcion, idRes
 	redactar_ready()
 	if (tipoRespuesta == 'respuesta' || tipoRespuesta == 'respuestaTodos'){
 		var paraArray = split( argumento );
+		var sendTo = []
 		$.each(paraArray, function(index, value){
 			var regex = /\[|\]/gi;
 			value = value.replace(regex, "");
 			if (value != ""){
 				if (excepcion == null || (!(value.indexOf(excepcion) >= 0))){
 					agregarCampoAPara(idMensaje, value)
+					sendTo.push(value)
 				}
 			}
 		})
 		if (tipoRespuesta == 'respuesta'){
 			$("#ids_" + idMensaje).val(idRespuesta + ',')
 		} else {
-			$("#ids_" + idMensaje).val(argumento)
+			var sendToText = ""
+			$.each(sendTo, function(index, value){
+				sendToText += (value + ",")
+			})
+			sendToText += idRespuesta
+			$("#ids_" + idMensaje).val(sendToText)
 		}
 		$("#asunto_"+idMensaje).val('Re: ')
 	} else {
@@ -322,7 +332,7 @@ function submitRespuesta(mensajeId){
 	if (paraBorrado == false){
 		data += $("#ids_" + mensajeId).val()
 	}
-	if (paraLong > 0 || cuerpoLong > 0 || sendArr.length > 0){
+	if ((paraLong > 0 || sendArr.length > 0 || data.length > 0) && cuerpoLong > 0 ){
 		var item = sendArr.pop()
 		while (item != null){
 			data += item
@@ -334,6 +344,7 @@ function submitRespuesta(mensajeId){
 		$("#form_reply_"+mensajeId+" input[name=para]").val(data)
 		return true;
 	} else {
+		alert("Completar todos los datos para enviar mensajes")
 		return false;
 	}
 }
