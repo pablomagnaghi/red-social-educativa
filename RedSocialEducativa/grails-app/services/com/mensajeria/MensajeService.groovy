@@ -1,7 +1,10 @@
 package com.mensajeria
 
+import org.springframework.aop.aspectj.RuntimeTestWalker.ThisInstanceOfResidueTestVisitor;
+
 import com.fiuba.Aprendiz
 import com.fiuba.Usuario
+
 import grails.transaction.Transactional
 
 @Transactional
@@ -18,8 +21,9 @@ class MensajeService {
 		def hilo = new Hilo()
     	hilo.save()
 		mensaje.hilo = hilo;
-		mensaje.para.put(mensaje.receptor.nombres +" "+mensaje.receptor.apellido + "<"+mensaje.receptor.email+">", mensaje.emisor.id)
-
+		
+		this.agregarDestinatarioAMensaje(mensaje, mensaje.receptor.nombres +" "+mensaje.receptor.apellido + "<"+mensaje.receptor.email+">", mensaje.receptor.id.toString())
+		
 		if(!mensaje.save(flush: true)){
 			mensaje.errors.each {
 				println it
@@ -71,10 +75,10 @@ class MensajeService {
 	 * @return
 	 */
 	def sendMessage(Conversacion conversacionEmisor, HashMap<String, String> para, String asunto, String texto, Usuario emisor, Usuario receptor){
-		def mensaje = new Mensaje(para: para, emisor: emisor, receptor: receptor, asunto: asunto,
+		def mensaje = new Mensaje(emisor: emisor, receptor: receptor, asunto: asunto,
 			cuerpo: texto, fecha : new Date())
 		mensaje.hilo = conversacionEmisor.hilo;
-		mensaje.para = para
+		this.agregarDestinatarios(mensaje, para)
 		
 		def carpeta = Carpeta.findByNombreAndUsuario("Escritorio", receptor)
 		this.guardarMensajeEnConversacion(carpeta, mensaje)
@@ -94,14 +98,18 @@ class MensajeService {
 	 * @return
 	 */
 	def reply(Mensaje mensajeOriginal, HashMap<String, String> para, String asunto, String texto, Usuario emisor, Usuario receptor){
-		def mensaje = new Mensaje(para: para, emisor: emisor, receptor: receptor, asunto: asunto,
+		def mensaje = new Mensaje(emisor: emisor, receptor: receptor, asunto: asunto,
 			cuerpo: texto, fecha : new Date())
 		mensaje.hilo = mensajeOriginal.hilo;
-		mensaje.para = para
+		
+		this.agregarDestinatarios(mensaje, para)
+		
 		//Ubico el mensaje en la carpeta del receptor
-		Conversacion conversacion = mensajeOriginal.conversaciones.find {
-			it.padre.usuario != emisor
+		def conversaciones = Conversacion.findAllByHilo(mensajeOriginal.hilo)
+		def conversacion = conversaciones.find {
+			it.padre.usuario == receptor
 		}
+
 		conversacion.addToMensajes(mensaje)
 		if(!conversacion.save()){
 			conversacion.errors.each {
@@ -164,4 +172,20 @@ class MensajeService {
 			aprendizService.sumarEnviado(aprendiz.get(0))
 		}
 	}
+	
+	private def agregarDestinatarios(Mensaje mensaje, HashMap<String, String> para){
+		for (String key : para.keySet()){
+			String value = para.get(key);
+			this.agregarDestinatarioAMensaje(mensaje, key, value)
+		}
+	}
+
+	
+	private def agregarDestinatarioAMensaje(Mensaje mensaje, String key, String value){
+		DestinatariosMensaje mPara = new DestinatariosMensaje()
+		mPara.key = key
+		mPara.value = value
+		mensaje.addToPara(mPara)
+	}
+
 }

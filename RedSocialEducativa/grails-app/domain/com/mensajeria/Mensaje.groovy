@@ -10,18 +10,17 @@ class Mensaje {
 	Usuario receptor
 	String asunto
 	String cuerpo
-	HashMap<String, String> para = new HashMap<String, String>()
 	Date fecha
 	Boolean leido = false
 	Hilo hilo
 	
 	static belongsTo = [Hilo, Conversacion]
 	
-	static hasMany = [conversaciones : Conversacion]
+	static hasMany = [conversaciones : Conversacion, para : DestinatariosMensaje]
 
 	static mapping = {
 		cuerpo type: "text"
-		sort fecha: "asc"
+		sort fecha: "desc"
 	}
 	
     static constraints = {

@@ -11,14 +11,21 @@
 	<ul class="talk">
 		<g:each in="${mensajes}" var="mensaje">
 			<%
-				def usuariosReplyAll = mensaje.para.values()
-				def keyReplyAll = mensaje.para.keySet()
+				def usuariosReplyAll = []
+				def keyReplyAll = []
+				def destinatariosReplyAll = []
+				for (mensajePara in mensaje.para) {
+    				usuariosReplyAll.add(mensajePara.value)
+					keyReplyAll.add(mensajePara.key)
+					destinatariosReplyAll.add(mensajePara.key)
+				}
+				destinatariosReplyAll.add(mensaje.emisor.nombres+" "+mensaje.emisor.apellido+"<"+mensaje.emisor.email+">")
 			 %>
 			<li style="border-bottom: 1px solid #D6D9E0;margin-bottom: 10px; padding-bottom: 10px;">
 				<g:if test="${mensaje.emisor != currentUser}">
 					<div class="btn-group text-left" style="float:right">
 						<button class="btn btn-primary btn-sm replythis" onclick="redactarRespuesta('${mensaje.id}', 'respuesta', 
-							'${mensaje.emisor.nombres} ${mensaje.emisor.apellido} &lt;${mensaje.emisor.email}&gt;', null, '${mensaje.emisor.id }')">
+							'${mensaje.emisor.nombres} ${mensaje.emisor.apellido}&lt;${mensaje.emisor.email}&gt;', null, '${mensaje.emisor.id }')">
 							<i class="fa fa-reply"></i> Responder
 						</button>
 						<button data-toggle="dropdown" class="btn btn-primary btn-sm dropdown-toggle">
@@ -26,8 +33,8 @@
 						</button>
 						<ul class="dropdown-menu pull-right">
 							<li>
-								<a class="replythis" onclick="redactarRespuesta('${mensaje.id}', 'respuestaTodos', '${keyReplyAll}', 
-								'${mensaje.receptor.nombres} ${mensaje.receptor.apellido}', null)">
+								<a class="replythis" onclick="redactarRespuesta('${mensaje.id}', 'respuestaTodos', '${destinatariosReplyAll}', 
+								'${mensaje.receptor.nombres} ${mensaje.receptor.apellido}&lt;${mensaje.receptor.email}&gt;', '${mensaje.emisor.id }')">
 								<i class="fa fa-reply"></i> Responder a todos</a>
 							</li>
 							<li>
@@ -69,14 +76,8 @@
 									<span class="span" style="width: 680px;">
 										<g:img file="Treeview.gif" id="img_clickeable"
 											style="cursor: pointer;width: 21px;float: right;margin-right: 65px; margin-top: 6px;" />
-										<g:if test="${para != null }">
-											<input type='hidden' class="para_${mensaje.id } autocomplete " name="para" value="${para }"
+										<input type='hidden' class="para_${mensaje.id } autocomplete" name="para"
 												style="margin-bottom: 11px;" />
-										</g:if>
-										<g:else>
-											<input type='hidden' class="para_${mensaje.id } autocomplete" name="para"
-												style="margin-bottom: 11px;" />
-										</g:else>
 										<input type='hidden' id="ids_${mensaje.id }"/>
 										<input type='hidden' id='asunto_${mensaje.id }' name='asunto' value=''>
 									</span>

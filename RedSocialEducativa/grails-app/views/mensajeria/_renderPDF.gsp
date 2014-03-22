@@ -4,6 +4,12 @@
 	</div>
 	<ul class="talk">
 		<g:each in="${mensajes}" var="mensaje">
+			<%
+				def keyReplyAll = []
+				for (mensajePara in mensaje.para) {
+					keyReplyAll.add(mensajePara.key)
+				}
+			 %>
 			<li style="border-bottom: 1px solid #D6D9E0;margin-bottom: 10px; padding-bottom: 10px;">
 				<span class="name">
 						${mensaje.emisor.nombres } ${mensaje.emisor.apellido }

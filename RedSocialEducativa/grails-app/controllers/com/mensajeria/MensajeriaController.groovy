@@ -99,8 +99,14 @@ class MensajeriaController {
 		def conversacion = []
 		def conversacionCount = 0
 		if (nombreCarpeta.equals("Enviados")){
-			def mensajes = Mensaje.findAllByEmisor(usuario, [max: params.max, offset: offset])
-			render(view:"index",model:[mensajes: mensajes, mensajesCount : mensajes.size(), etiquetasCarpetas:  getCarpetas(usuario), carpetaSeleccionada : nombreCarpeta, offset: offset])
+			
+			def mensajes = Mensaje.findAll("from Mensaje as m where m.emisor = :user group by asunto\
+					, cuerpo order by fecha desc", 
+					[user: usuario, max: params.max, offset: offset])
+			def mensajesCount = Mensaje.findAll("from Mensaje as m where m.emisor = :user group by asunto, cuerpo", 
+					[user: usuario]).size()
+			render(view:"index",model:[mensajes: mensajes, nombreCarpeta: nombreCarpeta, 
+				mensajesCount : mensajesCount, etiquetasCarpetas:  getCarpetas(usuario), offset: offset])
 			return	
 		} else {
 			def conversaciones = this.findConversaciones(usuario, nombreCarpeta)
@@ -317,18 +323,7 @@ class MensajeriaController {
 		def usuarios = []
 		this.cargarInputsRedactar(usuario, cursosAprendiz, datosCursosAprendiz, cursosMediador, datosCursosMediador, datosCursos, datosMediadores, usuarios)
 
-				
-		def mensaje = Mensaje.findById(params.id)
-		def asunto = "FW: " + mensaje.asunto
-		def para = ""
-		if (params.tipoRespuesta == 'Responder'){
-			asunto = "RE: " + mensaje.asunto
-			para = generarDestinatariosRespuesta(mensaje)
-		} else 	if (params.tipoRespuesta == 'ResponderTodos'){
-			asunto = "RE: " + mensaje.asunto
-			para = generarDestinatariosRespuestaATodos(mensaje)
-		}
-		render(template:"redactarRespuesta", model: [para : para, asunto : asunto, usuarios: usuarios, cursosAprendiz : cursosAprendiz, datosCursosAprendiz : datosCursosAprendiz,
+		render(template:"redactarRespuesta", model: [usuarios: usuarios, cursosAprendiz : cursosAprendiz, datosCursosAprendiz : datosCursosAprendiz,
 			cursosMediador : cursosMediador, datosCursosMediador : datosCursosMediador, datosMediadores : datosMediadores, cursosTotales: datosCursos])
 	}
 	
@@ -396,25 +391,29 @@ class MensajeriaController {
 		def asunto = params.asunto
 		def texto = params.mensaje
 		HashMap<String, String> paraMap = new HashMap<String, String>()
+		
 		def usuarios = this.getDestinatariosMail(params.para, paraMap, null)
 		def carpetaEmisor = Carpeta.findByNombreAndUsuario("Escritorio", usuario)
 		Hilo hilo = new Hilo()
 		mensajeService.guardarHilo(hilo)
 		def nuevaConversacion = new Conversacion(padre: carpetaEmisor, hilo: hilo)
-		
+		println usuarios
 		usuarios.each {
 			def receptor = it
-			mensajeService.sendMessage(nuevaConversacion, paraMap, asunto, texto, usuario, receptor)
+			if (usuario != receptor){
+				mensajeService.sendMessage(nuevaConversacion, paraMap, asunto, texto, usuario, receptor)
+			}
 		}
 		mensajeService.guardarConversacion(nuevaConversacion)
 		redirect(action: 'index')
 	}
 	
-	private def getDestinatariosMail(String paraParams, HashMap<String, String> paraMap, HashMap<String, String> mapaOriginal){
+	private def getDestinatariosMail(String paraParams, HashMap<String, String> paraMap, Mensaje mensajeOriginal){
 		Pattern usuarioPattern = Pattern.compile("^(\\d+)")
 		Pattern mediadorPattern = Pattern.compile("Mediador-(\\d+)")
 		Pattern cursoPattern = Pattern.compile("^Curso-(\\d+)")
 		Pattern grupoPattern = Pattern.compile("Grupo-(\\d+)_Curso-(\\d+)")
+		HashMap<String, String> mapaOriginal = this.getMapaReceptores(mensajeOriginal)
 		
 		def usuarios = []
 		def paraArray = []
@@ -473,6 +472,17 @@ class MensajeriaController {
 		return usuarios
 	}
 	
+	private def getMapaReceptores(mensajeOriginal){
+		if (mensajeOriginal == null){
+			return null
+		}
+		HashMap<String, String> mapa = new HashMap<String, String>()
+		for (DestinatariosMensaje destinatario : mensajeOriginal.para){
+			mapa.put(destinatario.key, destinatario.value)
+		}
+		return mapa
+	}
+	
 	
 	/**
 	 * Metodo que recibe la respuesta de los mensajes
@@ -487,13 +497,14 @@ class MensajeriaController {
 		def asunto = params.asunto + mensajeOriginal.asunto
 		def texto = params.mensaje
 		HashMap<String, String> paraMap = new HashMap<String, String>()
-		println params.para
-		def usuarios = this.getDestinatariosMail(params.para, paraMap, mensajeOriginal.para)
+		def usuarios = this.getDestinatariosMail(params.para, paraMap, mensajeOriginal)
+		println usuarios
 		usuarios.each {
 			def receptor = it
-			mensajeService.reply(mensajeOriginal, paraMap, asunto, texto, usuario, receptor)
+			if (usuario != receptor){
+				mensajeService.reply(mensajeOriginal, paraMap, asunto, texto, usuario, receptor)
+			}
 		}
-		println "HOOO"
 		flash.message = "Mensaje Enviado"
 		redirect(action:'index')
 	}

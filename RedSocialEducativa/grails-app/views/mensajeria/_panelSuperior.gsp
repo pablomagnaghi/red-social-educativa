@@ -1,3 +1,16 @@
+<%
+	def limiteSup = offset + params.max
+	if (conversacionCount != null){
+		if (conversacionCount < limiteSup){
+			limiteSup = conversacionCount
+		}
+	} else {
+		if (mensajesCount < limiteSup){
+			limiteSup = mensajesCount
+		}
+	}
+ %>
+
 <div style="height: 80px">
 	<span class="span2">
 		<h1 class="page-title txt-color-blueDark hidden-tablet">
@@ -40,13 +53,16 @@
 	
 	
 
-	<div class="pagination btn-group pull-right inbox-paging" style="margin-left: 10px; right: 20px; margin-top: 0px;">
-		<strong> ${offset+1}-${offset + params.max }
-		</strong> de <strong> <g:if test="${conversacionCount != null }">
-					${conversacionCount }
-				</g:if> <g:else>
-					${mensajesCount}
-				</g:else>
+	<span class="span1 pagination btn-group pull-right inbox-paging" style="margin-left: 10px; 
+		font-size:12px; margin-top: 0px; margin-right: 43px">
+		<strong> ${offset+1}- ${limiteSup }
+		</strong> de <strong> 
+		<g:if test="${conversacionCount != null }">
+			${conversacionCount }
+		</g:if> 
+		<g:else>
+			${mensajesCount}
+		</g:else>
 		</strong>
 		<g:if test="${conversacionCount != null }">
 			<g:if test="${deBusqueda != null && paraBusqueda != null}">
@@ -74,6 +90,6 @@
 			<g:paginate prev="" next="" total="${mensajesCount ?: 0}"
 				params="['nombreCarpeta' : nombreCarpeta]" />
 		</g:else>
-	</div>
+	</span>
 
 </div>
