@@ -5,9 +5,11 @@
         </div>
         <div class="box-content">
 			<dl>
-				<g:each in="${respuestas}" var="respuesta" status="i">
-					<dd><div class="message" style="width:95%">${i}-${respuesta.respuesta}</div></dd>
+				<g:set var="cant" value="1" />
+				<g:each in="${respuestas}" var="respuesta">
+					<dd><div class="message" style="width:95%">${cant}-${respuesta.respuesta}</div></dd>
 					<br>
+					<g:set var="cant" value="${cant + 1}" />
 				</g:each>		
 			</dl>
 		</div>
