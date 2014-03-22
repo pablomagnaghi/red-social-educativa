@@ -3,7 +3,6 @@ dataSource {
 	driverClassName = "com.mysql.jdbc.Driver"
 	username = "root"
 	password = "root"
-	//password = "33300432"
 	
 	// TODO para ver las consultas SQL
 	// logSql = true
@@ -32,7 +31,7 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+            url = "jdbc:mysql://localhost:3306/redSocialEducativa"
             properties {
                maxActive = -1
                minEvictableIdleTimeMillis=1800000

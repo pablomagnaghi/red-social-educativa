@@ -644,6 +644,8 @@ class BootStrap {
 		miembros.add(miembroLuis)
 		def miembroMessi = new Miembro(usuario: usuarioMessi, rol: rolMiembro)
 		miembros.add(miembroMessi)
+		def miembroArturo = new Miembro(usuario: usuarioArturo, rol: rolMiembro)
+		miembros.add(miembroArturo)
 		def miembroAgus = new Miembro(usuario: usuarioAgus, rol: rolMiembro)
 		miembros.add(miembroAgus)
 		def miembroUno = new Miembro(usuario: usuarioUno, rol: rolMiembro)
