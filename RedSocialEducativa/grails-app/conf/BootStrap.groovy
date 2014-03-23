@@ -49,16 +49,16 @@ class BootStrap {
 			email: "pany100@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioMessi)
 		def usuarioArturo = new Usuario(username: "11111111", password: "11111111", dni: "11111111", apellido: "Servetto", nombres: "Artuto", padron: "11111",
-			email: "pany100@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pelu1963@yahoo.com.ar", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioArturo)
 		def usuarioAgus = new Usuario(username: "32725217", password: "32725217", dni: "32725217", apellido: "Milla", nombres: "Agustina", padron: "88888", 
 			email: "pany100@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioAgus)
 		def usuarioUno = new Usuario(username: "00000001", password: "00000001", dni: "00000001", apellido: "ApeUNO", nombres: "NomUno", padron: "00001", 
-			email: "pany100@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pelu1963@yahoo.com.ar", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioUno)
 		def usuarioDos = new Usuario(username: "00000002", password: "00000002", dni: "00000002", apellido: "ApeDOS", nombres: "NomDOS", padron: "00002", 
-			email: "pany100@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pelu1963@yahoo.com.ar", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioDos)
 		def usuarioTres = new Usuario(username: "00000003", password: "00000003", dni: "00000003", apellido: "ApeTRES", nombres: "NomTRES", padron: "00003", 
 			email: "pany100@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
@@ -91,10 +91,10 @@ class BootStrap {
 			email: "pany100@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioDoce)
 		def usuarioTrece = new Usuario(username: "00000013", password: "00000013", dni: "00000013", apellido: "ApeTrece", nombres: "NomTrece", padron: "00013", 
-			email: "pany100@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pelu1963@yahoo.com.ar", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioTrece)
 		def usuarioCatorce = new Usuario(username: "00000014", password: "00000014", dni: "00000014", apellido: "ApeCatorce", nombres: "NomCatorce", padron: "00014", 
-			email: "pany100@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pelu1963@yahoo.com.ar", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioCatorce)
 
 		for(int i = 0; i<usuarios.size(); i++){
