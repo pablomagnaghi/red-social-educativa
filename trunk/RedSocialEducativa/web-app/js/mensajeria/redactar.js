@@ -144,7 +144,7 @@ function submitMail(){
 	var data = $("#e6").val()
 	data += ","
 	$("#e6").val(data)
-	if (para > 0 && asunto > 0 && cuerpo > 0){
+	if ((para > 0 || sendArr.length > 0 ) && asunto > 0 && cuerpo > 0){
 		var item = sendArr.pop()
 		while (item != null){
 			var val = $("#e6").val()
