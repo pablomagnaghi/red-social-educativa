@@ -49,6 +49,7 @@ class MediadorController {
 			return
 		}
 		mediadorService.notificar(mediadorInstance)
+		usuarioService.crearCarpetaCurso(mediadorInstance.usuario, mediadorInstance.curso.id.toString())
 		flash.message = "Mediador ${mediadorInstance.usuario} creado"
 		redirect action:"index", params: ['cursoId': params.cursoId]
 	}

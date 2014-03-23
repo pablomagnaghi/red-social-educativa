@@ -482,8 +482,10 @@ class MensajeriaController {
 			} else {
 				m = mediadorPattern.matcher(it.toString());
 				if (m.find()){
-					def receptor = Mediador.findById(m.group(1)).usuario
+					def mediador = Mediador.findById(m.group(1))
+					def receptor = mediador.usuario
 					usuarios.add(receptor)
+					def curso = mediador.curso
 					paraMap.put(receptor.nombres + " " + receptor.apellido + "<"+receptor.email+">", it.toString())
 					usuarioCarpeta.put(receptor, curso.asignatura.codigo + " - " + curso.nombre)
 				} else {
@@ -491,12 +493,19 @@ class MensajeriaController {
 					if (m.find()){
 						def curso = Curso.findById(m.group(1))
 						def cuatrimestre = cuatrimestreService.obtenerCuatrimestreActual(curso.id)
-						cuatrimestre.aprendices.each{
+						if (cuatrimestre != null){
+							cuatrimestre.aprendices.each{
+								def receptor = it.usuario
+								usuarios.add(receptor)
+								usuarioCarpeta.put(receptor, curso.asignatura.codigo + " - " + curso.nombre)
+							}
+							paraMap.put("Curso " + curso.id, it.toString())
+						}
+						curso.mediadores.each {
 							def receptor = it.usuario
 							usuarios.add(receptor)
 							usuarioCarpeta.put(receptor, curso.asignatura.codigo + " - " + curso.nombre)
 						}
-						paraMap.put("Curso " + curso.id, it.toString())
 					} else {
 						m = grupoPattern.matcher(it.toString());
 						if (m.find()){

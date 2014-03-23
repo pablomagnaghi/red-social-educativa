@@ -80,12 +80,11 @@ class UsuarioService {
 		return null
 	}
 	
-	def crearCarpetaCurso(Aprendiz aprendiz, String cursoId){
+	def crearCarpetaCurso(Usuario usuario, String cursoId){
 		Curso curso = Curso.findById(cursoId)
 		def nombreCurso = curso.nombre
 		def codigoMateria = curso.asignatura.codigo
 		def nombreCarpeta = codigoMateria + " - " + nombreCurso
-		Usuario usuario = aprendiz.usuario
 		def carpeta = Carpeta.findAllByUsuarioAndNombre(usuario, nombreCarpeta)
 		if (carpeta.empty){
 			def nuevaCarpeta = new Carpeta(nombre : nombreCarpeta, usuario: usuario)

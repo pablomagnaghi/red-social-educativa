@@ -417,6 +417,7 @@ class BootStrap {
 		cuatrimestreUno.addToAprendices(aprendizDiez)
 		cuatrimestreUno.addToAprendices(aprendizOnce)
 		cuatrimestreUno.addToAprendices(aprendizDoce)
+		
 		cuatrimestreUno.addToActividades(actividadUno)
 		cuatrimestreUno.addToActividades(actividadDos)
 		cuatrimestreUno.addToActividades(actividadTres)
@@ -441,15 +442,16 @@ class BootStrap {
 		
 		def cuatrimestreCuatro = new Cuatrimestre(anio: 2013, numero: 2, foro: foroCursoCuatro)
 		cuatrimestreCuatro.addToAprendices(aprendizUnoP)
-		
 		def cuatrimestreCuatroP = new Cuatrimestre(anio: 2012, numero: 2, foro: foroCursoCuatroP)
 		def cuatrimestreCuatroPP = new Cuatrimestre(anio: 2012, numero: 1, foro: foroCursoCuatroPP)
 		def cuatrimestreCuatroPPP = new Cuatrimestre(anio: 2011, numero: 2, foro: foroCursoCuatroPPP)
 		def cuatrimestreCuatroPPPP = new Cuatrimestre(anio: 2011, numero: 1, foro: foroCursoCuatroPPPP)
 		cuatrimestreCuatroPPPP.addToAprendices(aprendizDosPP)
+		
 
 		def cuatrimestreCinco = new Cuatrimestre(anio: 2012, numero: 2, foro: foroCursoCinco)
 		cuatrimestreCinco.addToAprendices(aprendizUnoPP)
+		
 		
 		// TODO
 		// Encuestas
@@ -498,6 +500,7 @@ class BootStrap {
 		def cursoUno = new Curso(nroRelativo: "01", cuatDict: "1|2", nombre: "Curso 1")
 		cursoUno.addToMediadores(mediadorAgus)
 		cursoUno.addToMediadores(mediadorUno)
+		
 		cursoUno.addToCuatrimestres(cuatrimestreUno)
 		cursoUno.addToCuatrimestres(cuatrimestreUnoP)
 		cursoUno.addToCuatrimestres(cuatrimestreUnoPP)
@@ -529,15 +532,19 @@ class BootStrap {
 		def cursoDos = new Curso(nroRelativo: "02", cuatDict: "1|2", nombre: "Curso 2")
 		cursoDos.addToMediadores(mediadorUnoP)
 		cursoDos.addToMediadores(mediadorDos)
+		
 		cursoDos.addToCuatrimestres(cuatrimestreDos)
 		cursoDos.addToTemas(temaUnoCursoDos)
 		
 		def cursoTres = new Curso(nroRelativo: "03", cuatDict: "1", nombre: "Curso 3")
 		cursoTres.addToMediadores(mediadorTres)
+		
+		
 		cursoTres.addToCuatrimestres(cuatrimestreTres)
 
 		def cursoCuatro = new Curso(nroRelativo: "04", cuatDict: "1|2", nombre: "Curso 4")
 		cursoCuatro.addToMediadores(mediadorCuatro)
+		
 		cursoCuatro.addToCuatrimestres(cuatrimestreCuatro)
 		cursoCuatro.addToCuatrimestres(cuatrimestreCuatroP)
 		cursoCuatro.addToCuatrimestres(cuatrimestreCuatroPP)
@@ -547,6 +554,7 @@ class BootStrap {
 		def cursoCinco = new Curso(nroRelativo: "05", cuatDict: "2", nombre: "Curso 5")
 		cursoCinco.addToMediadores(mediadorCinco)
 		cursoCinco.addToMediadores(mediadorSeis)
+
 		cursoCinco.addToCuatrimestres(cuatrimestreCinco)
 		
 		// Asignaturas - con carga de cursos
@@ -831,6 +839,36 @@ class BootStrap {
 			println "Red agregada a la bbdd:"
 			println red.titulo
 		}
+		
+		//Creo las carpetas de cursos correspondientes
+		usuarioService.crearCarpetaCurso(aprendizDos.usuario, cuatrimestreUno.curso.id.toString())
+		usuarioService.crearCarpetaCurso(aprendizTres.usuario, cuatrimestreUno.curso.id.toString())
+		usuarioService.crearCarpetaCurso(aprendizCuatro.usuario, cuatrimestreUno.curso.id.toString())
+		usuarioService.crearCarpetaCurso(aprendizCinco.usuario, cuatrimestreUno.curso.id.toString())
+		usuarioService.crearCarpetaCurso(aprendizSeis.usuario, cuatrimestreUno.curso.id.toString())
+		usuarioService.crearCarpetaCurso(aprendizSiete.usuario, cuatrimestreUno.curso.id.toString())
+		usuarioService.crearCarpetaCurso(aprendizOcho.usuario, cuatrimestreUno.curso.id.toString())
+		usuarioService.crearCarpetaCurso(aprendizNueve.usuario, cuatrimestreUno.curso.id.toString())
+		usuarioService.crearCarpetaCurso(aprendizDiez.usuario, cuatrimestreUno.curso.id.toString())
+		usuarioService.crearCarpetaCurso(aprendizOnce.usuario, cuatrimestreUno.curso.id.toString())
+		usuarioService.crearCarpetaCurso(aprendizDoce.usuario, cuatrimestreUno.curso.id.toString())
+		usuarioService.crearCarpetaCurso(aprendizUnoPP.usuario, cuatrimestreCinco.curso.id.toString())
+		usuarioService.crearCarpetaCurso(aprendizDosPPP.usuario, cuatrimestreUnoPPPPP.curso.id.toString())
+		usuarioService.crearCarpetaCurso(aprendizAgus.usuario, cuatrimestreDos.curso.id.toString())
+		usuarioService.crearCarpetaCurso(aprendizUno.usuario, cuatrimestreTres.curso.id.toString())
+		usuarioService.crearCarpetaCurso(aprendizDosP.usuario, cuatrimestreTres.curso.id.toString())
+		usuarioService.crearCarpetaCurso(aprendizUnoP.usuario, cuatrimestreCuatro.curso.id.toString())
+		usuarioService.crearCarpetaCurso(aprendizDosPP.usuario, cuatrimestreCuatroPPPP.curso.id.toString())
+
+		usuarioService.crearCarpetaCurso(mediadorAgus.usuario, cursoUno.id.toString())
+		usuarioService.crearCarpetaCurso(mediadorUno.usuario, cursoUno.id.toString())
+		usuarioService.crearCarpetaCurso(mediadorUnoP.usuario, cursoDos.id.toString())
+		usuarioService.crearCarpetaCurso(mediadorDos.usuario, cursoDos.id.toString())
+		usuarioService.crearCarpetaCurso(mediadorTres.usuario, cursoTres.id.toString())
+		usuarioService.crearCarpetaCurso(mediadorCuatro.usuario, cursoCuatro.id.toString())
+		usuarioService.crearCarpetaCurso(mediadorCinco.usuario, cursoCinco.id.toString())
+		usuarioService.crearCarpetaCurso(mediadorSeis.usuario, cursoCinco.id.toString())
+
     }
 	
 	public static synchronized Date deStringToDate(String fecha) {
