@@ -40,7 +40,7 @@ class BootStrap {
 		def ArrayList<Usuario> usuarios = new ArrayList<Usuario>()
 		
 		def usuarioPablo = new Usuario(username: "33300432", password: "33300432", dni: "33300432", apellido: "Magnaghi", nombres: "Pablo", padron: "88126", 
-			email: "pany100@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
+			email: "pablomagnaghi@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
 		usuarios.add(usuarioPablo)
 		def usuarioLuis = new Usuario(username: "31861315", password: "31861315", dni: "31861315", apellido: "Paniagua", nombres: "Luis", padron: "86862", 
 			email: "pany100@gmail.com", fechaMembresia: (new Date()).format(Utilidades.FORMATO_FECHA))
