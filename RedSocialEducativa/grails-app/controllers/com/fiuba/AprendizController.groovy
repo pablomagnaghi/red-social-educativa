@@ -89,7 +89,7 @@ class AprendizController {
 		}
 		aprendizService.notificar(aprendizInstance)
 		if (params.activar == 'true'){
-			usuarioService.crearCarpetaCurso(aprendizInstance, params.cursoId)
+			usuarioService.crearCarpetaCurso(aprendizInstance.usuario, params.cursoId)
 		}
 		if ((!aprendizInstance.participa) && (aprendizInstance.usuario == usuarioService.usuarioActual())) {
 			redirect controller:"red", action:"revisarRol",  method:"GET"
