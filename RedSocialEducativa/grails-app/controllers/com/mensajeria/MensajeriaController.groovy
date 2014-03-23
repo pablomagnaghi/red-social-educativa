@@ -429,8 +429,8 @@ class MensajeriaController {
 		def asunto = params.asunto
 		def texto = params.mensaje
 		HashMap<String, String> paraMap = new HashMap<String, String>()
-		
-		def usuarios = this.getDestinatariosMail(params.para, paraMap, null)
+		HashMap<Usuario, String> usuarioCarpeta = new HashMap<Usuario, String>()
+		def usuarios = this.getDestinatariosMail(params.para, paraMap, null, usuarioCarpeta)
 		def carpetaEmisor = Carpeta.findByNombreAndUsuario("Escritorio", usuario)
 		Hilo hilo = new Hilo()
 		mensajeService.guardarHilo(hilo)
@@ -439,7 +439,8 @@ class MensajeriaController {
 		usuarios.each {
 			def receptor = it
 			if (usuario != receptor){
-				mensajeService.sendMessage(nuevaConversacion, paraMap, asunto, texto, usuario, receptor)
+				String carpeta = usuarioCarpeta.get(receptor)
+				mensajeService.sendMessage(nuevaConversacion, paraMap, asunto, texto, usuario, receptor, carpeta)
 			}
 		}
 		mensajeService.guardarConversacion(nuevaConversacion)
@@ -449,7 +450,7 @@ class MensajeriaController {
 		redirect(action: 'index')
 	}
 	
-	private def getDestinatariosMail(String paraParams, HashMap<String, String> paraMap, Mensaje mensajeOriginal){
+	private def getDestinatariosMail(String paraParams, HashMap<String, String> paraMap, Mensaje mensajeOriginal, HashMap<Usuario, String> usuarioCarpeta){
 		Pattern usuarioPattern = Pattern.compile("^(\\d+)")
 		Pattern mediadorPattern = Pattern.compile("Mediador-(\\d+)")
 		Pattern cursoPattern = Pattern.compile("^Curso-(\\d+)")
@@ -492,10 +493,10 @@ class MensajeriaController {
 						cuatrimestre.aprendices.each{
 							def receptor = it.usuario
 							usuarios.add(receptor)
+							usuarioCarpeta.put(receptor, curso.asignatura.codigo + " - " + curso.nombre)
 						}
 						paraMap.put("Curso " + curso.id, it.toString())
 					} else {
-						// TODO
 						m = grupoPattern.matcher(it.toString());
 						if (m.find()){
 							def grupo = GrupoActividad.findById(m.group(1))
@@ -503,6 +504,7 @@ class MensajeriaController {
 							grupo.aprendices.each{
 								def receptor = it.aprendiz.usuario
 								usuarios.add(receptor)
+								usuarioCarpeta.put(receptor, curso.asignatura.codigo + " - " + curso.nombre)
 							}
 							paraMap.put("Grupo " + grupo.id+",Curso: " + curso.id, it.toString())
 						}
@@ -538,11 +540,13 @@ class MensajeriaController {
 		def asunto = params.asunto + mensajeOriginal.asunto
 		def texto = params.mensaje
 		HashMap<String, String> paraMap = new HashMap<String, String>()
-		def usuarios = this.getDestinatariosMail(params.para, paraMap, mensajeOriginal)
+		HashMap<Usuario, String> usuarioCarpeta = new HashMap<Usuario, String>()
+		def usuarios = this.getDestinatariosMail(params.para, paraMap, mensajeOriginal, usuarioCarpeta)
 		usuarios.each {
 			def receptor = it
 			if (usuario != receptor){
-				mensajeService.reply(mensajeOriginal, paraMap, asunto, texto, usuario, receptor)
+				String carpeta = usuarioCarpeta.get(receptor)
+				mensajeService.reply(mensajeOriginal, paraMap, asunto, texto, usuario, receptor, carpeta)
 			}
 		}
 		flash.message = "Mensaje Enviado"

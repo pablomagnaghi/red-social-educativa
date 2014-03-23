@@ -62,16 +62,27 @@ class MensajeService {
 	 * @param hilo
 	 * @return
 	 */
-	def sendMessage(Conversacion conversacionEmisor, HashMap<String, String> para, String asunto, String texto, Usuario emisor, Usuario receptor){
+	def sendMessage(Conversacion conversacionEmisor, HashMap<String, String> para, String asunto, 
+		String texto, Usuario emisor, Usuario receptor, String carpetaDestino){
 		def mensaje = new Mensaje(emisor: emisor, receptor: receptor, asunto: asunto,
 			cuerpo: texto, fecha : new Date())
 		mensaje.hilo = conversacionEmisor.hilo;
 		this.agregarDestinatarios(mensaje, para)
 		
-		def carpeta = Carpeta.findByNombreAndUsuario("Escritorio", receptor)
-		this.guardarMensajeEnConversacion(carpeta, mensaje)
-		conversacionEmisor.addToMensajes(mensaje)
+		String nombreCarpeta = "Escritorio"
+		if (carpetaDestino != null){
+			nombreCarpeta = carpetaDestino
+		}
 		
+		def carpeta = Carpeta.findByNombreAndUsuario(nombreCarpeta, receptor)
+		this.guardarMensajeEnConversacion(carpeta, mensaje)
+		
+		conversacionEmisor.addToMensajes(mensaje)
+		if(!conversacionEmisor.save()){
+			conversacionEmisor.errors.each {
+					println it
+			}
+		}
 		this.marcarMensajeEnviadoEnAprendiz(emisor)
 	}
 	
@@ -85,7 +96,8 @@ class MensajeService {
 	 * @param receptor
 	 * @return
 	 */
-	def reply(Mensaje mensajeOriginal, HashMap<String, String> para, String asunto, String texto, Usuario emisor, Usuario receptor){
+	def reply(Mensaje mensajeOriginal, HashMap<String, String> para, String asunto, String texto, Usuario emisor, 
+		Usuario receptor, String carpetaDestino){
 		def mensaje = new Mensaje(emisor: emisor, receptor: receptor, asunto: asunto,
 			cuerpo: texto, fecha : new Date())
 		mensaje.hilo = mensajeOriginal.hilo;
@@ -97,7 +109,14 @@ class MensajeService {
 		def conversacion = conversaciones.find {
 			it.padre.usuario == receptor
 		}
-
+		if (conversacion == null){
+			String nombreCarpeta = "Escritorio"
+			if (carpetaDestino != null){
+				nombreCarpeta = carpetaDestino
+			}
+			def carpeta = Carpeta.findByNombreAndUsuario(nombreCarpeta, receptor)
+			def nuevaConversacion = new Conversacion(padre: carpeta, hilo: mensajeOriginal.hilo)
+		}
 		conversacion.addToMensajes(mensaje)
 		if(!conversacion.save()){
 			conversacion.errors.each {
