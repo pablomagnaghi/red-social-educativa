@@ -165,9 +165,8 @@ function agregarMensajeABorradores(){
 		url: 'agregarMensajeABorradores',
 		type: 'POST',
 		data: {
-			para: $("#para").val(),
-			asunto : $("#asunto").val(),
-			cuerpo : $("#cuerpo").val()
+			asunto : replaceBr($("#asunto").val()),
+			cuerpo : replaceBr($("#cuerpo").val())
 		},
 		success: function(reply){
 			window.open('index', '_self')
@@ -348,4 +347,5 @@ function submitRespuesta(mensajeId){
 		return false;
 	}
 }
+
 

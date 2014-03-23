@@ -35,24 +35,46 @@
 	</g:if>
 	<g:else>
 		<g:if test="${mensajes != null && !mensajes.empty}">
-			<g:each in="${mensajes}" var="mensaje">
-			<li onclick="mostrarMensaje('${mensaje.id}')">
-				<span style="display: inline-flex;">
-					<input type="checkbox" id="${mensaje.id}"
-						class="checkbox style-2">
-				</span> 
-				<span class="from">
-					${mensaje.emisor.nombres}
-					${mensaje.emisor.apellido}
-				</span>
-				<span class="title" style="width: 49%;">
-					${mensaje.asunto} - ${mensaje.getCuerpoResumido()}...
-				</span>
-				<span class="date">
-					${mensaje.getFechaYHora() }
-				</span>
-			</li>
-			</g:each>
+			<g:if test="${'Borradores'.equals(carpetaSeleccionada)}">
+				<g:each in="${mensajes}" var="mensaje">
+				<li onclick="redactarBorrador('${mensaje.id}', 'Borradores')">
+					<span style="display: inline-flex;">
+						<input type="checkbox" id="${mensaje.id}"
+							class="checkbox style-2">
+					</span> 
+					<span class="from">
+						${mensaje.emisor.nombres}
+						${mensaje.emisor.apellido}   <strong>[Borradores]</strong>
+					</span>
+					<span class="title" style="width: 49%;">
+						${mensaje.asunto} - ${mensaje.getCuerpoResumido()}...
+					</span>
+					<span class="date">
+						${mensaje.getFechaYHora() }
+					</span>
+				</li>
+				</g:each>
+			</g:if>
+			<g:else>
+				<g:each in="${mensajes}" var="mensaje">
+				<li onclick="mostrarMensaje('${mensaje.id}')">
+					<span style="display: inline-flex;">
+						<input type="checkbox" id="${mensaje.id}"
+							class="checkbox style-2">
+					</span> 
+					<span class="from">
+						${mensaje.emisor.nombres}
+						${mensaje.emisor.apellido}
+					</span>
+					<span class="title" style="width: 49%;">
+						${mensaje.asunto} - ${mensaje.getCuerpoResumido()}...
+					</span>
+					<span class="date">
+						${mensaje.getFechaYHora() }
+					</span>
+				</li>
+				</g:each>
+			</g:else>
 		</g:if>
 		<g:else>
 			<div style="margin-left: 275px; margin-top: 50px;">No hay
