@@ -443,7 +443,9 @@ class MensajeriaController {
 			}
 		}
 		mensajeService.guardarConversacion(nuevaConversacion)
-		mensajeService.borrarBorrador(params.borradorId)
+		if (params.borradorId != null){
+			mensajeService.borrarBorrador(params.borradorId)
+		}
 		redirect(action: 'index')
 	}
 	
