@@ -485,6 +485,7 @@ class MensajeriaController {
 					def receptor = Mediador.findById(m.group(1)).usuario
 					usuarios.add(receptor)
 					paraMap.put(receptor.nombres + " " + receptor.apellido + "<"+receptor.email+">", it.toString())
+					usuarioCarpeta.put(receptor, curso.asignatura.codigo + " - " + curso.nombre)
 				} else {
 					m = cursoPattern.matcher(it.toString());
 					if (m.find()){
