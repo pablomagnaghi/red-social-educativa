@@ -26,6 +26,9 @@ class Mensaje {
     static constraints = {
 		conversaciones nullable:true
 		receptor nullable: true
+		para nullable: true
+		asunto nullable: true
+		cuerpo nullable: true
     }
 	
 	static findMessagesByCarpeta(Usuario usuario, String nombreCarpeta){
@@ -44,6 +47,9 @@ class Mensaje {
 	}
 	
 	public String getCuerpoResumido(){
+		if (this.cuerpo == null){
+			return "..."
+		}
 		def length = this.cuerpo.length();
 		if (length > 20){
 			length = 20

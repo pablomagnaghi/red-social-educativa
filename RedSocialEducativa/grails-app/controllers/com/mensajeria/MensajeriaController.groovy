@@ -100,15 +100,19 @@ class MensajeriaController {
 		def conversacionCount = 0
 		if (nombreCarpeta.equals("Enviados")){
 			
-			def mensajes = Mensaje.findAll("from Mensaje as m where m.emisor = :user group by asunto\
+			def mensajes = Mensaje.findAll("from Mensaje as m where m.emisor = :user and m.receptor != null group by asunto\
 					, cuerpo order by fecha desc", 
 					[user: usuario, max: params.max, offset: offset])
 			def mensajesCount = Mensaje.findAll("from Mensaje as m where m.emisor = :user group by asunto, cuerpo", 
 					[user: usuario]).size()
-			render(view:"index",model:[mensajes: mensajes, nombreCarpeta: nombreCarpeta, 
+			render(view:"index",model:[mensajes: mensajes, nombreCarpeta: nombreCarpeta, carpetaSeleccionada : nombreCarpeta, 
 				mensajesCount : mensajesCount, etiquetasCarpetas:  getCarpetas(usuario), offset: offset])
 			return	
 		} else {
+			if (nombreCarpeta.equals("Borradores")){
+				showMensajesBorradores(usuario, params.max, offset)
+				return
+			}
 			def conversaciones = this.findConversaciones(usuario, nombreCarpeta)
 			if (conversaciones.size() > 0){
 				def limiteSuperior = offset+(params.max-1)
@@ -126,6 +130,29 @@ class MensajeriaController {
 			nombreCarpeta : nombreCarpeta, offset: offset])
 	}
 
+	def showMensajesBorradores(Usuario usuario, Integer max, Integer offset){
+		Carpeta carpeta = Carpeta.findByNombreAndUsuario("Borradores", usuario)
+		def hilos = Conversacion.where {
+			padre == carpeta
+		}.projections {
+			property 'hilo'
+		}.list()
+		def mensajesBorradores = null
+		def mensajes = Mensaje.findAllByHiloInList(hilos)
+		def mensajesCount = null
+		if (mensajes.size()>0){
+			def limiteSuperior = offset+(max-1)
+			if(limiteSuperior > mensajes.size()){
+				limiteSuperior = mensajes.size()-1
+			}
+			mensajesBorradores =  mensajes[offset..limiteSuperior]
+			mensajesCount = mensajes.size()
+		}
+		render(view:"index",model:[mensajes: mensajesBorradores, nombreCarpeta: "Borradores", carpetaSeleccionada : "Borradores",
+				mensajesCount : mensajesCount, etiquetasCarpetas:  getCarpetas(usuario), 
+				offset: offset])
+			return	
+	}
 	
 	/**
 	 * Poner conversacion en una nueva carpeta
@@ -136,13 +163,19 @@ class MensajeriaController {
 		if (!usuario){
 			redirect (controller:"red", action:"revisarRol")
 		}
-		def idConversacion = params.conversacion
-		def nombreFormateado = params.carpeta
-		def carpeta = Carpeta.findByNombreAndUsuario(nombreFormateado, usuario)
-		def conversacion = Conversacion.findById(idConversacion)
-		conversacion.padre = carpeta;
-		conversacion.save(flush: true)
-		redirect(action:"mostrarMensajes", params:[nombreCarpeta: nombreFormateado])
+		if (!"Enviados".equals(params.carpeta) && !"Borradores".equals(params.carpeta)){
+			def idConversacion = params.conversacion
+			def nombreFormateado = params.carpeta
+			def carpeta = Carpeta.findByNombreAndUsuario(nombreFormateado, usuario)
+			def conversacion = Conversacion.findById(idConversacion)
+			conversacion.padre = carpeta;
+			conversacion.save(flush: true)
+			redirect(action:"mostrarMensajes", params:[nombreCarpeta: nombreFormateado])
+			return
+		} else {
+			redirect(action:"mostrarMensajes", params:[nombreCarpeta: "Escritorio"])
+			return
+		}
 	}
 	
 	
@@ -288,7 +321,10 @@ class MensajeriaController {
 		if (!usuario){
 			redirect (controller:"red", action:"revisarRol")
 		}
-		
+		Mensaje borrador = null
+		if (params.mensajeId != null){
+			borrador = Mensaje.findById(params.mensajeId)
+		}
 		def cursosAprendiz = []
 		def datosCursosAprendiz = [:]
 		def cursosMediador = []
@@ -302,7 +338,8 @@ class MensajeriaController {
 			this.cargarInputsRedactarFiltrados(params.carpetaSeleccionada, usuario, cursosAprendiz, datosCursosAprendiz, cursosMediador, datosCursosMediador, datosCursos, datosMediadores, usuarios)
 		}
 		render(template:"redactar", model: [usuarios: usuarios, cursosAprendiz : cursosAprendiz, datosCursosAprendiz : datosCursosAprendiz, 
-			cursosMediador : cursosMediador, datosCursosMediador : datosCursosMediador, datosMediadores : datosMediadores, cursosTotales: datosCursos])
+			cursosMediador : cursosMediador, datosCursosMediador : datosCursosMediador, 
+			mensajeBorrador : borrador, datosMediadores : datosMediadores, cursosTotales: datosCursos])
 	}
 
 	/**
@@ -388,6 +425,7 @@ class MensajeriaController {
 		if (!usuario){
 			redirect (controller:"red", action:"revisarRol")
 		}
+		
 		def asunto = params.asunto
 		def texto = params.mensaje
 		HashMap<String, String> paraMap = new HashMap<String, String>()
@@ -405,6 +443,7 @@ class MensajeriaController {
 			}
 		}
 		mensajeService.guardarConversacion(nuevaConversacion)
+		mensajeService.borrarBorrador(params.borradorId)
 		redirect(action: 'index')
 	}
 	
@@ -498,7 +537,6 @@ class MensajeriaController {
 		def texto = params.mensaje
 		HashMap<String, String> paraMap = new HashMap<String, String>()
 		def usuarios = this.getDestinatariosMail(params.para, paraMap, mensajeOriginal)
-		println usuarios
 		usuarios.each {
 			def receptor = it
 			if (usuario != receptor){
@@ -514,7 +552,7 @@ class MensajeriaController {
 		if (!usuario){
 			redirect (controller:"red", action:"revisarRol")
 		}
-		def mensaje = new Mensaje(para: params.para, asunto: params.asunto, cuerpo: params.cuerpo, emisor: usuario)
+		def mensaje = new Mensaje(asunto: params.asunto, cuerpo: params.cuerpo, emisor: usuario)
 		mensajeService.agregarMensajeABorradores(mensaje)
 		render (action: 'index')
 	}
@@ -563,6 +601,10 @@ class MensajeriaController {
 		def responder = true
 		if (carpeta.nombre.equals("Eliminados")){
 			responder = false
+		}
+		if (carpeta.nombre.equals("Borradores")){
+			//TODO     parametros al template deconversacion
+			return
 		}
 		ArrayList<Mensaje> mensajes = new ArrayList<Mensaje>()
 		mensajes = conversacion.mensajes

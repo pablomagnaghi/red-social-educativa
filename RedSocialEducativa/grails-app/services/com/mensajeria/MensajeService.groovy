@@ -41,27 +41,15 @@ class MensajeService {
 		this.marcarMensajeEnviadoEnAprendiz(mensaje.emisor)
     }
 	
-	//TODO PROBAR esto
-	/*def agregarMensajeABorradores(Mensaje mensaje){
+	def agregarMensajeABorradores(Mensaje mensaje){
+		def hilo = new Hilo()
+		hilo.save()
+		mensaje.hilo = hilo;
+		mensaje.fecha = new Date()
+		
 		def carpeta = Carpeta.findByNombreAndUsuario("Borradores", mensaje.emisor)
-		def conversacion = Conversacion.findByPadre(carpeta)
-		if (conversacion == null){
-			def hilo = new Hilo()
-			hilo.save()
-			mensaje.hilo = hilo
-			mensaje.fecha = new Date()
-			conversacion = new Conversacion(padre: carpeta, hilo: hilo)
-		} else {
-			mensaje.hilo = conversacion.hilo
-		}
-		if (!mensaje.save()){
-			mensaje.errors.each {
-				println it
-			}
-		}
-		conversacion.addToMensajes(mensaje)
-		conversacion.save()
-	}*/
+		this.guardarMensajeEnConversacion(carpeta, mensaje)
+	}
 	
 	
 	/**
@@ -166,6 +154,16 @@ class MensajeService {
 		}
 	}
 	
+	def borrarBorrador(String idMensaje){
+		Mensaje m = Mensaje.findById(idMensaje)
+		Conversacion c = m.conversaciones.toList().get(0)
+		if (!c.delete()){
+			c.errors.each {
+				println it
+			}
+		}
+	}
+	
 	private def marcarMensajeEnviadoEnAprendiz(Usuario usuario){
 		def aprendiz = Aprendiz.findAllByUsuarioAndCursando(usuario, true)
 		if (!aprendiz.empty){
@@ -187,5 +185,5 @@ class MensajeService {
 		mPara.value = value
 		mensaje.addToPara(mPara)
 	}
-
+	
 }

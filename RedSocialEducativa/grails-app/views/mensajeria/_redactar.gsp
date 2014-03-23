@@ -28,11 +28,12 @@
 				<div class="control-group" style="margin-bottom: 13px;">
 					<label for="date01" class="control-label">Asunto</label>
 					<div class="controls">
-						<g:if test="${asunto != null }">
+						<g:if test="${mensajeBorrador != null }">
 							<input type="text" name="asunto" id="asunto"
 								placeholder="Asunto del mensaje" class="span10"
 								style="color: #685555 !important" "
-								value="${asunto }">
+								value="${mensajeBorrador.asunto }">
+							<input type='hidden' name='borradorId' value="${mensajeBorrador.id }"/>
 						</g:if>
 						<g:else>
 							<input type="text" name="asunto" id="asunto"
@@ -47,13 +48,13 @@
 					<label for="textarea2" class="control-label">Texto </label>
 					<div class="controls">
 						<div class="cleditorMain" style="width: 500px; height: 250px;">
-							<g:if test="${cuerpo != null }">
+							<g:if test="${mensajeBorrador != null }">
 								<textarea rows="3" id="cuerpo" class="cleditor" id="cuerpo"
 									name="mensaje"
 									style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 73px; display: none; width: 500px;"></textarea>
 								<div contenteditable="true" id="divCuerpo" class="note-editable"
 									style="height: 250px;">
-									${cuerpo }
+									${mensajeBorrador.cuerpo }
 								</div>
 							</g:if>
 							<g:else>

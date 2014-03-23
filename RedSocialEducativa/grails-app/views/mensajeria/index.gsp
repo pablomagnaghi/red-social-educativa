@@ -44,7 +44,7 @@
 			<g:render template="/templateRed/panel" />
 			<div id="content" class="span10">
 				<div class="row-fluid">
-					<g:if test="${carpetaSeleccionada == "Enviados" }">
+					<g:if test="(${'Enviados'.equals(carpetaSeleccionada) || 'Borradores'.equals(carpetaSeleccionada)})">
 						<g:render template="panelSuperior"
 							model="['mensajesCount' : mensajesCount, 'nombreCarpeta':nombreCarpeta, 'offset':offset]"></g:render>
 					</g:if>
@@ -57,7 +57,7 @@
 						<g:render template="panelCarpetas"
 							model="['etiquetasCarpetas' : etiquetasCarpetas, 'seleccionada' : seleccionada]"></g:render>
 					</div>
-					<g:if test="${carpetaSeleccionada == "Enviados" }">
+					<g:if test="(${'Enviados'.equals(carpetaSeleccionada) || 'Borradores'.equals(carpetaSeleccionada)})">
 						<g:render template="panelConversaciones"
 							model="['mensajes' : mensajes]"></g:render>
 					</g:if>
