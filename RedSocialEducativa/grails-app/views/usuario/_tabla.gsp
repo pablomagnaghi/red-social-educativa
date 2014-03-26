@@ -22,12 +22,10 @@
                 <thead>
                     <tr>
                     	<th>Nombre de usuario</th>
-                        <th>DNI</th>
                         <th>Apellido</th>
                         <th>Nombres</th>
                         <th>Email</th>
                         <th>Fecha solicitud</th>
-                        <th>Fecha membresia</th>
                         <th>Estado</th>
 						<th>Acciones</th>                      
                     </tr>
@@ -36,19 +34,10 @@
                 	<g:each in="${usuarioInstanceList}" var="usuarioInstance">
 	                    <tr>
 	                    	<td>${fieldValue(bean: usuarioInstance, field: "username")}</td>	
-    	                    <td class="center">${fieldValue(bean: usuarioInstance, field: "dni")}</td>				
 							<td class="center">${fieldValue(bean: usuarioInstance, field: "apellido")}</td>				
 							<td class="center">${fieldValue(bean: usuarioInstance, field: "nombres")}</td>				
 							<td class="center">${fieldValue(bean: usuarioInstance, field: "email")}</td>	
 							<td class="center"><g:formatNumber number="${usuarioInstance.fechaSolicitud}"/></td>	
-							<td>
-								<g:if test="${fieldValue(bean: usuarioInstance, field: "fechaMembresia")}">
-									<g:formatNumber number="${usuarioInstance.fechaMembresia}"/>
-								</g:if>	
-								<g:else>
-									No tiene
-								</g:else>
-							</td>	
     	                    <td class="center">
                             	<g:if test="${usuarioInstance.enabled}">
                             		<span class="label label-success">Habilitado</span>
