@@ -47,7 +47,7 @@
 										<g:hiddenField name="evaluacion.id" value="${it.evaluacion.id}"/>
 										<g:hiddenField name="aprendiz.id" value="${it.aprendiz.id}"/>
 										<fieldset>		
-											<g:field name="nota" type="number decimal" value="${it.nota}" style="width: 5%; text-align: center"/>							
+											<g:field name="nota" type="number decimal" value="${it.nota}" style="width: 15%; text-align: center"/>							
 											<button class="btn btn-success" type="submit" class="btn btn-primary">Calificar</button>	    
 										</fieldset>
 								 	</g:form> 
