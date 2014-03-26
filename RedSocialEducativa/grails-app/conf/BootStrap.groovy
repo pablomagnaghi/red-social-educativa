@@ -868,7 +868,7 @@ class BootStrap {
 		usuarioService.crearCarpetaCurso(mediadorCuatro.usuario, cursoCuatro.id.toString())
 		usuarioService.crearCarpetaCurso(mediadorCinco.usuario, cursoCinco.id.toString())
 		usuarioService.crearCarpetaCurso(mediadorSeis.usuario, cursoCinco.id.toString())
-
+	
     }
 	
 	public static synchronized Date deStringToDate(String fecha) {
@@ -882,7 +882,7 @@ class BootStrap {
 			return null;
 		}
 	}
-
+	
     def destroy = {
     }
 }
