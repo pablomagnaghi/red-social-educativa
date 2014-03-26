@@ -12,10 +12,13 @@ class UsuarioService {
 	def springSecurityService
 	
 	private enviarEmail(String email, String msj) {
-		sendMail {
-			to email
-			subject Utilidades.TITULO_RED
-			body msj
+		try{
+			sendMail {
+				to email
+				subject Utilidades.TITULO_RED
+				body msj
+			}
+		}catch (Exception e){
 		}
 	}
 	

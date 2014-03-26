@@ -25,10 +25,13 @@ class RedService {
 	}
 	
 	private enviarEmail(String email, String msj) {
-		sendMail {
-			to email
-			subject Utilidades.TITULO_BIENVENIDA
-			body msj
+		try{
+			sendMail {
+				to email
+				subject Utilidades.TITULO_BIENVENIDA
+				body msj
+			}
+		}catch (Exception e){
 		}
 	}
 	
