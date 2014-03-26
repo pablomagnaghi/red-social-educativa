@@ -5,7 +5,7 @@
         </div>
         <div class="box-content">
 			<dl>
-				<g:set var="cant" value="1" />
+				<g:set var="cant" value="${1}" />
 				<g:each in="${respuestas}" var="respuesta">
 					<dd><div class="message" style="width:95%">${cant}-${respuesta.respuesta}</div></dd>
 					<br>
