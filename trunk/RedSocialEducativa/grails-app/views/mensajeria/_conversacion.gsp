@@ -170,7 +170,7 @@
 														<li style="display: none">
 															${grupo.nombre} <input type="checkbox"
 															id="checkBoxGA${grupo.id }"
-															onchange="agregarGrupo('checkBoxGM', '${grupo.id }', '${grupo.nombre }', '${cursoAprendiz.nombre}','${cursoAprendiz.id}')">
+															onchange="agregarGrupo('checkBoxGA', '${grupo.id }', '${grupo.nombre }', '${cursoAprendiz.nombre}','${cursoAprendiz.id}')">
 														</li>
 													</ul>
 												</g:each>
