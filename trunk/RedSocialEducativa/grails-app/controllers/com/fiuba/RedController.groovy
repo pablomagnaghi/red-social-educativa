@@ -48,12 +48,15 @@ class RedController {
 		}
 		usuarioService.guardar(usuario)
 		def email = usuario.email
-		sendMail {
-			to email
-			subject Utilidades.TITULO_CONFIRMACION
-			html g.render(template: "mailActivacion", model: [codigo: usuario.codigoConfirmacion, username: usuario.username])
-		}	
-		flash.message = "Tu cuenta ha sido creada. Revisa tu dirección de email para activarla"
+		try {
+			sendMail {
+				to email
+				subject Utilidades.TITULO_CONFIRMACION
+				html g.render(template: "mailActivacion", model: [codigo: usuario.codigoConfirmacion, username: usuario.username])
+			}
+			flash.message = "Tu cuenta ha sido creada. Revisa tu dirección de email para activarla"
+		} catch (Exception e) {
+		}
 		redirect uri: "/"
 	}
 	

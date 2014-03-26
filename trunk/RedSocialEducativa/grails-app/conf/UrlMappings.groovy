@@ -10,6 +10,7 @@ class UrlMappings {
 		"/"(controller: "login",
 			action: "auth")
 		//"/"(view:"/index")
+		"404"(controller:'login', action:'pagenotexist')
 		"500"(view:'/error')
 
 	}

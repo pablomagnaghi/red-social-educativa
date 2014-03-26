@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title><g:message code="springSecurity.denied.title" /></title>
+		<title>Página inexistente</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.jpg')}" type="image/x-icon">
@@ -90,7 +90,7 @@
 	            <!-- PANEL CENTRAL -->
 	            <div id="content" class="span10">
 					<div class="row-fluid">
-						<h3><g:message code="springSecurity.denied.message" /></h3>
+						<h3>No existe la página que se intentó acceder</h3>
 					</div>	
 				</div>	
 			</div><!--/fluid-row-->	
