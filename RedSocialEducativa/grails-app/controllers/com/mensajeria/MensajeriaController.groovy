@@ -435,7 +435,6 @@ class MensajeriaController {
 		Hilo hilo = new Hilo()
 		mensajeService.guardarHilo(hilo)
 		def nuevaConversacion = new Conversacion(padre: carpetaEmisor, hilo: hilo)
-		println usuarios
 		usuarios.each {
 			def receptor = it
 			if (usuario != receptor){
@@ -499,7 +498,7 @@ class MensajeriaController {
 								usuarios.add(receptor)
 								usuarioCarpeta.put(receptor, curso.asignatura.codigo + " - " + curso.nombre)
 							}
-							paraMap.put("Curso " + curso.id, it.toString())
+							paraMap.put("Curso " + curso.asignatura.codigo + " - " + curso.nombre, it.toString())
 						}
 						curso.mediadores.each {
 							def receptor = it.usuario
@@ -516,7 +515,7 @@ class MensajeriaController {
 								usuarios.add(receptor)
 								usuarioCarpeta.put(receptor, curso.asignatura.codigo + " - " + curso.nombre)
 							}
-							paraMap.put("Grupo " + grupo.id+",Curso: " + curso.id, it.toString())
+							paraMap.put("Grupo " + grupo.numero+"-Curso: " + curso.asignatura.codigo + " - " + curso.nombre, it.toString())
 						}
 					}
 				}
