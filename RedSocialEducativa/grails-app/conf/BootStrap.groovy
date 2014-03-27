@@ -1,3 +1,4 @@
+/*
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Date;
@@ -9,15 +10,15 @@ import com.foro.*
 import com.material.*
 import com.mensajeria.Hilo
 import com.mensajeria.Mensaje
-
+*/
 import org.codehaus.groovy.grails.commons.ApplicationAttributes
 
 class BootStrap {
-	def usuarioService
-	def mensajeService
+	//def usuarioService
+	//def mensajeService
 	
     def init = { servletContext ->
-		
+		/*
 		def ArrayList<Rol> roles = new ArrayList<Rol>()
 		def rolAdmin = new Rol(authority: 'ROL_ADMIN')
 		roles.add(rolAdmin)
@@ -854,9 +855,9 @@ class BootStrap {
 		usuarioService.crearCarpetaCurso(mediadorCuatro.usuario, cursoCuatro.id.toString())
 		usuarioService.crearCarpetaCurso(mediadorCinco.usuario, cursoCinco.id.toString())
 		usuarioService.crearCarpetaCurso(mediadorSeis.usuario, cursoCinco.id.toString())
-	
+	*/
     }
-	
+	/*
 	public static synchronized Date deStringToDate(String fecha) {
 		SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd-MM-yyyy");
 		Date fechaEnviar = null;
@@ -867,7 +868,7 @@ class BootStrap {
 			ex.printStackTrace();
 			return null;
 		}
-	}
+	}*/
 	
     def destroy = {
     }
