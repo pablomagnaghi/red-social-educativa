@@ -36,7 +36,7 @@ class MensajeriaController {
 		}
 		def etiquetasCarpetas = getCarpetas(usuario)
 		def conversacion = null
-		def conversacionCount = null
+		def conversacionCount = 0
 		def conversaciones = this.findConversaciones(usuario, 'Escritorio')
 		if (conversaciones.size() > 0){
 			def limiteSuperior = offset+(params.max-1)
