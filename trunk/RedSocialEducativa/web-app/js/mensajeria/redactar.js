@@ -215,7 +215,7 @@ function agregarGrupo(encabezado, idGrupo, nombreGrupo, nombreCurso, idCurso){
 	if ($("#grupo"+idGrupo).length==0 && $('#'+encabezado+idGrupo).is(':checked')){
 		$(".select2-choices").each(function(){
 			$(this).prepend("<li class='select2-search-choice generado' id='grupo"+idGrupo+"-"+idCurso+"'>" +
-					"<div>"+nombreGrupo+", "+ nombreCurso+"</div>    " +
+					"<div>"+nombreGrupo+"- "+ nombreCurso+"</div>    " +
 					"<a tabindex='-1' class='select2-search-choice-close removeLink' onclick='removeGrupoLi(\""+idGrupo+"\", \""+idCurso+"\")' href='#'></a></li>")
 		});
 		sendArr.push("Grupo-" + idGrupo + "_Curso-" + idCurso + ",")

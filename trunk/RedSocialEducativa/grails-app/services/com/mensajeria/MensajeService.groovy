@@ -115,7 +115,7 @@ class MensajeService {
 				nombreCarpeta = carpetaDestino
 			}
 			def carpeta = Carpeta.findByNombreAndUsuario(nombreCarpeta, receptor)
-			def nuevaConversacion = new Conversacion(padre: carpeta, hilo: mensajeOriginal.hilo)
+			conversacion = new Conversacion(padre: carpeta, hilo: mensajeOriginal.hilo)
 		}
 		conversacion.addToMensajes(mensaje)
 		if(!conversacion.save()){
