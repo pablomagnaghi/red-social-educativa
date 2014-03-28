@@ -61,6 +61,7 @@
 										<g:else>
 											<h3>Usted curso la materia durante el cuatrimestre: ${aprendiz.cuatrimestre.anio} - ${aprendiz.cuatrimestre.numero}</h3>
  										</g:else>
+ 										<br>
 									</div>
 								</div>
 							</div>
