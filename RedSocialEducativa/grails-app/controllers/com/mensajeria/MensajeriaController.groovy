@@ -339,7 +339,7 @@ class MensajeriaController {
 		}
 		render(template:"redactar", model: [usuarios: usuarios, cursosAprendiz : cursosAprendiz, datosCursosAprendiz : datosCursosAprendiz, 
 			cursosMediador : cursosMediador, datosCursosMediador : datosCursosMediador, 
-			mensajeBorrador : borrador, datosMediadores : datosMediadores, cursosTotales: datosCursos])
+			mensajeBorrador : borrador, datosMediadores : datosMediadores, cursosTotales: datosCursos, carpetaSeleccionada: params.carpetaSeleccionada])
 	}
 
 	/**
@@ -431,7 +431,11 @@ class MensajeriaController {
 		HashMap<String, String> paraMap = new HashMap<String, String>()
 		HashMap<Usuario, String> usuarioCarpeta = new HashMap<Usuario, String>()
 		def usuarios = this.getDestinatariosMail(params.para, paraMap, null, usuarioCarpeta)
-		def carpetaEmisor = Carpeta.findByNombreAndUsuario("Escritorio", usuario)
+		def carpetaEmisorNombre = "Escritorio"
+		if (params.nombreCarpeta != null){
+			carpetaEmisorNombre = params.nombreCarpeta.trim()
+		}
+		def carpetaEmisor = Carpeta.findByNombreAndUsuario(carpetaEmisorNombre, usuario)
 		Hilo hilo = new Hilo()
 		mensajeService.guardarHilo(hilo)
 		def nuevaConversacion = new Conversacion(padre: carpetaEmisor, hilo: hilo)
@@ -455,7 +459,7 @@ class MensajeriaController {
 		Pattern cursoPattern = Pattern.compile("^Curso-(\\d+)")
 		Pattern grupoPattern = Pattern.compile("Grupo-(\\d+)_Curso-(\\d+)")
 		HashMap<String, String> mapaOriginal = this.getMapaReceptores(mensajeOriginal)
-		
+		HashSet<Long> usuariosId = new HashSet<Long>()
 		def usuarios = []
 		def paraArray = []
 		paraArray = paraParams.split(",")
@@ -476,17 +480,21 @@ class MensajeriaController {
 			Matcher m = usuarioPattern.matcher(it.toString());
 			if (m.find()){
 				def receptor = Usuario.findById(m.group(1))
-				usuarios.add(receptor)
-				paraMap.put(receptor.nombres + " " + receptor.apellido + "<"+receptor.email+">", it.toString())
+				if (usuariosId.add(receptor.id)){
+					usuarios.add(receptor)
+					paraMap.put(receptor.nombres + " " + receptor.apellido + "<"+receptor.email+">", it.toString())
+				}
 			} else {
 				m = mediadorPattern.matcher(it.toString());
 				if (m.find()){
 					def mediador = Mediador.findById(m.group(1))
 					def receptor = mediador.usuario
-					usuarios.add(receptor)
-					def curso = mediador.curso
-					paraMap.put(receptor.nombres + " " + receptor.apellido + "<"+receptor.email+">", it.toString())
-					usuarioCarpeta.put(receptor, curso.asignatura.codigo + " - " + curso.nombre)
+					if (usuariosId.add(receptor.id)){
+						usuarios.add(receptor)
+						def curso = mediador.curso
+						paraMap.put(receptor.nombres + " " + receptor.apellido + "<"+receptor.email+">", it.toString())
+						usuarioCarpeta.put(receptor, curso.asignatura.codigo + " - " + curso.nombre)
+					}
 				} else {
 					m = cursoPattern.matcher(it.toString());
 					if (m.find()){
@@ -495,15 +503,19 @@ class MensajeriaController {
 						if (cuatrimestre != null){
 							cuatrimestre.aprendices.each{
 								def receptor = it.usuario
-								usuarios.add(receptor)
-								usuarioCarpeta.put(receptor, curso.asignatura.codigo + " - " + curso.nombre)
+								if(usuariosId.add(receptor.id)){
+									usuarios.add(receptor)
+									usuarioCarpeta.put(receptor, curso.asignatura.codigo + " - " + curso.nombre)
+								}
 							}
 							paraMap.put("Curso " + curso.asignatura.codigo + " - " + curso.nombre, it.toString())
 						}
 						curso.mediadores.each {
 							def receptor = it.usuario
-							usuarios.add(receptor)
-							usuarioCarpeta.put(receptor, curso.asignatura.codigo + " - " + curso.nombre)
+							if (usuariosId.add(receptor.id)){
+								usuarios.add(receptor)
+								usuarioCarpeta.put(receptor, curso.asignatura.codigo + " - " + curso.nombre)
+							}
 						}
 					} else {
 						m = grupoPattern.matcher(it.toString());
@@ -512,8 +524,10 @@ class MensajeriaController {
 							def curso = Curso.findById(m.group(2))
 							grupo.aprendices.each{
 								def receptor = it.aprendiz.usuario
-								usuarios.add(receptor)
-								usuarioCarpeta.put(receptor, curso.asignatura.codigo + " - " + curso.nombre)
+								if (usuariosId.add(receptor.id)){
+									usuarios.add(receptor)
+									usuarioCarpeta.put(receptor, curso.asignatura.codigo + " - " + curso.nombre)
+								}
 							}
 							paraMap.put("Grupo " + grupo.numero+"-Curso: " + curso.asignatura.codigo + " - " + curso.nombre, it.toString())
 						}
@@ -521,6 +535,7 @@ class MensajeriaController {
 				}
 			}
 		}
+		println usuarios
 		return usuarios
 	}
 	
