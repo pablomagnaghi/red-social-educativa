@@ -14,11 +14,11 @@ import com.mensajeria.Mensaje
 import org.codehaus.groovy.grails.commons.ApplicationAttributes
 
 class BootStrap {
-	//def usuarioService
-	//def mensajeService
+//	def usuarioService
+//	def mensajeService
 	
     def init = { servletContext ->
-		/*
+/*		
 		def ArrayList<Rol> roles = new ArrayList<Rol>()
 		def rolAdmin = new Rol(authority: 'ROL_ADMIN')
 		roles.add(rolAdmin)
@@ -380,23 +380,23 @@ class BootStrap {
 			fechaFinalizacion: (new Date()).format(Utilidades.FORMATO_FECHA))
 
 		// Evaluaciones	
-		def evaluacionUno = new Evaluacion(nombre: "evaluacion 1", fecha: "20140225", horario: "1900", 
+		def evaluacionUno = new Evaluacion(nombre: "evaluacion 1", fecha: "20140425", horario: "1900", 
 			aula: "1", parcial: true, obligatoria: false, habilitada: true)
-		def evaluacionDos = new Evaluacion(nombre: "evaluacion 2", fecha: "20140315", horario: "1930", 
+		def evaluacionDos = new Evaluacion(nombre: "evaluacion 2", fecha: "20140415", horario: "1930", 
 			aula: "2", parcial: true, obligatoria: false, habilitada: true)
-		def evaluacionTres = new Evaluacion(nombre: "evaluacion 3", fecha: "20140327", horario: "2000", 
+		def evaluacionTres = new Evaluacion(nombre: "evaluacion 3", fecha: "20140427", horario: "2000", 
 			aula: "3", parcial: true, obligatoria: false, habilitada: false)
-		def evaluacionCuatro = new Evaluacion(nombre: "evaluacion 4", fecha: "20140328", horario: "2030", 
+		def evaluacionCuatro = new Evaluacion(nombre: "evaluacion 4", fecha: "20140428", horario: "2030", 
 			aula: "4", parcial: true, obligatoria: false, habilitada: true)
-		def evaluacionCinco = new Evaluacion(nombre: "evaluacion 5", fecha: "20140329", horario: "1900", 
+		def evaluacionCinco = new Evaluacion(nombre: "evaluacion 5", fecha: "20140429", horario: "1900", 
 			aula: "5", parcial: true, obligatoria: false, habilitada: true)
-		def evaluacionSeis = new Evaluacion(nombre: "evaluacion 6", fecha: "20140330", horario: "1800",
+		def evaluacionSeis = new Evaluacion(nombre: "evaluacion 6", fecha: "20140430", horario: "1800",
 			aula: "6", parcial: true, obligatoria: false, habilitada: true)
 		def evaluacionSiete = new Evaluacion(nombre: "evaluacion 7", fecha: "20140325", horario: "1700",
 			aula: "7", parcial: true, obligatoria: false, habilitada: true)
 		def evaluacionOcho = new Evaluacion(nombre: "evaluacion 8", fecha: "20140326", horario: "1630",
 			aula: "8", parcial: true, obligatoria: false, habilitada: true)
-		def evaluacionNueve = new Evaluacion(nombre: "evaluacion 9", fecha: (new Date()).format(Utilidades.FORMATO_FECHA), horario: "1930",
+		def evaluacionNueve = new Evaluacion(nombre: "evaluacion 9", fecha: "20140321", horario: "1930",
 			aula: "9", parcial: true, obligatoria: false, habilitada: true)
 		
 		// Cuatrimestres
@@ -554,15 +554,15 @@ class BootStrap {
 		
 		// Asignaturas - con carga de cursos
 		def ArrayList<Asignatura> asignaturas = new ArrayList<Asignatura>()
-		def asignaturaUno = new Asignatura(codigo: "75.01", nombre: "asignaturaUno", creditos: "6", contenidosMinimos: "contenidos")
+		def asignaturaUno = new Asignatura(codigo: "75.01", nombre: "Computación", creditos: "6", contenidosMinimos: "contenidos")
 		asignaturaUno.addToCursos(cursoUno)
 		asignaturaUno.addToCursos(cursoDos)
 		asignaturaUno.addToCursos(cursoTres)
 		asignaturas.add(asignaturaUno)
-		def asignaturaDos = new Asignatura(codigo: "75.02", nombre: "asignaturaDos", creditos: "6", contenidosMinimos: "contenidos")
+		def asignaturaDos = new Asignatura(codigo: "75.06", nombre: "Organización de Datos", creditos: "6", contenidosMinimos: "contenidos")
 		asignaturaDos.addToCursos(cursoCuatro)
 		asignaturas.add(asignaturaDos)
-		def asignaturaTres = new Asignatura(codigo: "75.03", nombre: "asignaturaTres", creditos: "6", contenidosMinimos: "contenidos")
+		def asignaturaTres = new Asignatura(codigo: "75.52", nombre: "Taller de Programación II", creditos: "6", contenidosMinimos: "contenidos")
 		asignaturaTres.addToCursos(cursoCinco)
 		asignaturas.add(asignaturaTres)
 		
@@ -780,7 +780,7 @@ class BootStrap {
 		def calendarioUno = new Calendario(anio: 2013, inicioPrimerCuatrimestre: 20130220, inicioSegundoCuatrimestre: 20130810)
 		calendarios.add(calendarioUno)
 		
-		def calendarioDos = new Calendario(anio: 2014, inicioPrimerCuatrimestre: 20140328, inicioSegundoCuatrimestre: 20140815)
+		def calendarioDos = new Calendario(anio: 2014, inicioPrimerCuatrimestre: 20140330, inicioSegundoCuatrimestre: 20140815)
 		calendarios.add(calendarioDos)
 		
 		for(int i = 0; i<calendarios.size(); i++){
