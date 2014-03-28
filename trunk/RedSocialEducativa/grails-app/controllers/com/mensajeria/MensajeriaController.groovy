@@ -503,9 +503,11 @@ class MensajeriaController {
 						if (cuatrimestre != null){
 							cuatrimestre.aprendices.each{
 								def receptor = it.usuario
-								if(usuariosId.add(receptor.id)){
-									usuarios.add(receptor)
-									usuarioCarpeta.put(receptor, curso.asignatura.codigo + " - " + curso.nombre)
+								if (it.participa){
+									if(usuariosId.add(receptor.id)){
+										usuarios.add(receptor)
+										usuarioCarpeta.put(receptor, curso.asignatura.codigo + " - " + curso.nombre)
+									}
 								}
 							}
 							paraMap.put("Curso " + curso.asignatura.codigo + " - " + curso.nombre, it.toString())
@@ -535,7 +537,6 @@ class MensajeriaController {
 				}
 			}
 		}
-		println usuarios
 		return usuarios
 	}
 	

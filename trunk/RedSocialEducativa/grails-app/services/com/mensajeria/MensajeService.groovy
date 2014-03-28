@@ -68,7 +68,6 @@ class MensajeService {
 			cuerpo: texto, fecha : new Date())
 		mensaje.hilo = conversacionEmisor.hilo;
 		this.agregarDestinatarios(mensaje, para)
-		
 		String nombreCarpeta = "Escritorio"
 		if (carpetaDestino != null){
 			nombreCarpeta = carpetaDestino
