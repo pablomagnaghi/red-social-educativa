@@ -55,7 +55,7 @@
 				
 					<div id="carpetasUsuario">
 						<g:render template="panelCarpetas"
-							model="['etiquetasCarpetas' : etiquetasCarpetas, 'seleccionada' : seleccionada]"></g:render>
+							model="['etiquetasCarpetas' : etiquetasCarpetas, 'seleccionada' : carpetaSeleccionada]"></g:render>
 					</div>
 					<g:if test="(${'Enviados'.equals(carpetaSeleccionada) || 'Borradores'.equals(carpetaSeleccionada)})">
 						<g:render template="panelConversaciones"

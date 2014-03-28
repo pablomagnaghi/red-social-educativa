@@ -43,7 +43,7 @@
 
 					</div>
 				</div>
-
+				<input type="hidden" name="nombreCarpeta" value="${carpetaSeleccionada}">
 				<div class="control-group hidden-phone">
 					<label for="textarea2" class="control-label">Texto </label>
 					<div class="controls">
